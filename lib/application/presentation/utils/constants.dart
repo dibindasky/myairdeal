@@ -35,4 +35,4 @@ TextStyle textThinStyle1 =
 
 // Asset
 String myAirDealLogo = 'asset/my air deal logo .png';
-String splashImage = '';
+String splashImage = 'asset/image/onboard image one.png';

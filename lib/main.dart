@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/get_route_generator.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/domain/core/binding/all_controller_binding.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +26,8 @@ class MyAirDeal extends StatelessWidget {
         child: GetMaterialApp(
           getPages: GetXRouterConfig.routes,
           initialRoute: Routes.initial,
-           debugShowCheckedModeBanner: false,
-
-          ));
+          debugShowCheckedModeBanner: false,
+          initialBinding: AllControllerBinding(),
+        ));
   }
 }

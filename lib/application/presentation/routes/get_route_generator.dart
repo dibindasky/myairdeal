@@ -11,7 +11,7 @@ class GetXRouterConfig{
     ),
     GetPage(
       name: Routes.bottomBar,
-      page: () => const ScreenNavbar(),
+      page: () =>  ScreenNavbar(),
     ),
   ];
 }

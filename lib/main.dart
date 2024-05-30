@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/get_route_generator.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/domain/core/binding/all_controller_binding.dart';
 
 Future<void> main() async {
@@ -24,6 +26,13 @@ class MyAirDeal extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         child: GetMaterialApp(
+          theme: ThemeData(
+            primaryColor: kBlack,
+            scaffoldBackgroundColor: kGreyLightBackground,
+            textTheme: Theme.of(context).textTheme.apply(              
+                  fontFamily: poppins,
+                ),
+          ),
           getPages: GetXRouterConfig.routes,
           initialRoute: Routes.initial,
           debugShowCheckedModeBanner: false,

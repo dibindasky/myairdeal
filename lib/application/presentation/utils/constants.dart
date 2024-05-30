@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:myairdeal/application/presentation/utils/colors.dart';
-
 const errorMessage = 'something went wrong, please try again';
 
-const gilroyBold = 'Gilroy-Bold';
-const gilroyMedium = 'Gilroy-Medium';
-const gilroyRegular = 'Gilroy-Regular';
-const gilroySemiBold = 'Gilroy-SemiBold';
-
-double sHeight = 900;
-double sWidth = 400;
+const poppins = 'Poppins';
 
 const kEmpty = SizedBox();
 
@@ -33,74 +25,13 @@ final kRadius10 = BorderRadius.circular(10);
 final kRadius15 = BorderRadius.circular(15);
 final kRadius50 = BorderRadius.circular(50);
 
-final textHeadBold1 = TextStyle(
-  color: kBlack,
-  fontFamily: gilroyBold,
-  fontWeight: FontWeight.w400,
-  fontSize: sWidth < 400 ? sWidth * 0.040 : sWidth * 0.035,
-);
+TextStyle textHeadStyle1 =
+    TextStyle(fontWeight: FontWeight.w700, fontSize: 18.sp);
 
-final textHeadBoldBig = TextStyle(
-  color: kBlack,
-  fontFamily: gilroyBold,
-  fontWeight: FontWeight.w400,
-  fontSize: sWidth < 400 ? sWidth * 0.056 : sWidth * 0.045,
-);
+TextStyle textStyle1 = TextStyle(fontWeight: FontWeight.w400, fontSize: 15.sp);
 
-final textHeadBoldBig2 = TextStyle(
-  color: kBlack,
-  fontFamily: gilroyBold,
-  fontWeight: FontWeight.w400,
-  fontSize: sWidth < 400 ? 12.sp : sWidth * 0.055,
-);
-
-final textHeadMedium1 = TextStyle(
-  color: kBlack,
-  fontFamily: gilroyMedium,
-  fontWeight: FontWeight.w400,
-  fontSize: sWidth < 400 ? sWidth * 0.040 : sWidth * 0.035,
-);
-
-final textHeadMediumBig = TextStyle(
-  color: kBlack,
-  fontFamily: gilroyMedium,
-  fontWeight: FontWeight.w400,
-  fontSize: sWidth < 400 ? sWidth * 0.056 : sWidth * 0.045,
-);
-
-final textHeadRegular1 = TextStyle(
-  color: kBlack,
-  fontFamily: gilroyRegular,
-  fontWeight: FontWeight.w400,
-  fontSize: sWidth < 400 ? sWidth * 0.040 : sWidth * 0.035,
-);
-
-final textHeadRegular2 = TextStyle(
-  color: kBlack,
-  fontFamily: gilroyRegular,
-  fontWeight: FontWeight.w400,
-  fontSize: sWidth < 400 ? sWidth * 0.050 : sWidth * 0.040,
-);
-
-final textHeadRegularBig = TextStyle(
-  color: kBlack,
-  fontFamily: gilroyRegular,
-  fontWeight: FontWeight.w400,
-  fontSize: sWidth < 400 ? sWidth * 0.056 : sWidth * 0.045,
-);
-
-final textHeadSemiBold1 = TextStyle(
-  color: kBlack,
-  fontFamily: gilroySemiBold,
-  fontWeight: FontWeight.w400,
-  fontSize: sWidth < 400 ? sWidth * 0.040 : sWidth * 0.035,
-);
-
-void sizeFinder(BuildContext context) {
-  final size = MediaQuery.of(context).size;
-  sHeight = size.height > 900 ? 900 : size.height;
-  sWidth = size.width > 450 ? 450 : size.width;
-}
+TextStyle textThinStyle1 =
+    TextStyle(fontWeight: FontWeight.w300, fontSize: 12.sp);
 
 // Asset
 String myAirDealLogo = 'asset/my air deal logo .png';

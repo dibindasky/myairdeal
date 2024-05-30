@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class ScreenSplash extends StatelessWidget {
   const ScreenSplash({super.key});
@@ -14,9 +15,11 @@ class ScreenSplash extends StatelessWidget {
         Get.offAllNamed(Routes.bottomBar);
       });
     });
-    return const Scaffold(
-      body: Center(
-        child: Text('ScreenSplash'),
+    return Scaffold(
+      body: Column(
+        children: [
+          Image.asset(splashImage),
+        ],
       ),
     );
   }

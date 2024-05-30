@@ -32,3 +32,7 @@ TextStyle textStyle1 = TextStyle(fontWeight: FontWeight.w400, fontSize: 15.sp);
 
 TextStyle textThinStyle1 =
     TextStyle(fontWeight: FontWeight.w300, fontSize: 12.sp);
+
+// Asset
+String myAirDealLogo = 'asset/my air deal logo .png';
+String splashImage = '';

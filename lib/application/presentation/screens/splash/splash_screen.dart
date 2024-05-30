@@ -10,7 +10,7 @@ class ScreenSplash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Timer(const Duration(seconds: 3), () {
+      Timer(const Duration(seconds: 0), () {
         Get.offAllNamed(Routes.bottomBar);
       });
     });

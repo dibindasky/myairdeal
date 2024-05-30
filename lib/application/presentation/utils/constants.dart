@@ -51,7 +51,7 @@ final textHeadBoldBig2 = TextStyle(
   color: kBlack,
   fontFamily: gilroyBold,
   fontWeight: FontWeight.w400,
-  fontSize: sWidth < 400 ? sWidth * 0.07 : sWidth * 0.055,
+  fontSize: sWidth < 400 ? 12.sp : sWidth * 0.055,
 );
 
 final textHeadMedium1 = TextStyle(
@@ -101,3 +101,7 @@ void sizeFinder(BuildContext context) {
   sHeight = size.height > 900 ? 900 : size.height;
   sWidth = size.width > 450 ? 450 : size.width;
 }
+
+// Asset
+String myAirDealLogo = 'asset/my air deal logo .png';
+String splashImage = '';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
 
 const errorMessage = 'something went wrong, please try again';
 
@@ -33,6 +34,13 @@ TextStyle textStyle1 = TextStyle(fontWeight: FontWeight.w400, fontSize: 15.sp);
 TextStyle textThinStyle1 =
     TextStyle(fontWeight: FontWeight.w300, fontSize: 12.sp);
 
+List<BoxShadow> boxShadow = const [
+  BoxShadow(spreadRadius: 5, blurRadius: 10, offset: Offset(0, 3), color: kGrey)
+];
+
 // Asset
-String myAirDealLogo = 'asset/my air deal logo .png';
+String myAirDealLogo = 'asset/image/my air deal logo .png';
 String splashImage = 'asset/image/onboard image one.png';
+String imageGlobalMap = 'asset/image/Global Map.png';
+String imageFlight = 'asset/image/Ellipse 4.png';
+String imageSecureLogin = 'asset/image/secureLogin.png';

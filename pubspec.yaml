@@ -39,6 +39,8 @@ dependencies:
   curved_labeled_navigation_bar: ^2.0.2
   get: ^4.6.6
   iconsax: ^0.0.8
+  intl_phone_number_input: ^0.7.4
+  pinput: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +68,7 @@ flutter:
   assets:
     - asset/image/
     - asset/icon/
+    - asset/image/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

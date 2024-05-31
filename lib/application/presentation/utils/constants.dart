@@ -5,7 +5,6 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 const errorMessage = 'something went wrong, please try again';
 
 const poppins = 'Poppins';
-
 const kEmpty = SizedBox();
 
 final kHeight5 = SizedBox(height: 5.h);
@@ -44,3 +43,7 @@ String splashImage = 'asset/image/onboard image one.png';
 String imageGlobalMap = 'asset/image/Global Map.png';
 String imageFlight = 'asset/image/Ellipse 4.png';
 String imageSecureLogin = 'asset/image/secureLogin.png';
+String faceBookIcon = 'asset/image/Facebook.png';
+String googleIcon = 'asset/image/Google.png';
+String tickIcon = 'asset/icon/tick_image.png';
+

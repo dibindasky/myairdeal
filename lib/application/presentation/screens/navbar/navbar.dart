@@ -37,7 +37,7 @@ class ScreenNavbar extends StatelessWidget {
                 label: 'Home',
               ),
               CurvedNavigationBarItem(
-                child: Icon(selectedIndex==1?Iconsax.ticket5:Iconsax.ticket ),
+                child: Icon(selectedIndex==1?Icons.airplane_ticket:Iconsax.ticket ),
                 label: 'Bookings',
               ),
               CurvedNavigationBarItem(

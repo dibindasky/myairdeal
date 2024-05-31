@@ -22,21 +22,22 @@ class MyAirDeal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(360, 690),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        child: GetMaterialApp(
-          theme: ThemeData(
-            primaryColor: kBlack,
-            scaffoldBackgroundColor: kGreyLightBackground,
-            textTheme: Theme.of(context).textTheme.apply(              
-                  fontFamily: poppins,
-                ),
-          ),
-          getPages: GetXRouterConfig.routes,
-          initialRoute: Routes.initial,
-          debugShowCheckedModeBanner: false,
-          initialBinding: AllControllerBinding(),
-        ));
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: GetMaterialApp(
+        theme: ThemeData(
+          primaryColor: kBlack,
+          scaffoldBackgroundColor: kGreyLightBackground,
+          textTheme: Theme.of(context).textTheme.apply(
+                fontFamily: poppins,
+              ),
+        ),
+        getPages: GetXRouterConfig.routes,
+        initialRoute: Routes.initial,
+        debugShowCheckedModeBanner: false,
+        initialBinding: AllControllerBinding(),
+      ),
+    );
   }
 }

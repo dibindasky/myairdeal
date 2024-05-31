@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 const errorMessage = 'something went wrong, please try again';
 
 const poppins = 'Poppins';
-
 const kEmpty = SizedBox();
 
 final kHeight5 = SizedBox(height: 5.h);
@@ -34,5 +33,8 @@ TextStyle textThinStyle1 =
     TextStyle(fontWeight: FontWeight.w300, fontSize: 12.sp);
 
 // Asset
-String myAirDealLogo = 'asset/my air deal logo .png';
-String splashImage = 'asset/image/onboard image one.png';
+String myAirDealLogo = 'asset/image/myair_deal_logo.png';
+String splashImage = 'asset/image/onbaord_image_one.png';
+String faceBookIcon = 'asset/image/Facebook.png';
+String googleIcon = 'asset/image/Google.png';
+String tickIcon = 'asset/icon/tick_image.png';

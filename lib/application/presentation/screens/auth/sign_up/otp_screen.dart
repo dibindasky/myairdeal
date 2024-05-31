@@ -1,0 +1,73 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/auth_controller.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/pinput_feild.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/widgets/event_button.dart';
+
+class OTPScreen extends StatelessWidget {
+  OTPScreen({super.key});
+  final loginController = Get.find<AuthController>();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: ListView(
+            children: [
+              kHeight40,
+              Text(
+                'OTP Verification',
+                style: textHeadStyle1.copyWith(
+                  fontSize: 25.sp,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              kHeight10,
+              Text(
+                'Enter the verification code we just send to your number +91 ${loginController.loginNumber.text}.',
+                style: textThinStyle1.copyWith(color: kGrey),
+              ),
+              kHeight50,
+              kHeight30,
+              kHeight50,
+              const Text('Enter OTP'),
+              kHeight5,
+              PinEnterField(),
+              kHeight30,
+              kHeight50,
+              EventButton(
+                text: 'Verify',
+                onTap: () {
+                  Get.toNamed(Routes.alMostDone);
+                },
+              ),
+              kHeight20,
+              const Center(child: Text('Or Sign Up With')),
+              kHeight20,
+              const LoginGoogleOrFaceBook(),
+              kHeight10,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Already have an account?'),
+                  kWidth5,
+                  Text(
+                    'Sign In',
+                    style: textThinStyle1.copyWith(color: kBlue),
+                  )
+                ],
+              ),
+              kHeight10,
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

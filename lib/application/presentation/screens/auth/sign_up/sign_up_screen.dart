@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:myairdeal/application/controller/auth_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/facebook_google_button.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
@@ -81,6 +82,7 @@ class SignUpScreen extends StatelessWidget {
                 prefixIcon: const Icon(
                   Icons.person_2_outlined,
                   color: kWhite,
+                  size: 14,
                 ),
                 text: 'Login as Guest',
                 onTap: () {},
@@ -105,44 +107,6 @@ class SignUpScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class LoginGoogleOrFaceBook extends StatelessWidget {
-  const LoginGoogleOrFaceBook({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        EventIconButton(
-          hieght: 50.h,
-          width: 140.w,
-          color: kGrey,
-          suffixIcon: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Image.asset(faceBookIcon),
-          ),
-          text: '',
-          onTap: () {},
-        ),
-        kWidth30,
-        EventIconButton(
-          hieght: 50.h,
-          width: 140.w,
-          color: kGrey,
-          suffixIcon: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Image.asset(googleIcon),
-          ),
-          text: '',
-          onTap: () {},
-        )
-      ],
     );
   }
 }

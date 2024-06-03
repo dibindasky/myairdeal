@@ -13,3 +13,4 @@ const Color kGreyLight = Color.fromARGB(255, 240, 240, 240);
 const Color kGrey = Color.fromARGB(255, 187, 187, 187);
 const Color kGreyDark = Color.fromARGB(255, 133, 132, 132);
 const Color kGreyLightBackground = Color.fromARGB(255, 238, 238, 238);
+Color kBlueThinLIght = const Color(0xFFE8F7FF);

@@ -12,11 +12,13 @@ class TextIconButtonOutlinedCustom extends StatelessWidget {
       this.texthead,
       this.onTap,
       this.padding,
+      this.topRight,
       this.mainAxisAlignment = MainAxisAlignment.spaceEvenly});
 
   final Widget first;
   final Widget second;
   final String? texthead;
+  final Widget? topRight;
   final MainAxisAlignment mainAxisAlignment;
   final VoidCallback? onTap;
   final Widget spacer;
@@ -27,7 +29,14 @@ class TextIconButtonOutlinedCustom extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        texthead != null ? Text(texthead!, style: textStyle1) : kEmpty,
+        texthead != null
+            ? Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(texthead!, style: textStyle1),
+                  topRight != null ? topRight! : kEmpty,
+                ],
+              )
+            : kEmpty,
         texthead != null ? kHeight5 : kEmpty,
         GestureDetector(
           onTap: onTap,

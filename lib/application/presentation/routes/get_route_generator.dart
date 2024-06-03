@@ -6,6 +6,7 @@ import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_scre
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:myairdeal/application/presentation/screens/navbar/navbar.dart';
 import 'package:myairdeal/application/presentation/screens/onboarding/onboarding_screen.dart';
+import 'package:myairdeal/application/presentation/screens/search/airport_search.dart';
 import 'package:myairdeal/application/presentation/screens/splash/splash_screen.dart';
 
 class GetXRouterConfig {
@@ -37,6 +38,10 @@ class GetXRouterConfig {
     GetPage(
       name: Routes.bottomBar,
       page: () => const ScreenNavbar(),
+    ),
+    GetPage(
+      name: Routes.airportSearch,
+      page: () => const ScreenAirportSearch(),
     ),
   ];
 }

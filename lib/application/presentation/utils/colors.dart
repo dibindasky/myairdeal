@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 const Color knill = Colors.transparent;
 const Color kBlack = Colors.black;
 const Color kWhite = Colors.white;
+const Color kRed = Colors.red;
 const Color kBluePrimary = Color.fromARGB(255, 0, 126, 196);
 const Color kBlueDark = Color.fromARGB(255, 19, 96, 139);
 const Color kBlue = Color.fromARGB(255, 0, 100, 210);

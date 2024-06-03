@@ -27,7 +27,8 @@ class MyAirDeal extends StatelessWidget {
       splitScreenMode: true,
       child: GetMaterialApp(
         theme: ThemeData(
-          primaryColor: kBlack,
+          primaryColor: kBluePrimary,
+          primarySwatch: Colors.blue,
           scaffoldBackgroundColor: kGreyLightBackground,
           textTheme: Theme.of(context).textTheme.apply(
                 fontFamily: poppins,

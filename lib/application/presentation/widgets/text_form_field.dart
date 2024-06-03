@@ -13,8 +13,8 @@ class CustomTextField extends StatefulWidget {
       required this.fillColor,
       this.textCapitalization,
       this.focusNode,
-      required this.showUnderline,
-      required this.validate,
+      this.showUnderline = false,
+      this.validate = Validate.none,
       this.onTapOutside,
       this.obscureText = false,
       this.maxLines,
@@ -72,6 +72,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       controller: widget.controller,
       decoration: InputDecoration(
         counter: const SizedBox.shrink(),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15),
         suffixIcon: widget.obscureText
             ? IconButton(
                 onPressed: () {

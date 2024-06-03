@@ -35,7 +35,7 @@ class CustomTextField extends StatefulWidget {
   final int? maxLines;
   final TextEditingController? controller;
   final bool? isBorder;
-  final Color fillColor;
+  final Color? fillColor;
   final TextCapitalization? textCapitalization;
   final bool obscureText;
   final TextEditingController? password;
@@ -51,9 +51,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
   void initState() {
     super.initState();
     showEye = widget.obscureText;
-    // _focusNode.addListener(() {
-    //   setState(() {});
-    // });
   }
 
   @override

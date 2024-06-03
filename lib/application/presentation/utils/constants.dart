@@ -43,10 +43,15 @@ List<BoxShadow> boxShadow2 = const [
 // Asset
 String myAirDealLogo = 'asset/image/my air deal logo .png';
 String splashImage = 'asset/image/myair_deal_logo.png';
+String onBoardImage = 'asset/image/onbaord_image_one.png';
 String imageGlobalMap = 'asset/image/Global Map.png';
 String imageFlight = 'asset/image/Ellipse 4.png';
 String imageSecureLogin = 'asset/image/secureLogin.png';
 String faceBookIcon = 'asset/image/Facebook.png';
 String googleIcon = 'asset/image/Google.png';
 String tickIcon = 'asset/icon/tick_image.png';
+String flightDetailIcon = 'asset/image/flight_detail_image.png';
 
+// NetWork image
+String dummyPersonimage =
+    'https://www.google.com/imgres?q=person%20image&imgurl=https%3A%2F%2Fengineering.unl.edu%2Fimages%2Fstaff%2FKayla-Person.jpg&imgrefurl=https%3A%2F%2Fengineering.unl.edu%2Fkayla-person%2F&docid=ap6GPr-70tOAyM&tbnid=r4kykPUijMfl_M&vet=12ahUKEwiil4-b2LeGAxX43TgGHQWLAfUQM3oECDQQAA..i&w=600&h=800&hcb=2&ved=2ahUKEwiil4-b2LeGAxX43TgGHQWLAfUQM3oECDQQAA';

@@ -7,4 +7,5 @@ class Routes {
   static const String alMostDone = '/alMostDone';
   static const String bottomBar = '/bottom_bar';
   static const String airportSearch = '/airport_search_page';
+  static const String flightDetail = '/flight_detail';
 }

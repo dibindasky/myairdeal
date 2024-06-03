@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/facebook_google_button.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/pinput_feild.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -57,10 +58,12 @@ class OTPScreen extends StatelessWidget {
                 children: [
                   const Text('Already have an account?'),
                   kWidth5,
-                  Text(
-                    'Sign In',
-                    style: textThinStyle1.copyWith(color: kBlue),
-                  )
+                  TextButton(
+                      onPressed: () {
+                        Get.offNamed(Routes.signIn);
+                      },
+                      child: Text('Sign In',
+                          style: textThinStyle1.copyWith(color: kBlue)))
                 ],
               ),
               kHeight10,

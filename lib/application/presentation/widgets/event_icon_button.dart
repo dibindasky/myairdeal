@@ -6,7 +6,7 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 class EventIconButton extends StatelessWidget {
   const EventIconButton({
     super.key,
-    required this.text,
+    this.text,
     required this.onTap,
     this.width,
     this.hieght,
@@ -17,7 +17,7 @@ class EventIconButton extends StatelessWidget {
     this.suffixIcon,
   });
 
-  final String text;
+  final String? text;
   final VoidCallback onTap;
   final double? width;
   final double? hieght;
@@ -43,12 +43,14 @@ class EventIconButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             prefixIcon ?? kEmpty,
-            prefixIcon != null ? kWidth5 : kEmpty,
-            Text(
-              text,
-              style: textStyle1.copyWith(color: textColr ?? kWhite),
-            ),
-            suffixIcon != null ? kWidth10 : kEmpty,
+            prefixIcon != null && text != null ? kWidth5 : kEmpty,
+            text != null
+                ? Text(
+                    text!,
+                    style: textStyle1.copyWith(color: textColr ?? kWhite),
+                  )
+                : kEmpty,
+            suffixIcon != null && text != null ? kWidth10 : kEmpty,
             suffixIcon ?? kEmpty
           ],
         ),

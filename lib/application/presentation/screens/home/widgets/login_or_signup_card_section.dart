@@ -15,7 +15,7 @@ class LogInOrSignUpCard extends StatelessWidget {
       padding:
           EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
       decoration: BoxDecoration(
-          boxShadow: boxShadow,
+          boxShadow: boxShadow1,
           borderRadius: kRadius15,
           color: kBlueLightShade),
       child: Column(

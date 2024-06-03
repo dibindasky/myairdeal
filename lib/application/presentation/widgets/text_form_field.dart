@@ -5,25 +5,24 @@ import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/validators.dart';
 
 class CustomTextField extends StatefulWidget {
-  const CustomTextField({
-    super.key,
-    required this.hintText,
-    this.controller,
-    this.isBorder,
-    this.fillColor,
-    this.textCapitalization,
-    this.focusNode,
-    this.showUnderline = false,
-    this.validate = Validate.none,
-    this.onTapOutside,
-    this.obscureText = false,
-    this.maxLines,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.prefix,
-    this.clr,
-    this.password,
-  });
+  const CustomTextField(
+      {super.key,
+      required this.hintText,
+      this.controller,
+      this.isBorder,
+      required this.fillColor,
+      this.textCapitalization,
+      this.focusNode,
+      this.showUnderline = false,
+      this.validate = Validate.none,
+      this.onTapOutside,
+      this.obscureText = false,
+      this.maxLines,
+      this.prefixIcon,
+      this.suffixIcon,
+      this.prefix,
+      this.clr,
+      this.password});
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final Widget? prefix;
@@ -70,6 +69,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       controller: widget.controller,
       decoration: InputDecoration(
         counter: const SizedBox.shrink(),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15),
         suffixIcon: widget.obscureText
             ? IconButton(
                 onPressed: () {

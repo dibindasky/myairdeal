@@ -35,7 +35,7 @@ class BookingIssuesQuerySection extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
                   decoration: BoxDecoration(
                       color: kBlueLightShade,
-                      border: Border.all(color: kBluePrimary),
+                      border: Border.all(color: kBluePrimary.withOpacity(0.3)),
                       borderRadius: kRadius10),
                   child: Column(
                     children: [

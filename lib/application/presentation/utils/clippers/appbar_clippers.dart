@@ -33,7 +33,7 @@ class AppbarClipper2 extends CustomClipper<Path> {
     path.lineTo(x, 0);
     path.lineTo(x, y - 55);
     path.quadraticBezierTo(x - 10, y - 10, x - 60, y - 15);
-    path.lineTo(x / 3 +5, y - 30);
+    path.lineTo(x / 3 + 5, y - 30);
     path.lineTo(50, y - 15);
     path.quadraticBezierTo(10, y - 10, 0, y - 55);
     path.close();

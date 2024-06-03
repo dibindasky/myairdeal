@@ -18,7 +18,7 @@ class OnBoardScreen extends StatelessWidget {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              Image.asset(splashImage),
+              Image.asset(onBoardImage),
               kHeight40,
               Align(
                 alignment: Alignment.bottomLeft,

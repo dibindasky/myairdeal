@@ -5,24 +5,25 @@ import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/validators.dart';
 
 class CustomTextField extends StatefulWidget {
-  const CustomTextField(
-      {super.key,
-      required this.hintText,
-      this.controller,
-      this.isBorder,
-      required this.fillColor,
-      this.textCapitalization,
-      this.focusNode,
-      required this.showUnderline,
-      required this.validate,
-      this.onTapOutside,
-      this.obscureText = false,
-      this.maxLines,
-      this.prefixIcon,
-      this.suffixIcon,
-      this.prefix,
-      this.clr,
-      this.password});
+  const CustomTextField({
+    super.key,
+    required this.hintText,
+    this.controller,
+    this.isBorder,
+    this.fillColor,
+    this.textCapitalization,
+    this.focusNode,
+    this.showUnderline = false,
+    this.validate = Validate.none,
+    this.onTapOutside,
+    this.obscureText = false,
+    this.maxLines,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.prefix,
+    this.clr,
+    this.password,
+  });
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final Widget? prefix;
@@ -35,7 +36,7 @@ class CustomTextField extends StatefulWidget {
   final int? maxLines;
   final TextEditingController? controller;
   final bool? isBorder;
-  final Color fillColor;
+  final Color? fillColor;
   final TextCapitalization? textCapitalization;
   final bool obscureText;
   final TextEditingController? password;
@@ -51,9 +52,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
   void initState() {
     super.initState();
     showEye = widget.obscureText;
-    // _focusNode.addListener(() {
-    //   setState(() {});
-    // });
   }
 
   @override

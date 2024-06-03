@@ -6,4 +6,5 @@ class Routes {
   static const String otp = '/otp';
   static const String alMostDone = '/alMostDone';
   static const String bottomBar = '/bottom_bar';
+  static const String flightDetail = '/flight_detail';
 }

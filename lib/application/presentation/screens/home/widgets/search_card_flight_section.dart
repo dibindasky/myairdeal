@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/flight_sort_controller.dart';
-import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/bottom_calender_date_picker.dart';
+import 'package:myairdeal/application/presentation/screens/home/widgets/choose_person_class_bottom_Sheet.dart';
+import 'package:myairdeal/application/presentation/screens/home/widgets/place_selection.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
@@ -57,8 +59,15 @@ class FlightSearchCardHome extends StatelessWidget {
                       showModalBottomSheet(
                         context: context,
                         builder: (context) => DatePickingBottomSheet(
+                          initialDate: index == 0
+                              ? DateTime.now()
+                              : controller.depatureDate.value,
                           onPressed: (value) {
-                            controller.changeDepartureDate(value);
+                            if (index == 1) {
+                              controller.changeRetunDate(value);
+                            } else {
+                              controller.changeDepartureDate(value);
+                            }
                           },
                         ),
                       );
@@ -69,22 +78,37 @@ class FlightSearchCardHome extends StatelessWidget {
                     first: const Icon(Icons.calendar_month_rounded,
                         color: kBluePrimary),
                     second: Obx(() {
-                      return Text(
-                          DateFormating.getDate(controller.depatureDate.value));
+                      return Text(DateFormating.getDate(index == 0
+                          ? controller.depatureDate.value
+                          : controller.returnDate.value));
                     }),
                   ),
                 ),
               );
             }),
             kHeight10,
-            TextIconButtonOutlinedCustom(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              first: kEmpty,
-              second: const Icon(Icons.keyboard_arrow_down_rounded),
-              spacer: Text(controller.classType.value),
-              onTap: () {},
-              texthead: 'Class',
-            ),
+            Obx(() {
+              return TextIconButtonOutlinedCustom(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  first: const Icon(Iconsax.personalcard, color: kBluePrimary),
+                  second: Row(
+                    children: [
+                      Text(
+                          '${controller.adultCount.value + controller.childrenCount.value + controller.infantCount.value},',
+                          style: textHeadStyle1),
+                      kWidth5,
+                      Text(controller.classType.value, style: textThinStyle1)
+                    ],
+                  ),
+                  spacer: kWidth10,
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => const PersonClassBottomSheet(),
+                    );
+                  },
+                  texthead: 'Travellers & Class');
+            }),
             kHeight20,
             EventButton(
                 text: 'Search flights', onTap: () {}, width: double.infinity)
@@ -95,104 +119,3 @@ class FlightSearchCardHome extends StatelessWidget {
   }
 }
 
-class OneWayAndRoundTrip extends StatelessWidget {
-  const OneWayAndRoundTrip({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<FlightSortController>();
-    return Obx(() {
-      return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Expanded(
-          child: TextIconButtonOutlinedCustom(
-            onTap: () => Get.toNamed(Routes.airportSearch),
-            first: const Icon(Icons.flight_takeoff_rounded),
-            second: const Text('Bangalore'),
-            texthead: 'From',
-          ),
-        ),
-        Icon(
-            controller.tripType.value == 1
-                ? Icons.compare_arrows_outlined
-                : Icons.arrow_right_alt_outlined,
-            color: kBluePrimary),
-        Expanded(
-          child: TextIconButtonOutlinedCustom(
-            onTap: () => Get.toNamed(Routes.airportSearch),
-            first: const Icon(Icons.flight_land_rounded),
-            second: const Text('Hyderabad'),
-            texthead: 'To',
-          ),
-        )
-      ]);
-    });
-  }
-}
-
-class MultiCitySelection extends StatelessWidget {
-  const MultiCitySelection({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<FlightSortController>();
-    return Obx(() {
-      return Column(
-        children: List.generate(
-          controller.multiCityDepartureDate.length,
-          (index) => Padding(
-            padding: EdgeInsets.only(top: 10.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: TextIconButtonOutlinedCustom(
-                    onTap: () => Get.toNamed(Routes.airportSearch),
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    first: kEmpty,
-                    topRight: const Icon(Icons.arrow_right_alt_rounded,
-                        color: kBluePrimary),
-                    second: const Text('Bangalore'),
-                    texthead: 'From',
-                  ),
-                ),
-                kWidth5,
-                Expanded(
-                  child: TextIconButtonOutlinedCustom(
-                    onTap: () => Get.toNamed(Routes.airportSearch),
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    first: kEmpty,
-                    second: const Text('Hyderabad'),
-                    texthead: 'To',
-                  ),
-                ),
-                kWidth5,
-                Expanded(
-                  child: TextIconButtonOutlinedCustom(
-                    topRight: const Icon(Icons.remove_circle_outline),
-                    onTap: () => showModalBottomSheet(
-                      context: context,
-                      builder: (context) => DatePickingBottomSheet(
-                        onPressed: (value) {
-                          controller.addDateToMultiCityTrip(index, value);
-                        },
-                      ),
-                    ),
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    first: kEmpty,
-                    second: Text(DateFormating.getDate(
-                        controller.multiCityDepartureDate[index])),
-                    texthead: 'Date',
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      );
-    });
-  }
-}

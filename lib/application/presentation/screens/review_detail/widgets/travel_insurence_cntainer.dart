@@ -67,10 +67,10 @@ class _TravelInsurenceContainerState extends State<TravelInsurenceContainer> {
             ),
             const Divider(),
             ExpansionTile(
-              enableFeedback: false,
+              // enableFeedback: false,
               iconColor: kBlue,
-              enabled: true,
-              dense: true,
+              // enabled: true,
+              // dense: true,
               childrenPadding: const EdgeInsets.all(0),
               tilePadding: const EdgeInsets.all(0),
               title: const Text('Key benifits'),

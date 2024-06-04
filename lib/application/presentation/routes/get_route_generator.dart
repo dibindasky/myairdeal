@@ -47,11 +47,11 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.flightDetail,
-      page: () => FlightDetailsScreen(),
+      page: () => const FlightDetailsScreen(),
     ),
     GetPage(
-      name: Routes.flightDetail,
-      page: () => ProfileEdit(),
+      name: Routes.editProfile,
+      page: () => const ProfileEdit(),
     ),
   ];
 }

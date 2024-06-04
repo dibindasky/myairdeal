@@ -41,11 +41,12 @@ List<BoxShadow> boxShadow2 = const [
   BoxShadow(spreadRadius: 2, blurRadius: 4, offset: Offset(0, 1), color: kGrey)
 ];
 List<BoxShadow> boxShadow3 = const [
-  BoxShadow(spreadRadius: 1, blurRadius: 3, offset: Offset(0, 1), color: kGreyLight)
+  BoxShadow(
+      spreadRadius: 1, blurRadius: 3, offset: Offset(0, 1), color: kGreyLight)
 ];
 
 // Asset
-String myAirDealLogo = 'asset/image/my air deal logo .png';
+String myAirDealLogo = 'asset/image/myair_deal_logo.png';
 String splashImage = 'asset/image/myair_deal_logo.png';
 String onBoardImage = 'asset/image/onbaord_image_one.png';
 String imageGlobalMap = 'asset/image/Global Map.png';

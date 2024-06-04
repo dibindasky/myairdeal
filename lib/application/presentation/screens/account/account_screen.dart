@@ -26,7 +26,8 @@ class ScreenAccountPage extends StatelessWidget {
                     SettingsTile(
                       title: 'Edit Profile',
                       onTap: () {
-                        Get.toNamed(Routes.editProfile);
+                        Navigator.of(context).pushNamed(Routes.editProfile);
+                        //Get.toNamed(Routes.editProfile);
                       },
                     ),
                     SettingsTile(

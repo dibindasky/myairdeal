@@ -4,16 +4,16 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class EventButton extends StatelessWidget {
-  const EventButton({
-    super.key,
-    required this.text,
-    required this.onTap,
-    this.width,
-    this.hieght,
-    this.textColr,
-    this.color,
-    this.borderRadius,
-  });
+  const EventButton(
+      {super.key,
+      required this.text,
+      required this.onTap,
+      this.width,
+      this.hieght,
+      this.textColr,
+      this.color,
+      this.borderRadius,
+      this.fontSize});
 
   final String text;
   final VoidCallback onTap;
@@ -22,6 +22,7 @@ class EventButton extends StatelessWidget {
   final Color? textColr;
   final Color? color;
   final double? borderRadius;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,8 @@ class EventButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: textStyle1.copyWith(color: textColr ?? kWhite),
+            style: textStyle1.copyWith(
+                color: textColr ?? kWhite, fontSize: fontSize ?? 15.sp),
           ),
         ),
       ),

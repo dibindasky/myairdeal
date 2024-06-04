@@ -19,48 +19,50 @@ class ScreenNavbar extends StatelessWidget {
     List<Widget> tabItems = [
       const ScreenHomePage(),
       const ScreenBookings(),
-      const ScreenExplore(),
+      ScreenExplore(),
       const ScreenTalkToUsPage(),
       const ScreenAccountPage()
     ];
 
     return Scaffold(
       body: Obx(() => tabItems[Get.find<NavBarController>().bottomIndex.value]),
-      bottomNavigationBar: Obx(
-         () {
-          final selectedIndex=Get.find<NavBarController>().bottomIndex.value;
-          return CurvedNavigationBar(
-            backgroundColor: kGreyLightBackground,
-            items: [
-              CurvedNavigationBarItem(
-                child: Icon(selectedIndex==0?Iconsax.home1: Iconsax.home),
-                label: 'Home',
-              ),
-              CurvedNavigationBarItem(
-                child: Icon(selectedIndex==1?Icons.airplane_ticket:Iconsax.ticket ),
-                label: 'Bookings',
-              ),
-              CurvedNavigationBarItem(
-                child: Icon(selectedIndex==2?Icons.explore:Icons.explore_outlined),
-                label: 'Explore',
-              ),
-              CurvedNavigationBarItem(
-                child: Icon(selectedIndex==3?Iconsax.messages5:Iconsax.messages_1),
-                label: 'Talk to us',
-              ),
-              CurvedNavigationBarItem(
-                child: Icon(selectedIndex==4?Iconsax.profile_tick5:Iconsax.profile_tick),
-                label: 'Account',
-              ),
-            ],
-            onTap: (index) {
-              // Handle button tap
-              Get.find<NavBarController>().chageIndex(index);
-            },
-          );
-        }
-      ),
+      bottomNavigationBar: Obx(() {
+        final selectedIndex = Get.find<NavBarController>().bottomIndex.value;
+        return CurvedNavigationBar(
+          backgroundColor: kGreyLightBackground,
+          items: [
+            CurvedNavigationBarItem(
+              child: Icon(selectedIndex == 0 ? Iconsax.home1 : Iconsax.home),
+              label: 'Home',
+            ),
+            CurvedNavigationBarItem(
+              child: Icon(
+                  selectedIndex == 1 ? Icons.airplane_ticket : Iconsax.ticket),
+              label: 'Bookings',
+            ),
+            CurvedNavigationBarItem(
+              child: Icon(
+                  selectedIndex == 2 ? Icons.explore : Icons.explore_outlined),
+              label: 'Explore',
+            ),
+            CurvedNavigationBarItem(
+              child: Icon(
+                  selectedIndex == 3 ? Iconsax.messages5 : Iconsax.messages_1),
+              label: 'Talk to us',
+            ),
+            CurvedNavigationBarItem(
+              child: Icon(selectedIndex == 4
+                  ? Iconsax.profile_tick5
+                  : Iconsax.profile_tick),
+              label: 'Account',
+            ),
+          ],
+          onTap: (index) {
+            // Handle button tap
+            Get.find<NavBarController>().chageIndex(index);
+          },
+        );
+      }),
     );
   }
 }
-

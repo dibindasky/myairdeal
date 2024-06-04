@@ -5,7 +5,9 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/custom_appbar_shape.dart';
 
 class DetailAppBar extends StatelessWidget {
-  const DetailAppBar({super.key});
+  const DetailAppBar({super.key, this.heading});
+
+  final String? heading;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class DetailAppBar extends StatelessWidget {
                 ),
               ),
               Text(
-                'Review Flight Details',
+                heading ?? 'Review Flight Details',
                 style: textStyle1.copyWith(
                   color: kWhite,
                   fontWeight: FontWeight.w600,

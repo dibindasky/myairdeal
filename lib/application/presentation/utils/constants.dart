@@ -9,6 +9,7 @@ const kEmpty = SizedBox();
 
 final kHeight5 = SizedBox(height: 5.h);
 final kHeight10 = SizedBox(height: 10.h);
+final kHeight15 = SizedBox(height: 15.h);
 final kHeight20 = SizedBox(height: 20.h);
 final kHeight30 = SizedBox(height: 30.h);
 final kHeight40 = SizedBox(height: 40.h);
@@ -59,3 +60,13 @@ String flightDetailIcon = 'asset/image/flight_detail_image.png';
 // NetWork image
 String dummyPersonimage =
     'https://www.google.com/imgres?q=person%20image&imgurl=https%3A%2F%2Fengineering.unl.edu%2Fimages%2Fstaff%2FKayla-Person.jpg&imgrefurl=https%3A%2F%2Fengineering.unl.edu%2Fkayla-person%2F&docid=ap6GPr-70tOAyM&tbnid=r4kykPUijMfl_M&vet=12ahUKEwiil4-b2LeGAxX43TgGHQWLAfUQM3oECDQQAA..i&w=600&h=800&hcb=2&ved=2ahUKEwiil4-b2LeGAxX43TgGHQWLAfUQM3oECDQQAA';
+List<Map<String, String>> exploreData = [
+  {'image': 'asset/image/mumbai.png', 'city': 'Mumbai'},
+  {'image': 'asset/image/surat.jpeg', 'city': 'Surat'},
+  {'image': 'asset/image/chennai.jpeg', 'city': 'Chennai'},
+  {'image': 'asset/image/pune.jpeg', 'city': 'Pune'},
+  {'image': 'asset/image/mumbai.png', 'city': 'Mumbai'},
+  {'image': 'asset/image/surat.jpeg', 'city': 'Surat'},
+  {'image': 'asset/image/chennai.jpeg', 'city': 'Chennai'},
+  {'image': 'asset/image/pune.jpeg', 'city': 'Pune'},
+];

@@ -5,10 +5,11 @@ import 'package:myairdeal/application/presentation/screens/auth/sign_in/sign_in.
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/al_most_done.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_screen.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail/flight_detail.dart';
 import 'package:myairdeal/application/presentation/screens/navbar/navbar.dart';
 import 'package:myairdeal/application/presentation/screens/onboarding/onboarding_screen.dart';
 import 'package:myairdeal/application/presentation/screens/search/airport_search.dart';
-import 'package:myairdeal/application/presentation/screens/review_detail/review_detail.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail/review_detail.dart';
 import 'package:myairdeal/application/presentation/screens/splash/splash_screen.dart';
 
 class GetXRouterConfig {
@@ -46,12 +47,16 @@ class GetXRouterConfig {
       page: () => const ScreenAirportSearch(),
     ),
     GetPage(
-      name: Routes.flightDetail,
-      page: () => FlightDetailsScreen(),
+      name: Routes.reviewFlightDetail,
+      page: () => const ScreenReviewFlightDetails(),
     ),
     GetPage(
-      name: Routes.flightDetail,
-      page: () => ProfileEdit(),
+      name: Routes.reviewFlightDetail,
+      page: () => const ScreenFlightDetail(),
+    ),
+    GetPage(
+      name: Routes.reviewFlightDetail,
+      page: () => const ProfileEdit(),
     ),
   ];
 }

@@ -205,7 +205,7 @@ class FlightTicketCard extends StatelessWidget {
           bottom: 45,
           child: Container(
             decoration: const BoxDecoration(
-                color: kGrey,
+                color: kGreyLightBackground,
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(13),
                     bottomRight: Radius.circular(10))),
@@ -218,7 +218,7 @@ class FlightTicketCard extends StatelessWidget {
           right: 0,
           child: Container(
             decoration: const BoxDecoration(
-                color: kGrey,
+                color: kGreyLightBackground,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(13),
                     bottomLeft: Radius.circular(10))),

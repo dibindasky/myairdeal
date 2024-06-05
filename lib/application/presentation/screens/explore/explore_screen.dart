@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:myairdeal/application/controller/explore_controller.dart';
-import 'package:myairdeal/application/presentation/screens/explore/widgets/flight_ticket_card.dart';
-import 'package:myairdeal/application/presentation/screens/explore/widgets/page_view_image.dart';
+import 'package:myairdeal/application/presentation/widgets/flight_ticket_card.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 

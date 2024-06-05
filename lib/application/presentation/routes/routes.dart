@@ -9,4 +9,6 @@ class Routes {
   static const String airportSearch = '/airport_search_page';
   static const String flightDetail = '/flight_detail';
   static const String editProfile = '/edit_profile';
+  static const String security = '/security';
+  static const String notificationSetup = '/notification_setup';
 }

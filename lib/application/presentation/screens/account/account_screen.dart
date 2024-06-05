@@ -26,17 +26,19 @@ class ScreenAccountPage extends StatelessWidget {
                     SettingsTile(
                       title: 'Edit Profile',
                       onTap: () {
-                        Navigator.of(context).pushNamed(Routes.editProfile);
-                        //Get.toNamed(Routes.editProfile);
+                        Get.toNamed(Routes.editProfile);
                       },
                     ),
                     SettingsTile(
                       title: 'Security',
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(Routes.security);
+                      },
                     ),
                     SettingsTile(
                       title: 'Notifications',
                       onTap: () {
+                        Get.toNamed(Routes.notificationSetup);
                         // Handle Notifications tap
                       },
                     ),

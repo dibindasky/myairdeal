@@ -5,24 +5,26 @@ import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/validators.dart';
 
 class CustomTextField extends StatefulWidget {
-  const CustomTextField(
-      {super.key,
-      required this.hintText,
-      this.controller,
-      this.isBorder,
-      required this.fillColor,
-      this.textCapitalization,
-      this.focusNode,
-      this.showUnderline = false,
-      this.validate = Validate.none,
-      this.onTapOutside,
-      this.obscureText = false,
-      this.maxLines,
-      this.prefixIcon,
-      this.suffixIcon,
-      this.prefix,
-      this.clr,
-      this.password});
+  const CustomTextField({
+    super.key,
+    required this.hintText,
+    this.controller,
+    this.isBorder,
+    required this.fillColor,
+    this.textCapitalization,
+    this.focusNode,
+    this.showUnderline = false,
+    this.validate = Validate.none,
+    this.onTapOutside,
+    this.obscureText = false,
+    this.maxLines,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.prefix,
+    this.clr,
+    this.enabledBorder,
+    this.password,
+  });
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final Widget? prefix;
@@ -39,6 +41,7 @@ class CustomTextField extends StatefulWidget {
   final TextCapitalization? textCapitalization;
   final bool obscureText;
   final TextEditingController? password;
+  final InputBorder? enabledBorder;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -68,6 +71,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       textCapitalization: widget.textCapitalization ?? TextCapitalization.none,
       controller: widget.controller,
       decoration: InputDecoration(
+        enabledBorder: widget.enabledBorder,
         counter: const SizedBox.shrink(),
         contentPadding: const EdgeInsets.symmetric(horizontal: 15),
         suffixIcon: widget.obscureText
@@ -82,6 +86,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     : Icons.remove_red_eye))
             : widget.suffixIcon,
         prefix: widget.prefix,
+        prefixIcon: widget.prefixIcon,
         hintText: widget.hintText,
         border: widget.isBorder == null || widget.isBorder == true
             ? OutlineInputBorder(

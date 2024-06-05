@@ -8,7 +8,14 @@ import 'package:myairdeal/application/presentation/widgets/custom_appbar_shape.d
 class HomeHeaderSection extends StatelessWidget {
   const HomeHeaderSection({
     super.key,
+    required this.heading,
+    this.icon = true,
+    this.onTap,
   });
+
+  final String heading;
+  final bool icon;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -19,19 +26,20 @@ class HomeHeaderSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('My Air deals',
-                  style: textHeadStyle1.copyWith(color: kWhite)),
-              GestureDetector(
-                onTap: () {},
-                child: CircleAvatar(
-                  radius: 15.w,
-                  backgroundColor: kWhite,
-                  child: Icon(
-                    Iconsax.notification,
-                    size: 20.w,
-                  ),
-                ),
-              )
+              Text(heading, style: textHeadStyle1.copyWith(color: kWhite)),
+              icon
+                  ? GestureDetector(
+                      onTap: onTap,
+                      child: CircleAvatar(
+                        radius: 15.w,
+                        backgroundColor: kWhite,
+                        child: Icon(
+                          Iconsax.notification,
+                          size: 20.w,
+                        ),
+                      ),
+                    )
+                  : kHeight5
             ],
           ),
           kHeight20,

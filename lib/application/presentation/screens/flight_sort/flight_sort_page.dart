@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/flight_sort_controller.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/header_section_sort_screen.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -46,15 +47,17 @@ class ScreenFlightTicketSort extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SortingChipSortPage(
-                            text: 'Sort By: Best',
-                            selected: false,
-                            onTap: () {
-                              showModalBottomSheet(
-                                backgroundColor: knill,
-                                context: context,
-                                builder: (context) => SortFlightBottomSheet(),
-                              );
-                            }),
+                          text: 'Sort By: Best',
+                          selected: false,
+                          onTap: () {
+                            showModalBottomSheet(
+                              backgroundColor: knill,
+                              context: context,
+                              builder: (context) =>
+                                  const SortFlightBottomSheet(),
+                            );
+                          },
+                        ),
                         SortingChipSortPage(
                             text: 'Stops',
                             selected: false,
@@ -62,7 +65,8 @@ class ScreenFlightTicketSort extends StatelessWidget {
                               showModalBottomSheet(
                                 backgroundColor: knill,
                                 context: context,
-                                builder: (context) => StopsSortBottomSheet(),
+                                builder: (context) =>
+                                    const StopsSortBottomSheet(),
                               );
                             }),
                         SortingChipSortPage(
@@ -84,7 +88,8 @@ class ScreenFlightTicketSort extends StatelessWidget {
                     itemCount: 10,
                     separatorBuilder: (context, index) => kHeight5,
                     itemBuilder: (context, index) => CustomExpansionTile(
-                      child: const FlightTicketCard(),
+                      child: FlightTicketCard(
+                          onTap: () => Get.toNamed(Routes.flightDetail, id: 1)),
                       children: [
                         Container(
                           height: 100,
@@ -155,9 +160,7 @@ class SortFlightBottomSheet extends StatelessWidget {
 }
 
 class StopsSortBottomSheet extends StatelessWidget {
-  const StopsSortBottomSheet({
-    super.key,
-  });
+  const StopsSortBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {

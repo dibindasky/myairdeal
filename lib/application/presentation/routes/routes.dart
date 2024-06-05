@@ -12,6 +12,11 @@ class Routes {
   static const String homePage = '/home_page';
   static const String searchSortFlight = '/search_sort_flight';
   static const String editProfile = '/edit_profile';
+  static const String bookings = '/bookings';
+  static const String explore = '/explore';
+  static const String invoice = '/invoice';
   static const String security = '/security';
   static const String notificationSetup = '/notification_setup';
+  static const String account = '/account';
+  static const String travelerDetails = '/traveler_details';
 }

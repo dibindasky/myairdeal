@@ -1,4 +1,3 @@
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -38,10 +37,19 @@ class AirIndiaDetailCard extends StatelessWidget {
               ],
             ),
             kHeight10,
-            const DottedLine(
-              dashLength: 1,
-              dashGapLength: 2,
-              lineThickness: 2,
+            SizedBox(
+              height: 8.h,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(0),
+                itemCount: 500,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => Text(
+                  '_',
+                  style: textThinStyle1.copyWith(fontSize: 7.sp),
+                ),
+              ),
             ),
             kHeight20,
             Row(
@@ -147,10 +155,19 @@ class AirIndiaDetailCard extends StatelessWidget {
               ],
             ),
             kHeight20,
-            const DottedLine(
-              dashLength: 1.0,
-              dashGapLength: 2.0,
-              lineThickness: 2.0,
+            SizedBox(
+              height: 8.h,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(0),
+                itemCount: 500,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => Text(
+                  '_',
+                  style: textThinStyle1.copyWith(fontSize: 7.sp),
+                ),
+              ),
             ),
             kHeight10,
             RichText(

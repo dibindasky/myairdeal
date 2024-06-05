@@ -31,11 +31,14 @@ class ScreenAccountPage extends StatelessWidget {
                     ),
                     SettingsTile(
                       title: 'Security',
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(Routes.security);
+                      },
                     ),
                     SettingsTile(
                       title: 'Notifications',
                       onTap: () {
+                        Get.toNamed(Routes.notificationSetup);
                         // Handle Notifications tap
                       },
                     ),

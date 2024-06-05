@@ -1,6 +1,8 @@
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/screens/account/edit_profile.dart';
+import 'package:myairdeal/application/presentation/screens/account/notification_setup.dart';
+import 'package:myairdeal/application/presentation/screens/account/secuurity_screen.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_in/sign_in.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/al_most_done.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_screen.dart';
@@ -51,12 +53,20 @@ class GetXRouterConfig {
       page: () => const ScreenReviewFlightDetails(),
     ),
     GetPage(
-      name: Routes.reviewFlightDetail,
+      name: Routes.flightDetail,
       page: () => const ScreenFlightDetail(),
     ),
     GetPage(
-      name: Routes.reviewFlightDetail,
+      name: Routes.editProfile,
       page: () => const ProfileEdit(),
+    ),
+    GetPage(
+      name: Routes.security,
+      page: () => const SecurityScreen(),
+    ),
+    GetPage(
+      name: Routes.notificationSetup,
+      page: () => const NotificationSetup(),
     ),
   ];
 }

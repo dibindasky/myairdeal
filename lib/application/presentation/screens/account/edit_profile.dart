@@ -13,13 +13,13 @@ class ProfileEdit extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
+        child: ListView(
           children: [
             kHeight50,
             const CircleAvatar(
               radius: 50,
               backgroundImage: NetworkImage(
-                'https://www.google.com/url?sa=i&url=https%3A%2F%2Fstock.adobe.com%2Fsearch%3Fk%3Dperson&psig=AOvVaw0raiQQ43--C1-oRLUPQELR&ust=1717594071743000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOiA69eGwoYDFQAAAAAdAAAAABAE',
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5RSTnjCTlgRmF8wPPlCNrIsejlcjK-j037yiLr8C21tsSG3s-GRM5w4rc2Q&s',
               ),
             ),
             kHeight15,
@@ -39,7 +39,9 @@ class ProfileEdit extends StatelessWidget {
               iconImage: googleIcon,
               suffixImage: copyIcon,
             ),
-            const Spacer(),
+            kHeight50,
+            kHeight50,
+            kHeight30,
             EventButton(
               width: 380.w,
               text: 'Change Now',

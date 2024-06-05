@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/app_bar.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class NotificationSetup extends StatelessWidget {
@@ -10,7 +10,7 @@ class NotificationSetup extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const DetailAppBar(heading: 'Notification'),
+          const DetailAppBar(heading: 'Notification', id: 2),
           kHeight20,
           Container(
             margin: const EdgeInsets.all(10),
@@ -52,7 +52,7 @@ class NotificationSetup extends StatelessWidget {
                     Switch(
                       value: true,
                       onChanged: (value) {},
-                    )
+                    ),
                   ],
                 ),
                 const Divider(),
@@ -63,7 +63,7 @@ class NotificationSetup extends StatelessWidget {
                     Switch(
                       value: true,
                       onChanged: (value) {},
-                    )
+                    ),
                   ],
                 ),
               ],

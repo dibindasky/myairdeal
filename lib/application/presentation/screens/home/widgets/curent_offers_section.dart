@@ -23,7 +23,7 @@ class CurrentOffersSection extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 100.h,
+          height: 108.h,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             separatorBuilder: (context, index) => kWidth10,

@@ -5,7 +5,12 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 
 class FlightTicketCard extends StatelessWidget {
-  const FlightTicketCard({super.key});
+  const FlightTicketCard({
+    super.key,
+    required this.onTap,
+  });
+
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +18,10 @@ class FlightTicketCard extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: kWhite,
-            borderRadius: kRadius15,
-            boxShadow: [
-              BoxShadow(
-                color: kGrey.withOpacity(0.3),
-                spreadRadius: 3,
-                blurRadius: 5,
-              ),
-            ],
-          ),
+              color: kWhite,
+              borderRadius: kRadius15,
+              boxShadow: boxShadow3,
+              border: Border.all(width: .4)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -150,7 +149,7 @@ class FlightTicketCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 9.h,
+                height: 8.h,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
@@ -190,7 +189,7 @@ class FlightTicketCard extends StatelessWidget {
                           borderRadius: 29,
                           color: kIndigo,
                           text: 'Book Now',
-                          onTap: () {},
+                          onTap: onTap,
                         ),
                         kWidth10
                       ],
@@ -202,26 +201,30 @@ class FlightTicketCard extends StatelessWidget {
           ),
         ),
         Positioned(
+          left: .5,
           bottom: 45,
           child: Container(
             decoration: const BoxDecoration(
-                color: kGreyLightBackground,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(13),
-                    bottomRight: Radius.circular(10))),
+              color: kWhite,
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(13),
+                  bottomRight: Radius.circular(10)),
+            ),
             width: 20.w,
             height: 18.h,
           ),
         ),
         Positioned(
           bottom: 45,
-          right: 0,
+          right: 0.5,
           child: Container(
             decoration: const BoxDecoration(
-                color: kGreyLightBackground,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(13),
-                    bottomLeft: Radius.circular(10))),
+              color: kWhite,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(13),
+                bottomLeft: Radius.circular(10),
+              ),
+            ),
             width: 20.w,
             height: 18.h,
           ),

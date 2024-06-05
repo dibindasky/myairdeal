@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/app_bar.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class SecurityScreen extends StatelessWidget {
@@ -10,7 +10,7 @@ class SecurityScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const DetailAppBar(heading: 'Security'),
+          const DetailAppBar(heading: 'Security', id: 5),
           kHeight20,
           Container(
             margin: const EdgeInsets.all(10),

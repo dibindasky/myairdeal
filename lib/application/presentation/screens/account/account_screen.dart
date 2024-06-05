@@ -15,7 +15,11 @@ class ScreenAccountPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const DetailAppBar(heading: 'Account'),
+          const DetailAppBar(
+            heading: 'Account',
+            id: 5,
+            backButton: false,
+          ),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
@@ -26,20 +30,19 @@ class ScreenAccountPage extends StatelessWidget {
                     SettingsTile(
                       title: 'Edit Profile',
                       onTap: () {
-                        Get.toNamed(Routes.editProfile);
+                        Get.toNamed(Routes.editProfile, id: 5);
                       },
                     ),
                     SettingsTile(
                       title: 'Security',
                       onTap: () {
-                        Get.toNamed(Routes.security);
+                        Get.toNamed(Routes.security, id: 5);
                       },
                     ),
                     SettingsTile(
                       title: 'Notifications',
                       onTap: () {
-                        Get.toNamed(Routes.notificationSetup);
-                        // Handle Notifications tap
+                        Get.toNamed(Routes.notificationSetup, id: 5);
                       },
                     ),
                   ],
@@ -49,22 +52,16 @@ class ScreenAccountPage extends StatelessWidget {
                   tiles: [
                     SettingsTile(
                       title: 'Legal and Policies',
-                      onTap: () {
-                        // Handle Legal and Policies tap
-                      },
+                      onTap: () {},
                     ),
                     SettingsTile(
                       title: 'Help & Support',
-                      onTap: () {
-                        // Handle Help & Support tap
-                      },
+                      onTap: () {},
                     ),
                     SettingsTile(
                       title: 'Logout',
                       color: kRed,
-                      onTap: () {
-                        // Handle Logout tap
-                      },
+                      onTap: () {},
                     ),
                   ],
                 ),

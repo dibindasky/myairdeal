@@ -17,7 +17,7 @@ class ScreenHomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const HomeHeaderSection(),
+            const HomeHeaderSection(heading: 'My Air deals'),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
@@ -40,4 +40,3 @@ class ScreenHomePage extends StatelessWidget {
     );
   }
 }
-

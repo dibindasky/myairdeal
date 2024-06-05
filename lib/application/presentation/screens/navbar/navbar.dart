@@ -6,9 +6,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/navbar_controller.dart';
 import 'package:myairdeal/application/presentation/routes/indexed_stack/on_generate_route.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
-import 'package:myairdeal/application/presentation/screens/account/account_screen.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
-import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/talk_to_us_page.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 
@@ -23,14 +20,25 @@ class ScreenNavbar extends StatelessWidget {
         initialRoute: Routes.homePage,
         onGenerateRoute: RouteGenerator().onGenerateRoute,
       ),
-      const ScreenBookings(),
-      const ScreenExplore(),
+      Navigator(
+        key: Get.nestedKey(2),
+        initialRoute: Routes.bookings,
+        onGenerateRoute: RouteGenerator().onGenerateRoute,
+      ),
+      Navigator(
+        key: Get.nestedKey(3),
+        initialRoute: Routes.explore,
+        onGenerateRoute: RouteGenerator().onGenerateRoute,
+      ),
       const ScreenTalkToUsPage(),
-      const ScreenAccountPage()
+      Navigator(
+        key: Get.nestedKey(5),
+        initialRoute: Routes.account,
+        onGenerateRoute: RouteGenerator().onGenerateRoute,
+      ),
     ];
 
     return Scaffold(
-      // body: Obx(() => tabItems[Get.find<NavBarController>().bottomIndex.value]),
       body: Obx(() {
         return IndexedStack(
           index: Get.find<NavBarController>().bottomIndex.value,

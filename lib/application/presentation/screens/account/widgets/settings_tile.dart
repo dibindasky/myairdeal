@@ -22,7 +22,6 @@ class SettingsTile extends StatelessWidget {
       onTap: onTap,
       child: Card(
         color: kWhite,
-        // padding: EdgeInsets.symmetric(vertical: 16.0),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10),
           child: Row(

@@ -57,6 +57,9 @@ String faceBookIcon = 'asset/image/Facebook.png';
 String googleIcon = 'asset/image/Google.png';
 String tickIcon = 'asset/icon/tick_image.png';
 String flightDetailIcon = 'asset/image/flight_detail_image.png';
+String profileIcon = 'asset/image/profile.png';
+String smsIcon = 'asset/image/sms.png';
+String copyIcon = 'asset/image/link-2.png';
 
 // NetWork image
 String dummyPersonimage =

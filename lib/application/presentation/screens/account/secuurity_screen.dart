@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myairdeal/application/presentation/screens/review_detail/widgets/detail_appbar.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/app_bar.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class SecurityScreen extends StatelessWidget {

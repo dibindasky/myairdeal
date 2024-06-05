@@ -5,7 +5,9 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/custom_appbar_shape.dart';
 
 class DetailAppBar extends StatelessWidget {
-  const DetailAppBar({super.key});
+  const DetailAppBar({super.key,required this.heading});
+
+  final String heading;
 
   @override
   Widget build(BuildContext context) {

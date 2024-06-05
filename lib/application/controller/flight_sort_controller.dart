@@ -21,7 +21,11 @@ class FlightSortController extends GetxController {
   RxList<DateTime?> multiCityDepartureDate = <DateTime?>[DateTime.now()].obs;
   // variable to show between search and resent searchs
   RxBool search = false.obs;
+  RxString sortType = 'Best'.obs;
+  RxString stopType = 'Direct'.obs;
 
+  List<String> sortTypes = ['Best', 'Fastest', 'Cheapest'];
+  List<String> stopTypes = ['Direct', 'Max 1 Stop', 'Max 2 Stops'];
   List<String> tripTypes = ['One-way', 'Round-trip', 'Multi-city'];
   List<String> classTypes = [
     "Economy",
@@ -106,5 +110,13 @@ class FlightSortController extends GetxController {
 
   void changeSearch(bool value) {
     search.value = value;
+  }
+
+  void changeSortTypes(String type) {
+    sortType.value = type;
+  }
+
+  void changeStopTypes(String type) {
+    stopType.value = type;
   }
 }

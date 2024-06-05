@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/navbar_controller.dart';
+import 'package:myairdeal/application/presentation/routes/indexed_stack/on_generate_route.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/account/account_screen.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
-import 'package:myairdeal/application/presentation/screens/home/home_screen.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/talk_to_us_page.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 
@@ -17,15 +18,25 @@ class ScreenNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> tabItems = [
-      const ScreenHomePage(),
+      Navigator(
+        key: Get.nestedKey(1),
+        initialRoute: Routes.homePage,
+        onGenerateRoute: RouteGenerator().onGenerateRoute,
+      ),
       const ScreenBookings(),
-      ScreenExplore(),
+      const ScreenExplore(),
       const ScreenTalkToUsPage(),
       const ScreenAccountPage()
     ];
 
     return Scaffold(
-      body: Obx(() => tabItems[Get.find<NavBarController>().bottomIndex.value]),
+      // body: Obx(() => tabItems[Get.find<NavBarController>().bottomIndex.value]),
+      body: Obx(() {
+        return IndexedStack(
+          index: Get.find<NavBarController>().bottomIndex.value,
+          children: tabItems,
+        );
+      }),
       bottomNavigationBar: Obx(() {
         final selectedIndex = Get.find<NavBarController>().bottomIndex.value;
         return CurvedNavigationBar(
@@ -58,7 +69,6 @@ class ScreenNavbar extends StatelessWidget {
             ),
           ],
           onTap: (index) {
-            // Handle button tap
             Get.find<NavBarController>().chageIndex(index);
           },
         );

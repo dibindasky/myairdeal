@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/explore_controller.dart';
+import 'package:myairdeal/application/controller/explore/explore_controller.dart';
 import 'package:myairdeal/application/presentation/screens/explore/widgets/city_card.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 

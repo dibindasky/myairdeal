@@ -3,8 +3,11 @@ import 'dart:developer';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/sorting/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 
 class CalenderSectionSortHeader extends StatelessWidget {
   const CalenderSectionSortHeader({
@@ -13,67 +16,69 @@ class CalenderSectionSortHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<FlightSortController>();
+    
     return Positioned(
-      // alignment: Alignment.bottomCenter,
       top: 140.h,
       child: SizedBox(
-        // height: 50.h,
         width: MediaQuery.of(context).size.width,
-        child: EasyDateTimeLine(
-          dayProps: EasyDayProps(
-            disabledDayStyle: DayStyle(
+        child: Obx(() {
+          return EasyInfiniteDateTimeLine(
+            timeLineProps: const EasyTimeLineProps(
+              vPadding: 20,
+              hPadding: 5,
+            ),
+            firstDate: DateTime.now(),
+            lastDate: DateTime.now().add(const Duration(days: 31)),
+            focusDate: controller.selectedDate.value,
+            showTimelineHeader: false,
+            itemBuilder: (context, date, isSelected, onTap) => GestureDetector(
+              onTap: () {
+                onTap();
+                controller.selctDate(date);
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
                 decoration: BoxDecoration(
-                  color: kGrey,
                   borderRadius: kRadius15,
+                  color: isSelected ? kBluePrimary : kGrey,
                 ),
-                dayNumStyle: textHeadStyle1,
-                monthStrStyle: textStyle1,
-                dayStrStyle: textThinStyle1),
-            todayStyle: DayStyle(
-                decoration:
-                    BoxDecoration(borderRadius: kRadius15, color: kGrey),
-                dayNumStyle: textHeadStyle1,
-                monthStrStyle: textStyle1,
-                dayStrStyle: textThinStyle1),
-            todayHighlightColor: kWhite,
-            activeDayStyle: DayStyle(
-                decoration: BoxDecoration(
-                  color: kBluePrimary,
-                  borderRadius: kRadius15,
-                  border: Border.all(color: kBluePrimary),
+                padding: const EdgeInsets.all(5),
+                margin: EdgeInsets.symmetric(
+                    vertical: isSelected ? 0 : 5.h,
+                    horizontal: isSelected ? 0 : 3.w),
+                height: 70.h,
+                width: isSelected ? 60.w : 50.w,
+                child: FittedBox(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        DateFormating.getWeekDay(date.weekday),
+                        style: textThinStyle1.copyWith(
+                            color: isSelected ? kWhite : kBlack),
+                      ),
+                      Text(
+                        date.day.toString(),
+                        style: textHeadStyle1.copyWith(
+                            color: isSelected ? kWhite : kBlack),
+                      ),
+                      Text(
+                        '₹ 3100',
+                        style: textThinStyle1.copyWith(
+                            color: isSelected ? kWhite : kBlack),
+                      )
+                    ],
+                  ),
                 ),
-                dayNumStyle: textHeadStyle1.copyWith(color: kWhite),
-                monthStrStyle: textStyle1.copyWith(color: kWhite),
-                dayStrStyle: textThinStyle1.copyWith(color: kWhite)),
-            inactiveDayStyle: DayStyle(
-                decoration: BoxDecoration(
-                  color: kGrey,
-                  borderRadius: kRadius15,
-                ),
-                dayNumStyle: textHeadStyle1,
-                monthStrStyle: textStyle1,
-                dayStrStyle: textThinStyle1),
-          ),
-          timeLineProps: const EasyTimeLineProps(
-            vPadding: 20,
-            hPadding: 10,
-          ),
-          headerProps: const EasyHeaderProps(
-            showSelectedDate: false,
-            showHeader: false,
-          ),
-          activeColor: kBluePrimary,
-          initialDate: DateTime.now(),
-          itemBuilder: (context, date, isSelected, onTap) => Container(
-            height: 70.h,
-            width: 60.w,
-            color: kRed,
-          ),
-          // itemBuilder: (context, date, isSelected, onTap) => ,
-          onDateChange: (selectedDate) {
-            log(selectedDate.toString());
-          },
-        ),
+              ),
+            ),
+            onDateChange: (selectedDate) {
+              log(selectedDate.toString());
+              controller.selctDate(selectedDate);
+            },
+          );
+        }),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/sorting/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/screens/search/widgets/search_airport_tile.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';

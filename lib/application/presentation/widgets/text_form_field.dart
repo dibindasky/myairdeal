@@ -9,7 +9,7 @@ class CustomTextField extends StatefulWidget {
     super.key,
     required this.hintText,
     this.controller,
-    this.isBorder,
+    this.isBorder = false,
     required this.fillColor,
     this.textCapitalization,
     this.focusNode,
@@ -24,7 +24,9 @@ class CustomTextField extends StatefulWidget {
     this.clr,
     this.enabledBorder,
     this.password,
+    this.borderRadius = 8,
   });
+
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final Widget? prefix;
@@ -36,12 +38,13 @@ class CustomTextField extends StatefulWidget {
   final String hintText;
   final int? maxLines;
   final TextEditingController? controller;
-  final bool? isBorder;
+  final bool isBorder;
   final Color? fillColor;
   final TextCapitalization? textCapitalization;
   final bool obscureText;
   final TextEditingController? password;
   final InputBorder? enabledBorder;
+  final double borderRadius;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -71,6 +74,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       textCapitalization: widget.textCapitalization ?? TextCapitalization.none,
       controller: widget.controller,
       decoration: InputDecoration(
+        fillColor: widget.fillColor,
+        filled: true,
         enabledBorder: widget.enabledBorder,
         counter: const SizedBox.shrink(),
         contentPadding: const EdgeInsets.symmetric(horizontal: 15),
@@ -81,16 +86,19 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     showEye = !showEye;
                   });
                 },
-                icon: Icon(showEye
-                    ? Icons.remove_red_eye_outlined
-                    : Icons.remove_red_eye))
+                icon: Icon(
+                  showEye
+                      ? Icons.remove_red_eye_outlined
+                      : Icons.remove_red_eye,
+                ),
+              )
             : widget.suffixIcon,
         prefix: widget.prefix,
         prefixIcon: widget.prefixIcon,
         hintText: widget.hintText,
-        border: widget.isBorder == null || widget.isBorder == true
+        border: widget.isBorder
             ? OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: BorderRadius.circular(widget.borderRadius),
               )
             : null,
       ),

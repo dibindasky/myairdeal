@@ -4,6 +4,7 @@ import 'package:myairdeal/application/controller/explore_controller.dart';
 import 'package:myairdeal/application/controller/flight_sort_controller.dart';
 import 'package:myairdeal/application/controller/auth_controller.dart';
 import 'package:myairdeal/application/controller/navbar_controller.dart';
+import 'package:myairdeal/application/controller/traveler_controller.dart';
 
 class AllControllerBinding implements Bindings {
   @override
@@ -13,5 +14,6 @@ class AllControllerBinding implements Bindings {
     Get.lazyPut(() => AuthController());
     Get.lazyPut(() => ExpolreController());
     Get.lazyPut(() => BookingController());
+    Get.lazyPut(() => TravelerController());
   }
 }

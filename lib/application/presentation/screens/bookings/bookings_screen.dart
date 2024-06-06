@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/header_section.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card.dart';

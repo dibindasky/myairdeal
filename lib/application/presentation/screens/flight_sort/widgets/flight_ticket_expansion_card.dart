@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -30,14 +32,19 @@ class TicketDetailExpansionChild extends StatelessWidget {
               style: textThinStyle1.copyWith(fontWeight: FontWeight.w900),
             ),
             kWidth10,
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),
-              decoration:
-                  BoxDecoration(borderRadius: kRadius50, color: kBlueDark),
-              child: Text(
-                'Book Now',
-                style: textThinStyle1.copyWith(
-                    fontWeight: FontWeight.w900, color: kWhite),
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(Routes.flightDetail, id: 1);
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),
+                decoration:
+                    BoxDecoration(borderRadius: kRadius50, color: kBlueDark),
+                child: Text(
+                  'Book Now',
+                  style: textThinStyle1.copyWith(
+                      fontWeight: FontWeight.w900, color: kWhite),
+                ),
               ),
             )
           ],

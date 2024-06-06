@@ -20,7 +20,7 @@ class CityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 90.w,
+      width: 75.w,
       decoration: BoxDecoration(
         border: controller.selectedListviewIndex.value == index
             ? Border.all(width: 3, color: kBlack.withOpacity(.5))

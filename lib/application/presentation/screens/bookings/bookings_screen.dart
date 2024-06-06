@@ -32,7 +32,7 @@ class ScreenBookings extends StatelessWidget {
               itemCount: 5,
               shrinkWrap: true,
               itemBuilder: (context, index) => GestureDetector(
-                onTap: () => Get.toNamed(Routes.invoice, id: 2),
+                onTap: () => Get.toNamed(Routes.invoice),
                 child: FlightTicketCard(
                   onTap: () => Get.toNamed(Routes.flightDetail),
                 ),

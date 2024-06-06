@@ -22,7 +22,7 @@ class _ScreenReviewFlightDetailsState extends State<ScreenReviewFlightDetails> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const DetailAppBar(id: 1),
+            const DetailAppBar(),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(

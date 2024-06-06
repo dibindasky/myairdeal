@@ -17,7 +17,6 @@ class ScreenAccountPage extends StatelessWidget {
         children: [
           const DetailAppBar(
             heading: 'Account',
-            id: 5,
             backButton: false,
           ),
           Padding(
@@ -30,19 +29,19 @@ class ScreenAccountPage extends StatelessWidget {
                     SettingsTile(
                       title: 'Edit Profile',
                       onTap: () {
-                        Get.toNamed(Routes.editProfile, id: 5);
+                        Get.toNamed(Routes.editProfile);
                       },
                     ),
                     SettingsTile(
                       title: 'Security',
                       onTap: () {
-                        Get.toNamed(Routes.security, id: 5);
+                        Get.toNamed(Routes.security);
                       },
                     ),
                     SettingsTile(
                       title: 'Notifications',
                       onTap: () {
-                        Get.toNamed(Routes.notificationSetup, id: 5);
+                        Get.toNamed(Routes.notificationSetup);
                       },
                     ),
                   ],

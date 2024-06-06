@@ -7,6 +7,7 @@ import 'package:myairdeal/application/presentation/screens/auth/sign_in/sign_in.
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/al_most_done.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_screen.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:myairdeal/application/presentation/screens/bookings/widgets/invoice_dtail.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/flight_detail.dart';
 import 'package:myairdeal/application/presentation/screens/navbar/navbar.dart';
@@ -76,6 +77,10 @@ class GetXRouterConfig {
     GetPage(
       name: Routes.explore,
       page: () => const ScreenExplore(),
+    ),
+    GetPage(
+      name: Routes.invoice,
+      page: () => const InvoiceDetail(),
     ),
   ];
 }

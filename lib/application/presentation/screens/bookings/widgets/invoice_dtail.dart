@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -14,23 +15,30 @@ class InvoiceDetail extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          const DetailAppBar(id: 2, heading: 'Ticket booking '),
+          const DetailAppBar(heading: 'Ticket booking '),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 kHeight10,
+                Text(
+                  'Rate this trip',
+                  style: textHeadStyle1,
+                ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     ...List.generate(
                         5,
                         (index) => Row(
                               children: [
                                 kWidth10,
-                                const Icon(
+                                Icon(
                                   Icons.star,
                                   color: kGrey,
-                                  size: 50,
+                                  size: 30.h,
                                 ),
                               ],
                             )),

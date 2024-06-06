@@ -9,12 +9,12 @@ class DetailAppBar extends StatelessWidget {
   const DetailAppBar({
     super.key,
     this.heading,
-    required this.id,
+    this.id,
     this.backButton = true,
   });
 
   final String? heading;
-  final int id;
+  final int? id;
   final bool backButton;
 
   @override
@@ -29,7 +29,7 @@ class DetailAppBar extends StatelessWidget {
             children: [
               backButton
                   ? IconButton(
-                      onPressed: () => Get.back(id: id),
+                      onPressed: () => Get.back(),
                       icon: const Icon(
                         Icons.arrow_back_ios,
                         color: kWhite,

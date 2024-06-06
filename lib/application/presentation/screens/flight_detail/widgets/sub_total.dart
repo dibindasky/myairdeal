@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail/flight_detail.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 
@@ -31,7 +33,16 @@ class SubToTalContainer extends StatelessWidget {
             width: 15.w,
             child: Image.asset(tickIcon),
           ),
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              backgroundColor: kWhite,
+              showDragHandle: true,
+              enableDrag: true,
+              context: context,
+              builder: (context) => const ConfrimBottomSheet(),
+            );
+          },
         ),
       ],
     );

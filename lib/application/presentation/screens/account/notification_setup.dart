@@ -10,7 +10,7 @@ class NotificationSetup extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const DetailAppBar(heading: 'Notification', id: 2),
+          const DetailAppBar(heading: 'Notification',),
           kHeight20,
           Container(
             margin: const EdgeInsets.all(10),

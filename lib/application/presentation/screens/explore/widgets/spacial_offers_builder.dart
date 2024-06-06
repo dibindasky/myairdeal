@@ -23,7 +23,7 @@ class SpacialOffersBuilder extends StatelessWidget {
           shrinkWrap: true,
           itemBuilder: (context, index) => FlightTicketCard(
             onTap: () {
-              Get.toNamed(Routes.flightDetail, id: 1);
+              Get.toNamed(Routes.flightDetail);
             },
           ),
         ),

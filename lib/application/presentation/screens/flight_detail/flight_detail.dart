@@ -18,7 +18,7 @@ class ScreenFlightDetail extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const DetailAppBar(id: 1, heading: 'Flight Details'),
+          const DetailAppBar(heading: 'Flight Details'),
           kHeight15,
           Container(
             padding: const EdgeInsets.all(10),
@@ -361,14 +361,7 @@ class ScreenFlightDetail extends StatelessWidget {
                     EventButton(
                       text: 'Confirm',
                       onTap: () {
-                        showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: kWhite,
-                          showDragHandle: true,
-                          enableDrag: true,
-                          context: context,
-                          builder: (context) => const ConfrimBottomSheet(),
-                        );
+                       Get.toNamed(Routes.reviewFlightDetail,id:1);
                       },
                     ),
                     kHeight10,
@@ -478,7 +471,7 @@ class TravelerDetails extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          const DetailAppBar(id: 1, heading: 'Traveler Details'),
+          const DetailAppBar(heading: 'Traveler Details'),
           kHeight15,
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15),

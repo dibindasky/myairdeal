@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/custom_appbar_shape.dart';
 
 class DetailAppBar extends StatelessWidget {
-  const DetailAppBar({super.key, this.heading});
+  const DetailAppBar({
+    super.key,
+    this.heading,
+    required this.id,
+    this.backButton = true,
+  });
 
   final String? heading;
+  final int id;
+  final bool backButton;
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +27,16 @@ class DetailAppBar extends StatelessWidget {
           kHeight20,
           Row(
             children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: kWhite,
-                  size: 18,
-                ),
-              ),
+              backButton
+                  ? IconButton(
+                      onPressed: () => Get.back(id: id),
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: kWhite,
+                        size: 18,
+                      ),
+                    )
+                  : kEmpty,
               Text(
                 heading ?? 'Review Flight Details',
                 style: textStyle1.copyWith(

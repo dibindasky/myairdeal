@@ -11,7 +11,8 @@ class ScreenReviewFlightDetails extends StatefulWidget {
   const ScreenReviewFlightDetails({super.key});
 
   @override
-  _ScreenReviewFlightDetailsState createState() => _ScreenReviewFlightDetailsState();
+  _ScreenReviewFlightDetailsState createState() =>
+      _ScreenReviewFlightDetailsState();
 }
 
 class _ScreenReviewFlightDetailsState extends State<ScreenReviewFlightDetails> {
@@ -21,7 +22,7 @@ class _ScreenReviewFlightDetailsState extends State<ScreenReviewFlightDetails> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const DetailAppBar(),
+            const DetailAppBar(id: 1),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(

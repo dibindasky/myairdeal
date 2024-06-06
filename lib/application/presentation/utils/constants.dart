@@ -60,6 +60,7 @@ String flightDetailIcon = 'asset/image/flight_detail_image.png';
 String profileIcon = 'asset/image/profile.png';
 String smsIcon = 'asset/image/sms.png';
 String copyIcon = 'asset/image/link-2.png';
+String mumbai = 'asset/image/mumbai.png';
 
 // NetWork image
 String dummyPersonimage =

@@ -12,8 +12,7 @@ class LogInOrSignUpCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
       decoration: BoxDecoration(
           boxShadow: boxShadow1,
           borderRadius: kRadius15,
@@ -28,8 +27,7 @@ class LogInOrSignUpCard extends StatelessWidget {
                   children: [
                     Text('Login or Sign up', style: textStyle1),
                     kHeight5,
-                    Text(
-                        'Log in to get more details, and payment informations',
+                    Text('Log in to get more details, and payment informations',
                         style: textThinStyle1),
                   ],
                 ),
@@ -46,9 +44,10 @@ class LogInOrSignUpCard extends StatelessWidget {
             ],
           ),
           EventButton(
-              text: 'Sign Up',
-              onTap: () {},
-              width: double.infinity)
+            text: 'Sign Up',
+            onTap: () {},
+            width: double.infinity,
+          )
         ],
       ),
     );

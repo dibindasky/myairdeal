@@ -10,7 +10,7 @@ class SecurityScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const DetailAppBar(heading: 'Security'),
+          const DetailAppBar(heading: 'Security', id: 5),
           kHeight20,
           Container(
             margin: const EdgeInsets.all(10),

@@ -10,7 +10,7 @@ class NotificationSetup extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const DetailAppBar(heading: 'Notification'),
+          const DetailAppBar(heading: 'Notification', id: 2),
           kHeight20,
           Container(
             margin: const EdgeInsets.all(10),
@@ -52,7 +52,7 @@ class NotificationSetup extends StatelessWidget {
                     Switch(
                       value: true,
                       onChanged: (value) {},
-                    )
+                    ),
                   ],
                 ),
                 const Divider(),
@@ -63,7 +63,7 @@ class NotificationSetup extends StatelessWidget {
                     Switch(
                       value: true,
                       onChanged: (value) {},
-                    )
+                    ),
                   ],
                 ),
               ],

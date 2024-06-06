@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/header_section.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card.dart';
@@ -20,10 +21,12 @@ class ScreenBookings extends StatelessWidget {
             onTap: () {},
           ),
           kHeight20,
-          // const BookingsTab(),
+          const BookingsTab(),
+          kHeight5,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 13),
             child: ListView.separated(
+              padding: EdgeInsets.zero,
               separatorBuilder: (context, index) => kHeight10,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: 5,

@@ -24,6 +24,7 @@ class FlightSortController extends GetxController {
   RxString sortType = 'Best'.obs;
   RxString stopType = 'Direct'.obs;
   RxDouble durationSlider = .5.obs;
+  Rx<DateTime> selectedDate = DateTime.now().obs;
 
   List<String> sortAirlines = ['Indigo', 'Air-India', 'Asky Airlines'];
   RxList<String> sortAirlinesSelected = <String>[].obs;
@@ -168,5 +169,9 @@ class FlightSortController extends GetxController {
     } else {
       arrivesTimesSelected.add(value);
     }
+  }
+
+  void selctDate(DateTime value) {
+    selectedDate.value = value;
   }
 }

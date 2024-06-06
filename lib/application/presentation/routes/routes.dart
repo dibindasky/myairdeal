@@ -19,4 +19,5 @@ class Routes {
   static const String notificationSetup = '/notification_setup';
   static const String account = '/account';
   static const String travelerDetails = '/traveler_details';
+  static const String seatSelection = '/seat_selection_page';
 }

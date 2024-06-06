@@ -471,7 +471,7 @@ class TravelerDetails extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          const DetailAppBar(heading: 'Traveler Details'),
+          const DetailAppBar(heading: 'Traveler Details',id: 1),
           kHeight15,
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15),

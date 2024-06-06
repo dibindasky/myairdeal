@@ -21,11 +21,11 @@ class ScreenFlightTicketSort extends StatelessWidget {
             ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              itemCount: 10,
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              itemCount: 5,
               separatorBuilder: (context, index) => kHeight5,
               itemBuilder: (context, index) => CustomExpansionTile(
-                child: FlightTicketCard(onTap: (){},),
+                child: FlightTicketCard(onTap: () {}),
                 children: [
                   const TicketDetailExpansionChild(),
                   kHeight5,

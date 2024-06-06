@@ -28,6 +28,7 @@ class EventButton extends StatelessWidget {
   final Color? borderColor;
   final bool isBorder;
 
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

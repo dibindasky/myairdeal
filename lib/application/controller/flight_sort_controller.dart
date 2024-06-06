@@ -23,7 +23,22 @@ class FlightSortController extends GetxController {
   RxBool search = false.obs;
   RxString sortType = 'Best'.obs;
   RxString stopType = 'Direct'.obs;
+  RxDouble durationSlider = .5.obs;
 
+  List<String> sortAirlines = ['Indigo', 'Air-India', 'Asky Airlines'];
+  RxList<String> sortAirlinesSelected = <String>[].obs;
+  List<String> departureTimes = [
+    '00:00 to 05:59',
+    '00:01 to 05:59',
+    '00:03 to 05:59'
+  ];
+  RxList<String> departureTimesSelected = <String>[].obs;
+  List<String> arrivesTimes = [
+    '00:04 to 05:59',
+    '00:05 to 05:59',
+    '00:06 to 05:59'
+  ];
+  RxList<String> arrivesTimesSelected = <String>[].obs;
   List<String> sortTypes = ['Best', 'Fastest', 'Cheapest'];
   List<String> stopTypes = ['Direct', 'Max 1 Stop', 'Max 2 Stops'];
   List<String> tripTypes = ['One-way', 'Round-trip', 'Multi-city'];
@@ -118,5 +133,40 @@ class FlightSortController extends GetxController {
 
   void changeStopTypes(String type) {
     stopType.value = type;
+  }
+
+  void changeDurationSlider(double value) {
+    durationSlider.value = value;
+  }
+
+  void selectAirline(String value) {
+    if (sortAirlinesSelected.contains(value)) {
+      sortAirlinesSelected.remove(value);
+    } else {
+      sortAirlinesSelected.add(value);
+    }
+  }
+
+  void selectAllAirline(bool value) {
+    sortAirlinesSelected.clear();
+    if (value) {
+      sortAirlinesSelected.addAll(sortAirlines);
+    }
+  }
+
+  void selectDepartureTime(String value) {
+    if (departureTimesSelected.contains(value)) {
+      departureTimesSelected.remove(value);
+    } else {
+      departureTimesSelected.add(value);
+    }
+  }
+
+  void selectArrivalTime(String value) {
+    if (arrivesTimesSelected.contains(value)) {
+      arrivesTimesSelected.remove(value);
+    } else {
+      arrivesTimesSelected.add(value);
+    }
   }
 }

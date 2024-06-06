@@ -7,6 +7,7 @@ import 'package:myairdeal/application/presentation/screens/auth/sign_in/sign_in.
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/al_most_done.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_screen.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_screen.dart';
+import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/invoice_dtail.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/flight_detail.dart';
@@ -15,6 +16,7 @@ import 'package:myairdeal/application/presentation/screens/onboarding/onboarding
 import 'package:myairdeal/application/presentation/screens/payment/payement.dart';
 import 'package:myairdeal/application/presentation/screens/search/airport_search.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/review_detail.dart';
+import 'package:myairdeal/application/presentation/screens/seats/seats_selection.dart';
 import 'package:myairdeal/application/presentation/screens/splash/splash_screen.dart';
 
 class GetXRouterConfig {
@@ -77,7 +79,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.bookings,
-      page: () => const NotificationSetup(),
+      page: () => const ScreenBookings(),
     ),
     GetPage(
       name: Routes.explore,
@@ -86,6 +88,14 @@ class GetXRouterConfig {
     GetPage(
       name: Routes.invoice,
       page: () => const InvoiceDetail(),
+    ),
+    GetPage(
+      name: Routes.seatSelection,
+      page: () => const ScreenSeatSelection(),
+    ),
+    GetPage(
+      name: Routes.travelerDetails,
+      page: () => TravelerDetails(),
     ),
   ];
 }

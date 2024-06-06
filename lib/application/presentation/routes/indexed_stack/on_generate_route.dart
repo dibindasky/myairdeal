@@ -26,7 +26,7 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (ctx) => const ScreenReviewFlightDetails());
       case Routes.travelerDetails:
-        return MaterialPageRoute(builder: (ctx) => const TravelerDetails());
+        return MaterialPageRoute(builder: (ctx) => TravelerDetails());
       case Routes.account:
         return MaterialPageRoute(builder: (ctx) => const ScreenAccountPage());
       case Routes.editProfile:

@@ -650,7 +650,7 @@ class ReviewNameBottomSheet extends StatelessWidget {
         ),
       ),
       width: double.infinity,
-      height: 230.h,
+      height: 265.h,
       child: Column(
         children: [
           Container(
@@ -658,10 +658,10 @@ class ReviewNameBottomSheet extends StatelessWidget {
             width: 100.w,
             decoration: const BoxDecoration(color: kGrey),
           ),
+          kHeight15,
           Expanded(
             child: ListView(
               children: [
-                kHeight20,
                 Text('Review your name', style: textHeadStyle1),
                 kHeight10,
                 Text(
@@ -674,43 +674,57 @@ class ReviewNameBottomSheet extends StatelessWidget {
                   child: const ColoredBox(
                     color: kBlueLightShade,
                     child: Padding(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(12),
                       child: Row(
                         children: [
-                          Column(
-                            children: [
-                              Text('Passengers'),
-                              Text('Adult 1'),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Passengers'),
+                                Text('Adult 1'),
+                              ],
+                            ),
+                          ),
+                          VerticalDivider(
+                            width: 10,
+                            color: kBlueDark,
+                            thickness: 3,
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('First and Middle Name'),
+                                Text('Adult 1'),
+                              ],
+                            ),
                           ),
                           VerticalDivider(
                             color: kBlack,
-                            thickness: 1,
-                            width: 1,
+                            thickness: 3,
                           ),
-                          Column(
-                            children: [
-                              Text('First and Middle  Name'),
-                              Text('Adult 1'),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text('Mobile num'),
-                              Text('Adult 1'),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Mobile num'),
+                                Text('Adult 1'),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
                 ),
-                kHeight15,
+                kHeight20,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: EventButton(
+                        hieght: 38.h,
                         borderColor: kBlue,
                         textColr: kBlue,
                         color: kWhite,
@@ -724,6 +738,7 @@ class ReviewNameBottomSheet extends StatelessWidget {
                     kWidth20,
                     Expanded(
                       child: EventButton(
+                        hieght: 38.h,
                         text: 'Confirm',
                         onTap: () {},
                       ),

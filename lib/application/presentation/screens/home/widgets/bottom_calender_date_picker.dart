@@ -73,7 +73,7 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
     return SizedBox(
       width: double.infinity,
       // height: 500.h,
-      child: Column(
+      child: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 20, left: 20, right: 20),

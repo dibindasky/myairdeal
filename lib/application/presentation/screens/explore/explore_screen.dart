@@ -60,7 +60,7 @@ class FlightCard extends StatelessWidget {
                   children: [
                     Image.asset(
                       image,
-                      height: 290.h,
+                      height: 330.h,
                       width: double.infinity,
                       fit: BoxFit.cover,
                     ),
@@ -104,17 +104,17 @@ class FlightCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Positioned(
-                top: 16,
-                right: 16,
-                child: Row(
-                  children: [
-                    Icon(Icons.wb_sunny, color: kYellow),
-                    kWidth5,
-                    const Text('21.7 °C'),
-                  ],
-                ),
-              ),
+              // Positioned(
+              //   top: 16,
+              //   right: 16,
+              //   child: Row(
+              //     children: [
+              //       Icon(Icons.wb_sunny, color: kYellow),
+              //       kWidth5,
+              //       const Text('21.7 °C'),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ],

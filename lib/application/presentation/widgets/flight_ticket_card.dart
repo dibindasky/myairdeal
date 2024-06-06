@@ -168,7 +168,7 @@ class FlightTicketCard extends StatelessWidget {
                   bottomRight: Radius.circular(15),
                 ),
                 child: ColoredBox(
-                  color: kBlue,
+                  color: kBluePrimary,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: Row(

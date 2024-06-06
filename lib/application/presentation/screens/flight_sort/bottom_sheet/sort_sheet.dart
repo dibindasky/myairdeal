@@ -56,6 +56,7 @@ class SortFlightBottomSheet extends StatelessWidget {
                     text: 'Reset',
                     onTap: () {},
                     color: kWhite,
+                    borderColor: kBluePrimary,
                     textColr: kBluePrimary),
                 kWidth10,
                 EventButton(text: 'Done', onTap: () {})

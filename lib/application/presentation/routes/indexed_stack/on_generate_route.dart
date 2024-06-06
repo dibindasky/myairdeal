@@ -9,8 +9,10 @@ import 'package:myairdeal/application/presentation/screens/bookings/widgets/invo
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/flight_detail.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/review_detail.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail/traveler_detail.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/flight_Sort_page.dart';
 import 'package:myairdeal/application/presentation/screens/home/home_screen.dart';
+import 'package:myairdeal/application/presentation/screens/payment/payement.dart';
 
 class RouteGenerator {
   Route onGenerateRoute(RouteSettings settings) {
@@ -29,6 +31,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (ctx) => TravelerDetails());
       case Routes.account:
         return MaterialPageRoute(builder: (ctx) => const ScreenAccountPage());
+      case Routes.payment:
+        return MaterialPageRoute(
+            builder: (ctx) => const PaymentMethodsScreen());
       case Routes.editProfile:
         return MaterialPageRoute(builder: (ctx) => const ProfileEdit());
       case Routes.security:

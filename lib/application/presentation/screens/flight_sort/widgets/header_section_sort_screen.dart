@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -15,7 +12,7 @@ class SortScreenHeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
         AppBarCustomShape(
           child: Column(
@@ -28,8 +25,7 @@ class SortScreenHeaderSection extends StatelessWidget {
                     onTap: () {
                       Get.back(id: 1);
                     },
-                    child:
-                        const Icon(Icons.arrow_back_ios, color: kWhite),
+                    child: const Icon(Icons.arrow_back_ios, color: kWhite),
                   ),
                   Text(
                     '100 Results',
@@ -98,6 +94,7 @@ class SortScreenHeaderSection extends StatelessWidget {
             ],
           ),
         ),
+        
       ],
     );
   }

@@ -13,6 +13,7 @@ class EventButton extends StatelessWidget {
       this.textColr,
       this.color,
       this.borderRadius,
+      this.borderColor,
       this.fontSize});
 
   final String text;
@@ -23,6 +24,7 @@ class EventButton extends StatelessWidget {
   final Color? color;
   final double? borderRadius;
   final double? fontSize;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class EventButton extends StatelessWidget {
         width: width ?? 150.w,
         height: hieght ?? 35.h,
         decoration: BoxDecoration(
+            border: Border.all(color: borderColor ?? kBluePrimary),
             borderRadius: BorderRadius.all(
               Radius.circular(borderRadius ?? 9),
             ),

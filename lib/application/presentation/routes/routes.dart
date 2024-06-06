@@ -18,5 +18,6 @@ class Routes {
   static const String security = '/security';
   static const String notificationSetup = '/notification_setup';
   static const String account = '/account';
+  static const String payment = '/payment';
   static const String travelerDetails = '/traveler_details';
 }

@@ -6,8 +6,8 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 import '../../home/widgets/curent_offers_section.dart';
 
-class InvoiceDetail extends StatelessWidget {
-  const InvoiceDetail({super.key});
+class ScreenInvoiceDetail extends StatelessWidget {
+  const ScreenInvoiceDetail({super.key});
 
   @override
   Widget build(BuildContext context) {

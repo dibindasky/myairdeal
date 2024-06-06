@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
-class NotificationSetup extends StatelessWidget {
-  const NotificationSetup({super.key});
+class ScreenNotificationSetup extends StatelessWidget {
+  const ScreenNotificationSetup({super.key});
 
   @override
   Widget build(BuildContext context) {

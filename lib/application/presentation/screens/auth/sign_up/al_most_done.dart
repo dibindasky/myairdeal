@@ -6,10 +6,10 @@ import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 
-class AccountCreationForm extends StatelessWidget {
+class ScreenAccountCreationForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  AccountCreationForm({super.key});
+  ScreenAccountCreationForm({super.key});
 
   @override
   Widget build(BuildContext context) {

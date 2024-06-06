@@ -11,6 +11,7 @@ import 'package:myairdeal/application/presentation/screens/bookings/bookings_scr
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/invoice_dtail.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/flight_detail.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail/traveler_detail.dart';
 import 'package:myairdeal/application/presentation/screens/navbar/navbar.dart';
 import 'package:myairdeal/application/presentation/screens/onboarding/onboarding_screen.dart';
 import 'package:myairdeal/application/presentation/screens/payment/payement.dart';
@@ -27,23 +28,23 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.onboard,
-      page: () => const OnBoardScreen(),
+      page: () => const ScreenOnBoard(),
     ),
     GetPage(
       name: Routes.signUp,
-      page: () => SignUpScreen(),
+      page: () => ScreenSignUp(),
     ),
     GetPage(
       name: Routes.otp,
-      page: () => OTPScreen(),
+      page: () => ScreenOTP(),
     ),
     GetPage(
       name: Routes.signIn,
-      page: () => const SignInScreen(),
+      page: () => const ScreenSignIn(),
     ),
     GetPage(
       name: Routes.alMostDone,
-      page: () => AccountCreationForm(),
+      page: () => ScreenAccountCreationForm(),
     ),
     GetPage(
       name: Routes.bottomBar,
@@ -63,19 +64,19 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.editProfile,
-      page: () => const ProfileEdit(),
+      page: () => const ScreenProfileEdit(),
     ),
     GetPage(
       name: Routes.security,
-      page: () => const SecurityScreen(),
+      page: () => const ScreenSecurity(),
     ),
     GetPage(
       name: Routes.notificationSetup,
-      page: () => const NotificationSetup(),
+      page: () => const ScreenNotificationSetup(),
     ),
     GetPage(
       name: Routes.payment,
-      page: () => const PaymentMethodsScreen(),
+      page: () => const ScreenPaymentMethods(),
     ),
     GetPage(
       name: Routes.bookings,
@@ -87,7 +88,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.invoice,
-      page: () => const InvoiceDetail(),
+      page: () => const ScreenInvoiceDetail(),
     ),
     GetPage(
       name: Routes.seatSelection,
@@ -95,7 +96,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.travelerDetails,
-      page: () => TravelerDetails(),
+      page: () => ScreenTravelerDetails(),
     ),
   ];
 }

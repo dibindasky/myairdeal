@@ -28,24 +28,24 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (ctx) => const ScreenReviewFlightDetails());
       case Routes.travelerDetails:
-        return MaterialPageRoute(builder: (ctx) => TravelerDetails());
+        return MaterialPageRoute(builder: (ctx) => ScreenTravelerDetails());
       case Routes.account:
         return MaterialPageRoute(builder: (ctx) => const ScreenAccountPage());
       case Routes.payment:
         return MaterialPageRoute(
-            builder: (ctx) => const PaymentMethodsScreen());
+            builder: (ctx) => const ScreenPaymentMethods());
       case Routes.editProfile:
-        return MaterialPageRoute(builder: (ctx) => const ProfileEdit());
+        return MaterialPageRoute(builder: (ctx) => const ScreenProfileEdit());
       case Routes.security:
-        return MaterialPageRoute(builder: (ctx) => const SecurityScreen());
+        return MaterialPageRoute(builder: (ctx) => const ScreenSecurity());
       case Routes.bookings:
         return MaterialPageRoute(builder: (ctx) => const ScreenBookings());
       case Routes.invoice:
-        return MaterialPageRoute(builder: (ctx) => const InvoiceDetail());
+        return MaterialPageRoute(builder: (ctx) => const ScreenInvoiceDetail());
       case Routes.explore:
         return MaterialPageRoute(builder: (ctx) => const ScreenExplore());
       case Routes.notificationSetup:
-        return MaterialPageRoute(builder: (ctx) => const NotificationSetup());
+        return MaterialPageRoute(builder: (ctx) => const ScreenNotificationSetup());
       default:
         return _errorScreen();
     }

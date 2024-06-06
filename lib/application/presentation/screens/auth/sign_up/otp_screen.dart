@@ -10,8 +10,8 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 
-class OTPScreen extends StatelessWidget {
-  OTPScreen({super.key});
+class ScreenOTP extends StatelessWidget {
+  ScreenOTP({super.key});
   final loginController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {

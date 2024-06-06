@@ -6,8 +6,8 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card.dart';
 
-class PaymentMethodsScreen extends StatelessWidget {
-  const PaymentMethodsScreen({super.key});
+class ScreenPaymentMethods extends StatelessWidget {
+  const ScreenPaymentMethods({super.key});
 
   @override
   Widget build(BuildContext context) {

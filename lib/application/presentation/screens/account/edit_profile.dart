@@ -5,8 +5,8 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 
-class ProfileEdit extends StatelessWidget {
-  const ProfileEdit({super.key});
+class ScreenProfileEdit extends StatelessWidget {
+  const ScreenProfileEdit({super.key});
 
   @override
   Widget build(BuildContext context) {

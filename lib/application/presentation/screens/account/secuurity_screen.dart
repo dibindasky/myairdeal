@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
-class SecurityScreen extends StatelessWidget {
-  const SecurityScreen({super.key});
+class ScreenSecurity extends StatelessWidget {
+  const ScreenSecurity({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -9,8 +9,8 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 
-class SignUpScreen extends StatelessWidget {
-  SignUpScreen({super.key});
+class ScreenSignUp extends StatelessWidget {
+  ScreenSignUp({super.key});
   final loginContrller = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {

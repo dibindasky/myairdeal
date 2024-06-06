@@ -10,8 +10,8 @@ import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 
-class TravelerDetails extends StatelessWidget {
-  TravelerDetails({super.key});
+class ScreenTravelerDetails extends StatelessWidget {
+  ScreenTravelerDetails({super.key});
 
   final controller = Get.find<TravelerController>();
 

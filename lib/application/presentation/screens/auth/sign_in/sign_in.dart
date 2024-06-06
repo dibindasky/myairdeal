@@ -9,8 +9,8 @@ import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 
-class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+class ScreenSignIn extends StatelessWidget {
+  const ScreenSignIn({super.key});
 
   @override
   Widget build(BuildContext context) {

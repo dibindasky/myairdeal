@@ -7,8 +7,8 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 
-class OnBoardScreen extends StatelessWidget {
-  const OnBoardScreen({super.key});
+class ScreenOnBoard extends StatelessWidget {
+  const ScreenOnBoard({super.key});
 
   @override
   Widget build(BuildContext context) {

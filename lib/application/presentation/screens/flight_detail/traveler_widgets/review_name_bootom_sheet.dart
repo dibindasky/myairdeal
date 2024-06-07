@@ -107,7 +107,7 @@ class ReviewNameBottomSheet extends StatelessWidget {
                         hieght: 38.h,
                         text: 'Confirm',
                         onTap: () {
-                          Get.toNamed(Routes.payment, id: 1);
+                          Get.toNamed(Routes.seatSelection, id: 1);
                         },
                       ),
                     )

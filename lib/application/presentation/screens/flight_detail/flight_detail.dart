@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/confirm_bottomsheet.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -356,14 +358,7 @@ class ScreenFlightDetail extends StatelessWidget {
                     EventButton(
                       text: 'Confirm',
                       onTap: () {
-                        showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: kWhite,
-                          showDragHandle: true,
-                          enableDrag: true,
-                          context: context,
-                          builder: (context) => const ConfrimBottomSheet(),
-                        );
+                       Get.toNamed(Routes.reviewFlightDetail,id:1);
                       },
                     ),
                     kHeight10,

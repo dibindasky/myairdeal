@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card.dart';
@@ -15,7 +16,7 @@ class ScreenPaymentMethods extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          const DetailAppBar(heading: 'Payment'),
+          const DetailAppBar(heading: 'Payment', id: 1),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 13.w),
             child: Column(
@@ -31,17 +32,20 @@ class ScreenPaymentMethods extends StatelessWidget {
                 kHeight10,
                 const Text('Swipe left to set your default method'),
                 kHeight15,
-                const PaymentMethodCard(
-                  icon: Icons.credit_card,
-                  title: '***8976',
-                  subtitle: 'Get 10\$ Discount',
-                  isSelected: true,
-                ),
-                const PaymentMethodCard(
-                  icon: Icons.paypal,
-                  title: 'Paypal',
-                  subtitle: 'Get 10\$ Discount',
-                  isSelected: false,
+                Obx(
+                  () => Column(
+                    children: [
+                      ...List.generate(
+                        2,
+                        (index) => const PaymentMethodCard(
+                          icon: Icons.credit_card,
+                          title: '***8976',
+                          subtitle: 'Get 10\$ Discount',
+                          isSelected: true,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 const Divider(thickness: 1, height: 32),
                 const Text(
@@ -117,7 +121,7 @@ class PaymentMethodCard extends StatelessWidget {
       title: Text(title),
       subtitle: Text(subtitle),
       trailing: isSelected
-          ? const Icon(Icons.radio_button_checked, color: Colors.blue)
+          ? const Icon(Icons.radio_button_checked, color: kBlue)
           : const Icon(Icons.radio_button_unchecked),
       contentPadding: const EdgeInsets.symmetric(vertical: 8),
     );

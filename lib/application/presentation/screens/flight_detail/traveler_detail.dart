@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/traveller/traveler_controller.dart';
+import 'package:myairdeal/application/controller/home/traveler_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/traveler_widgets/review_name_bootom_sheet.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';

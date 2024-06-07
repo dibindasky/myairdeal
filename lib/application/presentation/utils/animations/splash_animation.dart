@@ -9,9 +9,9 @@ class AnimatedGrowShrinkContainer extends StatefulWidget {
   const AnimatedGrowShrinkContainer(
       {Key? key,
       required this.child,
-      this.milliseconds = 2000,
-      this.begin = 1.0,
-      this.end = 0.8})
+      this.milliseconds = 1500,
+      this.begin = 5.0,
+      this.end = 0.2})
       : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class _AnimatedGrowShrinkContainerState
     _scaleAnimation = Tween<double>(begin: widget.begin, end: widget.end)
         .animate(_controller)
       ..addListener(() => setState(() {}));
-    _controller.repeat(reverse: true);
+    _controller.forward();
   }
 
   @override

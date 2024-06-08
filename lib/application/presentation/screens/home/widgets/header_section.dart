@@ -6,15 +6,18 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/custom_appbar_shape.dart';
 
 class HomeHeaderSection extends StatelessWidget {
-  const HomeHeaderSection({
-    super.key,
-    required this.heading,
-    this.icon = true,
-    this.onTap,
-  });
+  const HomeHeaderSection(
+      {super.key,
+      required this.heading,
+      this.icon = true,
+      this.onTap,
+      this.backButton = false,
+      this.backButtonTap});
 
   final String heading;
   final bool icon;
+  final bool backButton;
+  final VoidCallback? backButtonTap;
   final Function()? onTap;
 
   @override
@@ -24,9 +27,14 @@ class HomeHeaderSection extends StatelessWidget {
         children: [
           kHeight30,
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              backButton
+                  ? IconButton(
+                      onPressed: backButtonTap,
+                      icon: const Icon(Icons.arrow_back_ios, color: kWhite))
+                  : kEmpty,
               Text(heading, style: textHeadStyle1.copyWith(color: kWhite)),
+              const Spacer(),
               icon
                   ? GestureDetector(
                       onTap: onTap,
@@ -65,7 +73,14 @@ class HomeHeaderSection extends StatelessWidget {
                       style: textThinStyle1.copyWith(
                         fontWeight: index == 0 ? FontWeight.w500 : null,
                       ),
-                    )
+                    ),
+                    index == 0
+                        ? Container(
+                            height: 2.h,
+                            color: kBlueDark,
+                            width: 30.w,
+                          )
+                        : kEmpty
                   ],
                 ),
               ),

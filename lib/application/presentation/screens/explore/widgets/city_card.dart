@@ -15,7 +15,7 @@ class CityCard extends StatelessWidget {
     required this.index,
   });
 
-  final controller = Get.find<ExpolreController>();
+  final controller = Get.find<ExploreController>();
 
   @override
   Widget build(BuildContext context) {

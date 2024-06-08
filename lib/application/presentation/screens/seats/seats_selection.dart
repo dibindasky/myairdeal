@@ -1,64 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/seat/seat_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 
-class ScreenSeatSelection extends StatefulWidget {
+class ScreenSeatSelection extends StatelessWidget {
   const ScreenSeatSelection({super.key});
 
   @override
-  _ScreenSeatSelectionState createState() => _ScreenSeatSelectionState();
-}
-
-class _ScreenSeatSelectionState extends State<ScreenSeatSelection> {
-  // seat states
-  static const String reserved = 'reserved';
-  static const String free = 'free';
-  static const String paid = 'paid';
-
-  // initial seat layout
-  List<List<String>> seatLayout = [
-    [reserved, free, free, free, free, reserved],
-    [free, free, reserved, reserved, free, free],
-    [free, free, free, free, free, free],
-    [reserved, free, free, free, free, reserved],
-    [free, free, reserved, reserved, free, free],
-    [free, free, free, free, free, free],
-    [free, reserved, reserved, reserved, reserved, free],
-    [free, free, reserved, reserved, free, free],
-    [free, free, free, free, free, free],
-    [free, free, free, free, free, free],
-    [free, reserved, reserved, reserved, reserved, free],
-    [free, free, free, free, free, paid],
-    [free, reserved, reserved, reserved, reserved, free],
-  ];
-
-  // selected seats
-  List<List<bool>> selectedSeats = [];
-
-  @override
-  void initState() {
-    super.initState();
-    selectedSeats = List.generate(
-      seatLayout.length,
-      (i) => List.generate(seatLayout[i].length, (j) => false),
-    );
-  }
-
-  void onSeatTap(int row, int col) {
-    if (seatLayout[row][col] == free) {
-      setState(() {
-        selectedSeats[row][col] = !selectedSeats[row][col];
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // final controller = Get.find<SeatController>();
     return Scaffold(
       body: Column(
         children: [
@@ -117,91 +72,101 @@ class _ScreenSeatSelectionState extends State<ScreenSeatSelection> {
                                 textThinStyle1.copyWith(color: kBluePrimary)),
                         Text('Economy',
                             style: textStyle1.copyWith(color: kBlueDark)),
-                        FittedBox(
-                          child: Column(
-                            children:
-                                List.generate(seatLayout.length + 1, (index) {
-                              int row = index - 1;
-                              return Row(
-                                children: List.generate(
-                                  seatLayout[row == -1 ? 0 : row].length + 1,
-                                  (index) {
-                                    int col = index - 1;
-                                    if (col == -1 || row == -1) {
-                                      return Container(
-                                        margin: EdgeInsets.only(
-                                            left: col == 3 ? 20 : 10.w,
-                                            right: col == 2 ? 20 : 10.w,
-                                            top: 5.h,
-                                            bottom: 5.h),
-                                        height: col == -1 && row == -1
-                                            ? 0
-                                            : row == -1
-                                                ? 15.h
-                                                : 35.h,
-                                        width: col == -1 && row == -1
-                                            ? 15.w
-                                            : col == -1
-                                                ? 15.w
-                                                : 30.w,
-                                        child: Center(
-                                          child: Text(row == -1 && col == -1
-                                              ? ''
-                                              : row == -1
-                                                  ? String.fromCharCode(
-                                                      65 + col)
-                                                  : col == -1
-                                                      ? '${row + 1}'
-                                                      : ''),
-                                        ),
-                                      );
-                                    } else {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          onSeatTap(row, col);
-                                        },
-                                        child: AnimatedContainer(
-                                          duration:
-                                              const Duration(milliseconds: 300),
+                        GetBuilder<SeatController>(
+                          builder: (controller) => FittedBox(
+                            child: Column(
+                              children: List.generate(
+                                  controller.seatLayout.length + 1, (index) {
+                                // set row as index -1 because need to display seat number and row in first index
+                                int row = index - 1;
+                                return Row(
+                                  children: List.generate(
+                                    controller.seatLayout[row == -1 ? 0 : row]
+                                            .length +
+                                        1,
+                                    (index) {
+                                      // set col as index -1 because need to display seat number and row in first index
+                                      int col = index - 1;
+                                      if (col == -1 || row == -1) {
+                                        // while row and column is in the first index show number and alphabet
+                                        return Container(
                                           margin: EdgeInsets.only(
-                                              left: col == 3 ? 20 : 10,
-                                              right: col == 2 ? 20 : 10,
-                                              top: 5,
-                                              bottom: 5),
-                                          height: 35.h,
-                                          width: 30.w,
-                                          decoration: BoxDecoration(
-                                            color: getSeatColor(row, col),
-                                            border: seatLayout[row][col] == free
-                                                ? Border.all(color: kBlueDark)
-                                                : null,
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                                              left: col == 3 ? 20 : 10.w,
+                                              right: col == 2 ? 20 : 10.w,
+                                              top: 5.h,
+                                              bottom: 5.h),
+                                          height: col == -1 && row == -1
+                                              ? 0
+                                              : row == -1
+                                                  ? 15.h
+                                                  : 35.h,
+                                          width: col == -1 && row == -1
+                                              ? 15.w
+                                              : col == -1
+                                                  ? 15.w
+                                                  : 30.w,
+                                          child: Center(
+                                            child: Text(row == -1 && col == -1
+                                                ? ''
+                                                : row == -1
+                                                    ? String.fromCharCode(
+                                                        65 + col)
+                                                    : col == -1
+                                                        ? '${row + 1}'
+                                                        : ''),
                                           ),
-                                          child: selectedSeats[row][col]
-                                              ? Center(
-                                                  child: Text(
-                                                    '${String.fromCharCode(65 + col)}${row + 1}',
-                                                    style: textThinStyle1
-                                                        .copyWith(
-                                                            color:
-                                                                selectedSeats[
-                                                                            row]
-                                                                        [col]
-                                                                    ? kWhite
-                                                                    : kBlack),
-                                                  ),
-                                                )
-                                              : null,
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                              );
-                            }),
-                          ),
-                        ),
+                                        );
+                                      } else {
+                                        // show seats
+                                        return GestureDetector(
+                                          onTap: () {
+                                            controller.onSeatTap(row, col);
+                                          },
+                                          child: AnimatedContainer(
+                                            duration: const Duration(
+                                                milliseconds: 300),
+                                            margin: EdgeInsets.only(
+                                                left: col == 3 ? 20 : 10,
+                                                right: col == 2 ? 20 : 10,
+                                                top: 5,
+                                                bottom: 5),
+                                            height: 35.h,
+                                            width: 30.w,
+                                            decoration: BoxDecoration(
+                                              color: controller.getSeatColor(
+                                                      row, col),
+                                              border: controller.seatLayout[row]
+                                                          [col] ==
+                                                      'free'
+                                                  ? Border.all(color: kBlueDark)
+                                                  : null,
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child:
+                                                controller.selectedSeats[row]
+                                                        [col]
+                                                    ? Center(
+                                                        child: Text(
+                                                          '${String.fromCharCode(65 + col)}${row + 1}',
+                                                          style: textThinStyle1.copyWith(
+                                                              color: controller
+                                                                          .selectedSeats[
+                                                                      row][col]
+                                                                  ? kWhite
+                                                                  : kBlack),
+                                                        ),
+                                                      )
+                                                    : null,
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                );
+                              }),
+                            ),
+                          ),),
                       ],
                     ),
                   ),
@@ -231,7 +196,7 @@ class _ScreenSeatSelectionState extends State<ScreenSeatSelection> {
                   ],
                 ),
                 EventIconButton(
-                  suffixIcon: Image.asset(tickIcon,height: 15.h),
+                    suffixIcon: Image.asset(tickIcon, height: 15.h),
                     text: 'Pay now',
                     onTap: () {
                       Get.toNamed(Routes.payment);
@@ -242,22 +207,5 @@ class _ScreenSeatSelectionState extends State<ScreenSeatSelection> {
         ],
       ),
     );
-  }
-
-  Color getSeatColor(int row, int col) {
-    if (selectedSeats[row][col]) {
-      return kGreen;
-    } else {
-      switch (seatLayout[row][col]) {
-        case reserved:
-          return kGrey;
-        case free:
-          return kWhite;
-        case paid:
-          return kBluePrimary;
-        default:
-          return kWhite;
-      }
-    }
   }
 }

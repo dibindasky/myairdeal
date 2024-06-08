@@ -10,10 +10,12 @@ class AppBarCustomShape extends StatelessWidget {
     required this.child,
     this.bottomgap,
     this.backGroundImage = true,
+    this.topGap,
     this.image,
   });
   final Widget child;
   final Widget? bottomgap;
+  final Widget? topGap;
   final bool backGroundImage;
   final String? image;
 
@@ -35,7 +37,7 @@ class AppBarCustomShape extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
               child: Column(
-                children: [child, bottomgap ?? kHeight50],
+                children: [topGap ?? kEmpty, child, bottomgap ?? kHeight30],
               ),
             ),
           ),

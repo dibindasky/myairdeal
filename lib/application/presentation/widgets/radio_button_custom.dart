@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -53,13 +54,14 @@ class CustomRadioButton extends StatelessWidget {
 class PaymentMethodSelection extends StatelessWidget {
   const PaymentMethodSelection({
     super.key,
-    required this.icon,
+    required this.image,
     required this.title,
     required this.subtitle,
     required this.isSelected,
+    required this.onTap,
   });
-
-  final IconData icon;
+  final VoidCallback onTap;
+  final String image;
   final String title;
   final String subtitle;
   final bool isSelected;
@@ -67,10 +69,22 @@ class PaymentMethodSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: ListTile(
-        leading: Icon(icon, size: 40),
+        leading: Image.asset(image, height: 20.h),
         title: Text(title),
-        subtitle: Text(subtitle),
+        subtitle: Row(
+          children: [
+            Image.asset(
+              'asset/icon/payment_agreee_tick.png',
+              height: 10.h,
+            ),
+            kWidth5,
+            Text(subtitle,
+                style:
+                    textThinStyle1.copyWith(color: kGreyDark, fontSize: 12.sp)),
+          ],
+        ),
         trailing: isSelected
             ? const Icon(Icons.radio_button_checked, color: kBlue)
             : const Icon(Icons.radio_button_unchecked),

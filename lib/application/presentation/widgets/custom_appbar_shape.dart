@@ -5,14 +5,17 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class AppBarCustomShape extends StatelessWidget {
-  const AppBarCustomShape(
-      {super.key,
-      required this.child,
-      this.bottomgap,
-      this.backGroundImage = true});
+  const AppBarCustomShape({
+    super.key,
+    required this.child,
+    this.bottomgap,
+    this.backGroundImage = true,
+    this.image,
+  });
   final Widget child;
   final Widget? bottomgap;
   final bool backGroundImage;
+  final String? image;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,8 @@ class AppBarCustomShape extends StatelessWidget {
             decoration: BoxDecoration(
                 color: kIndigo,
                 image: backGroundImage
-                    ? DecorationImage(image: AssetImage(imageGlobalMap))
+                    ? DecorationImage(
+                        image: AssetImage(image ?? imageGlobalMap))
                     : null),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),

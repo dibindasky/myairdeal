@@ -21,4 +21,5 @@ class Routes {
   static const String payment = '/payment';
   static const String travelerDetails = '/traveler_details';
   static const String seatSelection = '/seat_selection_page';
+  static const String paymentSucess = '/payment_sucess';
 }

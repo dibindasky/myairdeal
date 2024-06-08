@@ -33,8 +33,7 @@ class RouteGenerator {
       case Routes.account:
         return MaterialPageRoute(builder: (ctx) => const ScreenAccountPage());
       case Routes.payment:
-        return MaterialPageRoute(
-            builder: (ctx) => const ScreenPaymentMethods());
+        return MaterialPageRoute(builder: (ctx) => ScreenPaymentMethods());
       case Routes.editProfile:
         return MaterialPageRoute(builder: (ctx) => const ScreenProfileEdit());
       case Routes.security:
@@ -46,7 +45,8 @@ class RouteGenerator {
       case Routes.explore:
         return MaterialPageRoute(builder: (ctx) => const ScreenExplore());
       case Routes.notificationSetup:
-        return MaterialPageRoute(builder: (ctx) => const ScreenNotificationSetup());
+        return MaterialPageRoute(
+            builder: (ctx) => const ScreenNotificationSetup());
       case Routes.seatSelection:
         return MaterialPageRoute(builder: (ctx) => const ScreenSeatSelection());
       default:

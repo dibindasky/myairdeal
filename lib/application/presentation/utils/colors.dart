@@ -19,3 +19,4 @@ Color kYellow = Colors.yellow;
 const Color kYellowDark = Color.fromARGB(255, 250, 140, 8);
 Color kGreylowLight = const Color(0xFFF0F0F0);
 const Color kGreen = Colors.green; 
+Color kRedLight = const Color(0xFFFFA6A6);

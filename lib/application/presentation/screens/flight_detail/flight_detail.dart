@@ -371,4 +371,3 @@ class ScreenFlightDetail extends StatelessWidget {
     );
   }
 }
-

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/widgets/flight_ticket_card.dart';
+import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
 
 class SpacialOffersBuilder extends StatelessWidget {
   const SpacialOffersBuilder({super.key});

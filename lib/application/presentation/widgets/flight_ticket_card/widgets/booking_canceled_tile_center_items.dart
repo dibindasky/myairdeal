@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
-class BookingCancelledTabcenterItems extends StatelessWidget {
-  const BookingCancelledTabcenterItems({super.key});
+class BookingCombletedCancelledTabcenterItems extends StatelessWidget {
+  BookingCombletedCancelledTabcenterItems({super.key});
+
+  final bookingController = Get.find<BookingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +29,13 @@ class BookingCancelledTabcenterItems extends StatelessWidget {
                     fontSize: 5.sp, fontWeight: FontWeight.w800, color: kBlack),
               ),
             ),
-            // const DottedLineBuilder(),
-            const RotatedBox(
+            RotatedBox(
               quarterTurns: 1,
-              child: Icon(Icons.flight_rounded, size: 20, color: kRed),
+              child: Icon(Icons.flight_rounded,
+                  size: 20,
+                  color: bookingController.selectedBookingTab.value == 1
+                      ? kBlueDark
+                      : kRed),
             ),
             ...List.generate(
               4,
@@ -50,9 +57,15 @@ class BookingCancelledTabcenterItems extends StatelessWidget {
                     fontSize: 5.sp, fontWeight: FontWeight.w800, color: kBlack),
               ),
             ),
-            const RotatedBox(
+            RotatedBox(
               quarterTurns: 1,
-              child: Icon(Icons.flight_rounded, size: 20, color: kRed),
+              child: Icon(
+                Icons.flight_rounded,
+                size: 20,
+                color: bookingController.selectedBookingTab.value == 1
+                    ? kBlueDark
+                    : kRed,
+              ),
             ),
             ...List.generate(
               5,
@@ -80,9 +93,17 @@ class BookingCancelledTabcenterItems extends StatelessWidget {
             Row(
               children: [
                 Text('Ticket Price     : ',
-                    style: textStyle1.copyWith(fontSize: 11.sp, color: kRed)),
+                    style: textStyle1.copyWith(
+                        fontSize: 11.sp,
+                        color: bookingController.selectedBookingTab.value == 1
+                            ? kBlueDark
+                            : kRed)),
                 Text('? 3500',
-                    style: textStyle1.copyWith(fontSize: 11.sp, color: kRed))
+                    style: textStyle1.copyWith(
+                        fontSize: 11.sp,
+                        color: bookingController.selectedBookingTab.value == 1
+                            ? kBlueDark
+                            : kRed))
               ],
             ),
           ],

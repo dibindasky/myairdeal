@@ -4,6 +4,7 @@ import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/c
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/header_section_sort_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/sorting_section.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/tickets_list_sorted.dart';
+import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class ScreenFlightTicketSort extends StatelessWidget {
   const ScreenFlightTicketSort({super.key});
@@ -25,6 +26,7 @@ class ScreenFlightTicketSort extends StatelessWidget {
             ),
             const SortingChipsSection(),
             const TicketsListSorted(),
+            kHeight20
           ],
         ),
       ),

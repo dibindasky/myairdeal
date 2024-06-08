@@ -10,7 +10,7 @@ class CustomTextField extends StatefulWidget {
     required this.hintText,
     this.controller,
     this.isBorder = false,
-    required this.fillColor,
+    this.fillColor,
     this.textCapitalization,
     this.focusNode,
     this.showUnderline = false,

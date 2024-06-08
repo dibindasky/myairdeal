@@ -5,8 +5,8 @@ import 'package:myairdeal/application/controller/home/payment_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/screens/payment/widgets/add_method_card.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
@@ -29,7 +29,9 @@ class ScreenPaymentMethods extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 kHeight10,
-                FlightTicketCard(onTap: () {}),
+                FlightTicketCard(
+                    buttonOnTap: () {},
+                    flightTicketCardEnum: FlightTicketCardEnum.payment),
                 kHeight20,
                 Text(
                   'Digital payment method(s)',

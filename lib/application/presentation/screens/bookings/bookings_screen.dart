@@ -5,6 +5,7 @@ import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/header_section.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
 
 class ScreenBookings extends StatelessWidget {
@@ -25,7 +26,7 @@ class ScreenBookings extends StatelessWidget {
           const BookingsTab(),
           kHeight15,
           GetBuilder<BookingController>(builder: (controller) {
-            if (controller.selectedBookingTab.value == 0) {
+            if (controller.selectedBookingTab.value == 1) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 13),
                 child: ListView.separated(
@@ -37,12 +38,13 @@ class ScreenBookings extends StatelessWidget {
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () => Get.toNamed(Routes.invoice),
                     child: FlightTicketCard(
-                      onTap: () => Get.toNamed(Routes.flightDetail),
+                      flightTicketCardEnum: FlightTicketCardEnum.comblete,
+                      buttonOnTap: () => Get.toNamed(Routes.flightDetail),
                     ),
                   ),
                 ),
               );
-            } else if (controller.selectedBookingTab.value == 1) {
+            } else if (controller.selectedBookingTab.value == 2) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 13),
                 child: ListView.separated(
@@ -54,12 +56,13 @@ class ScreenBookings extends StatelessWidget {
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () => Get.toNamed(Routes.invoice),
                     child: FlightTicketCard(
-                      onTap: () => Get.toNamed(Routes.flightDetail),
+                      flightTicketCardEnum: FlightTicketCardEnum.cancelled,
+                      buttonOnTap: () => Get.toNamed(Routes.flightDetail),
                     ),
                   ),
                 ),
               );
-            } else {
+            } else if (controller.selectedBookingTab.value == 3) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 13),
                 child: ListView.separated(
@@ -71,11 +74,14 @@ class ScreenBookings extends StatelessWidget {
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () => Get.toNamed(Routes.invoice),
                     child: FlightTicketCard(
-                      onTap: () => Get.toNamed(Routes.flightDetail),
+                      flightTicketCardEnum: FlightTicketCardEnum.upcoming,
+                      buttonOnTap: () => Get.toNamed(Routes.flightDetail),
                     ),
                   ),
                 ),
               );
+            } else {
+              return kEmpty;
             }
           }),
         ],

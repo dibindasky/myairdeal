@@ -14,6 +14,7 @@ final kHeight20 = SizedBox(height: 20.h);
 final kHeight30 = SizedBox(height: 30.h);
 final kHeight40 = SizedBox(height: 40.h);
 final kHeight50 = SizedBox(height: 50.h);
+final kHeight7 = SizedBox(height: 7.h);
 
 final kWidth5 = SizedBox(width: 5.w);
 final kWidth10 = SizedBox(width: 10.w);

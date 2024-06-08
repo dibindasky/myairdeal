@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
 
 class SpacialOffersBuilder extends StatelessWidget {
@@ -22,7 +23,8 @@ class SpacialOffersBuilder extends StatelessWidget {
           itemCount: 2,
           shrinkWrap: true,
           itemBuilder: (context, index) => FlightTicketCard(
-            onTap: () {
+            flightTicketCardEnum: FlightTicketCardEnum.specialOffers,
+            buttonOnTap: () {
               Get.toNamed(Routes.flightDetail);
             },
           ),

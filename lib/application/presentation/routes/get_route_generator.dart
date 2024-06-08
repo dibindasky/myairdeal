@@ -8,7 +8,7 @@ import 'package:myairdeal/application/presentation/screens/auth/sign_up/al_most_
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_screen.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/widgets/invoice_dtail.dart';
+import 'package:myairdeal/application/presentation/screens/bookings/widgets/invoice_detail.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/flight_detail.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/traveler_detail.dart';

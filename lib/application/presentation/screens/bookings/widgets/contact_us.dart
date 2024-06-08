@@ -1,4 +1,3 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -165,12 +164,12 @@ class _ComplaintFormState extends State<ComplaintForm> {
           width: 60.w,
           text: 'Browse',
           onTap: () async {
-            FilePickerResult? result = await FilePicker.platform.pickFiles();
-            if (result != null) {
-              setState(() {
-                _fileName = result.files.single.name;
-              });
-            }
+            // FilePickerResult? result = await FilePicker.platform.pickFiles();
+            // if (result != null) {
+            //   setState(() {
+            //     _fileName = result.files.single.name;
+            //   });
+            // }
           },
         ),
         kHeight10

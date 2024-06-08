@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/header_section.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
 
@@ -31,7 +32,9 @@ class ScreenRefundPage extends StatelessWidget {
             padding: EdgeInsets.zero,
             itemCount: 2,
             separatorBuilder: (context, index) => kHeight5,
-            itemBuilder: (context, index) => FlightTicketCard(onTap: () {}),
+            itemBuilder: (context, index) => FlightTicketCard(
+                buttonOnTap: () {},
+                flightTicketCardEnum: FlightTicketCardEnum.homeSort),
           ),
         )),
         Container(

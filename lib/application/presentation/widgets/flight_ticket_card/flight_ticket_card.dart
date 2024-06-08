@@ -8,6 +8,7 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
+import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/booking_canceled_tile_center_items.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/card_side_items.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
@@ -25,14 +26,16 @@ class FlightTicketCard extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-              color: kWhite,
-              borderRadius: kRadius15,
-              boxShadow: boxShadow3,
-              border: Border.all(
-                  width: .7,
-                  color: bookingController.selectedBookingTab.value == 1
-                      ? kRedLight.withOpacity(.9)
-                      : kBlack)),
+            color: kWhite,
+            borderRadius: kRadius15,
+            boxShadow: boxShadow3,
+            border: Border.all(
+              width: .7,
+              color: bookingController.selectedBookingTab.value == 1
+                  ? kRedLight.withOpacity(.9)
+                  : kBlack,
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -47,7 +50,7 @@ class FlightTicketCard extends StatelessWidget {
                       from: 'Deport',
                       time: '07:00 AM',
                     ),
-                    bookingController.selectedBookingTab.value == 1
+                    bookingController.selectedBookingTab.value != 2
                         ? const BookingCancelledTabcenterItems()
                         : const NormalCenterItems(),
                     const CardSideItems(
@@ -85,14 +88,29 @@ class FlightTicketCard extends StatelessWidget {
                         : Row(
                             children: [
                               kWidth20,
-                              const Text(
+                              Text(
                                 'Ticket Price\nGHS 800',
                                 style: TextStyle(
                                   color: kWhite,
-                                  fontSize: 16,
+                                  fontSize: 12.sp,
                                 ),
                               ),
                               const Spacer(),
+                              bookingController.selectedBookingTab.value == 2
+                                  ? EventIconButton(
+                                      borderRadius: 60,
+                                      hieght: 25.h,
+                                      width: 30.w,
+                                      color: kIndigo,
+                                      prefixIcon: Icon(
+                                        Icons.share,
+                                        size: 17.w,
+                                        color: kWhite,
+                                      ),
+                                      onTap: () {},
+                                    )
+                                  : kEmpty,
+                              kWidth10,
                               EventButton(
                                 fontSize: 10.sp,
                                 width: 80.w,

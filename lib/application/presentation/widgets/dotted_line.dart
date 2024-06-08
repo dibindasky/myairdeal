@@ -6,14 +6,16 @@ class DottedLines extends StatelessWidget {
   const DottedLines({
     super.key,
     this.length = 500,
+    this.height = 8,
   });
 
   final int length;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 8.h,
+      height: height.h,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),

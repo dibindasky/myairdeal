@@ -60,7 +60,22 @@ class ScreenBookings extends StatelessWidget {
                 ),
               );
             } else {
-              return Container();
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 13),
+                child: ListView.separated(
+                  padding: EdgeInsets.zero,
+                  separatorBuilder: (context, index) => kHeight10,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 2,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () => Get.toNamed(Routes.invoice),
+                    child: FlightTicketCard(
+                      onTap: () => Get.toNamed(Routes.flightDetail),
+                    ),
+                  ),
+                ),
+              );
             }
           }),
         ],

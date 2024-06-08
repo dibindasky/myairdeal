@@ -10,7 +10,7 @@ class CityCardsBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ExpolreController>(builder: (controller) {
+    return GetBuilder<ExploreController>(builder: (controller) {
       return SizedBox(
         height: 80.h,
         child: ListView.separated(

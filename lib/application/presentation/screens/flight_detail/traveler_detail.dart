@@ -13,7 +13,7 @@ import 'package:myairdeal/application/presentation/widgets/text_form_field.dart'
 class ScreenTravelerDetails extends StatelessWidget {
   ScreenTravelerDetails({super.key});
 
-  final controller = Get.find<TravelerController>();
+  final controller = Get.find<TravellerController>();
 
   @override
   Widget build(BuildContext context) {

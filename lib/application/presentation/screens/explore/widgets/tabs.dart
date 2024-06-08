@@ -10,7 +10,7 @@ class Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ExpolreController>(
+    return GetBuilder<ExploreController>(
       builder: (controller) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

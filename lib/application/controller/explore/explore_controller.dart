@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class ExpolreController extends GetxController {
+class ExploreController extends GetxController {
   RxString selectedTab = 'Domestic'.obs;
 
   RxInt selectedListviewIndex = 0.obs;

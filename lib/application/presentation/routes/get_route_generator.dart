@@ -13,13 +13,25 @@ import 'package:myairdeal/application/presentation/screens/explore/explore_scree
 import 'package:myairdeal/application/presentation/screens/flight_detail/flight_detail.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/traveler_detail.dart';
 import 'package:myairdeal/application/presentation/screens/navbar/navbar.dart';
+import 'package:myairdeal/application/presentation/screens/notification/notification_screen.dart';
 import 'package:myairdeal/application/presentation/screens/onboarding/onboarding_screen.dart';
 import 'package:myairdeal/application/presentation/screens/payment/payement.dart';
 import 'package:myairdeal/application/presentation/screens/payment/sucess.dart';
+import 'package:myairdeal/application/presentation/screens/refunds/refund_screen.dart';
 import 'package:myairdeal/application/presentation/screens/search/airport_search.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/review_detail.dart';
 import 'package:myairdeal/application/presentation/screens/seats/seats_selection.dart';
 import 'package:myairdeal/application/presentation/screens/splash/splash_screen.dart';
+import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/chat_page.dart';
+import 'package:myairdeal/domain/core/binding/booking_controller_binding.dart';
+import 'package:myairdeal/domain/core/binding/explore_controller_binding.dart';
+import 'package:myairdeal/domain/core/binding/flight_sort_controller_binding.dart';
+import 'package:myairdeal/domain/core/binding/nav_bar_controller_binding.dart';
+import 'package:myairdeal/domain/core/binding/notification_binding.dart';
+import 'package:myairdeal/domain/core/binding/payment_controller_binding.dart';
+import 'package:myairdeal/domain/core/binding/seat_controller_binding.dart';
+import 'package:myairdeal/domain/core/binding/talk_to_us_controller_binding.dart';
+import 'package:myairdeal/domain/core/binding/traveller_controller_binding.dart';
 
 class GetXRouterConfig {
   static final List<GetPage> routes = [
@@ -48,6 +60,7 @@ class GetXRouterConfig {
       page: () => ScreenAccountCreationForm(),
     ),
     GetPage(
+      bindings: [NavBarBinding(), FlightSortBinding(), PaymentBinding()],
       name: Routes.bottomBar,
       page: () => const ScreenNavbar(),
     ),
@@ -80,10 +93,12 @@ class GetXRouterConfig {
       page: () => ScreenPaymentMethods(),
     ),
     GetPage(
+      binding: BookingBinding(),
       name: Routes.bookings,
       page: () => const ScreenBookings(),
     ),
     GetPage(
+      binding: ExploreBinding(),
       name: Routes.explore,
       page: () => const ScreenExplore(),
     ),
@@ -92,16 +107,33 @@ class GetXRouterConfig {
       page: () => const ScreenInvoiceDetail(),
     ),
     GetPage(
+      binding: SeatBinding(),
       name: Routes.seatSelection,
       page: () => const ScreenSeatSelection(),
     ),
     GetPage(
+      binding: TravellerBinding(),
       name: Routes.travelerDetails,
       page: () => ScreenTravelerDetails(),
     ),
     GetPage(
+      binding: PaymentBinding(),
       name: Routes.paymentSucess,
       page: () => const ScreenSuccessPage(),
+    ),
+    GetPage(
+      binding: TalkToUsBinding(),
+      name: Routes.chatPage,
+      page: () => const ScreenChatPage(),
+    ),
+    GetPage(
+      name: Routes.refundsPage,
+      page: () => const ScreenRefundPage(),
+    ),
+    GetPage(
+      binding: NotificationBinding(),
+      name: Routes.notificationPage,
+      page: () => const ScreenNotification(),
     ),
   ];
 }

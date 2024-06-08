@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/booking_qurreys_sections.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/curent_offers_section.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/header_section.dart';
@@ -17,7 +19,12 @@ class ScreenHomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const HomeHeaderSection(heading: 'My Air deals'),
+            HomeHeaderSection(
+              heading: 'My Air deals',
+              onTap: () {
+                Get.toNamed(Routes.notificationPage);
+              },
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -160,7 +162,12 @@ class _ScreenSeatSelectionState extends State<ScreenSeatSelection> {
                     Text('Total: ₹3620'),
                   ],
                 ),
-                EventButton(text: 'Pay now', onTap: () {})
+                EventButton(
+                  text: 'Pay now',
+                  onTap: () {
+                    Get.toNamed(Routes.payment);
+                  },
+                )
               ],
             ),
           ),

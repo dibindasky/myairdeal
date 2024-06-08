@@ -17,3 +17,4 @@ const Color kGreyLightBackground = Color.fromARGB(255, 238, 238, 238);
 Color kBlueThinLIght = const Color(0xFFE8F7FF);
 Color kYellow = Colors.yellow;
 Color kGreylowLight = const Color(0xFFF0F0F0);
+Color kRedLight = const Color(0xFFFFA6A6);

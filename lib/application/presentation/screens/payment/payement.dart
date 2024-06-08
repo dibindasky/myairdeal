@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/home/payment_controller.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
+import 'package:myairdeal/application/presentation/screens/payment/widgets/add_method_card.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/widgets/event_button.dart';
-import 'package:myairdeal/application/presentation/widgets/flight_ticket_card.dart';
+import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
+import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
+import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 
 class ScreenPaymentMethods extends StatelessWidget {
-  const ScreenPaymentMethods({super.key});
+  ScreenPaymentMethods({super.key});
+
+  final paymentController = Get.find<PaymentController>();
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,7 @@ class ScreenPaymentMethods extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          const DetailAppBar(heading: 'Payment', id: 1),
+          const DetailAppBar(heading: 'Payment'),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 13.w),
             child: Column(
@@ -25,45 +31,60 @@ class ScreenPaymentMethods extends StatelessWidget {
                 kHeight10,
                 FlightTicketCard(onTap: () {}),
                 kHeight20,
-                const Text(
+                Text(
                   'Digital payment method(s)',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: textHeadStyle1,
                 ),
                 kHeight10,
-                const Text('Swipe left to set your default method'),
-                kHeight15,
+                // Text(
+                //   'Swipe left to set your default method',
+                //   style: textThinStyle1.copyWith(color: kGreyDark),
+                // ),
+                //kHeight15,
                 Obx(
                   () => Column(
                     children: [
                       ...List.generate(
-                        2,
-                        (index) => const PaymentMethodCard(
-                          icon: Icons.credit_card,
-                          title: '***8976',
-                          subtitle: 'Get 10\$ Discount',
-                          isSelected: true,
-                        ),
+                        paymentController.itemMap.length,
+                        (index) {
+                          return Column(
+                            children: [
+                              PaymentMethodSelection(
+                                onTap: () => paymentController
+                                    .changePaymentMethod(index),
+                                image: paymentController.itemMap[index]
+                                    ['image']!,
+                                title: paymentController.itemMap[index]
+                                    ['title']!,
+                                subtitle: paymentController.itemMap[index]
+                                    ['subtitle']!,
+                                isSelected: index ==
+                                    paymentController
+                                        .selectedPayementmethod.value,
+                              ),
+                              index != paymentController.itemMap.length - 1
+                                  ? const Divider()
+                                  : kEmpty
+                            ],
+                          );
+                        },
                       )
                     ],
                   ),
                 ),
-                const Divider(thickness: 1, height: 32),
-                const Text(
-                  'Add methods',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const AddMethodCard(
+                kHeight10,
+                Text('Add methods', style: textHeadStyle1),
+                AddMethodCard(
                   icon: Icons.credit_card,
                   title: 'Credit or debit card',
                   subtitle: 'Visa, Mastercard, AMEX and JCB',
                 ),
-                const AddMethodCard(
+                AddMethodCard(
                   icon: Icons.account_balance,
                   title: 'Transfer',
                   subtitle:
                       'Transferring via ATM, Internet Banking & Mobile Banking',
                 ),
-                //  const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -83,9 +104,12 @@ class ScreenPaymentMethods extends StatelessWidget {
                     ),
                     kWidth20,
                     Expanded(
-                      child: EventButton(
+                      child: EventIconButton(
+                        suffixIcon: Image.asset(tickIcon, height: 13.h),
                         text: 'Proceed The Payment',
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(Routes.paymentSucess);
+                        },
                       ),
                     ),
                   ],
@@ -96,61 +120,6 @@ class ScreenPaymentMethods extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class PaymentMethodCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final bool isSelected;
-
-  const PaymentMethodCard({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.isSelected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon, size: 40),
-      title: Text(title),
-      subtitle: Text(subtitle),
-      trailing: isSelected
-          ? const Icon(Icons.radio_button_checked, color: kBlue)
-          : const Icon(Icons.radio_button_unchecked),
-      contentPadding: const EdgeInsets.symmetric(vertical: 8),
-    );
-  }
-}
-
-class AddMethodCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-
-  const AddMethodCard({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon, size: 40),
-      title: Text(title),
-      subtitle: Text(subtitle),
-      trailing: TextButton(
-        onPressed: () {},
-        child: const Text('Add'),
-      ),
-      contentPadding: const EdgeInsets.symmetric(vertical: 8),
     );
   }
 }

@@ -358,7 +358,7 @@ class ScreenFlightDetail extends StatelessWidget {
                     EventButton(
                       text: 'Confirm',
                       onTap: () {
-                       Get.toNamed(Routes.reviewFlightDetail,id:1);
+                        Get.toNamed(Routes.reviewFlightDetail, id: 1);
                       },
                     ),
                     kHeight10,
@@ -372,4 +372,3 @@ class ScreenFlightDetail extends StatelessWidget {
     );
   }
 }
-

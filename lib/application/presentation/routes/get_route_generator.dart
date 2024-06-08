@@ -15,6 +15,7 @@ import 'package:myairdeal/application/presentation/screens/flight_detail/travele
 import 'package:myairdeal/application/presentation/screens/navbar/navbar.dart';
 import 'package:myairdeal/application/presentation/screens/onboarding/onboarding_screen.dart';
 import 'package:myairdeal/application/presentation/screens/payment/payement.dart';
+import 'package:myairdeal/application/presentation/screens/payment/sucess.dart';
 import 'package:myairdeal/application/presentation/screens/search/airport_search.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/review_detail.dart';
 import 'package:myairdeal/application/presentation/screens/seats/seats_selection.dart';
@@ -76,7 +77,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.payment,
-      page: () => const ScreenPaymentMethods(),
+      page: () => ScreenPaymentMethods(),
     ),
     GetPage(
       name: Routes.bookings,
@@ -97,6 +98,10 @@ class GetXRouterConfig {
     GetPage(
       name: Routes.travelerDetails,
       page: () => ScreenTravelerDetails(),
+    ),
+    GetPage(
+      name: Routes.paymentSucess,
+      page: () => const ScreenSuccessPage(),
     ),
   ];
 }

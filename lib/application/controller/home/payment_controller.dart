@@ -4,8 +4,16 @@ class PaymentController extends GetxController {
   RxInt selectedPayementmethod = 0.obs;
 
   List<Map<String, String>> itemMap = [
-    {"image": "", "heading": "*********5343", "subHeading": "Get IOS Discount"},
-    {"image": "", "heading": "Paypal", "subHeading": "Get IOS Discount"},
+    {
+      "image": "asset/icon/payemt_number_icon.png",
+      "title": "*********5343",
+      "subtitle": "Get IOS Discount"
+    },
+    {
+      "image": "asset/icon/payment_paypal_icon.png",
+      "title": "Paypal",
+      "subtitle": "Get IOS Discount"
+    },
   ];
 
   changePaymentMethod(int id) {

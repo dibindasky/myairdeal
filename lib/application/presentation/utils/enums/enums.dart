@@ -10,3 +10,12 @@ enum Validate {
   ifValidWebsite,
   ifValidEmail,
 }
+
+enum FlightTicketCardEnum {
+  homeSort,
+  comblete,
+  cancelled,
+  upcoming,
+  specialOffers,
+  payment,
+}

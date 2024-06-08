@@ -28,17 +28,17 @@ class BookingsTab extends StatelessWidget {
                         topLeft: Radius.circular(24),
                         bottomLeft: Radius.circular(24)),
                     child: ColoredBox(
-                      color: controller.selectedBookingTab.value == 0
+                      color: controller.selectedBookingTab.value == 1
                           ? kBluePrimary
                           : kGreylowLight,
                       child: TextButton(
                         onPressed: () {
-                          controller.changeTab(0);
+                          controller.changeTab(1);
                         },
                         child: Text(
                           'Completed',
                           style: textThinStyle1.copyWith(
-                            color: controller.selectedBookingTab.value == 0
+                            color: controller.selectedBookingTab.value == 1
                                 ? kWhite
                                 : kGreyDark,
                           ),
@@ -54,17 +54,17 @@ class BookingsTab extends StatelessWidget {
                 ),
                 Expanded(
                   child: ColoredBox(
-                    color: controller.selectedBookingTab.value == 1
+                    color: controller.selectedBookingTab.value == 2
                         ? kBluePrimary
                         : kGreylowLight,
                     child: TextButton(
                       onPressed: () {
-                        controller.changeTab(1);
+                        controller.changeTab(2);
                       },
                       child: Text(
                         'Cancelled',
                         style: textThinStyle1.copyWith(
-                          color: controller.selectedBookingTab.value == 1
+                          color: controller.selectedBookingTab.value == 2
                               ? kWhite
                               : kGreyDark,
                         ),
@@ -83,17 +83,17 @@ class BookingsTab extends StatelessWidget {
                         topRight: Radius.circular(24),
                         bottomRight: Radius.circular(24)),
                     child: ColoredBox(
-                      color: controller.selectedBookingTab.value == 2
+                      color: controller.selectedBookingTab.value == 3
                           ? kBluePrimary
                           : kGreylowLight,
                       child: TextButton(
                         onPressed: () {
-                          controller.changeTab(2);
+                          controller.changeTab(3);
                         },
                         child: Text(
                           'Upcoming',
                           style: textThinStyle1.copyWith(
-                            color: controller.selectedBookingTab.value == 2
+                            color: controller.selectedBookingTab.value == 3
                                 ? kWhite
                                 : kGreyDark,
                           ),

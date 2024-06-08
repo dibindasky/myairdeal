@@ -22,27 +22,9 @@ class CustomRadioButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          !selected
-              ? const CircleAvatar(
-                  backgroundColor: kGrey,
-                  radius: 9,
-                  child: CircleAvatar(
-                    backgroundColor: kWhite,
-                    radius: 8,
-                  ),
-                )
-              : const CircleAvatar(
-                  backgroundColor: kBluePrimary,
-                  radius: 10,
-                  child: CircleAvatar(
-                    backgroundColor: kWhite,
-                    radius: 9,
-                    child: CircleAvatar(
-                      backgroundColor: kBluePrimary,
-                      radius: 8,
-                    ),
-                  ),
-                ),
+          selected
+              ? const Icon(Icons.radio_button_checked, color: kBlue)
+              : const Icon(Icons.radio_button_unchecked),
           kWidth5,
           Text(text),
         ],
@@ -54,16 +36,16 @@ class CustomRadioButton extends StatelessWidget {
 class PaymentMethodSelection extends StatelessWidget {
   const PaymentMethodSelection({
     super.key,
-    required this.image,
+    this.image,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     required this.isSelected,
     required this.onTap,
   });
   final VoidCallback onTap;
-  final String image;
+  final String? image;
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final bool isSelected;
 
   @override
@@ -71,20 +53,22 @@ class PaymentMethodSelection extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: ListTile(
-        leading: Image.asset(image, height: 20.h),
+        leading: image != null ? Image.asset(image!, height: 20.h) : null,
         title: Text(title),
-        subtitle: Row(
-          children: [
-            Image.asset(
-              'asset/icon/payment_agreee_tick.png',
-              height: 10.h,
-            ),
-            kWidth5,
-            Text(subtitle,
-                style:
-                    textThinStyle1.copyWith(color: kGreyDark, fontSize: 12.sp)),
-          ],
-        ),
+        subtitle: subtitle != null
+            ? Row(
+                children: [
+                  Image.asset(
+                    'asset/icon/payment_agreee_tick.png',
+                    height: 10.h,
+                  ),
+                  kWidth5,
+                  Text(subtitle!,
+                      style: textThinStyle1.copyWith(
+                          color: kGreyDark, fontSize: 12.sp)),
+                ],
+              )
+            : null,
         trailing: isSelected
             ? const Icon(Icons.radio_button_checked, color: kBlue)
             : const Icon(Icons.radio_button_unchecked),

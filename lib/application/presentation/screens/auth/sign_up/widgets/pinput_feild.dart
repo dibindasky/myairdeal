@@ -4,12 +4,13 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:pinput/pinput.dart';
 
 class PinEnterField extends StatelessWidget {
-  PinEnterField({super.key});
+  const PinEnterField({super.key});
+
   //final controller = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Pinput(
-      //controller: controller.otpNumber,
       onChanged: (value) {},
       onLongPress: () {
         print('onLongPress');

@@ -1,22 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
-import 'package:myairdeal/application/presentation/widgets/event_button.dart';
-import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/booking_canceled_tile_center_items.dart';
+import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/bottom_mini_container.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/card_side_items.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
 
 class FlightTicketCard extends StatelessWidget {
-  FlightTicketCard({super.key, required this.onTap});
+  FlightTicketCard({
+    super.key,
+    required this.buttonOnTap,
+    required this.flightTicketCardEnum,
+  });
 
-  final VoidCallback onTap;
+  final VoidCallback buttonOnTap;
+  final FlightTicketCardEnum flightTicketCardEnum;
 
   final bookingController = Get.find<BookingController>();
 
@@ -31,7 +34,7 @@ class FlightTicketCard extends StatelessWidget {
             boxShadow: boxShadow3,
             border: Border.all(
               width: .7,
-              color: bookingController.selectedBookingTab.value == 1
+              color: flightTicketCardEnum == FlightTicketCardEnum.cancelled
                   ? kRedLight.withOpacity(.9)
                   : kBlack,
             ),
@@ -50,8 +53,10 @@ class FlightTicketCard extends StatelessWidget {
                       from: 'Deport',
                       time: '07:00 AM',
                     ),
-                    bookingController.selectedBookingTab.value != 2
-                        ? const BookingCancelledTabcenterItems()
+                    (flightTicketCardEnum == FlightTicketCardEnum.comblete ||
+                            flightTicketCardEnum ==
+                                FlightTicketCardEnum.cancelled)
+                        ? BookingCombletedCancelledTabcenterItems()
                         : const NormalCenterItems(),
                     const CardSideItems(
                       place: 'KMS',
@@ -63,69 +68,9 @@ class FlightTicketCard extends StatelessWidget {
                 ),
               ),
               const DottedLines(),
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-                child: ColoredBox(
-                  color: (bookingController.selectedBookingTab.value == 1)
-                      ? kRedLight
-                      : kBluePrimary,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: (bookingController.selectedBookingTab.value == 1)
-                        ? Column(
-                            children: [
-                              kHeight10,
-                              Text(
-                                'Cancelled',
-                                style: textStyle1.copyWith(fontSize: 14.sp),
-                              ),
-                              kHeight10,
-                            ],
-                          )
-                        : Row(
-                            children: [
-                              kWidth20,
-                              Text(
-                                'Ticket Price\nGHS 800',
-                                style: TextStyle(
-                                  color: kWhite,
-                                  fontSize: 12.sp,
-                                ),
-                              ),
-                              const Spacer(),
-                              bookingController.selectedBookingTab.value == 2
-                                  ? EventIconButton(
-                                      borderRadius: 60,
-                                      hieght: 25.h,
-                                      width: 30.w,
-                                      color: kIndigo,
-                                      prefixIcon: Icon(
-                                        Icons.share,
-                                        size: 17.w,
-                                        color: kWhite,
-                                      ),
-                                      onTap: () {},
-                                    )
-                                  : kEmpty,
-                              kWidth10,
-                              EventButton(
-                                fontSize: 10.sp,
-                                width: 80.w,
-                                hieght: 25.h,
-                                borderRadius: 29,
-                                color: kIndigo,
-                                text: 'Book Now',
-                                onTap: onTap,
-                              ),
-                              kWidth10
-                            ],
-                          ),
-                  ),
-                ),
-              ),
+              BottomMiniContainer(
+                  flightTicketCardEnum: flightTicketCardEnum,
+                  buttonOnTap: buttonOnTap),
             ],
           ),
         ),

@@ -38,7 +38,7 @@ class ScreenOTP extends StatelessWidget {
               kHeight50,
               const Text('Enter OTP'),
               kHeight5,
-              PinEnterField(),
+              const PinEnterField(),
               kHeight30,
               kHeight50,
               EventButton(

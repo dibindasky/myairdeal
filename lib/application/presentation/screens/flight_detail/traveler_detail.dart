@@ -21,7 +21,7 @@ class ScreenTravelerDetails extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          const DetailAppBar(id: 1, heading: 'Traveler Details'),
+          const DetailAppBar(heading: 'Traveler Details'),
           kHeight15,
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -97,7 +97,7 @@ class ScreenTravelerDetails extends StatelessWidget {
                       borderSide: const BorderSide(width: .3),
                       borderRadius: kRadius15),
                   onTapOutside: () => FocusScope.of(context).unfocus(),
-                  hintText: 'Enter Your last Name',
+                  hintText: 'Enter Your Last Name',
                   fillColor: kWhite,
                 ),
                 kHeight15
@@ -105,7 +105,7 @@ class ScreenTravelerDetails extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding:  EdgeInsets.symmetric(horizontal: 15.w),
             width: double.infinity,
             margin: const EdgeInsets.all(14),
             decoration: BoxDecoration(
@@ -136,7 +136,7 @@ class ScreenTravelerDetails extends StatelessWidget {
                   hintText: '@gmail.com',
                   fillColor: kWhite,
                 ),
-                Text('Last Name', style: textThinStyle1),
+                Text('Phone Number', style: textThinStyle1),
                 kHeight5,
                 CustomTextField(
                   isBorder: true,
@@ -146,7 +146,7 @@ class ScreenTravelerDetails extends StatelessWidget {
                       borderSide: const BorderSide(width: .3),
                       borderRadius: kRadius15),
                   onTapOutside: () => FocusScope.of(context).unfocus(),
-                  hintText: 'Enter Your last Name',
+                  hintText: 'Enter Your Phone Number',
                   fillColor: kWhite,
                 ),
                 kHeight15

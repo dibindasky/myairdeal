@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/confirm_bottomsheet.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -16,7 +15,7 @@ class ScreenFlightDetail extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const DetailAppBar(id: 1, heading: 'Flight Details'),
+          const DetailAppBar(heading: 'Flight Details'),
           kHeight15,
           Container(
             padding: const EdgeInsets.all(10),
@@ -358,7 +357,7 @@ class ScreenFlightDetail extends StatelessWidget {
                     EventButton(
                       text: 'Confirm',
                       onTap: () {
-                        Get.toNamed(Routes.reviewFlightDetail, id: 1);
+                       Get.toNamed(Routes.reviewFlightDetail);
                       },
                     ),
                     kHeight10,

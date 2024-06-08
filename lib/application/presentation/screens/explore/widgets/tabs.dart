@@ -37,7 +37,7 @@ class Tabs extends StatelessWidget {
                           child: ColoredBox(
                             color: controller.selectedTab.value == 'Domestic'
                                 ? kBluePrimary
-                                : kGreylowLight,
+                                : kWhite,
                             child: TextButton(
                               onPressed: () {
                                 controller.changeTab('Domestic');
@@ -64,7 +64,7 @@ class Tabs extends StatelessWidget {
                             color:
                                 controller.selectedTab.value == 'International'
                                     ? kBluePrimary
-                                    : kGreylowLight,
+                                    : kWhite,
                             child: TextButton(
                               onPressed: () {
                                 controller.changeTab('International');

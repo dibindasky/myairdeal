@@ -16,13 +16,10 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
   String selectedPromo = '';
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: kWhite,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 4,
-      shadowColor: kBluePrimary,
+    return Container(
+      decoration: BoxDecoration(
+          color: kWhite, boxShadow: boxShadow1, borderRadius: kRadius15),
+      margin: EdgeInsets.symmetric(horizontal: 10.w),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -35,16 +32,26 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
             kHeight10,
             Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: CupertinoTextField(
+                    decoration: BoxDecoration(
+                        color: kBlueLightShade,
+                        borderRadius: kRadius5,
+                        border: const Border(
+                          bottom: BorderSide(color: kBluePrimary),
+                          top: BorderSide(color: kBluePrimary),
+                          left: BorderSide(color: kBluePrimary),
+                          right: BorderSide(color: kBluePrimary),
+                        )),
                     placeholder: 'Enter Promo code',
                   ),
                 ),
                 kWidth10,
                 EventButton(
-                  hieght: 27.h,
+                  hieght: 25.h,
                   width: 70.w,
                   text: 'Apply',
+                  fontSize: 12.sp,
                   onTap: () {},
                 )
               ],
@@ -63,9 +70,25 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
                     });
                   },
                   child: ListTile(
-                    title: Text(
-                      'YRICICICC Save ₹ 224',
-                      style: textThinStyle1,
+                    title: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: kYellowDark)),
+                              padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 3.h),
+                          child: Text(
+                            'YRICICICC',
+                            style: textThinStyle1,
+                          ),
+                        ),
+                        kWidth5,
+                        Text(
+                          'Save ₹ 224',
+                          style: textThinStyle1,
+                        ),
+                      ],
                     ),
                     subtitle: Text(
                       'Upto 13% OFF on using ICICI Bank Credit card',
@@ -74,8 +97,13 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
                     ),
                     leading: Radio<String>(
                       value: promoCode,
+                      activeColor: kBluePrimary,
                       groupValue: selectedPromo,
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        setState(() {
+                          selectedPromo = promoCode;
+                        });
+                      },
                     ),
                   ),
                 );

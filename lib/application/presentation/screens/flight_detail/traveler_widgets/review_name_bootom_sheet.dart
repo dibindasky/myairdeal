@@ -97,7 +97,7 @@ class ReviewNameBottomSheet extends StatelessWidget {
                         isBorder: true,
                         text: 'Edit Name',
                         onTap: () {
-                          Navigator.pop(context);
+                         Get.back();
                         },
                       ),
                     ),
@@ -107,8 +107,7 @@ class ReviewNameBottomSheet extends StatelessWidget {
                         hieght: 38.h,
                         text: 'Confirm',
                         onTap: () {
-                          Get.back();
-                          Get.toNamed(Routes.seatSelection, id: 1);
+                          Get.offNamed(Routes.seatSelection);
                         },
                       ),
                     )

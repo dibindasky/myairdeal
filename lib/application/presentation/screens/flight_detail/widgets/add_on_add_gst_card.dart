@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/read_more_text.dart';
+import 'package:myairdeal/application/presentation/widgets/read_more_text.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -18,12 +18,11 @@ class _AddOnesContainerState extends State<AddOnesContainer> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Card(
-          color: kWhite,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          elevation: 2,
+        kHeight20,
+        Container(
+          decoration: BoxDecoration(
+              color: kWhite, boxShadow: boxShadow1, borderRadius: kRadius15),
+          margin: EdgeInsets.symmetric(horizontal: 10.w),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -33,10 +32,15 @@ class _AddOnesContainerState extends State<AddOnesContainer> {
                   'Add Ons(Optional)',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
+                kHeight10,
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Checkbox(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      visualDensity:
+                          const VisualDensity(horizontal: -4, vertical: -4),
+                      activeColor: kBluePrimary,
                       value: addOnsChecked,
                       onChanged: (value) {
                         setState(() {
@@ -44,24 +48,28 @@ class _AddOnesContainerState extends State<AddOnesContainer> {
                         });
                       },
                     ),
+                    kWidth5,
+                    const CircleAvatar(
+                      backgroundImage:
+                          AssetImage('asset/image/myair_deal_logo.png'),
+                    ),
+                    kWidth10,
                     Expanded(
-                      child: ListTile(
-                        leading: const CircleAvatar(
-                          backgroundImage:
-                              AssetImage('asset/image/myair_deal_logo.png'),
-                        ),
-                        title: Text(
+                      child: Column(children: [
+                        Text(
                           'Take off: Giving children a second chance at life',
                           style: textHeadStyle1.copyWith(
-                              fontSize: 11.sp, fontWeight: FontWeight.w300),
+                              fontSize: 12.sp, fontWeight: FontWeight.w300),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        subtitle: const ReadMoreText(
+                        ReadMoreText(
+                          textStyle: textThinStyle1.copyWith(
+                              color: kGreyDark, fontSize: 11.sp),
                           text:
                               'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                        ),
-                      ),
+                        )
+                      ]),
                     ),
                   ],
                 ),
@@ -69,18 +77,19 @@ class _AddOnesContainerState extends State<AddOnesContainer> {
             ),
           ),
         ),
-        Card(
-          color: kWhite,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          elevation: 2,
-          child: ListTile(
-            title: const Text('Add GST Details (Optional)'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {},
-          ),
-        )
+        kHeight20,
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.w,vertical: 5.h),
+            decoration: BoxDecoration(
+                color: kWhite, boxShadow: boxShadow1, borderRadius: kRadius15),
+            margin: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Add GST Details (Optional)',style: textStyle1.copyWith(fontWeight: FontWeight.w800)),
+               const Icon(Icons.arrow_forward_ios,color: kBluePrimary),
+              ],
+            ))
       ],
     );
   }

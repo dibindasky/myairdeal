@@ -22,7 +22,7 @@ class _ScreenReviewFlightDetailsState extends State<ScreenReviewFlightDetails> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const DetailAppBar(),
+            const DetailAppBar(heading: 'Review Flight Details'),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -34,7 +34,8 @@ class _ScreenReviewFlightDetailsState extends State<ScreenReviewFlightDetails> {
                   const TravelInsurenceContainer(),
                   const AddOnesContainer(),
                   const Divider(),
-                  const SubToTalContainer()
+                  const SubToTalContainer(),
+                  kHeight15
                 ],
               ),
             ),

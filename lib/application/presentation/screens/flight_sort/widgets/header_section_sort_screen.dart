@@ -29,8 +29,9 @@ class SortScreenHeaderSection extends StatelessWidget {
                 ),
                 Text(
                   '100 Results',
-                  style:
-                      textThinStyle1.copyWith(fontSize: 20.sp, color: kWhite),
+                  style: textThinStyle1.copyWith(
+                      fontSize: 20.sp, color: kWhite),
+
                 ),
                 const Spacer(),
                 const Icon(Icons.edit_note_sharp, color: kWhite)

@@ -5,7 +5,7 @@ import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/widgets/event_button.dart';
+import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 
 class ScreenSeatSelection extends StatefulWidget {
   const ScreenSeatSelection({super.key});
@@ -15,25 +15,29 @@ class ScreenSeatSelection extends StatefulWidget {
 }
 
 class _ScreenSeatSelectionState extends State<ScreenSeatSelection> {
-  // Define the seat states
+  // seat states
   static const String reserved = 'reserved';
   static const String free = 'free';
   static const String paid = 'paid';
 
-  // Define the initial seat layout
+  // initial seat layout
   List<List<String>> seatLayout = [
     [reserved, free, free, free, free, reserved],
     [free, free, reserved, reserved, free, free],
     [free, free, free, free, free, free],
     [reserved, free, free, free, free, reserved],
-    [free, free, free, free, free, free],
     [free, free, reserved, reserved, free, free],
     [free, free, free, free, free, free],
     [free, reserved, reserved, reserved, reserved, free],
+    [free, free, reserved, reserved, free, free],
     [free, free, free, free, free, free],
+    [free, free, free, free, free, free],
+    [free, reserved, reserved, reserved, reserved, free],
+    [free, free, free, free, free, paid],
+    [free, reserved, reserved, reserved, reserved, free],
   ];
 
-  // Define the selected seats
+  // selected seats
   List<List<bool>> selectedSeats = [];
 
   @override
@@ -58,116 +62,180 @@ class _ScreenSeatSelectionState extends State<ScreenSeatSelection> {
     return Scaffold(
       body: Column(
         children: [
-          const DetailAppBar(heading: 'Seat selection', id: 1),
-          kHeight15,
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 15.w),
-            padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
-            decoration: BoxDecoration(
-                borderRadius: kRadius50,
-                border: Border.all(color: kBlueLight),
-                boxShadow: boxShadow3),
-            child: Row(
-              children: [
-                kWidth10,
-                CircleAvatar(radius: 8.w, backgroundColor: kGrey),
-                kWidth5,
-                const Text('Reserved'),
-                const Spacer(),
-                CircleAvatar(
-                  radius: 8.w,
-                  backgroundColor: kBluePrimary,
-                  child: CircleAvatar(
-                    radius: 7.w,
-                    backgroundColor: kGreyLight,
-                  ),
-                ),
-                kWidth5,
-                const Text('Free'),
-                const Spacer(),
-                CircleAvatar(radius: 8.w, backgroundColor: kBluePrimary),
-                kWidth5,
-                const Text('Paid'),
-                kWidth10
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
+          const DetailAppBar(heading: 'Seat selection'),
           Expanded(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 15.w),
-              decoration: BoxDecoration(
-                  boxShadow: boxShadow1,
-                  color: kWhite,
-                  borderRadius: kRadius10),
+            child: SingleChildScrollView(
               child: Column(
                 children: [
-                  kHeight10,
-                  Text('Class',
-                      style: textThinStyle1.copyWith(color: kBluePrimary)),
-                  Text('Economy', style: textStyle1.copyWith(color: kBlueDark)),
-                  Expanded(
-                    child: GridView.builder(
-                      padding: const EdgeInsets.all(20),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 6,
-                        childAspectRatio: 0.8,
-                        mainAxisSpacing: 5,
-                        crossAxisSpacing: 5,
-                      ),
-                      itemCount: seatLayout.length * seatLayout[0].length,
-                      itemBuilder: (context, index) {
-                        int row = index ~/ 6;
-                        int col = index % 6;
-                        return GestureDetector(
-                          onTap: () => onSeatTap(row, col),
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            decoration: BoxDecoration(
-                              color: getSeatColor(row, col),
-                              border: seatLayout[row][col] == free
-                                  ? Border.all(color: Colors.blue)
-                                  : null,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Center(
-                              child: Text(
-                                '${String.fromCharCode(65 + col)}${row + 1}',
-                                style: TextStyle(
-                                  color: selectedSeats[row][col]
-                                      ? Colors.white
-                                      : Colors.black,
-                                ),
-                              ),
-                            ),
+                  kHeight15,
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15.w),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
+                    decoration: BoxDecoration(
+                        borderRadius: kRadius50,
+                        border: Border.all(color: kBlueLight),
+                        boxShadow: boxShadow3),
+                    child: Row(
+                      children: [
+                        kWidth10,
+                        CircleAvatar(radius: 8.w, backgroundColor: kGrey),
+                        kWidth5,
+                        const Text('Reserved'),
+                        const Spacer(),
+                        CircleAvatar(
+                          radius: 8.w,
+                          backgroundColor: kBluePrimary,
+                          child: CircleAvatar(
+                            radius: 7.w,
+                            backgroundColor: kGreyLight,
                           ),
-                        );
-                      },
+                        ),
+                        kWidth5,
+                        const Text('Free'),
+                        const Spacer(),
+                        CircleAvatar(
+                            radius: 8.w, backgroundColor: kBluePrimary),
+                        kWidth5,
+                        const Text('Paid'),
+                        kWidth10
+                      ],
                     ),
                   ),
+                  const SizedBox(height: 20),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15.w),
+                    decoration: BoxDecoration(
+                        boxShadow: boxShadow1,
+                        color: kWhite,
+                        borderRadius: kRadius10),
+                    child: Column(
+                      children: [
+                        kHeight10,
+                        Text('Class',
+                            style:
+                                textThinStyle1.copyWith(color: kBluePrimary)),
+                        Text('Economy',
+                            style: textStyle1.copyWith(color: kBlueDark)),
+                        FittedBox(
+                          child: Column(
+                            children:
+                                List.generate(seatLayout.length + 1, (index) {
+                              int row = index - 1;
+                              return Row(
+                                children: List.generate(
+                                  seatLayout[row == -1 ? 0 : row].length + 1,
+                                  (index) {
+                                    int col = index - 1;
+                                    if (col == -1 || row == -1) {
+                                      return Container(
+                                        margin: EdgeInsets.only(
+                                            left: col == 3 ? 20 : 10.w,
+                                            right: col == 2 ? 20 : 10.w,
+                                            top: 5.h,
+                                            bottom: 5.h),
+                                        height: col == -1 && row == -1
+                                            ? 0
+                                            : row == -1
+                                                ? 15.h
+                                                : 35.h,
+                                        width: col == -1 && row == -1
+                                            ? 15.w
+                                            : col == -1
+                                                ? 15.w
+                                                : 30.w,
+                                        child: Center(
+                                          child: Text(row == -1 && col == -1
+                                              ? ''
+                                              : row == -1
+                                                  ? String.fromCharCode(
+                                                      65 + col)
+                                                  : col == -1
+                                                      ? '${row + 1}'
+                                                      : ''),
+                                        ),
+                                      );
+                                    } else {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          onSeatTap(row, col);
+                                        },
+                                        child: AnimatedContainer(
+                                          duration:
+                                              const Duration(milliseconds: 300),
+                                          margin: EdgeInsets.only(
+                                              left: col == 3 ? 20 : 10,
+                                              right: col == 2 ? 20 : 10,
+                                              top: 5,
+                                              bottom: 5),
+                                          height: 35.h,
+                                          width: 30.w,
+                                          decoration: BoxDecoration(
+                                            color: getSeatColor(row, col),
+                                            border: seatLayout[row][col] == free
+                                                ? Border.all(color: kBlueDark)
+                                                : null,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                          ),
+                                          child: selectedSeats[row][col]
+                                              ? Center(
+                                                  child: Text(
+                                                    '${String.fromCharCode(65 + col)}${row + 1}',
+                                                    style: textThinStyle1
+                                                        .copyWith(
+                                                            color:
+                                                                selectedSeats[
+                                                                            row]
+                                                                        [col]
+                                                                    ? kWhite
+                                                                    : kBlack),
+                                                  ),
+                                                )
+                                              : null,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  kHeight10
                 ],
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
+          Container(
+            decoration: BoxDecoration(color: kWhite, boxShadow: boxShadow1),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Add ons total: ₹120'),
-                    Text('Total: ₹3620'),
+                    Text('Add ons total', style: textThinStyle1),
+                    Text('₹120', style: textStyle1),
                   ],
                 ),
-                EventButton(
-                  text: 'Pay now',
-                  onTap: () {
-                    Get.toNamed(Routes.payment);
-                  },
-                )
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Total', style: textThinStyle1),
+                    Text('₹3620', style: textStyle1),
+                  ],
+                ),
+                EventIconButton(
+                  suffixIcon: Image.asset(tickIcon,height: 15.h),
+                    text: 'Pay now',
+                    onTap: () {
+                      Get.toNamed(Routes.payment);
+                    })
               ],
             ),
           ),
@@ -178,17 +246,17 @@ class _ScreenSeatSelectionState extends State<ScreenSeatSelection> {
 
   Color getSeatColor(int row, int col) {
     if (selectedSeats[row][col]) {
-      return Colors.blue;
+      return kGreen;
     } else {
       switch (seatLayout[row][col]) {
         case reserved:
-          return Colors.grey;
+          return kGrey;
         case free:
-          return Colors.white;
+          return kWhite;
         case paid:
-          return Colors.blue;
+          return kBluePrimary;
         default:
-          return Colors.white;
+          return kWhite;
       }
     }
   }

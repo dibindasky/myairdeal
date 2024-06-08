@@ -16,13 +16,9 @@ class _TravelInsurenceContainerState extends State<TravelInsurenceContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shadowColor: kBluePrimary,
-      color: kBlueThinLIght,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 1,
+    return Container(
+      decoration: BoxDecoration(color: kBlueLightShade,boxShadow: boxShadow1,borderRadius: kRadius15),
+      margin: EdgeInsets.symmetric(horizontal: 10.w),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Column(
@@ -38,10 +34,10 @@ class _TravelInsurenceContainerState extends State<TravelInsurenceContainer> {
               children: [
                 Text(
                   'Yes, Add Travel Insurance to my Trip',
-                  style: textStyle1.copyWith(
-                      fontWeight: FontWeight.w600, fontSize: 12.sp),
+                  style: textStyle1.copyWith(fontSize: 14.sp),
                 ),
                 Switch(
+                  activeColor: kBluePrimary,
                   value: addTravelInsurance,
                   onChanged: (value) {
                     setState(() {
@@ -53,7 +49,7 @@ class _TravelInsurenceContainerState extends State<TravelInsurenceContainer> {
             ),
             Text(
               'Rs.176 per passenger inclusive of 18% percent',
-              style: textHeadStyle1.copyWith(fontSize: 14.sp),
+              style: textThinStyle1,
             ),
             kHeight5,
             Text(

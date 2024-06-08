@@ -16,7 +16,7 @@ class ScreenPaymentMethods extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          const DetailAppBar(heading: 'Payment', id: 1),
+          const DetailAppBar(heading: 'Payment'),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 13.w),
             child: Column(

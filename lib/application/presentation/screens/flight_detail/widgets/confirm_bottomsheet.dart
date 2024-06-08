@@ -71,16 +71,14 @@ class ConfrimBottomSheet extends StatelessWidget {
             color: kWhite,
             text: 'Continue without Securing your Travel',
             onTap: () {
-              Navigator.pop(context);
-              Get.toNamed(Routes.travelerDetails, id: 1);
+              Get.offNamed(Routes.travelerDetails);
             },
           ),
           kHeight10,
           EventButton(
             text: 'Secure your Travel & Add travel insurance',
             onTap: () {
-              Navigator.pop(context);
-              Get.toNamed(Routes.travelerDetails, id: 1);
+              Get.offNamed(Routes.travelerDetails);
             },
           ),
           kHeight20,

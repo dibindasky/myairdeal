@@ -6,8 +6,10 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 class ReadMoreText extends StatefulWidget {
   final String text;
   final int trimLines;
+  final TextStyle? textStyle;
 
-  const ReadMoreText({super.key, required this.text, this.trimLines = 2});
+  const ReadMoreText(
+      {super.key, required this.text, this.trimLines = 2, this.textStyle});
 
   @override
   _ReadMoreTextState createState() => _ReadMoreTextState();
@@ -35,12 +37,11 @@ class _ReadMoreTextState extends State<ReadMoreText> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         isReadMore && isTextOverflowed
-            ? Text(
-                widget.text,
+            ? Text(widget.text,
                 maxLines: widget.trimLines,
                 overflow: TextOverflow.ellipsis,
-              )
-            : Text(widget.text),
+                style: widget.textStyle ?? textStyle1)
+            : Text(widget.text, style: widget.textStyle ?? textStyle1),
         isTextOverflowed
             ? InkWell(
                 onTap: () {

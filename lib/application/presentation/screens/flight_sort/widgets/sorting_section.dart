@@ -112,7 +112,7 @@ class SortingChipSortPage extends StatelessWidget {
         decoration: BoxDecoration(
             boxShadow: boxShadow3,
             border: Border.all(color: kBluePrimary),
-            borderRadius: kRadius10,
+            borderRadius: kRadius50,
             color: selected ? kBluePrimary : kWhite),
         child: Text(
           text,

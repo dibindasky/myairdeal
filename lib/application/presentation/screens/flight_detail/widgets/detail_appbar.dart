@@ -38,7 +38,7 @@ class DetailAppBar extends StatelessWidget {
                     )
                   : kEmpty,
               Text(
-                heading ?? 'Review Flight Details',
+                heading ?? '',
                 style: textStyle1.copyWith(
                   color: kWhite,
                   fontWeight: FontWeight.w600,

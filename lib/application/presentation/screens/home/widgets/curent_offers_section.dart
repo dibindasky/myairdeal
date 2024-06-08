@@ -11,17 +11,9 @@ class CurrentOffersSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Current offer', style: textHeadStyle1),
-            TextButton(
-                onPressed: () {},
-                child:
-                    Text('See all', style: textStyle1.copyWith(color: kBlack)))
-          ],
-        ),
+        Text('Current offer', style: textHeadStyle1),
         SizedBox(
           height: 108.h,
           child: ListView.separated(

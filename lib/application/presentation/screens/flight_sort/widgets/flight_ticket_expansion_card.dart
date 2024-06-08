@@ -34,7 +34,7 @@ class TicketDetailExpansionChild extends StatelessWidget {
             kWidth10,
             GestureDetector(
               onTap: () {
-                Get.toNamed(Routes.flightDetail, id: 1);
+                Get.toNamed(Routes.flightDetail);
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),

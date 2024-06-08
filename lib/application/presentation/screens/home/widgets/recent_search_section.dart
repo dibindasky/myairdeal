@@ -11,17 +11,11 @@ class RecentSearchSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Recent searches', style: textHeadStyle1),
-            TextButton(
-                onPressed: () {},
-                child:
-                    Text('See all', style: textStyle1.copyWith(color: kBlack)))
-          ],
-        ),
+        kHeight10,
+        Text('Recent searches', style: textHeadStyle1),
+        kHeight5,
         SizedBox(
           height: 90.h,
           child: ListView.separated(

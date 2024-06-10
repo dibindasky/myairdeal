@@ -49,6 +49,26 @@ class FlightSortController extends GetxController {
     "Business Class",
     "First Class"
   ];
+  //Travel Insurence Button
+  RxBool travelInsurence = false.obs;
+  RxInt selectedPromoCode = 300000.obs;
+  //Add ons
+  RxBool addOnsChecked = false.obs;
+
+  void changeAdds(bool value) {
+    addOnsChecked.value = value;
+    update();
+  }
+
+  void changePromoCode(int index) {
+    selectedPromoCode.value = index;
+    update();
+  }
+
+  void changeTravelValue(bool value) {
+    travelInsurence.value = value;
+    update();
+  }
 
   void changeAdultCount(bool inc) {
     if (!inc) {

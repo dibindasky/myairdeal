@@ -7,29 +7,32 @@ class CustomRadioButton extends StatelessWidget {
   const CustomRadioButton({
     super.key,
     required this.selected,
-    required this.text,
+    this.text,
     required this.onChanged,
     this.width,
+    this.child,
   });
   final SizedBox? width;
   final bool selected;
-  final String text;
+  final String? text;
   final VoidCallback onChanged;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onChanged,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          selected
-              ? const Icon(Icons.radio_button_checked, color: kBlue)
-              : const Icon(Icons.radio_button_unchecked),
-          width ?? kWidth5,
-          Text(text),
-        ],
-      ),
+      child: child ??
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              selected
+                  ? const Icon(Icons.radio_button_checked, color: kBlue)
+                  : const Icon(Icons.radio_button_unchecked),
+              width ?? kWidth5,
+              Text(text ?? ''),
+            ],
+          ),
     );
   }
 }

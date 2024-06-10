@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
-class TravelInsurenceContainer extends StatefulWidget {
+class TravelInsurenceContainer extends StatelessWidget {
   const TravelInsurenceContainer({super.key});
 
   @override
-  State<TravelInsurenceContainer> createState() =>
-      _TravelInsurenceContainerState();
-}
-
-class _TravelInsurenceContainerState extends State<TravelInsurenceContainer> {
-  bool addTravelInsurance = false;
-
-  @override
   Widget build(BuildContext context) {
+    final flightSortController = Get.find<FlightSortController>();
     return Container(
-      decoration: BoxDecoration(color: kBlueLightShade,boxShadow: boxShadow1,borderRadius: kRadius15),
+      decoration: BoxDecoration(
+          color: kBlueLightShade,
+          boxShadow: boxShadow1,
+          borderRadius: kRadius15),
       margin: EdgeInsets.symmetric(horizontal: 10.w),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -29,23 +27,26 @@ class _TravelInsurenceContainerState extends State<TravelInsurenceContainer> {
               style: textHeadStyle1.copyWith(
                   fontSize: 16, fontWeight: FontWeight.w800),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Yes, Add Travel Insurance to my Trip',
-                  style: textStyle1.copyWith(fontSize: 14.sp),
-                ),
-                Switch(
-                  activeColor: kBluePrimary,
-                  value: addTravelInsurance,
-                  onChanged: (value) {
-                    setState(() {
-                      addTravelInsurance = value;
-                    });
-                  },
-                ),
-              ],
+            FittedBox(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Yes, Add Travel Insurance to my Trip',
+                    style: textStyle1.copyWith(fontSize: 14.sp),
+                  ),
+                  Obx(
+                    () => Switch(
+                      activeTrackColor: kBlueDark,
+                      activeColor: kBluePrimary,
+                      value: flightSortController.travelInsurence.value,
+                      onChanged: (value) {
+                        flightSortController.changeTravelValue(value);
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
             Text(
               'Rs.176 per passenger inclusive of 18% percent',

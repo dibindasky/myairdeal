@@ -7,15 +7,9 @@ import 'package:myairdeal/application/presentation/screens/flight_detail/widgets
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'widgets/sub_total.dart';
 
-class ScreenReviewFlightDetails extends StatefulWidget {
+class ScreenReviewFlightDetails extends StatelessWidget {
   const ScreenReviewFlightDetails({super.key});
 
-  @override
-  _ScreenReviewFlightDetailsState createState() =>
-      _ScreenReviewFlightDetailsState();
-}
-
-class _ScreenReviewFlightDetailsState extends State<ScreenReviewFlightDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

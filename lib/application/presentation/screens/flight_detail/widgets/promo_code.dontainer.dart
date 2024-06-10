@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
+import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 
 class PromoCodeContainer extends StatefulWidget {
   const PromoCodeContainer({super.key});
@@ -16,6 +19,7 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
   String selectedPromo = '';
   @override
   Widget build(BuildContext context) {
+    final flightSortController = Get.find<FlightSortController>();
     return Container(
       decoration: BoxDecoration(
           color: kWhite, boxShadow: boxShadow1, borderRadius: kRadius15),
@@ -34,6 +38,7 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
               children: [
                 Expanded(
                   child: CupertinoTextField(
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
                     decoration: BoxDecoration(
                         color: kBlueLightShade,
                         borderRadius: kRadius5,
@@ -48,7 +53,7 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
                 ),
                 kWidth10,
                 EventButton(
-                  hieght: 25.h,
+                  hieght: 31.h,
                   width: 70.w,
                   text: 'Apply',
                   fontSize: 12.sp,
@@ -62,50 +67,47 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
               itemCount: 4,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                String promoCode = 'YRICICICC$index';
-                return InkWell(
-                  onTap: () {
-                    setState(() {
-                      selectedPromo = promoCode;
-                    });
+                return CustomRadioButton(
+                  onChanged: () {
+                    flightSortController.changePromoCode(index);
                   },
-                  child: ListTile(
-                    title: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: kYellowDark)),
-                              padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 3.h),
-                          child: Text(
-                            'YRICICICC',
+                  selected:
+                      flightSortController.selectedPromoCode.value == index,
+                  child:
+                      GetBuilder<FlightSortController>(builder: (controller) {
+                    return ListTile(
+                      title: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: kYellowDark)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 5.w, vertical: 3.h),
+                            child: Text(
+                              'YRICICICC',
+                              style: textThinStyle1,
+                            ),
+                          ),
+                          kWidth5,
+                          Text(
+                            'Save ₹ 224',
                             style: textThinStyle1,
                           ),
-                        ),
-                        kWidth5,
-                        Text(
-                          'Save ₹ 224',
-                          style: textThinStyle1,
-                        ),
-                      ],
-                    ),
-                    subtitle: Text(
-                      'Upto 13% OFF on using ICICI Bank Credit card',
-                      style: textThinStyle1.copyWith(
-                          color: kGreyDark, fontSize: 9.sp),
-                    ),
-                    leading: Radio<String>(
-                      value: promoCode,
-                      activeColor: kBluePrimary,
-                      groupValue: selectedPromo,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedPromo = promoCode;
-                        });
-                      },
-                    ),
-                  ),
+                        ],
+                      ),
+                      subtitle: Text(
+                        'Upto 13% OFF on using ICICI Bank Credit card',
+                        style: textThinStyle1.copyWith(
+                            color: kGreyDark, fontSize: 9.sp),
+                      ),
+                      leading: flightSortController.selectedPromoCode.value ==
+                              index
+                          ? const Icon(Icons.radio_button_checked, color: kBlue)
+                          : const Icon(Icons.radio_button_unchecked),
+                    );
+                  }),
                 );
               },
             ),

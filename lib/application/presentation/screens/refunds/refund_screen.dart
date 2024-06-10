@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/header_section.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -9,7 +10,9 @@ import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
 
 class ScreenRefundPage extends StatelessWidget {
-  const ScreenRefundPage({super.key});
+  ScreenRefundPage({super.key});
+
+  final bookingController = Get.find<BookingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +24,7 @@ class ScreenRefundPage extends StatelessWidget {
           icon: false,
           backButton: true,
           backButtonTap: () {
+            bookingController.changeSelectedYouCouldAlsoTab(-2);
             Get.back();
           },
         ),
@@ -33,8 +37,9 @@ class ScreenRefundPage extends StatelessWidget {
             itemCount: 2,
             separatorBuilder: (context, index) => kHeight5,
             itemBuilder: (context, index) => FlightTicketCard(
-                buttonOnTap: () {},
-                flightTicketCardEnum: FlightTicketCardEnum.homeSort),
+              buttonOnTap: () {},
+              flightTicketCardEnum: FlightTicketCardEnum.refundStatus,
+            ),
           ),
         )),
         Container(

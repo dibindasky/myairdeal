@@ -16,14 +16,11 @@ class ScreenTalkToUsPage extends StatelessWidget {
       body: Column(
         children: [
           AppBarCustomShape(
-            bottomgap: kHeight10,
+            bottomGap: kHeight20,
             topGap: kHeight30,
             backGroundImage: false,
             child: Row(
               children: [
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.arrow_back_ios, color: kWhite)),
                 Text('Talk to us',
                     style: textStyle1.copyWith(color: kWhite, fontSize: 16.sp)),
                 const Spacer(),
@@ -39,23 +36,27 @@ class ScreenTalkToUsPage extends StatelessWidget {
                 )
               ],
             ),
-          ),Spacer(),
+          ),
+          const Spacer(),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Column(
               children: [
-                Text('Let’s go somewhere', style: textHeadStyle1),
-                kHeight10,
+                Text('Let\'s go somewhere', style: textHeadStyle1),
+                kHeight15,
                 Text(
-                    'After book a trip you can manage orders and see E-ticket here.',
-                    style: textThinStyle1,textAlign: TextAlign.center,),
+                  'After book a trip you can manage orders and see E-ticket here.',
+                  style: textThinStyle1,
+                  textAlign: TextAlign.center,
+                ),
                 kHeight20,
                 EventButton(
-                    text: 'Chat with our team',
-                    onTap: () {
-                      Get.toNamed(Routes.chatPage);
-                    },
-                    width: double.infinity),
+                  text: 'Chat with our team',
+                  onTap: () {
+                    Get.toNamed(Routes.chatPage);
+                  },
+                  width: double.infinity,
+                ),
               ],
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/chat_bubble.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -11,17 +12,19 @@ class ScreenChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bookingController = Get.find<BookingController>();
     return Scaffold(
       body: Column(
         children: [
           AppBarCustomShape(
-            bottomgap: kHeight10,
+            bottomGap: kHeight10,
             topGap: kHeight30,
             backGroundImage: false,
             child: Row(
               children: [
                 IconButton(
                     onPressed: () {
+                      bookingController.changeSelectedYouCouldAlsoTab(-2);
                       Get.back();
                     },
                     icon: const Icon(Icons.arrow_back_ios, color: kWhite)),
@@ -50,7 +53,8 @@ class ScreenChatPage extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) => ChatBubble(
                   isSender: index % 2 == 0,
-                  text: 'Yes.. i am alwase free .. can we meet',
+                  text:
+                      'Yes.. i am alwase free .. can we meet Yes.. i am alwase free .. can we meet Yes.. i am alwase free .. can we meet',
                   time: '12:15 PM',
                 ),
               ),
@@ -82,9 +86,9 @@ class _ChatTextfieldContainerState extends State<ChatTextfieldContainer> {
       duration: const Duration(milliseconds: 500),
       height: 50.h + maxLines * 10.h,
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: kGreyLight,
-          border: const Border(top: BorderSide(color: kGreyLight, width: 0))),
+          border: Border(top: BorderSide(color: kGreyLight, width: 0))),
       child: Row(
         children: [
           kWidth10,
@@ -137,15 +141,18 @@ class _ChatTextfieldContainerState extends State<ChatTextfieldContainer> {
             ),
           )),
           kWidth10,
-         CircleAvatar(backgroundColor: kBlueDark,
-          child:  chatController.text == ''
-              ? IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.mic, color: kWhite),
-              )
-              : IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.send, color: kWhite)),),kWidth10
+          CircleAvatar(
+            backgroundColor: kBlueDark,
+            child: chatController.text == ''
+                ? IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.mic, color: kWhite),
+                  )
+                : IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.send, color: kWhite)),
+          ),
+          kWidth10
         ],
       ),
     );

@@ -8,13 +8,13 @@ class AppBarCustomShape extends StatelessWidget {
   const AppBarCustomShape({
     super.key,
     required this.child,
-    this.bottomgap,
+    this.bottomGap,
     this.backGroundImage = true,
     this.topGap,
     this.image,
   });
   final Widget child;
-  final Widget? bottomgap;
+  final Widget? bottomGap;
   final Widget? topGap;
   final bool backGroundImage;
   final String? image;
@@ -29,15 +29,15 @@ class AppBarCustomShape extends StatelessWidget {
           clipper: AppbarClipper2(),
           child: Container(
             decoration: BoxDecoration(
-                color: kIndigo,
-                image: backGroundImage
-                    ? DecorationImage(
-                        image: AssetImage(image ?? imageGlobalMap))
-                    : null),
+              color: kIndigo,
+              image: backGroundImage
+                  ? DecorationImage(image: AssetImage(image ?? imageGlobalMap))
+                  : null,
+            ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
               child: Column(
-                children: [topGap ?? kEmpty, child, bottomgap ?? kHeight30],
+                children: [topGap ?? kEmpty, child, bottomGap ?? kHeight30],
               ),
             ),
           ),

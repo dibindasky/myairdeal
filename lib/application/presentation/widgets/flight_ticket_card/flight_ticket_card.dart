@@ -14,11 +14,11 @@ import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/wi
 class FlightTicketCard extends StatelessWidget {
   FlightTicketCard({
     super.key,
-    required this.buttonOnTap,
+    this.buttonOnTap,
     required this.flightTicketCardEnum,
   });
 
-  final VoidCallback buttonOnTap;
+  final VoidCallback? buttonOnTap;
   final FlightTicketCardEnum flightTicketCardEnum;
 
   final bookingController = Get.find<BookingController>();

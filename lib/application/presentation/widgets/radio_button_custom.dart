@@ -9,8 +9,9 @@ class CustomRadioButton extends StatelessWidget {
     required this.selected,
     required this.text,
     required this.onChanged,
+    this.width,
   });
-
+  final SizedBox? width;
   final bool selected;
   final String text;
   final VoidCallback onChanged;
@@ -25,7 +26,7 @@ class CustomRadioButton extends StatelessWidget {
           selected
               ? const Icon(Icons.radio_button_checked, color: kBlue)
               : const Icon(Icons.radio_button_unchecked),
-          kWidth5,
+          width ?? kWidth5,
           Text(text),
         ],
       ),

@@ -18,4 +18,5 @@ enum FlightTicketCardEnum {
   upcoming,
   specialOffers,
   payment,
+  refundStatus
 }

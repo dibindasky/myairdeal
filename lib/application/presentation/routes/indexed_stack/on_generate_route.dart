@@ -41,7 +41,7 @@ class RouteGenerator {
       case Routes.bookings:
         return MaterialPageRoute(builder: (ctx) => const ScreenBookings());
       case Routes.invoice:
-        return MaterialPageRoute(builder: (ctx) => const ScreenInvoiceDetail());
+        return MaterialPageRoute(builder: (ctx) => ScreenInvoiceDetail());
       case Routes.explore:
         return MaterialPageRoute(builder: (ctx) => const ScreenExplore());
       case Routes.notificationSetup:

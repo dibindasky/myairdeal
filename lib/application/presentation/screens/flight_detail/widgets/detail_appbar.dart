@@ -28,7 +28,7 @@ class DetailAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBarCustomShape(
       backGroundImage: false,
-      bottomgap: bottomgap ?? kHeight20,
+      bottomGap: bottomgap ?? kHeight20,
       topGap: topGap ?? kEmpty,
       child: Column(
         children: [

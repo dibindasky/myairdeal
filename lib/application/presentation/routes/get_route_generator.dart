@@ -104,7 +104,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.invoice,
-      page: () => const ScreenInvoiceDetail(),
+      page: () => ScreenInvoiceDetail(),
     ),
     GetPage(
       binding: SeatBinding(),
@@ -128,7 +128,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.refundsPage,
-      page: () => const ScreenRefundPage(),
+      page: () => ScreenRefundPage(),
     ),
     GetPage(
       binding: NotificationBinding(),

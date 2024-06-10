@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -29,56 +31,64 @@ class ChatBubble extends StatelessWidget {
                   backgroundImage: AssetImage(imageChatPerson),
                 ),
           isSender ? kEmpty : kWidth5,
-          Container(
-            decoration: BoxDecoration(
-              color: isSender ? kBlueLight.withOpacity(0.5) : kWhite,
-              borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(10),
-                  bottomLeft:
-                      isSender ? const Radius.circular(10) : Radius.zero,
-                  bottomRight:
-                      isSender ? Radius.zero : const Radius.circular(10),
-                  topRight: const Radius.circular(10)),
-            ),
-            margin: EdgeInsets.symmetric(vertical: 3.h),
-            padding: EdgeInsets.all(10.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  text,
-                  style: textStyle1,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      time,
-                      style: textStyle1.copyWith(
-                        fontSize: 10.sp,
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: isSender ? kBlueLight.withOpacity(0.5) : kWhite,
+                borderRadius: BorderRadius.only(
+                    topLeft: const Radius.circular(10),
+                    bottomLeft:
+                        isSender ? const Radius.circular(10) : Radius.zero,
+                    bottomRight:
+                        isSender ? Radius.zero : const Radius.circular(10),
+                    topRight: const Radius.circular(10)),
+              ),
+              margin: EdgeInsets.only(
+                bottom: 10.h,
+                top: 3.h,
+                left: isSender ? 60.w : 0.w,
+                right: isSender ? 0 : 40.w,
+              ),
+              padding: EdgeInsets.all(10.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    text,
+                    style: textStyle1.copyWith(fontSize: 12.sp),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        time,
+                        style: textStyle1.copyWith(
+                          fontSize: 10.sp,
+                        ),
                       ),
-                    ),
-                    isSender ? kWidth10 : kEmpty,
-                    isSender
-                        ? SizedBox(
-                            height: 15.sp,
-                            width: 15.sp,
-                            child: const FittedBox(
-                              child: Stack(
-                                children: [
-                                  Icon(Icons.check, color: kGreen),
-                                  Positioned(
-                                      left: 5,
-                                      child: Icon(Icons.check, color: kGreen)),
-                                ],
+                      isSender ? kWidth10 : kEmpty,
+                      isSender
+                          ? SizedBox(
+                              height: 15.sp,
+                              width: 15.sp,
+                              child: const FittedBox(
+                                child: Stack(
+                                  children: [
+                                    Icon(Icons.check, color: kGreen),
+                                    Positioned(
+                                        left: 5,
+                                        child:
+                                            Icon(Icons.check, color: kGreen)),
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
-                        : kEmpty
-                  ],
-                ),
-              ],
+                            )
+                          : kEmpty
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

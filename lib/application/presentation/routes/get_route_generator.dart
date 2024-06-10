@@ -104,7 +104,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.invoice,
-      page: () => ScreenInvoiceDetail(),
+      page: () => const ScreenInvoiceDetail(),
     ),
     GetPage(
       binding: SeatBinding(),

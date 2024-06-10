@@ -182,7 +182,7 @@ class BottomMiniContainer extends StatelessWidget {
                                     onTap: buttonOnTap ?? () {},
                                   )
                                 : kEmpty,
-                            kHeight30
+                            kWidth10
                           ],
                         ),
         ),

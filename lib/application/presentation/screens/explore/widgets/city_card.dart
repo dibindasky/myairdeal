@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/explore/explore_controller.dart';
@@ -41,7 +42,8 @@ class CityCard extends StatelessWidget {
                 height: 200.h,
               ),
             ),
-            Center(
+            Align(
+              alignment: Alignment.bottomCenter,
               child: Text(
                 data['city']!,
                 style: const TextStyle(

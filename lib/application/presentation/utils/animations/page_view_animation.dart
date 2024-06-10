@@ -13,6 +13,7 @@ class PagviewAnimateBuilder extends StatefulWidget {
     required this.pageCount,
     required this.onpageCallBack,
   }) : super(key: key);
+
   final PageController pageController;
   final double pageValue;
   final ChildBuilder child;
@@ -31,8 +32,8 @@ class PagviewAnimateBuilderState extends State<PagviewAnimateBuilder> {
   void initState() {
     super.initState();
 
-    // Auto-scroll every 3 seconds
-    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+    // Auto-scroll every 5 seconds
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (widget.pageCount == 1) return;
       if (widget.pageController.page == widget.pageCount - 1 ||
           widget.pageController.page == 0) {
@@ -66,28 +67,23 @@ class PagviewAnimateBuilderState extends State<PagviewAnimateBuilder> {
       controller: widget.pageController,
       itemCount: widget.pageCount,
       itemBuilder: (context, index) {
-        double translation = 50.0;
+        double scaleFactor = .9;
+        double scale =
+            (1 - (widget.pageValue - index).abs()) * (1 - scaleFactor) +
+                scaleFactor;
 
-        if (index == widget.pageValue.floor() + 1 ||
-            index == widget.pageValue.floor() + 2) {
-          return Transform.translate(
-            offset: Offset(
-              0.0,
-              translation * (index - widget.pageValue),
-            ),
-            child: widget.child(index, context),
-          );
-        } else if (index == widget.pageValue.floor() ||
+        if (index == widget.pageValue.floor() ||
+            index == widget.pageValue.floor() + 1 ||
             index == widget.pageValue.floor() - 1) {
-          return Transform.translate(
-            offset: Offset(
-              0,
-              translation * (widget.pageValue - index),
-            ),
+          return Transform.scale(
+            scale: scale,
             child: widget.child(index, context),
           );
         } else {
-          return widget.child(index, context);
+          return Transform.scale(
+            scale: scaleFactor,
+            child: widget.child(index, context),
+          );
         }
       },
     );

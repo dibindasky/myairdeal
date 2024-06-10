@@ -6,8 +6,8 @@ import 'package:myairdeal/application/presentation/screens/explore/widgets/city_
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class CityCardsBuilder extends StatelessWidget {
-  const CityCardsBuilder({super.key});
-
+  const CityCardsBuilder({super.key, required this.pageController});
+  final PageController pageController;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ExploreController>(builder: (controller) {
@@ -23,6 +23,7 @@ class CityCardsBuilder extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 controller.changeIndex(index);
+                controller.updatePageController(pageController, index);
               },
               child: CityCard(
                 data: exploreData[index],

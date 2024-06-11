@@ -18,7 +18,23 @@ class ScreenOnBoard extends StatelessWidget {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              Image.asset(onBoardImage),
+              Stack(
+                children: [
+                  Image.asset(onBoardImage),
+                  Positioned(
+                    top: 23.h,
+                    left: 0,
+                    right: 0,
+                    child: Hero(
+                      tag: 'onbaordImage',
+                      child: Image.asset(
+                        splashImage,
+                        height: 30.h,
+                      ),
+                    ),
+                  )
+                ],
+              ),
               kHeight40,
               Align(
                 alignment: Alignment.bottomLeft,

@@ -15,7 +15,7 @@ class LoginGoogleOrFaceBook extends StatelessWidget {
         EventIconButton(
           hieght: 50.h,
           width: 140.w,
-          color: kGrey,
+          color: klightWhite,
           suffixIcon: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Image.asset(faceBookIcon),
@@ -26,7 +26,7 @@ class LoginGoogleOrFaceBook extends StatelessWidget {
         EventIconButton(
           hieght: 50.h,
           width: 140.w,
-          color: kGrey,
+          color: klightWhite,
           suffixIcon: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Image.asset(googleIcon),

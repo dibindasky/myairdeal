@@ -15,6 +15,7 @@ class ScreenSignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kWhite,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -22,7 +23,7 @@ class ScreenSignUp extends StatelessWidget {
             children: [
               kHeight40,
               Text(
-                'Sign Up',
+                'Create an Account',
                 style: textHeadStyle1.copyWith(
                   fontSize: 25.sp,
                   fontWeight: FontWeight.w700,
@@ -31,7 +32,7 @@ class ScreenSignUp extends StatelessWidget {
               kHeight10,
               Text(
                 'You will be sent a code on this number to verify if you are the owner of the number. ',
-                style: textThinStyle1.copyWith(color: kGrey),
+                style: textThinStyle1.copyWith(color: kbuttonGrey),
               ),
               kHeight50,
               kHeight30,
@@ -67,7 +68,7 @@ class ScreenSignUp extends StatelessWidget {
               ),
               kHeight50,
               EventIconButton(
-                color: kGrey,
+                color: kbuttonGrey,
                 text: 'Send Code',
                 onTap: () {
                   Get.offAllNamed(Routes.otp);
@@ -77,32 +78,34 @@ class ScreenSignUp extends StatelessWidget {
               const Center(child: Text('Or Sign Up With')),
               kHeight30,
               const LoginGoogleOrFaceBook(),
-              kHeight30,
+              kHeight50,
               EventIconButton(
                 prefixIcon: const Icon(
                   Icons.person_2_outlined,
                   color: kWhite,
-                  size: 14,
+                  size: 20,
                 ),
                 text: 'Login as Guest',
-                onTap: () {},
+                onTap: () {
+                  Get.offNamed(Routes.bottomBar);
+                },
               ),
               kHeight10,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Already have an account?'),
-                  kWidth5,
-                  TextButton(
-                    onPressed: () => Get.toNamed(Routes.signIn),
-                    child: Text(
-                      'Sign In',
-                      style: textThinStyle1.copyWith(color: kBlue),
-                    ),
-                  )
-                ],
-              ),
-              kHeight10,
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     const Text('Already have an account?'),
+              //     kWidth5,
+              //     TextButton(
+              //       onPressed: () => Get.toNamed(Routes.signIn),
+              //       child: Text(
+              //         'Sign In',
+              //         style: textThinStyle1.copyWith(color: kBlue),
+              //       ),
+              //     )
+              //   ],
+              // ),
+              // kHeight10,
             ],
           ),
         ),

@@ -6,33 +6,29 @@ import 'package:pinput/pinput.dart';
 class PinEnterField extends StatelessWidget {
   const PinEnterField({super.key});
 
-  //final controller = Get.find<AuthController>();
-
   @override
   Widget build(BuildContext context) {
     return Pinput(
+      animationCurve: Curves.bounceIn,
       onChanged: (value) {},
-      onLongPress: () {
-        print('onLongPress');
-      },
-      onCompleted: (value) {
-        print('Combleted');
-      },
+      onLongPress: () {},
+      onCompleted: (value) {},
+      submittedPinTheme: PinTheme(
+        width: 55,
+        height: 55,
+        decoration: BoxDecoration(
+          color: kBlueLightShade,
+          border: Border.all(color: kBlueLight, width: 2),
+          borderRadius: kRadius5,
+        ),
+      ),
       length: 6,
+      showCursor: true,
       focusedPinTheme: PinTheme(
         width: 55,
         height: 55,
         textStyle: textStyle1,
         decoration: BoxDecoration(
-          color: kBlue.withOpacity(0.2),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.lightBlueAccent.withOpacity(0.1),
-              offset: const Offset(0, 6),
-              blurRadius: 6,
-              spreadRadius: 2,
-            ),
-          ],
           border: Border.all(color: kBlue),
           borderRadius: kRadius5,
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
@@ -12,10 +13,10 @@ class ScreenAccountCreationForm extends StatelessWidget {
   ScreenAccountCreationForm({super.key});
 
   final _formKey = GlobalKey<FormState>();
-  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
+    final authController = Get.find<AuthController>();
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -53,9 +54,8 @@ class ScreenAccountCreationForm extends StatelessWidget {
                         style: textThinStyle1.copyWith(color: kGrey),
                       ),
                       kHeight20,
-                      kHeight10,
                       Container(
-                        padding: const EdgeInsets.all(14),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           border: Border.all(color: kBlue),
                           borderRadius: kRadius10,
@@ -78,6 +78,7 @@ class ScreenAccountCreationForm extends StatelessWidget {
                           ),
                         ),
                       ),
+                      kHeight10,
                       Text(
                         'First Name',
                         style: TextStyle(
@@ -144,6 +145,7 @@ class ScreenAccountCreationForm extends StatelessWidget {
                           child: Image.asset(tickIcon),
                         ),
                         onTap: () {
+                          Get.toNamed(Routes.goToHomePage);
                           if (_formKey.currentState!.validate()) {}
                         },
                       )

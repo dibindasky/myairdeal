@@ -5,13 +5,15 @@ class AnimatedGrowShrinkContainer extends StatefulWidget {
   final int milliseconds;
   final double begin;
   final double end;
+  final Function(AnimationController controller)? onTap;
 
   const AnimatedGrowShrinkContainer(
       {Key? key,
       required this.child,
       this.milliseconds = 1500,
       this.begin = 5.0,
-      this.end = 0.2})
+      this.end = 0.2,
+      this.onTap})
       : super(key: key);
 
   @override
@@ -33,7 +35,9 @@ class _AnimatedGrowShrinkContainerState
     _scaleAnimation = Tween<double>(begin: widget.begin, end: widget.end)
         .animate(_controller)
       ..addListener(() => setState(() {}));
-    _controller.forward();
+    if (widget.onTap == null) {
+      _controller.forward();
+    }
   }
 
   @override

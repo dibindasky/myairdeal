@@ -28,7 +28,7 @@ class ScreenSplash extends StatelessWidget {
         ),
         child: Center(
           child: AnimatedGrowShrinkContainer(
-            child: Image.asset(myAirDealLogo),
+            child: Hero(tag: 'onbaordImage', child: Image.asset(myAirDealLogo)),
           ),
         ),
       ),

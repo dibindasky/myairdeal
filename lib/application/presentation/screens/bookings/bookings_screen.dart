@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/screens/bookings/widgets/empty_booking.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/header_section.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -25,12 +26,12 @@ class ScreenBookings extends StatelessWidget {
           kHeight15,
           const BookingsTab(),
           kHeight15,
-          GetBuilder<BookingController>(builder: (controller) {
-            if (controller.selectedBookingTab.value == 1) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 13),
-                child: ListView.separated(
-                  padding: EdgeInsets.zero,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 13),
+            child: GetBuilder<BookingController>(builder: (controller) {
+              if (controller.selectedBookingTab.value == 1) {
+                return ListView.separated(
+                  padding: const EdgeInsets.only(bottom: 25),
                   separatorBuilder: (context, index) => kHeight10,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 3,
@@ -42,16 +43,13 @@ class ScreenBookings extends StatelessWidget {
                       buttonOnTap: () => Get.toNamed(Routes.flightDetail),
                     ),
                   ),
-                ),
-              );
-            } else if (controller.selectedBookingTab.value == 2) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 13),
-                child: ListView.separated(
-                  padding: EdgeInsets.zero,
+                );
+              } else if (controller.selectedBookingTab.value == 2) {
+                return ListView.separated(
+                  padding: const EdgeInsets.only(bottom: 25),
                   separatorBuilder: (context, index) => kHeight10,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 1,
+                  itemCount: 5,
                   shrinkWrap: true,
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () => Get.toNamed(Routes.invoice),
@@ -60,16 +58,13 @@ class ScreenBookings extends StatelessWidget {
                       buttonOnTap: () => Get.toNamed(Routes.flightDetail),
                     ),
                   ),
-                ),
-              );
-            } else if (controller.selectedBookingTab.value == 3) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 13),
-                child: ListView.separated(
-                  padding: EdgeInsets.zero,
+                );
+              } else if (controller.selectedBookingTab.value == 3) {
+                return ListView.separated(
+                  padding: const EdgeInsets.only(bottom: 25),
                   separatorBuilder: (context, index) => kHeight10,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 2,
+                  itemCount: 3,
                   shrinkWrap: true,
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () => Get.toNamed(Routes.invoice),
@@ -78,12 +73,13 @@ class ScreenBookings extends StatelessWidget {
                       buttonOnTap: () => Get.toNamed(Routes.flightDetail),
                     ),
                   ),
-                ),
-              );
-            } else {
-              return kEmpty;
-            }
-          }),
+                );
+              } else {
+                return kEmpty;
+              }
+            }),
+          ),
+          const EmptyBookingScreen()
         ],
       ),
     );

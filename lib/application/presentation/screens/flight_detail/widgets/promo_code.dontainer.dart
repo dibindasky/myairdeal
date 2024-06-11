@@ -40,14 +40,10 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
                   child: CupertinoTextField(
                     onTapOutside: (event) => FocusScope.of(context).unfocus(),
                     decoration: BoxDecoration(
-                        color: kBlueLightShade,
-                        borderRadius: kRadius5,
-                        border: const Border(
-                          bottom: BorderSide(color: kBluePrimary),
-                          top: BorderSide(color: kBluePrimary),
-                          left: BorderSide(color: kBluePrimary),
-                          right: BorderSide(color: kBluePrimary),
-                        )),
+                      color: kBlueLightShade,
+                      borderRadius: kRadius5,
+                      border: Border.all(color: kBluePrimary),
+                    ),
                     placeholder: 'Enter Promo code',
                   ),
                 ),

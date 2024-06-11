@@ -53,11 +53,13 @@ class SortFlightBottomSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 EventButton(
-                    text: 'Reset',
-                    onTap: () {},
-                    color: kWhite,
-                    borderColor: kBluePrimary,
-                    textColr: kBluePrimary),
+                  isBorder: true,
+                  text: 'Reset',
+                  onTap: () {},
+                  color: kWhite,
+                  borderColor: kBlack,
+                  textColr: kBluePrimary,
+                ),
                 kWidth10,
                 EventButton(text: 'Done', onTap: () {})
               ],

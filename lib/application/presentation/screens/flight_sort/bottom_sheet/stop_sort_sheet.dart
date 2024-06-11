@@ -7,12 +7,15 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 
 class StopsSortBottomSheet extends StatelessWidget {
-  const StopsSortBottomSheet({
-    super.key,
-  });
+  const StopsSortBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, String>> categ = [
+      {"place": "Direct", "cash": "From Rs. 3500"},
+      {"place": "Max 1 Stops", "cash": "From Rs. 3500"},
+      {"place": "Max 2 Stops", "cash": "From Rs. 4500"},
+    ];
     final controller = Get.find<FlightSortController>();
     return Container(
       width: double.infinity,
@@ -24,55 +27,59 @@ class StopsSortBottomSheet extends StatelessWidget {
           topRight: Radius.circular(40),
         ),
       ),
-      child: Obx(() {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            kHeight40,
-            Text('Airlines', style: textHeadStyle1),
-            kHeight10,
-            Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          kHeight40,
+          Text('Stops', style: textHeadStyle1),
+          kHeight10,
+          ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: categ.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) => Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Select All', style: textStyle1),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(categ[index]['place'] ?? '', style: textStyle1),
+                    Text(categ[index]['cash'] ?? '',
+                        style: textStyle1.copyWith(
+                            fontSize: 12.sp, color: kGreyDark)),
+                  ],
+                ),
                 Checkbox(
-                  value: controller.sortAirlines.length ==
-                      controller.sortAirlinesSelected.length,
+                  value: controller.sortAirlinesSelected
+                      .contains(controller.sortAirlines[index]),
                   onChanged: (value) {
-                    controller.selectAllAirline(value ?? false);
+                    controller.selectAirline(controller.sortAirlines[index]);
                   },
                   activeColor: kBluePrimary,
                 )
               ],
             ),
-            const Divider(color: kGrey),
-            ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: controller.sortAirlines.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(controller.sortAirlines[index], style: textStyle1),
-                  Checkbox(
-                    value: controller.sortAirlinesSelected
-                        .contains(controller.sortAirlines[index]),
-                    onChanged: (value) {
-                      controller.selectAirline(controller.sortAirlines[index]);
-                    },
-                    activeColor: kBluePrimary,
-                  )
-                ],
+          ),
+          kHeight5,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              EventButton(
+                isBorder: true,
+                text: 'Reset',
+                onTap: () {},
+                color: kWhite,
+                borderColor: kBlack,
+                textColr: kBluePrimary,
               ),
-            ),
-            kHeight5,
-            EventButton(
-                text: 'Search flights', onTap: () {}, width: double.infinity),
-            kHeight20
-          ],
-        );
-      }),
+              kWidth10,
+              EventButton(text: 'Done', onTap: () {})
+            ],
+          ),
+          kHeight20
+        ],
+      ),
     );
   }
 }

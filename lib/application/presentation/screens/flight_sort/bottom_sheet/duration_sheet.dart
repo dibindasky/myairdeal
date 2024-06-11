@@ -63,10 +63,11 @@ class DurationBottomSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 EventButton(
+                    isBorder: true,
                     text: 'Reset',
                     onTap: () {},
                     color: kWhite,
-                     borderColor: kBluePrimary,
+                    borderColor: kBlack,
                     textColr: kBluePrimary),
                 kWidth10,
                 EventButton(text: 'Done', onTap: () {})

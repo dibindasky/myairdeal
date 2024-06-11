@@ -27,6 +27,7 @@ class FlightSortController extends GetxController {
   Rx<DateTime> selectedDate = DateTime.now().obs;
 
   List<String> sortAirlines = ['Indigo', 'Air-India', 'Asky Airlines'];
+
   RxList<String> sortAirlinesSelected = <String>[].obs;
   List<String> departureTimes = [
     '00:00 to 05:59',

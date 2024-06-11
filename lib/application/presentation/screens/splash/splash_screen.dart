@@ -14,7 +14,7 @@ class ScreenSplash extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Timer(const Duration(milliseconds: 1600), () {
-        Get.offAllNamed(Routes.bottomBar);
+        Get.offAllNamed(Routes.onboard);
       });
     });
     return Scaffold(

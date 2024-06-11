@@ -5,6 +5,7 @@ class TravellerController extends GetxController {
   String travelerTab = 'Add Details';
   RxList genderList = ['Mr', 'Mrs', 'Ms'].obs;
   RxInt selectedSavedDetailData = 0.obs;
+
   void changeGenderType(int index) {
     genderType.value = index;
   }

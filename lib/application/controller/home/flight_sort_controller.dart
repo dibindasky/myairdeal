@@ -29,6 +29,7 @@ class FlightSortController extends GetxController {
   List<String> sortAirlines = ['Indigo', 'Air-India', 'Asky Airlines'];
 
   RxList<String> sortAirlinesSelected = <String>[].obs;
+  RxList<String> sortStopsSelected = <String>[].obs;
   List<String> departureTimes = [
     '00:00 to 05:59',
     '00:01 to 05:59',
@@ -166,6 +167,14 @@ class FlightSortController extends GetxController {
       sortAirlinesSelected.remove(value);
     } else {
       sortAirlinesSelected.add(value);
+    }
+  }
+
+  void selectStops(String value) {
+    if (sortStopsSelected.contains(value)) {
+      sortStopsSelected.remove(value);
+    } else {
+      sortStopsSelected.add(value);
     }
   }
 

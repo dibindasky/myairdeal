@@ -4,6 +4,7 @@ class Routes {
   static const String signUp = '/signUp';
   static const String signIn = '/sign_in';
   static const String otp = '/otp';
+  static const String goToHomePage = '/go_to-home_page';
   static const String alMostDone = '/al_most_done';
   static const String bottomBar = '/bottom_bar';
   static const String airportSearch = '/airport_search_page';

@@ -5,7 +5,6 @@ import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/facebook_google_button.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 
@@ -34,26 +33,44 @@ class ScreenSignIn extends StatelessWidget {
                 Text('Start Your Journey with affordable price',
                     style: textThinStyle1.copyWith(color: kGreyDark)),
                 kHeight30,
-                const Text('Email'),
-                kHeight5,
-                CustomTextField(
-                  onTapOutside: () => FocusScope.of(context).unfocus(),
-                  hintText: 'Enter Your Email',
-                  fillColor: kGreyLightBackground,
-                  showUnderline: false,
-                  validate: Validate.none,
+                Text(
+                  'Email',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                  ),
                 ),
-                kHeight20,
-                const Text('Password'),
                 kHeight5,
                 CustomTextField(
+                  isBorder: true,
+                  borderRadius: 14,
+                  textCapitalization: TextCapitalization.words,
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(width: .3),
+                      borderRadius: kRadius15),
                   onTapOutside: () => FocusScope.of(context).unfocus(),
+                  hintText: 'Email',
+                  fillColor: kWhite,
+                ),
+                kHeight10,
+                Text(
+                  'Password',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                  ),
+                ),
+                kHeight5,
+                CustomTextField(
                   obscureText: true,
                   password: TextEditingController(),
+                  isBorder: true,
+                  borderRadius: 14,
+                  textCapitalization: TextCapitalization.words,
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(width: .3),
+                      borderRadius: kRadius15),
+                  onTapOutside: () => FocusScope.of(context).unfocus(),
                   hintText: 'Enter Your Password',
-                  fillColor: kGreyLightBackground,
-                  showUnderline: false,
-                  validate: Validate.none,
+                  fillColor: kWhite,
                 ),
                 kHeight50,
                 EventIconButton(

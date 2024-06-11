@@ -34,23 +34,37 @@ class ScreenSeatSelection extends StatelessWidget {
                     child: Row(
                       children: [
                         kWidth10,
-                        CircleAvatar(radius: 8.w, backgroundColor: kGrey),
+                        Container(
+                          width: 12.w,
+                          height: 12.h,
+                          decoration: const BoxDecoration(
+                            color: kGrey,
+                            borderRadius: BorderRadius.all(Radius.circular(2)),
+                          ),
+                        ),
                         kWidth5,
                         const Text('Reserved'),
                         const Spacer(),
-                        CircleAvatar(
-                          radius: 8.w,
-                          backgroundColor: kBluePrimary,
-                          child: CircleAvatar(
-                            radius: 7.w,
-                            backgroundColor: kGreyLight,
+                        Container(
+                          width: 12.w,
+                          height: 12.h,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: kBluePrimary),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(2)),
                           ),
                         ),
                         kWidth5,
                         const Text('Free'),
                         const Spacer(),
-                        CircleAvatar(
-                            radius: 8.w, backgroundColor: kBluePrimary),
+                        Container(
+                          width: 12.w,
+                          height: 12.h,
+                          decoration: const BoxDecoration(
+                            color: kBluePrimary,
+                            borderRadius: BorderRadius.all(Radius.circular(2)),
+                          ),
+                        ),
                         kWidth5,
                         const Text('Paid'),
                         kWidth10
@@ -134,7 +148,7 @@ class ScreenSeatSelection extends StatelessWidget {
                                             width: 30.w,
                                             decoration: BoxDecoration(
                                               color: controller.getSeatColor(
-                                                      row, col),
+                                                  row, col),
                                               border: controller.seatLayout[row]
                                                           [col] ==
                                                       'free'
@@ -166,7 +180,9 @@ class ScreenSeatSelection extends StatelessWidget {
                                 );
                               }),
                             ),
-                          ),),
+                          ),
+                        ),
+                        kHeight10
                       ],
                     ),
                   ),

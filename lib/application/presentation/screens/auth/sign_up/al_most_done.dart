@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
+import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 
 class ScreenAccountCreationForm extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
-
   ScreenAccountCreationForm({super.key});
+
+  final _formKey = GlobalKey<FormState>();
+  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +33,7 @@ class ScreenAccountCreationForm extends StatelessWidget {
                     child: const Icon(Icons.arrow_back),
                   ),
                 ),
+                kHeight20,
                 Form(
                   key: _formKey,
                   child: Column(
@@ -49,22 +53,68 @@ class ScreenAccountCreationForm extends StatelessWidget {
                         style: textThinStyle1.copyWith(color: kGrey),
                       ),
                       kHeight20,
+                      kHeight10,
+                      Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: kBlue),
+                          borderRadius: kRadius10,
+                          color: kWhite,
+                        ),
+                        child: Obx(
+                          () => Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(
+                              3,
+                              (index) => CustomRadioButton(
+                                selected:
+                                    index == authController.genderType.value,
+                                onChanged: () {
+                                  authController.changeGenderType(index);
+                                },
+                                text: authController.genderList[index],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       Text(
-                        'User Name',
+                        'First Name',
                         style: TextStyle(
                           fontSize: 13.sp,
                         ),
                       ),
                       kHeight5,
                       CustomTextField(
+                        isBorder: true,
+                        borderRadius: 14,
+                        textCapitalization: TextCapitalization.words,
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(width: .3),
+                            borderRadius: kRadius15),
                         onTapOutside: () => FocusScope.of(context).unfocus(),
-                        fillColor: knill,
-                        controller: TextEditingController(),
-                        hintText: 'User Name',
-                        showUnderline: false,
-                        validate: Validate.none,
+                        hintText: 'first Name',
+                        fillColor: kWhite,
                       ),
                       kHeight10,
+                      Text(
+                        'Last Name',
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                        ),
+                      ),
+                      kHeight5,
+                      CustomTextField(
+                        isBorder: true,
+                        borderRadius: 14,
+                        textCapitalization: TextCapitalization.words,
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(width: .3),
+                            borderRadius: kRadius15),
+                        onTapOutside: () => FocusScope.of(context).unfocus(),
+                        hintText: 'Last Name',
+                        fillColor: kWhite,
+                      ),
                       Text(
                         'Email',
                         style: TextStyle(
@@ -73,48 +123,18 @@ class ScreenAccountCreationForm extends StatelessWidget {
                       ),
                       kHeight5,
                       CustomTextField(
+                        isBorder: true,
+                        borderRadius: 14,
+                        textCapitalization: TextCapitalization.words,
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(width: .3),
+                            borderRadius: kRadius15),
                         onTapOutside: () => FocusScope.of(context).unfocus(),
-                        fillColor: knill,
-                        controller: TextEditingController(),
                         hintText: 'Enter Username',
-                        showUnderline: false,
-                        validate: Validate.none,
+                        fillColor: kWhite,
                       ),
                       kHeight10,
-                      Text(
-                        'Password',
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                        ),
-                      ),
-                      kHeight5,
-                      CustomTextField(
-                        onTapOutside: () => FocusScope.of(context).unfocus(),
-                        fillColor: knill,
-                        password: TextEditingController(),
-                        hintText: 'Enter Password',
-                        showUnderline: false,
-                        validate: Validate.none,
-                        obscureText: true,
-                      ),
-                      kHeight10,
-                      Text(
-                        'Re-enter Password',
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                        ),
-                      ),
-                      kHeight5,
-                      CustomTextField(
-                        onTapOutside: () => FocusScope.of(context).unfocus(),
-                        fillColor: knill,
-                        password: TextEditingController(),
-                        hintText: 'Enter Password',
-                        showUnderline: false,
-                        validate: Validate.none,
-                        obscureText: true,
-                      ),
-                      kHeight40,
+                      kHeight50,
                       EventIconButton(
                         width: 360.w,
                         text: 'Create Account',

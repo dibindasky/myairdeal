@@ -30,6 +30,7 @@ class BookingIssuesQuerySection extends StatelessWidget {
         (index) => Expanded(
           child: Row(
             children: [
+              index != 0 ? kWidth5 : kEmpty,
               Expanded(
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
@@ -51,7 +52,6 @@ class BookingIssuesQuerySection extends StatelessWidget {
                   ),
                 ),
               ),
-              index != 4 ? kWidth5 : kEmpty
             ],
           ),
         ),

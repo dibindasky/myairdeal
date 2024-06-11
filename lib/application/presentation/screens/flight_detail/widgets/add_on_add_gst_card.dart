@@ -6,15 +6,8 @@ import 'package:myairdeal/application/presentation/widgets/read_more_text.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
-class AddOnesContainer extends StatefulWidget {
+class AddOnesContainer extends StatelessWidget {
   const AddOnesContainer({super.key});
-
-  @override
-  State<AddOnesContainer> createState() => _AddOnesContainerState();
-}
-
-class _AddOnesContainerState extends State<AddOnesContainer> {
-  bool addOnsChecked = false;
 
   @override
   Widget build(BuildContext context) {

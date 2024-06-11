@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/screens/account/edit_profile.dart';
 import 'package:myairdeal/application/presentation/screens/account/notification_setup.dart';
 import 'package:myairdeal/application/presentation/screens/account/secuurity_screen.dart';
+import 'package:myairdeal/application/presentation/screens/auth/goto_home_screen.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_in/sign_in.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/al_most_done.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_screen.dart';
@@ -48,6 +49,10 @@ class GetXRouterConfig {
       page: () => ScreenSignUp(),
     ),
     GetPage(
+      name: Routes.goToHomePage,
+      page: () => const GoTOHOmeScreen(),
+    ),
+    GetPage(
       name: Routes.otp,
       page: () => ScreenOTP(),
     ),
@@ -60,7 +65,11 @@ class GetXRouterConfig {
       page: () => ScreenAccountCreationForm(),
     ),
     GetPage(
-      bindings: [NavBarBinding(), FlightSortBinding(), PaymentBinding()],
+      bindings: [
+        NavBarBinding(),
+        FlightSortBinding(),
+        PaymentBinding(),
+      ],
       name: Routes.bottomBar,
       page: () => const ScreenNavbar(),
     ),
@@ -114,7 +123,7 @@ class GetXRouterConfig {
     GetPage(
       binding: TravellerBinding(),
       name: Routes.travelerDetails,
-      page: () => ScreenTravelerDetails(),
+      page: () => const ScreenTravelerDetails(),
     ),
     GetPage(
       binding: PaymentBinding(),

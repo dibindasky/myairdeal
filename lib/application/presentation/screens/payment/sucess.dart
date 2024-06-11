@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
@@ -81,8 +82,11 @@ class ScreenSuccessPage extends StatelessWidget {
                   style: textStyle1.copyWith(fontSize: 13.sp, color: kWhite),
                   width: 220.w,
                   text: 'Download Ticket',
-                  onTap: () {},
-                )
+                  onTap: () {
+                    //  Get.offAndToNamed(Routes.homePage);
+                    //  Get.offAllNamed(Routes.bottomBar);
+                  },
+                ),
               ],
             ),
           ),

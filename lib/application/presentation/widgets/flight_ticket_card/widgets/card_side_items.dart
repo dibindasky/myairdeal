@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class CardSideItems extends StatelessWidget {
-  const CardSideItems({
-    super.key,
-    required this.place,
-    required this.airPort,
-    required this.from,
-    required this.time,
-  });
+  const CardSideItems(
+      {super.key,
+      required this.place,
+      required this.airPort,
+      required this.from,
+      required this.time,
+      this.crossAxisAlignment = CrossAxisAlignment.start});
 
   final String place;
   final String airPort;
   final String from;
   final String time;
+  final CrossAxisAlignment crossAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: crossAxisAlignment,
       children: [
         Text(
           place,

@@ -14,6 +14,7 @@ class ScreenSignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kWhite,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -103,21 +104,21 @@ class ScreenSignIn extends StatelessWidget {
                   onTap: () {},
                 ),
                 kHeight20,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Already have an account?',
-                      style: textThinStyle1.copyWith(color: kGreyDark),
-                    ),
-                    TextButton(
-                        onPressed: () => Get.offNamed(Routes.signUp),
-                        child: Text(
-                          'Sign Up',
-                          style: textThinStyle1.copyWith(color: kBlue),
-                        )),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'Already have an account?',
+                //       style: textThinStyle1.copyWith(color: kGreyDark),
+                //     ),
+                //     TextButton(
+                //         onPressed: () => Get.offNamed(Routes.signUp),
+                //         child: Text(
+                //           'Sign Up',
+                //           style: textThinStyle1.copyWith(color: kBlue),
+                //         )),
+                //   ],
+                // ),
               ],
             ),
           ),

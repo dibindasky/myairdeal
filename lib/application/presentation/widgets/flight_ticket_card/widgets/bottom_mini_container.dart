@@ -29,7 +29,7 @@ class BottomMiniContainer extends StatelessWidget {
             : kBluePrimary,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
-          child: (flightTicketCardEnum == FlightTicketCardEnum.cancelled)
+          child: flightTicketCardEnum == FlightTicketCardEnum.cancelled
               ? Column(
                   children: [
                     kHeight7,
@@ -145,6 +145,41 @@ class BottomMiniContainer extends StatelessWidget {
                                 fontSize: 12.sp,
                               ),
                             ),
+                            flightTicketCardEnum ==
+                                    FlightTicketCardEnum.homeSort
+                                ? Row(
+                                    children: [
+                                      kWidth20,
+                                      ClipRRect(
+                                        borderRadius: kRadius5,
+                                        child: ColoredBox(
+                                          color: const Color(0xFF6E93A8),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 3),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.lock,
+                                                  size: 15.sp,
+                                                  color: kWhite,
+                                                ),
+                                                kWidth5,
+                                                Text(
+                                                  'Lock the price',
+                                                  style: textStyle1.copyWith(
+                                                    color: kWhite,
+                                                    fontSize: 12.sp,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : kEmpty,
                             const Spacer(),
                             flightTicketCardEnum ==
                                     FlightTicketCardEnum.upcoming

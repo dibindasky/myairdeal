@@ -63,6 +63,7 @@ String profileIcon = 'asset/image/profile.png';
 String smsIcon = 'asset/image/sms.png';
 String copyIcon = 'asset/image/link-2.png';
 String mumbai = 'asset/image/mumbai.png';
+String bookingEmptyImage = 'asset/image/booking_empty.png';
 
 // NetWork image
 String dummyPersonimage =

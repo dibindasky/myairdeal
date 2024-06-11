@@ -21,3 +21,5 @@ Color kGreylowLight = const Color(0xFFF0F0F0);
 const Color kGreen = Colors.green;
 Color kRedLight = const Color(0xFFFFA6A6);
 Color kPurple = Colors.purple;
+Color klightWhite = const Color(0xFFF2F3F6);
+Color kbuttonGrey = const Color(0xFF808080);

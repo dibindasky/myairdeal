@@ -59,6 +59,7 @@ class FlightTicketCard extends StatelessWidget {
                         ? BookingCombletedCancelledTabcenterItems()
                         : const NormalCenterItems(),
                     const CardSideItems(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       place: 'KMS',
                       airPort: 'Kumasi',
                       from: 'Arrival',

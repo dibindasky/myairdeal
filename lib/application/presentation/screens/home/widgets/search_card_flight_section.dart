@@ -103,7 +103,7 @@ class FlightSearchCardHome extends StatelessWidget {
                   ),
                   spacer: kWidth10,
                   onTap: () {
-                    showModalBottomSheet(
+                    showBottomSheet(
                       context: context,
                       builder: (context) => const PersonClassBottomSheet(),
                     );

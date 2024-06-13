@@ -42,6 +42,7 @@ class GetXRouterConfig {
       page: () => const ScreenSplash(),
     ),
     GetPage(
+      binding: AuthBinding(),
       name: Routes.onboard,
       page: () => const ScreenOnBoard(),
     ),
@@ -71,6 +72,8 @@ class GetXRouterConfig {
         NavBarBinding(),
         FlightSortBinding(),
         PaymentBinding(),
+        ExploreBinding(),
+        BookingBinding()
       ],
       name: Routes.bottomBar,
       page: () => const ScreenNavbar(),

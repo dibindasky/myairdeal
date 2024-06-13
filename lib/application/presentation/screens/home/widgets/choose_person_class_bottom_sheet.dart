@@ -117,7 +117,7 @@ class PersonClassBottomSheet extends StatelessWidget {
                         EventButton(
                             text: 'DONE',
                             onTap: () {
-                              Get.back();
+                              Navigator.pop(context);
                             },
                             width: double.infinity),
                         kHeight50

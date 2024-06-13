@@ -18,10 +18,10 @@ class BookingIssuesQuerySection extends StatelessWidget {
       Iconsax.close_circle
     ];
     List<String> text = [
-      'Check refund',
+      'Check Refund',
       'Web Check in',
       'Cancellation',
-      'Web Check in'
+      'YTD 1'
     ];
 
     return Row(

@@ -54,6 +54,9 @@ String imageGlobalMap = 'asset/image/Global Map.png';
 String imageFlight = 'asset/image/Ellipse 4.png';
 String imageSecureLogin = 'asset/image/secureLogin.png';
 String imageFlightTrip = 'asset/image/airplane1.png';
+String imageAirAmbulance = 'asset/image/air_Ambulance.png';
+String imageChatteredFlight = 'asset/image/chattered_flight.png';
+String imageHelicopter = 'asset/image/helicopter.png';
 String imageChatPerson = 'asset/image/chat_person.png';
 String faceBookIcon = 'asset/image/Facebook.png';
 String googleIcon = 'asset/image/Google.png';
@@ -64,6 +67,19 @@ String smsIcon = 'asset/image/sms.png';
 String copyIcon = 'asset/image/link-2.png';
 String mumbai = 'asset/image/mumbai.png';
 String bookingEmptyImage = 'asset/image/booking_empty.png';
+
+List<String> homeTabTitle = [
+  'Flights',
+  'Air Ambulance',
+  'Chatered Flights',
+  'Helicopter'
+];
+List<String> homeTabImages = [
+  imageFlight,
+  imageAirAmbulance,
+  imageChatteredFlight,
+  imageHelicopter
+];
 
 // NetWork image
 String dummyPersonimage =

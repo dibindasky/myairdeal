@@ -74,8 +74,8 @@ class PaymentMethodSelection extends StatelessWidget {
               )
             : null,
         trailing: isSelected
-            ? const Icon(Icons.radio_button_checked, color: kBlue)
-            : const Icon(Icons.radio_button_unchecked),
+            ? const Icon(Icons.radio_button_checked, color: kBluePrimary)
+            : const Icon(Icons.radio_button_unchecked, color: kGrey),
         contentPadding: const EdgeInsets.symmetric(vertical: 8),
       ),
     );

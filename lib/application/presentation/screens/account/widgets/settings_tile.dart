@@ -21,7 +21,8 @@ class SettingsTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        color: kWhite,
+        margin: const EdgeInsets.all(4),
+        decoration: BoxDecoration(color: kWhite, borderRadius: kRadius5),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10),
           child: Row(

@@ -24,6 +24,7 @@ import 'package:myairdeal/application/presentation/screens/flight_detail/review_
 import 'package:myairdeal/application/presentation/screens/seats/seats_selection.dart';
 import 'package:myairdeal/application/presentation/screens/splash/splash_screen.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/chat_page.dart';
+import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/tab.dart';
 import 'package:myairdeal/domain/core/binding/auth_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/booking_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/explore_controller_binding.dart';
@@ -134,6 +135,11 @@ class GetXRouterConfig {
       binding: PaymentBinding(),
       name: Routes.paymentSucess,
       page: () => const ScreenSuccessPage(),
+    ),
+    GetPage(
+      binding: TalkToUsBinding(),
+      name: Routes.chatTab,
+      page: () => const ScreenTab(),
     ),
     GetPage(
       binding: TalkToUsBinding(),

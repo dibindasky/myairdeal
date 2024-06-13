@@ -25,7 +25,7 @@ class BookingFilePicker extends StatelessWidget {
         ),
         EventButton(
           hieght: 37.h,
-          borderRadius: 5,
+          borderRadius: 3,
           style: textThinStyle1.copyWith(fontSize: 10.sp, color: kWhite),
           width: 60.w,
           text: 'Browse',

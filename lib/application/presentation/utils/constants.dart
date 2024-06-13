@@ -70,8 +70,8 @@ String bookingEmptyImage = 'asset/image/booking_empty.png';
 
 List<String> homeTabTitle = [
   'Flights',
-  'Air Ambulance',
-  'Chatered Flights',
+  'Air \nAmbulance',
+  'Chatered \nFlights',
   'Helicopter'
 ];
 List<String> homeTabImages = [

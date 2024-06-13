@@ -20,7 +20,7 @@ class SettingsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Card(
+      child: Container(
         color: kWhite,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10),

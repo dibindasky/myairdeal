@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class ScreenSecurity extends StatelessWidget {
@@ -26,9 +27,12 @@ class ScreenSecurity extends StatelessWidget {
                     const Text('Face ID'),
                     const Spacer(),
                     Switch(
+                      inactiveTrackColor: kGrey,
+                      activeTrackColor: kBlueDark,
+                      activeColor: kWhite,
                       value: true,
                       onChanged: (value) {},
-                    )
+                    ),
                   ],
                 ),
                 const Divider(),
@@ -38,9 +42,12 @@ class ScreenSecurity extends StatelessWidget {
                     const Text('Finger Print'),
                     const Spacer(),
                     Switch(
+                      inactiveTrackColor: kGrey,
+                      activeTrackColor: kBlueDark,
+                      activeColor: kWhite,
                       value: true,
                       onChanged: (value) {},
-                    )
+                    ),
                   ],
                 ),
                 kHeight5,
@@ -50,6 +57,9 @@ class ScreenSecurity extends StatelessWidget {
                     const Text('Password'),
                     const Spacer(),
                     Switch(
+                      inactiveTrackColor: kGrey,
+                      activeTrackColor: kBlueDark,
+                      activeColor: kWhite,
                       value: true,
                       onChanged: (value) {},
                     )

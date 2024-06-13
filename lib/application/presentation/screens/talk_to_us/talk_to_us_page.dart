@@ -51,9 +51,9 @@ class ScreenTalkToUsPage extends StatelessWidget {
                 ),
                 kHeight20,
                 EventButton(
-                  text: 'Chat with our team',
+                  text: 'Connect with our team',
                   onTap: () {
-                    Get.toNamed(Routes.chatPage);
+                    Get.toNamed(Routes.chatTab);
                   },
                   width: double.infinity,
                 ),

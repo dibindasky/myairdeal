@@ -15,7 +15,8 @@ class ScreenAccountPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-         DetailAppBar(heading: 'Account',backButton: false,topGap: kHeight10),
+          DetailAppBar(
+              heading: 'Account', backButton: false, topGap: kHeight10),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
@@ -43,6 +44,7 @@ class ScreenAccountPage extends StatelessWidget {
                     ),
                   ],
                 ),
+                kHeight20,
                 SettingsSection(
                   title: 'Preferences',
                   tiles: [
@@ -74,7 +76,11 @@ class SettingsSection extends StatelessWidget {
   final String title;
   final List<SettingsTile> tiles;
 
-  const SettingsSection({super.key, required this.title, required this.tiles});
+  const SettingsSection({
+    super.key,
+    required this.title,
+    required this.tiles,
+  });
 
   @override
   Widget build(BuildContext context) {

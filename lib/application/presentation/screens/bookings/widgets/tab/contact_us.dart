@@ -66,6 +66,7 @@ class ContactUsFrom extends StatelessWidget {
         const Text('Mail ID'),
         kHeight5,
         CustomTextField(
+          maxLines: 1,
           isBorder: true,
           borderRadius: 10,
           textCapitalization: TextCapitalization.words,
@@ -82,7 +83,7 @@ class ContactUsFrom extends StatelessWidget {
         const Text('Add Description'),
         kHeight5,
         CustomTextField(
-          maxLines: 4,
+          maxLines: 7,
           isBorder: true,
           borderRadius: 7,
           textCapitalization: TextCapitalization.words,
@@ -99,6 +100,7 @@ class ContactUsFrom extends StatelessWidget {
           text: 'Submit',
           onTap: () {},
         ),
+        kHeight20
       ],
     );
   }

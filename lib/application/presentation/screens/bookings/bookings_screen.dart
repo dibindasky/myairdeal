@@ -79,7 +79,7 @@ class ScreenBookings extends StatelessWidget {
               }
             }),
           ),
-          const EmptyBookingScreen()
+          // const EmptyBookingScreen()
         ],
       ),
     );

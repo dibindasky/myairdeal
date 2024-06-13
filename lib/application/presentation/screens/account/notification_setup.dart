@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class ScreenNotificationSetup extends StatelessWidget {
@@ -10,7 +11,9 @@ class ScreenNotificationSetup extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const DetailAppBar(heading: 'Notification',),
+          const DetailAppBar(
+            heading: 'Notification',
+          ),
           kHeight20,
           Container(
             margin: const EdgeInsets.all(10),
@@ -26,6 +29,9 @@ class ScreenNotificationSetup extends StatelessWidget {
                     const Text('Payment'),
                     const Spacer(),
                     Switch(
+                      inactiveTrackColor: kGrey,
+                      activeTrackColor: kBlueDark,
+                      activeColor: kWhite,
                       value: true,
                       onChanged: (value) {},
                     )
@@ -38,6 +44,9 @@ class ScreenNotificationSetup extends StatelessWidget {
                     const Text('Schedule'),
                     const Spacer(),
                     Switch(
+                      inactiveTrackColor: kGrey,
+                      activeTrackColor: kBlueDark,
+                      activeColor: kWhite,
                       value: true,
                       onChanged: (value) {},
                     )
@@ -50,6 +59,9 @@ class ScreenNotificationSetup extends StatelessWidget {
                     const Text('Cancellation'),
                     const Spacer(),
                     Switch(
+                      inactiveTrackColor: kGrey,
+                      activeTrackColor: kBlueDark,
+                      activeColor: kWhite,
                       value: true,
                       onChanged: (value) {},
                     ),
@@ -61,6 +73,9 @@ class ScreenNotificationSetup extends StatelessWidget {
                     const Text('Notification'),
                     const Spacer(),
                     Switch(
+                      inactiveTrackColor: kGrey,
+                      activeTrackColor: kBlueDark,
+                      activeColor: kWhite,
                       value: true,
                       onChanged: (value) {},
                     ),

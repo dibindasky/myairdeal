@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/custom_appbar_shape.dart';
 
 class HomeHeaderSection extends StatelessWidget {
-  const HomeHeaderSection(
-      {super.key,
-      required this.heading,
-      this.icon = true,
-      this.onTap,
-      this.backButton = false,
-      this.backButtonTap});
+  const HomeHeaderSection({
+    super.key,
+    required this.heading,
+    this.icon = true,
+    this.onTap,
+    this.backButton = false,
+    this.backButtonTap,
+  });
 
   final String heading;
   final bool icon;
@@ -52,6 +52,7 @@ class HomeHeaderSection extends StatelessWidget {
           ),
           kHeight20,
           Container(
+            height: 110.h,
             padding: EdgeInsets.all(5.w),
             decoration: BoxDecoration(color: kWhite, borderRadius: kRadius15),
             child: Row(
@@ -60,27 +61,29 @@ class HomeHeaderSection extends StatelessWidget {
                 4,
                 (index) => Column(
                   children: [
-                    Material(
-                      elevation: 5,
-                      borderRadius: BorderRadius.circular(100),
+                    Container(
+                      decoration: BoxDecoration(
+                          boxShadow: boxShadow2, borderRadius: kRadius50),
                       child: CircleAvatar(
                           radius: 30.w,
                           backgroundImage: AssetImage(homeTabImages[index])),
                     ),
                     kHeight5,
-                    Text(
-                      homeTabTitle[index],
-                      style: textThinStyle1.copyWith(
-                        fontWeight: index == 0 ? FontWeight.w500 : null,
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            homeTabTitle[index],
+                            style: textThinStyle1.copyWith(
+                              fontWeight: index == 0 ? FontWeight.w500 : null,
+                            ),
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                     ),
-                    index == 0
-                        ? Container(
-                            height: 2.h,
-                            color: kBlueDark,
-                            width: 30.w,
-                          )
-                        : kEmpty
                   ],
                 ),
               ),

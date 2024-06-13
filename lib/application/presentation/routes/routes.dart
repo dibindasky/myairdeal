@@ -23,6 +23,7 @@ class Routes {
   static const String travelerDetails = '/traveler_details';
   static const String seatSelection = '/seat_selection_page';
   static const String paymentSucess = '/payment_sucess';
+  static const String chatTab = '/chat_tab';
   static const String chatPage = '/chat_page';
   static const String refundsPage = '/refunds_page';
   static const String notificationPage = '/notification_page';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/chat_bubble.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -13,6 +14,7 @@ class ScreenChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bookingController = Get.find<BookingController>();
+    final talkToUsController = Get.find<TalkToUsController>();
     return Scaffold(
       body: Column(
         children: [
@@ -23,13 +25,17 @@ class ScreenChatPage extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                    onPressed: () {
-                      bookingController.changeSelectedYouCouldAlsoTab(-2);
-                      Get.back();
-                    },
-                    icon: const Icon(Icons.arrow_back_ios, color: kWhite)),
-                Text('Talk to us',
-                    style: textStyle1.copyWith(color: kWhite, fontSize: 16.sp)),
+                  onPressed: () {
+                    bookingController.changeSelectedYouCouldAlsoTab(-2);
+                    talkToUsController.changetab(1);
+                    Get.back();
+                  },
+                  icon: const Icon(Icons.arrow_back_ios, color: kWhite),
+                ),
+                Text(
+                  'Talk to us',
+                  style: textStyle1.copyWith(color: kWhite, fontSize: 16.sp),
+                ),
                 const Spacer(),
                 ClipRRect(
                   borderRadius: kRadius50,
@@ -40,7 +46,7 @@ class ScreenChatPage extends StatelessWidget {
                       child: Icon(Icons.phone_outlined),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -60,7 +66,7 @@ class ScreenChatPage extends StatelessWidget {
               ),
             ),
           ),
-          ChatTextfieldContainer()
+          const ChatTextfieldContainer()
         ],
       ),
     );

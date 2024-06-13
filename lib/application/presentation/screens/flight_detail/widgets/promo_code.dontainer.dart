@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/widgets/dashed_border.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 
@@ -76,14 +77,15 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: kYellowDark)),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 5.w, vertical: 3.h),
-                            child: Text(
-                              'YRICICICC',
-                              style: textThinStyle1,
+                          DashedBorder(
+                            color: kOrangeLight,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 7, vertical: 2),
+                              child: Text(
+                                'YRICICICC',
+                                style: textThinStyle1,
+                              ),
                             ),
                           ),
                           kWidth5,

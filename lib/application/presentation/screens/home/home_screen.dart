@@ -20,7 +20,7 @@ class ScreenHomePage extends StatelessWidget {
         child: Column(
           children: [
             HomeHeaderSection(
-              heading: 'My Air deals',
+              heading: 'My Air Deal',
               onTap: () {
                 Get.toNamed(Routes.notificationPage);
               },

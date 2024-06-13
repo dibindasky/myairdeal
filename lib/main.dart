@@ -37,7 +37,7 @@ class MyAirDeal extends StatelessWidget {
         getPages: GetXRouterConfig.routes,
         initialRoute: Routes.initial,
         debugShowCheckedModeBanner: false,
-        initialBinding: AllControllerBinding(),
+        // initialBinding: AllControllerBinding(),
       ),
     );
   }

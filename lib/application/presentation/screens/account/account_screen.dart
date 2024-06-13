@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/account/widgets/settings_tile.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/widgets/custom_appbar_shape.dart';
 
 class ScreenAccountPage extends StatelessWidget {
   const ScreenAccountPage({super.key});
@@ -15,19 +15,7 @@ class ScreenAccountPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          SizedBox(
-            width: double.infinity,
-            child: AppBarCustomShape(
-              bottomGap: kHeight20,
-              topGap: kHeight30,
-              backGroundImage: false,
-              child: const Row(
-                children: [
-                  Text('Account'),
-                ],
-              ),
-            ),
-          ),
+         DetailAppBar(heading: 'Account',backButton: false,topGap: kHeight10),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(

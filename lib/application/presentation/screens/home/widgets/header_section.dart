@@ -42,7 +42,7 @@ class HomeHeaderSection extends StatelessWidget {
                         radius: 15.w,
                         backgroundColor: kWhite,
                         child: Icon(
-                          Iconsax.notification,
+                          Icons.notifications_none,
                           size: 20.w,
                         ),
                       ),
@@ -65,11 +65,11 @@ class HomeHeaderSection extends StatelessWidget {
                       borderRadius: BorderRadius.circular(100),
                       child: CircleAvatar(
                           radius: 30.w,
-                          backgroundImage: AssetImage(imageFlight)),
+                          backgroundImage: AssetImage(homeTabImages[index])),
                     ),
                     kHeight5,
                     Text(
-                      'Flights',
+                      homeTabTitle[index],
                       style: textThinStyle1.copyWith(
                         fontWeight: index == 0 ? FontWeight.w500 : null,
                       ),

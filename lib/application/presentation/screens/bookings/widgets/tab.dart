@@ -18,96 +18,88 @@ class BookingsTab extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border.all(color: kBlack),
                 borderRadius: const BorderRadius.all(Radius.circular(24))),
-            height: 30.h,
+            // height: 30.h,
             width: 330.w,
             child: Row(
               children: [
-                Expanded(
-                  child: ClipRRect(
+                TabChildIcon(
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(24),
                         bottomLeft: Radius.circular(24)),
-                    child: ColoredBox(
-                      color: controller.selectedBookingTab.value == 1
-                          ? kBluePrimary
-                          : kGreylowLight,
-                      child: TextButton(
-                        onPressed: () {
-                          controller.changeTab(1);
-                        },
-                        child: Text(
-                          'Completed',
-                          style: textThinStyle1.copyWith(
-                            color: controller.selectedBookingTab.value == 1
-                                ? kWhite
-                                : kGreyDark,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const VerticalDivider(
+                    text: 'Completed',
+                    onTap: () {
+                      controller.changeTab(1);
+                    },
+                    selected: controller.selectedBookingTab.value == 1),
+                ColoredBox(
                   color: kBlack,
-                  thickness: 1,
-                  width: 1,
+                  child: SizedBox(width: 2, height: 20.h),
                 ),
-                Expanded(
-                  child: ColoredBox(
-                    color: controller.selectedBookingTab.value == 2
-                        ? kBluePrimary
-                        : kGreylowLight,
-                    child: TextButton(
-                      onPressed: () {
-                        controller.changeTab(2);
-                      },
-                      child: Text(
-                        'Cancelled',
-                        style: textThinStyle1.copyWith(
-                          color: controller.selectedBookingTab.value == 2
-                              ? kWhite
-                              : kGreyDark,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const VerticalDivider(
+                TabChildIcon(
+                    borderRadius: const BorderRadius.only(),
+                    text: 'Cancelled',
+                    onTap: () {
+                      controller.changeTab(2);
+                    },
+                    selected: controller.selectedBookingTab.value == 2),
+                ColoredBox(
                   color: kBlack,
-                  thickness: 2,
-                  width: 1,
+                  child: SizedBox(width: 2, height: 20.h),
                 ),
-                Expanded(
-                  child: ClipRRect(
+                TabChildIcon(
                     borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(24),
                         bottomRight: Radius.circular(24)),
-                    child: ColoredBox(
-                      color: controller.selectedBookingTab.value == 3
-                          ? kBluePrimary
-                          : kGreylowLight,
-                      child: TextButton(
-                        onPressed: () {
-                          controller.changeTab(3);
-                        },
-                        child: Text(
-                          'Upcoming',
-                          style: textThinStyle1.copyWith(
-                            color: controller.selectedBookingTab.value == 3
-                                ? kWhite
-                                : kGreyDark,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                    text: 'Upcoming',
+                    onTap: () {
+                      controller.changeTab(3);
+                    },
+                    selected: controller.selectedBookingTab.value == 3),
               ],
             ),
-          ),
-          kHeight5,
+          )
         ],
       );
     });
+  }
+}
+
+class TabChildIcon extends StatelessWidget {
+  const TabChildIcon(
+      {super.key,
+      required this.selected,
+      required this.onTap,
+      required this.text,
+      required this.borderRadius});
+
+  final bool selected;
+  final VoidCallback onTap;
+  final String text;
+  final BorderRadius borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ClipRRect(
+        borderRadius: borderRadius,
+        child: ColoredBox(
+          color: selected ? kBluePrimary : kGreylowLight,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 7.h),
+            child: GestureDetector(
+              onTap: onTap,
+              child: Center(
+                child: Text(
+                  text,
+                  style: textThinStyle1.copyWith(
+                    color: selected ? kWhite : kGreyDark,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

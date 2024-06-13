@@ -13,7 +13,9 @@ class CurrentOffersSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        kHeight5,
         Text('Current offer', style: textHeadStyle1),
+        kHeight5,
         SizedBox(
           height: 108.h,
           child: ListView.separated(

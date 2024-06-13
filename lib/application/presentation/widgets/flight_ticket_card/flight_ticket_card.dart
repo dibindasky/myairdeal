@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
@@ -12,7 +10,7 @@ import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/wi
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
 
 class FlightTicketCard extends StatelessWidget {
-  FlightTicketCard({
+  const FlightTicketCard({
     super.key,
     this.buttonOnTap,
     required this.flightTicketCardEnum,
@@ -20,8 +18,6 @@ class FlightTicketCard extends StatelessWidget {
 
   final VoidCallback? buttonOnTap;
   final FlightTicketCardEnum flightTicketCardEnum;
-
-  final bookingController = Get.find<BookingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +49,9 @@ class FlightTicketCard extends StatelessWidget {
                       from: 'Deport',
                       time: '07:00 AM',
                     ),
-                    (flightTicketCardEnum == FlightTicketCardEnum.comblete ||
+                    flightTicketCardEnum == FlightTicketCardEnum.comblete ||
                             flightTicketCardEnum ==
-                                FlightTicketCardEnum.cancelled)
+                                FlightTicketCardEnum.cancelled
                         ? BookingCombletedCancelledTabcenterItems()
                         : const NormalCenterItems(),
                     const CardSideItems(
@@ -70,8 +66,9 @@ class FlightTicketCard extends StatelessWidget {
               ),
               const DottedLines(),
               BottomMiniContainer(
-                  flightTicketCardEnum: flightTicketCardEnum,
-                  buttonOnTap: buttonOnTap),
+                flightTicketCardEnum: flightTicketCardEnum,
+                buttonOnTap: buttonOnTap,
+              ),
             ],
           ),
         ),

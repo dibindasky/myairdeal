@@ -197,10 +197,12 @@ class BottomMiniContainer extends StatelessWidget {
                                   )
                                 : kEmpty,
                             kWidth10,
-                            flightTicketCardEnum !=
-                                        FlightTicketCardEnum.payment ||
-                                    flightTicketCardEnum !=
-                                        FlightTicketCardEnum.refundStatus
+                            flightTicketCardEnum ==
+                                        FlightTicketCardEnum.homeSort ||
+                                    flightTicketCardEnum ==
+                                        FlightTicketCardEnum.specialOffers ||
+                                    flightTicketCardEnum ==
+                                        FlightTicketCardEnum.comblete
                                 ? EventButton(
                                     fontSize: 10.sp,
                                     width: 80.w,
@@ -208,12 +210,9 @@ class BottomMiniContainer extends StatelessWidget {
                                     borderRadius: 29,
                                     color: kIndigo,
                                     text: flightTicketCardEnum ==
-                                                FlightTicketCardEnum.homeSort ||
-                                            flightTicketCardEnum ==
-                                                FlightTicketCardEnum
-                                                    .specialOffers
-                                        ? 'Book Now'
-                                        : 'Download',
+                                            FlightTicketCardEnum.comblete
+                                        ? 'Download'
+                                        : 'Book Now',
                                     onTap: buttonOnTap ?? () {},
                                   )
                                 : kEmpty,

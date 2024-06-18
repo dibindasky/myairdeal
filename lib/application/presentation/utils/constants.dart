@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 
 const errorMessage = 'something went wrong, please try again';
 
@@ -80,6 +81,20 @@ List<String> homeTabImages = [
   imageChatteredFlight,
   imageHelicopter
 ];
+Color findInvoiceColor(FlightTicketInvoiceEnum flightTicketInvoiceEnum) {
+  switch (flightTicketInvoiceEnum) {
+    case FlightTicketInvoiceEnum.cancel:
+      return kYellow;
+    case FlightTicketInvoiceEnum.upcoming:
+      return kBlack;
+    case FlightTicketInvoiceEnum.success:
+      return kRed;
+    case FlightTicketInvoiceEnum.comblete:
+      return kBlueLight;
+    default:
+      return kBlueLightShade;
+  }
+}
 
 // NetWork image
 String dummyPersonimage =

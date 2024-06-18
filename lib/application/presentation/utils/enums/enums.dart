@@ -20,3 +20,10 @@ enum FlightTicketCardEnum {
   payment,
   refundStatus
 }
+
+enum FlightTicketInvoiceEnum {
+  cancel,
+  comblete,
+  upcoming,
+  success,
+}

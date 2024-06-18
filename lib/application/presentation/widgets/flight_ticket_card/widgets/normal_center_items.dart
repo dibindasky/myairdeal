@@ -4,25 +4,32 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class NormalCenterItems extends StatelessWidget {
-  const NormalCenterItems({super.key});
+  const NormalCenterItems({super.key, this.haveImage = true});
+
+  final bool haveImage;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.asset(
-          flightDetailIcon,
-          height: 20.h,
-        ),
-        kHeight10,
-        Text(
-          'Asky Airlines',
-          style: textStyle1.copyWith(fontSize: 12.sp),
-        ),
-        Text(
-          '01h 45m',
-          style: textThinStyle1.copyWith(fontSize: 9.sp),
-        ),
+        haveImage
+            ? Column(
+                children: [
+                  Image.asset(
+                    flightDetailIcon,
+                    height: 20.h,
+                  ),
+                  kHeight10,
+                  Text(
+                    'Asky Airlines',
+                    style: textStyle1.copyWith(fontSize: 12.sp),
+                  ),
+                ],
+              )
+            : Text(
+                '01h 45m',
+                style: textThinStyle1.copyWith(fontSize: 9.sp),
+              ),
         kWidth5,
         Row(
           children: [

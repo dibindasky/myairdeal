@@ -9,6 +9,8 @@ import 'package:myairdeal/application/presentation/screens/bookings/widgets/you_
 import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
+import 'package:myairdeal/application/presentation/widgets/flight_invoice/flight_invoice.dart';
 import '../../home/widgets/curent_offers_section.dart';
 
 class ScreenInvoiceDetail extends StatelessWidget {
@@ -60,7 +62,9 @@ class ScreenInvoiceDetail extends StatelessWidget {
                     style: textHeadStyle1),
                 kHeight10,
                 bookingController.selectedBookingTab.value == 2
-                    ? Image.asset('asset/dev/cancel_invoice.png')
+                    ? const FlightInvoice(
+                        flightTicketInvoiceEnum: FlightTicketInvoiceEnum.cancel,
+                      )
                     : Image.asset('asset/image/invoice_image.png'),
                 bookingController.selectedBookingTab.value == 2
                     ? kEmpty

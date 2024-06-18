@@ -20,7 +20,10 @@ class OneWayAndRoundTrip extends StatelessWidget {
       Expanded(
         child: TextIconButtonOutlinedCustom(
           onTap: () => Get.toNamed(Routes.airportSearch),
-          first: const Icon(Icons.flight_takeoff_rounded),
+          first: const Icon(
+            Icons.flight_takeoff_rounded,
+            color: kBluePrimary,
+          ),
           second: const Text('Bangalore'),
           texthead: 'From',
         ),
@@ -34,7 +37,10 @@ class OneWayAndRoundTrip extends StatelessWidget {
       Expanded(
         child: TextIconButtonOutlinedCustom(
           onTap: () => Get.toNamed(Routes.airportSearch),
-          first: const Icon(Icons.flight_land_rounded),
+          first: const Icon(
+            Icons.flight_land_rounded,
+            color: kBluePrimary,
+          ),
           second: const Text('Hyderabad'),
           texthead: 'To',
         ),
@@ -44,9 +50,7 @@ class OneWayAndRoundTrip extends StatelessWidget {
 }
 
 class MultiCitySelection extends StatelessWidget {
-  const MultiCitySelection({
-    super.key,
-  });
+  const MultiCitySelection({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
 class FlightSortController extends GetxController {
+  // Change category
+  RxInt selectedCategoryType = 0.obs;
   // variable used to select the trip type oneway,roundtrip, multicity
   RxInt tripType = 0.obs;
   // number of adult to be travelled
@@ -56,6 +58,11 @@ class FlightSortController extends GetxController {
   RxInt selectedPromoCode = 300000.obs;
   //Add ons
   RxBool addOnsChecked = false.obs;
+
+  changeCategory(int index) {
+    selectedCategoryType.value = index;
+    update();
+  }
 
   void changeAdds(bool value) {
     addOnsChecked.value = value;

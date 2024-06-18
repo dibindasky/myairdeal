@@ -57,7 +57,9 @@ class ScreenOnBoard extends StatelessWidget {
                   EventButton(
                     color: kGrey,
                     text: 'Skip',
-                    onTap: () {},
+                    onTap: () {
+                      Get.offAllNamed(Routes.bottomBar);
+                    },
                   ),
                   EventIconButton(
                     suffixIcon: const Icon(

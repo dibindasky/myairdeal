@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:pinput/pinput.dart';
@@ -8,11 +10,13 @@ class PinEnterField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authController = Get.find<AuthController>();
     return Pinput(
       animationCurve: Curves.bounceIn,
       onChanged: (value) {},
       onLongPress: () {},
       onCompleted: (value) {},
+      controller: authController.otpNumber,
       submittedPinTheme: PinTheme(
         width: 55,
         height: 55,
@@ -22,7 +26,7 @@ class PinEnterField extends StatelessWidget {
           borderRadius: kRadius5,
         ),
       ),
-      length: 6,
+      length: 4,
       showCursor: true,
       focusedPinTheme: PinTheme(
         width: 55,

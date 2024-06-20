@@ -30,7 +30,8 @@ class TextIconButtonOutlinedCustom extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         texthead != null
-            ? Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(texthead!, style: textStyle1),
                   topRight != null ? topRight! : kEmpty,

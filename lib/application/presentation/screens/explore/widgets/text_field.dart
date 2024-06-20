@@ -10,7 +10,8 @@ class ExploreTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(boxShadow: boxShadow2, borderRadius: kRadius5,color: kWhite),
+      decoration: BoxDecoration(
+          boxShadow: boxShadow2, borderRadius: kRadius5, color: kWhite),
       margin: EdgeInsets.symmetric(horizontal: 5.w),
       child: TextFormField(
         onTapOutside: (event) => FocusScope.of(context).unfocus(),

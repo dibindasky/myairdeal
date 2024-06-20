@@ -1,8 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/presentation/utils/animations/splash_animation.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -12,9 +11,10 @@ class ScreenSplash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authController = Get.find<AuthController>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Timer(const Duration(milliseconds: 1600), () {
-        Get.offAllNamed(Routes.onboard);
+        authController.whereToGo();
       });
     });
     return Scaffold(

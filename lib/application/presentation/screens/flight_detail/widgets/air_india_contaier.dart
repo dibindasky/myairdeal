@@ -9,7 +9,8 @@ class AirIndiaDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: kWhite,boxShadow: boxShadow1,borderRadius: kRadius15),
+      decoration: BoxDecoration(
+          color: kWhite, boxShadow: boxShadow1, borderRadius: kRadius15),
       margin: EdgeInsets.symmetric(horizontal: 10.w),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -60,7 +61,8 @@ class AirIndiaDetailCard extends StatelessWidget {
                     ),
                     Text(
                       'BNG',
-                      style: textHeadStyle1.copyWith(fontWeight: FontWeight.w900),
+                      style:
+                          textHeadStyle1.copyWith(fontWeight: FontWeight.w900),
                     ),
                     Text(
                       'International \nAirport',
@@ -68,55 +70,56 @@ class AirIndiaDetailCard extends StatelessWidget {
                     ),
                   ],
                 ),
-               Column(
-                            children: [
-                              Text(
-                                '01h 45m',
-                                style: textThinStyle1.copyWith(fontSize: 9.sp),
-                              ),
-                              kWidth5,
-                              Row(
-                                children: [
-                                  const CircleAvatar(
-                                    radius: 3,
-                                    backgroundColor: kGrey,
-                                  ),
-                                  ...List.generate(
-                                    10,
-                                    (index) => Text(
-                                      '-',
-                                      style: TextStyle(
-                                          fontSize: 8.sp,
-                                          fontWeight: FontWeight.w800,
-                                          color: kBlack),
-                                    ),
-                                  ),
-                                  const RotatedBox(quarterTurns: 1,
-                                    child: Icon(Icons.flight_rounded,
-                                        size: 20, color: kBlue),
-                                  ),
-                                  ...List.generate(
-                                    10,
-                                    (index) => Text(
-                                      '-',
-                                      style: TextStyle(
-                                          fontSize: 8.sp,
-                                          fontWeight: FontWeight.w800,
-                                          color: kBlack),
-                                    ),
-                                  ),
-                                  const CircleAvatar(
-                                    radius: 3,
-                                    backgroundColor: kGrey,
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                '0 Stop',
-                                style: textThinStyle1.copyWith(fontSize: 9.sp),
-                              ),
-                            ],
+                Column(
+                  children: [
+                    Text(
+                      '01h 45m',
+                      style: textThinStyle1.copyWith(fontSize: 9.sp),
+                    ),
+                    kWidth5,
+                    Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 3,
+                          backgroundColor: kGrey,
+                        ),
+                        ...List.generate(
+                          10,
+                          (index) => Text(
+                            '-',
+                            style: TextStyle(
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.w800,
+                                color: kBlack),
                           ),
+                        ),
+                        const RotatedBox(
+                          quarterTurns: 1,
+                          child: Icon(Icons.flight_rounded,
+                              size: 20, color: kBlue),
+                        ),
+                        ...List.generate(
+                          10,
+                          (index) => Text(
+                            '-',
+                            style: TextStyle(
+                                fontSize: 8.sp,
+                                fontWeight: FontWeight.w800,
+                                color: kBlack),
+                          ),
+                        ),
+                        const CircleAvatar(
+                          radius: 3,
+                          backgroundColor: kGrey,
+                        ),
+                      ],
+                    ),
+                    Text(
+                      '0 Stop',
+                      style: textThinStyle1.copyWith(fontSize: 9.sp),
+                    ),
+                  ],
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -126,7 +129,8 @@ class AirIndiaDetailCard extends StatelessWidget {
                     ),
                     Text(
                       'HYD',
-                      style: textHeadStyle1.copyWith(fontWeight: FontWeight.w900),
+                      style:
+                          textHeadStyle1.copyWith(fontWeight: FontWeight.w900),
                     ),
                     Text(
                       'International \nAirport',

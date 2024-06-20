@@ -10,10 +10,11 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 
 class ScreenOTP extends StatelessWidget {
-  ScreenOTP({super.key});
-  final loginController = Get.find<AuthController>();
+  const ScreenOTP({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final loginController = Get.find<AuthController>();
     return Scaffold(
       backgroundColor: kWhite,
       body: SafeArea(
@@ -45,7 +46,7 @@ class ScreenOTP extends StatelessWidget {
               EventButton(
                 text: 'Verify',
                 onTap: () {
-                  Get.toNamed(Routes.alMostDone);
+                  loginController.verifyOTP();
                 },
               ),
               kHeight20,

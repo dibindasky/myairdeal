@@ -38,7 +38,7 @@ class ScreenNotification extends StatelessWidget {
                               horizontal: 15.w, vertical: 5.h),
                           margin: EdgeInsets.symmetric(horizontal: 5.w),
                           decoration: BoxDecoration(
-                            boxShadow: boxShadow2,
+                              boxShadow: boxShadow2,
                               borderRadius: kRadius5,
                               color: controller.notificationIndex.value == index
                                   ? kBlueDark

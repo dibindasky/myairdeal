@@ -357,7 +357,7 @@ class ScreenFlightDetail extends StatelessWidget {
                     EventButton(
                       text: 'Confirm',
                       onTap: () {
-                       Get.toNamed(Routes.reviewFlightDetail);
+                        Get.toNamed(Routes.reviewFlightDetail);
                       },
                     ),
                     kHeight10,

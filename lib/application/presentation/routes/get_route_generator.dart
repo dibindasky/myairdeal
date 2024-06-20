@@ -39,6 +39,7 @@ import 'package:myairdeal/domain/core/binding/traveller_controller_binding.dart'
 class GetXRouterConfig {
   static final List<GetPage> routes = [
     GetPage(
+      binding: AuthBinding(),
       name: Routes.initial,
       page: () => const ScreenSplash(),
     ),
@@ -49,7 +50,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.signUp,
-      page: () => ScreenSignUp(),
+      page: () => const ScreenSignUp(),
     ),
     GetPage(
       name: Routes.goToHomePage,
@@ -57,14 +58,13 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.otp,
-      page: () => ScreenOTP(),
+      page: () => const ScreenOTP(),
     ),
     GetPage(
       name: Routes.signIn,
       page: () => const ScreenSignIn(),
     ),
     GetPage(
-      binding: AuthBinding(),
       name: Routes.alMostDone,
       page: () => ScreenAccountCreationForm(),
     ),

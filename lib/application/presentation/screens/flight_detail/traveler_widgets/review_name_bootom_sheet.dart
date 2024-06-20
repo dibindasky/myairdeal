@@ -97,7 +97,7 @@ class ReviewNameBottomSheet extends StatelessWidget {
                         isBorder: true,
                         text: 'Edit Name',
                         onTap: () {
-                         Get.back();
+                          Get.back();
                         },
                       ),
                     ),

@@ -6,13 +6,14 @@ import 'package:myairdeal/application/presentation/routes/get_route_generator.da
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/domain/core/binding/all_controller_binding.dart';
+import 'package:myairdeal/domain/core/di/dependency_injection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
   );
+  await configureInjection();
   runApp(const MyAirDeal());
 }
 

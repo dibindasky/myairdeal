@@ -16,7 +16,6 @@ import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 class AuthService extends AuthRepo {
   final ApiService apiService = ApiService();
 
-  AuthService();
   @override
   Future<Either<Failure, SuccessResponceModel>> sendOTP(
       {required LoginModel loginModel}) async {

@@ -9,10 +9,10 @@ import 'package:myairdeal/domain/models/auth/login_model/login_model.dart';
 import 'package:myairdeal/domain/models/auth/otp_verify_model/otp_verify_model.dart';
 import 'package:myairdeal/domain/models/success_responce_model/success_responce_model.dart';
 import 'package:myairdeal/domain/models/token/token_model.dart';
-import 'package:myairdeal/domain/repository/auth.dart';
+import 'package:myairdeal/domain/repository/service/auth.dart';
 
 @LazySingleton(as: AuthRepo)
-@singleton
+@injectable
 class AuthService extends AuthRepo {
   final ApiService apiService;
 

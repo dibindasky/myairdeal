@@ -13,24 +13,24 @@ class FlightInvoice extends StatelessWidget {
       width: 350,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Color(0xFFB3E5FC),
+        color: const Color(0xFFB3E5FC),
         borderRadius: BorderRadius.circular(16),
         boxShadow: boxShadow2,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TicketRow(
+          const TicketRow(
             label: 'Passenger',
             value: 'MacRaymond Idan',
             isBold: true,
             fontSize: 18,
           ),
-          DottedLines(),
+          const DottedLines(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TicketColumn(
+              const TicketColumn(
                 label: 'Temale',
                 value: 'TEL',
                 isBold: true,
@@ -42,16 +42,17 @@ class FlightInvoice extends StatelessWidget {
                     '01h 45m',
                     style: TextStyle(color: Colors.grey[700], fontSize: 12),
                   ),
-                  SizedBox(height: 4),
-                  Icon(Icons.airplanemode_active, size: 30, color: Colors.blue),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
+                  const Icon(Icons.airplanemode_active,
+                      size: 30, color: Colors.blue),
+                  const SizedBox(height: 4),
                   Text(
                     '0 Stop',
                     style: TextStyle(color: Colors.grey[700], fontSize: 12),
                   ),
                 ],
               ),
-              TicketColumn(
+              const TicketColumn(
                 label: 'Kumasi',
                 value: 'KSM',
                 isBold: true,
@@ -59,18 +60,18 @@ class FlightInvoice extends StatelessWidget {
               ),
             ],
           ),
-          DottedLines(),
-          TicketRow(label: 'Flight Code', value: 'Asky - 005'),
-          TicketRow(label: 'Class', value: 'Economy'),
-          TicketRow(label: 'Seat', value: 'Seat F2'),
-          TicketRow(label: 'Date', value: 'Tue, May 06'),
-          TicketRow(label: 'Departure', value: '07:00 AM'),
-          TicketRow(label: 'Arrival', value: '08:45 AM'),
-          Divider(),
-          TicketRow(label: 'Gate', value: 'Gate TT4'),
-          TicketRow(label: 'Terminal', value: 'T001'),
-          SizedBox(height: 16),
-          Barcode(),
+          const DottedLines(),
+          const TicketRow(label: 'Flight Code', value: 'Asky - 005'),
+          const TicketRow(label: 'Class', value: 'Economy'),
+          const TicketRow(label: 'Seat', value: 'Seat F2'),
+          const TicketRow(label: 'Date', value: 'Tue, May 06'),
+          const TicketRow(label: 'Departure', value: '07:00 AM'),
+          const TicketRow(label: 'Arrival', value: '08:45 AM'),
+          const Divider(),
+          const TicketRow(label: 'Gate', value: 'Gate TT4'),
+          const TicketRow(label: 'Terminal', value: 'T001'),
+          const SizedBox(height: 16),
+          const Barcode(),
         ],
       ),
     );
@@ -138,7 +139,7 @@ class TicketColumn extends StatelessWidget {
           label,
           style: TextStyle(color: Colors.grey[700]),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(
           value,
           style: TextStyle(
@@ -146,7 +147,7 @@ class TicketColumn extends StatelessWidget {
             fontSize: 18,
           ),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(
           subValue,
           style: TextStyle(color: Colors.grey[700], fontSize: 12),
@@ -165,7 +166,7 @@ class Barcode extends StatelessWidget {
       height: 50,
       width: double.infinity,
       color: Colors.black,
-      child: Center(
+      child: const Center(
         child: Text(
           '0019T6POL98347',
           style: TextStyle(

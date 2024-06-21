@@ -19,7 +19,6 @@ class AuthController extends GetxController {
   bool hasError = false;
   bool isOtpSent = false;
   bool isOtpVerfied = false;
-  bool isFail = false;
 
   TextEditingController loginNumber = TextEditingController();
   TextEditingController otpNumber = TextEditingController();
@@ -107,5 +106,14 @@ class AuthController extends GetxController {
           backgroundColor: kBluePrimary);
       await SecureStorage.setLogin();
     });
+  }
+
+  void logOut() async {
+    await SecureStorage.clearLogin();
+    otpNumber.clear();
+    isOtpSent = false;
+    isOtpVerfied = false;
+    loginNumber.clear();
+    Get.offAndToNamed(Routes.signUp);
   }
 }

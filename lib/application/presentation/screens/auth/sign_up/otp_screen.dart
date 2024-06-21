@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/facebook_google_button.dart';
@@ -40,34 +41,47 @@ class ScreenOTP extends StatelessWidget {
               kHeight50,
               const Text('Enter OTP'),
               kHeight5,
-              const PinEnterField(),
-              kHeight30,
-              kHeight50,
-              EventButton(
-                text: 'Verify',
-                onTap: () {
-                  loginController.verifyOTP();
-                },
-              ),
-              kHeight20,
-              const Center(child: Text('Or Sign Up With')),
-              kHeight20,
-              const LoginGoogleOrFaceBook(),
-              kHeight10,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Already have an account?'),
-                  kWidth5,
-                  TextButton(
-                    onPressed: () {
-                      Get.offNamed(Routes.signIn);
-                    },
-                    child: Text('Sign In',
-                        style: textThinStyle1.copyWith(color: kBlue)),
-                  ),
-                ],
-              ),
+              GetBuilder<AuthController>(builder: (controller) {
+                if (controller.isLoading.value) {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: kBluePrimary,
+                    ),
+                  );
+                }
+                return Column(
+                  children: [
+                    const PinEnterField(),
+                    kHeight30,
+                    kHeight50,
+                    EventButton(
+                      text: 'Verify',
+                      onTap: () {
+                        loginController.verifyOTP();
+                      },
+                    ),
+                    kHeight20,
+                    const Center(child: Text('Or Sign Up With')),
+                    kHeight20,
+                    const LoginGoogleOrFaceBook(),
+                    kHeight10,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Already have an account?'),
+                        kWidth5,
+                        TextButton(
+                          onPressed: () {
+                            Get.offNamed(Routes.signIn);
+                          },
+                          child: Text('Sign In',
+                              style: textThinStyle1.copyWith(color: kBlue)),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              }),
               kHeight10,
             ],
           ),

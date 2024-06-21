@@ -12,11 +12,11 @@ import 'package:dio/dio.dart' as _i3;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:myairdeal/application/controller/auth/auth_controller.dart'
-    as _i4;
-import 'package:myairdeal/data/service/api_service.dart' as _i5;
-import 'package:myairdeal/data/service/auth/auth_service.dart' as _i7;
+    as _i7;
+import 'package:myairdeal/data/service/api_service.dart' as _i4;
+import 'package:myairdeal/data/service/auth/auth_service.dart' as _i6;
 import 'package:myairdeal/domain/core/dio_module/dio_module.dart' as _i8;
-import 'package:myairdeal/domain/repository/service/auth.dart' as _i6;
+import 'package:myairdeal/domain/repository/service/auth_repo.dart' as _i5;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -31,9 +31,10 @@ extension GetItInjectableX on _i1.GetIt {
     );
     final dioModule = _$DioModule();
     gh.lazySingleton<_i3.Dio>(() => dioModule.dioInstance);
-    gh.factory<_i4.AuthController>(() => _i4.AuthController(gh<InvalidType>()));
-    gh.factory<_i5.ApiService>(() => _i5.ApiService(gh<_i3.Dio>()));
-    gh.lazySingleton<_i6.AuthRepo>(() => _i7.AuthService(gh<_i5.ApiService>()));
+    gh.factory<_i4.ApiService>(() => _i4.ApiService(gh<_i3.Dio>()));
+    gh.lazySingleton<_i5.AuthRepo>(() => _i6.AuthService(gh<_i4.ApiService>()));
+    gh.factory<_i7.AuthController>(
+        () => _i7.AuthController(gh<_i5.AuthRepo>()));
     return this;
   }
 }

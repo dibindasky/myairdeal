@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/facebook_google_button.dart';
@@ -39,8 +38,6 @@ class ScreenOTP extends StatelessWidget {
               kHeight50,
               kHeight30,
               kHeight50,
-              const Text('Enter OTP'),
-              kHeight5,
               GetBuilder<AuthController>(builder: (controller) {
                 if (controller.isLoading.value) {
                   return const Center(
@@ -51,6 +48,8 @@ class ScreenOTP extends StatelessWidget {
                 }
                 return Column(
                   children: [
+                    const Text('Enter OTP'),
+                    kHeight5,
                     const PinEnterField(),
                     kHeight30,
                     kHeight50,

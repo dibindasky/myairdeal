@@ -1,11 +1,8 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
-import 'package:injectable/injectable.dart';
 import 'package:myairdeal/data/secure_storage/secure_storage.dart';
 import 'package:myairdeal/domain/core/api_endpoints/api_endpoints.dart';
 
-@injectable
 class ApiService {
   final Dio _dio = Dio(BaseOptions(baseUrl: ApiEndPoints.baseUrl));
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/widgets/empty_booking.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/header_section.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';

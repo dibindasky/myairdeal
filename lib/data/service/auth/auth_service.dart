@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:injectable/injectable.dart';
 import 'package:myairdeal/data/service/api_service.dart';
 import 'package:myairdeal/domain/core/api_endpoints/api_endpoints.dart';
 import 'package:myairdeal/domain/core/failure/failure.dart';
@@ -11,8 +10,6 @@ import 'package:myairdeal/domain/models/success_responce_model/success_responce_
 import 'package:myairdeal/domain/models/token/token_model.dart';
 import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 
-@LazySingleton(as: AuthRepo)
-@injectable
 class AuthService extends AuthRepo {
   final ApiService apiService = ApiService();
 
@@ -20,7 +17,6 @@ class AuthService extends AuthRepo {
   Future<Either<Failure, SuccessResponceModel>> sendOTP(
       {required LoginModel loginModel}) async {
     try {
-      log('${loginModel.toJson()}');
       final responce = await apiService.post(
         ApiEndPoints.sendOTP,
         data: loginModel.toJson(),
@@ -41,7 +37,6 @@ class AuthService extends AuthRepo {
     required OtpVerifyModel otpVerifyModel,
   }) async {
     try {
-      log('${otpVerifyModel.toJson()}');
       final responce = await apiService.post(
         ApiEndPoints.verifyOTP,
         data: otpVerifyModel.toJson(),

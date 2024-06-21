@@ -1,10 +1,8 @@
-import 'dart:developer';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:injectable/injectable.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/data/secure_storage/secure_storage.dart';
 import 'package:myairdeal/data/service/auth/auth_service.dart';
 import 'package:myairdeal/domain/models/auth/login_model/login_model.dart';
@@ -12,12 +10,10 @@ import 'package:myairdeal/domain/models/auth/otp_verify_model/otp_verify_model.d
 import 'package:myairdeal/domain/models/token/token_model.dart';
 import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 
-@injectable
 class AuthController extends GetxController {
-
   AuthRepo authRepo = AuthService();
 
-  RxBool isLoading = false.obs;
+  bool isLoading = false;
   bool hasError = false;
   bool isOtpSent = false;
   bool isOtpVerfied = false;
@@ -26,11 +22,33 @@ class AuthController extends GetxController {
   TextEditingController otpNumber = TextEditingController();
   RxInt genderType = 0.obs;
   RxList genderList = ['Mr', 'Mrs', 'Ms'].obs;
-  RegExp phoneNumberRegExp = RegExp(r'^[0-9]+$');
+  RxInt maxLength = 10.obs;
+  RxInt maxOTPLength = 4.obs;
 
-  phoneNumber(int phonenumber) {
-    loginNumber.text = phonenumber.toString();
+  @override
+  void onInit() {
+    super.onInit();
+    otpNumber.addListener(_checkOTPNumberLength);
+    loginNumber.addListener(_checkPhoneNumberLength);
+  }
+
+  @override
+  void onClose() {
+    otpNumber.removeListener(_checkOTPNumberLength);
+    loginNumber.removeListener(_checkPhoneNumberLength);
+    super.onClose();
+  }
+
+  void _checkPhoneNumberLength() {
     update();
+  }
+
+  void _checkOTPNumberLength() {
+    update();
+  }
+
+  void updateMaxLength(String countryCode) {
+    maxLength.value = countryMaxLengths[countryCode] ?? 10;
   }
 
   void changeGenderType(int index) {
@@ -54,55 +72,56 @@ class AuthController extends GetxController {
   }
 
   Future<void> otpSent() async {
-    isLoading.value = true;
+    isLoading = true;
     hasError = false;
     isOtpSent = false;
-
+    update();
     String trimmedNumber = loginNumber.text.trim();
     String replaceWhiteSpace = trimmedNumber.replaceAll(' ', '');
-
     final data = await authRepo.sendOTP(
       loginModel: LoginModel(mobileNumber: replaceWhiteSpace),
     );
-
     data.fold((failure) {
-      isLoading.value = false;
+      isLoading = false;
       hasError = true;
       isOtpSent = false;
+      update();
       Get.snackbar('Failed', 'OTP Sending Failed', backgroundColor: kRed);
     }, (success) {
-      isLoading.value = false;
+      isLoading = false;
       hasError = false;
       isOtpSent = true;
-      Get.offAllNamed(Routes.otp);
+      update();
+      Get.toNamed(Routes.otp);
       Get.snackbar('Success', 'OTP Sending Success',
           backgroundColor: kBluePrimary);
     });
   }
 
   Future<void> verifyOTP() async {
-    isLoading.value = true;
+    isLoading = true;
     hasError = false;
     isOtpVerfied = false;
+    update();
     String trimmedNumber = loginNumber.text.trim();
     String replaceWhiteSpace = trimmedNumber.replaceAll(' ', '');
-    log(otpNumber.text);
-    log(replaceWhiteSpace);
     final data = await authRepo.verifyOTP(
         otpVerifyModel: OtpVerifyModel(
       phone: replaceWhiteSpace,
       otp: otpNumber.text,
     ));
     data.fold((l) {
-      isLoading.value = false;
+      isLoading = false;
       hasError = true;
       isOtpVerfied = false;
+      update();
       Get.snackbar('Failed', 'OTP Verify Failed', backgroundColor: kRed);
     }, (r) async {
       await SecureStorage.saveToken(tokenModel: TokenModel(token: r.token));
-      isLoading.value = false;
+      isLoading = false;
       hasError = false;
       isOtpVerfied = true;
+      update();
       Get.offAllNamed(Routes.bottomBar);
       Get.snackbar('Success', 'OTP Verify Success',
           backgroundColor: kBluePrimary);
@@ -117,6 +136,8 @@ class AuthController extends GetxController {
     isOtpSent = false;
     isOtpVerfied = false;
     loginNumber.clear();
+    update();
     await SecureStorage.clearLogin();
+    await SecureStorage.setOnBoard();
   }
 }

@@ -14,9 +14,9 @@ import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 @LazySingleton(as: AuthRepo)
 @injectable
 class AuthService extends AuthRepo {
-  final ApiService apiService;
+  final ApiService apiService = ApiService();
 
-  AuthService(this.apiService);
+  AuthService();
   @override
   Future<Either<Failure, SuccessResponceModel>> sendOTP(
       {required LoginModel loginModel}) async {

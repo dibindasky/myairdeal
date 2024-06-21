@@ -3,26 +3,11 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:myairdeal/data/secure_storage/secure_storage.dart';
+import 'package:myairdeal/domain/core/api_endpoints/api_endpoints.dart';
 
 @injectable
 class ApiService {
-  final Dio _dio;
-
-  ApiService(this._dio) {
-    // dio.options.connectTimeout = const Duration(seconds: 3);
-    // dio.interceptors.add(InterceptorsWrapper(
-    //   onRequest: (options, handler) async {
-    //     final token =
-    //         await SecureStorage.getToken().then((token) => token.token);
-    //     dio.options.headers['Authorization'] = token;
-    //     options.headers['Authorization'] = token;
-    //     log(dio.options.headers);
-    //     log(options.headers);
-    //     return handler.next(options);
-    //   },
-    //   onError: (e, handler) async {},
-    // ));
-  }
+  final Dio _dio = Dio(BaseOptions(baseUrl: ApiEndPoints.baseUrl));
 
   Future<Response<dynamic>> get(
     String url, {

@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/data/secure_storage/secure_storage.dart';
+import 'package:myairdeal/data/service/auth/auth_service.dart';
 import 'package:myairdeal/domain/models/auth/login_model/login_model.dart';
 import 'package:myairdeal/domain/models/auth/otp_verify_model/otp_verify_model.dart';
 import 'package:myairdeal/domain/models/token/token_model.dart';
@@ -13,9 +14,8 @@ import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 
 @injectable
 class AuthController extends GetxController {
-  AuthController(this.authRepo);
 
-  AuthRepo authRepo;
+  AuthRepo authRepo = AuthService();
 
   RxBool isLoading = false.obs;
   bool hasError = false;

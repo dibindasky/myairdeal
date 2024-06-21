@@ -21,7 +21,7 @@ class ScreenSignUp extends StatelessWidget {
         child: GetBuilder<AuthController>(builder: (controller) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: loginContrller.isLoading
+            child: loginContrller.isLoading.value
                 ? const Center(
                     child: CircularProgressIndicator(
                       color: kBlueLight,

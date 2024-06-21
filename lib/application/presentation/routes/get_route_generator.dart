@@ -70,6 +70,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       bindings: [
+        AuthBinding(),
         NavBarBinding(),
         FlightSortBinding(),
         PaymentBinding(),

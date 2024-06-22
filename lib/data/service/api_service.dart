@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:myairdeal/data/secure_storage/secure_storage.dart';
 import 'package:myairdeal/domain/core/api_endpoints/api_endpoints.dart';
@@ -29,8 +28,10 @@ class ApiService {
       }
       log('api uri ==>get  ${_dio.options.baseUrl + url}');
       log('token ==>  ${_dio.options.headers['authorization']}');
-      final response =
-          await _dio.get(url, data: data, queryParameters: queryParameters);
+      final response = await _dio.get(url,
+          data: data,
+          queryParameters: queryParameters,
+          cancelToken: CancelToken());
       return response;
     } on DioException catch (exception) {
       log('Dio exception code => ${exception.response?.statusCode}');

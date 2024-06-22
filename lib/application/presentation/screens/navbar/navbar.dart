@@ -25,7 +25,7 @@ class ScreenNavbar extends StatelessWidget {
       ),
       const ScreenBookings(),
       const ScreenExplore(),
-      ScreenTalkToUsPage(),
+      const ScreenTalkToUsPage(),
       const ScreenAccountPage()
     ];
 

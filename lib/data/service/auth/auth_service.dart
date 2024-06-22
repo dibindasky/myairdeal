@@ -17,7 +17,6 @@ class AuthService extends AuthRepo {
   Future<Either<Failure, SuccessResponceModel>> sendOTP(
       {required LoginModel loginModel}) async {
     try {
-      log('${loginModel.toJson()}');
       final responce = await apiService.post(
         ApiEndPoints.sendOTP,
         data: loginModel.toJson(),
@@ -38,7 +37,6 @@ class AuthService extends AuthRepo {
     required OtpVerifyModel otpVerifyModel,
   }) async {
     try {
-      log('${otpVerifyModel.toJson()}');
       final responce = await apiService.post(
         ApiEndPoints.verifyOTP,
         data: otpVerifyModel.toJson(),

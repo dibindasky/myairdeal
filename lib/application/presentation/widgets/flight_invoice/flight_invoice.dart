@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
+import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
 
 class FlightInvoice extends StatelessWidget {
   final FlightTicketInvoiceEnum flightTicketInvoiceEnum;
@@ -9,70 +12,143 @@ class FlightInvoice extends StatelessWidget {
   const FlightInvoice({super.key, required this.flightTicketInvoiceEnum});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 350,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Color(0xFFB3E5FC),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: boxShadow2,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TicketRow(
-            label: 'Passenger',
-            value: 'MacRaymond Idan',
-            isBold: true,
-            fontSize: 18,
+    return Column(
+      children: [
+        Container(
+          width: 350,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: const Color(0xFFDCF3FF),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: boxShadow2,
           ),
-          DottedLines(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TicketColumn(
-                label: 'Temale',
-                value: 'TEL',
-                isBold: true,
-                subValue: 'Temale International\nAirport',
-              ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '01h 45m',
-                    style: TextStyle(color: Colors.grey[700], fontSize: 12),
+                  const Text('Passenger'),
+                  Text('MacRaymond Idan', style: textStyle1),
+                ],
+              ),
+              kHeight5,
+              const DottedLines(height: 10),
+              kHeight15,
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TicketColumn(
+                    label: 'Temale',
+                    value: 'TEL',
+                    isBold: true,
                   ),
-                  SizedBox(height: 4),
-                  Icon(Icons.airplanemode_active, size: 30, color: Colors.blue),
-                  SizedBox(height: 4),
-                  Text(
-                    '0 Stop',
-                    style: TextStyle(color: Colors.grey[700], fontSize: 12),
+                  NormalCenterItems(haveImage: false),
+                  TicketColumn(
+                    label: 'Kumasi',
+                    value: 'KSM',
+                    isBold: true,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                   ),
                 ],
               ),
-              TicketColumn(
-                label: 'Kumasi',
-                value: 'KSM',
-                isBold: true,
-                subValue: 'Kumasi International\nAirport',
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TicketColumn(
+                    label: 'Temale International',
+                    subValue: 'Airport',
+                  ),
+                  TicketColumn(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    label: 'Kumasi International',
+                    subValue: 'Airport',
+                  ),
+                ],
               ),
+              const DottedLines(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TicketColumn(
+                    label: 'Flight Code',
+                    subValue: 'Asky - 005',
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
+                  ),
+                  TicketColumn(
+                    label: 'Class',
+                    subValue: 'Economy',
+                    subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                  ),
+                  TicketColumn(
+                    subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
+                    label: 'Seat',
+                    subValue: 'Seat F2',
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                  ),
+                ],
+              ),
+              kHeight5,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TicketColumn(
+                    label: 'Date',
+                    subValue: 'Tue, May 06',
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
+                  ),
+                  TicketColumn(
+                    label: 'Departuress',
+                    subValue: '07:00 AM',
+                    subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                  ),
+                  TicketColumn(
+                    subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
+                    label: 'Arrival',
+                    subValue: '08:45 AM',
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                  ),
+                ],
+              ),
+              kHeight10,
+              const DottedLines(height: 10),
+              kHeight5,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TicketColumn(
+                    label: 'Date',
+                    subValue: 'Tue, May 06',
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
+                  ),
+                  TicketColumn(
+                    subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
+                    label: 'Arrival',
+                    subValue: '08:45 AM',
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                  ),
+                ],
+              ),
+              // const TicketRow(label: 'Flight Code', value: 'Asky - 005'),
+              // const TicketRow(label: 'Class', value: 'Economy'),
+              // const TicketRow(label: 'Seat', value: 'Seat F2'),
+              // const TicketRow(label: 'Date', value: 'Tue, May 06'),
+              // const TicketRow(label: 'Departure', value: '07:00 AM'),
+              // const TicketRow(label: 'Arrival', value: '08:45 AM'),
+              // const DottedLines(),
+              // const TicketRow(label: 'Gate', value: 'Gate TT4'),
+              // const TicketRow(label: 'Terminal', value: 'T001'),
+              // const SizedBox(height: 16),
+              const Barcode(),
             ],
           ),
-          DottedLines(),
-          TicketRow(label: 'Flight Code', value: 'Asky - 005'),
-          TicketRow(label: 'Class', value: 'Economy'),
-          TicketRow(label: 'Seat', value: 'Seat F2'),
-          TicketRow(label: 'Date', value: 'Tue, May 06'),
-          TicketRow(label: 'Departure', value: '07:00 AM'),
-          TicketRow(label: 'Arrival', value: '08:45 AM'),
-          Divider(),
-          TicketRow(label: 'Gate', value: 'Gate TT4'),
-          TicketRow(label: 'Terminal', value: 'T001'),
-          SizedBox(height: 16),
-          Barcode(),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -117,40 +193,51 @@ class TicketRow extends StatelessWidget {
 
 class TicketColumn extends StatelessWidget {
   final String label;
-  final String value;
-  final String subValue;
+  final String? value;
+  final String? subValue;
   final bool isBold;
-
+  final CrossAxisAlignment? crossAxisAlignment;
+  final TextStyle? lebelStyle;
+  final TextStyle? subValueStyle;
   const TicketColumn({
+    this.subValueStyle,
+    this.lebelStyle,
     super.key,
     required this.label,
-    required this.value,
-    required this.subValue,
+    this.subValue,
+    this.value,
     this.isBold = false,
+    this.crossAxisAlignment,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
       children: [
+        kHeight5,
         Text(
           label,
-          style: TextStyle(color: Colors.grey[700]),
+          style: lebelStyle ??
+              textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
         ),
-        SizedBox(height: 4),
-        Text(
-          value,
-          style: TextStyle(
-            fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-            fontSize: 18,
-          ),
-        ),
-        SizedBox(height: 4),
-        Text(
-          subValue,
-          style: TextStyle(color: Colors.grey[700], fontSize: 12),
-        ),
+        kHeight5,
+        value != null
+            ? Text(
+                value!,
+                style: TextStyle(
+                  fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+                  fontSize: 18,
+                ),
+              )
+            : kEmpty,
+        subValue != null
+            ? Text(
+                subValue!,
+                style: subValueStyle ??
+                    textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
+              )
+            : kEmpty,
       ],
     );
   }
@@ -165,7 +252,7 @@ class Barcode extends StatelessWidget {
       height: 50,
       width: double.infinity,
       color: Colors.black,
-      child: Center(
+      child: const Center(
         child: Text(
           '0019T6POL98347',
           style: TextStyle(

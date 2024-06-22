@@ -29,7 +29,8 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (ctx) => const ScreenReviewFlightDetails());
       case Routes.travelerDetails:
-        return MaterialPageRoute(builder: (ctx) => ScreenTravelerDetails());
+        return MaterialPageRoute(
+            builder: (ctx) => const ScreenTravelerDetails());
       case Routes.account:
         return MaterialPageRoute(builder: (ctx) => const ScreenAccountPage());
       case Routes.payment:
@@ -41,7 +42,7 @@ class RouteGenerator {
       case Routes.bookings:
         return MaterialPageRoute(builder: (ctx) => const ScreenBookings());
       case Routes.invoice:
-        return MaterialPageRoute(builder: (ctx) => ScreenInvoiceDetail());
+        return MaterialPageRoute(builder: (ctx) => const ScreenInvoiceDetail());
       case Routes.explore:
         return MaterialPageRoute(builder: (ctx) => const ScreenExplore());
       case Routes.notificationSetup:

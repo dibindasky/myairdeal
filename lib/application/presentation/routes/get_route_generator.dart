@@ -49,6 +49,7 @@ class GetXRouterConfig {
       page: () => const ScreenOnBoard(),
     ),
     GetPage(
+      binding: AuthBinding(),
       name: Routes.signUp,
       page: () => const ScreenSignUp(),
     ),
@@ -57,6 +58,7 @@ class GetXRouterConfig {
       page: () => const GoTOHOmeScreen(),
     ),
     GetPage(
+      binding: AuthBinding(),
       name: Routes.otp,
       page: () => const ScreenOTP(),
     ),

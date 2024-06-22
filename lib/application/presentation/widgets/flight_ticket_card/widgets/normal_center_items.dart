@@ -38,7 +38,7 @@ class NormalCenterItems extends StatelessWidget {
               backgroundColor: kGrey,
             ),
             ...List.generate(
-              10,
+              7,
               (index) => Text(
                 '-',
                 style: TextStyle(
@@ -50,7 +50,7 @@ class NormalCenterItems extends StatelessWidget {
               child: Icon(Icons.flight_rounded, size: 20, color: kBlue),
             ),
             ...List.generate(
-              10,
+              7,
               (index) => Text(
                 '-',
                 style: TextStyle(

@@ -19,70 +19,70 @@ class ScreenSignUp extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: GetBuilder<AuthController>(builder: (cont) {
-            return ListView(
-              children: [
-                kHeight40,
-                Text(
-                  'Create an Account',
-                  style: textHeadStyle1.copyWith(
-                    fontSize: 25.sp,
-                    fontWeight: FontWeight.w700,
-                  ),
+          child: ListView(
+            children: [
+              kHeight40,
+              Text(
+                'Create an Account',
+                style: textHeadStyle1.copyWith(
+                  fontSize: 25.sp,
+                  fontWeight: FontWeight.w700,
                 ),
-                kHeight10,
-                Text(
-                  'You will be sent a code on this number to verify if you are the owner of the number. ',
-                  style: textThinStyle1.copyWith(color: kbuttonGrey),
+              ),
+              kHeight10,
+              Text(
+                'You will be sent a code on this number to verify if you are the owner of the number. ',
+                style: textThinStyle1.copyWith(color: kbuttonGrey),
+              ),
+              kHeight50,
+              kHeight30,
+              kHeight50,
+              const Text('Mobile Number'),
+              kHeight5,
+              InternationalPhoneNumberInput(
+                selectorButtonOnErrorPadding: 0,
+                spaceBetweenSelectorAndTextField: 0,
+                hintText: 'Mobile Number',
+                onInputChanged: (PhoneNumber number) {
+                  controller.updateMaxLength(number.isoCode ?? 'IN');
+                },
+                selectorConfig: const SelectorConfig(
+                  trailingSpace: false,
+                  showFlags: false,
+                  selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                  useBottomSheetSafeArea: true,
                 ),
-                kHeight50,
-                kHeight30,
-                kHeight50,
-                const Text('Mobile Number'),
-                kHeight5,
-                InternationalPhoneNumberInput(
-                  selectorButtonOnErrorPadding: 0,
-                  spaceBetweenSelectorAndTextField: 0,
-                  hintText: 'Mobile Number',
-                  onInputChanged: (PhoneNumber number) {
-                    controller.updateMaxLength(number.isoCode ?? 'IN');
-                  },
-                  selectorConfig: const SelectorConfig(
-                    trailingSpace: false,
-                    showFlags: false,
-                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                    useBottomSheetSafeArea: true,
-                  ),
-                  initialValue: PhoneNumber(isoCode: 'IN'),
-                  ignoreBlank: false,
-                  autoValidateMode: AutovalidateMode.disabled,
-                  selectorTextStyle: const TextStyle(color: kBlack),
-                  textFieldController: controller.loginNumber,
-                  formatInput: true,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    signed: true,
-                    decimal: false,
-                  ),
-                  inputDecoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: kGrey,
-                        width: 1.0,
-                      ),
+                initialValue: PhoneNumber(isoCode: 'IN'),
+                ignoreBlank: false,
+                autoValidateMode: AutovalidateMode.disabled,
+                selectorTextStyle: const TextStyle(color: kBlack),
+                textFieldController: controller.loginNumber,
+                formatInput: true,
+                keyboardType: const TextInputType.numberWithOptions(
+                  signed: true,
+                  decimal: false,
+                ),
+                inputDecoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color: kGrey,
+                      width: 1.0,
                     ),
-                    hintText: 'Mobile Number',
                   ),
-                  maxLength: controller.maxLength.value + 1,
-                  onSaved: (PhoneNumber number) {},
+                  hintText: 'Mobile Number',
                 ),
-                kHeight50,
-                kHeight50,
-                controller.isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : EventIconButton(
+                maxLength: controller.maxLength.value + 1,
+                onSaved: (PhoneNumber number) {},
+              ),
+              kHeight50,
+              kHeight50,
+              controller.isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : GetBuilder<AuthController>(builder: (cont) {
+                      return EventIconButton(
                         suffixIcon: controller.loginNumber.text.length >=
                                 controller.maxLength.value + 1
                             ? Image.asset(
@@ -107,27 +107,27 @@ class ScreenSignUp extends StatelessWidget {
                             );
                           }
                         },
-                      ),
-                kHeight20,
-                const Center(child: Text('Or Sign Up With')),
-                kHeight10,
-                // const LoginGoogleOrFaceBook(),
-                kHeight10,
-                EventIconButton(
-                  prefixIcon: const Icon(
-                    Icons.person_2_outlined,
-                    color: kWhite,
-                    size: 20,
-                  ),
-                  text: 'Login as Guest',
-                  onTap: () {
-                    Get.offNamed(Routes.bottomBar);
-                  },
+                      );
+                    }),
+              kHeight20,
+              const Center(child: Text('Or Sign Up With')),
+              kHeight10,
+              // const LoginGoogleOrFaceBook(),
+              kHeight10,
+              EventIconButton(
+                prefixIcon: const Icon(
+                  Icons.person_2_outlined,
+                  color: kWhite,
+                  size: 20,
                 ),
-                kHeight10,
-              ],
-            );
-          }),
+                text: 'Login as Guest',
+                onTap: () {
+                  Get.offNamed(Routes.bottomBar);
+                },
+              ),
+              kHeight10,
+            ],
+          ),
         ),
       ),
     );

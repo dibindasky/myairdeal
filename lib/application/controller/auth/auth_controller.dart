@@ -15,8 +15,6 @@ class AuthController extends GetxController {
 
   bool isLoading = false;
   bool hasError = false;
-  bool isOtpSent = false;
-  bool isOtpVerfied = false;
 
   TextEditingController loginNumber = TextEditingController();
   TextEditingController otpNumber = TextEditingController();
@@ -74,7 +72,7 @@ class AuthController extends GetxController {
   Future<void> otpSent() async {
     isLoading = true;
     hasError = false;
-    isOtpSent = false;
+
     update();
     String trimmedNumber = loginNumber.text.trim();
     String replaceWhiteSpace = trimmedNumber.replaceAll(' ', '');
@@ -84,24 +82,22 @@ class AuthController extends GetxController {
     data.fold((failure) {
       isLoading = false;
       hasError = true;
-      isOtpSent = false;
+
       update();
       Get.snackbar('Failed', 'OTP Sending Failed', backgroundColor: kRed);
     }, (success) {
       isLoading = false;
       hasError = false;
-      isOtpSent = true;
-      update();
-      Get.toNamed(Routes.otp);
       Get.snackbar('Success', 'OTP Sending Success',
           backgroundColor: kBluePrimary);
+      Get.toNamed(Routes.otp);
     });
   }
 
   Future<void> verifyOTP() async {
     isLoading = true;
     hasError = false;
-    isOtpVerfied = false;
+
     update();
     String trimmedNumber = loginNumber.text.trim();
     String replaceWhiteSpace = trimmedNumber.replaceAll(' ', '');
@@ -113,14 +109,14 @@ class AuthController extends GetxController {
     data.fold((l) {
       isLoading = false;
       hasError = true;
-      isOtpVerfied = false;
+
       update();
       Get.snackbar('Failed', 'OTP Verify Failed', backgroundColor: kRed);
     }, (r) async {
       await SecureStorage.saveToken(tokenModel: TokenModel(token: r.token));
       isLoading = false;
       hasError = false;
-      isOtpVerfied = true;
+
       update();
       Get.offAllNamed(Routes.bottomBar);
       Get.snackbar('Success', 'OTP Verify Success',
@@ -133,8 +129,7 @@ class AuthController extends GetxController {
     Get.snackbar('Success', 'Logout success');
     Get.offAndToNamed(Routes.signUp);
     otpNumber.clear();
-    isOtpSent = false;
-    isOtpVerfied = false;
+
     loginNumber.clear();
     update();
     await SecureStorage.clearLogin();

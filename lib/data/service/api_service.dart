@@ -28,8 +28,10 @@ class ApiService {
       }
       log('api uri ==>get  ${_dio.options.baseUrl + url}');
       log('token ==>  ${_dio.options.headers['authorization']}');
-      final response =
-          await _dio.get(url, data: data, queryParameters: queryParameters);
+      final response = await _dio.get(url,
+          data: data,
+          queryParameters: queryParameters,
+          cancelToken: CancelToken());
       return response;
     } on DioException catch (exception) {
       log('Dio exception code => ${exception.response?.statusCode}');

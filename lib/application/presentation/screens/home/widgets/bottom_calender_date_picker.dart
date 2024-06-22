@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
@@ -11,6 +10,8 @@ class DatePickingBottomSheet extends StatefulWidget {
     super.key,
     required this.onPressed,
     this.initialDate,
+    this.lastDate,
+    this.focusedDay,
     this.year = 0,
     this.last = 0,
   });
@@ -19,6 +20,9 @@ class DatePickingBottomSheet extends StatefulWidget {
   final int year;
   final int last;
   final DateTime? initialDate;
+  final DateTime? lastDate;
+  // focus date should be in between the active date
+  final DateTime? focusedDay;
 
   @override
   State<DatePickingBottomSheet> createState() => _DatePickingBottomSheetState();
@@ -27,14 +31,16 @@ class DatePickingBottomSheet extends StatefulWidget {
 class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
   DateTime initialDate = DateTime.now();
   DateTime selectedDate = DateTime.now();
+  DateTime _focusedDay = DateTime.now();
   @override
   void initState() {
     initialDate = widget.initialDate ?? initialDate;
+    _focusedDay = widget.focusedDay ?? _focusedDay;
+
     super.initState();
   }
 
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   Map<DateTime, String> prices = {
     DateTime.utc(2024, 6, 1): '₹3500',
@@ -90,8 +96,11 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
           Column(
             children: [
               TableCalendar(
-                firstDay: DateTime.utc(2024, 6, 1),
-                lastDay: DateTime.utc(2024, 12, 30),
+                firstDay: widget.initialDate ?? DateTime.now(),
+                lastDay: widget.lastDate ??
+                    DateTime.now().add(const Duration(days: 60)),
+                // firstDay: DateTime.utc(2024, 6, 1),
+                // lastDay: DateTime.utc(2024, 12, 30),
                 focusedDay: _focusedDay,
                 calendarFormat: _calendarFormat,
                 calendarBuilders: CalendarBuilders(
@@ -161,7 +170,7 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
                     text: 'Continue',
                     width: double.infinity,
                     onTap: () {
-                      Get.back();
+                      Navigator.of(context).pop();
                     }),
               )
             ],

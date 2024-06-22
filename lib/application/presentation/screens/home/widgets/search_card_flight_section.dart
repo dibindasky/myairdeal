@@ -49,6 +49,7 @@ class FlightSearchCardHome extends StatelessWidget {
                 : // one way and round trip
                 const OneWayAndRoundTrip(),
             kHeight10,
+            // date selection index 0 is departure and index 1 is return
             Obx(() {
               return Column(
                 children: List.generate(
@@ -88,6 +89,7 @@ class FlightSearchCardHome extends StatelessWidget {
               );
             }),
             kHeight10,
+            // travellers and class selection
             Obx(() {
               return TextIconButtonOutlinedCustom(
                   mainAxisAlignment: MainAxisAlignment.start,

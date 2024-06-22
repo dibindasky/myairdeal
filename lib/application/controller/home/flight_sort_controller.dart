@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/utils/test_const.dart';
+import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
 
 class FlightSortController extends GetxController {
   // Change category
   RxInt selectedCategoryType = 0.obs;
-  // variable used to select the trip type oneway,roundtrip, multicity
+  // variable used to select the trip type 0- oneway, 1- roundtrip, 2- multicity
   RxInt tripType = 0.obs;
   // number of adult to be travelled
   RxInt adultCount = 1.obs;
@@ -12,7 +15,7 @@ class FlightSortController extends GetxController {
   // number of infant to be travelled
   RxInt infantCount = 0.obs;
   // number of citys in multicity trip
-  RxInt multiCityCount = 1.obs;
+  RxInt multiCityCount = 2.obs;
   // class type to be travelled
   RxString classType = "Economy".obs;
   // departure date in oneway and round trip
@@ -20,15 +23,23 @@ class FlightSortController extends GetxController {
   // return date in round trip
   Rx<DateTime> returnDate = DateTime.now().obs;
   // departure dates in multicity trips
-  RxList<DateTime?> multiCityDepartureDate = <DateTime?>[DateTime.now()].obs;
+  RxList<DateTime?> multiCityDepartureDate =
+      <DateTime?>[DateTime.now(), DateTime.now()].obs;
   // variable to show between search and resent searchs
   RxBool search = false.obs;
   RxString sortType = 'Best'.obs;
   RxString stopType = 'Direct'.obs;
   RxDouble durationSlider = .5.obs;
   Rx<DateTime> selectedDate = DateTime.now().obs;
+  RxList<RxList<CitySearchModel>> airportSelected = <RxList<CitySearchModel>>[
+    RxList.generate(2, (index) => CitySearchModel()),
+    RxList.generate(2, (index) => CitySearchModel())
+  ].obs;
+  int chooseAirportIndex = 0;
+  bool departureAirport = true;
 
   List<String> sortAirlines = ['Indigo', 'Air-India', 'Asky Airlines'];
+  RxList<CitySearchModel> searchCityList = <CitySearchModel>[].obs;
 
   RxList<String> sortAirlinesSelected = <String>[].obs;
   RxList<String> sortStopsSelected = <String>[].obs;
@@ -79,8 +90,8 @@ class FlightSortController extends GetxController {
     update();
   }
 
-  void changeAdultCount(bool inc) {
-    if (!inc) {
+  void changeAdultCount(bool increment) {
+    if (!increment) {
       if (adultCount.value != 0) {
         adultCount.value--;
       }
@@ -89,8 +100,8 @@ class FlightSortController extends GetxController {
     }
   }
 
-  void changeChildrenCount(bool inc) {
-    if (!inc) {
+  void changeChildrenCount(bool increment) {
+    if (!increment) {
       if (childrenCount.value != 0) {
         childrenCount.value--;
       }
@@ -99,8 +110,8 @@ class FlightSortController extends GetxController {
     }
   }
 
-  void changeInfantCount(bool inc) {
-    if (!inc) {
+  void changeInfantCount(bool increment) {
+    if (!increment) {
       if (infantCount.value != 0) {
         infantCount.value--;
       }
@@ -126,12 +137,18 @@ class FlightSortController extends GetxController {
 
   void removeFromMultiCityTrip(int index) {
     multiCityDepartureDate.removeAt(index);
+    airportSelected.removeAt(index);
     multiCityCount.value--;
   }
 
   void increaseMulticityField() {
+    CitySearchModel model =
+        airportSelected[multiCityDepartureDate.length - 1][1];
+    RxList<CitySearchModel> list =
+        RxList.generate(2, (index) => index == 0 ? model : CitySearchModel());
     multiCityCount.value++;
     multiCityDepartureDate.add(null);
+    airportSelected.add(list);
   }
 
   void changeTripType(int index) {
@@ -153,8 +170,41 @@ class FlightSortController extends GetxController {
     classType.value = type;
   }
 
-  void changeSearch(bool value) {
-    search.value = value;
+  void changeSearch(String value) {
+    search.value = value != '';
+    if (value == '') {
+      searchCityList.value = <CitySearchModel>[];
+    } else {
+      List<CitySearchModel> searchList = [];
+      for (var element in searchAirport) {
+        if (element[searchCountry]!.contains(value) ||
+            element[searchCode]!.contains(value) ||
+            element[searchcity]!.contains(value)) {
+          searchList.add(CitySearchModel.fromJson(element));
+        }
+      }
+      searchCityList.value = searchList;
+    }
+  }
+
+  void changeSelectedAirport({required bool from, int index = 0}) {
+    Get.toNamed(Routes.airportSearch);
+    departureAirport = from;
+    chooseAirportIndex = index;
+  }
+
+  void setAirportSelection({required CitySearchModel citySearchModel}) {
+    // add selected airport to the selected airport list
+    airportSelected[chooseAirportIndex][departureAirport ? 0 : 1] =
+        citySearchModel;
+    if (chooseAirportIndex == 0 &&
+        !departureAirport &&
+        multiCityCount.value == 2) {
+      RxList<CitySearchModel> list = RxList.generate(
+          2, (index) => index == 0 ? citySearchModel : CitySearchModel());
+      airportSelected[1] = list;
+    }
+    Get.back();
   }
 
   void changeSortTypes(String type) {

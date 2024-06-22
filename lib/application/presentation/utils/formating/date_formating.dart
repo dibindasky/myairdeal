@@ -17,11 +17,11 @@ class DateFormating {
       case DateTime.thursday:
         return 'THU';
       case DateTime.friday:
-        return 'Fri';
+        return 'FRI';
       case DateTime.saturday:
-        return 'Sat';
+        return 'SAT';
       case DateTime.sunday:
-        return 'Sun';
+        return 'SUN';
       default:
         return '';
     }

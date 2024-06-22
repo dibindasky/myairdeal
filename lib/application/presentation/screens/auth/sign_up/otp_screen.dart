@@ -69,7 +69,12 @@ class ScreenOTP extends StatelessWidget {
                         width: 400.w,
                         text: 'Verify',
                         onTap: () {
-                          loginController.verifyOTP();
+                          if (loginController.otpNumber.text.length >=
+                              loginController.maxOTPLength.value) {
+                            loginController.verifyOTP();
+                          } else {
+                            Get.snackbar('Failed', 'OTP number is not Valid');
+                          }
                         },
                       ),
                       kHeight20,

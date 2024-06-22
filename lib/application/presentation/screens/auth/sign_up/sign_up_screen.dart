@@ -77,38 +77,45 @@ class ScreenSignUp extends StatelessWidget {
               ),
               kHeight50,
               kHeight50,
-              controller.isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : GetBuilder<AuthController>(builder: (cont) {
-                      return EventIconButton(
-                        suffixIcon: controller.loginNumber.text.length >=
-                                controller.maxLength.value + 1
-                            ? Image.asset(
-                                tickIcon,
-                                height: 13.h,
-                              )
-                            : null,
-                        color: controller.loginNumber.text.length >=
-                                controller.maxLength.value + 1
-                            ? kBluePrimary
-                            : kbuttonGrey,
-                        text: 'Send OTP',
-                        onTap: () {
-                          if (controller.loginNumber.text.length >=
-                              controller.maxLength.value + 1) {
-                            controller.otpSent();
-                          } else {
-                            Get.snackbar(
-                              'Failed',
-                              'Mobile Number is not valid',
-                              backgroundColor: kRed,
-                            );
-                          }
-                        },
-                      );
-                    }),
+              GetBuilder<AuthController>(builder: (cont) {
+                return Column(
+                  children: [
+                    controller.isLoading
+                        ? const Center(
+                            child:
+                                CircularProgressIndicator(color: kBluePrimary),
+                          )
+                        : EventIconButton(
+                            width: 400.w,
+                            suffixIcon: controller.loginNumber.text.length >=
+                                    controller.maxLength.value + 1
+                                ? Image.asset(
+                                    tickIcon,
+                                    height: 13.h,
+                                  )
+                                : null,
+                            color: controller.loginNumber.text.length >=
+                                    controller.maxLength.value + 1
+                                ? kBluePrimary
+                                : kbuttonGrey,
+                            text: 'Send OTP',
+                            onTap: () {
+                              if (controller.loginNumber.text.length >=
+                                  controller.maxLength.value + 1) {
+                                controller.otpSent();
+                              } else {
+                                Get.snackbar(
+                                  'Failed',
+                                  'Mobile Number is not valid',
+                                  backgroundColor: kRed,
+                                );
+                              }
+                            },
+                          ),
+                  ],
+                );
+              }),
+
               kHeight20,
               const Center(child: Text('Or Sign Up With')),
               kHeight10,

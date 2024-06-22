@@ -56,10 +56,11 @@ class ScreenInvoiceDetail extends StatelessWidget {
                     : kEmpty,
                 kHeight10,
                 Text(
-                    bookingController.selectedBookingTab.value != 2
-                        ? 'Ticket : Confirmed      Completed '
-                        : 'Ticket : Cancel',
-                    style: textHeadStyle1),
+                  bookingController.selectedBookingTab.value != 2
+                      ? 'Ticket : Confirmed      Completed '
+                      : 'Ticket : Cancel',
+                  style: textHeadStyle1,
+                ),
                 kHeight10,
                 bookingController.selectedBookingTab.value == 2
                     ? const FlightInvoice(

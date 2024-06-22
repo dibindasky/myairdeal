@@ -5,6 +5,7 @@ import 'package:myairdeal/application/controller/home/flight_sort_controller.dar
 import 'package:myairdeal/application/presentation/screens/search/widgets/search_airport_tile.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
 
 class ScreenAirportSearch extends StatelessWidget {
   const ScreenAirportSearch({super.key});
@@ -33,7 +34,7 @@ class ScreenAirportSearch extends StatelessWidget {
                   Expanded(
                     child: TextField(
                       onChanged: (value) {
-                        controller.changeSearch(value != '');
+                        controller.changeSearch(value);
                       },
                       style: textStyle1,
                       decoration: InputDecoration(
@@ -52,8 +53,10 @@ class ScreenAirportSearch extends StatelessWidget {
               if (controller.search.value) {
                 return Expanded(
                   child: ListView.builder(
+                    itemCount: controller.searchCityList.length,
                     shrinkWrap: true,
-                    itemBuilder: (context, index) => const SearchAirportTile(),
+                    itemBuilder: (context, index) => SearchAirportTile(
+                        airportModel: controller.searchCityList[index]),
                   ),
                 );
               }
@@ -89,8 +92,12 @@ class ScreenAirportSearch extends StatelessWidget {
                         itemCount: 5,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) =>
-                            const SearchAirportTile(history: true),
+                        itemBuilder: (context, index) => SearchAirportTile(
+                            history: true,
+                            airportModel: CitySearchModel(
+                                city: 'Resent Search',
+                                code: 'CODE',
+                                country: 'Country')),
                       ),
                       kHeight10,
                       Text(
@@ -102,8 +109,11 @@ class ScreenAirportSearch extends StatelessWidget {
                         itemCount: 10,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) =>
-                            const SearchAirportTile(),
+                        itemBuilder: (context, index) => SearchAirportTile(
+                            airportModel: CitySearchModel(
+                                city: 'Popular City',
+                                code: 'CODE',
+                                country: 'Country')),
                       )
                     ],
                   ),

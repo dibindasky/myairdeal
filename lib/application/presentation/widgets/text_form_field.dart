@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
-import 'package:myairdeal/application/presentation/utils/validators.dart';
+import 'package:myairdeal/application/presentation/utils/validators/validators.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({

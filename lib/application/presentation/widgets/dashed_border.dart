@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
-import 'package:myairdeal/application/presentation/utils/dotted_border.dart';
+import 'package:myairdeal/application/presentation/widgets/dotted_border.dart';
 
 class DashedBorder extends StatelessWidget {
   final Widget child;

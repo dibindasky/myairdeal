@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
-import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/bottom_calender_date_picker.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -16,36 +15,48 @@ class OneWayAndRoundTrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Expanded(
-        child: TextIconButtonOutlinedCustom(
-          onTap: () => Get.toNamed(Routes.airportSearch),
-          first: const Icon(
-            Icons.flight_takeoff_rounded,
-            color: kBluePrimary,
+    final controller = Get.find<FlightSortController>();
+    return Obx(
+      () => Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Expanded(
+          child: TextIconButtonOutlinedCustom(
+            onTap: () => controller.changeSelectedAirport(from: true, index: 0),
+            first: const Icon(
+              Icons.flight_takeoff_rounded,
+              color: kBluePrimary,
+            ),
+            spacer: kWidth10,
+            second: Expanded(
+              child: Text(controller.airportSelected[0][0].city ?? 'From',
+                  overflow: TextOverflow.ellipsis),
+            ),
+            texthead: 'From',
           ),
-          second: const Text('Bangalore'),
-          texthead: 'From',
         ),
-      ),
-      GestureDetector(
-          onTap: () {
-            // change from and to
-          },
-          child:
-              const Icon(Icons.compare_arrows_outlined, color: kBluePrimary)),
-      Expanded(
-        child: TextIconButtonOutlinedCustom(
-          onTap: () => Get.toNamed(Routes.airportSearch),
-          first: const Icon(
-            Icons.flight_land_rounded,
-            color: kBluePrimary,
+        GestureDetector(
+            onTap: () {
+              // change from and to
+            },
+            child:
+                const Icon(Icons.compare_arrows_outlined, color: kBluePrimary)),
+        Expanded(
+          child: TextIconButtonOutlinedCustom(
+            onTap: () =>
+                controller.changeSelectedAirport(from: false, index: 0),
+            first: const Icon(
+              Icons.flight_land_rounded,
+              color: kBluePrimary,
+            ),
+            spacer: kWidth10,
+            second: Expanded(
+              child: Text(controller.airportSelected[0][1].city ?? 'To',
+                  overflow: TextOverflow.ellipsis),
+            ),
+            texthead: 'To',
           ),
-          second: const Text('Hyderabad'),
-          texthead: 'To',
         ),
-      )
-    ]);
+      ]),
+    );
   }
 }
 
@@ -66,29 +77,40 @@ class MultiCitySelection extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextIconButtonOutlinedCustom(
-                    onTap: () => Get.toNamed(Routes.airportSearch),
+                    onTap: () => controller.changeSelectedAirport(
+                        from: true, index: index),
                     mainAxisAlignment: MainAxisAlignment.center,
                     first: kEmpty,
                     topRight: const Icon(Icons.arrow_right_alt_rounded,
                         color: kBluePrimary),
-                    second: const Text('Bangalore'),
+                    second: Expanded(
+                      child: Text(
+                          controller.airportSelected[index][0].city ?? 'From',
+                          overflow: TextOverflow.ellipsis),
+                    ),
                     texthead: 'From',
                   ),
                 ),
                 kWidth5,
                 Expanded(
                   child: TextIconButtonOutlinedCustom(
-                    onTap: () => Get.toNamed(Routes.airportSearch),
+                    onTap: () => controller.changeSelectedAirport(
+                        from: false, index: index),
                     mainAxisAlignment: MainAxisAlignment.center,
                     first: kEmpty,
-                    second: const Text('Hyderabad'),
+                    spacer: kWidth10,
+                    second: Expanded(
+                      child: Text(
+                          controller.airportSelected[index][1].city ?? 'To',
+                          overflow: TextOverflow.ellipsis),
+                    ),
                     texthead: 'To',
                   ),
                 ),
                 kWidth5,
                 Expanded(
                   child: TextIconButtonOutlinedCustom(
-                    topRight: index == 0
+                    topRight: index == 0 || index == 1
                         ? kEmpty
                         : GestureDetector(
                             onTap: () {
@@ -113,8 +135,13 @@ class MultiCitySelection extends StatelessWidget {
                     ),
                     mainAxisAlignment: MainAxisAlignment.center,
                     first: kEmpty,
-                    second: Text(DateFormating.getDate(
-                        controller.multiCityDepartureDate[index])),
+                    spacer: kWidth10,
+                    second: Expanded(
+                      child: Text(
+                          DateFormating.getDate(
+                              controller.multiCityDepartureDate[index]),
+                          overflow: TextOverflow.ellipsis),
+                    ),
                     texthead: 'Date',
                   ),
                 )
@@ -123,13 +150,15 @@ class MultiCitySelection extends StatelessWidget {
           ),
         ),
         kHeight5,
-        TextIconButtonOutlinedCustom(
-            onTap: () {
-              controller.increaseMulticityField();
-            },
-            first: const Text('Add City'),
-            second: kEmpty,
-            mainAxisAlignment: MainAxisAlignment.center)
+        controller.multiCityCount.value >= 6
+            ? kEmpty
+            : TextIconButtonOutlinedCustom(
+                onTap: () {
+                  controller.increaseMulticityField();
+                },
+                first: const Text('Add City'),
+                second: kEmpty,
+                mainAxisAlignment: MainAxisAlignment.center)
       ]);
     });
   }

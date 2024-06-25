@@ -14,7 +14,7 @@ class TicketsListSorted extends StatelessWidget {
     return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      padding: EdgeInsets.symmetric(horizontal: 11.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       itemCount: 4,
       separatorBuilder: (context, index) => kHeight5,
       itemBuilder: (context, index) => CustomExpansionTile(

@@ -37,6 +37,7 @@ class FlightSortController extends GetxController {
     '00:01 to 05:59',
     '00:03 to 05:59'
   ];
+
   RxList<String> departureTimesSelected = <String>[].obs;
   List<String> arrivesTimes = [
     '00:04 to 05:59',

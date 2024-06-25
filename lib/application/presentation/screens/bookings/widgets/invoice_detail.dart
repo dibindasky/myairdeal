@@ -62,11 +62,9 @@ class ScreenInvoiceDetail extends StatelessWidget {
                   style: textHeadStyle1,
                 ),
                 kHeight10,
-                bookingController.selectedBookingTab.value == 2
-                    ? const FlightInvoice(
-                        flightTicketInvoiceEnum: FlightTicketInvoiceEnum.cancel,
-                      )
-                    : Image.asset('asset/image/invoice_image.png'),
+                const FlightInvoiceCard(
+                    flightTicketInvoiceEnum: FlightTicketInvoiceEnum.cancel),
+                kHeight10,
                 bookingController.selectedBookingTab.value == 2
                     ? kEmpty
                     : Column(

@@ -6,6 +6,7 @@ part 'flight_search_sort_model.g.dart';
 
 @JsonSerializable()
 class FlightSearchSortModel {
+  @JsonKey(name: 'searchQuery')
   FlightSearchQuery? searchQuery;
 
   FlightSearchSortModel({this.searchQuery});

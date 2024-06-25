@@ -36,6 +36,7 @@ class OneWayAndRoundTrip extends StatelessWidget {
         GestureDetector(
             onTap: () {
               // change from and to
+              controller.swapFromAndTow();
             },
             child:
                 const Icon(Icons.compare_arrows_outlined, color: kBluePrimary)),

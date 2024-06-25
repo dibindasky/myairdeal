@@ -1,17 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'from_city_or_airport.dart';
+part of 'code_airport.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-FromCityOrAirport _$FromCityOrAirportFromJson(Map<String, dynamic> json) =>
-    FromCityOrAirport(
+CodeAirport _$CodeAirportFromJson(Map<String, dynamic> json) => CodeAirport(
       code: json['code'] as String?,
     );
 
-Map<String, dynamic> _$FromCityOrAirportToJson(FromCityOrAirport instance) =>
+Map<String, dynamic> _$CodeAirportToJson(CodeAirport instance) =>
     <String, dynamic>{
       'code': instance.code,
     };

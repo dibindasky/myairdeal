@@ -8,9 +8,13 @@ part 'flight_search_query.g.dart';
 
 @JsonSerializable()
 class FlightSearchQuery {
+  @JsonKey(name: 'cabinClass')
   String? cabinClass;
+  @JsonKey(name: 'paxInfo')
   PaxInfo? paxInfo;
+  @JsonKey(name: 'routeInfos')
   List<RouteInfo>? routeInfos;
+  @JsonKey(name: 'searchModifiers')
   SearchModifiers? searchModifiers;
 
   FlightSearchQuery({

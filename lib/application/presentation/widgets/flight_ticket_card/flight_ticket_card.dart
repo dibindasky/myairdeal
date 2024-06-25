@@ -24,6 +24,7 @@ class FlightTicketCard extends StatelessWidget {
     return Stack(
       children: [
         Container(
+          margin: EdgeInsets.symmetric(horizontal: 11.w),
           decoration: BoxDecoration(
             color: kWhite,
             borderRadius: kRadius15,
@@ -73,7 +74,7 @@ class FlightTicketCard extends StatelessWidget {
           ),
         ),
         Positioned(
-          left: .5,
+          left: 14,
           bottom: 45,
           child: Container(
             decoration: const BoxDecoration(
@@ -88,7 +89,7 @@ class FlightTicketCard extends StatelessWidget {
         ),
         Positioned(
           bottom: 45,
-          right: 0.5,
+          right: 14,
           child: Container(
             decoration: const BoxDecoration(
               color: kWhite,

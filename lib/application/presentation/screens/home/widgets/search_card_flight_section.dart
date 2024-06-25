@@ -114,11 +114,12 @@ class FlightSearchCardHome extends StatelessWidget {
             }),
             kHeight20,
             EventButton(
-                text: 'Search flights',
-                onTap: () {
-                  Get.toNamed(Routes.searchSortFlight, id: 1);
-                },
-                width: double.infinity)
+              text: 'Search flights',
+              onTap: () {
+                Get.toNamed(Routes.searchSortFlight, id: 1);
+              },
+              width: double.infinity,
+            )
           ],
         );
       }),

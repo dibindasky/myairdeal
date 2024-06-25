@@ -17,21 +17,23 @@ class FlightService implements FlightRepo {
       {required FlightSearchSortModel flightSearchSortModel}) async {
     try {
       print('api 1');
-      final responce = await apiService
-          .post(addHeader: false, ApiEndPoints.flightSort, data: {
-        "searchQuery": {
-          "paxInfo": {"ADULT": "1"},
-          "routeInfos": [
-            {
-              "fromCityOrAirport": {"code": "DEL"},
-              "toCityOrAirport": {"code": "BOM"},
-              "travelDate": "2024-06-26"
-            }
-          ]
-        }
-      }
-              // data: flightSearchSortModel.toJson
-              );
+      final responce = await apiService.post(
+          addHeader: false,
+          ApiEndPoints.flightSort,
+          data: flightSearchSortModel.toJson
+          //      data: {
+          //   "searchQuery": {
+          //     "paxInfo": {"ADULT": "1"},
+          //     "routeInfos": [
+          //       {
+          //         "fromCityOrAirport": {"code": "DEL"},
+          //         "toCityOrAirport": {"code": "BOM"},
+          //         "travelDate": "2024-06-26"
+          //       }
+          //     ]
+          //   }
+          // }
+          );
       print('api 2');
       log('getAllFlight send');
       return Right(FlightSortResponseModel.fromJson(responce.data));

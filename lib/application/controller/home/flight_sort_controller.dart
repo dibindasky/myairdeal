@@ -130,6 +130,7 @@ class FlightSortController extends GetxController {
         ),
       ),
     );
+    print(searchModel.toJson());
     final result = await flightService.getAllFlight(
         flightSearchSortModel: FlightSearchSortModel(searchQuery: searchModel));
     result.fold((l) {
@@ -266,9 +267,9 @@ class FlightSortController extends GetxController {
     } else {
       List<CitySearchModel> searchList = [];
       for (var element in searchAirport) {
-        if (element[searchCountry]!.contains(value) ||
-            element[searchCode]!.contains(value) ||
-            element[searchcity]!.contains(value)) {
+        if (element[searchCountry]!.toLowerCase().contains(value) ||
+            element[searchCode]!.toLowerCase().contains(value) ||
+            element[searchcity]!.toLowerCase().contains(value)) {
           searchList.add(CitySearchModel.fromJson(element));
         }
       }

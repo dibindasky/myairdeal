@@ -25,59 +25,56 @@ class ScreenBookings extends StatelessWidget {
           kHeight15,
           const BookingsTab(),
           kHeight15,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 13),
-            child: GetBuilder<BookingController>(builder: (controller) {
-              if (controller.selectedBookingTab.value == 1) {
-                return ListView.separated(
-                  padding: const EdgeInsets.only(bottom: 25),
-                  separatorBuilder: (context, index) => kHeight10,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 3,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => Get.toNamed(Routes.invoice),
-                    child: FlightTicketCard(
-                      flightTicketCardEnum: FlightTicketCardEnum.comblete,
-                      buttonOnTap: () => Get.toNamed(Routes.flightDetail),
-                    ),
+          GetBuilder<BookingController>(builder: (controller) {
+            if (controller.selectedBookingTab.value == 1) {
+              return ListView.separated(
+                padding: const EdgeInsets.only(bottom: 25),
+                separatorBuilder: (context, index) => kHeight10,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 3,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () => Get.toNamed(Routes.invoice),
+                  child: FlightTicketCard(
+                    flightTicketCardEnum: FlightTicketCardEnum.comblete,
+                    buttonOnTap: () => Get.toNamed(Routes.flightDetail),
                   ),
-                );
-              } else if (controller.selectedBookingTab.value == 2) {
-                return ListView.separated(
-                  padding: const EdgeInsets.only(bottom: 25),
-                  separatorBuilder: (context, index) => kHeight10,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 5,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => Get.toNamed(Routes.invoice),
-                    child: FlightTicketCard(
-                      flightTicketCardEnum: FlightTicketCardEnum.cancelled,
-                      buttonOnTap: () => Get.toNamed(Routes.flightDetail),
-                    ),
+                ),
+              );
+            } else if (controller.selectedBookingTab.value == 2) {
+              return ListView.separated(
+                padding: const EdgeInsets.only(bottom: 25),
+                separatorBuilder: (context, index) => kHeight10,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 2,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () => Get.toNamed(Routes.invoice),
+                  child: FlightTicketCard(
+                    flightTicketCardEnum: FlightTicketCardEnum.cancelled,
+                    buttonOnTap: () => Get.toNamed(Routes.flightDetail),
                   ),
-                );
-              } else if (controller.selectedBookingTab.value == 3) {
-                return ListView.separated(
-                  padding: const EdgeInsets.only(bottom: 25),
-                  separatorBuilder: (context, index) => kHeight10,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 3,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => Get.toNamed(Routes.invoice),
-                    child: FlightTicketCard(
-                      flightTicketCardEnum: FlightTicketCardEnum.upcoming,
-                      buttonOnTap: () => Get.toNamed(Routes.flightDetail),
-                    ),
+                ),
+              );
+            } else if (controller.selectedBookingTab.value == 3) {
+              return ListView.separated(
+                padding: const EdgeInsets.only(bottom: 25),
+                separatorBuilder: (context, index) => kHeight10,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 4,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () => Get.toNamed(Routes.invoice),
+                  child: FlightTicketCard(
+                    flightTicketCardEnum: FlightTicketCardEnum.upcoming,
+                    buttonOnTap: () => Get.toNamed(Routes.flightDetail),
                   ),
-                );
-              } else {
-                return kEmpty;
-              }
-            }),
-          ),
+                ),
+              );
+            } else {
+              return kEmpty;
+            }
+          }),
           // const EmptyBookingScreen()
         ],
       ),

@@ -1,14 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'from_city_or_airport.dart';
-import 'to_city_or_airport.dart';
+import 'code_airport.dart';
 
 part 'route_info.g.dart';
 
 @JsonSerializable()
 class RouteInfo {
-  FromCityOrAirport? fromCityOrAirport;
-  ToCityOrAirport? toCityOrAirport;
+  CodeAirport? fromCityOrAirport;
+  CodeAirport? toCityOrAirport;
   String? travelDate;
 
   RouteInfo({
@@ -24,8 +23,8 @@ class RouteInfo {
   Map<String, dynamic> toJson() => _$RouteInfoToJson(this);
 
   RouteInfo copyWith({
-    FromCityOrAirport? fromCityOrAirport,
-    ToCityOrAirport? toCityOrAirport,
+    CodeAirport? fromCityOrAirport,
+    CodeAirport? toCityOrAirport,
     String? travelDate,
   }) {
     return RouteInfo(

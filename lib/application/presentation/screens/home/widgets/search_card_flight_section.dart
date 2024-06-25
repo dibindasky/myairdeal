@@ -116,6 +116,7 @@ class FlightSearchCardHome extends StatelessWidget {
             EventButton(
                 text: 'Search flights',
                 onTap: () {
+                  controller.searchFlights();
                   Get.toNamed(Routes.searchSortFlight, id: 1);
                 },
                 width: double.infinity)

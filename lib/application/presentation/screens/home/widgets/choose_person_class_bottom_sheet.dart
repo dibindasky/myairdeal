@@ -136,7 +136,8 @@ class PersonClassBottomSheet extends StatelessWidget {
           child: Row(
             children: [
               GestureDetector(
-                  onTap: () => Get.back(), child: const Icon(Icons.close)),
+                  onTap: () => Navigator.pop(context),
+                  child: const Icon(Icons.close)),
               kWidth10,
               const Text('Select Travellers & Class')
             ],

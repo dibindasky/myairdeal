@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/bottom_sheet/airlines_sheet.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/bottom_sheet/duration_sheet.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/bottom_sheet/flight_times_sheet.dart';
@@ -15,78 +17,89 @@ class SortingChipsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FittedBox(
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            SortingChipSortPage(
-                text: 'Flight: BNG TO HYD', selected: true, onTap: () {}),
-            SortingChipSortPage(
-                text: 'Departure: May 06, 2024', selected: true, onTap: () {}),
-            SortingChipSortPage(
-                text: 'Class: Premium Economy', selected: true, onTap: () {}),
-          ]),
-        ),
-        FittedBox(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    final controller = Get.find<FlightSortController>();
+    return Obx(() => controller.searchListLoading.value
+        ? kEmpty
+        : Column(
             children: [
-              SortingChipSortPage(
-                  text: 'Sort By: Best',
-                  selected: false,
-                  onTap: () {
-                    showModalBottomSheet(
-                      backgroundColor: knill,
-                      context: context,
-                      builder: (context) => const SortFlightBottomSheet(),
-                    );
-                  }),
-              SortingChipSortPage(
-                  text: 'Stops',
-                  selected: false,
-                  onTap: () {
-                    showModalBottomSheet(
-                      backgroundColor: knill,
-                      context: context,
-                      builder: (context) => const StopsSortBottomSheet(),
-                    );
-                  }),
-              SortingChipSortPage(
-                  text: 'Duration',
-                  selected: false,
-                  onTap: () {
-                    showModalBottomSheet(
-                      backgroundColor: knill,
-                      context: context,
-                      builder: (context) => const DurationBottomSheet(),
-                    );
-                  }),
-              SortingChipSortPage(
-                  text: 'Airlines',
-                  selected: false,
-                  onTap: () {
-                    showModalBottomSheet(
-                      backgroundColor: knill,
-                      context: context,
-                      builder: (context) => const AirlinesBottomSheet(),
-                    );
-                  }),
-              SortingChipSortPage(
-                  text: 'Flight times',
-                  selected: false,
-                  onTap: () {
-                    showModalBottomSheet(
-                      backgroundColor: knill,
-                      context: context,
-                      builder: (context) => const FlightTimesBottomSheet(),
-                    );
-                  }),
+              FittedBox(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SortingChipSortPage(
+                          text: 'Flight: BNG TO HYD',
+                          selected: true,
+                          onTap: () {}),
+                      SortingChipSortPage(
+                          text: 'Departure: May 06, 2024',
+                          selected: true,
+                          onTap: () {}),
+                      SortingChipSortPage(
+                          text: 'Class: Premium Economy',
+                          selected: true,
+                          onTap: () {}),
+                    ]),
+              ),
+              FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SortingChipSortPage(
+                        text: 'Sort By: Best',
+                        selected: false,
+                        onTap: () {
+                          showModalBottomSheet(
+                            backgroundColor: knill,
+                            context: context,
+                            builder: (context) => const SortFlightBottomSheet(),
+                          );
+                        }),
+                    SortingChipSortPage(
+                        text: 'Stops',
+                        selected: false,
+                        onTap: () {
+                          showModalBottomSheet(
+                            backgroundColor: knill,
+                            context: context,
+                            builder: (context) => const StopsSortBottomSheet(),
+                          );
+                        }),
+                    SortingChipSortPage(
+                        text: 'Duration',
+                        selected: false,
+                        onTap: () {
+                          showModalBottomSheet(
+                            backgroundColor: knill,
+                            context: context,
+                            builder: (context) => const DurationBottomSheet(),
+                          );
+                        }),
+                    SortingChipSortPage(
+                        text: 'Airlines',
+                        selected: false,
+                        onTap: () {
+                          showModalBottomSheet(
+                            backgroundColor: knill,
+                            context: context,
+                            builder: (context) => const AirlinesBottomSheet(),
+                          );
+                        }),
+                    SortingChipSortPage(
+                        text: 'Flight times',
+                        selected: false,
+                        onTap: () {
+                          showModalBottomSheet(
+                            backgroundColor: knill,
+                            context: context,
+                            builder: (context) =>
+                                const FlightTimesBottomSheet(),
+                          );
+                        }),
+                  ],
+                ),
+              ),
             ],
-          ),
-        ),
-      ],
-    );
+          ));
   }
 }
 

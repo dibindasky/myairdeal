@@ -1,17 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'to_city_or_airport.dart';
+part of 'ai.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ToCityOrAirport _$ToCityOrAirportFromJson(Map<String, dynamic> json) =>
-    ToCityOrAirport(
+AI _$AIFromJson(Map<String, dynamic> json) => AI(
       code: json['code'] as String?,
+      name: json['name'] as String?,
+      isLcc: json['isLcc'] as bool?,
     );
 
-Map<String, dynamic> _$ToCityOrAirportToJson(ToCityOrAirport instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AIToJson(AI instance) => <String, dynamic>{
       'code': instance.code,
+      'name': instance.name,
+      'isLcc': instance.isLcc,
     };

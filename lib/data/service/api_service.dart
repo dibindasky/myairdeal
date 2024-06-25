@@ -69,6 +69,7 @@ class ApiService {
         data: data is FormData ? data : data as Map<String, dynamic>?,
         queryParameters: queryParameters,
       );
+      log('post success $url');
       return response;
     } on DioException catch (exception) {
       log('Dio exception code => ${exception.response?.statusCode}');

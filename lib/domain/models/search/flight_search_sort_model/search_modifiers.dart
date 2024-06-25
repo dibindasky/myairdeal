@@ -5,7 +5,9 @@ part 'search_modifiers.g.dart';
 @JsonSerializable()
 class SearchModifiers {
   String? pft;
+  @JsonKey(name: 'isDirectFlight')
   bool? isDirectFlight;
+  @JsonKey(name: 'isConnectingFlight')
   bool? isConnectingFlight;
 
   SearchModifiers({this.isDirectFlight, this.isConnectingFlight, this.pft});

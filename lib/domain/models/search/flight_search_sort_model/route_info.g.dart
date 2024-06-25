@@ -9,11 +9,11 @@ part of 'route_info.dart';
 RouteInfo _$RouteInfoFromJson(Map<String, dynamic> json) => RouteInfo(
       fromCityOrAirport: json['fromCityOrAirport'] == null
           ? null
-          : FromCityOrAirport.fromJson(
+          : CodeAirport.fromJson(
               json['fromCityOrAirport'] as Map<String, dynamic>),
       toCityOrAirport: json['toCityOrAirport'] == null
           ? null
-          : ToCityOrAirport.fromJson(
+          : CodeAirport.fromJson(
               json['toCityOrAirport'] as Map<String, dynamic>),
       travelDate: json['travelDate'] as String?,
     );

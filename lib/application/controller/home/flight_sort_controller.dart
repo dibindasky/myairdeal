@@ -1,23 +1,55 @@
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/utils/test_const.dart';
+import 'package:myairdeal/data/service/flight_sort/flight_service.dart';
 import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
+import 'package:myairdeal/domain/models/search/flight_search_sort_model/code_airport.dart';
+import 'package:myairdeal/domain/models/search/flight_search_sort_model/flight_search_query.dart';
+import 'package:myairdeal/domain/models/search/flight_search_sort_model/flight_search_sort_model.dart';
+import 'package:myairdeal/domain/models/search/flight_search_sort_model/pax_info.dart';
+import 'package:myairdeal/domain/models/search/flight_search_sort_model/route_info.dart';
+import 'package:myairdeal/domain/models/search/flight_search_sort_model/search_modifiers.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
+import 'package:myairdeal/domain/repository/service/flight_sort_repo.dart';
 
 class FlightSortController extends GetxController {
+  // flight service class responsible for api calls
+  final FlightRepo flightService = FlightService();
+
+  /// list responsible for the rebuild and sorting of airlines available on [searchListMain]
+  RxList<SearchAirlineInformation> searchList =
+      <SearchAirlineInformation>[].obs;
+
+  /// here store all the response form api and responsible for giving data to [searchList] for sorting
+  RxList<SearchAirlineInformation> searchListMain =
+      <SearchAirlineInformation>[].obs;
+
+  // variable responsible for show loading in the search list page
+  RxBool searchListLoading = false.obs;
+
   // Change category
   RxInt selectedCategoryType = 0.obs;
+
   // variable used to select the trip type 0- oneway, 1- roundtrip, 2- multicity
   RxInt tripType = 0.obs;
+
   // number of adult to be travelled
   RxInt adultCount = 1.obs;
   // number of children to be travelled
   RxInt childrenCount = 0.obs;
   // number of infant to be travelled
   RxInt infantCount = 0.obs;
+
   // number of citys in multicity trip
   RxInt multiCityCount = 2.obs;
-  // class type to be travelled
-  RxString classType = "Economy".obs;
+
+  /// class type to be travelled can be choose form [classTypes]
+  RxString classType = "ECONOMY".obs;
+
+  /// list of cabin classes, selected cabin class will be stored in [classType]
+  List<String> classTypes = ["ECONOMY", "PREMIUM_ECONOMY", "BUSINESS", "FIRST"];
+
   // departure date in oneway and round trip
   Rx<DateTime> depatureDate = DateTime.now().obs;
   // return date in round trip
@@ -25,17 +57,25 @@ class FlightSortController extends GetxController {
   // departure dates in multicity trips
   RxList<DateTime?> multiCityDepartureDate =
       <DateTime?>[DateTime.now(), DateTime.now()].obs;
-  // variable to show between search and resent searchs
+
+  /// variable to show between search and resent searchs in [ScreenAirportSearch]
   RxBool search = false.obs;
+
   RxString sortType = 'Best'.obs;
   RxString stopType = 'Direct'.obs;
   RxDouble durationSlider = .5.obs;
   Rx<DateTime> selectedDate = DateTime.now().obs;
+
+  /// selected airports for search for all oneway,round and multicity in a list
   RxList<RxList<CitySearchModel>> airportSelected = <RxList<CitySearchModel>>[
     RxList.generate(2, (index) => CitySearchModel()),
     RxList.generate(2, (index) => CitySearchModel())
   ].obs;
+
+  /// index of selected index for choosing airport in [airportSelected]
   int chooseAirportIndex = 0;
+
+  /// variable responsible for finding wether choosing the departure airport or destination with respect to [chooseAirportIndex]
   bool departureAirport = true;
 
   List<String> sortAirlines = ['Indigo', 'Air-India', 'Asky Airlines'];
@@ -58,17 +98,63 @@ class FlightSortController extends GetxController {
   List<String> sortTypes = ['Best', 'Fastest', 'Cheapest'];
   List<String> stopTypes = ['Direct', 'Max 1 Stop', 'Max 2 Stops'];
   List<String> tripTypes = ['One-way', 'Round-trip', 'Multi-city'];
-  List<String> classTypes = [
-    "Economy",
-    "Premium Economy",
-    "Business Class",
-    "First Class"
-  ];
   //Travel Insurence Button
   RxBool travelInsurence = false.obs;
   RxInt selectedPromoCode = 300000.obs;
   //Add ons
   RxBool addOnsChecked = false.obs;
+
+  void searchFlights() async {
+    searchListLoading.value = true;
+    FlightSearchQuery searchModel = FlightSearchQuery(
+      cabinClass: classType.value,
+      paxInfo: PaxInfo(
+        adult: adultCount.value.toString(),
+        child: childrenCount.value.toString(),
+        infant: infantCount.value.toString(),
+      ),
+      searchModifiers:
+          SearchModifiers(isConnectingFlight: true, isDirectFlight: true),
+      routeInfos: List.generate(
+        airportSelected.length,
+        (index) => RouteInfo(
+          fromCityOrAirport: CodeAirport(code: airportSelected[index][0].code),
+          toCityOrAirport: CodeAirport(code: airportSelected[index][1].code),
+          travelDate: DateFormating.getDateApi(
+            tripType.value == 2
+                ? multiCityDepartureDate[index]!
+                : tripType.value == 1
+                    ? returnDate.value
+                    : depatureDate.value,
+          ),
+        ),
+      ),
+    );
+    final result = await flightService.getAllFlight(
+        flightSearchSortModel: FlightSearchSortModel(searchQuery: searchModel));
+    result.fold((l) {
+      searchListLoading.value = false;
+    }, (r) {
+      if (r.errors == null) {
+        if (r.searchResult?.tripInfos?.combo != null) {
+          searchListMain.value =
+              r.searchResult?.tripInfos?.combo ?? <SearchAirlineInformation>[];
+        } else if (r.searchResult?.tripInfos?.onward != null) {
+          searchListMain.value =
+              r.searchResult?.tripInfos?.onward ?? <SearchAirlineInformation>[];
+        } else if (r.searchResult?.tripInfos?.returns != null) {
+          searchListMain.value = r.searchResult?.tripInfos?.returns ??
+              <SearchAirlineInformation>[];
+        }
+        //  else if (r.searchResult?.tripInfos?.multicity1 != null) {
+        //   searchListMain.value = r.searchResult?.tripInfos?.multicity1 ??
+        //       <SearchAirlineInformation>[];
+        // }
+        searchList = searchListMain;
+      }
+      searchListLoading.value = false;
+    });
+  }
 
   changeCategory(int index) {
     selectedCategoryType.value = index;
@@ -90,33 +176,36 @@ class FlightSortController extends GetxController {
     update();
   }
 
+  void swapFromAndTow() {
+    final from = airportSelected[0][0];
+    airportSelected[0][0] = airportSelected[0][1];
+    airportSelected[0][1] = from;
+  }
+
   void changeAdultCount(bool increment) {
-    if (!increment) {
-      if (adultCount.value != 0) {
-        adultCount.value--;
-      }
-    } else {
+    if (increment && (adultCount.value + childrenCount.value) < 9) {
       adultCount.value++;
+    } else if (!increment && adultCount.value != 1) {
+      adultCount.value--;
+    }
+    if (adultCount.value < infantCount.value) {
+      infantCount.value = adultCount.value;
     }
   }
 
   void changeChildrenCount(bool increment) {
-    if (!increment) {
-      if (childrenCount.value != 0) {
-        childrenCount.value--;
-      }
-    } else {
+    if (increment && (adultCount.value + childrenCount.value) < 9) {
       childrenCount.value++;
+    } else if (!increment && childrenCount.value != 0) {
+      childrenCount.value--;
     }
   }
 
   void changeInfantCount(bool increment) {
-    if (!increment) {
-      if (infantCount.value != 0) {
-        infantCount.value--;
-      }
-    } else {
+    if (increment && infantCount.value < adultCount.value) {
       infantCount.value++;
+    } else if (infantCount.value != 0 && !increment) {
+      infantCount.value--;
     }
   }
 

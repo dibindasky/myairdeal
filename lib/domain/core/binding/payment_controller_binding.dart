@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/home/payment_controller.dart';
+import 'package:myairdeal/application/controller/booking/payment_controller.dart';
 
 class PaymentBinding extends Bindings {
   @override

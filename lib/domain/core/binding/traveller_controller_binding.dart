@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/home/traveler_controller.dart';
+import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 
 class TravellerBinding extends Bindings {
   @override

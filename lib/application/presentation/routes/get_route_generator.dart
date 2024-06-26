@@ -68,6 +68,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       name: Routes.alMostDone,
+      bindings: [AuthBinding()],
       page: () => ScreenAccountCreationForm(),
     ),
     GetPage(

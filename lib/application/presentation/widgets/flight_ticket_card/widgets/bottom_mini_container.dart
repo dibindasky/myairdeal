@@ -140,12 +140,18 @@ class BottomMiniContainer extends StatelessWidget {
                       : Row(
                           children: [
                             kWidth20,
-                            Text(
-                              'Ticket Price\n₹ $price',
-                              style: textStyle1.copyWith(
-                                color: kWhite,
-                                fontSize: 12.sp,
-                              ),
+                            Column(
+                              children: [
+                                kHeight10,
+                                Text(
+                                  'Ticket Price',
+                                  style: textStyle1.copyWith(
+                                    color: kWhite,
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                                kHeight10,
+                              ],
                             ),
                             flightTicketCardEnum ==
                                     FlightTicketCardEnum.homeSort
@@ -200,7 +206,16 @@ class BottomMiniContainer extends StatelessWidget {
                                 : kEmpty,
                             kWidth10,
                             flightTicketCardEnum ==
-                                        FlightTicketCardEnum.homeSort ||
+                                        FlightTicketCardEnum.homeSort?Text(
+                                  '₹ $price',
+                                  style: textStyle1.copyWith(
+                                    color: kWhite,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                ):
+                            buttonOnTap==null?kEmpty:
+                            
                                     flightTicketCardEnum ==
                                         FlightTicketCardEnum.specialOffers ||
                                     flightTicketCardEnum ==

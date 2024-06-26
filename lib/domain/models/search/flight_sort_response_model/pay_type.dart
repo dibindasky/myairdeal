@@ -4,10 +4,10 @@ import 'af_c.dart';
 import 'bi.dart';
 import 'fc.dart';
 
-part 'adult.g.dart';
+part 'pay_type.g.dart';
 
 @JsonSerializable()
-class Adult {
+class PayType {
   Fc? fC;
   AfC? afC;
   int? sR;
@@ -18,7 +18,7 @@ class Adult {
   String? fB;
   bool? mI;
 
-  Adult({
+  PayType({
     this.fC,
     this.afC,
     this.sR,
@@ -30,11 +30,11 @@ class Adult {
     this.mI,
   });
 
-  factory Adult.fromJson(Map<String, dynamic> json) => _$AdultFromJson(json);
+  factory PayType.fromJson(Map<String, dynamic> json) => _$PayTypeFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AdultToJson(this);
+  Map<String, dynamic> toJson() => _$PayTypeToJson(this);
 
-  Adult copyWith({
+  PayType copyWith({
     Fc? fC,
     AfC? afC,
     int? sR,
@@ -45,7 +45,7 @@ class Adult {
     String? fB,
     bool? mI,
   }) {
-    return Adult(
+    return PayType(
       fC: fC ?? this.fC,
       afC: afC ?? this.afC,
       sR: sR ?? this.sR,

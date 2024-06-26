@@ -49,4 +49,28 @@ class DateFormating {
         '${hours.toString().padLeft(2, '0')}h ${minutes.toString().padLeft(2, '0')}m';
     return formattedTime;
   }
+
+  static String getDifferenceOfDates(String dateTimeString1, String dateTimeString2) {
+  DateTime dateTime1 = DateTime.parse(dateTimeString1);
+  DateTime dateTime2 = DateTime.parse(dateTimeString2);
+
+  Duration difference = dateTime2.difference(dateTime1);
+
+  int days = difference.inDays;
+  int hours = difference.inHours % 24;
+  int minutes = difference.inMinutes % 60;
+
+  String formattedDifference = '';
+  if (days > 0) {
+    formattedDifference += '$days day${days > 1 ? 's' : ''} ';
+  }
+  if (hours > 0) {
+    formattedDifference += '${hours.toString().padLeft(2, '0')}hr ';
+  }
+  if (minutes > 0) {
+    formattedDifference += '${minutes.toString().padLeft(2, '0')}m';
+  }
+
+  return formattedDifference.trim();
+}
 }

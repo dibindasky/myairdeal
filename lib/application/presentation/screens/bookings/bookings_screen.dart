@@ -44,7 +44,8 @@ class ScreenBookings extends StatelessWidget {
                     ),
                   ),
                 );
-              } else if (controller.selectedBookingTab.value == 2) {
+              } else
+               if (controller.selectedBookingTab.value == 2) {
                 return ListView.separated(
                   padding: const EdgeInsets.only(bottom: 25),
                   separatorBuilder: (context, index) => kHeight10,

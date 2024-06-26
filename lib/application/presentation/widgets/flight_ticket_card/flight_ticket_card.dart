@@ -16,13 +16,11 @@ class FlightTicketCard extends StatelessWidget {
       {super.key,
       this.buttonOnTap,
       required this.flightTicketCardEnum,
-      this.index = 0,
       this.searchAirlineInformation});
 
   final VoidCallback? buttonOnTap;
   final FlightTicketCardEnum flightTicketCardEnum;
   final SearchAirlineInformation? searchAirlineInformation;
-  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +48,11 @@ class FlightTicketCard extends StatelessWidget {
                   children: [
                     searchAirlineInformation != null
                         ? CardSideItems(
-                            place:
-                                searchAirlineInformation!.sI![index].da!.code!,
-                            airPort:
-                                searchAirlineInformation!.sI![index].da!.city!,
+                            place: searchAirlineInformation!.sI![0].da!.code!,
+                            airPort: searchAirlineInformation!.sI![0].da!.city!,
                             from: 'Departure',
                             time: DateFormating.formatTime(
-                                searchAirlineInformation!.sI![index].dt!),
+                                searchAirlineInformation!.sI![0].dt!),
                           )
                         : const CardSideItems(
                             place: 'TTT',
@@ -64,24 +60,39 @@ class FlightTicketCard extends StatelessWidget {
                             from: 'Departure',
                             time: '07:00 AM',
                           ),
-                    flightTicketCardEnum == FlightTicketCardEnum.complete ||
-                            flightTicketCardEnum ==
-                                FlightTicketCardEnum.cancelled
-                        ? BookingCombletedCancelledTabcenterItems()
-                        : NormalCenterItems(
-                            airline: searchAirlineInformation!
-                                .sI![index].fD!.aI!.name,
-                            stops: searchAirlineInformation!.sI![index].stops ??
-                                0),
+                    searchAirlineInformation != null
+                        ? NormalCenterItems(
+                            travelMinutes: DateFormating.getDifferenceOfDates(
+                                searchAirlineInformation!.sI![0].dt!,
+                                searchAirlineInformation!
+                                    .sI![searchAirlineInformation!.sI!.length -
+                                        1]
+                                    .at!),
+                            airline:
+                                searchAirlineInformation!.sI![0].fD!.aI!.name,
+                            stops: searchAirlineInformation!.sI!.length - 1)
+                        : flightTicketCardEnum ==
+                                    FlightTicketCardEnum.complete ||
+                                flightTicketCardEnum ==
+                                    FlightTicketCardEnum.cancelled
+                            ? BookingCombletedCancelledTabcenterItems()
+                            : const NormalCenterItems(),
                     searchAirlineInformation != null
                         ? CardSideItems(
-                            place:
-                                searchAirlineInformation!.sI![index].aa!.code!,
-                            airPort:
-                                searchAirlineInformation!.sI![index].aa!.city!,
-                            from: 'Departure',
+                            place: searchAirlineInformation!
+                                .sI![searchAirlineInformation!.sI!.length - 1]
+                                .aa!
+                                .code!,
+                            airPort: searchAirlineInformation!
+                                .sI![searchAirlineInformation!.sI!.length - 1]
+                                .aa!
+                                .city!,
+                            from: 'Arrival',
                             time: DateFormating.formatTime(
-                                searchAirlineInformation!.sI![index].at!),
+                                searchAirlineInformation!
+                                    .sI![searchAirlineInformation!.sI!.length -
+                                        1]
+                                    .at!),
                           )
                         : const CardSideItems(
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -97,8 +108,10 @@ class FlightTicketCard extends StatelessWidget {
               BottomMiniContainer(
                 flightTicketCardEnum: flightTicketCardEnum,
                 buttonOnTap: buttonOnTap,
-                price: searchAirlineInformation!
-                    .totalPriceList![index].fd!.adult!.fC!.tf!,
+                price: searchAirlineInformation != null
+                    ? searchAirlineInformation!
+                        .totalPriceList![0].fd!.adult!.fC!.tf!
+                    : 0,
               ),
             ],
           ),
@@ -107,9 +120,9 @@ class FlightTicketCard extends StatelessWidget {
           left: 1,
           bottom: 45,
           child: Container(
-            decoration: const BoxDecoration(
-              color: kWhite,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: kGreylowLight,
+              borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(13),
                   bottomRight: Radius.circular(10)),
             ),
@@ -121,9 +134,9 @@ class FlightTicketCard extends StatelessWidget {
           right: 1,
           bottom: 45,
           child: Container(
-            decoration: const BoxDecoration(
-              color: kWhite,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: kGreylowLight,
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(13),
                 bottomLeft: Radius.circular(10),
               ),

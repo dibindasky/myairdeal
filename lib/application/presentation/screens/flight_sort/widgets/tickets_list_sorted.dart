@@ -25,13 +25,13 @@ class TicketsListSorted extends StatelessWidget {
           child: FlightTicketCard(
             flightTicketCardEnum: FlightTicketCardEnum.homeSort,
             searchAirlineInformation: controller.searchList[index],
-            buttonOnTap: () {},
           ),
-          children: [
-            const TicketDetailExpansionChild(),
-            kHeight5,
-            const TicketDetailExpansionChild()
-          ],
+          children: List.generate(
+            controller.searchList[index].totalPriceList!.length,
+            (index) => TicketDetailExpansionChild(
+              totalPriceList: controller.searchList[index].totalPriceList![0],
+            ),
+          ),
         ),
       );
     });

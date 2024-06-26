@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/presentation/screens/home/widgets/search_card_flight_section.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/custom_appbar_shape.dart';
@@ -33,7 +34,15 @@ class SortScreenHeaderSection extends StatelessWidget {
                       textThinStyle1.copyWith(fontSize: 20.sp, color: kWhite),
                 ),
                 const Spacer(),
-                const Icon(Icons.edit_note_sharp, color: kWhite)
+                GestureDetector(
+                    onTap: () {
+                      // edit selections for search api
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) => FlightSearchCardHome(),
+                      );
+                    },
+                    child: const Icon(Icons.edit_note_sharp, color: kWhite))
               ],
             ),
             kHeight10,

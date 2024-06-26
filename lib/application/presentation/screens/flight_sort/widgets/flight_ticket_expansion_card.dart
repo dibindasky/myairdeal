@@ -4,17 +4,18 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/total_price_list.dart';
 
 class TicketDetailExpansionChild extends StatelessWidget {
-  const TicketDetailExpansionChild({
-    super.key,
-  });
+  const TicketDetailExpansionChild({super.key, required this.totalPriceList});
+
+  final TotalPriceList totalPriceList;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-      margin: EdgeInsets.symmetric(horizontal: 5.w),
+      margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
       width: double.infinity,
       decoration: BoxDecoration(
           color: kWhite, borderRadius: kRadius15, boxShadow: boxShadow2),
@@ -23,12 +24,12 @@ class TicketDetailExpansionChild extends StatelessWidget {
         Row(
           children: [
             Text(
-              'Saver fare',
+              totalPriceList.fareIdentifier??'',
               style: textStyle1.copyWith(fontWeight: FontWeight.w900),
             ),
             const Spacer(),
             Text(
-              '₹3500',
+              '₹ ${totalPriceList.fd!.adult!.fC!.tf}',
               style: textThinStyle1.copyWith(fontWeight: FontWeight.w900),
             ),
             kWidth10,
@@ -50,77 +51,47 @@ class TicketDetailExpansionChild extends StatelessWidget {
           ],
         ),
         const Divider(color: kBluePrimary),
-        Row(
-          children: [
-            Expanded(
-                flex: 1, child: Text('Seat Selection', style: textThinStyle1)),
-            Expanded(
-              flex: 2,
-              child: Text('Standard : Chargeable/ Seats : Chargeable',
-                  style: textThinStyle1.copyWith(
-                      fontSize: 9.sp, color: kGreyDark)),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-                flex: 1, child: Text('Cancelation', style: textThinStyle1)),
-            Expanded(
-              flex: 2,
-              child: Text('INR 3500 with in 72 hours',
-                  style: textThinStyle1.copyWith(
-                      fontSize: 9.sp, color: kGreyDark)),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-                flex: 1, child: Text('Date change', style: textThinStyle1)),
-            Expanded(
-              flex: 2,
-              child: Text('INR 3250 with in 72 hours',
-                  style: textThinStyle1.copyWith(
-                      fontSize: 9.sp, color: kGreyDark)),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-                flex: 1, child: Text('Checked bag', style: textThinStyle1)),
-            Expanded(
-              flex: 2,
-              child: Text('15 Kgs',
-                  style: textThinStyle1.copyWith(
-                      fontSize: 9.sp, color: kGreyDark)),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(flex: 1, child: Text('Hand Bag', style: textThinStyle1)),
-            Expanded(
-              flex: 2,
-              child: Text('7 Kgs',
-                  style: textThinStyle1.copyWith(
-                      fontSize: 9.sp, color: kGreyDark)),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(flex: 1, child: Text('Meal', style: textThinStyle1)),
-            Expanded(
-              flex: 2,
-              child: Text('Chargeable',
-                  style: textThinStyle1.copyWith(
-                      fontSize: 9.sp, color: kGreyDark)),
-            ),
-          ],
-        ),
+        TicketDetailTile(
+            first: 'Seat Remaining',
+            second: '${totalPriceList.fd!.adult!.sR ?? 0} Seats Remaining'),
+        TicketDetailTile(
+            first: 'Checked bag',
+            second: totalPriceList.fd!.adult!.bI!.iB ?? ''),
+        TicketDetailTile(
+            first: 'Hand Bag', second: totalPriceList.fd!.adult!.bI!.cB ?? ''),
+        TicketDetailTile(
+            first: 'Meal',
+            second: totalPriceList.fd!.adult!.mI! ? 'Free' : 'Chargable'),
+        // TicketDetailTile(
+        //     first: 'Cancelation', second: 'INR 3250 with in 72 hours'),
+        // TicketDetailTile(
+        //     first: 'Date change', second: 'INR 3250 with in 72 hours'),
       ]),
+    );
+  }
+}
+
+class TicketDetailTile extends StatelessWidget {
+  const TicketDetailTile({
+    super.key,
+    required this.first,
+    required this.second,
+  });
+
+  final String first;
+  final String second;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(flex: 1, child: Text(first, style: textThinStyle1)),
+        Expanded(
+          flex: 2,
+          child: Text(second,
+              style: textThinStyle1.copyWith(fontSize: 9.sp, color: kGreyDark)),
+        ),
+      ],
     );
   }
 }

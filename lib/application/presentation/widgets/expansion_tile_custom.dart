@@ -6,12 +6,14 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 class CustomExpansionTile extends StatefulWidget {
   const CustomExpansionTile(
       {super.key,
+      this.isBorder = true,
       this.isExpandable = true,
       required this.children,
       required this.child});
   final List<Widget> children;
   final Widget child;
   final bool isExpandable;
+  final bool isBorder;
 
   @override
   State<CustomExpansionTile> createState() => _CustomExpansionTileState();
@@ -23,8 +25,10 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: kBluePrimary), borderRadius: kRadius15),
+      decoration: !widget.isBorder
+          ? null
+          : BoxDecoration(
+              border: Border.all(color: kBluePrimary), borderRadius: kRadius15),
       child: Column(
         children: [
           InkWell(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/traveler_widgets/saved_detailcard.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_widgets/saved_detailcard.dart';
 
 class SavedDetailBuilder extends StatelessWidget {
   const SavedDetailBuilder({super.key});

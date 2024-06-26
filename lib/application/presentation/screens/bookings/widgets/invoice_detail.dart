@@ -6,7 +6,7 @@ import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab/
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab/mail.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/quick_links.container.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/you_could_also.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';

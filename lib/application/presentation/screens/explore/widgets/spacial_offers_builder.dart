@@ -25,7 +25,7 @@ class SpacialOffersBuilder extends StatelessWidget {
           itemBuilder: (context, index) => FlightTicketCard(
             flightTicketCardEnum: FlightTicketCardEnum.specialOffers,
             buttonOnTap: () {
-              Get.toNamed(Routes.flightDetail);
+              Get.toNamed(Routes.flightDetailFillling);
             },
           ),
         ),

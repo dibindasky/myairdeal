@@ -40,7 +40,8 @@ class ScreenBookings extends StatelessWidget {
                     onTap: () => Get.toNamed(Routes.invoice),
                     child: FlightTicketCard(
                       flightTicketCardEnum: FlightTicketCardEnum.comblete,
-                      buttonOnTap: () => Get.toNamed(Routes.flightDetail),
+                      buttonOnTap: () =>
+                          Get.toNamed(Routes.flightDetailFillling),
                     ),
                   ),
                 );
@@ -55,7 +56,8 @@ class ScreenBookings extends StatelessWidget {
                     onTap: () => Get.toNamed(Routes.invoice),
                     child: FlightTicketCard(
                       flightTicketCardEnum: FlightTicketCardEnum.cancelled,
-                      buttonOnTap: () => Get.toNamed(Routes.flightDetail),
+                      buttonOnTap: () =>
+                          Get.toNamed(Routes.flightDetailFillling),
                     ),
                   ),
                 );
@@ -70,7 +72,8 @@ class ScreenBookings extends StatelessWidget {
                     onTap: () => Get.toNamed(Routes.invoice),
                     child: FlightTicketCard(
                       flightTicketCardEnum: FlightTicketCardEnum.upcoming,
-                      buttonOnTap: () => Get.toNamed(Routes.flightDetail),
+                      buttonOnTap: () =>
+                          Get.toNamed(Routes.flightDetailFillling),
                     ),
                   ),
                 );

@@ -11,16 +11,15 @@ import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_
 import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/invoice_detail.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/flight_detail.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/traveler_detail.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/flight_detail.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_detail.dart';
 import 'package:myairdeal/application/presentation/screens/navbar/navbar.dart';
 import 'package:myairdeal/application/presentation/screens/notification/notification_screen.dart';
 import 'package:myairdeal/application/presentation/screens/onboarding/onboarding_screen.dart';
-import 'package:myairdeal/application/presentation/screens/payment/payement.dart';
 import 'package:myairdeal/application/presentation/screens/payment/sucess.dart';
 import 'package:myairdeal/application/presentation/screens/refunds/refund_screen.dart';
 import 'package:myairdeal/application/presentation/screens/search/airport_search.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/review_detail.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/review_detail.dart';
 import 'package:myairdeal/application/presentation/screens/seats/seats_selection.dart';
 import 'package:myairdeal/application/presentation/screens/splash/splash_screen.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/chat_page.dart';
@@ -77,7 +76,8 @@ class GetXRouterConfig {
         FlightSortBinding(),
         PaymentBinding(),
         ExploreBinding(),
-        BookingBinding()
+        BookingBinding(),
+        TravellerBinding()
       ],
       name: Routes.bottomBar,
       page: () => const ScreenNavbar(),
@@ -91,7 +91,12 @@ class GetXRouterConfig {
       page: () => const ScreenReviewFlightDetails(),
     ),
     GetPage(
-      name: Routes.flightDetail,
+      bindings: [
+        SeatBinding(),
+        TravellerBinding(),
+        PaymentBinding(),
+      ],
+      name: Routes.flightDetailFillling,
       page: () => const ScreenFlightDetail(),
     ),
     GetPage(
@@ -106,10 +111,10 @@ class GetXRouterConfig {
       name: Routes.notificationSetup,
       page: () => const ScreenNotificationSetup(),
     ),
-    GetPage(
-      name: Routes.payment,
-      page: () => ScreenPaymentMethods(),
-    ),
+    // GetPage(
+    //   name: Routes.payment,
+    //   page: () => const ScreenPaymentMethods(),
+    // ),
     GetPage(
       binding: BookingBinding(),
       name: Routes.bookings,

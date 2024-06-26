@@ -10,7 +10,7 @@ TotalPriceList _$TotalPriceListFromJson(Map<String, dynamic> json) =>
     TotalPriceList(
       fd: json['fd'] == null
           ? null
-          : FD.fromJson(json['fd'] as Map<String, dynamic>),
+          : FdPrice.fromJson(json['fd'] as Map<String, dynamic>),
       fareIdentifier: json['fareIdentifier'] as String?,
       id: json['id'] as String?,
       msri: json['msri'] as List<dynamic>?,

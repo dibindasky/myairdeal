@@ -7,15 +7,17 @@ part of 'taf.dart';
 // **************************************************************************
 
 Taf _$TafFromJson(Map<String, dynamic> json) => Taf(
-      yr: (json['YR'] as num?)?.toInt(),
+      yq: (json['YQ'] as num?)?.toInt(),
+      mft: (json['MFT'] as num?)?.toDouble(),
       ot: (json['OT'] as num?)?.toInt(),
-      mu: (json['MU'] as num?)?.toInt(),
+      mf: (json['MF'] as num?)?.toInt(),
       agst: (json['AGST'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$TafToJson(Taf instance) => <String, dynamic>{
-      'YR': instance.yr,
+      'YQ': instance.yq,
+      'MFT': instance.mft,
       'OT': instance.ot,
-      'MU': instance.mu,
+      'MF': instance.mf,
       'AGST': instance.agst,
     };

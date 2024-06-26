@@ -2,34 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 
 class NormalCenterItems extends StatelessWidget {
-  const NormalCenterItems({super.key, this.haveImage = true});
+  const NormalCenterItems(
+      {super.key,
+      this.haveImage = true,
+      this.airline,
+      this.travelMinutes = 0,
+      this.stops = 0});
 
   final bool haveImage;
+  final String? airline;
+  final int stops;
+  final int travelMinutes;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         haveImage
-            ? Column(
-                children: [
-                  Image.asset(
-                    flightDetailIcon,
-                    height: 20.h,
-                  ),
-                  kHeight10,
-                  Text(
-                    'Asky Airlines',
-                    style: textStyle1.copyWith(fontSize: 12.sp),
-                  ),
-                ],
+            ? Image.asset(
+                flightDetailIcon,
+                height: 20.h,
               )
-            : Text(
-                '01h 45m',
-                style: textThinStyle1.copyWith(fontSize: 9.sp),
-              ),
+            : kEmpty,
+        kHeight10,
+        Text(
+          airline ?? 'Airline',
+          style: textStyle1.copyWith(fontSize: 12.sp),
+        ),
+        Text(
+          DateFormating.convertMinutesToHoursMinutes(travelMinutes),
+          style: textThinStyle1.copyWith(fontSize: 9.sp),
+        ),
         kWidth5,
         Row(
           children: [
@@ -64,7 +70,7 @@ class NormalCenterItems extends StatelessWidget {
           ],
         ),
         Text(
-          '0 Stop',
+          '$stops Stop',
           style: textThinStyle1.copyWith(fontSize: 9.sp),
         ),
       ],

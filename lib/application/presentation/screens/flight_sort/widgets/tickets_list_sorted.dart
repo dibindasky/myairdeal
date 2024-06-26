@@ -24,6 +24,7 @@ class TicketsListSorted extends StatelessWidget {
         itemBuilder: (context, index) => CustomExpansionTile(
           child: FlightTicketCard(
             flightTicketCardEnum: FlightTicketCardEnum.homeSort,
+            searchAirlineInformation: controller.searchList[index],
             buttonOnTap: () {},
           ),
           children: [

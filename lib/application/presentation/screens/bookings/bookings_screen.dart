@@ -39,7 +39,7 @@ class ScreenBookings extends StatelessWidget {
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () => Get.toNamed(Routes.invoice),
                     child: FlightTicketCard(
-                      flightTicketCardEnum: FlightTicketCardEnum.comblete,
+                      flightTicketCardEnum: FlightTicketCardEnum.complete,
                       buttonOnTap: () =>
                           Get.toNamed(Routes.flightDetailFillling),
                     ),

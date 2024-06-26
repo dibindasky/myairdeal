@@ -13,7 +13,7 @@ enum Validate {
 
 enum FlightTicketCardEnum {
   homeSort,
-  comblete,
+  complete,
   cancelled,
   upcoming,
   specialOffers,

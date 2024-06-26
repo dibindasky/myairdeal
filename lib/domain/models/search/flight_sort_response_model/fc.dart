@@ -3,33 +3,33 @@ import 'package:json_annotation/json_annotation.dart';
 part 'fc.g.dart';
 
 @JsonSerializable()
-class FC {
-  @JsonKey(name: 'TAF')
-  int? taf;
-  @JsonKey(name: 'NF')
-  int? nf;
-  @JsonKey(name: 'TF')
-  int? tf;
+class Fc {
   @JsonKey(name: 'BF')
   int? bf;
+  @JsonKey(name: 'TF')
+  double? tf;
+  @JsonKey(name: 'NF')
+  double? nf;
+  @JsonKey(name: 'TAF')
+  double? taf;
 
-  FC({this.taf, this.nf, this.tf, this.bf});
+  Fc({this.bf, this.tf, this.nf, this.taf});
 
-  factory FC.fromJson(Map<String, dynamic> json) => _$FCFromJson(json);
+  factory Fc.fromJson(Map<String, dynamic> json) => _$FcFromJson(json);
 
-  Map<String, dynamic> toJson() => _$FCToJson(this);
+  Map<String, dynamic> toJson() => _$FcToJson(this);
 
-  FC copyWith({
-    int? taf,
-    int? nf,
-    int? tf,
+  Fc copyWith({
     int? bf,
+    double? tf,
+    double? nf,
+    double? taf,
   }) {
-    return FC(
-      taf: taf ?? this.taf,
-      nf: nf ?? this.nf,
-      tf: tf ?? this.tf,
+    return Fc(
       bf: bf ?? this.bf,
+      tf: tf ?? this.tf,
+      nf: nf ?? this.nf,
+      taf: taf ?? this.taf,
     );
   }
 }

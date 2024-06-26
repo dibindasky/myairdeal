@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'adult.dart';
+part of 'pay_type.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Adult _$AdultFromJson(Map<String, dynamic> json) => Adult(
+PayType _$PayTypeFromJson(Map<String, dynamic> json) => PayType(
       fC: json['fC'] == null
           ? null
-          : FC.fromJson(json['fC'] as Map<String, dynamic>),
+          : Fc.fromJson(json['fC'] as Map<String, dynamic>),
       afC: json['afC'] == null
           ? null
           : AfC.fromJson(json['afC'] as Map<String, dynamic>),
       sR: (json['sR'] as num?)?.toInt(),
       bI: json['bI'] == null
           ? null
-          : BI.fromJson(json['bI'] as Map<String, dynamic>),
+          : Bi.fromJson(json['bI'] as Map<String, dynamic>),
       rT: (json['rT'] as num?)?.toInt(),
       cc: json['cc'] as String?,
       cB: json['cB'] as String?,
@@ -24,7 +24,7 @@ Adult _$AdultFromJson(Map<String, dynamic> json) => Adult(
       mI: json['mI'] as bool?,
     );
 
-Map<String, dynamic> _$AdultToJson(Adult instance) => <String, dynamic>{
+Map<String, dynamic> _$PayTypeToJson(PayType instance) => <String, dynamic>{
       'fC': instance.fC,
       'afC': instance.afC,
       'sR': instance.sR,

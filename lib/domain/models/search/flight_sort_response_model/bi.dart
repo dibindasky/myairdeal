@@ -3,21 +3,21 @@ import 'package:json_annotation/json_annotation.dart';
 part 'bi.g.dart';
 
 @JsonSerializable()
-class BI {
+class Bi {
   String? iB;
   String? cB;
 
-  BI({this.iB, this.cB});
+  Bi({this.iB, this.cB});
 
-  factory BI.fromJson(Map<String, dynamic> json) => _$BIFromJson(json);
+  factory Bi.fromJson(Map<String, dynamic> json) => _$BiFromJson(json);
 
-  Map<String, dynamic> toJson() => _$BIToJson(this);
+  Map<String, dynamic> toJson() => _$BiToJson(this);
 
-  BI copyWith({
+  Bi copyWith({
     String? iB,
     String? cB,
   }) {
-    return BI(
+    return Bi(
       iB: iB ?? this.iB,
       cB: cB ?? this.cB,
     );

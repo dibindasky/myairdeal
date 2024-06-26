@@ -123,8 +123,8 @@ class FlightSortController extends GetxController {
                 ? 2
                 : airportSelected.length,
         (index) => RouteInfo(
-          fromCityOrAirport: CodeAirport(code: 'DEL'),
-          toCityOrAirport: CodeAirport(code: 'BOM'),
+          fromCityOrAirport: CodeAirport(code: 'COK'),
+          toCityOrAirport: CodeAirport(code: 'DEL'),
           // fromCityOrAirport: CodeAirport(
           //     code: airportSelected[tripType.value == 1 ? 0 : index]
           //             [tripType.value == 1 && index == 1 ? 1 : 0]

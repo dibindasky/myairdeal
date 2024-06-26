@@ -10,10 +10,12 @@ class BottomMiniContainer extends StatelessWidget {
   const BottomMiniContainer({
     super.key,
     required this.flightTicketCardEnum,
+    this.price = 0,
     this.buttonOnTap,
   });
 
   final FlightTicketCardEnum flightTicketCardEnum;
+  final double price;
   final VoidCallback? buttonOnTap;
 
   @override
@@ -40,7 +42,7 @@ class BottomMiniContainer extends StatelessWidget {
                     kHeight7
                   ],
                 )
-              : flightTicketCardEnum == FlightTicketCardEnum.comblete
+              : flightTicketCardEnum == FlightTicketCardEnum.complete
                   ? Column(
                       children: [
                         kHeight7,
@@ -138,45 +140,51 @@ class BottomMiniContainer extends StatelessWidget {
                       : Row(
                           children: [
                             kWidth20,
-                            Text(
-                              'Ticket Price\nGHS 800',
-                              style: textStyle1.copyWith(
-                                color: kWhite,
-                                fontSize: 12.sp,
-                              ),
+                            Column(
+                              children: [
+                                kHeight10,
+                                Text(
+                                  'Ticket Price',
+                                  style: textStyle1.copyWith(
+                                    color: kWhite,
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                                kHeight10,
+                              ],
                             ),
                             flightTicketCardEnum ==
                                     FlightTicketCardEnum.homeSort
                                 ? Row(
                                     children: [
                                       kWidth20,
-                                      ClipRRect(
-                                        borderRadius: kRadius5,
-                                        child: ColoredBox(
-                                          color: const Color(0xFF6E93A8),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 3),
-                                            child: Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.lock,
-                                                  size: 15.sp,
-                                                  color: kWhite,
-                                                ),
-                                                kWidth5,
-                                                Text(
-                                                  'Lock the price',
-                                                  style: textStyle1.copyWith(
-                                                    color: kWhite,
-                                                    fontSize: 12.sp,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      // ClipRRect(
+                                      //   borderRadius: kRadius5,
+                                      //   child: ColoredBox(
+                                      //     color: const Color(0xFF6E93A8),
+                                      //     child: Padding(
+                                      //       padding: const EdgeInsets.symmetric(
+                                      //           horizontal: 10, vertical: 3),
+                                      //       child: Row(
+                                      //         children: [
+                                      //           Icon(
+                                      //             Icons.lock,
+                                      //             size: 15.sp,
+                                      //             color: kWhite,
+                                      //           ),
+                                      //           kWidth5,
+                                      //           Text(
+                                      //             'Lock the price',
+                                      //             style: textStyle1.copyWith(
+                                      //               color: kWhite,
+                                      //               fontSize: 12.sp,
+                                      //             ),
+                                      //           ),
+                                      //         ],
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
                                     ],
                                   )
                                 : kEmpty,
@@ -198,11 +206,20 @@ class BottomMiniContainer extends StatelessWidget {
                                 : kEmpty,
                             kWidth10,
                             flightTicketCardEnum ==
-                                        FlightTicketCardEnum.homeSort ||
+                                        FlightTicketCardEnum.homeSort?Text(
+                                  '₹ $price',
+                                  style: textStyle1.copyWith(
+                                    color: kWhite,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                ):
+                            buttonOnTap==null?kEmpty:
+                            
                                     flightTicketCardEnum ==
                                         FlightTicketCardEnum.specialOffers ||
                                     flightTicketCardEnum ==
-                                        FlightTicketCardEnum.comblete
+                                        FlightTicketCardEnum.complete
                                 ? EventButton(
                                     fontSize: 10.sp,
                                     width: 80.w,
@@ -210,7 +227,7 @@ class BottomMiniContainer extends StatelessWidget {
                                     borderRadius: 29,
                                     color: kIndigo,
                                     text: flightTicketCardEnum ==
-                                            FlightTicketCardEnum.comblete
+                                            FlightTicketCardEnum.complete
                                         ? 'Download'
                                         : 'Book Now',
                                     onTap: buttonOnTap ?? () {},

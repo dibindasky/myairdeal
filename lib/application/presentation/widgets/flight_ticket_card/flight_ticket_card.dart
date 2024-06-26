@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
+import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/booking_canceled_tile_center_items.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/bottom_mini_container.dart';
@@ -45,24 +46,61 @@ class FlightTicketCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const CardSideItems(
-                      place: 'TML',
-                      airPort: 'Temale',
-                      from: 'Deport',
-                      time: '07:00 AM',
-                    ),
-                    flightTicketCardEnum == FlightTicketCardEnum.comblete ||
-                            flightTicketCardEnum ==
-                                FlightTicketCardEnum.cancelled
-                        ? BookingCombletedCancelledTabcenterItems()
-                        : const NormalCenterItems(),
-                    const CardSideItems(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      place: 'KMS',
-                      airPort: 'Kumasi',
-                      from: 'Arrival',
-                      time: '08:40 PM',
-                    ),
+                    searchAirlineInformation != null
+                        ? CardSideItems(
+                            place: searchAirlineInformation!.sI![0].da!.code!,
+                            airPort: searchAirlineInformation!.sI![0].da!.city!,
+                            from: 'Departure',
+                            time: DateFormating.formatTime(
+                                searchAirlineInformation!.sI![0].dt!),
+                          )
+                        : const CardSideItems(
+                            place: 'TTT',
+                            airPort: 'Airport',
+                            from: 'Departure',
+                            time: '07:00 AM',
+                          ),
+                    searchAirlineInformation != null
+                        ? NormalCenterItems(
+                            travelMinutes: DateFormating.getDifferenceOfDates(
+                                searchAirlineInformation!.sI![0].dt!,
+                                searchAirlineInformation!
+                                    .sI![searchAirlineInformation!.sI!.length -
+                                        1]
+                                    .at!),
+                            airline:
+                                searchAirlineInformation!.sI![0].fD!.aI!.name,
+                            stops: searchAirlineInformation!.sI!.length - 1)
+                        : flightTicketCardEnum ==
+                                    FlightTicketCardEnum.complete ||
+                                flightTicketCardEnum ==
+                                    FlightTicketCardEnum.cancelled
+                            ? BookingCombletedCancelledTabcenterItems()
+                            : const NormalCenterItems(),
+                    searchAirlineInformation != null
+                        ? CardSideItems(
+                            place: searchAirlineInformation!
+                                .sI![searchAirlineInformation!.sI!.length - 1]
+                                .aa!
+                                .code!,
+                            airPort: searchAirlineInformation!
+                                .sI![searchAirlineInformation!.sI!.length - 1]
+                                .aa!
+                                .city!,
+                            from: 'Arrival',
+                            time: DateFormating.formatTime(
+                                searchAirlineInformation!
+                                    .sI![searchAirlineInformation!.sI!.length -
+                                        1]
+                                    .at!),
+                          )
+                        : const CardSideItems(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            place: 'TTT',
+                            airPort: 'Airport',
+                            from: 'Arrival',
+                            time: '07:00 PM',
+                          ),
                   ],
                 ),
               ),
@@ -70,6 +108,10 @@ class FlightTicketCard extends StatelessWidget {
               BottomMiniContainer(
                 flightTicketCardEnum: flightTicketCardEnum,
                 buttonOnTap: buttonOnTap,
+                price: searchAirlineInformation != null
+                    ? searchAirlineInformation!
+                        .totalPriceList![0].fd!.adult!.fC!.tf!
+                    : 0,
               ),
             ],
           ),
@@ -78,9 +120,9 @@ class FlightTicketCard extends StatelessWidget {
           left: 1,
           bottom: 45,
           child: Container(
-            decoration: const BoxDecoration(
-              color: kWhite,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: kGreylowLight,
+              borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(13),
                   bottomRight: Radius.circular(10)),
             ),
@@ -92,9 +134,9 @@ class FlightTicketCard extends StatelessWidget {
           right: 1,
           bottom: 45,
           child: Container(
-            decoration: const BoxDecoration(
-              color: kWhite,
-              borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+              color: kGreylowLight,
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(13),
                 bottomLeft: Radius.circular(10),
               ),

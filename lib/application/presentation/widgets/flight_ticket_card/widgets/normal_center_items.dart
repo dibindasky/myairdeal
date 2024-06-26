@@ -4,32 +4,37 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class NormalCenterItems extends StatelessWidget {
-  const NormalCenterItems({super.key, this.haveImage = true});
+  const NormalCenterItems(
+      {super.key,
+      this.haveImage = true,
+      this.airline,
+      this.travelMinutes = '',
+      this.stops = 0});
 
   final bool haveImage;
+  final String? airline;
+  final int stops;
+  final String travelMinutes;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         haveImage
-            ? Column(
-                children: [
-                  Image.asset(
-                    flightDetailIcon,
-                    height: 20.h,
-                  ),
-                  kHeight10,
-                  Text(
-                    'Asky Airlines',
-                    style: textStyle1.copyWith(fontSize: 12.sp),
-                  ),
-                ],
+            ? Image.asset(
+                flightDetailIcon,
+                height: 20.h,
               )
-            : Text(
-                '01h 45m',
-                style: textThinStyle1.copyWith(fontSize: 9.sp),
-              ),
+            : kEmpty,
+        kHeight10,
+        Text(
+          airline ?? 'Airline',
+          style: textStyle1.copyWith(fontSize: 12.sp),
+        ),
+        Text(
+          travelMinutes,
+          style: textThinStyle1.copyWith(fontSize: 9.sp),
+        ),
         kWidth5,
         Row(
           children: [
@@ -38,19 +43,21 @@ class NormalCenterItems extends StatelessWidget {
               backgroundColor: kGrey,
             ),
             ...List.generate(
-              7,
+              5,
               (index) => Text(
                 '-',
                 style: TextStyle(
                     fontSize: 8.sp, fontWeight: FontWeight.w800, color: kBlack),
               ),
             ),
-            const RotatedBox(
-              quarterTurns: 1,
-              child: Icon(Icons.flight_rounded, size: 20, color: kBlue),
-            ),
             ...List.generate(
-              7,
+                stops,
+                (index) => const RotatedBox(
+                      quarterTurns: 1,
+                      child: Icon(Icons.flight_rounded, size: 20, color: kBlue),
+                    )),
+            ...List.generate(
+              5,
               (index) => Text(
                 '-',
                 style: TextStyle(
@@ -64,7 +71,7 @@ class NormalCenterItems extends StatelessWidget {
           ],
         ),
         Text(
-          '0 Stop',
+          '$stops Stop',
           style: textThinStyle1.copyWith(fontSize: 9.sp),
         ),
       ],

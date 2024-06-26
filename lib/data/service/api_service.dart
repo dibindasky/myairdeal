@@ -47,7 +47,7 @@ class ApiService {
     String url, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
-    dynamic data,
+    Map<String, dynamic>? data,
     bool addHeader = true,
   }) async {
     try {
@@ -66,7 +66,7 @@ class ApiService {
       log('api uri ==>post  ${_dio.options.baseUrl + url}');
       final response = await _dio.post(
         url,
-        data: data is FormData ? data : data as Map<String, dynamic>?,
+        data: data as Map<String, dynamic>?,
         queryParameters: queryParameters,
       );
       log('post success $url');

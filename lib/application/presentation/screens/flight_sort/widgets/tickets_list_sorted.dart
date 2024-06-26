@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/flight_ticket_expansion_card.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
@@ -16,11 +15,6 @@ class TicketsListSorted extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
     return Obx(() {
-      if (controller.searchListLoading.value) {
-        return const Center(
-          child: CircularProgressIndicator(color: kBluePrimary),
-        );
-      }
       return ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,

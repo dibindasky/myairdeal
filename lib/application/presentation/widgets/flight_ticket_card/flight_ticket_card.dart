@@ -8,23 +8,24 @@ import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/wi
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/bottom_mini_container.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/card_side_items.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
 
 class FlightTicketCard extends StatelessWidget {
-  const FlightTicketCard({
-    super.key,
-    this.buttonOnTap,
-    required this.flightTicketCardEnum,
-  });
+  const FlightTicketCard(
+      {super.key,
+      this.buttonOnTap,
+      required this.flightTicketCardEnum,
+      this.searchAirlineInformation});
 
   final VoidCallback? buttonOnTap;
   final FlightTicketCardEnum flightTicketCardEnum;
+  final SearchAirlineInformation? searchAirlineInformation;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 11.w),
           decoration: BoxDecoration(
             color: kWhite,
             borderRadius: kRadius15,
@@ -74,7 +75,7 @@ class FlightTicketCard extends StatelessWidget {
           ),
         ),
         Positioned(
-          left: 14,
+          left: 1,
           bottom: 45,
           child: Container(
             decoration: const BoxDecoration(
@@ -88,8 +89,8 @@ class FlightTicketCard extends StatelessWidget {
           ),
         ),
         Positioned(
+          right: 1,
           bottom: 45,
-          right: 14,
           child: Container(
             decoration: const BoxDecoration(
               color: kWhite,

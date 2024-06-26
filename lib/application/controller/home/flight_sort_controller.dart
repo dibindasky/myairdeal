@@ -117,10 +117,22 @@ class FlightSortController extends GetxController {
       searchModifiers:
           SearchModifiers(isConnectingFlight: true, isDirectFlight: true),
       routeInfos: List.generate(
-        airportSelected.length,
+        tripType.value == 0
+            ? 1
+            : tripType.value == 1
+                ? 2
+                : airportSelected.length,
         (index) => RouteInfo(
-          fromCityOrAirport: CodeAirport(code: airportSelected[index][0].code),
-          toCityOrAirport: CodeAirport(code: airportSelected[index][1].code),
+          fromCityOrAirport: CodeAirport(code: 'DEL'),
+          toCityOrAirport: CodeAirport(code: 'BOM'),
+          // fromCityOrAirport: CodeAirport(
+          //     code: airportSelected[tripType.value == 1 ? 0 : index]
+          //             [tripType.value == 1 && index == 1 ? 1 : 0]
+          //         .code),
+          // toCityOrAirport: CodeAirport(
+          //     code: airportSelected[tripType.value == 1 ? 0 : index]
+          //             [tripType.value == 1 && index == 1 ? 0 : 1]
+          //         .code),
           travelDate: DateFormating.getDateApi(
             tripType.value == 2
                 ? multiCityDepartureDate[index]!
@@ -131,7 +143,6 @@ class FlightSortController extends GetxController {
         ),
       ),
     );
-    print(searchModel.toJson());
     final result = await flightService.getAllFlight(
         flightSearchSortModel: FlightSearchSortModel(searchQuery: searchModel));
     result.fold((l) {

@@ -16,26 +16,10 @@ class FlightService implements FlightRepo {
   Future<Either<Failure, FlightSortResponseModel>> getAllFlight(
       {required FlightSearchSortModel flightSearchSortModel}) async {
     try {
-      print('api 1');
       final responce = await apiService.post(
           addHeader: false,
           ApiEndPoints.flightSort,
-          data: flightSearchSortModel.toJson
-          //      data: {
-          //   "searchQuery": {
-          //     "paxInfo": {"ADULT": "1"},
-          //     "routeInfos": [
-          //       {
-          //         "fromCityOrAirport": {"code": "DEL"},
-          //         "toCityOrAirport": {"code": "BOM"},
-          //         "travelDate": "2024-06-26"
-          //       }
-          //     ]
-          //   }
-          // }
-          );
-      print('api 2');
-      log('getAllFlight send');
+          data: flightSearchSortModel.toJson());
       return Right(FlightSortResponseModel.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException getAllFlight $e');

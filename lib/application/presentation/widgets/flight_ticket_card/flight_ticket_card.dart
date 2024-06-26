@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
+import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/booking_canceled_tile_center_items.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/bottom_mini_container.dart';
@@ -15,11 +16,13 @@ class FlightTicketCard extends StatelessWidget {
       {super.key,
       this.buttonOnTap,
       required this.flightTicketCardEnum,
+      this.index = 0,
       this.searchAirlineInformation});
 
   final VoidCallback? buttonOnTap;
   final FlightTicketCardEnum flightTicketCardEnum;
   final SearchAirlineInformation? searchAirlineInformation;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -45,24 +48,48 @@ class FlightTicketCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const CardSideItems(
-                      place: 'TML',
-                      airPort: 'Temale',
-                      from: 'Deport',
-                      time: '07:00 AM',
-                    ),
-                    flightTicketCardEnum == FlightTicketCardEnum.comblete ||
+                    searchAirlineInformation != null
+                        ? CardSideItems(
+                            place:
+                                searchAirlineInformation!.sI![index].da!.code!,
+                            airPort:
+                                searchAirlineInformation!.sI![index].da!.city!,
+                            from: 'Departure',
+                            time: DateFormating.formatTime(
+                                searchAirlineInformation!.sI![index].dt!),
+                          )
+                        : const CardSideItems(
+                            place: 'TTT',
+                            airPort: 'Airport',
+                            from: 'Departure',
+                            time: '07:00 AM',
+                          ),
+                    flightTicketCardEnum == FlightTicketCardEnum.complete ||
                             flightTicketCardEnum ==
                                 FlightTicketCardEnum.cancelled
                         ? BookingCombletedCancelledTabcenterItems()
-                        : const NormalCenterItems(),
-                    const CardSideItems(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      place: 'KMS',
-                      airPort: 'Kumasi',
-                      from: 'Arrival',
-                      time: '08:40 PM',
-                    ),
+                        : NormalCenterItems(
+                            airline: searchAirlineInformation!
+                                .sI![index].fD!.aI!.name,
+                            stops: searchAirlineInformation!.sI![index].stops ??
+                                0),
+                    searchAirlineInformation != null
+                        ? CardSideItems(
+                            place:
+                                searchAirlineInformation!.sI![index].aa!.code!,
+                            airPort:
+                                searchAirlineInformation!.sI![index].aa!.city!,
+                            from: 'Departure',
+                            time: DateFormating.formatTime(
+                                searchAirlineInformation!.sI![index].at!),
+                          )
+                        : const CardSideItems(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            place: 'TTT',
+                            airPort: 'Airport',
+                            from: 'Arrival',
+                            time: '07:00 PM',
+                          ),
                   ],
                 ),
               ),
@@ -70,6 +97,8 @@ class FlightTicketCard extends StatelessWidget {
               BottomMiniContainer(
                 flightTicketCardEnum: flightTicketCardEnum,
                 buttonOnTap: buttonOnTap,
+                price: searchAirlineInformation!
+                    .totalPriceList![index].fd!.adult!.fC!.tf!,
               ),
             ],
           ),

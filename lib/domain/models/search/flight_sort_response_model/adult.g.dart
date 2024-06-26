@@ -9,14 +9,14 @@ part of 'adult.dart';
 Adult _$AdultFromJson(Map<String, dynamic> json) => Adult(
       fC: json['fC'] == null
           ? null
-          : FC.fromJson(json['fC'] as Map<String, dynamic>),
+          : Fc.fromJson(json['fC'] as Map<String, dynamic>),
       afC: json['afC'] == null
           ? null
           : AfC.fromJson(json['afC'] as Map<String, dynamic>),
       sR: (json['sR'] as num?)?.toInt(),
       bI: json['bI'] == null
           ? null
-          : BI.fromJson(json['bI'] as Map<String, dynamic>),
+          : Bi.fromJson(json['bI'] as Map<String, dynamic>),
       rT: (json['rT'] as num?)?.toInt(),
       cc: json['cc'] as String?,
       cB: json['cB'] as String?,

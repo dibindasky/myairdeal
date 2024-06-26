@@ -6,12 +6,12 @@ part of 'bi.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BI _$BIFromJson(Map<String, dynamic> json) => BI(
+Bi _$BiFromJson(Map<String, dynamic> json) => Bi(
       iB: json['iB'] as String?,
       cB: json['cB'] as String?,
     );
 
-Map<String, dynamic> _$BIToJson(BI instance) => <String, dynamic>{
+Map<String, dynamic> _$BiToJson(Bi instance) => <String, dynamic>{
       'iB': instance.iB,
       'cB': instance.cB,
     };

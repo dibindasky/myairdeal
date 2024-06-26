@@ -8,10 +8,10 @@ part 'adult.g.dart';
 
 @JsonSerializable()
 class Adult {
-  FC? fC;
+  Fc? fC;
   AfC? afC;
   int? sR;
-  BI? bI;
+  Bi? bI;
   int? rT;
   String? cc;
   String? cB;
@@ -35,10 +35,10 @@ class Adult {
   Map<String, dynamic> toJson() => _$AdultToJson(this);
 
   Adult copyWith({
-    FC? fC,
+    Fc? fC,
     AfC? afC,
     int? sR,
-    BI? bI,
+    Bi? bI,
     int? rT,
     String? cc,
     String? cB,

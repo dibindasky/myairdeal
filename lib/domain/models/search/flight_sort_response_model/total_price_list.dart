@@ -1,12 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import 'fd.dart';
+import 'fd_price.dart';
 
 part 'total_price_list.g.dart';
 
 @JsonSerializable()
 class TotalPriceList {
-  FD? fd;
+  FdPrice? fd;
   String? fareIdentifier;
   String? id;
   List<dynamic>? msri;
@@ -29,7 +30,7 @@ class TotalPriceList {
   Map<String, dynamic> toJson() => _$TotalPriceListToJson(this);
 
   TotalPriceList copyWith({
-    FD? fd,
+    FdPrice? fd,
     String? fareIdentifier,
     String? id,
     List<dynamic>? msri,

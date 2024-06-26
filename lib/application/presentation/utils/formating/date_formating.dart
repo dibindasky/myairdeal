@@ -34,4 +34,19 @@ class DateFormating {
         return '';
     }
   }
+
+  // will return time as hh:mm a if pass a formatted date string
+  static String formatTime(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    final DateFormat formatter = DateFormat('hh:mm a');
+    return formatter.format(dateTime);
+  }
+
+  static String convertMinutesToHoursMinutes(int totalMinutes) {
+    int hours = totalMinutes ~/ 60;
+    int minutes = totalMinutes % 60;
+    String formattedTime =
+        '${hours.toString().padLeft(2, '0')}h ${minutes.toString().padLeft(2, '0')}m';
+    return formattedTime;
+  }
 }

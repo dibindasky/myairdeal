@@ -4,31 +4,35 @@ part 'taf.g.dart';
 
 @JsonSerializable()
 class Taf {
-  @JsonKey(name: 'YR')
-  int? yr;
+  @JsonKey(name: 'YQ')
+  int? yq;
+  @JsonKey(name: 'MFT')
+  double? mft;
   @JsonKey(name: 'OT')
   int? ot;
-  @JsonKey(name: 'MU')
-  int? mu;
+  @JsonKey(name: 'MF')
+  int? mf;
   @JsonKey(name: 'AGST')
   int? agst;
 
-  Taf({this.yr, this.ot, this.mu, this.agst});
+  Taf({this.yq, this.mft, this.ot, this.mf, this.agst});
 
   factory Taf.fromJson(Map<String, dynamic> json) => _$TafFromJson(json);
 
   Map<String, dynamic> toJson() => _$TafToJson(this);
 
   Taf copyWith({
-    int? yr,
+    int? yq,
+    double? mft,
     int? ot,
-    int? mu,
+    int? mf,
     int? agst,
   }) {
     return Taf(
-      yr: yr ?? this.yr,
+      yq: yq ?? this.yq,
+      mft: mft ?? this.mft,
       ot: ot ?? this.ot,
-      mu: mu ?? this.mu,
+      mf: mf ?? this.mf,
       agst: agst ?? this.agst,
     );
   }

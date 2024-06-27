@@ -4,12 +4,13 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class NormalCenterItems extends StatelessWidget {
-  const NormalCenterItems(
-      {super.key,
-      this.haveImage = true,
-      this.airline,
-      this.travelMinutes = '',
-      this.stops = 0});
+  const NormalCenterItems({
+    super.key,
+    this.haveImage = true,
+    this.airline,
+    this.travelMinutes = '',
+    this.stops = 1,
+  });
 
   final bool haveImage;
   final String? airline;

@@ -127,6 +127,9 @@ class GetXRouterConfig {
       page: () => const ScreenExplore(),
     ),
     GetPage(
+      bindings: [
+        BookingBinding(),
+      ],
       name: Routes.invoice,
       page: () => const ScreenInvoiceDetail(),
     ),

@@ -13,7 +13,7 @@ class FdPrice {
   @JsonKey(name: 'CHILD')
   PayType? child;
 
-  FdPrice({this.adult,this.child,this.infant});
+  FdPrice({this.adult, this.child, this.infant});
 
   factory FdPrice.fromJson(Map<String, dynamic> json) {
     return _$FdPriceFromJson(json);

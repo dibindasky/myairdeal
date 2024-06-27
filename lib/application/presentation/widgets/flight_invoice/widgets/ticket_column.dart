@@ -8,17 +8,21 @@ class TicketColumn extends StatelessWidget {
   final String? value;
   final String? subValue;
   final bool isBold;
+  final bool isSubValueColumn;
   final CrossAxisAlignment? crossAxisAlignment;
+  final TextStyle? valueStyle;
   final TextStyle? lebelStyle;
   final TextStyle? subValueStyle;
   const TicketColumn({
-    this.subValueStyle,
-    this.lebelStyle,
     super.key,
+    this.subValueStyle,
+    this.valueStyle,
+    this.lebelStyle,
     required this.label,
     this.subValue,
     this.value,
     this.isBold = false,
+    this.isSubValueColumn = false,
     this.crossAxisAlignment,
   });
 
@@ -37,17 +41,20 @@ class TicketColumn extends StatelessWidget {
         value != null
             ? Text(
                 value!,
-                style: TextStyle(
-                  fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-                  fontSize: 18,
-                ),
+                style: valueStyle ??
+                    TextStyle(
+                      fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+                      fontSize: 18,
+                    ),
               )
             : kEmpty,
+        kHeight5,
         subValue != null
             ? Text(
                 subValue!,
                 style: subValueStyle ??
                     textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
+                overflow: TextOverflow.ellipsis,
               )
             : kEmpty,
       ],

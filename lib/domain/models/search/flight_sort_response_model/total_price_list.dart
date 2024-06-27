@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'fd.dart';
 import 'fd_price.dart';
 
 part 'total_price_list.g.dart';

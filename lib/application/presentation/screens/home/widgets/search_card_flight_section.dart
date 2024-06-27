@@ -61,6 +61,9 @@ class FlightSearchCardHome extends StatelessWidget {
                       showModalBottomSheet(
                         context: context,
                         builder: (context) => DatePickingBottomSheet(
+                          focusedDay: index == 0
+                              ? DateTime.now()
+                              : controller.depatureDate.value,
                           initialDate: index == 0
                               ? DateTime.now()
                               : controller.depatureDate.value,

@@ -30,7 +30,9 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
           InkWell(
             onTap: () {
               setState(() {
-                isExpanded = !isExpanded;
+                if (widget.isExpandable) {
+                  isExpanded = !isExpanded;
+                }
               });
             },
             splashFactory: NoSplash.splashFactory,

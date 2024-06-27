@@ -9,7 +9,7 @@ class NormalCenterItems extends StatelessWidget {
       this.haveImage = true,
       this.airline,
       this.travelMinutes = '',
-      this.stops = 0});
+      this.stops = 1});
 
   final bool haveImage;
   final String? airline;

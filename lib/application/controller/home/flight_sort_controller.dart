@@ -18,17 +18,29 @@ class FlightSortController extends GetxController {
   final FlightRepo flightService = FlightService();
 
   /// list responsible for the rebuild and sorting of airlines available on [searchListMain]
-  RxList<SearchAirlineInformation> searchList =
-      <SearchAirlineInformation>[].obs;
+  RxList<RxList<SearchAirlineInformation>> searchList =
+      <RxList<SearchAirlineInformation>>[].obs;
+
+  /// variable responsible for showing the selected trip where from round trip or
+  /// multicity trip, work with [searchList]
+  RxInt selctedTripIndex = 0.obs;
 
   /// here store all the response form api and responsible for giving data to [searchList] for sorting
-  RxList<SearchAirlineInformation> searchListMain =
-      <SearchAirlineInformation>[].obs;
+  List<List<SearchAirlineInformation>> searchListMain =
+      <List<SearchAirlineInformation>>[].obs;
+
+  /// variable used for showing the selection of flights for multi city and round trip,
+  /// responsible for work with [searchList]
+  RxList<int> selectedFlights = [0, 0].obs;
+
+  /// selected trip list index that responsible for work with [searchList] and [selectedFlights]
+  /// to set which list should show on sorting page
+  RxInt selectedTripListIndex = 0.obs;
 
   // variable responsible for show loading in the search list page
   RxBool searchListLoading = false.obs;
 
-  // Change category
+  // Change category [flights, air ambulance, chatered flight, helicopter]
   RxInt selectedCategoryType = 0.obs;
 
   // variable used to select the trip type 0- oneway, 1- roundtrip, 2- multicity
@@ -105,8 +117,21 @@ class FlightSortController extends GetxController {
   //Add ons
   RxBool addOnsChecked = false.obs;
 
+// change the category in the home section [flights, air ambulance, chatered flight, helicopter]
+  void changeCategory(int index) {
+    selectedCategoryType.value = index;
+    update();
+  }
+
   void searchFlights() async {
     searchListLoading.value = true;
+    if (tripType.value == 1) {
+      airportSelected[1].value = [airportSelected[0][1], airportSelected[0][0]];
+      selectedFlights.value = [0, 0];
+    } else if (tripType.value == 2) {
+      selectedFlights.value =
+          List.generate(airportSelected.length, (index) => 0);
+    }
     FlightSearchQuery searchModel = FlightSearchQuery(
       cabinClass: classType.value,
       paxInfo: PaxInfo(
@@ -123,16 +148,10 @@ class FlightSortController extends GetxController {
                 ? 2
                 : airportSelected.length,
         (index) => RouteInfo(
-          fromCityOrAirport: CodeAirport(code: 'COK'),
-          toCityOrAirport: CodeAirport(code: 'DEL'),
-          // fromCityOrAirport: CodeAirport(
-          //     code: airportSelected[tripType.value == 1 ? 0 : index]
-          //             [tripType.value == 1 && index == 1 ? 1 : 0]
-          //         .code),
-          // toCityOrAirport: CodeAirport(
-          //     code: airportSelected[tripType.value == 1 ? 0 : index]
-          //             [tripType.value == 1 && index == 1 ? 0 : 1]
-          //         .code),
+          // fromCityOrAirport: CodeAirport(code: 'MAA'),
+          // toCityOrAirport: CodeAirport(code: 'DEL'),
+          fromCityOrAirport: CodeAirport(code: airportSelected[index][0].code),
+          toCityOrAirport: CodeAirport(code: airportSelected[index][1].code),
           travelDate: DateFormating.getDateApi(
             tripType.value == 2
                 ? multiCityDepartureDate[index]!
@@ -149,30 +168,68 @@ class FlightSortController extends GetxController {
       searchListLoading.value = false;
     }, (r) {
       if (r.errors == null) {
+        searchListMain = [];
+        searchList.value = [];
         if (r.searchResult?.tripInfos?.combo != null) {
-          searchListMain.value =
-              r.searchResult?.tripInfos?.combo ?? <SearchAirlineInformation>[];
-        } else if (r.searchResult?.tripInfos?.onward != null) {
-          searchListMain.value =
-              r.searchResult?.tripInfos?.onward ?? <SearchAirlineInformation>[];
-        } else if (r.searchResult?.tripInfos?.returns != null) {
-          searchListMain.value = r.searchResult?.tripInfos?.returns ??
-              <SearchAirlineInformation>[];
+          searchListMain.add(RxList.from(r.searchResult?.tripInfos?.combo ??
+              <SearchAirlineInformation>[]));
         }
-        //  else if (r.searchResult?.tripInfos?.multicity1 != null) {
-        //   searchListMain.value = r.searchResult?.tripInfos?.multicity1 ??
-        //       <SearchAirlineInformation>[];
-        // }
-        searchList = searchListMain;
+        if (r.searchResult?.tripInfos?.onward != null) {
+          searchListMain.add(RxList.from(r.searchResult?.tripInfos?.onward ??
+              <SearchAirlineInformation>[]));
+        }
+        if (r.searchResult?.tripInfos?.returns != null) {
+          searchListMain.add(RxList.from(r.searchResult?.tripInfos?.returns ??
+              <SearchAirlineInformation>[]));
+        }
+        if (r.searchResult?.tripInfos?.multicity1 != null) {
+          searchListMain.add(RxList.from(
+              r.searchResult?.tripInfos?.multicity1 ??
+                  <SearchAirlineInformation>[]));
+        }
+        if (r.searchResult?.tripInfos?.multicity2 != null) {
+          searchListMain.add(RxList.from(
+              r.searchResult?.tripInfos?.multicity2 ??
+                  <SearchAirlineInformation>[]));
+        }
+        if (r.searchResult?.tripInfos?.multicity3 != null) {
+          searchListMain.add(RxList.from(
+              r.searchResult?.tripInfos?.multicity3 ??
+                  <SearchAirlineInformation>[]));
+        }
+        if (r.searchResult?.tripInfos?.multicity4 != null) {
+          searchListMain.add(RxList.from(
+              r.searchResult?.tripInfos?.multicity4 ??
+                  <SearchAirlineInformation>[]));
+        }
+        if (r.searchResult?.tripInfos?.multicity5 != null) {
+          searchListMain.add(RxList.from(
+              r.searchResult?.tripInfos?.multicity5 ??
+                  <SearchAirlineInformation>[]));
+        }
+        if (r.searchResult?.tripInfos?.multicity6 != null) {
+          searchListMain.add(RxList.from(
+              r.searchResult?.tripInfos?.multicity6 ??
+                  <SearchAirlineInformation>[]));
+        }
+        for (var e in searchListMain) {
+          searchList.add(RxList.from(e));
+        }
       }
       searchListLoading.value = false;
+      getSortingVariables();
     });
   }
 
-  changeCategory(int index) {
-    selectedCategoryType.value = index;
-    update();
+  void changeFlightSelectionMultiCityAndRound(int index) {
+    selectedFlights[selectedTripListIndex.value] = index;
   }
+
+  void changeSelectedTripIndex(int index) {
+    selectedTripListIndex.value = 0;
+  }
+
+  void getSortingVariables() {}
 
   void changeAdds(bool value) {
     addOnsChecked.value = value;
@@ -255,6 +312,11 @@ class FlightSortController extends GetxController {
 
   void changeTripType(int index) {
     tripType.value = index;
+    if (index != 2) {
+      multiCityCount.value = 2;
+      multiCityDepartureDate.removeRange(2, multiCityDepartureDate.length);
+      airportSelected.removeRange(2, airportSelected.length);
+    }
   }
 
   void changeDepartureDate(DateTime value) {

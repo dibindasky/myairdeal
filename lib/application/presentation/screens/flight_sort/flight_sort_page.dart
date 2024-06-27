@@ -7,6 +7,7 @@ import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/c
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/header_section_sort_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/sorting_section.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/tickets_list_sorted.dart';
+import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/trip_choosing_containers.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -35,6 +36,7 @@ class ScreenFlightTicketSort extends StatelessWidget {
         }
         return SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: 220.h,
@@ -46,6 +48,7 @@ class ScreenFlightTicketSort extends StatelessWidget {
                 ),
               ),
               const SortingChipsSection(),
+              const TripChoosingContainers(),
               const TicketsListSorted(),
               kHeight20
             ],
@@ -55,3 +58,4 @@ class ScreenFlightTicketSort extends StatelessWidget {
     );
   }
 }
+

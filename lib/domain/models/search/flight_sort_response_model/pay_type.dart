@@ -30,7 +30,8 @@ class PayType {
     this.mI,
   });
 
-  factory PayType.fromJson(Map<String, dynamic> json) => _$PayTypeFromJson(json);
+  factory PayType.fromJson(Map<String, dynamic> json) =>
+      _$PayTypeFromJson(json);
 
   Map<String, dynamic> toJson() => _$PayTypeToJson(this);
 

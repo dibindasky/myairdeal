@@ -10,6 +10,7 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_invoice/flight_invoice.dart';
 import '../../home/widgets/curent_offers_section.dart';
 
@@ -62,8 +63,19 @@ class ScreenInvoiceDetail extends StatelessWidget {
                   style: textHeadStyle1,
                 ),
                 kHeight10,
-                const FlightInvoiceCard(
-                    flightTicketInvoiceEnum: FlightTicketInvoiceEnum.cancel),
+                GetBuilder<BookingController>(builder: (controller) {
+                  if (controller.singleBookingLoading.value) {
+                    return const Skeleton(
+                      crossAxisCount: 1,
+                      itemCount: 1,
+                    );
+                  }
+                  return FlightInvoiceCard(
+                    retrieveSingleBookingresponceModel:
+                        controller.retrieveSingleBookingresponceModel.value,
+                    flightTicketInvoiceEnum: FlightTicketInvoiceEnum.cancel,
+                  );
+                }),
                 kHeight10,
                 bookingController.selectedBookingTab.value == 2
                     ? kEmpty

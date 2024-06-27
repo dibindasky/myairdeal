@@ -14,7 +14,6 @@ class ScreenAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginContrller = Get.find<AuthController>();
     return Scaffold(
       body: Column(
         children: [
@@ -68,7 +67,7 @@ class ScreenAccountPage extends StatelessWidget {
                           heading:
                               'Are you sure do you want to logout from MYAIRDEAL',
                           onPressed: () {
-                            loginContrller.logOut();
+                            Get.find<AuthController>().logOut();
                           },
                         );
                       },

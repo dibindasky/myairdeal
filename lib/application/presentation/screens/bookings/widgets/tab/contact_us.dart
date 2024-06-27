@@ -32,7 +32,7 @@ class ContactUsFrom extends StatelessWidget {
                   bookingController.changeContactUsRadioButton(index);
                 },
                 selected: index ==
-                    bookingController.selectedcontactUsradioButton.value,
+                    bookingController.selectedcontactUsRadioButton.value,
                 text: bookingController.contactusRadioItems[index],
               ),
             ),

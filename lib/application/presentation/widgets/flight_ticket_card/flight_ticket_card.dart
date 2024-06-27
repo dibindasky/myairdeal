@@ -70,7 +70,8 @@ class FlightTicketCard extends StatelessWidget {
                                     .at!),
                             airline:
                                 searchAirlineInformation!.sI![0].fD!.aI!.name,
-                            stops: searchAirlineInformation!.sI!.length - 1)
+                            stops: searchAirlineInformation!.sI!.length - 1,
+                          )
                         : flightTicketCardEnum ==
                                     FlightTicketCardEnum.complete ||
                                 flightTicketCardEnum ==

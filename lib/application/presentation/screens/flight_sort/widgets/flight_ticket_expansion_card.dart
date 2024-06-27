@@ -24,7 +24,7 @@ class TicketDetailExpansionChild extends StatelessWidget {
         Row(
           children: [
             Text(
-              totalPriceList.fareIdentifier??'',
+              totalPriceList.fareIdentifier ?? '',
               style: textStyle1.copyWith(fontWeight: FontWeight.w900),
             ),
             const Spacer(),

@@ -206,33 +206,35 @@ class BottomMiniContainer extends StatelessWidget {
                                 : kEmpty,
                             kWidth10,
                             flightTicketCardEnum ==
-                                        FlightTicketCardEnum.homeSort?Text(
-                                  '₹ $price',
-                                  style: textStyle1.copyWith(
-                                    color: kWhite,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                ):
-                            buttonOnTap==null?kEmpty:
-                            
-                                    flightTicketCardEnum ==
-                                        FlightTicketCardEnum.specialOffers ||
-                                    flightTicketCardEnum ==
-                                        FlightTicketCardEnum.complete
-                                ? EventButton(
-                                    fontSize: 10.sp,
-                                    width: 80.w,
-                                    hieght: 25.h,
-                                    borderRadius: 29,
-                                    color: kIndigo,
-                                    text: flightTicketCardEnum ==
-                                            FlightTicketCardEnum.complete
-                                        ? 'Download'
-                                        : 'Book Now',
-                                    onTap: buttonOnTap ?? () {},
+                                    FlightTicketCardEnum.homeSort
+                                ? Text(
+                                    '₹ $price',
+                                    style: textStyle1.copyWith(
+                                        color: kWhite,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.bold),
                                   )
-                                : kEmpty,
+                                : buttonOnTap == null
+                                    ? kEmpty
+                                    : flightTicketCardEnum ==
+                                                FlightTicketCardEnum
+                                                    .specialOffers ||
+                                            flightTicketCardEnum ==
+                                                FlightTicketCardEnum.complete
+                                        ? EventButton(
+                                            fontSize: 10.sp,
+                                            width: 80.w,
+                                            hieght: 25.h,
+                                            borderRadius: 29,
+                                            color: kIndigo,
+                                            text: flightTicketCardEnum ==
+                                                    FlightTicketCardEnum
+                                                        .complete
+                                                ? 'Download'
+                                                : 'Book Now',
+                                            onTap: buttonOnTap ?? () {},
+                                          )
+                                        : kEmpty,
                             kWidth10
                           ],
                         ),

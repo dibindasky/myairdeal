@@ -66,7 +66,7 @@ class ApiService {
       log('api uri ==>post  ${_dio.options.baseUrl + url}');
       final response = await _dio.post(
         url,
-        data: data as Map<String, dynamic>?,
+        data: data,
         queryParameters: queryParameters,
       );
       log('post success $url');

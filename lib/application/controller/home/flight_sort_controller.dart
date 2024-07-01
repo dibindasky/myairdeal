@@ -123,6 +123,7 @@ class FlightSortController extends GetxController {
     update();
   }
 
+// search api request for all types of trips
   void searchFlights() async {
     searchListLoading.value = true;
     if (tripType.value == 1) {
@@ -221,12 +222,14 @@ class FlightSortController extends GetxController {
     });
   }
 
+// change the selected flight for multi city and round trips on list
   void changeFlightSelectionMultiCityAndRound(int index) {
     selectedFlights[selectedTripListIndex.value] = index;
   }
 
+// change trip from tab for multicity and round trip for choosing diffrent flights in different list
   void changeSelectedTripIndex(int index) {
-    selectedTripListIndex.value = 0;
+    selectedTripListIndex.value = index;
   }
 
   void getSortingVariables() {}

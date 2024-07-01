@@ -24,29 +24,33 @@ class TicketsListSorted extends StatelessWidget {
         separatorBuilder: (context, index) => kHeight5,
         itemBuilder: (context, index) => CustomExpansionTile(
           isExpandable: controller.tripType.value == 0,
-          child: FlightTicketCard(
-            onTap: controller.tripType.value != 0
-                ? () {
-                    controller.changeSelectedTripIndex(index);
-                  }
-                : null,
-            flightTicketCardEnum: FlightTicketCardEnum.homeSort,
-            isSelectedTicket: controller.tripType.value != 0 &&
-                controller.selectedFlights[index] == index,
-            borderColor: controller.tripType.value != 0 &&
-                    controller.selectedFlights[index] == index
-                ? kBlack
-                : null,
-            borderWidth: controller.tripType.value != 0 &&
-                    controller.selectedFlights[index] == index
-                ? 3
-                : .7,
-            color: controller.tripType.value != 0 &&
-                    controller.selectedFlights[index] == index
-                ? kBlueLightShade
-                : kWhite,
-            searchAirlineInformation:
-                controller.searchList[controller.selctedTripIndex.value][index],
+          child: Obx( () {
+              return FlightTicketCard(
+                onTap: controller.tripType.value != 0
+                    ? () {
+                        controller.changeFlightSelectionMultiCityAndRound(index);
+                        print('taped on card for selction');
+                      }
+                    : null,
+                flightTicketCardEnum: FlightTicketCardEnum.homeSort,
+                isSelectedTicket: controller.tripType.value != 0 &&
+                    controller.selectedFlights[index] == index,
+                borderColor: controller.tripType.value != 0 &&
+                        controller.selectedFlights[index] == index
+                    ? kBlack
+                    : null,
+                borderWidth: controller.tripType.value != 0 &&
+                        controller.selectedFlights[index] == index
+                    ? 3
+                    : .7,
+                color: controller.tripType.value != 0 &&
+                        controller.selectedFlights[index] == index
+                    ? kBlueLightShade
+                    : kWhite,
+                searchAirlineInformation:
+                    controller.searchList[controller.selctedTripIndex.value][index],
+              );
+            }
           ),
           children: List.generate(
             controller.searchList[controller.selctedTripIndex.value][index]

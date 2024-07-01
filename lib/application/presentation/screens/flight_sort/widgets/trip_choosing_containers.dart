@@ -25,7 +25,7 @@ class TripChoosingContainers extends StatelessWidget {
                   controller.searchList.length,
                   (index) => GestureDetector(
                     onTap: () {
-                      controller.changeFlightSelectionMultiCityAndRound(index);
+                      controller.changeSelectedTripIndex(index);
                     },
                     child: Container(
                       margin: EdgeInsets.only(

@@ -7,12 +7,11 @@ import 'package:myairdeal/application/presentation/screens/account/secuurity_scr
 import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/invoice_detail.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/flight_detail.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/review_detail.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/traveler_detail.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/flight_detail.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/review_detail.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_detail.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/flight_Sort_page.dart';
 import 'package:myairdeal/application/presentation/screens/home/home_screen.dart';
-import 'package:myairdeal/application/presentation/screens/payment/payement.dart';
 import 'package:myairdeal/application/presentation/screens/seats/seats_selection.dart';
 
 class RouteGenerator {
@@ -23,7 +22,7 @@ class RouteGenerator {
       case Routes.searchSortFlight:
         return MaterialPageRoute(
             builder: (ctx) => const ScreenFlightTicketSort());
-      case Routes.flightDetail:
+      case Routes.flightDetailFillling:
         return MaterialPageRoute(builder: (ctx) => const ScreenFlightDetail());
       case Routes.reviewFlightDetail:
         return MaterialPageRoute(
@@ -33,8 +32,7 @@ class RouteGenerator {
             builder: (ctx) => const ScreenTravelerDetails());
       case Routes.account:
         return MaterialPageRoute(builder: (ctx) => const ScreenAccountPage());
-      case Routes.payment:
-        return MaterialPageRoute(builder: (ctx) => ScreenPaymentMethods());
+
       case Routes.editProfile:
         return MaterialPageRoute(builder: (ctx) => const ScreenProfileEdit());
       case Routes.security:

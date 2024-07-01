@@ -24,7 +24,7 @@ class TicketDetailExpansionChild extends StatelessWidget {
         Row(
           children: [
             Text(
-              totalPriceList.fareIdentifier??'',
+              totalPriceList.fareIdentifier ?? '',
               style: textStyle1.copyWith(fontWeight: FontWeight.w900),
             ),
             const Spacer(),
@@ -35,7 +35,7 @@ class TicketDetailExpansionChild extends StatelessWidget {
             kWidth10,
             GestureDetector(
               onTap: () {
-                Get.toNamed(Routes.flightDetail);
+                Get.toNamed(Routes.flightDetailFillling);
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),

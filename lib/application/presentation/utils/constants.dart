@@ -75,12 +75,14 @@ List<String> homeTabTitle = [
   'Chatered \nFlights',
   'Helicopter'
 ];
+
 List<String> homeTabImages = [
   imageFlight,
   imageAirAmbulance,
   imageChatteredFlight,
   imageHelicopter
 ];
+
 Color findInvoiceColor(FlightTicketInvoiceEnum flightTicketInvoiceEnum) {
   switch (flightTicketInvoiceEnum) {
     case FlightTicketInvoiceEnum.cancel:

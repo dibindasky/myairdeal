@@ -8,6 +8,7 @@ import 'package:myairdeal/application/presentation/screens/home/widgets/header_s
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
+import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 
 class ScreenBookings extends StatelessWidget {
   const ScreenBookings({super.key});
@@ -31,23 +32,29 @@ class ScreenBookings extends StatelessWidget {
             child: GetBuilder<BookingController>(builder: (controller) {
               if (controller.selectedBookingTab.value == 1) {
                 return ListView.separated(
-                  padding: const EdgeInsets.only(bottom: 25),
+                  padding: EdgeInsets.only(bottom: 23.w),
                   separatorBuilder: (context, index) => kHeight10,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 3,
                   shrinkWrap: true,
                   itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => Get.toNamed(Routes.invoice),
+                    onTap: () {
+                      controller.getSingBooking(
+                          retrieveSingleBookingRequestModel:
+                              RetrieveSingleBookingRequestModel(
+                                  bookingId: 'TJS104200983792'));
+                      Get.toNamed(Routes.invoice);
+                    },
                     child: FlightTicketCard(
                       flightTicketCardEnum: FlightTicketCardEnum.complete,
-                      buttonOnTap: () => Get.toNamed(Routes.flightDetail),
+                      buttonOnTap: () =>
+                          Get.toNamed(Routes.flightDetailFillling),
                     ),
                   ),
                 );
-              } else
-               if (controller.selectedBookingTab.value == 2) {
+              } else if (controller.selectedBookingTab.value == 2) {
                 return ListView.separated(
-                  padding: const EdgeInsets.only(bottom: 25),
+                  padding: EdgeInsets.only(bottom: 23.w),
                   separatorBuilder: (context, index) => kHeight10,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 2,
@@ -56,22 +63,30 @@ class ScreenBookings extends StatelessWidget {
                     onTap: () => Get.toNamed(Routes.invoice),
                     child: FlightTicketCard(
                       flightTicketCardEnum: FlightTicketCardEnum.cancelled,
-                      buttonOnTap: () => Get.toNamed(Routes.flightDetail),
+                      buttonOnTap: () =>
+                          Get.toNamed(Routes.flightDetailFillling),
                     ),
                   ),
                 );
               } else if (controller.selectedBookingTab.value == 3) {
                 return ListView.separated(
-                  padding: const EdgeInsets.only(bottom: 25),
+                  padding: EdgeInsets.only(bottom: 23.w),
                   separatorBuilder: (context, index) => kHeight10,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 4,
                   shrinkWrap: true,
                   itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => Get.toNamed(Routes.invoice),
+                    onTap: () {
+                      controller.getSingBooking(
+                          retrieveSingleBookingRequestModel:
+                              RetrieveSingleBookingRequestModel(
+                                  bookingId: 'TJS104200983792'));
+                      Get.toNamed(Routes.invoice);
+                    },
                     child: FlightTicketCard(
                       flightTicketCardEnum: FlightTicketCardEnum.upcoming,
-                      buttonOnTap: () => Get.toNamed(Routes.flightDetail),
+                      buttonOnTap: () =>
+                          Get.toNamed(Routes.flightDetailFillling),
                     ),
                   ),
                 );

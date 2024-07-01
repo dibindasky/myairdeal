@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/account/widgets/settings_tile.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail/widgets/detail_appbar.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/confirm_dailogue/confirm_dailogue.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -14,7 +14,6 @@ class ScreenAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginContrller = Get.find<AuthController>();
     return Scaffold(
       body: Column(
         children: [
@@ -68,7 +67,7 @@ class ScreenAccountPage extends StatelessWidget {
                           heading:
                               'Are you sure do you want to logout from MYAIRDEAL',
                           onPressed: () {
-                            loginContrller.logOut();
+                            Get.find<AuthController>().logOut();
                           },
                         );
                       },

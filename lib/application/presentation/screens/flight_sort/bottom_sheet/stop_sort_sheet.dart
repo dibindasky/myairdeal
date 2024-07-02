@@ -11,11 +11,6 @@ class StopsSortBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> categ = [
-      {"place": "Direct", "cash": "From Rs. 3500"},
-      {"place": "Max 1 Stops", "cash": "From Rs. 3500"},
-      {"place": "Max 2 Stops", "cash": "From Rs. 4500"},
-    ];
     final controller = Get.find<FlightSortController>();
     return Container(
       width: double.infinity,
@@ -34,52 +29,75 @@ class StopsSortBottomSheet extends StatelessWidget {
           kHeight40,
           Text('Stops', style: textHeadStyle1),
           kHeight10,
-          ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: categ.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          SingleChildScrollView(
+            child: Column(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Obx(() {
+                  return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    itemCount: controller
+                        .sortingVariables[
+                            controller.selectedTripListIndex.value]![1]
+                        .length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                controller.sortingVariables[controller
+                                            .selectedTripListIndex
+                                            .value]![1][index] ==
+                                        0
+                                    ? 'Non Stop'
+                                    : '${controller.sortingVariables[controller.selectedTripListIndex.value]![1][index]} Stops',
+                                style: textStyle1),
+                            // Text('₹ 3500',
+                            //     style: textStyle1.copyWith(
+                            //         fontSize: 12.sp, color: kGreyDark)),
+                          ],
+                        ),
+                        Checkbox(
+                          value: 
+                           controller.sortingVariablesSelected[
+                                  controller.selectedTripListIndex.value]![1]
+                              .contains(controller.sortingVariables[
+                                      controller.selectedTripListIndex.value]![1]
+                                  [index]),
+                          onChanged: (value) {
+                            controller.selectStops(controller.sortingVariables[
+                                    controller.selectedTripListIndex.value]![1]
+                                [index]);
+                          },
+                          activeColor: kBluePrimary,
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+                kHeight5,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(categ[index]['place'] ?? '', style: textStyle1),
-                    Text(categ[index]['cash'] ?? '',
-                        style: textStyle1.copyWith(
-                            fontSize: 12.sp, color: kGreyDark)),
+                    EventButton(
+                      isBorder: true,
+                      text: 'Reset',
+                      onTap: () {},
+                      color: kWhite,
+                      borderColor: kBlack,
+                      textColr: kBluePrimary,
+                    ),
+                    kWidth10,
+                    EventButton(text: 'Done', onTap: () {})
                   ],
                 ),
-                Obx(
-                  () => Checkbox(
-                    value: controller.sortStopsSelected
-                        .contains(categ[index]['place']),
-                    onChanged: (value) {
-                      controller.selectStops(categ[index]['place'] ?? '');
-                    },
-                    activeColor: kBluePrimary,
-                  ),
-                )
+                kHeight20,
               ],
             ),
-          ),
-          kHeight5,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              EventButton(
-                isBorder: true,
-                text: 'Reset',
-                onTap: () {},
-                color: kWhite,
-                borderColor: kBlack,
-                textColr: kBluePrimary,
-              ),
-              kWidth10,
-              EventButton(text: 'Done', onTap: () {})
-            ],
-          ),
-          kHeight20
+          )
         ],
       ),
     );

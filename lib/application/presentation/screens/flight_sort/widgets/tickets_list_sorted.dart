@@ -19,48 +19,58 @@ class TicketsListSorted extends StatelessWidget {
       return ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: 11.w),
-        itemCount: controller.searchList.length,
+        padding: EdgeInsets.only(left: 11.w,right: 11.w,bottom: 25.h),
+        itemCount: controller.searchList[controller.selectedTripListIndex.value].length,
         separatorBuilder: (context, index) => kHeight5,
         itemBuilder: (context, index) => CustomExpansionTile(
           isExpandable: controller.tripType.value == 0,
-          child: Obx( () {
-              return FlightTicketCard(
-                onTap: controller.tripType.value != 0
-                    ? () {
-                        controller.changeFlightSelectionMultiCityAndRound(index);
-                        print('taped on card for selction');
-                      }
-                    : null,
-                flightTicketCardEnum: FlightTicketCardEnum.homeSort,
-                isSelectedTicket: controller.tripType.value != 0 &&
-                    controller.selectedFlights[index] == index,
-                borderColor: controller.tripType.value != 0 &&
-                        controller.selectedFlights[index] == index
-                    ? kBlack
-                    : null,
-                borderWidth: controller.tripType.value != 0 &&
-                        controller.selectedFlights[index] == index
-                    ? 3
-                    : .7,
-                color: controller.tripType.value != 0 &&
-                        controller.selectedFlights[index] == index
-                    ? kBlueLightShade
-                    : kWhite,
-                searchAirlineInformation:
-                    controller.searchList[controller.selctedTripIndex.value][index],
-              );
-            }
-          ),
-          children: List.generate(
-            controller.searchList[controller.selctedTripIndex.value][index]
-                .totalPriceList!.length,
-            (index) => TicketDetailExpansionChild(
-              totalPriceList: controller
-                  .searchList[controller.selctedTripIndex.value][index]
-                  .totalPriceList![0],
-            ),
-          ),
+          child: Obx(() {
+            return FlightTicketCard(
+              onTap: controller.tripType.value != 0
+                  ? () {
+                      controller.changeFlightSelectionMultiCityAndRound(index);
+                    }
+                  : null,
+              flightTicketCardEnum: FlightTicketCardEnum.homeSort,
+              isSelectedTicket: controller.tripType.value != 0 &&
+                  controller.selectedFlights[
+                          controller.selectedTripListIndex.value] ==
+                      index,
+              borderColor: controller.tripType.value != 0 &&
+                      controller.selectedFlights[
+                              controller.selectedTripListIndex.value] ==
+                          index
+                  ? kBlack
+                  : null,
+              borderWidth: controller.tripType.value != 0 &&
+                      controller.selectedFlights[
+                              controller.selectedTripListIndex.value] ==
+                          index
+                  ? 3
+                  : .7,
+              color: controller.tripType.value != 0 &&
+                      controller.selectedFlights[
+                              controller.selectedTripListIndex.value] ==
+                          index
+                  ? kBlueLightShade
+                  : kWhite,
+              searchAirlineInformation: controller
+                  .searchList[controller.selectedTripListIndex.value][index],
+            );
+          }),
+          children: controller.tripType.value != 0
+              ? []
+              : List.generate(
+                  controller
+                      .searchList[controller.selectedTripListIndex.value][index]
+                      .totalPriceList!
+                      .length,
+                  (index) => TicketDetailExpansionChild(
+                    totalPriceList: controller
+                        .searchList[controller.selectedTripListIndex.value][index]
+                        .totalPriceList![0],
+                  ),
+                ),
         ),
       );
     });

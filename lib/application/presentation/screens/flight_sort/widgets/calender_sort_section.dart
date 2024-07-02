@@ -23,9 +23,7 @@ class CalenderSectionSortHeader extends StatelessWidget {
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Obx(() {
-          return controller.tripType.value != 0
-              ? kEmpty
-              : EasyInfiniteDateTimeLine(
+          return EasyInfiniteDateTimeLine(
                   timeLineProps: const EasyTimeLineProps(
                     vPadding: 20,
                     hPadding: 5,

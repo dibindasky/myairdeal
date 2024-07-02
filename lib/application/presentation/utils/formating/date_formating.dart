@@ -43,10 +43,17 @@ class DateFormating {
   }
 
   static String convertMinutesToHoursMinutes(int totalMinutes) {
-    int hours = totalMinutes ~/ 60;
+    int days = totalMinutes ~/ 1440;
+    int hours = (totalMinutes % 1440) ~/ 60;
     int minutes = totalMinutes % 60;
-    String formattedTime =
+
+    String formattedTime = '';
+    if (days > 0) {
+      formattedTime += '${days}d ';
+    }
+    formattedTime +=
         '${hours.toString().padLeft(2, '0')}h ${minutes.toString().padLeft(2, '0')}m';
+
     return formattedTime;
   }
 
@@ -74,4 +81,14 @@ class DateFormating {
 
     return formattedDifference.trim();
   }
+  
+  static int getTotalDifferenceInMinutes(String dateTimeString1, String dateTimeString2) {
+  DateTime dateTime1 = DateTime.parse(dateTimeString1);
+  DateTime dateTime2 = DateTime.parse(dateTimeString2);
+
+  Duration difference = dateTime2.difference(dateTime1);
+
+  return difference.inMinutes;
+}
+
 }

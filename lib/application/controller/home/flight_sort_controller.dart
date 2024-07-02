@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
@@ -14,16 +15,15 @@ import 'package:myairdeal/domain/models/search/flight_sort_response_model/search
 import 'package:myairdeal/domain/repository/service/flight_sort_repo.dart';
 
 class FlightSortController extends GetxController {
+  // Change category [flights, air ambulance, chatered flight, helicopter]
+  RxInt selectedCategoryType = 0.obs;
+
   // flight service class responsible for api calls
   final FlightRepo flightService = FlightService();
 
   /// list responsible for the rebuild and sorting of airlines available on [searchListMain]
   RxList<RxList<SearchAirlineInformation>> searchList =
       <RxList<SearchAirlineInformation>>[].obs;
-
-  /// variable responsible for showing the selected trip where from round trip or
-  /// multicity trip, work with [searchList]
-  RxInt selctedTripIndex = 0.obs;
 
   /// here store all the response form api and responsible for giving data to [searchList] for sorting
   List<List<SearchAirlineInformation>> searchListMain =
@@ -37,11 +37,19 @@ class FlightSortController extends GetxController {
   /// to set which list should show on sorting page
   RxInt selectedTripListIndex = 0.obs;
 
+  // scroll controller used to show the list[selected flights and selected tabs in sorting] in a auto scroll view
+  ScrollController flightSortController = ScrollController();
+  ScrollController flightSortTabController = ScrollController();
+
+  // map responsible for finding the variables for sorting and showing it in the ui
+  RxMap<int, List<RxList<dynamic>>> sortingVariables =
+      <int, List<RxList<dynamic>>>{}.obs;
+  // map responsible for storing the selected varibales for sorting
+  RxMap<int, List<RxList<dynamic>>> sortingVariablesSelected =
+      <int, List<RxList<dynamic>>>{}.obs;
+
   // variable responsible for show loading in the search list page
   RxBool searchListLoading = false.obs;
-
-  // Change category [flights, air ambulance, chatered flight, helicopter]
-  RxInt selectedCategoryType = 0.obs;
 
   // variable used to select the trip type 0- oneway, 1- roundtrip, 2- multicity
   RxInt tripType = 0.obs;
@@ -75,7 +83,10 @@ class FlightSortController extends GetxController {
 
   RxString sortType = 'Best'.obs;
   RxString stopType = 'Direct'.obs;
-  RxDouble durationSlider = .5.obs;
+
+  // value used to change the duration of flights in the sorting section
+  RxDouble durationSlider = 1.0.obs;
+
   Rx<DateTime> selectedDate = DateTime.now().obs;
 
   /// selected airports for search for all oneway,round and multicity in a list
@@ -90,22 +101,29 @@ class FlightSortController extends GetxController {
   /// variable responsible for finding wether choosing the departure airport or destination with respect to [chooseAirportIndex]
   bool departureAirport = true;
 
-  List<String> sortAirlines = ['Indigo', 'Air-India', 'Asky Airlines'];
+  // list responsible for the showing the available airlines from the given list
+  RxList<String> sortAirlines = <String>[].obs;
+
+  /// list responsible for the sorting of the [searchList], store the selected airlines
+  RxList<String> sortAirlinesSelected = <String>[].obs;
+
+  // list responsible for search of city and airport in the search airport page
   RxList<CitySearchModel> searchCityList = <CitySearchModel>[].obs;
 
-  RxList<String> sortAirlinesSelected = <String>[].obs;
   RxList<String> sortStopsSelected = <String>[].obs;
   List<String> departureTimes = [
     '00:00 to 05:59',
-    '00:01 to 05:59',
-    '00:03 to 05:59'
+    '06:00 to 11:59',
+    '12:00 to 17:59',
+    '18:00 to 23:59'
   ];
 
   RxList<String> departureTimesSelected = <String>[].obs;
   List<String> arrivesTimes = [
-    '00:04 to 05:59',
-    '00:05 to 05:59',
-    '00:06 to 05:59'
+    '00:00 to 05:59',
+    '06:00 to 11:59',
+    '12:00 to 17:59',
+    '18:00 to 23:59'
   ];
   RxList<String> arrivesTimesSelected = <String>[].obs;
   List<String> sortTypes = ['Best', 'Fastest', 'Cheapest'];
@@ -222,17 +240,86 @@ class FlightSortController extends GetxController {
     });
   }
 
+// get the variables for sorting like {duration,ailines,times,stops}
+// 0 -> airlines
+// 1 -> stops
+// 2 -> duration
+// 3 -> arrival times
+// 4 -> departure times
+  void getSortingVariables() {
+    sortingVariables = <int, List<RxList<dynamic>>>{}.obs;
+    sortingVariablesSelected = <int, List<RxList<dynamic>>>{}.obs;
+    // loop for all trips
+    for (int i = 0; i < searchListMain.length; i++) {
+      sortingVariables[i] = List.generate(5, (index) => [].obs);
+      sortingVariablesSelected[i] = List.generate(5, (index) => [].obs);
+      // loop for iterate in the single list items
+      for (var item in searchListMain[i]) {
+        // finding available airlines and add it for sorting
+        if (item.sI?[0].fD?.aI?.name != null &&
+            item.sI![0].fD!.aI!.name != '' &&
+            !sortingVariables[i]![0].contains(item.sI![0].fD!.aI!.name!)) {
+          sortingVariables[i]![0].add(item.sI![0].fD!.aI!.name!);
+        }
+        // avaliable stops in the given list
+        if (!sortingVariables[i]![1].contains(item.sI!.length - 1)) {
+          sortingVariables[i]![1].add(item.sI!.length - 1);
+        }
+        // duration of flights form the given list
+        if (item.sI!.length == 1 &&
+            !sortingVariables[i]![2].contains(item.sI![0].duration)) {
+          sortingVariables[i]![2].add(item.sI![0].duration);
+        } else if (item.sI!.length > 1) {
+          int minutes = DateFormating.getTotalDifferenceInMinutes(
+              item.sI![0].dt ?? '', item.sI![item.sI!.length - 1].at ?? '');
+          if (!sortingVariables[i]![2].contains(item.sI![0].duration)) {
+            sortingVariables[i]![2].add(minutes);
+          }
+        }
+      }
+      sortingVariables[i]![1].sort();
+      sortingVariables[i]![2].sort();
+    }
+  }
+
 // change the selected flight for multi city and round trips on list
   void changeFlightSelectionMultiCityAndRound(int index) {
     selectedFlights[selectedTripListIndex.value] = index;
   }
 
 // change trip from tab for multicity and round trip for choosing diffrent flights in different list
+// auto scroll the list in the top showing selection accoring to the selection of tab
   void changeSelectedTripIndex(int index) {
     selectedTripListIndex.value = index;
+    final onePotion = flightSortController.position.maxScrollExtent /
+        (selectedFlights.length);
+    flightSortController.animateTo(
+        index < 2
+            ? flightSortController.position.minScrollExtent
+            : index >= selectedFlights.length - 2
+                ? flightSortController.position.maxScrollExtent
+                : onePotion * index,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOut);
+    final onePotion1 = flightSortTabController.position.maxScrollExtent /
+        (selectedFlights.length);
+    flightSortTabController.animateTo(
+        index < 2
+            ? flightSortTabController.position.minScrollExtent
+            : index >= selectedFlights.length - 2
+                ? flightSortTabController.position.maxScrollExtent
+                : onePotion1 * index,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOut);
   }
 
-  void getSortingVariables() {}
+  void nextOrContinue() {
+    if (selectedTripListIndex.value < searchList.length - 1) {
+      changeSelectedTripIndex(selectedTripListIndex.value + 1);
+    } else {
+      print("continue");
+    }
+  }
 
   void changeAdds(bool value) {
     addOnsChecked.value = value;
@@ -249,12 +336,14 @@ class FlightSortController extends GetxController {
     update();
   }
 
+// swap the data between from and to in search field
   void swapFromAndTow() {
     final from = airportSelected[0][0];
     airportSelected[0][0] = airportSelected[0][1];
     airportSelected[0][1] = from;
   }
 
+// count changing for adults cannot exceed the total by 9 and cannot decrease the count below 1 atleat one adult should be there
   void changeAdultCount(bool increment) {
     if (increment && (adultCount.value + childrenCount.value) < 9) {
       adultCount.value++;
@@ -266,6 +355,7 @@ class FlightSortController extends GetxController {
     }
   }
 
+// children cannot travel alone atleast one adult should be there.. cannot exeed max traveller count 9
   void changeChildrenCount(bool increment) {
     if (increment && (adultCount.value + childrenCount.value) < 9) {
       childrenCount.value++;
@@ -274,6 +364,7 @@ class FlightSortController extends GetxController {
     }
   }
 
+// add infant according to the number of adults number of adult and number of infaunt can be same but cannot exceed the number grater than adult count
   void changeInfantCount(bool increment) {
     if (increment && infantCount.value < adultCount.value) {
       infantCount.value++;
@@ -382,8 +473,14 @@ class FlightSortController extends GetxController {
     stopType.value = type;
   }
 
-  void changeDurationSlider(double value) {
-    durationSlider.value = value;
+  // change the duration of the slider for sorting, need to check the least time while changing
+  void changeDurationSlider(double value, [bool reset = false]) {
+    if (reset) {
+      sortingVariablesSelected[selectedTripListIndex.value]![2].clear();
+    } else if (sortingVariables[selectedTripListIndex.value]![2].first <=
+        sortingVariables[selectedTripListIndex.value]![2].last * value) {
+      durationSlider.value = value;
+    }
   }
 
   void selectAirline(String value) {

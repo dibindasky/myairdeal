@@ -37,8 +37,14 @@ class AirlinesBottomSheet extends StatelessWidget {
               children: [
                 Text('Select All', style: textStyle1),
                 Checkbox(
-                  value: controller.sortAirlines.length ==
-                      controller.sortAirlinesSelected.length,
+                  value: controller
+                          .sortingVariables[
+                              controller.selectedTripListIndex.value]![0]
+                          .length ==
+                      controller
+                          .sortingVariablesSelected[
+                              controller.selectedTripListIndex.value]![0]
+                          .length,
                   onChanged: (value) {
                     controller.selectAllAirline(value ?? false);
                   },
@@ -47,29 +53,50 @@ class AirlinesBottomSheet extends StatelessWidget {
               ],
             ),
             const Divider(color: kGrey),
-            ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: controller.sortAirlines.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(controller.sortAirlines[index], style: textStyle1),
-                  Checkbox(
-                    value: controller.sortAirlinesSelected
-                        .contains(controller.sortAirlines[index]),
-                    onChanged: (value) {
-                      controller.selectAirline(controller.sortAirlines[index]);
-                    },
-                    activeColor: kBluePrimary,
-                  )
-                ],
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      itemCount: controller
+                          .sortingVariables[controller.selectedTripListIndex.value]![0]
+                          .length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                              controller.sortingVariables[
+                                      controller.selectedTripListIndex.value]![0][index]
+                                  .toString(),
+                              style: textStyle1),
+                          Checkbox(
+                            value: controller.sortingVariablesSelected[
+                                    controller.selectedTripListIndex.value]![0]
+                                .contains(controller.sortingVariables[
+                                    controller.selectedTripListIndex.value]![0][index]),
+                            onChanged: (value) {
+                              controller.selectAirline(controller.sortAirlines[index]);
+                            },
+                            activeColor: kBluePrimary,
+                          )
+                        ],
+                      ),
+                    ),
+                    kHeight5,
+                    EventButton(
+                        text: 'Search flights',
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        width: double.infinity),
+                    kHeight20,
+                  ],
+                ),
               ),
-            ),
-            kHeight5,
-            EventButton(
-                text: 'Search flights', onTap: () {}, width: double.infinity),
-            kHeight20
+            )
           ],
         );
       }),

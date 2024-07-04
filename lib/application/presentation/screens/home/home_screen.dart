@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/booking_qurreys_sections.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/curent_offers_section.dart';
@@ -32,7 +33,12 @@ class ScreenHomePage extends StatelessWidget {
                   kHeight20,
                   const FlightSearchCardHome(),
                   kHeight10,
-                  const LogInOrSignUpCard(),
+                  GetBuilder<AuthController>(builder: (controller) {
+                    if (controller.loginOrNot.value) {
+                      return const LogInOrSignUpCard();
+                    }
+                    return kEmpty;
+                  }),
                   kHeight10,
                   const BookingIssuesQuerySection(),
                   const RecentSearchSection(),

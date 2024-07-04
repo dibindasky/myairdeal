@@ -21,6 +21,9 @@ RetrieveSingleBookingresponceModel _$RetrieveSingleBookingresponceModelFromJson(
       status: json['status'] == null
           ? null
           : Status.fromJson(json['status'] as Map<String, dynamic>),
+      errors: (json['errors'] as List<dynamic>?)
+          ?.map((e) => Error.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$RetrieveSingleBookingresponceModelToJson(
@@ -30,4 +33,5 @@ Map<String, dynamic> _$RetrieveSingleBookingresponceModelToJson(
       'itemInfos': instance.itemInfos,
       'gstInfo': instance.gstInfo,
       'status': instance.status,
+      'errors': instance.errors,
     };

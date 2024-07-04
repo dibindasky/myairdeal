@@ -20,7 +20,7 @@ class SpacialOffersBuilder extends StatelessWidget {
         ListView.separated(
           separatorBuilder: (context, index) => kHeight10,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 2,
+          itemCount: 10,
           shrinkWrap: true,
           itemBuilder: (context, index) => FlightTicketCard(
             flightTicketCardEnum: FlightTicketCardEnum.specialOffers,

@@ -78,7 +78,6 @@ class DateFormating {
     if (minutes > 0) {
       formattedDifference += '${minutes.toString().padLeft(2, '0')}m';
     }
-
     return formattedDifference.trim();
   }
   

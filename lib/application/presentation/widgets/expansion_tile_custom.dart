@@ -8,9 +8,9 @@ class CustomExpansionTile extends StatefulWidget {
       {super.key,
       this.isBorder = true,
       this.isExpandable = true,
-      required this.children,
+      this.children,
       required this.child});
-  final List<Widget> children;
+  final List<Widget>? children;
   final Widget child;
   final bool isExpandable;
   final bool isBorder;
@@ -54,10 +54,13 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
                 : CrossFadeState.showFirst,
             firstChild: kEmpty,
             secondChild: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5.h),
-              child: Column(
-                children: widget.children,
-              ),
+              padding: EdgeInsets.symmetric(
+                  vertical: widget.children != null ? 5.h : 0.h),
+              child: widget.children != null
+                  ? Column(
+                      children: widget.children!,
+                    )
+                  : null,
             ),
           ),
         ],

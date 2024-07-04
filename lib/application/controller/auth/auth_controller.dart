@@ -15,6 +15,7 @@ class AuthController extends GetxController {
 
   bool isLoading = false;
   bool hasError = false;
+  RxBool loginOrNot = false.obs;
 
   TextEditingController loginNumber = TextEditingController();
   TextEditingController otpNumber = TextEditingController();
@@ -109,14 +110,13 @@ class AuthController extends GetxController {
     data.fold((l) {
       isLoading = false;
       hasError = true;
-
       update();
       Get.snackbar('Failed', 'OTP Verify Failed', backgroundColor: kRed);
     }, (r) async {
       await SecureStorage.saveToken(tokenModel: TokenModel(token: r.token));
       isLoading = false;
       hasError = false;
-
+      loginOrNot.value = true;
       update();
       Get.offAllNamed(Routes.bottomBar);
       Get.snackbar('Success', 'OTP Verify Success',
@@ -129,7 +129,7 @@ class AuthController extends GetxController {
     Get.snackbar('Success', 'Logout success');
     Get.offAndToNamed(Routes.signUp);
     otpNumber.clear();
-
+    loginOrNot.value = false;
     loginNumber.clear();
     update();
     await SecureStorage.clearLogin();

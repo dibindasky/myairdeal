@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-
 import 'search_result.dart';
 import 'status.dart';
 import 'error.dart';

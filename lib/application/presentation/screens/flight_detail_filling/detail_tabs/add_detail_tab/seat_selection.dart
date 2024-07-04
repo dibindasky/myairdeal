@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/seat/seat_controller.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/bottom_button..dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -13,7 +14,7 @@ class SelectSeatContainer extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Select seat', style: textHeadStyle1),
+        Text('Select seat', style: textStyle1),
         kHeight15,
         Wrap(
           children: [
@@ -187,6 +188,9 @@ class SelectSeatContainer extends StatelessWidget {
           ),
         ),
         kHeight10,
+        kHeight20,
+        const BottomButton(),
+        kHeight15
       ],
     );
   }

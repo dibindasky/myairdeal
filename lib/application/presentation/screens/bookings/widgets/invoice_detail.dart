@@ -64,7 +64,7 @@ class ScreenInvoiceDetail extends StatelessWidget {
                 ),
                 kHeight10,
                 GetBuilder<BookingController>(builder: (controller) {
-                  if (controller.singleBookingLoading.value) {
+                  if (controller.bookingLoading.value) {
                     return const Skeleton(
                       crossAxisCount: 1,
                       itemCount: 1,

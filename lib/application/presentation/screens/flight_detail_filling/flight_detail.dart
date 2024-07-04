@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/add_details.tab.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/detail_tab_selection.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/itinerary_tab.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/review.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/tabs.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/screens/payment/payement.dart';
@@ -30,7 +31,9 @@ class ScreenFlightDetail extends StatelessWidget {
                 if (travelController.selectedMainTab.value == 0) {
                   return const ItineraryTab();
                 } else if (travelController.selectedMainTab.value == 1) {
-                  return PassengerDetailsTab();
+                  return const PassengerDetailsTabSelection();
+                } else if (travelController.selectedMainTab.value == 2) {
+                  return const ReveiewTab();
                 } else if (travelController.selectedMainTab.value == 3) {
                   return const PaymentTab();
                 } else {

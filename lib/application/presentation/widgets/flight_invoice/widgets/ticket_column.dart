@@ -35,7 +35,10 @@ class TicketColumn extends StatelessWidget {
         Text(
           label,
           style: lebelStyle ??
-              textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
+              textThinStyle1.copyWith(
+                  color: kGreyDark,
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w700),
         ),
         kHeight5,
         value != null

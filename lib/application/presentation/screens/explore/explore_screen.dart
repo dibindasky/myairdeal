@@ -50,7 +50,9 @@ class _ScreenExploreState extends State<ScreenExplore> {
                   const Tabs(),
                   CityCardsBuilder(pageController: pageController),
                   PageviewBuilder(
-                      pageController: pageController, pageValue: pageValue),
+                    pageController: pageController,
+                    pageValue: pageValue,
+                  ),
                 ],
               ),
               const SpacialOffersBuilder(),

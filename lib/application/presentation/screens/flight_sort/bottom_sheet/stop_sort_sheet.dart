@@ -60,20 +60,20 @@ class StopsSortBottomSheet extends StatelessWidget {
                             //         fontSize: 12.sp, color: kGreyDark)),
                           ],
                         ),
-                        Checkbox(
-                          value: 
-                           controller.sortingVariablesSelected[
-                                  controller.selectedTripListIndex.value]![1]
-                              .contains(controller.sortingVariables[
-                                      controller.selectedTripListIndex.value]![1]
-                                  [index]),
-                          onChanged: (value) {
-                            controller.selectStops(controller.sortingVariables[
+                        Obx(() {
+                          return Checkbox(
+                            value: controller.sortingVariablesSelected[
                                     controller.selectedTripListIndex.value]![1]
-                                [index]);
-                          },
-                          activeColor: kBluePrimary,
-                        ),
+                                .contains(controller.sortingVariables[controller
+                                    .selectedTripListIndex.value]![1][index]),
+                            onChanged: (value) {
+                              controller.selectStops(
+                                  controller.sortingVariables[controller
+                                      .selectedTripListIndex.value]![1][index]);
+                            },
+                            activeColor: kBluePrimary,
+                          );
+                        }),
                       ],
                     ),
                   );

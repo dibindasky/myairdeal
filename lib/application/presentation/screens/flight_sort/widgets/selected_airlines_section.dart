@@ -68,11 +68,22 @@ class SelectedAirlinesSections extends StatelessWidget {
                                 style: textStyle1.copyWith(
                                     fontWeight: FontWeight.bold)),
                             Text(
-                                '${DateFormating.formatTime(flightModel.sI?[0].dt ?? '')} - ${DateFormating.formatTime(flightModel.sI?[(flightModel.sI?.length ?? 1) - 1].dt ?? '')}',
+                                '${DateFormating.formatTime(flightModel.sI?[0].dt ?? '')} - ${DateFormating.formatTime(flightModel.sI?[(flightModel.sI?.length ?? 1) - 1].at ?? '')}',
                                 style:
                                     textThinStyle1.copyWith(fontSize: 10.sp)),
                             Text(
-                                '₹ ${flightModel.totalPriceList?[0].fd?.adult?.fC?.tf ?? ''}',
+                                (controller
+                                            .searchList[index][controller
+                                                .selectedFlights[index]]
+                                            .totalPriceList![controller
+                                                .selectedTicketPrices[index]]
+                                            .fd
+                                            ?.adult
+                                            ?.fC
+                                            ?.tf ??
+                                        '')
+                                    .toString(),
+                                // '₹ ${flightModel.totalPriceList?[controller.selectedTicketPrices[index]].fd?.adult?.fC?.tf ?? ''}',
                                 style: textThinStyle1.copyWith())
                           ],
                         )

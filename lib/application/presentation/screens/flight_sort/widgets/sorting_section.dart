@@ -44,16 +44,16 @@ class SortingChipsSection extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SortingChipSortPage(
-                        text: 'Sort By: Best',
-                        selected: false,
-                        onTap: () {
-                          showModalBottomSheet(
-                            backgroundColor: knill,
-                            context: context,
-                            builder: (context) => const SortFlightBottomSheet(),
-                          );
-                        }),
+                    // SortingChipSortPage(
+                    //     text: 'Sort By: Best',
+                    //     selected: false,
+                    //     onTap: () {
+                    //       showModalBottomSheet(
+                    //         backgroundColor: knill,
+                    //         context: context,
+                    //         builder: (context) => const SortFlightBottomSheet(),
+                    //       );
+                    //     }),
                     SortingChipSortPage(
                         text: 'Stops',
                         selected: false,
@@ -88,7 +88,7 @@ class SortingChipsSection extends StatelessWidget {
                         text: 'Flight times',
                         selected: false,
                         onTap: () {
-                          showModalBottomSheet(
+                          showBottomSheet(
                             backgroundColor: knill,
                             context: context,
                             builder: (context) =>

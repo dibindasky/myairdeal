@@ -21,8 +21,10 @@ class ScreenFlightTicketSort extends StatelessWidget {
     final controller = Get.find<FlightSortController>();
     return Scaffold(
       body: Obx(() {
-        if (controller.searchList.isEmpty ||
-            controller.searchListLoading.value) {
+        if (controller.searchListLoading.value ||
+            (!controller.comboTrip.value && controller.searchList.isEmpty) ||
+            (controller.comboTrip.value && controller.comboList.isEmpty)) {
+              print('combo --> ${controller.comboList.length}');
           return Column(
             children: [
               const DetailAppBar(heading: 'Search', id: 1),

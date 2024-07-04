@@ -121,10 +121,12 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) => SearchAirportTile(
-                            airportModel: CitySearchModel(
-                                city: 'Popular City',
-                                code: 'CODE',
-                                country: 'Country')),
+                          airportModel: CitySearchModel(
+                            city: 'Popular City',
+                            code: 'CODE',
+                            country: 'Country',
+                          ),
+                        ),
                       )
                     ],
                   ),

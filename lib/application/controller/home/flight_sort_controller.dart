@@ -21,6 +21,15 @@ class FlightSortController extends GetxController {
   // flight service class responsible for api calls
   final FlightRepo flightService = FlightService();
 
+  /// list responsible for international(combo) multicity and round trips airline storing,
+  /// [comboList] data provider
+  RxList<List<SearchAirlineInformation>> comboListMain =
+      <List<SearchAirlineInformation>>[].obs;
+
+  /// list work with [comboListMain] and responsible to show sorted list
+  RxList<List<SearchAirlineInformation>> comboList =
+      <List<SearchAirlineInformation>>[].obs;
+
   /// list responsible for the rebuild and sorting of airlines available on [searchListMain]
   RxList<RxList<SearchAirlineInformation>> searchList =
       <RxList<SearchAirlineInformation>>[].obs;
@@ -66,6 +75,9 @@ class FlightSortController extends GetxController {
 
   // number of citys in multicity trip
   RxInt multiCityCount = 2.obs;
+
+  // bool responsible for halnle ui for combo(international multicity and round trip)
+  RxBool comboTrip = false.obs;
 
   /// class type to be travelled can be choose form [classTypes]
   RxString classType = "ECONOMY".obs;
@@ -145,8 +157,10 @@ class FlightSortController extends GetxController {
 
 // search api request for all types of trips
   void searchFlights() async {
+    comboTrip.value = false;
     searchListLoading.value = true;
     selectedTripListIndex.value = 0;
+    durationSlider.value = 1;
     if (tripType.value == 1) {
       // if it is a round trip add airport as ulta
       airportSelected[1].value = [airportSelected[0][1], airportSelected[0][0]];
@@ -199,52 +213,86 @@ class FlightSortController extends GetxController {
         if (r.searchResult?.tripInfos?.combo != null) {
           searchListMain.add(RxList.from(r.searchResult?.tripInfos?.combo ??
               <SearchAirlineInformation>[]));
-        }
-        if (r.searchResult?.tripInfos?.onward != null) {
-          searchListMain.add(RxList.from(r.searchResult?.tripInfos?.onward ??
-              <SearchAirlineInformation>[]));
-        }
-        if (r.searchResult?.tripInfos?.returns != null) {
-          searchListMain.add(RxList.from(r.searchResult?.tripInfos?.returns ??
-              <SearchAirlineInformation>[]));
-        }
-        if (r.searchResult?.tripInfos?.multicity1 != null) {
-          searchListMain.add(RxList.from(
-              r.searchResult?.tripInfos?.multicity1 ??
-                  <SearchAirlineInformation>[]));
-        }
-        if (r.searchResult?.tripInfos?.multicity2 != null) {
-          searchListMain.add(RxList.from(
-              r.searchResult?.tripInfos?.multicity2 ??
-                  <SearchAirlineInformation>[]));
-        }
-        if (r.searchResult?.tripInfos?.multicity3 != null) {
-          searchListMain.add(RxList.from(
-              r.searchResult?.tripInfos?.multicity3 ??
-                  <SearchAirlineInformation>[]));
-        }
-        if (r.searchResult?.tripInfos?.multicity4 != null) {
-          searchListMain.add(RxList.from(
-              r.searchResult?.tripInfos?.multicity4 ??
-                  <SearchAirlineInformation>[]));
-        }
-        if (r.searchResult?.tripInfos?.multicity5 != null) {
-          searchListMain.add(RxList.from(
-              r.searchResult?.tripInfos?.multicity5 ??
-                  <SearchAirlineInformation>[]));
-        }
-        if (r.searchResult?.tripInfos?.multicity6 != null) {
-          searchListMain.add(RxList.from(
-              r.searchResult?.tripInfos?.multicity6 ??
-                  <SearchAirlineInformation>[]));
-        }
-        for (var e in searchListMain) {
-          searchList.add(RxList.from(e));
+          getComboList();
+          comboTrip.value = true;
+        } else {
+          if (r.searchResult?.tripInfos?.onward != null) {
+            searchListMain.add(RxList.from(r.searchResult?.tripInfos?.onward ??
+                <SearchAirlineInformation>[]));
+          }
+          if (r.searchResult?.tripInfos?.returns != null) {
+            searchListMain.add(RxList.from(r.searchResult?.tripInfos?.returns ??
+                <SearchAirlineInformation>[]));
+          }
+          if (r.searchResult?.tripInfos?.multicity1 != null) {
+            searchListMain.add(RxList.from(
+                r.searchResult?.tripInfos?.multicity1 ??
+                    <SearchAirlineInformation>[]));
+          }
+          if (r.searchResult?.tripInfos?.multicity2 != null) {
+            searchListMain.add(RxList.from(
+                r.searchResult?.tripInfos?.multicity2 ??
+                    <SearchAirlineInformation>[]));
+          }
+          if (r.searchResult?.tripInfos?.multicity3 != null) {
+            searchListMain.add(RxList.from(
+                r.searchResult?.tripInfos?.multicity3 ??
+                    <SearchAirlineInformation>[]));
+          }
+          if (r.searchResult?.tripInfos?.multicity4 != null) {
+            searchListMain.add(RxList.from(
+                r.searchResult?.tripInfos?.multicity4 ??
+                    <SearchAirlineInformation>[]));
+          }
+          if (r.searchResult?.tripInfos?.multicity5 != null) {
+            searchListMain.add(RxList.from(
+                r.searchResult?.tripInfos?.multicity5 ??
+                    <SearchAirlineInformation>[]));
+          }
+          if (r.searchResult?.tripInfos?.multicity6 != null) {
+            searchListMain.add(RxList.from(
+                r.searchResult?.tripInfos?.multicity6 ??
+                    <SearchAirlineInformation>[]));
+          }
+          for (var e in searchListMain) {
+            searchList.add(RxList.from(e));
+          }
         }
       }
       searchListLoading.value = false;
-      getSortingVariables();
+      if (searchListMain.isEmpty) {
+        return;
+      }
+      if (!comboTrip.value) getSortingVariables();
     });
+  }
+
+  /// for international multi city and round trip need a seperate list from [searchListMain] first index
+  /// sort and add the airlines list to [comboListMain] and [comboList] for sort and ui
+  void getComboList() {
+    print('in combo making function');
+    print('searchListMain => ${searchListMain[0].length}');
+    int j = 0;
+    for (int i = 0; i < searchListMain[0].length; i++) {
+      print(i);
+      if (searchListMain[0].isEmpty) break;
+      print(
+          '${airportSelected[j][0].code} == ${searchListMain[0][0].sI?[0].da?.code}  ${airportSelected[j][1].code} == ${searchListMain[0][i].sI?[0].aa?.code}');
+      if (airportSelected[j][0].code ==
+              (searchListMain[0][0].sI?[0].da?.code ?? '') &&
+          airportSelected[j][1].code ==
+              (searchListMain[0][i].sI?[0].aa?.code ?? '')) {
+        print('in side condition');
+        comboListMain.add(searchListMain[0].sublist(0, i + 1));
+        searchListMain[0] = searchListMain[0].sublist(i + 1);
+        i = -1;
+        j++;
+        if (j == airportSelected.length) break;
+      } else {
+        print('condition failed');
+      }
+    }
+    comboList.addAll(comboListMain);
   }
 
 // get the variables for sorting like {duration,ailines,times,stops}

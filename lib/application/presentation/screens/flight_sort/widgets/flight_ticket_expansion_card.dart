@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
@@ -12,11 +10,13 @@ class TicketDetailExpansionChild extends StatelessWidget {
       {super.key,
       required this.totalPriceList,
       this.isSelected = false,
-      this.onTap});
+      this.onTap,
+      this.onTapBookNow});
 
   final TotalPriceList totalPriceList;
   final bool isSelected;
   final VoidCallback? onTap;
+  final VoidCallback? onTapBookNow;
 
   @override
   Widget build(BuildContext context) {
@@ -45,18 +45,16 @@ class TicketDetailExpansionChild extends StatelessWidget {
                 style: textThinStyle1.copyWith(fontWeight: FontWeight.w900),
               ),
               kWidth10,
-              GestureDetector(
-                onTap: () {
-                  Get.toNamed(Routes.flightDetailFillling);
-                },
-                child: onTap != null
-                    ? CustomRadioButton(
-                        color: kBlueDark,
-                        selected: isSelected,
-                        onChanged: () {
-                          onTap!();
-                        })
-                    : Container(
+              onTap != null
+                  ? CustomRadioButton(
+                      color: kBlueDark,
+                      selected: isSelected,
+                      onChanged: () {
+                        onTap!();
+                      })
+                  : GestureDetector(
+                      onTap: onTapBookNow,
+                      child: Container(
                         padding: EdgeInsets.symmetric(
                             horizontal: 15.w, vertical: 5.h),
                         decoration: BoxDecoration(
@@ -67,7 +65,7 @@ class TicketDetailExpansionChild extends StatelessWidget {
                               fontWeight: FontWeight.w900, color: kWhite),
                         ),
                       ),
-              )
+                    )
             ],
           ),
           const Divider(color: kBluePrimary),

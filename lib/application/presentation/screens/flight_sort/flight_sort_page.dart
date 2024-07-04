@@ -63,4 +63,3 @@ class ScreenFlightTicketSort extends StatelessWidget {
     );
   }
 }
-

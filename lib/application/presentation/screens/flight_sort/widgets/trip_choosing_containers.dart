@@ -16,7 +16,7 @@ class TripChoosingContainers extends StatelessWidget {
     final controller = Get.find<FlightSortController>();
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      controller:controller.flightSortTabController,
+      controller: controller.flightSortTabController,
       child: Obx(() {
         return controller.searchList.length == 1
             ? kEmpty
@@ -30,11 +30,13 @@ class TripChoosingContainers extends StatelessWidget {
                     },
                     child: Container(
                       margin: EdgeInsets.only(
-                          left: index == 0? 15.w : 0, bottom: 10.h),
+                          left: index == 0 ? 15.w : 0, bottom: 10.h),
                       padding:
                           EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
                       decoration: BoxDecoration(
-                        color: index == controller.selectedTripListIndex.value? kBlueLightShade : kWhite,
+                        color: index == controller.selectedTripListIndex.value
+                            ? kBlueLightShade
+                            : kWhite,
                         border: Border.all(
                             color: kBluePrimary, width: index == 0 ? 1 : 1),
                       ),

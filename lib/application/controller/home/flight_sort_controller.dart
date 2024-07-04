@@ -147,6 +147,7 @@ class FlightSortController extends GetxController {
   void searchFlights() async {
     searchListLoading.value = true;
     selectedTripListIndex.value = 0;
+    durationSlider.value = 1;
     if (tripType.value == 1) {
       // if it is a round trip add airport as ulta
       airportSelected[1].value = [airportSelected[0][1], airportSelected[0][0]];

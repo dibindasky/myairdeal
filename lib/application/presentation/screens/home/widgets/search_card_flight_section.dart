@@ -117,7 +117,6 @@ class FlightSearchCardHome extends StatelessWidget {
             }),
             kHeight20,
             EventButton(
-
                 text: 'Search flights',
                 onTap: () {
                   controller.searchFlights();

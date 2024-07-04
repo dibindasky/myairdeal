@@ -80,14 +80,14 @@ class DateFormating {
     }
     return formattedDifference.trim();
   }
-  
-  static int getTotalDifferenceInMinutes(String dateTimeString1, String dateTimeString2) {
-  DateTime dateTime1 = DateTime.parse(dateTimeString1);
-  DateTime dateTime2 = DateTime.parse(dateTimeString2);
 
-  Duration difference = dateTime2.difference(dateTime1);
+  static int getTotalDifferenceInMinutes(
+      String dateTimeString1, String dateTimeString2) {
+    DateTime dateTime1 = DateTime.parse(dateTimeString1);
+    DateTime dateTime2 = DateTime.parse(dateTimeString2);
 
-  return difference.inMinutes;
-}
+    Duration difference = dateTime2.difference(dateTime1);
 
+    return difference.inMinutes;
+  }
 }

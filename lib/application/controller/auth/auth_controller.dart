@@ -5,8 +5,11 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/data/secure_storage/secure_storage.dart';
 import 'package:myairdeal/data/service/auth/auth_service.dart';
+import 'package:myairdeal/domain/models/auth/login_model/country.dart';
 import 'package:myairdeal/domain/models/auth/login_model/login_model.dart';
 import 'package:myairdeal/domain/models/auth/otp_verify_model/otp_verify_model.dart';
+import 'package:myairdeal/domain/models/auth/user_creation_model/user_creation_model.dart';
+import 'package:myairdeal/domain/models/auth/user_creation_responce_model/user_creation_responce_model.dart';
 import 'package:myairdeal/domain/models/token/token_model.dart';
 import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 
@@ -19,10 +22,18 @@ class AuthController extends GetxController {
 
   TextEditingController loginNumber = TextEditingController();
   TextEditingController otpNumber = TextEditingController();
+  TextEditingController firstName = TextEditingController();
+  TextEditingController lastName = TextEditingController();
+  TextEditingController email = TextEditingController();
+  final RxString? dialCode = ''.obs;
+  final RxString? countryCode = ''.obs;
+  final RxString? countryName = ''.obs;
   RxInt genderType = 0.obs;
   RxList genderList = ['Mr', 'Mrs', 'Ms'].obs;
   RxInt maxLength = 10.obs;
   RxInt maxOTPLength = 4.obs;
+  Rx<UserCreationResponceModel> userCreationResponceModel =
+      UserCreationResponceModel().obs;
 
   @override
   void onInit() {
@@ -70,6 +81,10 @@ class AuthController extends GetxController {
     }
   }
 
+  // String getCountryName(String countryCode) {
+  //   return countryCodes[countryCode.toUpperCase()] ?? 'Unknown country';
+  // }
+
   Future<void> otpSent() async {
     isLoading = true;
     hasError = false;
@@ -78,7 +93,13 @@ class AuthController extends GetxController {
     String trimmedNumber = loginNumber.text.trim();
     String replaceWhiteSpace = trimmedNumber.replaceAll(' ', '');
     final data = await authRepo.sendOTP(
-      loginModel: LoginModel(mobileNumber: replaceWhiteSpace),
+      loginModel: LoginModel(
+        mobileNumber: replaceWhiteSpace,
+        country: Country(
+            dialCode: dialCode?.value,
+            countryCode: countryCode?.value,
+            countryName: countryName?.value),
+      ),
     );
     data.fold((failure) {
       isLoading = false;
@@ -118,11 +139,52 @@ class AuthController extends GetxController {
       hasError = false;
       loginOrNot.value = true;
       update();
-      Get.offAllNamed(Routes.bottomBar);
+      Get.offNamed(Routes.alMostDone);
       Get.snackbar('Success', 'OTP Verify Success',
           backgroundColor: kBluePrimary);
       await SecureStorage.setLogin();
     });
+  }
+
+  void userCreation() async {
+    isLoading = true;
+    update();
+    final data = await authRepo.userCreation(
+        userCreationModel: UserCreationModel(
+            email: email.text,
+            firstName: firstName.text,
+            lastName: lastName.text,
+            country: Country(countryCode: '', countryName: '', dialCode: '')));
+    data.fold(
+      (l) {
+        Get.snackbar('Failed', errorMessage, backgroundColor: kRed);
+        isLoading = false;
+      },
+      (r) {
+        Get.snackbar('Success', 'User details added',
+            backgroundColor: kBluePrimary);
+        getUserInfo();
+        Get.offAllNamed(Routes.bottomBar);
+        update();
+      },
+    );
+  }
+
+  void getUserInfo() async {
+    isLoading = true;
+    update();
+    final data = await authRepo.getUser();
+    data.fold(
+      (l) {
+        Get.snackbar('Failed', errorMessage, backgroundColor: kRed);
+        isLoading = false;
+      },
+      (r) {
+        isLoading = false;
+        userCreationResponceModel.value = r;
+        update();
+      },
+    );
   }
 
   void logOut() async {

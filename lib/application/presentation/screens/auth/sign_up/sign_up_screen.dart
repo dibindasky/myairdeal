@@ -45,6 +45,8 @@ class ScreenSignUp extends StatelessWidget {
                 hintText: 'Mobile Number',
                 onInputChanged: (PhoneNumber number) {
                   controller.updateMaxLength(number.isoCode ?? 'IN');
+                  controller.countryCode?.value = number.isoCode ?? '';
+                  controller.dialCode?.value = number.dialCode ?? '';
                 },
                 selectorConfig: const SelectorConfig(
                   trailingSpace: false,

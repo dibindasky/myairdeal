@@ -61,6 +61,9 @@ class FlightSearchCardHome extends StatelessWidget {
                       showModalBottomSheet(
                         context: context,
                         builder: (context) => DatePickingBottomSheet(
+                          focusedDay: index == 0
+                              ? DateTime.now()
+                              : controller.depatureDate.value,
                           initialDate: index == 0
                               ? DateTime.now()
                               : controller.depatureDate.value,
@@ -114,13 +117,13 @@ class FlightSearchCardHome extends StatelessWidget {
             }),
             kHeight20,
             EventButton(
-              text: 'Search flights',
-              onTap: () {
-                controller.searchFlights();
-                Get.toNamed(Routes.searchSortFlight, id: 1);
-              },
-              width: double.infinity,
-            ),
+
+                text: 'Search flights',
+                onTap: () {
+                  controller.searchFlights();
+                  Get.toNamed(Routes.searchSortFlight, id: 1);
+                },
+                width: double.infinity)
           ],
         );
       }),

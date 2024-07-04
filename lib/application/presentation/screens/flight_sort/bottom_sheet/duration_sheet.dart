@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 
 class DurationBottomSheet extends StatelessWidget {
@@ -39,7 +40,11 @@ class DurationBottomSheet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Maximum Travel Time', style: textStyle1),
-                    Text('27 hours',
+                    Text(
+                        DateFormating.convertMinutesToHoursMinutes((controller
+                            .sortingVariables[
+                                controller.selectedTripListIndex.value]![2]
+                            .last * controller.durationSlider.value).round()),
                         style: textThinStyle1.copyWith(color: kGreyDark)),
                   ],
                 ),
@@ -65,12 +70,16 @@ class DurationBottomSheet extends StatelessWidget {
                 EventButton(
                     isBorder: true,
                     text: 'Reset',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
                     color: kWhite,
                     borderColor: kBlack,
                     textColr: kBluePrimary),
                 kWidth10,
-                EventButton(text: 'Done', onTap: () {})
+                EventButton(text: 'Done', onTap: () {
+                  Navigator.of(context).pop();
+                })
               ],
             ),
             kHeight20

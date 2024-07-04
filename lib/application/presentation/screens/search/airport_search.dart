@@ -50,7 +50,8 @@ class ScreenAirportSearch extends StatelessWidget {
             ),
             kHeight10,
             Obx(() {
-              if (controller.search.value) {
+              // change this condition as [controller.search.value] 
+              if (!controller.search.value || controller.search.value) {
                 return Expanded(
                   child: ListView.builder(
                     itemCount: controller.searchCityList.length,

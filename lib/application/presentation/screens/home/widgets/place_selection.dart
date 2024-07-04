@@ -129,6 +129,8 @@ class MultiCitySelection extends StatelessWidget {
                     onTap: () => showModalBottomSheet(
                       context: context,
                       builder: (context) => DatePickingBottomSheet(
+                        initialDate: index==0?DateTime.now():controller.multiCityDepartureDate[index-1],
+                        focusedDay: index==0?DateTime.now():controller.multiCityDepartureDate[index-1],
                         onPressed: (value) {
                           controller.addDateToMultiCityTrip(index, value);
                         },

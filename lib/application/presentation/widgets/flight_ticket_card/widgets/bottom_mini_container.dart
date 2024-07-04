@@ -22,8 +22,8 @@ class BottomMiniContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
-        bottomLeft: Radius.circular(15),
-        bottomRight: Radius.circular(15),
+        bottomLeft: Radius.circular(10),
+        bottomRight: Radius.circular(10),
       ),
       child: ColoredBox(
         color: (flightTicketCardEnum == FlightTicketCardEnum.cancelled)

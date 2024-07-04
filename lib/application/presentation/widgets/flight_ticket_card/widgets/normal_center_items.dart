@@ -36,39 +36,41 @@ class NormalCenterItems extends StatelessWidget {
           style: textThinStyle1.copyWith(fontSize: 9.sp),
         ),
         kWidth5,
-        Row(
-          children: [
-            const CircleAvatar(
-              radius: 3,
-              backgroundColor: kGrey,
-            ),
-            ...List.generate(
-              5,
-              (index) => Text(
-                '-',
-                style: TextStyle(
-                    fontSize: 8.sp, fontWeight: FontWeight.w800, color: kBlack),
+        FittedBox(
+          child: Row(
+            children: [
+              const CircleAvatar(
+                radius: 3,
+                backgroundColor: kGrey,
               ),
-            ),
-            ...List.generate(
-                stops,
-                (index) => const RotatedBox(
-                      quarterTurns: 1,
-                      child: Icon(Icons.flight_rounded, size: 20, color: kBlue),
-                    )),
-            ...List.generate(
-              5,
-              (index) => Text(
-                '-',
-                style: TextStyle(
-                    fontSize: 8.sp, fontWeight: FontWeight.w800, color: kBlack),
+              ...List.generate(
+                5,
+                (index) => Text(
+                  '-',
+                  style: TextStyle(
+                      fontSize: 8.sp, fontWeight: FontWeight.w800, color: kBlack),
+                ),
               ),
-            ),
-            const CircleAvatar(
-              radius: 3,
-              backgroundColor: kGrey,
-            ),
-          ],
+              ...List.generate(
+                  stops,
+                  (index) => const RotatedBox(
+                        quarterTurns: 1,
+                        child: Icon(Icons.flight_rounded, size: 20, color: kBlue),
+                      )),
+              ...List.generate(
+                5,
+                (index) => Text(
+                  '-',
+                  style: TextStyle(
+                      fontSize: 8.sp, fontWeight: FontWeight.w800, color: kBlack),
+                ),
+              ),
+              const CircleAvatar(
+                radius: 3,
+                backgroundColor: kGrey,
+              ),
+            ],
+          ),
         ),
         Text(
           '$stops Stop',

@@ -11,12 +11,14 @@ class CustomRadioButton extends StatelessWidget {
     required this.onChanged,
     this.width,
     this.child,
+    this.color=kBluePrimary
   });
   final SizedBox? width;
   final bool selected;
   final String? text;
   final VoidCallback onChanged;
   final Widget? child;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class CustomRadioButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               selected
-                  ? const Icon(Icons.radio_button_checked, color: kBlue)
+                  ? Icon(Icons.radio_button_checked, color: color)
                   : const Icon(Icons.radio_button_unchecked),
               width ?? kWidth5,
               Text(text ?? ''),

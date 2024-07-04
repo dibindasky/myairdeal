@@ -4,69 +4,91 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/total_price_list.dart';
 
 class TicketDetailExpansionChild extends StatelessWidget {
-  const TicketDetailExpansionChild({super.key, required this.totalPriceList});
+  const TicketDetailExpansionChild(
+      {super.key,
+      required this.totalPriceList,
+      this.isSelected = false,
+      this.onTap});
 
   final TotalPriceList totalPriceList;
+  final bool isSelected;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-      margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
-      width: double.infinity,
-      decoration: BoxDecoration(
-          color: kWhite, borderRadius: kRadius15, boxShadow: boxShadow2),
-      child: Column(children: [
-        kHeight10,
-        Row(
-          children: [
-            Text(
-              totalPriceList.fareIdentifier ?? '',
-              style: textStyle1.copyWith(fontWeight: FontWeight.w900),
-            ),
-            const Spacer(),
-            Text(
-              '₹ ${totalPriceList.fd!.adult!.fC!.tf}',
-              style: textThinStyle1.copyWith(fontWeight: FontWeight.w900),
-            ),
-            kWidth10,
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(Routes.flightDetailFillling);
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),
-                decoration:
-                    BoxDecoration(borderRadius: kRadius50, color: kBlueDark),
-                child: Text(
-                  'Book Now',
-                  style: textThinStyle1.copyWith(
-                      fontWeight: FontWeight.w900, color: kWhite),
-                ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+        margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: isSelected ? kBlueLightShade : kWhite,
+            borderRadius: kRadius15,
+            border: isSelected?Border.all(color: kBlueDark):null,
+            boxShadow: boxShadow2),
+        child: Column(children: [
+          kHeight10,
+          Row(
+            children: [
+              Text(
+                totalPriceList.fareIdentifier ?? '',
+                style: textStyle1.copyWith(fontWeight: FontWeight.w900),
               ),
-            )
-          ],
-        ),
-        const Divider(color: kBluePrimary),
-        TicketDetailTile(
-            first: 'Seat Remaining',
-            second: '${totalPriceList.fd!.adult!.sR ?? 0} Seats Remaining'),
-        TicketDetailTile(
-            first: 'Checked bag',
-            second: totalPriceList.fd!.adult!.bI!.iB ?? ''),
-        TicketDetailTile(
-            first: 'Hand Bag', second: totalPriceList.fd!.adult!.bI!.cB ?? ''),
-        TicketDetailTile(
-            first: 'Meal',
-            second: totalPriceList.fd!.adult!.mI! ? 'Free' : 'Chargable'),
-        // TicketDetailTile(
-        //     first: 'Cancelation', second: 'INR 3250 with in 72 hours'),
-        // TicketDetailTile(
-        //     first: 'Date change', second: 'INR 3250 with in 72 hours'),
-      ]),
+              const Spacer(),
+              Text(
+                '₹ ${totalPriceList.fd!.adult!.fC!.tf}',
+                style: textThinStyle1.copyWith(fontWeight: FontWeight.w900),
+              ),
+              kWidth10,
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.flightDetailFillling);
+                },
+                child: onTap != null
+                    ? CustomRadioButton(
+                        color: kBlueDark,
+                        selected: isSelected,
+                        onChanged: () {
+                          onTap!();
+                        })
+                    : Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 15.w, vertical: 5.h),
+                        decoration: BoxDecoration(
+                            borderRadius: kRadius50, color: kBlueDark),
+                        child: Text(
+                          'Book Now',
+                          style: textThinStyle1.copyWith(
+                              fontWeight: FontWeight.w900, color: kWhite),
+                        ),
+                      ),
+              )
+            ],
+          ),
+          const Divider(color: kBluePrimary),
+          TicketDetailTile(
+              first: 'Seat Remaining',
+              second: '${totalPriceList.fd!.adult!.sR ?? 0} Seats Remaining'),
+          TicketDetailTile(
+              first: 'Checked bag',
+              second: totalPriceList.fd!.adult!.bI!.iB ?? ''),
+          TicketDetailTile(
+              first: 'Hand Bag',
+              second: totalPriceList.fd!.adult!.bI!.cB ?? ''),
+          TicketDetailTile(
+              first: 'Meal',
+              second: totalPriceList.fd?.adult?.mI??false ? 'Free' : 'Chargable'),
+          // TicketDetailTile(
+          //     first: 'Cancelation', second: 'INR 3250 with in 72 hours'),
+          // TicketDetailTile(
+          //     first: 'Date change', second: 'INR 3250 with in 72 hours'),
+        ]),
+      ),
     );
   }
 }

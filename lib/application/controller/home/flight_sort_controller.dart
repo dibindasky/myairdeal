@@ -33,6 +33,9 @@ class FlightSortController extends GetxController {
   /// responsible for work with [searchList]
   RxList<int> selectedFlights = [0, 0].obs;
 
+  /// selected index in the price list of [selectedFlights]
+  RxList<int> selectedTicketPrices = <int>[0, 0].obs;
+
   /// selected trip list index that responsible for work with [searchList] and [selectedFlights]
   /// to set which list should show on sorting page
   RxInt selectedTripListIndex = 0.obs;
@@ -110,7 +113,6 @@ class FlightSortController extends GetxController {
   // list responsible for search of city and airport in the search airport page
   RxList<CitySearchModel> searchCityList = <CitySearchModel>[].obs;
 
-  RxList<String> sortStopsSelected = <String>[].obs;
   List<String> departureTimes = [
     '00:00 to 05:59',
     '06:00 to 11:59',
@@ -144,11 +146,16 @@ class FlightSortController extends GetxController {
 // search api request for all types of trips
   void searchFlights() async {
     searchListLoading.value = true;
+    selectedTripListIndex.value = 0;
     if (tripType.value == 1) {
+      // if it is a round trip add airport as ulta
       airportSelected[1].value = [airportSelected[0][1], airportSelected[0][0]];
       selectedFlights.value = [0, 0];
+      selectedTicketPrices.value = [0, 0];
     } else if (tripType.value == 2) {
       selectedFlights.value =
+          List.generate(airportSelected.length, (index) => 0);
+      selectedTicketPrices.value =
           List.generate(airportSelected.length, (index) => 0);
     }
     FlightSearchQuery searchModel = FlightSearchQuery(
@@ -280,11 +287,14 @@ class FlightSortController extends GetxController {
       sortingVariables[i]![1].sort();
       sortingVariables[i]![2].sort();
     }
+    sortAirlineList();
   }
 
 // change the selected flight for multi city and round trips on list
-  void changeFlightSelectionMultiCityAndRound(int index) {
+// paramater index -> index of ticket, i -> index of ticket price
+  void changeFlightSelectionMultiCityAndRound(int index, int i) {
     selectedFlights[selectedTripListIndex.value] = index;
+    selectedTicketPrices[selectedTripListIndex.value] = i;
   }
 
 // change trip from tab for multicity and round trip for choosing diffrent flights in different list
@@ -313,6 +323,49 @@ class FlightSortController extends GetxController {
         curve: Curves.easeInOut);
   }
 
+  // sort the data according to the selected sorting variables
+  void sortAirlineList() {
+    print('SORTING...');
+    List<SearchAirlineInformation> sort = [];
+    // sort for airline
+    if (sortingVariablesSelected[selectedTripListIndex.value]![0].isEmpty ||
+        sortingVariablesSelected[selectedTripListIndex.value]![0].length ==
+            sortingVariables[selectedTripListIndex.value]![0].length) {
+      // add all if no airlines selected or everything has been selected
+      sort.addAll(searchListMain[selectedTripListIndex.value]);
+    } else {
+      // iterate and add the airline information if ailine is present in the selected list
+      for (var airline in searchListMain[selectedTripListIndex.value]) {
+        if (sortingVariablesSelected[selectedTripListIndex.value]![0]
+            .contains(airline.sI![0].fD!.aI!.name ?? '')) {
+          sort.add(airline);
+        }
+      }
+    }
+    // sort in base of stops
+    for (int i = 0; i < sort.length; i++) {
+      if (sortingVariablesSelected[selectedTripListIndex.value]![1]
+              .isNotEmpty &&
+          !sortingVariablesSelected[selectedTripListIndex.value]![1]
+              .contains(sort[i].sI!.length - 1)) {
+        sort.removeAt(i--);
+      }
+    }
+    // sort for duration
+    for (int i = 0; i < sort.length; i++) {
+      if (sortingVariablesSelected[selectedTripListIndex.value]![2]
+              .isNotEmpty &&
+          sortingVariables[selectedTripListIndex.value]![2].last *
+                  durationSlider.value <
+              DateFormating.getTotalDifferenceInMinutes(sort[i].sI![0].dt ?? '',
+                  sort[i].sI![sort[i].sI!.length - 1].at ?? '')) {
+        sort.removeAt(i--);
+      }
+    }
+    searchList[selectedTripListIndex.value].value = sort.obs;
+  }
+
+  // button for choosing diferent airlines and on the last index need to call review page
   void nextOrContinue() {
     if (selectedTripListIndex.value < searchList.length - 1) {
       changeSelectedTripIndex(selectedTripListIndex.value + 1);
@@ -481,29 +534,39 @@ class FlightSortController extends GetxController {
         sortingVariables[selectedTripListIndex.value]![2].last * value) {
       durationSlider.value = value;
     }
+    sortAirlineList();
   }
 
+  // selsect the airlines for sorting
   void selectAirline(String value) {
-    if (sortAirlinesSelected.contains(value)) {
-      sortAirlinesSelected.remove(value);
+    if (sortingVariablesSelected[selectedTripListIndex.value]![0]
+        .contains(value)) {
+      sortingVariablesSelected[selectedTripListIndex.value]![0].remove(value);
     } else {
-      sortAirlinesSelected.add(value);
+      sortingVariablesSelected[selectedTripListIndex.value]![0].add(value);
     }
+    sortAirlineList();
   }
 
-  void selectStops(String value) {
-    if (sortStopsSelected.contains(value)) {
-      sortStopsSelected.remove(value);
-    } else {
-      sortStopsSelected.add(value);
-    }
-  }
-
+  // selcct or unselect all airlines for sorting
   void selectAllAirline(bool value) {
-    sortAirlinesSelected.clear();
+    sortingVariablesSelected[selectedTripListIndex.value]![0].clear();
     if (value) {
-      sortAirlinesSelected.addAll(sortAirlines);
+      sortingVariablesSelected[selectedTripListIndex.value]![0]
+          .addAll(sortingVariables[selectedTripListIndex.value]![0]);
     }
+    sortAirlineList();
+  }
+
+  // add a stop for sorting if it is alredy added remove it form the list
+  void selectStops(int value) {
+    if (sortingVariablesSelected[selectedTripListIndex.value]![1]
+        .contains(value)) {
+      sortingVariablesSelected[selectedTripListIndex.value]![1].remove(value);
+    } else {
+      sortingVariablesSelected[selectedTripListIndex.value]![1].add(value);
+    }
+    sortAirlineList();
   }
 
   void selectDepartureTime(String value) {

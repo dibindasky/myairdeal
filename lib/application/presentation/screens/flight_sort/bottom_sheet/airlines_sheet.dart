@@ -78,7 +78,8 @@ class AirlinesBottomSheet extends StatelessWidget {
                                 .contains(controller.sortingVariables[
                                     controller.selectedTripListIndex.value]![0][index]),
                             onChanged: (value) {
-                              controller.selectAirline(controller.sortAirlines[index]);
+                              controller.selectAirline(controller.sortingVariables[
+                                      controller.selectedTripListIndex.value]![0][index]);
                             },
                             activeColor: kBluePrimary,
                           )

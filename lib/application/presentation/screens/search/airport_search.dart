@@ -7,11 +7,20 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
 
-class ScreenAirportSearch extends StatelessWidget {
+class ScreenAirportSearch extends StatefulWidget {
   const ScreenAirportSearch({super.key});
 
   @override
+  State<ScreenAirportSearch> createState() => _ScreenAirportSearchState();
+}
+
+class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
+  final focusNode = FocusNode();
+  @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) { 
+      focusNode.requestFocus();
+    });
     final controller = Get.find<FlightSortController>();
     return Scaffold(
       body: SafeArea(
@@ -33,6 +42,7 @@ class ScreenAirportSearch extends StatelessWidget {
                       child: const Icon(Icons.arrow_back)),
                   Expanded(
                     child: TextField(
+                      focusNode: focusNode,
                       onChanged: (value) {
                         controller.changeSearch(value);
                       },

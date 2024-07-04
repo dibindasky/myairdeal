@@ -18,7 +18,7 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
   final focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) { 
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       focusNode.requestFocus();
     });
     final controller = Get.find<FlightSortController>();
@@ -60,7 +60,7 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
             ),
             kHeight10,
             Obx(() {
-              // change this condition as [controller.search.value] 
+              // change this condition as [controller.search.value]
               if (!controller.search.value || controller.search.value) {
                 return Expanded(
                   child: ListView.builder(

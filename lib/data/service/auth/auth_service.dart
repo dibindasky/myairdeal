@@ -6,6 +6,8 @@ import 'package:myairdeal/domain/core/api_endpoints/api_endpoints.dart';
 import 'package:myairdeal/domain/core/failure/failure.dart';
 import 'package:myairdeal/domain/models/auth/login_model/login_model.dart';
 import 'package:myairdeal/domain/models/auth/otp_verify_model/otp_verify_model.dart';
+import 'package:myairdeal/domain/models/auth/user_creation_model/user_creation_model.dart';
+import 'package:myairdeal/domain/models/auth/user_creation_responce_model/user_creation_responce_model.dart';
 import 'package:myairdeal/domain/models/success_responce_model/success_responce_model.dart';
 import 'package:myairdeal/domain/models/token/token_model.dart';
 import 'package:myairdeal/domain/repository/service/auth_repo.dart';
@@ -17,6 +19,7 @@ class AuthService extends AuthRepo {
   Future<Either<Failure, SuccessResponceModel>> sendOTP(
       {required LoginModel loginModel}) async {
     try {
+      log('OTP data ${loginModel.toJson()}');
       final responce = await apiService.post(
         ApiEndPoints.sendOTP,
         data: loginModel.toJson(),
@@ -48,6 +51,42 @@ class AuthService extends AuthRepo {
       return Left(Failure(message: e.response?.data['error'] ?? errorMessage));
     } catch (e) {
       log('catch verifyOTP $e');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SuccessResponceModel>> userCreation(
+      {required UserCreationModel userCreationModel}) async {
+    try {
+      final responce = await apiService.put(
+        ApiEndPoints.userData,
+        data: userCreationModel.toJson(),
+      );
+      log('Success userCreation');
+      return Right(SuccessResponceModel.fromJson(responce.data));
+    } on DioException catch (e) {
+      log('DioException userCreation $e');
+      return Left(Failure(message: e.response?.data['error'] ?? errorMessage));
+    } catch (e) {
+      log('catch userCreation $e');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserCreationResponceModel>> getUser() async {
+    try {
+      final responce = await apiService.get(
+        ApiEndPoints.userData,
+      );
+      log('getUser');
+      return Right(UserCreationResponceModel.fromJson(responce.data));
+    } on DioException catch (e) {
+      log('DioException getUser $e');
+      return Left(Failure(message: e.response?.data['error'] ?? errorMessage));
+    } catch (e) {
+      log('catch getUser $e');
       return Left(Failure(message: e.toString()));
     }
   }

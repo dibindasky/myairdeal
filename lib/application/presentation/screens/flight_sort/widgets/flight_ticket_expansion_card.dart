@@ -29,7 +29,7 @@ class TicketDetailExpansionChild extends StatelessWidget {
         decoration: BoxDecoration(
             color: isSelected ? kBlueLightShade : kWhite,
             borderRadius: kRadius15,
-            border: isSelected?Border.all(color: kBlueDark):null,
+            border: isSelected ? Border.all(color: kBlueDark) : null,
             boxShadow: boxShadow2),
         child: Column(children: [
           kHeight10,
@@ -82,7 +82,8 @@ class TicketDetailExpansionChild extends StatelessWidget {
               second: totalPriceList.fd!.adult!.bI!.cB ?? ''),
           TicketDetailTile(
               first: 'Meal',
-              second: totalPriceList.fd?.adult?.mI??false ? 'Free' : 'Chargable'),
+              second:
+                  totalPriceList.fd?.adult?.mI ?? false ? 'Free' : 'Chargable'),
           // TicketDetailTile(
           //     first: 'Cancelation', second: 'INR 3250 with in 72 hours'),
           // TicketDetailTile(

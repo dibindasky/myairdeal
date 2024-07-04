@@ -4,15 +4,14 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class CustomRadioButton extends StatelessWidget {
-  const CustomRadioButton({
-    super.key,
-    required this.selected,
-    this.text,
-    required this.onChanged,
-    this.width,
-    this.child,
-    this.color=kBluePrimary
-  });
+  const CustomRadioButton(
+      {super.key,
+      required this.selected,
+      this.text,
+      required this.onChanged,
+      this.width,
+      this.child,
+      this.color = kBluePrimary});
   final SizedBox? width;
   final bool selected;
   final String? text;

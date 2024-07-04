@@ -42,9 +42,11 @@ class DurationBottomSheet extends StatelessWidget {
                     Text('Maximum Travel Time', style: textStyle1),
                     Text(
                         DateFormating.convertMinutesToHoursMinutes((controller
-                            .sortingVariables[
-                                controller.selectedTripListIndex.value]![2]
-                            .last * controller.durationSlider.value).round()),
+                                    .sortingVariables[controller
+                                        .selectedTripListIndex.value]![2]
+                                    .last *
+                                controller.durationSlider.value)
+                            .round()),
                         style: textThinStyle1.copyWith(color: kGreyDark)),
                   ],
                 ),
@@ -77,9 +79,11 @@ class DurationBottomSheet extends StatelessWidget {
                     borderColor: kBlack,
                     textColr: kBluePrimary),
                 kWidth10,
-                EventButton(text: 'Done', onTap: () {
-                  Navigator.of(context).pop();
-                })
+                EventButton(
+                    text: 'Done',
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    })
               ],
             ),
             kHeight20

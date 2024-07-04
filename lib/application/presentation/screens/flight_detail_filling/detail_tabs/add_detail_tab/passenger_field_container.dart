@@ -15,7 +15,6 @@ class DetailContainer extends StatelessWidget {
     final travelController = Get.find<TravellerController>();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      // margin: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         border: Border.all(color: kBlue),
         borderRadius: kRadius10,

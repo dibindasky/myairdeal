@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 
 class TravelInsurenceContainer extends StatelessWidget {
   const TravelInsurenceContainer({super.key});
@@ -13,10 +14,10 @@ class TravelInsurenceContainer extends StatelessWidget {
     final flightSortController = Get.find<FlightSortController>();
     return Container(
       decoration: BoxDecoration(
-          color: kBlueLightShade,
-          boxShadow: boxShadow1,
-          borderRadius: kRadius15),
-      margin: EdgeInsets.symmetric(horizontal: 10.w),
+        color: kBlueLightShade,
+        boxShadow: boxShadow1,
+        borderRadius: kRadius15,
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Column(
@@ -63,18 +64,49 @@ class TravelInsurenceContainer extends StatelessWidget {
                   textThinStyle1.copyWith(fontSize: 10.sp, color: kBluePrimary),
             ),
             const Divider(),
-            ExpansionTile(
-              // enableFeedback: false,
-              iconColor: kBlue,
-              childrenPadding: const EdgeInsets.all(0),
-              tilePadding: const EdgeInsets.all(0),
-              title: const Text('Key benifits'),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+            CustomExpansionTile(
+              isBorder: false,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Key benifits',
                     style: textStyle1.copyWith(fontSize: 12.sp),
+                  ),
+                  const Icon(Icons.arrow_drop_down)
+                ],
+              ),
+              children: [
+                SizedBox(
+                  height: 100.h,
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) => kWidth10,
+                    itemCount: 4,
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        decoration: BoxDecoration(
+                            color: kBlueLightShade,
+                            borderRadius: kRadius10,
+                            border: Border.all(color: kBlueDark)),
+                        width: 110.w,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset('asset/icon/done_icon.png',
+                                height: 40.h),
+                            kHeight10,
+                            Text(
+                              'Common carrier delayclaim up to 1000',
+                              style: textThinStyle1.copyWith(fontSize: 9.sp),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

@@ -9,18 +9,22 @@ import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/wi
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/bottom_mini_container.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/card_side_items.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
+import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/item_infos.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
 
 class FlightTicketCard extends StatelessWidget {
-  const FlightTicketCard(
-      {super.key,
-      this.buttonOnTap,
-      required this.flightTicketCardEnum,
-      this.searchAirlineInformation});
+  const FlightTicketCard({
+    super.key,
+    this.buttonOnTap,
+    this.itemInfos,
+    required this.flightTicketCardEnum,
+    this.searchAirlineInformation,
+  });
 
   final VoidCallback? buttonOnTap;
   final FlightTicketCardEnum flightTicketCardEnum;
   final SearchAirlineInformation? searchAirlineInformation;
+  final ItemInfos? itemInfos;
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +58,25 @@ class FlightTicketCard extends StatelessWidget {
                             time: DateFormating.formatTime(
                                 searchAirlineInformation!.sI![0].dt!),
                           )
-                        : const CardSideItems(
-                            place: 'TTT',
-                            airPort: 'Airport',
-                            from: 'Departure',
-                            time: '07:00 AM',
-                          ),
+                        : itemInfos != null
+                            ? CardSideItems(
+                                place: itemInfos!
+                                        .air?.tripInfos?[0].sI?[0].da?.code ??
+                                    '',
+                                airPort: itemInfos!
+                                        .air?.tripInfos?[0].sI?[0].da?.city ??
+                                    '',
+                                from: 'Departure',
+                                time: DateFormating.getDate(DateTime.parse(
+                                    itemInfos!.air?.tripInfos?[0].sI?[0].dt ??
+                                        '')),
+                              )
+                            : const CardSideItems(
+                                place: 'TTT',
+                                airPort: 'Airport',
+                                from: 'Departure',
+                                time: '07:00 AM',
+                              ),
                     searchAirlineInformation != null
                         ? NormalCenterItems(
                             travelMinutes: DateFormating.getDifferenceOfDates(
@@ -95,13 +112,41 @@ class FlightTicketCard extends StatelessWidget {
                                         1]
                                     .at!),
                           )
-                        : const CardSideItems(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            place: 'TTT',
-                            airPort: 'Airport',
-                            from: 'Arrival',
-                            time: '07:00 PM',
-                          ),
+                        : itemInfos != null
+                            ? CardSideItems(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                place: itemInfos!
+                                        .air
+                                        ?.tripInfos?[0]
+                                        .sI?[((itemInfos!.air?.tripInfos?[0].sI
+                                                    ?.length ??
+                                                1) -
+                                            1)]
+                                        .aa
+                                        ?.code ??
+                                    '',
+                                airPort: itemInfos!
+                                        .air
+                                        ?.tripInfos?[0]
+                                        .sI?[((itemInfos!.air?.tripInfos?[0].sI
+                                                    ?.length ??
+                                                1) -
+                                            1)]
+                                        .aa
+                                        ?.code ??
+                                    '',
+                                from: 'Arrival',
+                                time: DateFormating.getDate(DateTime.parse(
+                                    itemInfos!.air?.tripInfos?[0].sI?[0].at ??
+                                        '')),
+                              )
+                            : const CardSideItems(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                place: 'TTT',
+                                airPort: 'Airport',
+                                from: 'Arrival',
+                                time: '07:00 PM',
+                              ),
                   ],
                 ),
               ),

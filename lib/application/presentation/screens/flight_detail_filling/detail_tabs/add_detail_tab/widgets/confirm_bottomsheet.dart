@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
@@ -71,14 +71,18 @@ class ConfrimBottomSheet extends StatelessWidget {
             color: kWhite,
             text: 'Continue without Securing your Travel',
             onTap: () {
-              Get.offNamed(Routes.travelerDetails);
+              //Get.offNamed(Routes.travelerDetails);
+              Navigator.pop(context);
+              Get.find<TravellerController>().selectedMainTab.value = 2;
             },
           ),
           kHeight10,
           EventButton(
             text: 'Secure your Travel & Add travel insurance',
             onTap: () {
-              Get.offNamed(Routes.travelerDetails);
+              Navigator.pop(context);
+              Get.find<TravellerController>().selectedMainTab.value = 2;
+              // Get.offNamed(Routes.travelerDetails);
             },
           ),
           kHeight20,

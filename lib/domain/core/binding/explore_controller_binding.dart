@@ -4,6 +4,6 @@ import 'package:myairdeal/application/controller/explore/explore_controller.dart
 class ExploreBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ExploreController>(() => ExploreController());
+    Get.put<ExploreController>(ExploreController(), permanent: true);
   }
 }

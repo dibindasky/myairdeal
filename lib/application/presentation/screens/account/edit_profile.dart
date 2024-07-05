@@ -6,7 +6,6 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/utils/animations/splash_animation.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 
 class ScreenProfileEdit extends StatelessWidget {
   const ScreenProfileEdit({super.key});
@@ -30,63 +29,76 @@ class ScreenProfileEdit extends StatelessWidget {
               topGap: kHeight10,
             ),
             kHeight50,
-            AnimatedGrowShrinkContainer(
-              child: CircleAvatar(
-                backgroundColor: kBlueLight,
-                radius: 58,
-                child: CircleAvatar(
-                  backgroundColor: kBluePrimary,
-                  radius: 50,
-                  child: name == ''
-                      ? const Icon(
-                          size: 50,
-                          Icons.person,
-                          color: kBlueLight,
-                        )
-                      : Text(
-                          name.toUpperCase(),
-                          style: textThinStyle1.copyWith(
-                            fontSize: 30.sp,
-                            color: kWhite,
-                          ),
-                        ),
-                ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Column(
+                children: [
+                  AnimatedGrowShrinkContainer(
+                    milliseconds: 1000,
+                    begin: .85,
+                    end: 0.9,
+                    child: CircleAvatar(
+                      backgroundColor: kBlueLight,
+                      radius: 58,
+                      child: CircleAvatar(
+                        backgroundColor: kBluePrimary,
+                        radius: 50,
+                        child: name == ''
+                            ? const Icon(
+                                size: 50,
+                                Icons.person,
+                                color: kBlueLight,
+                              )
+                            : Text(
+                                name.toUpperCase(),
+                                style: textThinStyle1.copyWith(
+                                  fontSize: 30.sp,
+                                  color: kWhite,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+                  kHeight5,
+                  ProfileField(
+                    data:
+                        controller.userCreationResponceModel.value.firstName ??
+                            '',
+                    label: 'First name',
+                    value: 'name',
+                    iconImage: profileIcon,
+                  ),
+                  ProfileField(
+                    data: controller.userCreationResponceModel.value.lastName ??
+                        '',
+                    label: 'Last name',
+                    value: '',
+                    iconImage: profileIcon,
+                  ),
+                  ProfileField(
+                    data:
+                        controller.userCreationResponceModel.value.email ?? '',
+                    label: 'Email ',
+                    value: '@gmail.com',
+                    iconImage: smsIcon,
+                  ),
+                  ProfileField(
+                    data:
+                        controller.userCreationResponceModel.value.phone ?? '',
+                    label: 'Phone Number',
+                    value: 'xxxxxxxx',
+                    iconImage: smsIcon,
+                  ),
+                  kHeight50,
+                  // EventButton(
+                  //   width: 380.w,
+                  //   text: '',
+                  //   onTap: () {
+                  //     Navigator.pop(context);
+                  //   },
+                  // ),
+                ],
               ),
-            ),
-            kHeight15,
-            ProfileField(
-              data: controller.userCreationResponceModel.value.firstName ?? '',
-              label: 'First name',
-              value: 'name',
-              iconImage: profileIcon,
-            ),
-            ProfileField(
-              data: controller.userCreationResponceModel.value.lastName ?? '',
-              label: 'Last name',
-              value: '',
-              iconImage: profileIcon,
-            ),
-            ProfileField(
-              data: controller.userCreationResponceModel.value.email ?? '',
-              label: 'Email ',
-              value: '@gmail.com',
-              iconImage: smsIcon,
-            ),
-            ProfileField(
-              data: controller.userCreationResponceModel.value.phone ?? '',
-              label: 'Phone Number',
-              value: 'xxxxxxxx',
-              iconImage: smsIcon,
-            ),
-            kHeight50,
-            kHeight50,
-            kHeight30,
-            EventButton(
-              width: 380.w,
-              text: 'Change Now',
-              onTap: () {
-                Navigator.pop(context);
-              },
             ),
           ],
         );
@@ -114,7 +126,7 @@ class ProfileField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.h),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -137,34 +149,6 @@ class ProfileField extends StatelessWidget {
               ],
             ),
           ),
-          // CustomTextField(
-          //   //controller: data,
-          //   enabledBorder:
-          //       const OutlineInputBorder(borderSide: BorderSide(width: .3)),
-          //   suffixIcon: suffixImage != null
-          //       ? Padding(
-          //           padding: const EdgeInsets.all(13.0),
-          //           child: Image.asset(
-          //             suffixImage!,
-          //             height: 4.h,
-          //             width: 5.w,
-          //             fit: BoxFit.cover,
-          //           ),
-          //         )
-          //       : null,
-          //   onTapOutside: () => FocusScope.of(context).unfocus(),
-          //   hintText: value,
-          //   fillColor: kGreyLight,
-          //   prefixIcon: Padding(
-          //     padding: const EdgeInsets.all(13.0),
-          //     child: Image.asset(
-          //       iconImage,
-          //       height: 4.h,
-          //       width: 5.w,
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

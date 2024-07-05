@@ -78,9 +78,7 @@ class ScreenOTP extends StatelessWidget {
                         },
                       ),
                       kHeight20,
-                      //const Center(child: Text('Or Sign Up With')),
                       kHeight20,
-                      //const LoginGoogleOrFaceBook(),
                       kHeight10,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

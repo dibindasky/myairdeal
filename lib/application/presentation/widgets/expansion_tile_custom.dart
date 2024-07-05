@@ -9,11 +9,13 @@ class CustomExpansionTile extends StatefulWidget {
       this.isBorder = true,
       this.isExpandable = true,
       this.children,
+      this.expansionColor,
       required this.child});
   final List<Widget>? children;
   final Widget child;
   final bool isExpandable;
   final bool isBorder;
+  final Color? expansionColor;
 
   @override
   State<CustomExpansionTile> createState() => _CustomExpansionTileState();
@@ -28,7 +30,9 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
       decoration: !widget.isBorder
           ? null
           : BoxDecoration(
-              border: Border.all(color: kBluePrimary), borderRadius: kRadius15),
+              color: widget.expansionColor!=null && isExpanded ? widget.expansionColor : null,
+              border: Border.all(color: kBluePrimary),
+              borderRadius: kRadius15),
       child: Column(
         children: [
           InkWell(

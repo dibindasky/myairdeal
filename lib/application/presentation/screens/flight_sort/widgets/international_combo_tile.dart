@@ -6,6 +6,7 @@ import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/f
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
+import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/bottom_mini_container.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/card_side_items.dart';
@@ -23,6 +24,7 @@ class InternationalMutliComboTile extends StatelessWidget {
     final controller = Get.find<FlightSortController>();
     return Obx(() {
       return CustomExpansionTile(
+        expansionColor: kGrey,
         child: Stack(
           children: [
             Container(
@@ -31,51 +33,78 @@ class InternationalMutliComboTile extends StatelessWidget {
                   Column(
                       children: List.generate(
                     controller.multiCityCount.value,
-                    (index) {
+                    (jIndex) {
                       return Container(
-                      margin: EdgeInsets.only(
-                        top: 2.h,
-                        bottom: 2,
-                        left: 2.w,
-                        right: 2.w,
-                      ),
-                      decoration: BoxDecoration(
-                          color: isSelectedTicket ? kBlueLightShade : kWhite,
-                          boxShadow: boxShadow3,
-                          border: Border.all(width: 0.3),
-                          borderRadius: BorderRadius.circular(13)),
-                      child: Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CardSideItems(
-                              place: controller.airportSelected[index][0].code??"",
-                              airPort: 'Airport',
-                              from: 'Departure',
-                              time: '07:00 AM',
-                            ),
-                            NormalCenterItems(),
-                            CardSideItems(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              place: controller.airportSelected[index][1].code??"",
-                              airPort: 'Airport',
-                              from: 'Arrival',
-                              time: '07:00 PM',
-                            ),
-                          ],
+                        margin: EdgeInsets.only(
+                          top: 2.h,
+                          bottom: 2,
+                          left: 2.w,
+                          right: 2.w,
                         ),
-                      ),
-                    );
+                        decoration: BoxDecoration(
+                            color: isSelectedTicket ? kBlueLightShade : kWhite,
+                            boxShadow: boxShadow3,
+                            border: Border.all(width: 0.3),
+                            borderRadius: BorderRadius.circular(13)),
+                        child: Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CardSideItems(
+                                place: controller.comboList[index][jIndex]
+                                        .sI![0].aa?.code ??
+                                    '',
+                                airPort: controller.comboList[index][jIndex]
+                                        .sI![0].aa?.name ??
+                                    '',
+                                from: 'Departure',
+                                time: DateFormating.formatTime(controller
+                                        .comboList[index][jIndex].sI![0].dt ??
+                                    ''),
+                              ),
+                              NormalCenterItems(
+                                  stops: controller
+                                      .comboList[index][jIndex].sI!.length),
+                              CardSideItems(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                place: controller
+                                        .comboList[index][jIndex]
+                                        .sI![controller.comboList[index][jIndex]
+                                                .sI!.length -
+                                            1]
+                                        .aa
+                                        ?.code ??
+                                    '',
+                                airPort: controller
+                                        .comboList[index][jIndex]
+                                        .sI![controller.comboList[index][jIndex]
+                                                .sI!.length -
+                                            1]
+                                        .aa
+                                        ?.name ??
+                                    '',
+                                from: 'Arrival',
+                                time: DateFormating.formatTime(controller
+                                        .comboList[index][jIndex]
+                                        .sI![controller.comboList[index][jIndex]
+                                                .sI!.length -
+                                            1]
+                                        .at ??
+                                    ''),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                     },
                   )),
                   BottomMiniContainer(
-                    flightTicketCardEnum: FlightTicketCardEnum.homeSort,
-                    buttonOnTap: () {},
-                    price: controller.searchList[0][index].totalPriceList![0].fd
-                            ?.adult?.fC?.tf ??
-                        0,
-                  ),
+                      flightTicketCardEnum: FlightTicketCardEnum.homeSort,
+                      buttonOnTap: () {},
+                      price: controller.comboList[index][0].totalPriceList?[0]
+                              .fd?.adult?.fC?.tf ??
+                          0),
                 ],
               ),
             ),
@@ -110,14 +139,14 @@ class InternationalMutliComboTile extends StatelessWidget {
             ),
           ],
         ),
-        children: [
-          TicketDetailExpansionChild(
-              onTapBookNow: () {
-                // book ticket for international mutli city and round trip
-              },
-              totalPriceList:
-                  controller.searchList[0][index].totalPriceList![0])
-        ],
+        children: List.generate(
+            controller.comboList[index][0].totalPriceList!.length,
+            (k) => TicketDetailExpansionChild(
+                onTapBookNow: () {
+                  // book ticket for international mutli city and round trip
+                },
+                totalPriceList:
+                    controller.comboList[index][0].totalPriceList![k])),
       );
     });
   }

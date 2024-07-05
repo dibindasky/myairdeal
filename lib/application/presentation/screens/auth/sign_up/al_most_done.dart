@@ -87,6 +87,7 @@ class ScreenAccountCreationForm extends StatelessWidget {
                       ),
                       kHeight5,
                       CustomTextField(
+                        controller: authController.firstName,
                         isBorder: true,
                         borderRadius: 14,
                         textCapitalization: TextCapitalization.words,
@@ -106,6 +107,7 @@ class ScreenAccountCreationForm extends StatelessWidget {
                       ),
                       kHeight5,
                       CustomTextField(
+                        controller: authController.lastName,
                         isBorder: true,
                         borderRadius: 14,
                         textCapitalization: TextCapitalization.words,
@@ -124,6 +126,7 @@ class ScreenAccountCreationForm extends StatelessWidget {
                       ),
                       kHeight5,
                       CustomTextField(
+                        controller: authController.email,
                         isBorder: true,
                         borderRadius: 14,
                         textCapitalization: TextCapitalization.words,
@@ -131,7 +134,7 @@ class ScreenAccountCreationForm extends StatelessWidget {
                             borderSide: const BorderSide(width: .3),
                             borderRadius: kRadius15),
                         onTapOutside: () => FocusScope.of(context).unfocus(),
-                        hintText: 'Enter Username',
+                        hintText: 'Enter Email',
                         fillColor: kWhite,
                       ),
                       kHeight10,
@@ -139,14 +142,12 @@ class ScreenAccountCreationForm extends StatelessWidget {
                       EventIconButton(
                         width: 360.w,
                         text: 'Create Account',
-                        suffixIcon: SizedBox(
-                          height: 15.h,
-                          width: 15.w,
-                          child: Image.asset(tickIcon),
-                        ),
+                        suffixIcon: Image.asset(tickIcon, height: 15.h),
                         onTap: () {
                           Get.toNamed(Routes.goToHomePage);
-                          if (_formKey.currentState!.validate()) {}
+                          if (_formKey.currentState!.validate()) {
+                            authController.userCreation();
+                          }
                         },
                       )
                     ],

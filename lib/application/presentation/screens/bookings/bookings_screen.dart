@@ -17,7 +17,7 @@ class ScreenBookings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Get.find<BookingController>().getAllCancelBooking();
+      // Get.find<BookingController>().getAllCancelBooking();
       Get.find<BookingController>().getAllCombleteBooking();
       Get.find<BookingController>().getAllUpcomingBooking();
     });
@@ -37,14 +37,14 @@ class ScreenBookings extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 10.h),
             child: GetBuilder<BookingController>(builder: (controller) {
               if (controller.bookingLoading.value) {
-                return const Skeleton(
-                  crossAxisCount: 1,
-                  itemCount: 1,
-                );
+                return const Skeleton(crossAxisCount: 1, itemCount: 1);
               } else {
                 if (controller.selectedBookingTab.value == 1) {
                   if (controller.retrieveAllCompletedBooking.isEmpty) {
-                    return const Center(child: Text('No data'));
+                    return SizedBox(
+                        height: 250.h,
+                        child:
+                            const Center(child: Text('No Combleted Booking')));
                   }
                   return ListView.separated(
                     padding: EdgeInsets.only(bottom: 23.w),
@@ -74,7 +74,10 @@ class ScreenBookings extends StatelessWidget {
                   );
                 } else if (controller.selectedBookingTab.value == 2) {
                   if (controller.retrieveAllCancelBooking.isEmpty) {
-                    return const Center(child: Text('No data'));
+                    return SizedBox(
+                        height: 250.h,
+                        child:
+                            const Center(child: Text('No Cancelled Tickets')));
                   }
                   return ListView.separated(
                     padding: EdgeInsets.only(bottom: 23.w),
@@ -103,7 +106,10 @@ class ScreenBookings extends StatelessWidget {
                   );
                 } else if (controller.selectedBookingTab.value == 3) {
                   if (controller.retrieveAllUpcomingBooking.isEmpty) {
-                    return const Center(child: Text('No data'));
+                    return SizedBox(
+                      height: 250.h,
+                      child: const Center(child: Text('No Upcoming Tickets')),
+                    );
                   }
                   return ListView.separated(
                     padding: EdgeInsets.only(bottom: 23.w),

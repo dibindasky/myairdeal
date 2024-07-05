@@ -14,6 +14,10 @@ class ScreenAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<AuthController>();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Get.find<AuthController>().logOrNot();
+    });
     return Scaffold(
       body: Column(
         children: [
@@ -26,12 +30,16 @@ class ScreenAccountPage extends StatelessWidget {
                 SettingsSection(
                   title: 'General',
                   tiles: [
-                    SettingsTile(
-                      title: 'Edit Profile',
-                      onTap: () {
-                        Get.toNamed(Routes.editProfile);
-                      },
-                    ),
+                    Obx(() {
+                      return controller.loginOrNot.value
+                          ? SettingsTile(
+                              title: 'Edit Profile',
+                              onTap: () {
+                                Get.toNamed(Routes.editProfile);
+                              },
+                            )
+                          : kEmpty;
+                    }),
                     SettingsTile(
                       title: 'Security',
                       onTap: () {
@@ -58,20 +66,24 @@ class ScreenAccountPage extends StatelessWidget {
                       title: 'Help & Support',
                       onTap: () {},
                     ),
-                    SettingsTile(
-                      title: 'Logout',
-                      color: kRed,
-                      onTap: () {
-                        showConfirmationDialog(
-                          context: context,
-                          heading:
-                              'Are you sure do you want to logout from MYAIRDEAL',
-                          onPressed: () {
-                            Get.find<AuthController>().logOut();
-                          },
-                        );
-                      },
-                    ),
+                    Obx(() {
+                      return controller.loginOrNot.value
+                          ? SettingsTile(
+                              title: 'Logout',
+                              color: kRed,
+                              onTap: () {
+                                showConfirmationDialog(
+                                  context: context,
+                                  heading:
+                                      'Are you sure do you want to logout from MYAIRDEAL',
+                                  onPressed: () {
+                                    controller.logOut();
+                                  },
+                                );
+                              },
+                            )
+                          : kEmpty;
+                    })
                   ],
                 ),
               ],
@@ -85,7 +97,7 @@ class ScreenAccountPage extends StatelessWidget {
 
 class SettingsSection extends StatelessWidget {
   final String title;
-  final List<SettingsTile> tiles;
+  final List<Widget> tiles;
 
   const SettingsSection({
     super.key,

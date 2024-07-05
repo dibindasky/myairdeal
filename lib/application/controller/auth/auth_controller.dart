@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/validators/validators.dart';
 import 'package:myairdeal/data/secure_storage/secure_storage.dart';
 import 'package:myairdeal/data/service/auth/auth_service.dart';
 import 'package:myairdeal/domain/models/auth/login_model/country.dart';
@@ -85,10 +88,13 @@ class AuthController extends GetxController {
   //   return countryCodes[countryCode.toUpperCase()] ?? 'Unknown country';
   // }
 
+  Future<void> logOrNot() async {
+    loginOrNot.value = await SecureStorage.getLogin();
+  }
+
   Future<void> otpSent() async {
     isLoading = true;
     hasError = false;
-
     update();
     String trimmedNumber = loginNumber.text.trim();
     String replaceWhiteSpace = trimmedNumber.replaceAll(' ', '');
@@ -104,7 +110,6 @@ class AuthController extends GetxController {
     data.fold((failure) {
       isLoading = false;
       hasError = true;
-
       update();
       Get.snackbar('Failed', 'OTP Sending Failed', backgroundColor: kRed);
     }, (success) {
@@ -149,6 +154,20 @@ class AuthController extends GetxController {
   void userCreation() async {
     isLoading = true;
     update();
+    if (!isValidEmail(email.text)) {
+      Get.showSnackbar(const GetSnackBar(
+        message: 'Email is not valid',
+      ));
+      return;
+    }
+
+    if (firstName.text.isEmpty || firstName.text.length <= 2) {
+      Get.showSnackbar(const GetSnackBar(
+        message: 'First name must have 3 letters is not valid',
+      ));
+      return;
+    }
+
     final data = await authRepo.userCreation(
         userCreationModel: UserCreationModel(
             email: email.text,

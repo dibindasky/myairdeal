@@ -272,25 +272,28 @@ class FlightSortController extends GetxController {
   void getComboList() {
     print('in combo making function');
     print('searchListMain => ${searchListMain[0].length}');
-    int j = 0;
-    for (int i = 0; i < searchListMain[0].length; i++) {
-      print(i);
-      if (searchListMain[0].isEmpty) break;
-      print(
-          '${airportSelected[j][0].code} == ${searchListMain[0][0].sI?[0].da?.code}  ${airportSelected[j][1].code} == ${searchListMain[0][i].sI?[0].aa?.code}');
-      if (airportSelected[j][0].code ==
-              (searchListMain[0][0].sI?[0].da?.code ?? '') &&
-          airportSelected[j][1].code ==
-              (searchListMain[0][i].sI?[0].aa?.code ?? '')) {
-        print('in side condition');
-        comboListMain.add(searchListMain[0].sublist(0, i + 1));
-        searchListMain[0] = searchListMain[0].sublist(i + 1);
-        i = -1;
-        j++;
-        if (j == airportSelected.length) break;
-      } else {
-        print('condition failed');
+    for (var trip in searchListMain[0]) {
+      int j = 0, k = 0;
+      List<SearchAirlineInformation> tempList = [];
+      for (int i = 0; i < (trip.sI?.length ?? 0); i++) {
+        print(i);
+        if (trip.sI![k].sN == 0 &&
+            (trip.sI!.length - 1 == i || trip.sI![i + 1].sN == 0)) {
+          print('conditon success');
+          tempList.add(SearchAirlineInformation(
+              sI: trip.sI!.sublist(k, i + 1),
+              totalPriceList: trip.totalPriceList));
+          j++;
+          k = i + 1;
+        } else {
+          print('conditon failed');
+        }
+        if (j == airportSelected.length) {
+          // tempList.add(temp);
+          break;
+        }
       }
+      comboListMain.add(tempList);
     }
     comboList.addAll(comboListMain);
   }

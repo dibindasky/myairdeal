@@ -21,33 +21,38 @@ class CardSideItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: crossAxisAlignment,
-      children: [
-        Text(
-          place,
-          style: textHeadStyle1,
-        ),
-        kHeight5,
-        Text(
-          airPort,
-          style: textThinStyle1.copyWith(color: kGrey, fontSize: 10.sp),
-        ),
-        kHeight15,
-        Text(
-          from,
-          style: textThinStyle1.copyWith(color: kBlack, fontSize: 9.sp),
-        ),
-        kHeight5,
-        Text(
-          time,
-          style: textThinStyle1.copyWith(
-            color: kBlack,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w800,
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: crossAxisAlignment,
+        children: [
+          Text(
+            place,
+            style: textHeadStyle1,
           ),
-        ),
-      ],
+          kHeight5,
+          Text(
+            airPort,
+            style: textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
+            textAlign: crossAxisAlignment == CrossAxisAlignment.start
+                ? TextAlign.start
+                : TextAlign.end,
+          ),
+          kHeight15,
+          Text(
+            from,
+            style: textThinStyle1.copyWith(color: kBlack, fontSize: 9.sp),
+          ),
+          kHeight5,
+          Text(
+            time,
+            style: textThinStyle1.copyWith(
+              color: kBlack,
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

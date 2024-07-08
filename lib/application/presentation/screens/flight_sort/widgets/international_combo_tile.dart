@@ -53,10 +53,10 @@ class InternationalMutliComboTile extends StatelessWidget {
                             children: [
                               CardSideItems(
                                 place: controller.comboList[index][jIndex]
-                                        .sI![0].aa?.code ??
+                                        .sI![0].da?.code ??
                                     '',
                                 airPort: controller.comboList[index][jIndex]
-                                        .sI![0].aa?.name ??
+                                        .sI![0].da?.name ??
                                     '',
                                 from: 'Departure',
                                 time: DateFormating.formatTime(controller

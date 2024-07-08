@@ -21,7 +21,7 @@ class TicketDetailsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack (
+    return Stack(
       children: [
         Padding(
           padding: const EdgeInsets.all(16.0),
@@ -39,9 +39,11 @@ class TicketDetailsSection extends StatelessWidget {
                   : itemInfos != null
                       ? CardSideItems(
                           place:
-                              itemInfos!.air?.tripInfos?[0].sI?[0].da?.code ?? '',
+                              itemInfos!.air?.tripInfos?[0].sI?[0].da?.code ??
+                                  '',
                           airPort:
-                              itemInfos!.air?.tripInfos?[0].sI?[0].da?.city ?? '',
+                              itemInfos!.air?.tripInfos?[0].sI?[0].da?.city ??
+                                  '',
                           from: 'Departure',
                           time: DateFormating.getDate(DateTime.parse(
                               itemInfos!.air?.tripInfos?[0].sI?[0].dt ?? '')),
@@ -57,7 +59,8 @@ class TicketDetailsSection extends StatelessWidget {
                       travelMinutes: DateFormating.getDifferenceOfDates(
                           searchAirlineInformation!.sI![0].dt!,
                           searchAirlineInformation!
-                              .sI![searchAirlineInformation!.sI!.length - 1].at!),
+                              .sI![searchAirlineInformation!.sI!.length - 1]
+                              .at!),
                       airline: searchAirlineInformation!.sI![0].fD!.aI!.name,
                       stops: searchAirlineInformation!.sI!.length)
                   : flightTicketCardEnum == FlightTicketCardEnum.complete ||
@@ -66,10 +69,15 @@ class TicketDetailsSection extends StatelessWidget {
                       : const NormalCenterItems(),
               searchAirlineInformation != null
                   ? CardSideItems(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       place: searchAirlineInformation!
-                          .sI![searchAirlineInformation!.sI!.length - 1].aa!.code!,
+                          .sI![searchAirlineInformation!.sI!.length - 1]
+                          .aa!
+                          .code!,
                       airPort: searchAirlineInformation!
-                          .sI![searchAirlineInformation!.sI!.length - 1].aa!.city!,
+                          .sI![searchAirlineInformation!.sI!.length - 1]
+                          .aa!
+                          .city!,
                       from: 'Arrival',
                       time: DateFormating.formatTime(searchAirlineInformation!
                           .sI![searchAirlineInformation!.sI!.length - 1].at!),
@@ -80,7 +88,8 @@ class TicketDetailsSection extends StatelessWidget {
                           place: itemInfos!
                                   .air
                                   ?.tripInfos?[0]
-                                  .sI?[((itemInfos!.air?.tripInfos?[0].sI?.length ??
+                                  .sI?[((itemInfos!
+                                              .air?.tripInfos?[0].sI?.length ??
                                           1) -
                                       1)]
                                   .aa
@@ -89,7 +98,8 @@ class TicketDetailsSection extends StatelessWidget {
                           airPort: itemInfos!
                                   .air
                                   ?.tripInfos?[0]
-                                  .sI?[((itemInfos!.air?.tripInfos?[0].sI?.length ??
+                                  .sI?[((itemInfos!
+                                              .air?.tripInfos?[0].sI?.length ??
                                           1) -
                                       1)]
                                   .aa

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/flight_ticket_expansion_card.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
+import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
 
 class DomesticTripsAndOneWayInternationalTile extends StatelessWidget {
   const DomesticTripsAndOneWayInternationalTile(
@@ -42,6 +44,17 @@ class DomesticTripsAndOneWayInternationalTile extends StatelessWidget {
                 controller.selectedTicketPrices[
                         controller.selectedTripListIndex.value] ==
                     i,
+            onTapBookNow: () {
+              Get.find<BookingController>().reviewPriceDetailChecking(
+                  reviewPriceDetailIdModel: ReviewPriceDetailIdModel(priceIds: [
+                controller
+                        .searchList[controller.selectedTripListIndex.value]
+                            [index]
+                        .totalPriceList![i]
+                        .id ??
+                    ''
+              ]));
+            },
             onTap: controller.tripType.value == 0
                 ? null
                 : () {

@@ -7,10 +7,31 @@ import 'package:myairdeal/domain/core/failure/failure.dart';
 import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_responce.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
+import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_result.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
 class BookingService implements BookingRepo {
   ApiService apiService = ApiService();
+
+  @override
+  Future<Either<Failure, SearchResult>> reviewPriceDetails(
+      {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
+       try {
+      final responce = await apiService.post(ApiEndPoints.retrieveSingleBooking,
+          data: reviewPriceDetailIdModel.toJson(),addHeader: true);
+      log('reviewPriceDetails done');
+      log('${responce.data}');
+      return Right(SearchResult.fromJson(responce.data));
+    } on DioException catch (e) {
+      log('DioException reviewPriceDetails $e');
+      return Left(Failure(message: e.response?.data?['errors'] ?? errorMessage));
+    } catch (e) {
+      log('catch reviewPriceDetails');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
   @override
   Future<Either<Failure, RetrieveSingleBookingresponceModel>>
       retrieveSinglleBooking({

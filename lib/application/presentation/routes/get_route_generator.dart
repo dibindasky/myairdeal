@@ -12,7 +12,7 @@ import 'package:myairdeal/application/presentation/screens/bookings/bookings_scr
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/invoice_detail.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/ticket_cancelation.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail_filling/flight_detail.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/flight_detail_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_detail.dart';
 import 'package:myairdeal/application/presentation/screens/navbar/navbar.dart';
 import 'package:myairdeal/application/presentation/screens/notification/notification_screen.dart';

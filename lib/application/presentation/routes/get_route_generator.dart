@@ -29,6 +29,7 @@ import 'package:myairdeal/domain/core/binding/auth_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/booking_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/explore_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/flight_sort_controller_binding.dart';
+import 'package:myairdeal/domain/core/binding/home_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/nav_bar_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/notification_binding.dart';
 import 'package:myairdeal/domain/core/binding/payment_controller_binding.dart';
@@ -86,7 +87,8 @@ class GetXRouterConfig {
         PaymentBinding(),
         ExploreBinding(),
         BookingBinding(),
-        TravellerBinding()
+        TravellerBinding(),
+        HomeBinding()
       ],
       name: Routes.bottomBar,
       page: () => const ScreenNavbar(),

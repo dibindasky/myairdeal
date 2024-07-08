@@ -400,14 +400,14 @@ class FlightSortController extends GetxController {
       }
     }
     // sort for duration
-      for (int i = 0; i < sort.length; i++) {
-        if (sortingVariables[selectedTripListIndex.value]![2].first *
-                durationSlider.value <
-            DateFormating.getTotalDifferenceInMinutes(sort[i].sI![0].dt ?? '',
-                sort[i].sI![sort[i].sI!.length - 1].at ?? '')) {
-          sort.removeAt(i--);
-        }
+    for (int i = 0; i < sort.length; i++) {
+      if (sortingVariables[selectedTripListIndex.value]![2].first *
+              durationSlider.value <
+          DateFormating.getTotalDifferenceInMinutes(sort[i].sI![0].dt ?? '',
+              sort[i].sI![sort[i].sI!.length - 1].at ?? '')) {
+        sort.removeAt(i--);
       }
+    }
     searchList[selectedTripListIndex.value].value = sort.obs;
   }
 

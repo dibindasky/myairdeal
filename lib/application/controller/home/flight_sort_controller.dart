@@ -285,11 +285,8 @@ class FlightSortController extends GetxController {
               totalPriceList: trip.totalPriceList));
           j++;
           k = i + 1;
-        } else {
-          print('conditon failed');
         }
         if (j == airportSelected.length) {
-          // tempList.add(temp);
           break;
         }
       }

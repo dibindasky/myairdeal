@@ -64,6 +64,7 @@ class ApiService {
         _dio.options.headers['content-Type'] = 'application/json';
       }
       log('api uri ==>post  ${_dio.options.baseUrl + url}');
+      log('token ==>  ${_dio.options.headers['authorization']}');
       final response = await _dio.post(
         url,
         data: data,
@@ -73,7 +74,7 @@ class ApiService {
       return response;
     } on DioException catch (exception) {
       log('Dio exception code => ${exception.response?.statusCode}');
-      log('Dio exception => ${exception.response?.statusCode}');
+      log('Dio exception => ${exception.response?.data}');
       if (exception.response?.statusCode == 403) {
         //_logOut();
       }

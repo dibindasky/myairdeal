@@ -1,13 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:myairdeal/domain/models/search/flight_search_sort_model/flight_search_query.dart';
+import 'package:myairdeal/domain/models/search/recent_deatil_search/search_query_variable.dart';
 
 part 'recent_detail_search_item.g.dart';
 
 @JsonSerializable()
 class RecentDetailSearchItem {
   String? type;
-  FlightSearchQuery? searchQuery;
-
+  SearchQueryVariable? searchQuery;
   RecentDetailSearchItem({this.type, this.searchQuery});
 
   factory RecentDetailSearchItem.fromJson(Map<String, dynamic> json) =>

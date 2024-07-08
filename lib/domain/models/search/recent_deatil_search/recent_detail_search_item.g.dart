@@ -12,7 +12,7 @@ RecentDetailSearchItem _$RecentDetailSearchItemFromJson(
       type: json['type'] as String?,
       searchQuery: json['searchQuery'] == null
           ? null
-          : FlightSearchQuery.fromJson(
+          : SearchQueryVariable.fromJson(
               json['searchQuery'] as Map<String, dynamic>),
     );
 

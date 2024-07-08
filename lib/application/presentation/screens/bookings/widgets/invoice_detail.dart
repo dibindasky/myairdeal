@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab/contact_us.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab/mail.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/quick_links.container.dart';
@@ -92,7 +93,7 @@ class ScreenInvoiceDetail extends StatelessWidget {
                               bookingController
                                   .changeSelectedYouCouldAlsoTab(0);
                             },
-                            text: 'Flight cancellation',
+                            text: 'Raise Ticket',
                           ),
                           QuickLinksContainer(
                             onTap: () {
@@ -107,6 +108,12 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                   .changeSelectedYouCouldAlsoTab(2);
                             },
                             text: 'Call',
+                          ),
+                          QuickLinksContainer(
+                            onTap: () {
+                              Get.toNamed(Routes.ticketCancel);
+                            },
+                            text: 'Ticket Cancellation',
                           ),
                         ],
                       ),

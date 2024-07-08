@@ -27,4 +27,5 @@ class Routes {
   static const String chatPage = '/chat_page';
   static const String refundsPage = '/refunds_page';
   static const String notificationPage = '/notification_page';
+  static const String ticketCancel = '/ticket_cancel';
 }

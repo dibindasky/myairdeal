@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/presentation/screens/search/widgets/search_airport_tile.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -16,6 +17,9 @@ class ScreenAirportSearch extends StatefulWidget {
 
 class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
   final focusNode = FocusNode();
+
+  final homeController = Get.find<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -44,7 +48,8 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
                     child: TextField(
                       focusNode: focusNode,
                       onChanged: (value) {
-                        controller.changeSearch(value);
+                        // controller.changeSearch(value);
+                        homeController.fetchAirportsSearches(value);
                       },
                       style: textStyle1,
                       decoration: InputDecoration(
@@ -61,15 +66,28 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
             kHeight10,
             Obx(() {
               // change this condition to (controller.search.value)
-              if (!controller.search.value || controller.search.value) {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: controller.searchCityList.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) => SearchAirportTile(
-                        airportModel: controller.searchCityList[index]),
-                  ),
-                );
+              if (homeController.search.value) {
+                if (homeController.airportsSearches.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      'Data Not found',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: kRed,
+                      ),
+                    ),
+                  );
+                } else {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: homeController.airportsSearches.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => SearchAirportTile(
+                        airportModel: homeController.airportsSearches[index],
+                      ),
+                    ),
+                  );
+                }
               }
               return Expanded(
                 child: SingleChildScrollView(

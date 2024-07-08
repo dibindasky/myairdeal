@@ -61,8 +61,8 @@ class BookingController extends GetxController {
     });
   }
 
-  void getAllUpcomingBooking() async {
-    if (retrieveAllUpcomingBooking.isNotEmpty) return;
+  void getAllUpcomingBooking(bool isLoad) async {
+    if (retrieveAllUpcomingBooking.isNotEmpty && !isLoad) return;
     bookingLoading.value = true;
     update();
     final data = await bookingRepo.retrieveUpComimgBooking();
@@ -91,8 +91,8 @@ class BookingController extends GetxController {
     });
   }
 
-  void getAllCombleteBooking() async {
-    if (retrieveAllCompletedBooking.isNotEmpty) return;
+  void getAllCombleteBooking(bool isLoad) async {
+    if (retrieveAllCompletedBooking.isNotEmpty && !isLoad) return;
     bookingLoading.value = true;
     update();
     final data = await bookingRepo.retrieveCombletedBooking();

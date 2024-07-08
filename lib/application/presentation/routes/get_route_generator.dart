@@ -10,6 +10,7 @@ import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_scre
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/invoice_detail.dart';
+import 'package:myairdeal/application/presentation/screens/bookings/widgets/ticket_cancelation.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/flight_detail.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_detail.dart';
@@ -33,6 +34,7 @@ import 'package:myairdeal/domain/core/binding/notification_binding.dart';
 import 'package:myairdeal/domain/core/binding/payment_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/seat_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/talk_to_us_controller_binding.dart';
+import 'package:myairdeal/domain/core/binding/ticket_cancelaation_binding.dart';
 import 'package:myairdeal/domain/core/binding/traveller_controller_binding.dart';
 
 class GetXRouterConfig {
@@ -70,6 +72,12 @@ class GetXRouterConfig {
       bindings: [AuthBinding()],
       page: () => ScreenAccountCreationForm(),
     ),
+    GetPage(
+      name: Routes.ticketCancel,
+      bindings: [TicketCancellationBinding()],
+      page: () => const ScreenTicetCanceallation(),
+    ),
+
     GetPage(
       bindings: [
         AuthBinding(),

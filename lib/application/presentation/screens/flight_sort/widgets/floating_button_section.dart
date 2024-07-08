@@ -13,7 +13,7 @@ class FloatingButtonSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
     return Obx(() {
-      return controller.tripType.value == 0 ||
+      return controller.comboTrip.value|| controller.tripType.value == 0 ||
               controller.searchListLoading.value
           ? kEmpty
           : FloatingActionButton.extended(

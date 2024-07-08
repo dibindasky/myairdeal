@@ -324,13 +324,10 @@ class FlightSortController extends GetxController {
           sortingVariables[i]![1].add(item.sI!.length - 1);
         }
         // duration of flights form the given list
-        if (item.sI!.length == 1 &&
-            !sortingVariables[i]![2].contains(item.sI![0].duration)) {
-          sortingVariables[i]![2].add(item.sI![0].duration);
-        } else if (item.sI!.length > 1) {
+        if (item.sI!.length > 1) {
           int minutes = DateFormating.getTotalDifferenceInMinutes(
               item.sI![0].dt ?? '', item.sI![item.sI!.length - 1].at ?? '');
-          if (!sortingVariables[i]![2].contains(item.sI![0].duration)) {
+          if (!sortingVariables[i]![2].contains(minutes)) {
             sortingVariables[i]![2].add(minutes);
           }
         }
@@ -403,16 +400,14 @@ class FlightSortController extends GetxController {
       }
     }
     // sort for duration
-    for (int i = 0; i < sort.length; i++) {
-      if (sortingVariablesSelected[selectedTripListIndex.value]![2]
-              .isNotEmpty &&
-          sortingVariables[selectedTripListIndex.value]![2].last *
-                  durationSlider.value <
-              DateFormating.getTotalDifferenceInMinutes(sort[i].sI![0].dt ?? '',
-                  sort[i].sI![sort[i].sI!.length - 1].at ?? '')) {
-        sort.removeAt(i--);
+      for (int i = 0; i < sort.length; i++) {
+        if (sortingVariables[selectedTripListIndex.value]![2].first *
+                durationSlider.value <
+            DateFormating.getTotalDifferenceInMinutes(sort[i].sI![0].dt ?? '',
+                sort[i].sI![sort[i].sI!.length - 1].at ?? '')) {
+          sort.removeAt(i--);
+        }
       }
-    }
     searchList[selectedTripListIndex.value].value = sort.obs;
   }
 

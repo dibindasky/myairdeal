@@ -19,12 +19,12 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
   final focusNode = FocusNode();
 
   final homeController = Get.find<HomeController>();
-  // final controller = Get.find<FlightSortController>();
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       focusNode.requestFocus();
+      homeController.fetchAirportRecentSearches();
     });
 
     return Scaffold(
@@ -67,115 +67,182 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
                 ),
               ),
               kHeight10,
-              Obx(() {
-                if (homeController.isLoading.value) {
-                  return const Expanded(
-                    child: HorizontalShimmerSkeleton(
-                      paddingvertical: 7.5,
-                      itemCount: 15,
-                      scrollDirection: Axis.vertical,
-                      height: 60,
-                      width: 0,
-                    ),
-                  );
-                } else if (homeController.search.value) {
-                  if (homeController.airportsSearches.isEmpty) {
-                    return const Center(
-                      child: Text(
-                        'Data Not found',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: kRed,
-                        ),
+              Obx(
+                () {
+                  if (homeController.isLoading.value) {
+                    return const Expanded(
+                      child: HorizontalShimmerSkeleton(
+                        paddingvertical: 7.5,
+                        itemCount: 15,
+                        scrollDirection: Axis.vertical,
+                        height: 60,
+                        width: 0,
                       ),
                     );
+                  } else if (homeController.search.value) {
+                    if (homeController.airportsSearches.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          'Data Not found',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: kRed,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Expanded(
+                        child: ListView.builder(
+                          itemCount: homeController.airportsSearches.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => SearchAirportTile(
+                            airportModel:
+                                homeController.airportsSearches[index],
+                          ),
+                        ),
+                      );
+                    }
                   } else {
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: homeController.airportsSearches.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) => SearchAirportTile(
-                          airportModel: homeController.airportsSearches[index],
-                        ),
-                      ),
-                    );
-                  }
-                } else {
-                  return Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: kBlueLightShade.withOpacity(0.5),
-                              boxShadow: boxShadow2,
-                              borderRadius: kRadius5,
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 20.w,
-                              vertical: 10.h,
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.location_searching_sharp,
-                                    color: kBluePrimary),
-                                kWidth10,
-                                Text(
-                                  'Nearest Airport',
-                                  style:
-                                      textStyle1.copyWith(color: kBluePrimary),
+                    if (homeController.airportRecentSearches.isEmpty) {
+                      return Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: kBlueLightShade.withOpacity(0.5),
+                                  boxShadow: boxShadow2,
+                                  borderRadius: kRadius5,
                                 ),
-                              ],
-                            ),
-                          ),
-                          kHeight10,
-                          Text(
-                            'Recent searches',
-                            style: textStyle1.copyWith(color: kBluePrimary),
-                          ),
-                          kHeight10,
-                          ListView.builder(
-                            itemCount:
-                                homeController.airportRecentSearches.length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) => SearchAirportTile(
-                              history: true,
-                              airportModel: CitySearchModel(
-                                city: homeController
-                                    .airportRecentSearches[index].city,
-                                code: homeController
-                                    .airportRecentSearches[index].code,
-                                country: homeController
-                                    .airportRecentSearches[index].country,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                  vertical: 10.h,
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.location_searching_sharp,
+                                        color: kBluePrimary),
+                                    kWidth10,
+                                    Text(
+                                      'Nearest Airport',
+                                      style: textStyle1.copyWith(
+                                          color: kBluePrimary),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ),
-                          kHeight10,
-                          Text(
-                            'Popular cities',
-                            style: textStyle1.copyWith(color: kBluePrimary),
-                          ),
-                          kHeight10,
-                          ListView.builder(
-                            itemCount: 10,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) => SearchAirportTile(
-                              airportModel: CitySearchModel(
-                                city: 'Popular City',
-                                code: 'CODE',
-                                country: 'Country',
+                              kHeight10,
+                              Text(
+                                'Popular cities',
+                                style: textStyle1.copyWith(color: kBluePrimary),
                               ),
-                            ),
+                              kHeight10,
+                              ListView.builder(
+                                itemCount: 10,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) =>
+                                    SearchAirportTile(
+                                  airportModel: CitySearchModel(
+                                    city: 'Popular City',
+                                    code: 'CODE',
+                                    country: 'Country',
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                  );
-                }
-              }),
+                        ),
+                      );
+                    } else {
+                      return Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: kBlueLightShade.withOpacity(0.5),
+                                  boxShadow: boxShadow2,
+                                  borderRadius: kRadius5,
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                  vertical: 10.h,
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.location_searching_sharp,
+                                        color: kBluePrimary),
+                                    kWidth10,
+                                    Text(
+                                      'Nearest Airport',
+                                      style: textStyle1.copyWith(
+                                          color: kBluePrimary),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              kHeight10,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Recent searches',
+                                    style: textStyle1.copyWith(
+                                        color: kBluePrimary),
+                                  ),
+                                  kHeight10,
+                                  ListView.builder(
+                                    itemCount: homeController
+                                        .airportRecentSearches.length,
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, index) =>
+                                        SearchAirportTile(
+                                      history: true,
+                                      airportModel: CitySearchModel(
+                                        city: homeController
+                                            .airportRecentSearches[index].city,
+                                        code: homeController
+                                            .airportRecentSearches[index].code,
+                                        country: homeController
+                                            .airportRecentSearches[index]
+                                            .country,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              kHeight10,
+                              Text(
+                                'Popular cities',
+                                style: textStyle1.copyWith(color: kBluePrimary),
+                              ),
+                              kHeight10,
+                              ListView.builder(
+                                itemCount: 10,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) =>
+                                    SearchAirportTile(
+                                  airportModel: CitySearchModel(
+                                    city: 'Popular City',
+                                    code: 'CODE',
+                                    country: 'Country',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                  }
+                },
+              ),
             ],
           ),
         ),

@@ -47,7 +47,7 @@ class HomeController extends GetxController {
       search.value = false;
       return;
     }
-    ;
+
     isLoading.value = true;
     search.value = true;
     final result = await homeService.getAirportsSearches(cityname: cityName);
@@ -57,6 +57,7 @@ class HomeController extends GetxController {
         airportsSearches.value = citySearchData.data ?? [];
       },
     );
+
     search.value = true;
     isLoading.value = false;
   }
@@ -77,6 +78,33 @@ class HomeController extends GetxController {
       },
     );
 
+    isLoading.value = false;
+  }
+
+// Add new airport search
+  void addAirportRecentSearch(
+      {required CitySearchModel citySearchModel}) async {
+    await homeService.addAirportRecentSearch(citySearchModel: citySearchModel);
+
+    airportRecentSearches
+        .removeWhere((search) => search.code == citySearchModel.code);
+    airportRecentSearches.insert(0, citySearchModel);
+  }
+
+  // // Airport search with country code
+  void fetchAirportSearchWithCountryCode(String countryCode) async {
+    isLoading.value = true;
+    search.value = true;
+    final result = await homeService.getAirportsSearchWithCountryCode(
+        countryCode: countryCode);
+    result.fold(
+      (failure) => log(failure.message.toString()),
+      (citySearchData) {
+        airportsSearches.value = citySearchData.data ?? [];
+      },
+    );
+
+    search.value = true;
     isLoading.value = false;
   }
 }

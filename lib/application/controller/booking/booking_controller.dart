@@ -15,6 +15,9 @@ class BookingController extends GetxController {
   // loading for review pice for booking
   RxBool reviewPriceLoading = false.obs;
 
+  String travelerTab = 'Add Details';
+  List<String> detailList = [' Itinerary', 'Add Details', 'Review', 'Payments'];
+
   // variable used for
   Rx<ReviewFlightDetailPrice>? reviewedDetail;
 

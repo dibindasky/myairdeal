@@ -6,13 +6,38 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
 
-class DetailContainer extends StatelessWidget {
-  const DetailContainer({super.key});
+class DetailContainer extends StatefulWidget {
+  const DetailContainer(
+      {super.key, required this.index, required this.travellerType});
+
+  final int index;
+  final String travellerType;
+
+  @override
+  State<DetailContainer> createState() => _DetailContainerState();
+}
+
+class _DetailContainerState extends State<DetailContainer> {
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController dateOfBirthController = TextEditingController();
+  final travelController = Get.find<TravellerController>();
+
+  @override
+  void initState() {
+    final model = travelController.passengerDetails[widget.index];
+    if (model != null) {
+      firstNameController.text = model.fN ?? '';
+      lastNameController.text = model.lN ?? '';
+      dateOfBirthController.text = model.dob ?? '';
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final travelController = Get.find<TravellerController>();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
@@ -71,6 +96,7 @@ class DetailContainer extends StatelessWidget {
           Text('First Name', style: textThinStyle1),
           kHeight5,
           CustomTextField(
+            controller: firstNameController,
             isBorder: true,
             borderRadius: 14,
             textCapitalization: TextCapitalization.words,
@@ -84,6 +110,7 @@ class DetailContainer extends StatelessWidget {
           Text('Last Name', style: textThinStyle1),
           kHeight5,
           CustomTextField(
+            controller: lastNameController,
             isBorder: true,
             borderRadius: 14,
             textCapitalization: TextCapitalization.words,
@@ -94,9 +121,10 @@ class DetailContainer extends StatelessWidget {
             hintText: 'Enter Your Last Name',
             fillColor: kWhite,
           ),
-          Text('Mail id', style: textThinStyle1),
+          Text('Date Of Birth', style: textThinStyle1),
           kHeight5,
           CustomTextField(
+            controller: dateOfBirthController,
             isBorder: true,
             borderRadius: 14,
             textCapitalization: TextCapitalization.words,
@@ -104,8 +132,44 @@ class DetailContainer extends StatelessWidget {
                 borderSide: const BorderSide(width: .3),
                 borderRadius: kRadius15),
             onTapOutside: () => FocusScope.of(context).unfocus(),
-            hintText: 'Enter Your Mail id',
+            hintText: 'yyyy-mm-dd',
             fillColor: kWhite,
+          ),
+          kHeight5,
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () {
+                // add passenger details
+                final gender = travelController.genderType.value;
+                travelController.addPassengerDetail(
+                    widget.index,
+                    TravellerInfo(
+                        dob: dateOfBirthController.text,
+                        fN: firstNameController.text,
+                        lN: lastNameController.text,
+                        ti: widget.travellerType == 'INFANT'
+                            ? null
+                            : gender == 0
+                                ? 'Mr'
+                                : gender == 1
+                                    ? 'Mrs'
+                                    : 'Ms',
+                        pt: widget.travellerType));
+              },
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                decoration: BoxDecoration(
+                    boxShadow: boxShadow3,
+                    color: kBlueLightShade,
+                    border: Border.all(color: kBluePrimary),
+                    borderRadius: kRadius10),
+                child: Text(
+                  '+ Add',
+                  style: textStyle1.copyWith(color: kBluePrimary),
+                ),
+              ),
+            ),
           ),
           kHeight15
         ],

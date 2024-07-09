@@ -14,6 +14,7 @@ SI _$SIFromJson(Map<String, dynamic> json) => SI(
       stops: (json['stops'] as num?)?.toInt(),
       so: json['so'] as List<dynamic>?,
       duration: (json['duration'] as num?)?.toInt(),
+      cT: (json['cT'] as num?)?.toInt(),
       da: json['da'] == null
           ? null
           : Da.fromJson(json['da'] as Map<String, dynamic>),
@@ -37,6 +38,7 @@ Map<String, dynamic> _$SIToJson(SI instance) => <String, dynamic>{
       'stops': instance.stops,
       'so': instance.so,
       'duration': instance.duration,
+      'cT': instance.cT,
       'da': instance.da,
       'aa': instance.aa,
       'oaa': instance.oaa,

@@ -193,8 +193,8 @@ class BaggageAndMealsSelection extends StatelessWidget {
                 ),
               ),
             ),
-            children: const [
-              DetailContainer(),
+            children: [
+              DetailContainer(index:index,travellerType: 'ADULT'),
             ],
           ),
         ),

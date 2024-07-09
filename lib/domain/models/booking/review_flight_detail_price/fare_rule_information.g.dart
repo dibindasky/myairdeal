@@ -8,9 +8,6 @@ part of 'fare_rule_information.dart';
 
 FareRuleInformation _$FareRuleInformationFromJson(Map<String, dynamic> json) =>
     FareRuleInformation(
-      fr: json['fr'] == null
-          ? null
-          : Fr.fromJson(json['fr'] as Map<String, dynamic>),
       tfr: json['tfr'] == null
           ? null
           : Tfr.fromJson(json['tfr'] as Map<String, dynamic>),
@@ -19,6 +16,5 @@ FareRuleInformation _$FareRuleInformationFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$FareRuleInformationToJson(
         FareRuleInformation instance) =>
     <String, dynamic>{
-      'fr': instance.fr,
       'tfr': instance.tfr,
     };

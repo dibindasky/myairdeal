@@ -16,8 +16,8 @@ class ReviewFlightDetailPrice {
   String? bookingId;
   TotalPriceInfo? totalPriceInfo;
   Status? status;
-  List<Error>? errors;
   Conditions? conditions;
+  List<Error>? errors;
 
   ReviewFlightDetailPrice({
     this.tripInfos,

@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 
 class TravellerController extends GetxController {
-  
   /// Gender type [genderType] 0- Mr, 1- Mrs, 2- Ms
   RxInt genderType = 0.obs;
   String travelerTab = 'Add Details';

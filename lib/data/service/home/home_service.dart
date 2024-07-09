@@ -46,4 +46,21 @@ class HomeService implements HomeRepo {
       return Left(Failure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, CitySearchData>> getAirportRecentSearches() async {
+    try {
+      final response = await apiService.get(
+        ApiEndPoints.airportRecentSearch,
+      );
+      log("=> Response Airport Recent Searches : ${response.data}");
+      return Right(CitySearchData.fromJson(response.data));
+    } on DioException catch (e) {
+      log('DioException getAirportRecentSearches $e');
+      return Left(Failure(message: e.message ?? errorMessage));
+    } catch (e) {
+      log('catch getAirportRecentSearches $e');
+      return Left(Failure(message: e.toString()));
+    }
+  }
 }

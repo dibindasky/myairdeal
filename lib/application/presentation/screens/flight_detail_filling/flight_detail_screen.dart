@@ -27,7 +27,7 @@ class ScreenFlightDetail extends StatelessWidget {
                       .detailList[travelController.selectedMainTab.value]),
             ),
             Obx(() {
-              if (Get.find<BookingController>().bookingLoading.value) {
+              if (Get.find<BookingController>().reviewPriceLoading.value) {
                 return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.75,
                     child: const Center(

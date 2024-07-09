@@ -23,9 +23,12 @@ class TravellerController extends GetxController {
   RxInt selectedAddDetailsStep = 0.obs;
   int totalSubStepLength = 4;
 
+  // total number of passengers
+  int passengerLength = 1;
+
   /// list responsible for entering the passenger details
   RxList<TravellerInfo?> passengerDetails =
-      List.generate(20, (index) => null).obs;
+      List<TravellerInfo?>.filled(20, null, growable: true).obs;
 
   /// add passenger details to the list to submit while booking
   void addPassengerDetail(int index, TravellerInfo travellerInfo) {
@@ -37,6 +40,10 @@ class TravellerController extends GetxController {
     update();
   }
 
+  void updatePassengersNumber(int number) {
+    passengerLength = number;
+  }
+
   changeAddDetailsSubStep(int index) {
     selectedAddDetailsStep.value = index;
     update();
@@ -46,17 +53,27 @@ class TravellerController extends GetxController {
     if (selectedAddDetailsStep.value > 0) {
       selectedAddDetailsStep.value -= 1;
       update();
-    } else {
-      Get.snackbar('', 'Fill from here', backgroundColor: kGreen);
     }
   }
 
   void changeAddDetailsSubStepAdd() {
-    if (selectedAddDetailsStep.value < totalSubStepLength - 1) {
+    if (selectedAddDetailsStep.value == 0) {
+      for (int i = 0; i < passengerLength; i++) {
+        if (passengerDetails[i] == null) {
+          Get.snackbar(
+              'Add all passengers details', 'Add all passengers to continue.',
+              backgroundColor: kRed,
+              colorText: kWhite,
+              snackPosition: SnackPosition.BOTTOM);
+          return;
+        }
+      }
+      // remove later after adding seat,meal,baggage
+      changeDetailEnterTab(3);
+      return;
+    } else if (selectedAddDetailsStep.value < totalSubStepLength - 1) {
       selectedAddDetailsStep.value += 1;
       update();
-    } else {
-      Get.snackbar('', 'Fill from here', backgroundColor: kGreen);
     }
   }
 

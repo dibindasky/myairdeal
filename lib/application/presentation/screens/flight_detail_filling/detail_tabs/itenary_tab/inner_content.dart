@@ -24,10 +24,12 @@ class InnerContents extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    controller.reviewPriceLoading.value?
-                    flightDetailIcon:flightDetailIcon,
+                    controller.reviewPriceLoading.value
+                        ? flightDetailIcon
+                        : flightDetailIcon,
                     height: 20.h,
-                  ),kWidth5,
+                  ),
+                  kWidth5,
                   Text(
                       controller.reviewedDetail?.value.tripInfos?[0].sI?[0].fD
                               ?.aI?.name ??
@@ -103,7 +105,10 @@ class InnerContents extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '01h 45m',
+                              DateFormating.getDifferenceOfDates(
+                                  model?.sI?[0].dt ?? '',
+                                  model?.sI?[(model.sI?.length ?? 1) - 1].at ??
+                                      ''),
                               style: textThinStyle1.copyWith(fontSize: 9.sp),
                             ),
                             kWidth5,
@@ -123,10 +128,15 @@ class InnerContents extends StatelessWidget {
                                         color: kBlack),
                                   ),
                                 ),
-                                RotatedBox(
-                                  quarterTurns: 1,
-                                  child: Icon(Icons.flight_rounded,
-                                      size: 24.w, color: kBlue),
+                                Row(
+                                  children: List.generate(
+                                    (model?.sI?.length ?? 1) - 1,
+                                    (index) => RotatedBox(
+                                      quarterTurns: 1,
+                                      child: Icon(Icons.flight_rounded,
+                                          size: 24.w, color: kBlue),
+                                    ),
+                                  ),
                                 ),
                                 ...List.generate(
                                   6,
@@ -145,7 +155,7 @@ class InnerContents extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              '0 Stop',
+                              '${(model?.sI?.length ?? 1) - 1} Stop',
                               style: textThinStyle1.copyWith(fontSize: 9.sp),
                             ),
                           ],
@@ -171,7 +181,7 @@ class InnerContents extends StatelessWidget {
                                 model?.sI?[(model.sI?.length ?? 1) - 1].aa
                                         ?.name ??
                                     '',
-                                    textAlign: TextAlign.end,
+                                textAlign: TextAlign.end,
                                 style: textThinStyle1.copyWith(
                                   color: kGrey,
                                   fontSize: 10.sp,

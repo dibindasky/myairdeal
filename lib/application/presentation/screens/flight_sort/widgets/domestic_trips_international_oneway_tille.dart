@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/flight_ticket_expansion_card.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -45,6 +46,11 @@ class DomesticTripsAndOneWayInternationalTile extends StatelessWidget {
                         controller.selectedTripListIndex.value] ==
                     i,
             onTapBookNow: () {
+              // update travellers count
+              Get.find<TravellerController>().updatePassengersNumber(
+                  controller.adultCount.value +
+                      controller.childrenCount.value +
+                      controller.infantCount.value);
               Get.find<BookingController>().reviewPriceDetailChecking(
                   reviewPriceDetailIdModel: ReviewPriceDetailIdModel(priceIds: [
                 controller

@@ -27,13 +27,21 @@ class ProgressBar extends StatelessWidget {
                   () => Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      index != 0 ? const StepConnector() : kEmpty,
+                      index != 0
+                          ? StepConnector(
+                              isComplete:
+                                  travelController.selectedMainTab.value >=
+                                      index,
+                            )
+                          : kEmpty,
                       Step(
                         isActive:
                             travelController.selectedMainTab.value == index
                                 ? true
                                 : false,
                         label: travelController.detailList[index],
+                        isComplete:
+                            travelController.selectedMainTab.value > index,
                       ),
                     ],
                   ),
@@ -50,8 +58,13 @@ class ProgressBar extends StatelessWidget {
 class Step extends StatelessWidget {
   final bool isActive;
   final String label;
+  final bool isComplete;
 
-  const Step({super.key, required this.isActive, required this.label});
+  const Step(
+      {super.key,
+      required this.isActive,
+      required this.label,
+      required this.isComplete});
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +73,13 @@ class Step extends StatelessWidget {
         Icon(
           Icons.radio_button_checked,
           size: 24.w,
-          color: isActive ? kBluePrimary : kGreyDark,
+          color: isComplete || isActive ? kBluePrimary : kGreyDark,
         ),
         kHeight5,
         Text(
           label,
           style: textStyle1.copyWith(
-            color: isActive ? kBluePrimary : kGreyDark,
+            color: isComplete || isActive ? kBluePrimary : kGreyDark,
           ),
         ),
       ],
@@ -75,7 +88,9 @@ class Step extends StatelessWidget {
 }
 
 class StepConnector extends StatelessWidget {
-  const StepConnector({super.key});
+  const StepConnector({super.key, required this.isComplete});
+
+  final bool isComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +98,7 @@ class StepConnector extends StatelessWidget {
       margin: EdgeInsets.only(top: 10.w),
       width: 50.0.w,
       height: 3.0.h,
-      color: kGrey,
+      color: isComplete ? kBluePrimary : kGrey,
     );
   }
 }

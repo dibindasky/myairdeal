@@ -26,6 +26,9 @@ SI _$SIFromJson(Map<String, dynamic> json) => SI(
       iand: json['iand'] as bool?,
       isRs: json['isRs'] as bool?,
       sN: (json['sN'] as num?)?.toInt(),
+      ssrInfo: json['ssrInfo'] == null
+          ? null
+          : SsrInfo.fromJson(json['ssrInfo'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$SIToJson(SI instance) => <String, dynamic>{
@@ -42,4 +45,5 @@ Map<String, dynamic> _$SIToJson(SI instance) => <String, dynamic>{
       'iand': instance.iand,
       'isRs': instance.isRs,
       'sN': instance.sN,
+      'ssrInfo':instance.ssrInfo,
     };

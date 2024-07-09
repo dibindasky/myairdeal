@@ -13,4 +13,5 @@ class ApiEndPoints {
   static const String recentSearch = '/search/searchQueryHistory';
   static const String airportSearch = '/search/user-get-all-airports?search=';
   static const String reviewPriceDetails = '/booking/review-price';
+  static const String completeBooking = '/booking/complete';
 }

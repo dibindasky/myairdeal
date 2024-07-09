@@ -37,6 +37,7 @@ class DateFormating {
 
   // will return time as hh:mm a if pass a formatted date string
   static String formatTime(String date) {
+    if (date == '') return '';
     DateTime dateTime = DateTime.parse(date);
     final DateFormat formatter = DateFormat('hh:mm a');
     return formatter.format(dateTime);

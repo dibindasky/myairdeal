@@ -14,6 +14,7 @@ class SI {
   int? stops;
   List<dynamic>? so;
   int? duration;
+  int? cT;
   Da? da;
   Aa? aa;
   String? oaa;
@@ -22,24 +23,25 @@ class SI {
   bool? iand;
   bool? isRs;
   int? sN;
+  @JsonKey(name: 'ssrInfo')
   SsrInfo? ssrInfo;
 
-  SI({
-    this.id,
-    this.fD,
-    this.stops,
-    this.so,
-    this.duration,
-    this.da,
-    this.aa,
-    this.oaa,
-    this.dt,
-    this.at,
-    this.iand,
-    this.isRs,
-    this.sN,
-    this.ssrInfo
-  });
+  SI(
+      {this.id,
+      this.fD,
+      this.stops,
+      this.so,
+      this.duration,
+      this.cT,
+      this.da,
+      this.aa,
+      this.oaa,
+      this.dt,
+      this.at,
+      this.iand,
+      this.isRs,
+      this.sN,
+      this.ssrInfo});
 
   factory SI.fromJson(Map<String, dynamic> json) => _$SIFromJson(json);
 
@@ -51,6 +53,7 @@ class SI {
     int? stops,
     List<dynamic>? so,
     int? duration,
+    int? cT,
     Da? da,
     Aa? aa,
     String? oaa,
@@ -67,6 +70,7 @@ class SI {
       stops: stops ?? this.stops,
       so: so ?? this.so,
       duration: duration ?? this.duration,
+      cT: cT ?? this.cT,
       da: da ?? this.da,
       aa: aa ?? this.aa,
       oaa: oaa ?? this.oaa,

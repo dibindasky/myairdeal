@@ -16,12 +16,18 @@ class FlightSearchQuery {
   List<RouteInfo>? routeInfos;
   @JsonKey(name: 'searchModifiers')
   SearchModifiers? searchModifiers;
+  String? searchType;
+  bool? isDomestic;
+  String? requestId;
 
   FlightSearchQuery({
     this.cabinClass,
     this.paxInfo,
     this.routeInfos,
     this.searchModifiers,
+    this.isDomestic,
+    this.searchType,
+    this.requestId,
   });
 
   factory FlightSearchQuery.fromJson(Map<String, dynamic> json) {
@@ -35,12 +41,18 @@ class FlightSearchQuery {
     PaxInfo? paxInfo,
     List<RouteInfo>? routeInfos,
     SearchModifiers? searchModifiers,
+    bool? isDomestic,
+    String? searchType,
+    String? requestId,
   }) {
     return FlightSearchQuery(
       cabinClass: cabinClass ?? this.cabinClass,
       paxInfo: paxInfo ?? this.paxInfo,
       routeInfos: routeInfos ?? this.routeInfos,
       searchModifiers: searchModifiers ?? this.searchModifiers,
+      isDomestic: isDomestic ?? this.isDomestic,
+      searchType: searchType ?? this.searchType,
+      requestId: requestId ?? this.requestId,
     );
   }
 }

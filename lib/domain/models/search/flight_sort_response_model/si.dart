@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../booking/review_flight_detail_price/ssr_info.dart';
 import 'aa.dart';
 import 'da.dart';
 import 'fd.dart';
@@ -21,6 +22,7 @@ class SI {
   bool? iand;
   bool? isRs;
   int? sN;
+  SsrInfo? ssrInfo;
 
   SI({
     this.id,
@@ -36,6 +38,7 @@ class SI {
     this.iand,
     this.isRs,
     this.sN,
+    this.ssrInfo
   });
 
   factory SI.fromJson(Map<String, dynamic> json) => _$SIFromJson(json);
@@ -56,6 +59,7 @@ class SI {
     bool? iand,
     bool? isRs,
     int? sN,
+    SsrInfo? ssrInfo,
   }) {
     return SI(
       id: id ?? this.id,
@@ -71,6 +75,7 @@ class SI {
       iand: iand ?? this.iand,
       isRs: isRs ?? this.isRs,
       sN: sN ?? this.sN,
+      ssrInfo: ssrInfo ?? this.ssrInfo,
     );
   }
 }

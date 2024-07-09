@@ -5,8 +5,8 @@ import 'package:myairdeal/data/service/booking/booking_service.dart';
 import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_responce.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
+import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
-import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_result.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
 class BookingController extends GetxController {
@@ -16,7 +16,7 @@ class BookingController extends GetxController {
   RxBool reviewPriceLoading = false.obs;
 
   // variable used for
-  Rx<SearchResult>? reviewedDetail;
+  Rx<ReviewFlightDetailPrice>? reviewedDetail;
 
   // Booking tab according to status 1- campleted, 2- Cancelled, 3- Upcoming
   RxInt selectedBookingTab = 1.obs;

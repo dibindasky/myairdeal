@@ -5,6 +5,9 @@ import 'package:myairdeal/domain/models/search/recent_deatil_search/recent_detai
 
 abstract class HomeRepo {
   Future<Either<Failure, RecentDetailSearch>> getRecentSearches();
+
   Future<Either<Failure, CitySearchData>> getAirportsSearches(
       {required String cityname});
+
+  Future<Either<Failure, CitySearchData>> getAirportRecentSearches();
 }

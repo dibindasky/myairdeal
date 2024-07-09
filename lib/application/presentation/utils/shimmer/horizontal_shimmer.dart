@@ -7,6 +7,8 @@ class HorizontalShimmerSkeleton extends StatelessWidget {
   final Axis scrollDirection;
   final double height;
   final double width;
+  final double paddingvertical;
+  final double paddingHorizontal;
 
   const HorizontalShimmerSkeleton({
     Key? key,
@@ -14,6 +16,8 @@ class HorizontalShimmerSkeleton extends StatelessWidget {
     required this.scrollDirection,
     required this.height,
     required this.width,
+    this.paddingHorizontal = 0,
+    this.paddingvertical = 0,
   }) : super(key: key);
 
   @override
@@ -28,7 +32,8 @@ class HorizontalShimmerSkeleton extends StatelessWidget {
           itemCount: itemCount,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: EdgeInsets.symmetric(
+                  horizontal: paddingHorizontal, vertical: paddingvertical),
               child: Container(
                 width: width,
                 height: height,

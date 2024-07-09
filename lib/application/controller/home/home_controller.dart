@@ -11,7 +11,11 @@ class HomeController extends GetxController {
 
   RxList<RecentDetailSearchItem> recentSearches =
       <RecentDetailSearchItem>[].obs;
+
   RxList<CitySearchModel> airportsSearches = <CitySearchModel>[].obs;
+
+  RxList<CitySearchModel> airportRecentSearches = <CitySearchModel>[].obs;
+
   RxBool isLoading = false.obs;
 
   RxBool search = false.obs;
@@ -20,10 +24,10 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     fetchRecentSearches();
-
-    log('$recentSearches');
+    fetchAirportRecentSearches();
   }
 
+  // Recent Searches
   void fetchRecentSearches() async {
     isLoading.value = true;
     final result = await homeService.getRecentSearches();
@@ -36,10 +40,16 @@ class HomeController extends GetxController {
     isLoading.value = false;
   }
 
+  // Airport Searches
   void fetchAirportsSearches(String cityName) async {
-    if (cityName.length < 3) return;
-    search.value = true;
+    if (cityName.length < 3) {
+      airportsSearches.value = [];
+      search.value = false;
+      return;
+    }
+    ;
     isLoading.value = true;
+    search.value = true;
     final result = await homeService.getAirportsSearches(cityname: cityName);
     result.fold(
       (failure) => log(failure.message.toString()),
@@ -47,10 +57,26 @@ class HomeController extends GetxController {
         airportsSearches.value = citySearchData.data ?? [];
       },
     );
+    search.value = true;
     isLoading.value = false;
   }
 
   void changeSearch() {
     search.value = false;
+    airportsSearches.value = [];
+  }
+
+  // Airport Recent Search
+  void fetchAirportRecentSearches() async {
+    isLoading.value = true;
+    final result = await homeService.getAirportRecentSearches();
+    result.fold(
+      (failure) => log(failure.message.toString()),
+      (citySearchData) {
+        airportRecentSearches.value = citySearchData.data ?? [];
+      },
+    );
+
+    isLoading.value = false;
   }
 }

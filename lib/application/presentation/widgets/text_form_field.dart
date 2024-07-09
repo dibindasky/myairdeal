@@ -25,6 +25,8 @@ class CustomTextField extends StatefulWidget {
     this.enabledBorder,
     this.password,
     this.borderRadius = 8,
+    this.onChanged,
+    this.keyboardType,
   });
 
   final Widget? prefixIcon;
@@ -45,6 +47,8 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController? password;
   final InputBorder? enabledBorder;
   final double borderRadius;
+  final Function(String value)? onChanged;
+  final TextInputType? keyboardType;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -62,6 +66,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: widget.keyboardType,
+      onChanged: widget.onChanged,
       maxLines: widget.maxLines ?? 1,
       style: TextStyle(color: kBlack, fontSize: 12.sp),
       obscureText: showEye,

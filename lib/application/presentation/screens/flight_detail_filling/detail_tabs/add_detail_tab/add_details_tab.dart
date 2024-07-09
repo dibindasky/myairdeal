@@ -67,7 +67,7 @@ class _PassengerDetailsTabState extends State<PassengerDetailsTab> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                        '${controller.selectedAddDetailsStep.value + 1}/4 : Step ${controller.selectedAddDetailsStep.value + 1}'),
+                        '${controller.selectedAddDetailsStep.value + 1}/${controller.totalSubStepLength} : Step ${controller.selectedAddDetailsStep.value + 1}'),
                     InkWell(
                       onTap: () {
                         travelController.changeSelectedDetailStepArrow(
@@ -100,7 +100,7 @@ class _PassengerDetailsTabState extends State<PassengerDetailsTab> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(3),
                             color:
-                                travelController.selectedAddDetailsStep.value ==
+                                travelController.selectedAddDetailsStep.value >=
                                         index
                                     ? kBlueDark
                                     : kGrey,

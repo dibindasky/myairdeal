@@ -41,6 +41,7 @@ class PassengerDetailsContainer extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(17.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text((searchController.adultCount.value) > index
                           ? "Adult ${index + 1}"
@@ -54,7 +55,18 @@ class PassengerDetailsContainer extends StatelessWidget {
                                       index
                                   ? 'Infant ${index - searchController.adultCount.value - searchController.childrenCount.value + 1}'
                                   : ''),
-                      const Icon(Icons.check, color: kGreen)
+                      Obx(
+                        () => controller.passengerDetails[index] == null
+                            ? const Icon(Icons.arrow_drop_down)
+                            : const CircleAvatar(
+                                backgroundColor: kGreen,
+                                child: Padding(
+                                  padding: EdgeInsets.all(2.0),
+                                  child: Icon(Icons.check,
+                                      size: 15, color: kWhite),
+                                ),
+                              ),
+                      )
                     ],
                   ),
                 ),

@@ -10,4 +10,5 @@ class ApiEndPoints {
   static const String completedAllBooking = '/user/completed-user-bookings';
   static const String cancelledAllBooking = '/user/cancelled-user-bookings';
   static const String userData = '/user/profile';
+  static const String amendendMentCharge = '/booking/amendment-charges';
 }

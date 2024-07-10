@@ -144,7 +144,6 @@ class ScreenAccountCreationForm extends StatelessWidget {
                         text: 'Create Account',
                         suffixIcon: Image.asset(tickIcon, height: 15.h),
                         onTap: () {
-                          Get.toNamed(Routes.goToHomePage);
                           if (_formKey.currentState!.validate()) {
                             authController.userCreation();
                           }

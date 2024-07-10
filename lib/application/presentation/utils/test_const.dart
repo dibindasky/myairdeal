@@ -5247,7 +5247,7 @@ const List<Map<String, String>> searchAirport = <Map<String, String>>[
   },
   {
     "code": "DUQ",
-    "name": "Duncan\/Quam Rail Station",
+    "name": "Duncan/Quam Rail Station",
     "citycode": "DUQ",
     "city": "Duncan",
     "country": "Canada",
@@ -12213,7 +12213,7 @@ const List<Map<String, String>> searchAirport = <Map<String, String>>[
   },
   {
     "code": "ZBA",
-    "name": "Basel\/Mullhouse Rail Service",
+    "name": "Basel/Mullhouse Rail Service",
     "citycode": "EAP",
     "city": "Mulhouse Basel",
     "country": "France",
@@ -12221,7 +12221,7 @@ const List<Map<String, String>> searchAirport = <Map<String, String>>[
   },
   {
     "code": "ZDH",
-    "name": "Basel\/Mullhouse SBB Rail Service",
+    "name": "Basel/Mullhouse SBB Rail Service",
     "citycode": "EAP",
     "city": "Mulhouse Basel",
     "country": "France",
@@ -27789,7 +27789,7 @@ const List<Map<String, String>> searchAirport = <Map<String, String>>[
     "code": "NKT",
     "name": "Sirnak Airport",
     "citycode": "NKT",
-    "city": "Sirnak \/ Cizre, Turkey",
+    "city": "Sirnak \n Cizre, Turkey",
     "country": "Turkey",
     "countrycode": "TR"
   },
@@ -42017,7 +42017,7 @@ const List<Map<String, String>> searchAirport = <Map<String, String>>[
   },
   {
     "code": "DKK",
-    "name": "Chautauqua County\/Dunkirk Airport",
+    "name": "Chautauqua County/Dunkirk Airport",
     "citycode": "DKK",
     "city": "Dunkirk",
     "country": "United States",

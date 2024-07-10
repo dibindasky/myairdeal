@@ -34,7 +34,7 @@ class ScreenHomePage extends StatelessWidget {
                   const FlightSearchCardHome(),
                   kHeight10,
                   GetBuilder<AuthController>(builder: (controller) {
-                    if (controller.loginOrNot.value) {
+                    if (!controller.loginOrNot.value) {
                       return const LogInOrSignUpCard();
                     }
                     return kEmpty;

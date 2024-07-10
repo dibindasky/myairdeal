@@ -3,14 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class DottedLines extends StatelessWidget {
-  const DottedLines({
-    super.key,
-    this.length = 500,
-    this.height = 8,
-  });
+  const DottedLines(
+      {super.key, this.length = 500, this.height = 8, this.color});
 
   final int length;
   final double height;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class DottedLines extends StatelessWidget {
         shrinkWrap: true,
         itemBuilder: (context, index) => Text(
           '_',
-          style: textThinStyle1.copyWith(fontSize: 7.sp),
+          style: textThinStyle1.copyWith(fontSize: 7.sp, color: color),
         ),
       ),
     );

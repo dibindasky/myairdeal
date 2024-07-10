@@ -111,7 +111,12 @@ class ScreenInvoiceDetail extends StatelessWidget {
                           ),
                           QuickLinksContainer(
                             onTap: () {
-                              Get.toNamed(Routes.ticketCancel);
+                              Get.find<BookingController>()
+                                          .bookingLoading
+                                          .value ==
+                                      false
+                                  ? Get.toNamed(Routes.ticketCancel)
+                                  : null;
                             },
                             text: 'Ticket Cancellation',
                           ),

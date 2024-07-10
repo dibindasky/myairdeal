@@ -10,27 +10,32 @@ import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
 
 class FlightTicketCard extends StatelessWidget {
-  const FlightTicketCard(
-      {super.key,
-      this.buttonOnTap,
-      this.itemInfos,
-      required this.flightTicketCardEnum,
-      this.color = kWhite,
-      this.isSelectedTicket = false,
-      this.borderColor,
-      this.borderWidth = .7,
-      this.onTap,
-      this.searchAirlineInformation});
+  const FlightTicketCard({
+    super.key,
+    this.buttonOnTap,
+    this.itemInfos,
+    required this.flightTicketCardEnum,
+    this.color = kWhite,
+    this.isSelectedTicket = false,
+    this.borderColor,
+    this.borderWidth = .7,
+    this.onTap,
+    this.bookingId,
+    this.flightId,
+    this.searchAirlineInformation,
+  });
 
   final VoidCallback? buttonOnTap;
   final FlightTicketCardEnum flightTicketCardEnum;
   final SearchAirlineInformation? searchAirlineInformation;
   final ItemInfos? itemInfos;
   final Color color;
+  final String? flightId;
   final Color? borderColor;
   final double borderWidth;
   final bool isSelectedTicket;
   final VoidCallback? onTap;
+  final String? bookingId;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +61,7 @@ class FlightTicketCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TicketDetailsSection(
+                    bookingId: bookingId,
                     searchAirlineInformation: searchAirlineInformation,
                     itemInfos: itemInfos,
                     flightTicketCardEnum: flightTicketCardEnum),

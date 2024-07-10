@@ -8,6 +8,9 @@ class NormalCenterItems extends StatelessWidget {
       {super.key,
       this.haveImage = true,
       this.airline,
+      this.flightId,
+      this.date,
+      this.number = '32',
       this.travelMinutes = '',
       this.stops = 1});
 
@@ -15,6 +18,9 @@ class NormalCenterItems extends StatelessWidget {
   final String? airline;
   final int stops;
   final String travelMinutes;
+  final String? date;
+  final String? flightId;
+  final String? number;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +34,7 @@ class NormalCenterItems extends StatelessWidget {
             : kEmpty,
         kHeight10,
         Text(
-          airline ?? 'Airline',
+          '${airline ?? 'Airline'} $flightId',
           style: textStyle1.copyWith(fontSize: 12.sp),
         ),
         Text(
@@ -39,6 +45,7 @@ class NormalCenterItems extends StatelessWidget {
         FittedBox(
           child: Row(
             children: [
+              kWidth5,
               const CircleAvatar(
                 radius: 3,
                 backgroundColor: kGrey,
@@ -74,6 +81,7 @@ class NormalCenterItems extends StatelessWidget {
                 radius: 3,
                 backgroundColor: kGrey,
               ),
+              kWidth5
             ],
           ),
         ),
@@ -81,6 +89,12 @@ class NormalCenterItems extends StatelessWidget {
           stops == 0 ? 'Non Stop' : '$stops Stop',
           style: textThinStyle1.copyWith(fontSize: 9.sp),
         ),
+        date != null
+            ? Text(
+                date!,
+                style: textThinStyle1.copyWith(fontSize: 9.sp),
+              )
+            : kEmpty,
       ],
     );
   }

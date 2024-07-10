@@ -143,12 +143,24 @@ class BottomMiniContainer extends StatelessWidget {
                             Column(
                               children: [
                                 kHeight10,
-                                Text(
-                                  'Ticket Price',
-                                  style: textStyle1.copyWith(
-                                    color: kWhite,
-                                    fontSize: 12.sp,
-                                  ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Ticket Price',
+                                      style: textStyle1.copyWith(
+                                          color: kWhite,
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w800),
+                                    ),
+                                    kWidth10,
+                                    Text(
+                                      '$price',
+                                      style: textStyle1.copyWith(
+                                          color: kWhite,
+                                          fontSize: 13.sp,
+                                          fontWeight: FontWeight.w800),
+                                    )
+                                  ],
                                 ),
                                 kHeight10,
                               ],

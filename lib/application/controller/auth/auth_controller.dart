@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
@@ -19,7 +17,7 @@ import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 class AuthController extends GetxController {
   AuthRepo authRepo = AuthService();
 
-  bool isLoading = false;
+  RxBool isLoading = false.obs;
   bool hasError = false;
   RxBool loginOrNot = false.obs;
 
@@ -75,29 +73,29 @@ class AuthController extends GetxController {
   Future<void> whereToGo() async {
     final isLogin = await SecureStorage.getLogin();
     final onBoard = await SecureStorage.getOnBoard();
+    final saveDetails = await SecureStorage.getSaveDetails();
     if (!onBoard) {
       Get.toNamed(Routes.onboard);
     } else if (!isLogin) {
       Get.toNamed(Routes.signUp);
+    } else if (!saveDetails) {
+      Get.toNamed(Routes.alMostDone);
     } else if (onBoard && isLogin) {
       Get.offAndToNamed(Routes.bottomBar);
     }
   }
 
-  // String getCountryName(String countryCode) {
-  //   return countryCodes[countryCode.toUpperCase()] ?? 'Unknown country';
-  // }
-
   Future<void> logOrNot() async {
     loginOrNot.value = await SecureStorage.getLogin();
+    update();
   }
 
   Future<void> otpSent() async {
-    isLoading = true;
-    hasError = false;
-    update();
     String trimmedNumber = loginNumber.text.trim();
     String replaceWhiteSpace = trimmedNumber.replaceAll(' ', '');
+    isLoading.value = true;
+    hasError = false;
+    update();
     final data = await authRepo.sendOTP(
       loginModel: LoginModel(
         mobileNumber: replaceWhiteSpace,
@@ -108,43 +106,43 @@ class AuthController extends GetxController {
       ),
     );
     data.fold((failure) {
-      isLoading = false;
+      isLoading.value = false;
       hasError = true;
       update();
       Get.snackbar('Failed', 'OTP Sending Failed', backgroundColor: kRed);
     }, (success) {
-      isLoading = false;
+      isLoading.value = false;
       hasError = false;
       Get.snackbar('Success', 'OTP Sending Success',
           backgroundColor: kBluePrimary);
       Get.toNamed(Routes.otp);
+      update();
     });
   }
 
   Future<void> verifyOTP() async {
-    isLoading = true;
-    hasError = false;
-
-    update();
     String trimmedNumber = loginNumber.text.trim();
     String replaceWhiteSpace = trimmedNumber.replaceAll(' ', '');
+    isLoading.value = true;
+    hasError = false;
+    update();
     final data = await authRepo.verifyOTP(
         otpVerifyModel: OtpVerifyModel(
       phone: replaceWhiteSpace,
       otp: otpNumber.text,
     ));
     data.fold((l) {
-      isLoading = false;
+      isLoading.value = false;
       hasError = true;
       update();
       Get.snackbar('Failed', 'OTP Verify Failed', backgroundColor: kRed);
     }, (r) async {
       await SecureStorage.saveToken(tokenModel: TokenModel(token: r.token));
-      isLoading = false;
+      isLoading.value = false;
       hasError = false;
       loginOrNot.value = true;
       update();
-      Get.offNamed(Routes.alMostDone);
+      Get.offAllNamed(Routes.alMostDone);
       Get.snackbar('Success', 'OTP Verify Success',
           backgroundColor: kBluePrimary);
       await SecureStorage.setLogin();
@@ -152,8 +150,16 @@ class AuthController extends GetxController {
   }
 
   void userCreation() async {
-    isLoading = true;
     update();
+    if (email.text.isEmpty || firstName.text.isEmpty || lastName.text.isEmpty) {
+      Get.snackbar('Failed', 'Fields is empty', backgroundColor: kRed);
+    }
+    if (firstName.text.isEmpty || firstName.text.length <= 2) {
+      Get.showSnackbar(const GetSnackBar(
+        message: 'First name must have 3 letters',
+      ));
+      return;
+    }
     if (!isValidEmail(email.text)) {
       Get.showSnackbar(const GetSnackBar(
         message: 'Email is not valid',
@@ -161,45 +167,44 @@ class AuthController extends GetxController {
       return;
     }
 
-    if (firstName.text.isEmpty || firstName.text.length <= 2) {
-      Get.showSnackbar(const GetSnackBar(
-        message: 'First name must have 3 letters is not valid',
-      ));
-      return;
-    }
+    isLoading.value = true;
 
     final data = await authRepo.userCreation(
-        userCreationModel: UserCreationModel(
-            email: email.text,
-            firstName: firstName.text,
-            lastName: lastName.text,
-            country: Country(countryCode: '', countryName: '', dialCode: '')));
+      userCreationModel: UserCreationModel(
+          email: email.text,
+          firstName: firstName.text,
+          lastName: lastName.text,
+          country: Country(countryCode: '', countryName: '', dialCode: '')),
+    );
     data.fold(
       (l) {
         Get.snackbar('Failed', errorMessage, backgroundColor: kRed);
-        isLoading = false;
+        isLoading.value = false;
       },
-      (r) {
+      (r) async {
+        isLoading.value = false;
         Get.snackbar('Success', 'User details added',
             backgroundColor: kBluePrimary);
         getUserInfo();
         Get.offAllNamed(Routes.bottomBar);
         update();
+        getUserInfo();
+        await SecureStorage.setSaveDetails();
       },
     );
   }
 
   void getUserInfo() async {
-    isLoading = true;
+    isLoading.value = true;
     update();
     final data = await authRepo.getUser();
     data.fold(
       (l) {
         Get.snackbar('Failed', errorMessage, backgroundColor: kRed);
-        isLoading = false;
+        isLoading.value = false;
       },
       (r) {
-        isLoading = false;
+        isLoading.value = false;
         userCreationResponceModel.value = r;
         update();
       },
@@ -208,7 +213,7 @@ class AuthController extends GetxController {
 
   void logOut() async {
     Get.snackbar('Success', 'Logout success');
-    Get.offAndToNamed(Routes.signUp);
+    Get.offAllNamed(Routes.signUp);
     otpNumber.clear();
     loginOrNot.value = false;
     loginNumber.clear();

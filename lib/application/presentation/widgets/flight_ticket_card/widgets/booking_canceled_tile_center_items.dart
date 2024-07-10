@@ -6,9 +6,10 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class BookingCombletedCancelledTabcenterItems extends StatelessWidget {
-  BookingCombletedCancelledTabcenterItems({super.key});
+  BookingCombletedCancelledTabcenterItems({super.key, this.price = 0});
 
   final bookingController = Get.find<BookingController>();
+  final int price;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +99,7 @@ class BookingCombletedCancelledTabcenterItems extends StatelessWidget {
                         color: bookingController.selectedBookingTab.value == 1
                             ? kBlueDark
                             : kRed)),
-                Text('? 3500',
+                Text('? $price',
                     style: textStyle1.copyWith(
                         fontSize: 11.sp,
                         color: bookingController.selectedBookingTab.value == 1

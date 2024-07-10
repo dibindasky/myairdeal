@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/booking_canceled_tile_center_items.dart';
@@ -66,7 +67,17 @@ class TicketDetailsSection extends StatelessWidget {
                   : flightTicketCardEnum == FlightTicketCardEnum.complete ||
                           flightTicketCardEnum == FlightTicketCardEnum.cancelled
                       ? BookingCombletedCancelledTabcenterItems()
-                      : const NormalCenterItems(),
+                      : itemInfos != null
+                          ? NormalCenterItems(
+                              airline: itemInfos!
+                                      .air?.tripInfos?[0].sI?[0].fD?.aI?.name ??
+                                  '',
+                              stops:
+                                  (itemInfos!.air?.tripInfos?[0].sI?.length ??
+                                          0) -
+                                      1,
+                            )
+                          : kEmpty,
               searchAirlineInformation != null
                   ? CardSideItems(
                       crossAxisAlignment: CrossAxisAlignment.end,

@@ -4,21 +4,28 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class TicketColumn extends StatelessWidget {
-  final String label;
+  final String? label;
   final String? value;
   final String? subValue;
+  final String? flightCode;
   final bool isBold;
   final bool isSubValueColumn;
   final CrossAxisAlignment? crossAxisAlignment;
   final TextStyle? valueStyle;
   final TextStyle? lebelStyle;
   final TextStyle? subValueStyle;
+  final TextStyle? exitStyle;
+  final String? exit;
+
   const TicketColumn({
     super.key,
+    this.flightCode,
+    this.exitStyle,
+    this.exit,
     this.subValueStyle,
     this.valueStyle,
     this.lebelStyle,
-    required this.label,
+    this.label,
     this.subValue,
     this.value,
     this.isBold = false,
@@ -32,14 +39,16 @@ class TicketColumn extends StatelessWidget {
       crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
       children: [
         kHeight5,
-        Text(
-          label,
-          style: lebelStyle ??
-              textThinStyle1.copyWith(
-                  color: kGreyDark,
-                  fontSize: 11.sp,
-                  fontWeight: FontWeight.w700),
-        ),
+        label != null
+            ? Text(
+                label!,
+                style: lebelStyle ??
+                    textThinStyle1.copyWith(
+                        color: kGreyDark,
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w700),
+              )
+            : kEmpty,
         kHeight5,
         value != null
             ? Text(
@@ -60,6 +69,24 @@ class TicketColumn extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               )
             : kEmpty,
+        kHeight5,
+        exit != null
+            ? Text(
+                exit!,
+                style: exitStyle ??
+                    textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
+                overflow: TextOverflow.ellipsis,
+              )
+            : kEmpty,
+        kHeight5,
+        flightCode != null
+            ? Text(
+                flightCode!,
+                style: exitStyle ??
+                    textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
+                overflow: TextOverflow.ellipsis,
+              )
+            : kEmpty
       ],
     );
   }

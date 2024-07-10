@@ -8,10 +8,9 @@ import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab/
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/quick_links.container.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/you_could_also.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
-import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_invoice/flight_invoice.dart';
 import '../../home/widgets/curent_offers_section.dart';
 
@@ -25,50 +24,53 @@ class ScreenInvoiceDetail extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          const DetailAppBar(heading: 'Ticket booking '),
+          const DetailAppBar(heading: 'Ticket Booking '),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 kHeight10,
-                bookingController.selectedBookingTab.value != 2
-                    ? Text('Rate this trip', style: textHeadStyle1)
-                    : kEmpty,
-                bookingController.selectedBookingTab.value != 2
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ...List.generate(
-                            5,
-                            (index) => Row(
-                              children: [
-                                kWidth10,
-                                Icon(
-                                  Icons.star,
-                                  color: kGrey,
-                                  size: 30.h,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                    : kEmpty,
-                kHeight10,
+                // bookingController.selectedBookingTab.value != 2
+                //     ? Text('Rate this trip', style: textHeadStyle1)
+                //     : kEmpty,
+                // bookingController.selectedBookingTab.value != 2
+                //     ? Row(
+                //         mainAxisAlignment: MainAxisAlignment.start,
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: [
+                //           ...List.generate(
+                //             5,
+                //             (index) => Row(
+                //               children: [
+                //                 kWidth10,
+                //                 Icon(
+                //                   Icons.star,
+                //                   color: kGrey,
+                //                   size: 30.h,
+                //                 ),
+                //               ],
+                //             ),
+                //           ),
+                //         ],
+                //       )
+                //     : kEmpty,
+                // kHeight10,
                 Text(
-                  bookingController.selectedBookingTab.value != 2
-                      ? 'Ticket : Confirmed      Completed '
-                      : 'Ticket : Cancel',
+                  bookingController.selectedBookingTab.value == 1
+                      ? 'Completed Ticket'
+                      : bookingController.selectedBookingTab.value == 2
+                          ? 'Cancel Ticket'
+                          : 'Upcoming Ticket',
                   style: textHeadStyle1,
                 ),
                 kHeight10,
                 GetBuilder<BookingController>(builder: (controller) {
-                  if (controller.bookingLoading.value) {
-                    return const Skeleton(
-                      crossAxisCount: 1,
+                  if (controller.invoiceLoading.value) {
+                    return HorizontalShimmerSkeleton(
+                      scrollDirection: Axis.vertical,
                       itemCount: 1,
+                      height: 300.h,
                     );
                   }
                   return FlightInvoiceCard(

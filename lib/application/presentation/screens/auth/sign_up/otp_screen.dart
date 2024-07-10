@@ -39,7 +39,7 @@ class ScreenOTP extends StatelessWidget {
                 kHeight30,
                 kHeight50,
                 GetBuilder<AuthController>(builder: (controller) {
-                  if (controller.isLoading) {
+                  if (controller.isLoading.value) {
                     return const Center(
                       child: CircularProgressIndicator(
                         color: kBluePrimary,
@@ -47,10 +47,11 @@ class ScreenOTP extends StatelessWidget {
                     );
                   }
                   return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Text('Enter OTP'),
                       kHeight15,
+                      kHeight10,
                       const Center(child: PinEnterField()),
                       kHeight30,
                       kHeight50,
@@ -80,20 +81,20 @@ class ScreenOTP extends StatelessWidget {
                       kHeight20,
                       kHeight20,
                       kHeight10,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Already have an account?'),
-                          kWidth5,
-                          TextButton(
-                            onPressed: () {
-                              Get.offNamed(Routes.signIn);
-                            },
-                            child: Text('Sign In',
-                                style: textThinStyle1.copyWith(color: kBlue)),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     const Text('Already have an account?'),
+                      //     kWidth5,
+                      //     TextButton(
+                      //       onPressed: () {
+                      //         Get.offNamed(Routes.signIn);
+                      //       },
+                      //       child: Text('Sign In',
+                      //           style: textThinStyle1.copyWith(color: kBlue)),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   );
                 }),

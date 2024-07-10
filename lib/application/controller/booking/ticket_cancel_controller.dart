@@ -13,11 +13,15 @@ class TIcketCancellaionCntroller extends GetxController {
   Rx<TicketCancelResponce> ticketData = TicketCancelResponce().obs;
 
   void addItem(TicketCancelRequestModel item) {
-    selectedItems.add(item);
-  }
+    final existingIndex = selectedItems
+        .indexWhere((element) => element.bookingId == item.bookingId);
 
-  void removeItem(TicketCancelRequestModel item) {
-    selectedItems.remove(item);
+    if (existingIndex != -1) {
+      selectedItems.removeAt(existingIndex);
+    } else {
+      selectedItems.add(item);
+    }
+    update();
   }
 
   void ticketCancel(TicketCancelRequestModel ticketCancelRequestModel) async {

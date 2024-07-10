@@ -69,13 +69,13 @@ class ScreenAccountPage extends StatelessWidget {
                     Obx(() {
                       return controller.loginOrNot.value
                           ? SettingsTile(
-                              title: 'Logout',
+                              title: 'Log-Out',
                               color: kRed,
                               onTap: () {
                                 showConfirmationDialog(
                                   context: context,
                                   heading:
-                                      'Are you sure do you want to logout from MYAIRDEAL',
+                                      'Are you sure do you want to Log-Out from MY AIRDEAL',
                                   onPressed: () {
                                     controller.logOut();
                                   },
@@ -117,6 +117,7 @@ class SettingsSection extends StatelessWidget {
             style: textHeadStyle1.copyWith(fontSize: 15.sp),
           ),
         ),
+        kHeight10,
         ...tiles,
       ],
     );

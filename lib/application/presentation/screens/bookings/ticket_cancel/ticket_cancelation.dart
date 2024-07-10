@@ -160,8 +160,9 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                               .order
                                               ?.bookingId;
                                           cancelController.addItem(
-                                              TicketCancelRequestModel(
-                                                  bookingId: bookingId));
+                                            TicketCancelRequestModel(
+                                                bookingId: bookingId),
+                                          );
                                         },
                                         child: GetBuilder<
                                             TIcketCancellaionCntroller>(

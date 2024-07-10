@@ -7,6 +7,7 @@ class TicketColumn extends StatelessWidget {
   final String? label;
   final String? value;
   final String? subValue;
+  final String? flightCode;
   final bool isBold;
   final bool isSubValueColumn;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -18,6 +19,7 @@ class TicketColumn extends StatelessWidget {
 
   const TicketColumn({
     super.key,
+    this.flightCode,
     this.exitStyle,
     this.exit,
     this.subValueStyle,
@@ -67,6 +69,7 @@ class TicketColumn extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               )
             : kEmpty,
+        kHeight5,
         exit != null
             ? Text(
                 exit!,
@@ -75,6 +78,15 @@ class TicketColumn extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               )
             : kEmpty,
+        kHeight5,
+        flightCode != null
+            ? Text(
+                flightCode!,
+                style: exitStyle ??
+                    textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
+                overflow: TextOverflow.ellipsis,
+              )
+            : kEmpty
       ],
     );
   }

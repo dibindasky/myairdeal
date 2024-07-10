@@ -43,6 +43,21 @@ class DateFormating {
     return formatter.format(dateTime);
   }
 
+  static String formatDate(String date) {
+    if (date.isEmpty) return '';
+
+    DateTime dateTime = DateTime.parse(date);
+
+    // Format to "Jul 18, Thu"
+    String formattedDate = DateFormat('MMM d, E').format(dateTime);
+
+    // Format to "21:00"
+    String formattedTime = DateFormat('HH:mm').format(dateTime);
+
+    // Combine the date and time
+    return '$formattedDate, $formattedTime';
+  }
+
   static String convertMinutesToHoursMinutes(int totalMinutes) {
     int days = totalMinutes ~/ 1440;
     int hours = (totalMinutes % 1440) ~/ 60;
@@ -57,17 +72,17 @@ class DateFormating {
 
     return formattedTime;
   }
-  
+
   static String convertSecondsToHoursMinutesSeconds(int totalSeconds) {
-  int hours = totalSeconds ~/ 3600;
-  int minutes = (totalSeconds % 3600) ~/ 60;
-  int seconds = totalSeconds % 60;
+    int hours = totalSeconds ~/ 3600;
+    int minutes = (totalSeconds % 3600) ~/ 60;
+    int seconds = totalSeconds % 60;
 
-  String formattedTime =
-      '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+    String formattedTime =
+        '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
 
-  return formattedTime;
-}
+    return formattedTime;
+  }
 
   static String getDifferenceOfDates(
       String dateTimeString1, String dateTimeString2) {

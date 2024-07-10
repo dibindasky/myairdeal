@@ -11,6 +11,7 @@ import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom
 import 'package:myairdeal/application/presentation/widgets/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
+import 'package:pinput/pinput.dart';
 
 class FlightInvoiceCard extends StatelessWidget {
   final FlightTicketInvoiceEnum flightTicketInvoiceEnum;
@@ -128,22 +129,25 @@ class FlightInvoiceCard extends StatelessWidget {
                                     isBold: false,
                                   ),
                                 ),
+                                const SizedBox(width: 6),
                                 TicketColumn(
-                                  label: 'Flight code',
+                                  label:
+                                      '${tripInfos?[index].sI?[stopIndex].fD?.aI?.code ?? ''}- ${tripInfos?[index].sI?[stopIndex].fD?.fN ?? ''}',
                                   lebelStyle:
                                       textThinStyle1.copyWith(fontSize: 10.sp),
-                                  value: 'code',
+                                  value: "--",
                                   valueStyle: textThinStyle1.copyWith(
                                       fontSize: 10.sp, color: kGreyDark),
-                                  subValue: 'Seat',
+                                  subValue: DateFormating.formatDate(
+                                      (tripInfos?[index].sI?[0].dt ?? '')),
                                   subValueStyle:
                                       textThinStyle1.copyWith(fontSize: 10.sp),
-                                  exit: 'Seat no',
                                   exitStyle: textThinStyle1.copyWith(
                                       fontSize: 10.sp, color: kGreyDark),
                                   isBold: false,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                 ),
+                                const SizedBox(width: 6),
                                 Expanded(
                                   child: TicketColumn(
                                     label: tripInfos?[index]
@@ -234,40 +238,6 @@ class FlightInvoiceCard extends StatelessWidget {
                 ),
               ),
             ),
-            //
-            kHeight5,
-            ...List.generate(
-              (tripInfos?.length ?? 0),
-              (index) => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: TicketColumn(
-                      label: 'Flight Code',
-                      subValue:
-                          "${tripInfos?[index].sI?[0].fD?.aI?.code ?? ''} ${tripInfos?[index].sI?[0].fD?.fN ?? ''}",
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
-                    ),
-                  ),
-                  // TicketColumn(
-                  //   label: 'Class',
-                  //   subValue: 'Economy',
-                  //   subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
-                  //   crossAxisAlignment: CrossAxisAlignment.center,
-                  // ),
-                  Expanded(
-                    child: TicketColumn(
-                      subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
-                      label: 'Seat',
-                      subValue: 'Seat F2',
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const DottedLines(height: 10),
             kHeight5,
             ...List.generate(
               (tripInfos?.length ?? 0),
@@ -277,20 +247,25 @@ class FlightInvoiceCard extends StatelessWidget {
                   Expanded(
                     child: TicketColumn(
                       label:
-                          '${tripInfos?[index].sI?[0].da?.code ?? ''} TO ${tripInfos?[index].sI?[0].aa?.code ?? ''} '
+                          '${tripInfos?[index].sI?[0].da?.city ?? ''} TO ${tripInfos?[index].sI?[(tripInfos[index].sI?.length ?? 0) - 1].aa?.city ?? ''} '
                           '',
-                      value: 'Date',
+                      subValue: 'Date',
+                      exit: 'Time',
+                      value: '',
+                      flightCode: '',
+                      exitStyle: textThinStyle1,
                       valueStyle: textThinStyle1,
-                      lebelStyle: textStyle1,
-                      subValue: '',
+                      lebelStyle: textThinStyle1,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
                     ),
                   ),
                   TicketColumn(
-                    value: 'Departuress',
+                    value: 'Departure',
                     valueStyle: textThinStyle1,
-                    label: '',
+                    exit: DateFormating.formatTime(
+                        (tripInfos?[index].sI?[0].dt ?? '')),
+                    exitStyle: textThinStyle1,
                     subValue: DateFormating.getDate(
                         DateTime.parse(tripInfos?[index].sI?[0].dt ?? '')),
                     subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
@@ -301,7 +276,9 @@ class FlightInvoiceCard extends StatelessWidget {
                       value: 'Arrival',
                       valueStyle: textThinStyle1,
                       subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
-                      label: '',
+                      exit: DateFormating.formatTime(
+                          (tripInfos?[index].sI?[0].at ?? '')),
+                      exitStyle: textThinStyle1,
                       subValue: DateFormating.getDate(
                           DateTime.parse(tripInfos?[index].sI?[0].at ?? '')),
                       crossAxisAlignment: CrossAxisAlignment.end,

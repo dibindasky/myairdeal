@@ -120,8 +120,29 @@ class FlightInvoiceCard extends StatelessWidget {
                                             .da
                                             ?.name ??
                                         '',
+                                    exit: tripInfos?[index]
+                                            .sI?[stopIndex]
+                                            .da
+                                            ?.terminal ??
+                                        '',
                                     isBold: false,
                                   ),
+                                ),
+                                TicketColumn(
+                                  label: 'Flight code',
+                                  lebelStyle:
+                                      textThinStyle1.copyWith(fontSize: 10.sp),
+                                  value: 'code',
+                                  valueStyle: textThinStyle1.copyWith(
+                                      fontSize: 10.sp, color: kGreyDark),
+                                  subValue: 'Seat',
+                                  subValueStyle:
+                                      textThinStyle1.copyWith(fontSize: 10.sp),
+                                  exit: 'Seat no',
+                                  exitStyle: textThinStyle1.copyWith(
+                                      fontSize: 10.sp, color: kGreyDark),
+                                  isBold: false,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                 ),
                                 Expanded(
                                   child: TicketColumn(
@@ -141,84 +162,110 @@ class FlightInvoiceCard extends StatelessWidget {
                                             .aa
                                             ?.name ??
                                         '',
+                                    exit: tripInfos?[index]
+                                            .sI?[stopIndex]
+                                            .aa
+                                            ?.terminal ??
+                                        '',
                                     isBold: false,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                   ),
                                 ),
                               ],
                             ),
+                            const DottedLines(height: 9)
                           ],
                         ),
                       )
                     : null,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
                   children: [
-                    Expanded(
-                      child: TicketColumn(
-                        label: tripInfos?[index].sI?[0].da?.code ?? '',
-                        value: tripInfos?[index].sI?[0].da?.city ?? '',
-                        subValue: tripInfos?[index].sI?[0].da?.name ?? '',
-                        isBold: true,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: TicketColumn(
+                            label: tripInfos?[index].sI?[0].da?.code ?? '',
+                            value: tripInfos?[index].sI?[0].da?.city ?? '',
+                            subValue: tripInfos?[index].sI?[0].da?.name ?? '',
+                            isBold: true,
+                            exit: tripInfos?[index].sI?[0].da?.terminal ?? '',
+                          ),
+                        ),
+                        NormalCenterItems(
+                          airline: tripInfos?[index].sI?[0].fD?.aI?.name ?? '',
+                          haveImage: false,
+                          stops: (tripInfos?[index].sI?.length ?? 0) - 1,
+                        ),
+                        Expanded(
+                          child: TicketColumn(
+                            label: tripInfos?[index]
+                                    .sI?[((tripInfos[index].sI?.length ?? 1) -
+                                        1)]
+                                    .aa
+                                    ?.code ??
+                                '',
+                            value: tripInfos?[index]
+                                    .sI?[((tripInfos[index].sI?.length ?? 1) -
+                                        1)]
+                                    .aa
+                                    ?.city ??
+                                '',
+                            subValue: tripInfos?[index]
+                                    .sI?[((tripInfos[index].sI?.length ?? 1) -
+                                        1)]
+                                    .aa
+                                    ?.name ??
+                                '',
+                            exit: tripInfos?[index]
+                                    .sI?[((tripInfos[index].sI?.length ?? 1) -
+                                        1)]
+                                    .aa
+                                    ?.terminal ??
+                                '',
+                            isBold: true,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                          ),
+                        ),
+                      ],
                     ),
-                    NormalCenterItems(
-                      airline: tripInfos?[index].sI?[0].fD?.aI?.name ?? '',
-                      haveImage: false,
-                      stops: (tripInfos?[index].sI?.length ?? 0) - 1,
-                    ),
-                    Expanded(
-                      child: TicketColumn(
-                        label: tripInfos?[index]
-                                .sI?[((tripInfos[index].sI?.length ?? 1) - 1)]
-                                .aa
-                                ?.code ??
-                            '',
-                        value: tripInfos?[index]
-                                .sI?[((tripInfos[index].sI?.length ?? 1) - 1)]
-                                .aa
-                                ?.city ??
-                            '',
-                        subValue: tripInfos?[index]
-                                .sI?[((tripInfos[index].sI?.length ?? 1) - 1)]
-                                .aa
-                                ?.name ??
-                            '',
-                        isBold: true,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                      ),
-                    ),
+                    const DottedLines(height: 10),
                   ],
                 ),
               ),
             ),
-            const DottedLines(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: TicketColumn(
-                    label: 'Flight Code',
-                    subValue: 'Asky - 005',
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
+            //
+            kHeight5,
+            ...List.generate(
+              (tripInfos?.length ?? 0),
+              (index) => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: TicketColumn(
+                      label: 'Flight Code',
+                      subValue:
+                          "${tripInfos?[index].sI?[0].fD?.aI?.code ?? ''} ${tripInfos?[index].sI?[0].fD?.fN ?? ''}",
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
+                    ),
                   ),
-                ),
-                TicketColumn(
-                  label: 'Class',
-                  subValue: 'Economy',
-                  subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                ),
-                Expanded(
-                  child: TicketColumn(
-                    subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
-                    label: 'Seat',
-                    subValue: 'Seat F2',
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                  // TicketColumn(
+                  //   label: 'Class',
+                  //   subValue: 'Economy',
+                  //   subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  // ),
+                  Expanded(
+                    child: TicketColumn(
+                      subValueStyle: textThinStyle1.copyWith(fontSize: 11.sp),
+                      label: 'Seat',
+                      subValue: 'Seat F2',
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             const DottedLines(height: 10),
             kHeight5,
@@ -262,6 +309,27 @@ class FlightInvoiceCard extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            const DottedLines(height: 10),
+            kHeight10,
+            Row(
+              children: [
+                Text(
+                  'Ticket Price',
+                  style: textStyle1.copyWith(
+                      color: kBlack,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w800),
+                ),
+                kWidth10,
+                Text(
+                  '₹ ${retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.tf.toString() ?? 0.toString()}',
+                  style: textStyle1.copyWith(
+                      color: kBlack,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w800),
+                )
+              ],
             ),
             // const DottedLines(height: 10),
             // kHeight5,

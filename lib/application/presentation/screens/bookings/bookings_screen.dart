@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/empty_booking.dart';
@@ -25,7 +24,6 @@ class ScreenBookings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final authController = Get.find<AuthController>();
     final controller = Get.find<BookingController>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.getAllCombleteBooking(false);

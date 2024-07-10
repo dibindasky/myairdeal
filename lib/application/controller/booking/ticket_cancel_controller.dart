@@ -17,10 +17,8 @@ class TIcketCancellaionCntroller extends GetxController {
         .indexWhere((element) => element.bookingId == item.bookingId);
 
     if (existingIndex != -1) {
-      // Remove item if it already exists
       selectedItems.removeAt(existingIndex);
     } else {
-      // Add item if it does not exist
       selectedItems.add(item);
     }
     update();

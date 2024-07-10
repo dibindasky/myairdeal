@@ -87,6 +87,7 @@ class AuthController extends GetxController {
 
   Future<void> logOrNot() async {
     loginOrNot.value = await SecureStorage.getLogin();
+    update();
   }
 
   Future<void> otpSent() async {

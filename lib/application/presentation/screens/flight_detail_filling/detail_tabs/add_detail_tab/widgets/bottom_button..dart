@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
@@ -11,33 +12,35 @@ class BottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<TravellerController>();
+    final bookingController = Get.find<BookingController>();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Add ons total',
-              style: textThinStyle1.copyWith(fontSize: 10.sp),
-            ),
-            const Text(
-              '₹ 120',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     Text(
+        //       'Add ons total',
+        //       style: textThinStyle1.copyWith(fontSize: 10.sp),
+        //     ),
+        //     const Text(
+        //       '₹ ',
+        //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        //     ),
+        //   ],
+        // ),
         kWidth20,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Subtotal',
+              'total',
               style: textThinStyle1.copyWith(fontSize: 10.sp),
             ),
-            const Text(
-              '₹ 3500',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            Text(
+              '₹ ${bookingController.reviewedDetail!.value.totalPriceInfo!.totalFareDetail!.fC!.tf ?? ''}',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ],
         ),

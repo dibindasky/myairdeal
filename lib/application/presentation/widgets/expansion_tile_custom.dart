@@ -30,7 +30,9 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
       decoration: !widget.isBorder
           ? null
           : BoxDecoration(
-              color: widget.expansionColor!=null && isExpanded ? widget.expansionColor : null,
+              color: widget.expansionColor != null && isExpanded
+                  ? widget.expansionColor
+                  : null,
               border: Border.all(color: kBluePrimary),
               borderRadius: kRadius15),
       child: Column(

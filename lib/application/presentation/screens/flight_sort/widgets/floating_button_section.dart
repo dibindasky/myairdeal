@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -13,7 +14,8 @@ class FloatingButtonSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
     return Obx(() {
-      return controller.comboTrip.value|| controller.tripType.value == 0 ||
+      return controller.comboTrip.value ||
+              controller.tripType.value == 0 ||
               controller.searchListLoading.value
           ? kEmpty
           : FloatingActionButton.extended(
@@ -21,6 +23,10 @@ class FloatingButtonSection extends StatelessWidget {
               splashColor: kBluePrimary,
               onPressed: () {
                 controller.nextOrContinue();
+                Get.find<TravellerController>().updatePassengersNumber(
+                    controller.adultCount.value +
+                        controller.childrenCount.value +
+                        controller.infantCount.value);
               },
               label: Column(
                 children: [

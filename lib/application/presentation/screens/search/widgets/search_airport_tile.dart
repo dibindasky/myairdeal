@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
@@ -16,9 +17,19 @@ class SearchAirportTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+    final homeController = Get.find<HomeController>();
     return GestureDetector(
       onTap: () {
         controller.setAirportSelection(citySearchModel: airportModel);
+        homeController.addAirportRecentSearch(
+            citySearchModel: CitySearchModel(
+          city: airportModel.city,
+          citycode: airportModel.citycode,
+          code: airportModel.code,
+          name: airportModel.name,
+          country: airportModel.country,
+          countrycode: airportModel.countrycode,
+        ));
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),

@@ -11,4 +11,11 @@ class ApiEndPoints {
   static const String cancelledAllBooking = '/user/cancelled-user-bookings';
   static const String userData = '/user/profile';
   static const String amendendMentCharge = '/booking/amendment-charges';
+  static const String recentSearch = '/search/searchQueryHistory';
+  static const String airportSearch = '/search/user-get-all-airports?search=';
+  static const String reviewPriceDetails = '/booking/review-price';
+  static const String completeBooking = '/booking/complete';
+  static const String airportRecentSearch = '/search/airportSearchHistory';
+  static const airportSearchWithCountryCode =
+      '/search/airport-country-code?countrycode=';
 }

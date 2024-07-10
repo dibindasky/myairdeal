@@ -5,12 +5,56 @@ import 'package:myairdeal/data/service/api_service.dart';
 import 'package:myairdeal/domain/core/api_endpoints/api_endpoints.dart';
 import 'package:myairdeal/domain/core/failure/failure.dart';
 import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_responce.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
+import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
+import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
+import 'package:myairdeal/domain/models/success_responce_model/success_responce_model.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
 class BookingService implements BookingRepo {
   ApiService apiService = ApiService();
+
+  @override
+  Future<Either<Failure, SuccessResponceModel>> bookTicket(
+      {required BookTicketModel bookTicketModel}) async {
+    try {
+      final responce = await apiService.post(ApiEndPoints.completeBooking,
+          data: bookTicketModel.toJson(), addHeader: true);
+      log('bookTicket done');
+      log('${responce.data}');
+      return Right(SuccessResponceModel());
+    } on DioException catch (e) {
+      log('DioException bookTicket $e');
+      return Left(
+          Failure(message: e.response?.data?['errors'] ?? errorMessage));
+    } catch (e) {
+      log('catch bookTicket');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ReviewFlightDetailPrice>> reviewPriceDetails(
+      {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
+    try {
+      print(reviewPriceDetailIdModel.priceIds!);
+      final responce = await apiService.post(ApiEndPoints.reviewPriceDetails,
+          data: reviewPriceDetailIdModel.toJson(), addHeader: true);
+      log('reviewPriceDetails done');
+      log('${responce.data}');
+      return Right(ReviewFlightDetailPrice.fromJson(responce.data));
+    } on DioException catch (e) {
+      log('DioException reviewPriceDetails $e');
+      return Left(
+          Failure(message: e.response?.data?['errors'] ?? errorMessage));
+    } catch (e) {
+      log('catch reviewPriceDetails');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
   @override
   Future<Either<Failure, RetrieveSingleBookingresponceModel>>
       retrieveSinglleBooking({

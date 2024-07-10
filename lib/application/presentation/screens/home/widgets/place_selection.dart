@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/bottom_calender_date_picker.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -20,7 +21,10 @@ class OneWayAndRoundTrip extends StatelessWidget {
       () => Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Expanded(
           child: TextIconButtonOutlinedCustom(
-            onTap: () => controller.changeSelectedAirport(from: true, index: 0),
+            onTap: () {
+              controller.changeSelectedAirport(from: true, index: 0);
+              Get.find<HomeController>().changeSearch();
+            },
             first: const Icon(
               Icons.flight_takeoff_rounded,
               color: kBluePrimary,
@@ -42,8 +46,10 @@ class OneWayAndRoundTrip extends StatelessWidget {
                 const Icon(Icons.compare_arrows_outlined, color: kBluePrimary)),
         Expanded(
           child: TextIconButtonOutlinedCustom(
-            onTap: () =>
-                controller.changeSelectedAirport(from: false, index: 0),
+            onTap: () {
+              controller.changeSelectedAirport(from: false, index: 0);
+              Get.find<HomeController>().changeSearch();
+            },
             first: const Icon(
               Icons.flight_land_rounded,
               color: kBluePrimary,
@@ -78,8 +84,11 @@ class MultiCitySelection extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextIconButtonOutlinedCustom(
-                    onTap: () => controller.changeSelectedAirport(
-                        from: true, index: index),
+                    onTap: () {
+                      controller.changeSelectedAirport(
+                          from: true, index: index);
+                      Get.find<HomeController>().changeSearch();
+                    },
                     mainAxisAlignment: MainAxisAlignment.center,
                     first: kEmpty,
                     topRight: const Icon(Icons.arrow_right_alt_rounded,
@@ -95,8 +104,11 @@ class MultiCitySelection extends StatelessWidget {
                 kWidth5,
                 Expanded(
                   child: TextIconButtonOutlinedCustom(
-                    onTap: () => controller.changeSelectedAirport(
-                        from: false, index: index),
+                    onTap: () {
+                      controller.changeSelectedAirport(
+                          from: false, index: index);
+                      Get.find<HomeController>().changeSearch();
+                    },
                     mainAxisAlignment: MainAxisAlignment.center,
                     first: kEmpty,
                     spacer: kWidth10,

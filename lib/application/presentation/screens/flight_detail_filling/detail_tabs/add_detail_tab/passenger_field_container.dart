@@ -6,13 +6,38 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
 
-class DetailContainer extends StatelessWidget {
-  const DetailContainer({super.key});
+class DetailContainer extends StatefulWidget {
+  const DetailContainer(
+      {super.key, required this.index, required this.travellerType});
+
+  final int index;
+  final String travellerType;
+
+  @override
+  State<DetailContainer> createState() => _DetailContainerState();
+}
+
+class _DetailContainerState extends State<DetailContainer> {
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController dateOfBirthController = TextEditingController();
+  final travelController = Get.find<TravellerController>();
+
+  @override
+  void initState() {
+    final model = travelController.passengerDetails[widget.index];
+    if (model != null) {
+      firstNameController.text = model.fN ?? '';
+      lastNameController.text = model.lN ?? '';
+      dateOfBirthController.text = model.dob ?? '';
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final travelController = Get.find<TravellerController>();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
@@ -44,33 +69,36 @@ class DetailContainer extends StatelessWidget {
             ],
           ),
           kHeight10,
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              border: Border.all(color: kBlue),
-              borderRadius: kRadius10,
-              color: kWhite,
-            ),
-            child: Obx(
-              () => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(
-                  3,
-                  (index) => CustomRadioButton(
-                    selected: index == travelController.genderType.value,
-                    onChanged: () {
-                      travelController.changeGenderType(index);
-                    },
-                    text: travelController.genderList[index],
+          widget.travellerType == 'INFANT'
+              ? kEmpty
+              : Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: kBlue),
+                    borderRadius: kRadius10,
+                    color: kWhite,
+                  ),
+                  child: Obx(
+                    () => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: List.generate(
+                        3,
+                        (index) => CustomRadioButton(
+                          selected: index == travelController.genderType.value,
+                          onChanged: () {
+                            travelController.changeGenderType(index);
+                          },
+                          text: travelController.genderList[index],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
           kHeight15,
           Text('First Name', style: textThinStyle1),
           kHeight5,
           CustomTextField(
+            controller: firstNameController,
             isBorder: true,
             borderRadius: 14,
             textCapitalization: TextCapitalization.words,
@@ -84,6 +112,7 @@ class DetailContainer extends StatelessWidget {
           Text('Last Name', style: textThinStyle1),
           kHeight5,
           CustomTextField(
+            controller: lastNameController,
             isBorder: true,
             borderRadius: 14,
             textCapitalization: TextCapitalization.words,
@@ -94,9 +123,11 @@ class DetailContainer extends StatelessWidget {
             hintText: 'Enter Your Last Name',
             fillColor: kWhite,
           ),
-          Text('Mail id', style: textThinStyle1),
+          Text('Date Of Birth', style: textThinStyle1),
           kHeight5,
           CustomTextField(
+            keyboardType: TextInputType.number,
+            controller: dateOfBirthController,
             isBorder: true,
             borderRadius: 14,
             textCapitalization: TextCapitalization.words,
@@ -104,8 +135,86 @@ class DetailContainer extends StatelessWidget {
                 borderSide: const BorderSide(width: .3),
                 borderRadius: kRadius15),
             onTapOutside: () => FocusScope.of(context).unfocus(),
-            hintText: 'Enter Your Mail id',
+            hintText: 'yyyy-mm-dd',
             fillColor: kWhite,
+            onChanged: (v) {
+     String value = dateOfBirthController.text;
+    String newValue = '';
+
+    if (value.isNotEmpty) {
+      value = value.replaceAll('-', '');
+
+      for (int i = 0; i < value.length; i++) {
+        if (i == 4 || i == 6) {
+          newValue += '-';
+        }
+        newValue += value[i];
+      }
+
+      if (newValue.length > 10) {
+        newValue = newValue.substring(0, 10);
+      }
+    }
+
+    if (newValue != dateOfBirthController.text) {
+      dateOfBirthController.value = dateOfBirthController.value.copyWith(
+        text: newValue,
+        selection: TextSelection.collapsed(offset: newValue.length),
+      );
+    }
+            },
+          ),
+          kHeight5,
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () {
+                // add passenger details
+                if (dateOfBirthController.text.isEmpty ||
+                    firstNameController.text.isEmpty ||
+                    lastNameController.text.isEmpty) {
+                  Get.snackbar('Fill all details',
+                      'Fill all 3 fields of passenger to add details',
+                      backgroundColor: kRed,
+                      colorText: kWhite,
+                      snackPosition: SnackPosition.BOTTOM);
+                  return;
+                }
+                final gender = travelController.genderType.value;
+                travelController.addPassengerDetail(
+                  widget.index,
+                  TravellerInfo(
+                      dob: dateOfBirthController.text,
+                      fN: firstNameController.text,
+                      lN: lastNameController.text,
+                      ti: widget.travellerType == 'INFANT'
+                          ? null
+                          : gender == 0
+                              ? 'Mr'
+                              : gender == 1
+                                  ? 'Mrs'
+                                  : 'Ms',
+                      pt: widget.travellerType),
+                );
+              },
+              child: Obx( () {
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                    decoration: BoxDecoration(
+                        boxShadow: boxShadow3,
+                        color:travelController.passengerDetails[widget.index] != null?kBluePrimary:kWhite,
+                        border: Border.all(color:travelController.passengerDetails[widget.index] != null?kWhite:  kBluePrimary),
+                        borderRadius: kRadius10),
+                    child: Text(
+                      travelController.passengerDetails[widget.index] != null
+                          ? 'Update'
+                          : '+ Add',
+                      style: textStyle1.copyWith(color:travelController.passengerDetails[widget.index] != null?kWhite:  kBluePrimary),
+                    ),
+                  );
+                }
+              ),
+            ),
           ),
           kHeight15
         ],

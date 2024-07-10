@@ -1,24 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/data/service/booking/booking_service.dart';
 import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_responce.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
+import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
+import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
 class BookingController extends GetxController {
   BookingRepo bookingRepo = BookingService();
+
+  // loading for review pice for booking
+  RxBool reviewPriceLoading = false.obs;
+
+  String travelerTab = 'Add Details';
+  List<String> detailList = [' Itinerary', 'Add Details', 'Review', 'Payments'];
+
+  // variable used for
+  Rx<ReviewFlightDetailPrice>? reviewedDetail;
+
   // Booking tab according to status 1- campleted, 2- Cancelled, 3- Upcoming
   RxInt selectedBookingTab = 1.obs;
+
   // in except cancel tab Choosing for raice ticket, Connection, Refund and Mail
   RxInt selectedYouCouldAlsoTab = 6.obs;
+
   // in combleted and upcoming tab ticket raising value
   RxInt selectedcontactUsRadioButton = 6.obs;
+
   RxBool bookingLoading = false.obs;
+
+  // booking completion loading
+  RxBool bookingCompleteLoading = false.obs;
+  RxBool bookingCompleteSuccess = false.obs;
+  RxBool bookingCompleteFailure = false.obs;
+
   // Retrive sinle booking model
   Rx<RetrieveSingleBookingresponceModel> retrieveSingleBookingresponceModel =
       RetrieveSingleBookingresponceModel().obs;
+
   // Retrieve all booking
   RxList<AllBookingResponce> retrieveAllUpcomingBooking =
       <AllBookingResponce>[].obs;
@@ -41,6 +65,44 @@ class BookingController extends GetxController {
   ];
 
   List<String> dropDwnDatas = ['Product 1', 'Product 2', 'Product 3'];
+
+  void completeBooking(BookTicketModel bookTicketModel) async {
+    bookingCompleteLoading.value = true;
+    final result =
+        await bookingRepo.bookTicket(bookTicketModel: bookTicketModel);
+    result.fold((l) {
+      bookingCompleteFailure.value = true;
+    }, (r) {
+      bookingCompleteSuccess.value = true;
+    });
+    if (bookingCompleteSuccess.value) {
+      Get.snackbar('Booking done successfully',
+          'Your booking has been successfully placed',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: kGreen,
+          colorText: kWhite);
+    } else {
+      Get.snackbar('Booking Failed', 'FAiled to book your ticket',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: kRed,
+          colorText: kWhite);
+    }
+    bookingCompleteLoading.value = false;
+    Get.offNamedUntil(Routes.bottomBar, (route) => false);
+    Get.back(id: 1);
+  }
+
+  // review price details before going to the booking section
+  void reviewPriceDetailChecking(
+      {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
+    Get.toNamed(Routes.flightDetailFillling);
+    reviewedDetail = null;
+    reviewPriceLoading.value = true;
+    final result = await bookingRepo.reviewPriceDetails(
+        reviewPriceDetailIdModel: reviewPriceDetailIdModel);
+    result.fold((l) => Get.back(), (r) => reviewedDetail = r.obs);
+    reviewPriceLoading.value = false;
+  }
 
   // Get Single Booking
   void getSingleBooking({

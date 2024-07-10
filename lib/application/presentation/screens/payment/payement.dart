@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/payment_controller.dart';
+import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/presentation/screens/payment/widgets/add_method_card.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
+import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/booking.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/delivery_info.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/payment_info.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
 
 class PaymentTab extends StatelessWidget {
   const PaymentTab({super.key});
@@ -27,6 +36,57 @@ class PaymentTab extends StatelessWidget {
               FlightTicketCard(
                   buttonOnTap: () {},
                   flightTicketCardEnum: FlightTicketCardEnum.payment),
+              kHeight20,
+              Obx(() {
+                return Get.find<BookingController>()
+                        .bookingCompleteLoading
+                        .value
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: kBluePrimary,
+                        ),
+                      )
+                    : Align(
+                        child: EventButton(
+                            text: 'Conform Booking',
+                            onTap: () {
+                              final bookingController =
+                                  Get.find<BookingController>();
+                              final travellerController =
+                                  Get.find<TravellerController>();
+                              List<TravellerInfo> travellerInfos = [];
+                              for (int i = 0;
+                                  i < travellerController.passengerLength;
+                                  i++) {
+                                travellerInfos.add(
+                                    travellerController.passengerDetails[i]!);
+                              }
+                              bookingController.completeBooking(
+                                BookTicketModel(
+                                  searchQuery: bookingController
+                                      .reviewedDetail?.value.searchQuery,
+                                  booking: Booking(
+                                      bookingId: bookingController
+                                          .reviewedDetail?.value.bookingId,
+                                      paymentInfos: [
+                                        PaymentInfo(
+                                            amount: bookingController
+                                                .reviewedDetail
+                                                ?.value
+                                                .totalPriceInfo
+                                                ?.totalFareDetail
+                                                ?.fC
+                                                ?.tf)
+                                      ],
+                                      travellerInfo: travellerInfos,
+                                      deliveryInfo: DeliveryInfo(
+                                          contacts: ['9825127788'],
+                                          emails: ['testemail@gmail.com'])),
+                                ),
+                              );
+                            },
+                            color: kBlueDark));
+              }),
               kHeight20,
               Text(
                 'Digital payment method(s)',

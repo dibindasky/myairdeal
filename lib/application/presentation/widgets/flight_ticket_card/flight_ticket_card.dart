@@ -105,4 +105,3 @@ class FlightTicketCard extends StatelessWidget {
     );
   }
 }
-

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/flight_ticket_expansion_card.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -144,6 +145,11 @@ class InternationalMutliComboTile extends StatelessWidget {
             (k) => TicketDetailExpansionChild(
                 onTapBookNow: () {
                   // book ticket for international mutli city and round trip
+                  // for update traveller count
+                  Get.find<TravellerController>().updatePassengersNumber(
+                      controller.adultCount.value +
+                          controller.childrenCount.value +
+                          controller.infantCount.value);
                 },
                 totalPriceList:
                     controller.comboList[index][0].totalPriceList![k])),

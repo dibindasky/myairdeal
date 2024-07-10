@@ -24,7 +24,7 @@ class ScreenFlightTicketSort extends StatelessWidget {
         if (controller.searchListLoading.value ||
             (!controller.comboTrip.value && controller.searchList.isEmpty) ||
             (controller.comboTrip.value && controller.comboList.isEmpty)) {
-              print('combo --> ${controller.comboList.length}');
+          print('combo --> ${controller.comboList.length}');
           return Column(
             children: [
               const DetailAppBar(heading: 'Search', id: 1),

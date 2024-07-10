@@ -51,7 +51,6 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   dartz: ^0.10.1
   shimmer: ^3.0.0
-  share_plus: ^7.2.2
 
 dev_dependencies:
   flutter_test:

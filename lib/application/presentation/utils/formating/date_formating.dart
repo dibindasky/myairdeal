@@ -43,6 +43,14 @@ class DateFormating {
     return formatter.format(dateTime);
   }
 
+  // 24 hr format
+    static String formatTime24(String date) {
+    if (date == '') return '';
+    DateTime dateTime = DateTime.parse(date);
+    final DateFormat formatter = DateFormat('HH:mm');
+    return formatter.format(dateTime);
+  }
+
   static String formatDate(String date) {
     if (date.isEmpty) return '';
 

@@ -104,16 +104,22 @@ class SortingChipsSection extends StatelessWidget {
                                       );
                                     }),
                                 SortingChipSortPage(
-                                    text: 'Flight times',
+                                    text: 'Clear Filter',
                                     selected: false,
                                     onTap: () {
-                                      showBottomSheet(
-                                        backgroundColor: knill,
-                                        context: context,
-                                        builder: (context) =>
-                                            const FlightTimesBottomSheet(),
-                                      );
+                                     controller.clearFilters();
                                     }),
+                                // SortingChipSortPage(
+                                //     text: 'Flight times',
+                                //     selected: false,
+                                //     onTap: () {
+                                //       showBottomSheet(
+                                //         backgroundColor: knill,
+                                //         context: context,
+                                //         builder: (context) =>
+                                //             const FlightTimesBottomSheet(),
+                                //       );
+                                //     }),
                               ],
                             ),
                           ),

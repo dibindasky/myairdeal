@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -423,12 +424,14 @@ class FlightSortController extends GetxController {
       }
     }
     // sort for duration
-    for (int i = 0; i < sort.length; i++) {
-      if (sortingVariables[selectedTripListIndex.value]![2].first *
-              durationSlider.value <
-          DateFormating.getTotalDifferenceInMinutes(sort[i].sI![0].dt ?? '',
-              sort[i].sI![sort[i].sI!.length - 1].at ?? '')) {
-        sort.removeAt(i--);
+    if (sortingVariablesSelected[selectedTripListIndex.value]![1].isEmpty) {
+      for (int i = 0; i < sort.length; i++) {
+        if (sortingVariables[selectedTripListIndex.value]![2].first *
+                durationSlider.value <
+            DateFormating.getTotalDifferenceInMinutes(sort[i].sI![0].dt ?? '',
+                sort[i].sI![sort[i].sI!.length - 1].at ?? '')) {
+          sort.removeAt(i--);
+        }
       }
     }
     searchList[selectedTripListIndex.value].value = sort.obs;
@@ -596,8 +599,29 @@ class FlightSortController extends GetxController {
     stopType.value = type;
   }
 
+  // clear all filters
+  void clearFilters() {
+    sortingVariablesSelected[selectedTripListIndex.value]![0].clear();
+    sortingVariablesSelected[selectedTripListIndex.value]![1].clear();
+    sortingVariablesSelected[selectedTripListIndex.value]![2].clear();
+    sortAirlineList();
+  }
+
   // change the duration of the slider for sorting, need to check the least time while changing
   void changeDurationSlider(double value, [bool reset = false]) {
+    if (sortingVariablesSelected[selectedTripListIndex.value]![1].isNotEmpty) {
+      Get.rawSnackbar(
+          backgroundColor: kGreyDark,
+          duration: const Duration(milliseconds: 300),
+          maxWidth: 100.w,
+          margin: EdgeInsets.only(bottom: 20.h),
+          messageText: Text(
+            'Try differnt filter',
+            style: textStyle1.copyWith(color: kWhite),
+          ));
+      durationSlider.value = 1;
+      return;
+    }
     if (reset) {
       sortingVariablesSelected[selectedTripListIndex.value]![2].clear();
     } else if (sortingVariables[selectedTripListIndex.value]![2].first <=
@@ -630,14 +654,12 @@ class FlightSortController extends GetxController {
 
   // add a stop for sorting if it is alredy added remove it form the list
   void selectStops(int value) {
-    print(sortingVariablesSelected[selectedTripListIndex.value]![1]);
     if (sortingVariablesSelected[selectedTripListIndex.value]![1]
         .contains(value)) {
       sortingVariablesSelected[selectedTripListIndex.value]![1].remove(value);
     } else {
       sortingVariablesSelected[selectedTripListIndex.value]![1].add(value);
     }
-    print(sortingVariablesSelected[selectedTripListIndex.value]![1]);
     sortAirlineList();
   }
 

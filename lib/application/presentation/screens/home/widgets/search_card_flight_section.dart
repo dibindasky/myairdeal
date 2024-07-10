@@ -17,7 +17,10 @@ import 'package:myairdeal/application/presentation/widgets/text_icon_button_cust
 class FlightSearchCardHome extends StatelessWidget {
   const FlightSearchCardHome({
     super.key,
+    this.formEdit = false,
   });
+
+  final bool formEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +123,11 @@ class FlightSearchCardHome extends StatelessWidget {
                 text: 'Search flights',
                 onTap: () {
                   controller.searchFlights();
-                  Get.toNamed(Routes.searchSortFlight, id: 1);
+                  if (formEdit) {
+                    Navigator.of(context).pop();
+                  } else {
+                    Get.toNamed(Routes.searchSortFlight, id: 1);
+                  }
                 },
                 width: double.infinity)
           ],

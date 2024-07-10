@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/flight_ticket_expansion_card.dart';
@@ -12,6 +13,7 @@ import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/bottom_mini_container.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/card_side_items.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
+import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
 
 class InternationalMutliComboTile extends StatelessWidget {
   const InternationalMutliComboTile(
@@ -145,6 +147,16 @@ class InternationalMutliComboTile extends StatelessWidget {
             (k) => TicketDetailExpansionChild(
                 onTapBookNow: () {
                   // book ticket for international mutli city and round trip
+                  Get.find<BookingController>().reviewPriceDetailChecking(
+                      reviewPriceDetailIdModel:
+                          ReviewPriceDetailIdModel(priceIds: [
+                    controller
+                            .searchList[0]
+                                [index]
+                            .totalPriceList![k]
+                            .id ??
+                        ''
+                  ]));
                   // for update traveller count
                   Get.find<TravellerController>().updatePassengersNumber(
                       controller.adultCount.value +

@@ -14,6 +14,7 @@ class DetailAppBar extends StatelessWidget {
       this.actionButton,
       this.bottomgap,
       this.topGap,
+      this.action,
       this.onActionButtonTap});
 
   final String? heading;
@@ -23,6 +24,7 @@ class DetailAppBar extends StatelessWidget {
   final bool backButton;
   final Widget? bottomgap;
   final Widget? topGap;
+  final Widget? action;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +69,7 @@ class DetailAppBar extends StatelessWidget {
                       ),
                     )
                   : kEmpty,
+              action != null ? action! : kEmpty,
               kWidth10
             ],
           ),

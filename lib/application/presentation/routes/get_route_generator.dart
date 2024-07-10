@@ -94,6 +94,7 @@ class GetXRouterConfig {
       page: () => const ScreenNavbar(),
     ),
     GetPage(
+      bindings: [HomeBinding(), FlightSortBinding()],
       name: Routes.airportSearch,
       page: () => const ScreenAirportSearch(),
     ),

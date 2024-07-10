@@ -39,7 +39,7 @@ class SortScreenHeaderSection extends StatelessWidget {
                       // edit selections for search api
                       showModalBottomSheet(
                         context: context,
-                        builder: (context) => FlightSearchCardHome(),
+                        builder: (context) => const FlightSearchCardHome(formEdit: true),
                       );
                     },
                     child: const Icon(Icons.edit_note_sharp, color: kWhite))

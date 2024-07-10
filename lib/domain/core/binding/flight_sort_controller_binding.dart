@@ -4,6 +4,6 @@ import 'package:myairdeal/application/controller/home/flight_sort_controller.dar
 class FlightSortBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<FlightSortController>(() => FlightSortController());
+    Get.put<FlightSortController>(FlightSortController(), permanent: true);
   }
 }

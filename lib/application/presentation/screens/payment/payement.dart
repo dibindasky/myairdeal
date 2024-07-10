@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/payment_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/itenary_tab/inner_content.dart';
 import 'package:myairdeal/application/presentation/screens/payment/widgets/add_method_card.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -33,9 +34,17 @@ class PaymentTab extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               kHeight10,
-              FlightTicketCard(
-                  buttonOnTap: () {},
-                  flightTicketCardEnum: FlightTicketCardEnum.payment),
+              Container(
+                  decoration: BoxDecoration(
+                      borderRadius: kRadius15,
+                      boxShadow: boxShadow2,
+                      color: kWhite),
+                  child: Column(
+                    children: [
+                      InnerContents(),kHeight20
+                    ],
+                  )),
+
               kHeight20,
               Obx(() {
                 return Get.find<BookingController>()

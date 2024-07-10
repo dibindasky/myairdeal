@@ -132,7 +132,7 @@ class FlightInvoiceCard extends StatelessWidget {
                                     '${tripInfos?[index].sI?[stopIndex].fD?.aI?.code ?? ''}- ${tripInfos?[index].sI?[stopIndex].fD?.fN ?? ''}',
                                 lebelStyle:
                                     textThinStyle1.copyWith(fontSize: 10.sp),
-                                //value: "--",
+                                value: "--",
                                 valueStyle: textThinStyle1.copyWith(
                                     fontSize: 10.sp, color: kGreyDark),
                                 subValue: DateFormating.formatDate(
@@ -205,9 +205,9 @@ class FlightInvoiceCard extends StatelessWidget {
                         airline: tripInfos?[index].sI?[0].fD?.aI?.name ?? '',
                         haveImage: false,
                         stops: (tripInfos?[index].sI?.length ?? 0) - 1,
-                        date: DateFormating.formatDate(
-                          (tripInfos?[index].sI?[0].dt ?? ''),
-                        ),
+                        // date:  DateFormating.formatDate(
+                        //   (tripInfos?[index].sI?[0].dt ?? ''),
+                        // ),
                       ),
                       Expanded(
                         child: TicketColumn(

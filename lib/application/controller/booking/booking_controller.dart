@@ -5,13 +5,16 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/data/service/booking/booking_service.dart';
 import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_responce.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
+import 'package:myairdeal/domain/models/booking/review_flight_detail_price/trip_info.dart';
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/pay_type.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
 class BookingController extends GetxController {
@@ -113,13 +116,24 @@ class BookingController extends GetxController {
   // complete booking api calling
   void completeBooking(BookTicketModel bookTicketModel) async {
     bookingCompleteLoading.value = true;
+    bookingCompleteSuccess = false.obs;
+    bookingCompleteFailure = false.obs;
+    String message = '';
     endTimer();
     final result =
         await bookingRepo.bookTicket(bookTicketModel: bookTicketModel);
     result.fold((l) {
       bookingCompleteFailure.value = true;
+      print('failure');
+      print(l.message);
+      message = l.message ?? errorMessage;
     }, (r) {
       bookingCompleteSuccess.value = true;
+      print('success');
+      if (r.errors != null && r.errors!.isNotEmpty) {
+        print(r.errors?[0].message ?? errorMessage);
+        message = r.errors?[0].message ?? errorMessage;
+      }
     });
     Get.back(id: 1);
     bookingCompleteLoading.value = false;
@@ -131,7 +145,7 @@ class BookingController extends GetxController {
           backgroundColor: kGreen,
           colorText: kWhite);
     } else {
-      Get.snackbar('Booking Failed', 'FAiled to book your ticket',
+      Get.snackbar('Booking Failed', message,
           snackPosition: SnackPosition.TOP,
           backgroundColor: kRed,
           colorText: kWhite);
@@ -155,6 +169,20 @@ class BookingController extends GetxController {
     if (start) {
       startTimer();
     }
+  }
+
+  double getPrice(String type) {
+    double price = 0.0;
+    for (var element in reviewedDetail!.value.tripInfos!) {
+      if (type == 'ADULT') {
+        price += element.totalPriceList?[0].fd?.adult?.fC?.tf ?? 00;
+      } else if (type == 'CHILD') {
+        price += element.totalPriceList?[0].fd?.child?.fC?.tf ?? 00;
+      } else if (type == 'INFANT') {
+        price += element.totalPriceList?[0].fd?.infant?.fC?.tf ?? 00;
+      }
+    }
+    return price;
   }
 
   // Get Single Booking

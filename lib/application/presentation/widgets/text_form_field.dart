@@ -27,6 +27,7 @@ class CustomTextField extends StatefulWidget {
     this.borderRadius = 8,
     this.onChanged,
     this.keyboardType,
+    this.maxLength,
   });
 
   final Widget? prefixIcon;
@@ -39,6 +40,7 @@ class CustomTextField extends StatefulWidget {
   final Validate validate;
   final String hintText;
   final int? maxLines;
+  final int? maxLength;
   final TextEditingController? controller;
   final bool isBorder;
   final Color? fillColor;
@@ -69,6 +71,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.keyboardType,
       onChanged: widget.onChanged,
       maxLines: widget.maxLines ?? 1,
+      maxLength: widget.maxLength,
       style: TextStyle(color: kBlack, fontSize: 12.sp),
       obscureText: showEye,
       autofocus: false,
@@ -111,6 +114,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
       validator: (value) {
         if (Validate.none == widget.validate) {
           return null;
+        } else if (widget.validate == Validate.phone &&
+            !isValidPhoneNumber(value!)) {
+          return 'Please enter a valid phone number';
         } else if (widget.validate == Validate.email && !isValidEmail(value!)) {
           return 'Please enter a valid email address';
         } else if (widget.validate == Validate.password && value!.length < 8) {

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,9 +15,9 @@ class CalenderSectionSortHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
-
     return Positioned(
-      top: 140.h,
+      // top: 140.h,
+      bottom: 0,
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Obx(() {
@@ -30,12 +28,12 @@ class CalenderSectionSortHeader extends StatelessWidget {
             ),
             firstDate: DateTime.now(),
             lastDate: DateTime.now().add(const Duration(days: 31)),
-            focusDate: controller.selectedDate.value,
+            focusDate: controller.depatureDate.value,
             showTimelineHeader: false,
             itemBuilder: (context, date, isSelected, onTap) => GestureDetector(
               onTap: () {
                 onTap();
-                controller.selctDate(date);
+                controller.searchFlights();
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
@@ -74,8 +72,8 @@ class CalenderSectionSortHeader extends StatelessWidget {
               ),
             ),
             onDateChange: (selectedDate) {
-              log(selectedDate.toString());
-              controller.selctDate(selectedDate);
+              controller.changeDepartureDate(selectedDate);
+              controller.searchFlights();
             },
           );
         }),

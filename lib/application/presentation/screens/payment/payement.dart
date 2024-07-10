@@ -35,16 +35,14 @@ class PaymentTab extends StatelessWidget {
             children: [
               kHeight10,
               Container(
-                  decoration: BoxDecoration(
-                      borderRadius: kRadius15,
-                      boxShadow: boxShadow2,
-                      color: kWhite),
-                  child: Column(
-                    children: [
-                      InnerContents(),kHeight20
-                    ],
-                  )),
-
+                decoration: BoxDecoration(
+                    borderRadius: kRadius15,
+                    boxShadow: boxShadow2,
+                    color: kWhite),
+                child: Column(
+                  children: [const InnerContents(), kHeight20],
+                ),
+              ),
               kHeight20,
               Obx(() {
                 return Get.find<BookingController>()
@@ -65,7 +63,7 @@ class PaymentTab extends StatelessWidget {
                                   Get.find<TravellerController>();
                               List<TravellerInfo> travellerInfos = [];
                               for (int i = 0;
-                                  i < travellerController.passengerLength;
+                                  i < travellerController.passengerLength.value;
                                   i++) {
                                 travellerInfos.add(
                                     travellerController.passengerDetails[i]!);
@@ -88,9 +86,11 @@ class PaymentTab extends StatelessWidget {
                                                 ?.tf)
                                       ],
                                       travellerInfo: travellerInfos,
-                                      deliveryInfo: DeliveryInfo(
-                                          contacts: ['9825127788'],
-                                          emails: ['testemail@gmail.com'])),
+                                      deliveryInfo: DeliveryInfo(contacts: [
+                                        travellerController.phoneController.text
+                                      ], emails: [
+                                        travellerController.emailController.text
+                                      ])),
                                 ),
                               );
                             },

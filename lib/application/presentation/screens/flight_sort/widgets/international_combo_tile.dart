@@ -50,7 +50,7 @@ class InternationalMutliComboTile extends StatelessWidget {
                             border: Border.all(width: 0.3),
                             borderRadius: BorderRadius.circular(13)),
                         child: Padding(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -146,22 +146,17 @@ class InternationalMutliComboTile extends StatelessWidget {
             controller.comboList[index][0].totalPriceList!.length,
             (k) => TicketDetailExpansionChild(
                 onTapBookNow: () {
-                  // book ticket for international mutli city and round trip
-                  Get.find<BookingController>().reviewPriceDetailChecking(
-                      reviewPriceDetailIdModel:
-                          ReviewPriceDetailIdModel(priceIds: [
-                    controller
-                            .searchList[0]
-                                [index]
-                            .totalPriceList![k]
-                            .id ??
-                        ''
-                  ]));
-                  // for update traveller count
                   Get.find<TravellerController>().updatePassengersNumber(
                       controller.adultCount.value +
                           controller.childrenCount.value +
                           controller.infantCount.value);
+                  // book ticket for international mutli city and round trip
+                  Get.find<BookingController>().reviewPriceDetailChecking(
+                      reviewPriceDetailIdModel:
+                          ReviewPriceDetailIdModel(priceIds: [
+                    controller.comboList[index][0].totalPriceList?[k].id ?? ''
+                  ]));
+                  // for update traveller count
                 },
                 totalPriceList:
                     controller.comboList[index][0].totalPriceList![k])),

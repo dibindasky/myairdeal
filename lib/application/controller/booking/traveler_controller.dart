@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
@@ -6,6 +7,7 @@ class TravellerController extends GetxController {
   /// Gender type [genderType] 0- Mr, 1- Mrs, 2- Ms
   RxInt genderType = 0.obs;
   RxList genderList = ['Mr', 'Mrs', 'Ms'].obs;
+  RxList genderListchild = ['Ms', 'Master'].obs;
   RxInt selectedSavedDetailData = 0.obs;
   String travelerTab = 'Add Details';
   List<String> detailList = [' Itinerary', 'Add Details', 'Review', 'Payments'];
@@ -17,6 +19,11 @@ class TravellerController extends GetxController {
     'Travel Insurance'
   ];
 
+  /// controller and key for traveller contact detail
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
   /// Add details Screen
   RxInt selectedMainTab = 0.obs;
   RxBool selectedDetailStepArrow = false.obs;
@@ -24,7 +31,7 @@ class TravellerController extends GetxController {
   int totalSubStepLength = 4;
 
   // total number of passengers
-  int passengerLength = 1;
+  RxInt passengerLength = 1.obs;
 
   /// list responsible for entering the passenger details
   RxList<TravellerInfo?> passengerDetails =
@@ -41,7 +48,8 @@ class TravellerController extends GetxController {
   }
 
   void updatePassengersNumber(int number) {
-    passengerLength = number;
+    print('passenger count number is $number');
+    passengerLength.value = number;
     selectedMainTab.value = 0;
     selectedAddDetailsStep.value = 0;
     update();
@@ -61,7 +69,7 @@ class TravellerController extends GetxController {
 
   void changeAddDetailsSubStepAdd() {
     if (selectedAddDetailsStep.value == 0) {
-      for (int i = 0; i < passengerLength; i++) {
+      for (int i = 0; i < passengerLength.value; i++) {
         if (passengerDetails[i] == null) {
           Get.snackbar(
               'Add all passengers details', 'Add all passengers to continue.',
@@ -72,7 +80,9 @@ class TravellerController extends GetxController {
         }
       }
       // remove later after adding seat,meal,baggage
-      changeDetailEnterTab(3);
+      // changeDetailEnterTab(3);
+      selectedAddDetailsStep.value = 3;
+      update();
       return;
     } else if (selectedAddDetailsStep.value < totalSubStepLength - 1) {
       selectedAddDetailsStep.value += 1;

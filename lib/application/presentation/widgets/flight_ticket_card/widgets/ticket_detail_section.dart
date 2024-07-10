@@ -63,8 +63,7 @@ class TicketDetailsSection extends StatelessWidget {
                               .sI![searchAirlineInformation!.sI!.length - 1]
                               .at!),
                       airline: searchAirlineInformation!.sI![0].fD!.aI!.name,
-                      stops: searchAirlineInformation!.sI!.length,
-                    )
+                      stops: searchAirlineInformation!.sI!.length-1)
                   : flightTicketCardEnum == FlightTicketCardEnum.complete ||
                           flightTicketCardEnum == FlightTicketCardEnum.cancelled
                       ? BookingCombletedCancelledTabcenterItems()

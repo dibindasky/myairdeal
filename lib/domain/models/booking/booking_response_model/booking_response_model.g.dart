@@ -9,6 +9,9 @@ part of 'booking_response_model.dart';
 BookingResponseModel _$BookingResponseModelFromJson(
         Map<String, dynamic> json) =>
     BookingResponseModel(
+      errors: (json['errors'] as List<dynamic>?)
+          ?.map((e) => Error.fromJson(e as Map<String, dynamic>))
+          .toList(),
       bookingId: json['bookingId'] as String?,
       status: json['status'] == null
           ? null
@@ -20,4 +23,5 @@ Map<String, dynamic> _$BookingResponseModelToJson(
     <String, dynamic>{
       'bookingId': instance.bookingId,
       'status': instance.status,
+      'errors': instance.errors
     };

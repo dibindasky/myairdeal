@@ -24,7 +24,6 @@ class ScreenFlightTicketSort extends StatelessWidget {
         if (controller.searchListLoading.value ||
             (!controller.comboTrip.value && controller.searchList.isEmpty) ||
             (controller.comboTrip.value && controller.comboList.isEmpty)) {
-          print('combo --> ${controller.comboList.length}');
           return Column(
             children: [
               const DetailAppBar(heading: 'Search', id: 1),
@@ -43,13 +42,15 @@ class ScreenFlightTicketSort extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 220.h,
+                height: controller.comboTrip.value ? null : 220.h,
                 child: Stack(
                   children: [
                     const SortScreenHeaderSection(),
-                    controller.tripType.value == 0
-                        ? const CalenderSectionSortHeader()
-                        : const SelectedAirlinesSections(),
+                    controller.comboTrip.value
+                        ? kEmpty
+                        : controller.tripType.value == 0
+                            ? const CalenderSectionSortHeader()
+                            : const SelectedAirlinesSections(),
                   ],
                 ),
               ),

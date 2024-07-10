@@ -27,8 +27,8 @@ class BookingService implements BookingRepo {
       return Right(BookingResponseModel.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException bookTicket $e');
-      return Left(
-          Failure(message: e.response?.data?['errors'] ?? errorMessage));
+      return Left(Failure(
+          message: e.response?.data?['errors'][0]['message'] ?? errorMessage));
     } catch (e) {
       log('catch bookTicket');
       return Left(Failure(message: e.toString()));
@@ -48,7 +48,7 @@ class BookingService implements BookingRepo {
     } on DioException catch (e) {
       log('DioException reviewPriceDetails $e');
       return Left(
-          Failure(message: e.response?.data?['errors'] ?? errorMessage));
+          Failure(message: e.response?.data?['errors'][0]['message'] ?? errorMessage));
     } catch (e) {
       log('catch reviewPriceDetails');
       return Left(Failure(message: e.toString()));

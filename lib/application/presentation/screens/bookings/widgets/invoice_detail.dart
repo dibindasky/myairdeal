@@ -11,7 +11,7 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
-import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_invoice/flight_invoice.dart';
 import '../../home/widgets/curent_offers_section.dart';
 
@@ -65,10 +65,11 @@ class ScreenInvoiceDetail extends StatelessWidget {
                 ),
                 kHeight10,
                 GetBuilder<BookingController>(builder: (controller) {
-                  if (controller.bookingLoading.value) {
-                    return const Skeleton(
-                      crossAxisCount: 1,
+                  if (controller.invoiceLoading.value) {
+                    return HorizontalShimmerSkeleton(
+                      scrollDirection: Axis.vertical,
                       itemCount: 1,
+                      height: 300.h,
                     );
                   }
                   return FlightInvoiceCard(

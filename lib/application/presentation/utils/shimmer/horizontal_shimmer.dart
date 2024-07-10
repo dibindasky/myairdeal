@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -26,8 +27,11 @@ class HorizontalShimmerSkeleton extends StatelessWidget {
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: SizedBox(
-        height: 125,
-        child: ListView.builder(
+        height: scrollDirection == Axis.vertical ? null : 125,
+        child: ListView.separated(
+          shrinkWrap: scrollDirection == Axis.vertical ? true : false,
+          separatorBuilder: (context, index) =>
+              scrollDirection != Axis.horizontal ? kHeight10 : kWidth10,
           scrollDirection: scrollDirection,
           itemCount: itemCount,
           itemBuilder: (context, index) {
@@ -38,7 +42,7 @@ class HorizontalShimmerSkeleton extends StatelessWidget {
                 width: width,
                 height: height,
                 decoration:
-                    BoxDecoration(color: Colors.white, borderRadius: kRadius10),
+                    BoxDecoration(color: kWhite, borderRadius: kRadius10),
               ),
             );
           },

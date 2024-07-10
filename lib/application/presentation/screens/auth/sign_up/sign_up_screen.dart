@@ -82,7 +82,7 @@ class ScreenSignUp extends StatelessWidget {
               GetBuilder<AuthController>(builder: (cont) {
                 return Column(
                   children: [
-                    controller.isLoading
+                    controller.isLoading.value
                         ? const Center(
                             child:
                                 CircularProgressIndicator(color: kBluePrimary),
@@ -119,7 +119,8 @@ class ScreenSignUp extends StatelessWidget {
               }),
 
               kHeight20,
-              const Center(child: Text('Or Sign Up With')),
+              // const Center(child: Text('Or Sign Up With')),
+              kHeight10,
               kHeight10,
               // const LoginGoogleOrFaceBook(),
               kHeight10,

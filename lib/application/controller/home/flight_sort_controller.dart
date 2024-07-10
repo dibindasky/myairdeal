@@ -637,6 +637,7 @@ class FlightSortController extends GetxController {
     } else {
       sortingVariablesSelected[selectedTripListIndex.value]![1].add(value);
     }
+    print(sortingVariablesSelected[selectedTripListIndex.value]![1]);
     sortAirlineList();
   }
 

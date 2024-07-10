@@ -47,11 +47,11 @@ showConfirmationDialog({
                   kWidth20,
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: buttonColor)),
+                        side: const BorderSide(color: kRed)),
                     onPressed: onPressed ?? () => Navigator.pop(context),
                     child: Text(
                       operationButtonName ?? 'Yes',
-                      style: textThinStyle1.copyWith(color: buttonColor),
+                      style: textThinStyle1.copyWith(color: kRed),
                     ),
                   )
                 ],

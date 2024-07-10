@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
@@ -13,6 +15,8 @@ class EmptyBookingScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(bookingEmptyImage),
           Text(
@@ -27,7 +31,9 @@ class EmptyBookingScreen extends StatelessWidget {
           EventButton(
             width: 400.w,
             text: 'Book a trip',
-            onTap: () {},
+            onTap: () {
+              Get.find<NavBarController>().chageIndex(0);
+            },
           )
         ],
       ),

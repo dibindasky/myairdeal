@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
-import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
-import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 
 class ScreenAccountCreationForm extends StatelessWidget {
@@ -27,13 +25,6 @@ class ScreenAccountCreationForm extends StatelessWidget {
               children: [
                 kHeight50,
                 kHeight10,
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: InkWell(
-                    onTap: () => Navigator.of(context).pop(),
-                    child: const Icon(Icons.arrow_back),
-                  ),
-                ),
                 kHeight20,
                 Form(
                   key: _formKey,
@@ -54,30 +45,30 @@ class ScreenAccountCreationForm extends StatelessWidget {
                         style: textThinStyle1.copyWith(color: kGrey),
                       ),
                       kHeight20,
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: kBlue),
-                          borderRadius: kRadius10,
-                          color: kWhite,
-                        ),
-                        child: Obx(
-                          () => Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(
-                              3,
-                              (index) => CustomRadioButton(
-                                selected:
-                                    index == authController.genderType.value,
-                                onChanged: () {
-                                  authController.changeGenderType(index);
-                                },
-                                text: authController.genderList[index],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   padding: const EdgeInsets.all(10),
+                      //   decoration: BoxDecoration(
+                      //     border: Border.all(color: kBlue),
+                      //     borderRadius: kRadius10,
+                      //     color: kWhite,
+                      //   ),
+                      //   child: Obx(
+                      //     () => Row(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //       children: List.generate(
+                      //         3,
+                      //         (index) => CustomRadioButton(
+                      //           selected:
+                      //               index == authController.genderType.value,
+                      //           onChanged: () {
+                      //             authController.changeGenderType(index);
+                      //           },
+                      //           text: authController.genderList[index],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       kHeight10,
                       Text(
                         'First Name',
@@ -95,7 +86,7 @@ class ScreenAccountCreationForm extends StatelessWidget {
                             borderSide: const BorderSide(width: .3),
                             borderRadius: kRadius15),
                         onTapOutside: () => FocusScope.of(context).unfocus(),
-                        hintText: 'first Name',
+                        hintText: 'First Name',
                         fillColor: kWhite,
                       ),
                       kHeight10,
@@ -129,7 +120,6 @@ class ScreenAccountCreationForm extends StatelessWidget {
                         controller: authController.email,
                         isBorder: true,
                         borderRadius: 14,
-                        textCapitalization: TextCapitalization.words,
                         enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(width: .3),
                             borderRadius: kRadius15),
@@ -139,14 +129,30 @@ class ScreenAccountCreationForm extends StatelessWidget {
                       ),
                       kHeight10,
                       kHeight50,
-                      EventIconButton(
-                        width: 360.w,
-                        text: 'Create Account',
-                        suffixIcon: Image.asset(tickIcon, height: 15.h),
-                        onTap: () {
-                          if (_formKey.currentState!.validate()) {
-                            authController.userCreation();
+                      Obx(
+                        () {
+                          if (authController.isLoading.value) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: kBluePrimary,
+                              ),
+                            );
                           }
+                          return EventIconButton(
+                            width: 360.w,
+                            text: 'Save Details',
+                            suffixIcon: authController
+                                        .lastName.text.isNotEmpty &&
+                                    authController.firstName.text.isNotEmpty &&
+                                    authController.email.text.isNotEmpty
+                                ? Image.asset(tickIcon, height: 15.h)
+                                : null,
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                authController.userCreation();
+                              }
+                            },
+                          );
                         },
                       )
                     ],

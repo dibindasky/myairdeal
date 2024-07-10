@@ -78,7 +78,7 @@ class NormalCenterItems extends StatelessWidget {
           ),
         ),
         Text(
-          '$stops Stop',
+          stops == 0 ? 'Non Stop' : '$stops Stop',
           style: textThinStyle1.copyWith(fontSize: 9.sp),
         ),
       ],

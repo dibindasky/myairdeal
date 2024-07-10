@@ -66,7 +66,12 @@ class FlightTicketCard extends StatelessWidget {
                   price: searchAirlineInformation != null
                       ? searchAirlineInformation!
                           .totalPriceList![0].fd!.adult!.fC!.tf!
-                      : 0,
+                      : itemInfos != null
+                          ? itemInfos!
+                                  .air?.totalPriceInfo?.totalFareDetail?.fC?.tf
+                                  ?.toDouble() ??
+                              0
+                          : 0,
                 ),
               ],
             ),

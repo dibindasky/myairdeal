@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/data/service/booking/booking_service.dart';
@@ -33,6 +34,7 @@ class BookingController extends GetxController {
   RxInt selectedcontactUsRadioButton = 6.obs;
 
   RxBool bookingLoading = false.obs;
+  RxBool invoiceLoading = false.obs;
 
   // booking completion loading
   RxBool bookingCompleteLoading = false.obs;
@@ -109,16 +111,16 @@ class BookingController extends GetxController {
     required RetrieveSingleBookingRequestModel
         retrieveSingleBookingRequestModel,
   }) async {
-    bookingLoading.value = true;
+    invoiceLoading.value = true;
     update();
     final data = await bookingRepo.retrieveSinglleBooking(
         retrieveSingleBookingRequestModel: retrieveSingleBookingRequestModel);
     data.fold((l) {
-      bookingLoading.value = false;
+      invoiceLoading.value = false;
       update();
     }, (r) {
       retrieveSingleBookingresponceModel.value = r;
-      bookingLoading.value = false;
+      invoiceLoading.value = false;
       update();
     });
   }

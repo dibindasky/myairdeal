@@ -4,13 +4,21 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/debouncer/debouncer.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 
-class DurationBottomSheet extends StatelessWidget {
+class DurationBottomSheet extends StatefulWidget {
   const DurationBottomSheet({
     super.key,
   });
+
+  @override
+  State<DurationBottomSheet> createState() => _DurationBottomSheetState();
+}
+
+class _DurationBottomSheetState extends State<DurationBottomSheet> {
+  Debouncer debouncer = Debouncer(milliseconds: 200);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +69,9 @@ class DurationBottomSheet extends StatelessWidget {
             Slider(
                 value: controller.durationSlider.value,
                 onChanged: (value) {
-                  controller.changeDurationSlider(value);
+                  debouncer.run(() {
+                    controller.changeDurationSlider(value);
+                  });
                 },
                 activeColor: kBluePrimary,
                 inactiveColor: kGreyLight),

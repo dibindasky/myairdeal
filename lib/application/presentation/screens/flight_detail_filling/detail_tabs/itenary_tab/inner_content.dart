@@ -65,7 +65,7 @@ class InnerContents extends StatelessWidget {
                               Text(
                                 model?.sI?[0].da?.name ?? '',
                                 style: textThinStyle1.copyWith(
-                                  fontSize: 9.sp,
+                                  fontSize: 10.sp,
                                   color: kGrey,
                                 ),
                               ),
@@ -77,7 +77,7 @@ class InnerContents extends StatelessWidget {
                               ),
                               kHeight5,
                               Text(
-                                DateFormating.formatTime(
+                                DateFormating.formatDate(
                                     model?.sI?[0].dt ?? ''),
                                 style: textThinStyle1.copyWith(
                                   color: kBlack,
@@ -200,7 +200,7 @@ class InnerContents extends StatelessWidget {
                               ),
                               kHeight5,
                               Text(
-                                DateFormating.formatTime(model
+                                DateFormating.formatDate(model
                                         ?.sI?[(model.sI?.length ?? 1) - 1].at ??
                                     ''),
                                 style: textThinStyle1.copyWith(

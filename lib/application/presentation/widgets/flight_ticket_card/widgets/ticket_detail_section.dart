@@ -36,7 +36,7 @@ class TicketDetailsSection extends StatelessWidget {
                       place: searchAirlineInformation!.sI![0].da!.code!,
                       airPort: searchAirlineInformation!.sI![0].da!.city!,
                       from: 'Departure',
-                      time: DateFormating.formatTime(
+                      time: DateFormating.formatTime24(
                           searchAirlineInformation!.sI![0].dt!),
                     )
                   : itemInfos != null
@@ -93,7 +93,7 @@ class TicketDetailsSection extends StatelessWidget {
                           .aa!
                           .city!,
                       from: 'Arrival',
-                      time: DateFormating.formatTime(searchAirlineInformation!
+                      time: DateFormating.formatTime24(searchAirlineInformation!
                           .sI![searchAirlineInformation!.sI!.length - 1].at!),
                     )
                   : itemInfos != null

@@ -3,15 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 
 class FareSummary extends StatelessWidget {
-  const FareSummary({
-    super.key,
-  });
+  const FareSummary({super.key, this.reviewPage = false});
+
+  final bool reviewPage;
 
   @override
   Widget build(BuildContext context) {
@@ -21,53 +22,162 @@ class FareSummary extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 10.w),
         child: Column(
           children: [
-            // Text(
-            //   'Fare Summary',
-            //   style: textStyle1.copyWith(fontWeight: FontWeight.w600),
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Text(
-            //           'Passenger(s)',
-            //           style:
-            //               textThinStyle1.copyWith(color: kBlack, fontSize: 9.sp),
-            //         ),
-            //         Text(
-            //           'Adult (x1)',
-            //           style: textThinStyle1.copyWith(
-            //             color: kBlack,
-            //             fontSize: 12.sp,
+            Text(
+              'Fare Summary',
+              style: textStyle1.copyWith(fontWeight: FontWeight.w600),
+            ),
+            controller.reviewedDetail?.value.tripInfos?[0].totalPriceList![0].fd
+                        ?.adult ==
+                    null
+                ? kEmpty
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Passenger(s)',
+                            style: textThinStyle1.copyWith(
+                                color: kBlack, fontSize: 9.sp),
+                          ),
+                          Text(
+                            'Adult (x${Get.find<FlightSortController>().adultCount.value})',
+                            style: textThinStyle1.copyWith(
+                              color: kBlack,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                          kHeight5,
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Ticket Price',
+                            style: textThinStyle1.copyWith(
+                                color: kBlack, fontSize: 9.sp),
+                          ),
+                          Text(
+                            '₹ ${controller.getPrice('ADULT')}',
+                            style: textThinStyle1.copyWith(
+                              color: kBlack,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                          kHeight5,
+                        ],
+                      ),
+                    ],
+                  ),
+            controller.reviewedDetail?.value.tripInfos?[0].totalPriceList![0].fd
+                        ?.child ==
+                    null
+                ? kEmpty
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Child (x${Get.find<FlightSortController>().childrenCount.value})',
+                            style: textThinStyle1.copyWith(
+                              color: kBlack,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                          kHeight5,
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '₹ ${controller.getPrice('CHILD')}',
+                            style: textThinStyle1.copyWith(
+                              color: kBlack,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                          kHeight5,
+                        ],
+                      ),
+                    ],
+                  ),
+            controller.reviewedDetail?.value.tripInfos?[0].totalPriceList![0].fd
+                        ?.infant ==
+                    null
+                ? kEmpty
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Infant (x${Get.find<FlightSortController>().infantCount.value})',
+                            style: textThinStyle1.copyWith(
+                              color: kBlack,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                          kHeight5,
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '₹ ${controller.getPrice('INFANT')}',
+                            style: textThinStyle1.copyWith(
+                              color: kBlack,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                          kHeight5,
+                        ],
+                      ),
+                    ],
+                  ),
+            // controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC
+            //             ?.taf ==
+            //         null
+            //     ? kEmpty
+            //     : Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               Text(
+            //                 'Taxes and Fees',
+            //                 style: textThinStyle1.copyWith(
+            //                   color: kBlack,
+            //                   fontSize: 12.sp,
+            //                 ),
+            //               ),
+            //               kHeight5,
+            //             ],
             //           ),
-            //         ),
-            //         kHeight5,
-            //       ],
-            //     ),
-            //     Column(
-            //       crossAxisAlignment: CrossAxisAlignment.end,
-            //       children: [
-            //         Text(
-            //           'Ticket Price',
-            //           style:
-            //               textThinStyle1.copyWith(color: kBlack, fontSize: 9.sp),
-            //         ),
-            //         Text(
-            //           '₹ ${controller.reviewedDetail?.value.tripInfos?[0].totalPriceList}',
-            //           style: textThinStyle1.copyWith(
-            //             color: kBlack,
-            //             fontSize: 12.sp,
+            //           Column(
+            //             crossAxisAlignment: CrossAxisAlignment.end,
+            //             children: [
+            //               Text(
+            //                 '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.taf}',
+            //                 style: textThinStyle1.copyWith(
+            //                   color: kBlack,
+            //                   fontSize: 12.sp,
+            //                 ),
+            //               ),
+            //               kHeight5,
+            //             ],
             //           ),
-            //         ),
-            //         kHeight5,
-            //       ],
-            //     ),
-            //   ],
-            // ),
-            // const DottedLines(height: 10),
-            // kHeight15,
+            //         ],
+            //       ),
+            const DottedLines(height: 10),
+            kHeight15,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -101,13 +211,17 @@ class FareSummary extends StatelessWidget {
                 ],
               ),
             ),
-            kHeight20,
-            EventButton(
-              text: controller.bookingLoading.value ? 'Confirm' : 'Confirm',
-              onTap: () {
-                Get.find<TravellerController>().changeDetailEnterTab(1);
-              },
-            ),
+            reviewPage ? kEmpty : kHeight20,
+            reviewPage
+                ? kEmpty
+                : EventButton(
+                    text: controller.bookingLoading.value
+                        ? 'Continue'
+                        : 'Continue',
+                    onTap: () {
+                      Get.find<TravellerController>().changeDetailEnterTab(1);
+                    },
+                  ),
             kHeight10,
           ],
         ),

@@ -24,6 +24,10 @@ class FloatingButtonSection extends StatelessWidget {
               backgroundColor: kBlueDark,
               splashColor: kBluePrimary,
               onPressed: () {
+                Get.find<TravellerController>().updatePassengersNumber(
+                    controller.adultCount.value +
+                        controller.childrenCount.value +
+                        controller.infantCount.value);
                 if (controller.selectedTripListIndex.value ==
                     controller.searchList.length - 1) {
                   List<String> ids = [];
@@ -40,10 +44,6 @@ class FloatingButtonSection extends StatelessWidget {
                 } else {
                   controller.nextOrContinue();
                 }
-                Get.find<TravellerController>().updatePassengersNumber(
-                    controller.adultCount.value +
-                        controller.childrenCount.value +
-                        controller.infantCount.value);
               },
               label: Column(
                 children: [

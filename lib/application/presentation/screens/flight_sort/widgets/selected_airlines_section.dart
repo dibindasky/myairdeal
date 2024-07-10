@@ -31,15 +31,15 @@ class SelectedAirlinesSections extends StatelessWidget {
                   final flightModel = controller.searchList[index]
                       [controller.selectedFlights[index]];
                   return GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       controller.changeSelectedTripIndex(index);
                     },
                     child: Container(
                       decoration: BoxDecoration(
                           // boxShadow: boxShadow2 ,
-                          color:index == controller.selectedTripListIndex.value
-                            ? kBlueLightShade
-                            : kGreyLightBackground,
+                          color: index == controller.selectedTripListIndex.value
+                              ? kBlueLightShade
+                              : kGreyLightBackground,
                           border: Border.all(color: kBlack),
                           borderRadius: kRadius10),
                       margin: EdgeInsets.only(
@@ -71,7 +71,7 @@ class SelectedAirlinesSections extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                  '${controller.airportSelected[index][0].citycode ?? ''} - ${controller.airportSelected[index][1].citycode}',
+                                  '${controller.airportSelected[index][0].code ?? ''} - ${controller.airportSelected[index][1].code ?? ''}',
                                   style: textStyle1.copyWith(
                                       fontWeight: FontWeight.bold)),
                               Text(
@@ -93,15 +93,15 @@ class SelectedAirlinesSections extends StatelessWidget {
                                   // '₹ ${flightModel.totalPriceList?[controller.selectedTicketPrices[index]].fd?.adult?.fC?.tf ?? ''}',
                                   style: textThinStyle1.copyWith()),
                               Text(
-                                  DateFormating.getDate(controller
-                                              .tripType.value ==
-                                          1
-                                      ? index == 0
-                                          ? controller.depatureDate.value
-                                          : controller.returnDate.value
-                                      : controller.multiCityDepartureDate[index]),
-                                  style:
-                                      textThinStyle1.copyWith(color: kGreyDark)),
+                                  DateFormating.getDate(
+                                      controller.tripType.value == 1
+                                          ? index == 0
+                                              ? controller.depatureDate.value
+                                              : controller.returnDate.value
+                                          : controller
+                                              .multiCityDepartureDate[index]),
+                                  style: textThinStyle1.copyWith(
+                                      color: kGreyDark)),
                             ],
                           )
                         ],

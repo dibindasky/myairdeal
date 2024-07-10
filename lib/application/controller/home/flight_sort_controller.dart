@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/utils/test_const.dart';
 import 'package:myairdeal/data/service/flight_sort/flight_service.dart';
@@ -105,8 +107,6 @@ class FlightSortController extends GetxController {
   // value used to change the duration of flights in the sorting section
   RxDouble durationSlider = 1.0.obs;
 
-  Rx<DateTime> selectedDate = DateTime.now().obs;
-
   /// selected airports for search for all oneway,round and multicity in a list
   RxList<RxList<CitySearchModel>> airportSelected = <RxList<CitySearchModel>>[
     RxList.generate(2, (index) => CitySearchModel()),
@@ -164,6 +164,7 @@ class FlightSortController extends GetxController {
     searchListLoading.value = true;
     selectedTripListIndex.value = 0;
     durationSlider.value = 1;
+    String message = '';
     if (tripType.value == 1) {
       // if it is a round trip add airport as ulta
       airportSelected[1].value = [airportSelected[0][1], airportSelected[0][0]];
@@ -209,6 +210,7 @@ class FlightSortController extends GetxController {
         flightSearchSortModel: FlightSearchSortModel(searchQuery: searchModel));
     result.fold((l) {
       searchListLoading.value = false;
+      message = l.message ?? errorMessage;
     }, (r) {
       if (r.errors == null) {
         searchListMain = [];
@@ -261,6 +263,11 @@ class FlightSortController extends GetxController {
             searchList.add(RxList.from(e));
           }
         }
+      }
+      if (message != '') {
+        Get.snackbar('Failed to load data', message,
+            backgroundColor: kRed, colorText: kWhite);
+        Get.back(id: 1);
       }
       searchListLoading.value = false;
       if (searchListMain.isEmpty) {
@@ -623,6 +630,7 @@ class FlightSortController extends GetxController {
 
   // add a stop for sorting if it is alredy added remove it form the list
   void selectStops(int value) {
+    print(sortingVariablesSelected[selectedTripListIndex.value]![1]);
     if (sortingVariablesSelected[selectedTripListIndex.value]![1]
         .contains(value)) {
       sortingVariablesSelected[selectedTripListIndex.value]![1].remove(value);
@@ -652,9 +660,5 @@ class FlightSortController extends GetxController {
     } else {
       arrivesTimesSelected.add(value);
     }
-  }
-
-  void selctDate(DateTime value) {
-    selectedDate.value = value;
   }
 }

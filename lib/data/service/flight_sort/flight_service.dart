@@ -23,7 +23,8 @@ class FlightService implements FlightRepo {
       return Right(FlightSortResponseModel.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException getAllFlight $e');
-      return Left(Failure(message: e.message ?? errorMessage));
+      return Left(Failure(
+          message: e.response?.data?['errors'][0]['message'] ?? errorMessage));
     } catch (e) {
       log('catch getAllFlight $e');
       return Left(Failure(message: e.toString()));

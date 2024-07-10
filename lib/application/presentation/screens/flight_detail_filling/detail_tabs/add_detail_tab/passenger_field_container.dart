@@ -23,6 +23,7 @@ class _DetailContainerState extends State<DetailContainer> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
+  int gender = 0;
   final travelController = Get.find<TravellerController>();
 
   @override
@@ -69,31 +70,34 @@ class _DetailContainerState extends State<DetailContainer> {
             ],
           ),
           kHeight10,
-          widget.travellerType == 'INFANT'
-              ? kEmpty
-              : Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: kBlue),
-                    borderRadius: kRadius10,
-                    color: kWhite,
-                  ),
-                  child: Obx(
-                    () => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(
-                        3,
-                        (index) => CustomRadioButton(
-                          selected: index == travelController.genderType.value,
-                          onChanged: () {
-                            travelController.changeGenderType(index);
-                          },
-                          text: travelController.genderList[index],
-                        ),
-                      ),
-                    ),
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              border: Border.all(color: kBlue),
+              borderRadius: kRadius10,
+              color: kWhite,
+            ),
+            child: Obx(
+              () => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(
+                  widget.travellerType == 'ADULT' ? 3 : 2,
+                  (index) => CustomRadioButton(
+                    selected: gender == index,
+                    onChanged: () {
+                      // travelController.changeGenderType(index);
+                      setState(() {
+                        gender = index;
+                      });
+                    },
+                    text: widget.travellerType == 'ADULT'
+                        ? travelController.genderList[index]
+                        : travelController.genderListchild[index],
                   ),
                 ),
+              ),
+            ),
+          ),
           kHeight15,
           Text('First Name', style: textThinStyle1),
           kHeight5,
@@ -138,30 +142,31 @@ class _DetailContainerState extends State<DetailContainer> {
             hintText: 'yyyy-mm-dd',
             fillColor: kWhite,
             onChanged: (v) {
-     String value = dateOfBirthController.text;
-    String newValue = '';
+              String value = dateOfBirthController.text;
+              String newValue = '';
 
-    if (value.isNotEmpty) {
-      value = value.replaceAll('-', '');
+              if (value.isNotEmpty) {
+                value = value.replaceAll('-', '');
 
-      for (int i = 0; i < value.length; i++) {
-        if (i == 4 || i == 6) {
-          newValue += '-';
-        }
-        newValue += value[i];
-      }
+                for (int i = 0; i < value.length; i++) {
+                  if (i == 4 || i == 6) {
+                    newValue += '-';
+                  }
+                  newValue += value[i];
+                }
 
-      if (newValue.length > 10) {
-        newValue = newValue.substring(0, 10);
-      }
-    }
+                if (newValue.length > 10) {
+                  newValue = newValue.substring(0, 10);
+                }
+              }
 
-    if (newValue != dateOfBirthController.text) {
-      dateOfBirthController.value = dateOfBirthController.value.copyWith(
-        text: newValue,
-        selection: TextSelection.collapsed(offset: newValue.length),
-      );
-    }
+              if (newValue != dateOfBirthController.text) {
+                dateOfBirthController.value =
+                    dateOfBirthController.value.copyWith(
+                  text: newValue,
+                  selection: TextSelection.collapsed(offset: newValue.length),
+                );
+              }
             },
           ),
           kHeight5,
@@ -180,40 +185,48 @@ class _DetailContainerState extends State<DetailContainer> {
                       snackPosition: SnackPosition.BOTTOM);
                   return;
                 }
-                final gender = travelController.genderType.value;
                 travelController.addPassengerDetail(
                   widget.index,
                   TravellerInfo(
                       dob: dateOfBirthController.text,
                       fN: firstNameController.text,
                       lN: lastNameController.text,
-                      ti: widget.travellerType == 'INFANT'
-                          ? null
-                          : gender == 0
-                              ? 'Mr'
-                              : gender == 1
-                                  ? 'Mrs'
-                                  : 'Ms',
+                      ti: widget.travellerType == 'ADULT'
+                          ? travelController.genderList[gender]
+                          : travelController.genderListchild[gender],
                       pt: widget.travellerType),
                 );
               },
-              child: Obx( () {
-                  return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-                    decoration: BoxDecoration(
-                        boxShadow: boxShadow3,
-                        color:travelController.passengerDetails[widget.index] != null?kBluePrimary:kWhite,
-                        border: Border.all(color:travelController.passengerDetails[widget.index] != null?kWhite:  kBluePrimary),
-                        borderRadius: kRadius10),
-                    child: Text(
-                      travelController.passengerDetails[widget.index] != null
-                          ? 'Update'
-                          : '+ Add',
-                      style: textStyle1.copyWith(color:travelController.passengerDetails[widget.index] != null?kWhite:  kBluePrimary),
-                    ),
-                  );
-                }
-              ),
+              child: Obx(() {
+                return Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                  decoration: BoxDecoration(
+                      boxShadow: boxShadow3,
+                      color: travelController.passengerDetails[widget.index] !=
+                              null
+                          ? kBluePrimary
+                          : kWhite,
+                      border: Border.all(
+                          color:
+                              travelController.passengerDetails[widget.index] !=
+                                      null
+                                  ? kWhite
+                                  : kBluePrimary),
+                      borderRadius: kRadius10),
+                  child: Text(
+                    travelController.passengerDetails[widget.index] != null
+                        ? 'Update'
+                        : '+ Add',
+                    style: textStyle1.copyWith(
+                        color:
+                            travelController.passengerDetails[widget.index] !=
+                                    null
+                                ? kWhite
+                                : kBluePrimary),
+                  ),
+                );
+              }),
             ),
           ),
           kHeight15

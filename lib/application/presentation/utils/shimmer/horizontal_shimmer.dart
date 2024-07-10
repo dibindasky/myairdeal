@@ -14,8 +14,8 @@ class HorizontalShimmerSkeleton extends StatelessWidget {
     Key? key,
     required this.itemCount,
     required this.scrollDirection,
-    required this.height,
-    required this.width,
+    this.height = 200,
+    this.width = 100,
     this.paddingHorizontal = 0,
     this.paddingvertical = 0,
   }) : super(key: key);

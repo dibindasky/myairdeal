@@ -1,8 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/status.dart';
 import 'gst_info.dart';
 import 'item_infos.dart';
 import 'order.dart';
-import 'status.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/error.dart';
 part 'retrieve_single_bookingresponce_model.g.dart';
 

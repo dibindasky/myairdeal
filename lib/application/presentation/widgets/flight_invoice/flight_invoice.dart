@@ -123,12 +123,6 @@ class FlightInvoiceCard extends StatelessWidget {
                                     isBold: false,
                                   ),
                                 ),
-                                // NormalCenterItems(
-                                //   airline:
-                                //       tripInfos?[index].sI?[0].fD?.aI?.name ?? '',
-                                //   haveImage: false,
-                                //   stops: 0,
-                                // ),
                                 Expanded(
                                   child: TicketColumn(
                                     label: tripInfos?[index]

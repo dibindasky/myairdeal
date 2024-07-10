@@ -43,18 +43,12 @@ class DateFormating {
     return formatter.format(dateTime);
   }
 
+  // Format to "Jul 18, Thu", "21:00"
   static String formatDate(String date) {
     if (date.isEmpty) return '';
-
     DateTime dateTime = DateTime.parse(date);
-
-    // Format to "Jul 18, Thu"
     String formattedDate = DateFormat('MMM d, E').format(dateTime);
-
-    // Format to "21:00"
     String formattedTime = DateFormat('HH:mm').format(dateTime);
-
-    // Combine the date and time
     return '$formattedDate, $formattedTime';
   }
 
@@ -69,7 +63,6 @@ class DateFormating {
     }
     formattedTime +=
         '${hours.toString().padLeft(2, '0')}h ${minutes.toString().padLeft(2, '0')}m';
-
     return formattedTime;
   }
 

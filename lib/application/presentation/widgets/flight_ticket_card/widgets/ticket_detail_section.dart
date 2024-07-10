@@ -13,11 +13,13 @@ class TicketDetailsSection extends StatelessWidget {
     super.key,
     required this.searchAirlineInformation,
     this.itemInfos,
+    this.bookingId,
     required this.flightTicketCardEnum,
   });
 
   final SearchAirlineInformation? searchAirlineInformation;
   final ItemInfos? itemInfos;
+  final String? bookingId;
   final FlightTicketCardEnum flightTicketCardEnum;
 
   @override
@@ -69,6 +71,7 @@ class TicketDetailsSection extends StatelessWidget {
                       ? BookingCombletedCancelledTabcenterItems()
                       : itemInfos != null
                           ? NormalCenterItems(
+                              travelMinutes: '$bookingId',
                               airline: itemInfos!
                                       .air?.tripInfos?[0].sI?[0].fD?.aI?.name ??
                                   '',

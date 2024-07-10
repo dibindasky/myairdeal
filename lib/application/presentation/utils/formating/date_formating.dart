@@ -57,6 +57,17 @@ class DateFormating {
 
     return formattedTime;
   }
+  
+  static String convertSecondsToHoursMinutesSeconds(int totalSeconds) {
+  int hours = totalSeconds ~/ 3600;
+  int minutes = (totalSeconds % 3600) ~/ 60;
+  int seconds = totalSeconds % 60;
+
+  String formattedTime =
+      '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+
+  return formattedTime;
+}
 
   static String getDifferenceOfDates(
       String dateTimeString1, String dateTimeString2) {

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
@@ -34,6 +36,11 @@ class BookingController extends GetxController {
 
   RxBool bookingLoading = false.obs;
 
+  // timer for booking
+  Rx<Timer> timer = Timer(const Duration(seconds: 1), () {}).obs;
+  // remaining time
+  RxInt remainingTime = 900.obs;
+
   // booking completion loading
   RxBool bookingCompleteLoading = false.obs;
   RxBool bookingCompleteSuccess = false.obs;
@@ -66,8 +73,45 @@ class BookingController extends GetxController {
 
   List<String> dropDwnDatas = ['Product 1', 'Product 2', 'Product 3'];
 
+  // start timer for booking section
+  void startTimer() {
+    timer.value.cancel();
+    final DateTime currentTime = DateTime.now();
+    final Duration elapsedTime = currentTime.difference(
+        DateTime.parse(reviewedDetail?.value.conditions?.sct ?? ''));
+    final int elapsedSeconds = elapsedTime.inSeconds;
+    remainingTime.value =
+        (reviewedDetail?.value.conditions?.st ?? 900 - elapsedSeconds)
+            .clamp(0, 900);
+    timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (remainingTime.value == 0) {
+        timer.cancel();
+        Get.back(id: 1);
+        Get.until((route) => Get.currentRoute == Routes.bottomBar);
+        Get.dialog(AlertDialog(
+          backgroundColor: kRedLight,
+          title: const Text('Session expired'),
+          content: const Text(
+              'Your session time has been expired. You have to complete booking before the timer ends.'),
+        ));
+        // Get.snackbar('Session has been expired',
+        //     'Your session time has been expired you have to complete booking before the timer ends',
+        //     backgroundColor: kRed, colorText: kWhite);
+      } else {
+        remainingTime.value--;
+      }
+    });
+  }
+
+  // end timer
+  void endTimer() {
+    timer.value.cancel();
+  }
+
+  // complete booking api calling
   void completeBooking(BookTicketModel bookTicketModel) async {
     bookingCompleteLoading.value = true;
+    endTimer();
     final result =
         await bookingRepo.bookTicket(bookTicketModel: bookTicketModel);
     result.fold((l) {
@@ -75,6 +119,9 @@ class BookingController extends GetxController {
     }, (r) {
       bookingCompleteSuccess.value = true;
     });
+    Get.back(id: 1);
+    bookingCompleteLoading.value = false;
+    Get.until((route) => Get.currentRoute == Routes.bottomBar);
     if (bookingCompleteSuccess.value) {
       Get.snackbar('Booking done successfully',
           'Your booking has been successfully placed',
@@ -87,21 +134,25 @@ class BookingController extends GetxController {
           backgroundColor: kRed,
           colorText: kWhite);
     }
-    bookingCompleteLoading.value = false;
-    Get.offNamedUntil(Routes.bottomBar, (route) => false);
-    Get.back(id: 1);
   }
 
   // review price details before going to the booking section
   void reviewPriceDetailChecking(
       {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
+    bool start = false;
     Get.toNamed(Routes.flightDetailFillling);
     reviewedDetail = null;
     reviewPriceLoading.value = true;
     final result = await bookingRepo.reviewPriceDetails(
         reviewPriceDetailIdModel: reviewPriceDetailIdModel);
-    result.fold((l) => Get.back(), (r) => reviewedDetail = r.obs);
+    result.fold((l) => Get.back(), (r) {
+      start = true;
+      reviewedDetail = r.obs;
+    });
     reviewPriceLoading.value = false;
+    if (start) {
+      startTimer();
+    }
   }
 
   // Get Single Booking

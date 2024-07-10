@@ -85,13 +85,19 @@ class StopsSortBottomSheet extends StatelessWidget {
                     EventButton(
                       isBorder: true,
                       text: 'Reset',
-                      onTap: () {},
+                      onTap: () {
+                        controller.resetStops();
+                      },
                       color: kWhite,
                       borderColor: kBlack,
                       textColr: kBluePrimary,
                     ),
                     kWidth10,
-                    EventButton(text: 'Done', onTap: () {})
+                    EventButton(
+                        text: 'Done',
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        })
                   ],
                 ),
                 kHeight20,

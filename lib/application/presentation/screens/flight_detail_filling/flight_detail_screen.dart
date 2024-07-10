@@ -10,6 +10,7 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/screens/payment/payement.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 
 class ScreenFlightDetail extends StatelessWidget {
   const ScreenFlightDetail({super.key});
@@ -17,17 +18,26 @@ class ScreenFlightDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final travelController = Get.find<TravellerController>();
+    final bookingController = Get.find<BookingController>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
             Obx(
               () => DetailAppBar(
-                  heading: travelController
-                      .detailList[travelController.selectedMainTab.value]),
+                heading: travelController
+                    .detailList[travelController.selectedMainTab.value],
+                action: bookingController.bookingLoading.value
+                    ? kEmpty
+                    : Text(
+                        DateFormating.convertSecondsToHoursMinutesSeconds(
+                            bookingController.remainingTime.value),
+                        style: textStyle1.copyWith(color: kWhite),
+                      ),
+              ),
             ),
             Obx(() {
-              if (Get.find<BookingController>().reviewPriceLoading.value) {
+              if (bookingController.reviewPriceLoading.value) {
                 return SizedBox(
                     height: MediaQuery.of(context).size.height * 0.75,
                     child: const Center(

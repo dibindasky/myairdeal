@@ -54,7 +54,7 @@ class ScreenFlightTicketSort extends StatelessWidget {
                 ),
               ),
               const SortingChipsSection(),
-              const TripChoosingContainers(),
+              // const TripChoosingContainers(),
               const TicketsListSorted(),
               kHeight20
             ],

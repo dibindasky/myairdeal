@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
 
 class FloatingButtonSection extends StatelessWidget {
   const FloatingButtonSection({
@@ -22,7 +24,22 @@ class FloatingButtonSection extends StatelessWidget {
               backgroundColor: kBlueDark,
               splashColor: kBluePrimary,
               onPressed: () {
-                controller.nextOrContinue();
+                if (controller.selectedTripListIndex.value ==
+                    controller.searchList.length - 1) {
+                  List<String> ids = [];
+                  for (int i = 0; i < controller.searchList.length; i++) {
+                    final item = controller.searchList[i];
+                    ids.add(item[controller.selectedFlights[i]]
+                            .totalPriceList![controller.selectedTicketPrices[i]]
+                            .id ??
+                        '');
+                  }
+                  Get.find<BookingController>().reviewPriceDetailChecking(
+                      reviewPriceDetailIdModel:
+                          ReviewPriceDetailIdModel(priceIds: ids));
+                } else {
+                  controller.nextOrContinue();
+                }
                 Get.find<TravellerController>().updatePassengersNumber(
                     controller.adultCount.value +
                         controller.childrenCount.value +
@@ -38,7 +55,7 @@ class FloatingButtonSection extends StatelessWidget {
                     style: textStyle1.copyWith(color: kWhite),
                   ),
                   Text(
-                    '₹ 4,500',
+                    '₹ ${controller.totalTicketPrice.value}',
                     style: textThinStyle1.copyWith(color: kWhite),
                   )
                 ],

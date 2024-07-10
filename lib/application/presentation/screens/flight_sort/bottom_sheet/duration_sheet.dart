@@ -73,6 +73,7 @@ class DurationBottomSheet extends StatelessWidget {
                     isBorder: true,
                     text: 'Reset',
                     onTap: () {
+                      controller.changeDurationSlider(1, true);
                       Navigator.of(context).pop();
                     },
                     color: kWhite,

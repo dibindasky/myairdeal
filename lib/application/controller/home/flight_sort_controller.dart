@@ -49,6 +49,9 @@ class FlightSortController extends GetxController {
   /// to set which list should show on sorting page
   RxInt selectedTripListIndex = 0.obs;
 
+  // total price of the ticket with the selected total ticket fare
+  RxDouble totalTicketPrice = 0.0.obs;
+
   // scroll controller used to show the list[selected flights and selected tabs in sorting] in a auto scroll view
   ScrollController flightSortController = ScrollController();
   ScrollController flightSortTabController = ScrollController();
@@ -335,11 +338,27 @@ class FlightSortController extends GetxController {
     sortAirlineList();
   }
 
+  void getTotalFare() {
+    double price = 0.0;
+    for (int i = 0; i < searchList.length; i++) {
+      final item = searchList[i];
+      price += item[selectedFlights[i]]
+              .totalPriceList![selectedTicketPrices[i]]
+              .fd
+              ?.adult
+              ?.fC
+              ?.tf ??
+          0.0;
+    }
+    totalTicketPrice.value = price;
+  }
+
 // change the selected flight for multi city and round trips on list
 // paramater index -> index of ticket, i -> index of ticket price
   void changeFlightSelectionMultiCityAndRound(int index, int i) {
     selectedFlights[selectedTripListIndex.value] = index;
     selectedTicketPrices[selectedTripListIndex.value] = i;
+    getTotalFare();
   }
 
 // change trip from tab for multicity and round trip for choosing diffrent flights in different list
@@ -406,6 +425,7 @@ class FlightSortController extends GetxController {
       }
     }
     searchList[selectedTripListIndex.value].value = sort.obs;
+    getTotalFare();
   }
 
   // button for choosing diferent airlines and on the last index need to call review page
@@ -609,6 +629,12 @@ class FlightSortController extends GetxController {
     } else {
       sortingVariablesSelected[selectedTripListIndex.value]![1].add(value);
     }
+    sortAirlineList();
+  }
+
+  // reset the stops selected
+  void resetStops() {
+    sortingVariablesSelected[selectedTripListIndex.value]![1].clear();
     sortAirlineList();
   }
 

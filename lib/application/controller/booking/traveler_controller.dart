@@ -42,6 +42,9 @@ class TravellerController extends GetxController {
 
   void updatePassengersNumber(int number) {
     passengerLength = number;
+    selectedMainTab.value = 0;
+    selectedAddDetailsStep.value = 0;
+    update();
   }
 
   changeAddDetailsSubStep(int index) {

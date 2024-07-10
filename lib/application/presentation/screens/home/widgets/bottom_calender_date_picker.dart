@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -43,35 +45,35 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime? _selectedDay;
   Map<DateTime, String> prices = {
-    DateTime.utc(2024, 6, 1): '₹3500',
-    DateTime.utc(2024, 6, 2): '₹3500',
-    DateTime.utc(2024, 6, 3): '₹3500',
-    DateTime.utc(2024, 6, 4): '₹3500',
-    DateTime.utc(2024, 6, 5): '₹3500',
-    DateTime.utc(2024, 6, 6): '₹3500',
-    DateTime.utc(2024, 6, 7): '₹3500',
-    DateTime.utc(2024, 6, 8): '₹3500',
-    DateTime.utc(2024, 6, 9): '₹3500',
-    DateTime.utc(2024, 6, 10): '₹3500',
-    DateTime.utc(2024, 6, 11): '₹3500',
-    DateTime.utc(2024, 6, 12): '₹3500',
-    DateTime.utc(2024, 6, 13): '₹3500',
-    DateTime.utc(2024, 6, 14): '₹3500',
-    DateTime.utc(2024, 6, 15): '₹3500',
-    DateTime.utc(2024, 6, 16): '₹3500',
-    DateTime.utc(2024, 6, 17): '₹3500',
-    DateTime.utc(2024, 6, 18): '₹3500',
-    DateTime.utc(2024, 6, 19): '₹3500',
-    DateTime.utc(2024, 6, 20): '₹3500',
-    DateTime.utc(2024, 6, 21): '₹3500',
-    DateTime.utc(2024, 6, 22): '₹3500',
-    DateTime.utc(2024, 6, 23): '₹3500',
-    DateTime.utc(2024, 6, 24): '₹3500',
-    DateTime.utc(2024, 6, 25): '₹3500',
-    DateTime.utc(2024, 6, 26): '₹3500',
-    DateTime.utc(2024, 6, 27): '₹3500',
-    DateTime.utc(2024, 6, 28): '₹3500',
-    DateTime.utc(2024, 6, 29): '₹3500',
+    DateTime.utc(2024, 7, 1): '₹3500',
+    DateTime.utc(2024, 7, 2): '₹3500',
+    DateTime.utc(2024, 7, 3): '₹3500',
+    DateTime.utc(2024, 7, 4): '₹3500',
+    DateTime.utc(2024, 7, 5): '₹3500',
+    DateTime.utc(2024, 7, 6): '₹3500',
+    DateTime.utc(2024, 7, 7): '₹3500',
+    DateTime.utc(2024, 7, 8): '₹3500',
+    DateTime.utc(2024, 7, 9): '₹3500',
+    DateTime.utc(2024, 7, 10): '₹3500',
+    DateTime.utc(2024, 7, 11): '₹3500',
+    DateTime.utc(2024, 7, 12): '₹3500',
+    DateTime.utc(2024, 7, 13): '₹3500',
+    DateTime.utc(2024, 7, 14): '₹3500',
+    DateTime.utc(2024, 7, 15): '₹3500',
+    DateTime.utc(2024, 7, 16): '₹3500',
+    DateTime.utc(2024, 7, 17): '₹3500',
+    DateTime.utc(2024, 7, 18): '₹3500',
+    DateTime.utc(2024, 7, 19): '₹3500',
+    DateTime.utc(2024, 7, 20): '₹3500',
+    DateTime.utc(2024, 7, 21): '₹3500',
+    DateTime.utc(2024, 7, 22): '₹3500',
+    DateTime.utc(2024, 7, 23): '₹3500',
+    DateTime.utc(2024, 7, 24): '₹3500',
+    DateTime.utc(2024, 7, 25): '₹3500',
+    DateTime.utc(2024, 7, 26): '₹3500',
+    DateTime.utc(2024, 7, 27): '₹3500',
+    DateTime.utc(2024, 7, 28): '₹3500',
+    DateTime.utc(2024, 7, 29): '₹3500',
   };
 
   @override
@@ -131,6 +133,9 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
                     _focusedDay = focusedDay;
                   });
                   widget.onPressed(_selectedDay!);
+                  Timer(const Duration(microseconds: 300), () {
+                    Navigator.of(context).pop();
+                  });
                 },
                 onFormatChanged: (format) {
                   if (_calendarFormat != format) {

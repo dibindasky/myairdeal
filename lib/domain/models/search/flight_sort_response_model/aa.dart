@@ -10,6 +10,7 @@ class Aa {
   String? city;
   String? country;
   String? countryCode;
+  String? terminal;
 
   Aa({
     this.code,
@@ -18,6 +19,7 @@ class Aa {
     this.city,
     this.country,
     this.countryCode,
+    this.terminal,
   });
 
   factory Aa.fromJson(Map<String, dynamic> json) => _$AaFromJson(json);

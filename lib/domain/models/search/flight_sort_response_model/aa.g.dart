@@ -7,13 +7,13 @@ part of 'aa.dart';
 // **************************************************************************
 
 Aa _$AaFromJson(Map<String, dynamic> json) => Aa(
-      code: json['code'] as String?,
-      name: json['name'] as String?,
-      cityCode: json['cityCode'] as String?,
-      city: json['city'] as String?,
-      country: json['country'] as String?,
-      countryCode: json['countryCode'] as String?,
-    );
+    code: json['code'] as String?,
+    name: json['name'] as String?,
+    cityCode: json['cityCode'] as String?,
+    city: json['city'] as String?,
+    country: json['country'] as String?,
+    countryCode: json['countryCode'] as String?,
+    terminal: json['terminal'] as String?);
 
 Map<String, dynamic> _$AaToJson(Aa instance) => <String, dynamic>{
       'code': instance.code,
@@ -22,4 +22,5 @@ Map<String, dynamic> _$AaToJson(Aa instance) => <String, dynamic>{
       'city': instance.city,
       'country': instance.country,
       'countryCode': instance.countryCode,
+      'terminal': instance.terminal,
     };

@@ -120,7 +120,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
         } else if (widget.validate == Validate.email && !isValidEmail(value!)) {
           return 'Please enter a valid email address';
         } else if (widget.validate == Validate.password && value!.length < 8) {
-          return 'Password must contain at least 8 characters';
+          return 'Password must contavin at least 8 characters';
+        } else if (widget.validate == Validate.notNull &&
+            (value == null || value == '')) {
+          return 'This field cannot be empty';
         } else if (widget.validate == Validate.password) {
           if (!hasLowerCase(value!)) {
             return 'Password must contains lowerCase letters';

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -119,6 +118,7 @@ class BookingController extends GetxController {
     bookingCompleteSuccess = false.obs;
     bookingCompleteFailure = false.obs;
     String message = '';
+    String bookingId = '';
     endTimer();
     final result =
         await bookingRepo.bookTicket(bookTicketModel: bookTicketModel);
@@ -129,21 +129,30 @@ class BookingController extends GetxController {
       message = l.message ?? errorMessage;
     }, (r) {
       bookingCompleteSuccess.value = true;
+      bookingId = r.bookingId ?? '';
       print('success');
       if (r.errors != null && r.errors!.isNotEmpty) {
         print(r.errors?[0].message ?? errorMessage);
         message = r.errors?[0].message ?? errorMessage;
       }
     });
-    Get.back(id: 1);
     bookingCompleteLoading.value = false;
+    Get.back(id: 1);
     Get.until((route) => Get.currentRoute == Routes.bottomBar);
     if (bookingCompleteSuccess.value) {
+      Get.toNamed(Routes.paymentSucess);
       Get.snackbar('Booking done successfully',
           'Your booking has been successfully placed',
           snackPosition: SnackPosition.TOP,
           backgroundColor: kGreen,
           colorText: kWhite);
+      // timer to wait until the data has been saved in the server and calling for booked ticket
+      invoiceLoading.value = true;
+      Timer(const Duration(seconds: 3), () {
+        getSingleBooking(
+            retrieveSingleBookingRequestModel:
+                RetrieveSingleBookingRequestModel(bookingId: bookingId));
+      });
     } else {
       Get.snackbar('Booking Failed', message,
           snackPosition: SnackPosition.TOP,
@@ -175,14 +184,20 @@ class BookingController extends GetxController {
     double price = 0.0;
     for (var element in reviewedDetail!.value.tripInfos!) {
       if (type == 'ADULT') {
-        price += element.totalPriceList?[0].fd?.adult?.fC?.tf ?? 00;
+        price += element.totalPriceList?[0].fd?.adult?.fC?.bf ?? 00;
       } else if (type == 'CHILD') {
-        price += element.totalPriceList?[0].fd?.child?.fC?.tf ?? 00;
+        price += element.totalPriceList?[0].fd?.child?.fC?.bf ?? 00;
       } else if (type == 'INFANT') {
-        price += element.totalPriceList?[0].fd?.infant?.fC?.tf ?? 00;
+        price += element.totalPriceList?[0].fd?.infant?.fC?.bf ?? 00;
       }
     }
     return price;
+  }
+
+  // clear all the data after booking to not affect the next booking
+  void clearDataAfterBooking(){
+    travelerTab = 'Add Details';
+    remainingTime = 0.obs;
   }
 
   // Get Single Booking

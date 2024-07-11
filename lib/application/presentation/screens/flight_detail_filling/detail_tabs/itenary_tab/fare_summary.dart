@@ -8,6 +8,7 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
+import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 
 class FareSummary extends StatelessWidget {
   const FareSummary({super.key, this.reviewPage = false});
@@ -42,7 +43,7 @@ class FareSummary extends StatelessWidget {
                                 color: kBlack, fontSize: 9.sp),
                           ),
                           Text(
-                            'Adult (x${Get.find<FlightSortController>().adultCount.value})',
+                            'Adult (x ${Get.find<FlightSortController>().adultCount.value})',
                             style: textThinStyle1.copyWith(
                               color: kBlack,
                               fontSize: 12.sp,
@@ -82,7 +83,7 @@ class FareSummary extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Child (x${Get.find<FlightSortController>().childrenCount.value})',
+                            'Child (x ${Get.find<FlightSortController>().childrenCount.value})',
                             style: textThinStyle1.copyWith(
                               color: kBlack,
                               fontSize: 12.sp,
@@ -117,7 +118,7 @@ class FareSummary extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Infant (x${Get.find<FlightSortController>().infantCount.value})',
+                            'Infant (x ${Get.find<FlightSortController>().infantCount.value})',
                             style: textThinStyle1.copyWith(
                               color: kBlack,
                               fontSize: 12.sp,
@@ -141,41 +142,91 @@ class FareSummary extends StatelessWidget {
                       ),
                     ],
                   ),
-            // controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC
-            //             ?.taf ==
-            //         null
-            //     ? kEmpty
-            //     : Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           Column(
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: [
-            //               Text(
-            //                 'Taxes and Fees',
-            //                 style: textThinStyle1.copyWith(
-            //                   color: kBlack,
-            //                   fontSize: 12.sp,
-            //                 ),
-            //               ),
-            //               kHeight5,
-            //             ],
-            //           ),
-            //           Column(
-            //             crossAxisAlignment: CrossAxisAlignment.end,
-            //             children: [
-            //               Text(
-            //                 '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.taf}',
-            //                 style: textThinStyle1.copyWith(
-            //                   color: kBlack,
-            //                   fontSize: 12.sp,
-            //                 ),
-            //               ),
-            //               kHeight5,
-            //             ],
-            //           ),
-            //         ],
-            //       ),
+            controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC
+                        ?.taf ==
+                    null
+                ? kEmpty
+                : CustomExpansionTile(
+                    isBorder: false,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Taxes and Fees',
+                              style: textThinStyle1.copyWith(
+                                color: kBlack,
+                                fontSize: 12.sp,
+                              ),
+                            ),
+                            kHeight5,
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(Icons.arrow_drop_down_sharp),
+                                Text(
+                                  '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.taf}',
+                                  style: textThinStyle1.copyWith(
+                                    color: kBlack,
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            kHeight5,
+                          ],
+                        ),
+                      ],
+                    ),
+                    children: List.generate(
+                      3,
+                      (index) => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                index == 0
+                                    ? 'Airline GST'
+                                    : index == 1
+                                        ? 'Other Taxes'
+                                        : 'YR',
+                                style: textThinStyle1.copyWith(
+                                  color: kBlack,
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                              kHeight5,
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                index == 0
+                                    ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst}'
+                                    : index == 1
+                                        ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot}'
+                                        : '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr}',
+                                style: textThinStyle1.copyWith(
+                                  color: kBlack,
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                              kHeight5,
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
             const DottedLines(height: 10),
             kHeight15,
             Row(
@@ -217,7 +268,12 @@ class FareSummary extends StatelessWidget {
                 : EventButton(
                     text: controller.bookingLoading.value
                         ? 'Continue'
-                        : 'Continue',
+                        : Get.find<TravellerController>()
+                                    .selectedMainTab
+                                    .value ==
+                                0
+                            ? 'Add Passenger'
+                            : 'Continue',
                     onTap: () {
                       Get.find<TravellerController>().changeDetailEnterTab(1);
                     },

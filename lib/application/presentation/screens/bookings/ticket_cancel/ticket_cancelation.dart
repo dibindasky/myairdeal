@@ -48,8 +48,8 @@ class ScreenTicetCanceallation extends StatelessWidget {
                             itemCount: 10,
                             scrollDirection: Axis.vertical,
                           )
-                        : Column(children: [
-                            ...List.generate(
+                        : Column(
+                            children: List.generate(
                               tripInfos?.length ?? 0,
                               (index) => Padding(
                                 padding: EdgeInsets.symmetric(vertical: 2.w),
@@ -202,7 +202,7 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          ]),
+                          ),
                   ),
                   kHeight50,
                   kHeight15

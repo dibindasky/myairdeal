@@ -134,8 +134,7 @@ class ScreenAccountCreationForm extends StatelessWidget {
                           if (authController.isLoading.value) {
                             return const Center(
                               child: CircularProgressIndicator(
-                                color: kBluePrimary,
-                              ),
+                                  color: kBluePrimary),
                             );
                           }
                           return EventIconButton(
@@ -144,7 +143,8 @@ class ScreenAccountCreationForm extends StatelessWidget {
                             suffixIcon: authController
                                         .lastName.text.isNotEmpty &&
                                     authController.firstName.text.isNotEmpty &&
-                                    authController.email.text.isNotEmpty
+                                    authController.email.text.isNotEmpty &&
+                                    authController.firstName.text.length > 2
                                 ? Image.asset(tickIcon, height: 15.h)
                                 : null,
                             onTap: () {

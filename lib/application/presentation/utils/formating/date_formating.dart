@@ -44,7 +44,7 @@ class DateFormating {
   }
 
   // 24 hr format
-    static String formatTime24(String date) {
+  static String formatTime24(String date) {
     if (date == '') return '';
     DateTime dateTime = DateTime.parse(date);
     final DateFormat formatter = DateFormat('HH:mm');
@@ -56,6 +56,15 @@ class DateFormating {
     if (date.isEmpty) return '';
     DateTime dateTime = DateTime.parse(date);
     String formattedDate = DateFormat('MMM d, E').format(dateTime);
+    String formattedTime = DateFormat('HH:mm').format(dateTime);
+    return '$formattedDate, $formattedTime';
+  }
+
+  //July 8 2024
+  static String formatDateMonthYear(String date) {
+    if (date.isEmpty) return '';
+    DateTime dateTime = DateTime.parse(date);
+    String formattedDate = DateFormat('MMM d, yyyy').format(dateTime);
     String formattedTime = DateFormat('HH:mm').format(dateTime);
     return '$formattedDate, $formattedTime';
   }

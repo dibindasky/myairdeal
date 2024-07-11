@@ -117,13 +117,13 @@ class ScreenSignUp extends StatelessWidget {
                   ],
                 );
               }),
-
               kHeight20,
+              const Center(child: Text('OR')),
               // const Center(child: Text('Or Sign Up With')),
               kHeight10,
               kHeight10,
               // const LoginGoogleOrFaceBook(),
-              kHeight10,
+
               EventIconButton(
                 prefixIcon: const Icon(
                   Icons.person_2_outlined,

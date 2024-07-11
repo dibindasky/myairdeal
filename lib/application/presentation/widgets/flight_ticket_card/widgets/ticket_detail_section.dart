@@ -65,13 +65,13 @@ class TicketDetailsSection extends StatelessWidget {
                               .sI![searchAirlineInformation!.sI!.length - 1]
                               .at!),
                       airline: searchAirlineInformation!.sI![0].fD!.aI!.name,
-                      stops: searchAirlineInformation!.sI!.length-1)
+                      stops: searchAirlineInformation!.sI!.length - 1)
                   : flightTicketCardEnum == FlightTicketCardEnum.complete ||
                           flightTicketCardEnum == FlightTicketCardEnum.cancelled
                       ? BookingCombletedCancelledTabcenterItems()
                       : itemInfos != null
                           ? NormalCenterItems(
-                              travelMinutes: '$bookingId',
+                              travelMinutes: bookingId ?? '',
                               airline: itemInfos!
                                       .air?.tripInfos?[0].sI?[0].fD?.aI?.name ??
                                   '',
@@ -102,20 +102,20 @@ class TicketDetailsSection extends StatelessWidget {
                           place: itemInfos!
                                   .air
                                   ?.tripInfos?[0]
-                                  .sI?[((itemInfos!
+                                  .sI?[(itemInfos!
                                               .air?.tripInfos?[0].sI?.length ??
                                           1) -
-                                      1)]
+                                      1]
                                   .aa
                                   ?.code ??
                               '',
                           airPort: itemInfos!
                                   .air
                                   ?.tripInfos?[0]
-                                  .sI?[((itemInfos!
+                                  .sI?[(itemInfos!
                                               .air?.tripInfos?[0].sI?.length ??
                                           1) -
-                                      1)]
+                                      1]
                                   .aa
                                   ?.code ??
                               '',

@@ -90,6 +90,12 @@ class TravellerController extends GetxController {
     }
   }
 
+  // clear data after booking to not to affect the next booking
+  void clearDataAfterBooking() {
+    selectedMainTab = 0.obs;
+    selectedAddDetailsStep = 0.obs;
+  }
+
   changeSelectedDetailStepArrow(bool newValue) {
     selectedDetailStepArrow.value = newValue;
     update();

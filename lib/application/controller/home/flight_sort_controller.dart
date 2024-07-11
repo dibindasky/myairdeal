@@ -159,6 +159,27 @@ class FlightSortController extends GetxController {
     update();
   }
 
+  // clear all the information after booking not to affect the next booking
+  void clearDataAfterBooking() {
+    comboList.clear();
+    comboListMain.clear();
+    searchList.clear();
+    searchListMain.clear();
+    selectedTripListIndex.value = 0;
+    airportSelected = <RxList<CitySearchModel>>[
+      RxList.generate(2, (index) => CitySearchModel()),
+      RxList.generate(2, (index) => CitySearchModel())
+    ].obs;
+    durationSlider.value = 1;
+    sortingVariables.clear();
+    sortAirlinesSelected.clear();
+    departureTimesSelected.clear();
+    arrivesTimesSelected.clear();
+    adultCount.value = 1;
+    infantCount.value = 0;
+    childrenCount.value = 0;
+  }
+
 // search api request for all types of trips
   void searchFlights() async {
     comboTrip.value = false;

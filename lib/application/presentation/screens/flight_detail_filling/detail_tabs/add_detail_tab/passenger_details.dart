@@ -7,7 +7,6 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/bottom_button..dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 
 class PassengerDetailsContainer extends StatelessWidget {
   const PassengerDetailsContainer({super.key});
@@ -28,8 +27,30 @@ class PassengerDetailsContainer extends StatelessWidget {
             itemCount: searchController.adultCount.value +
                 searchController.infantCount.value +
                 searchController.childrenCount.value,
-            itemBuilder: (context, index) => CustomExpansionTile(
-              isBorder: false,
+            itemBuilder: (context, index) => GestureDetector(
+              onTap: () {
+                Get.dialog(
+                  Dialog(
+                    child: DetailContainer(
+                        index: index,
+                        travellerType: (searchController.adultCount.value) >
+                                index
+                            ? "ADULT"
+                            : (searchController.adultCount.value +
+                                        searchController.childrenCount.value) >
+                                    index
+                                ? 'CHILD'
+                                : (searchController.adultCount.value +
+                                            searchController
+                                                .childrenCount.value +
+                                            searchController
+                                                .infantCount.value) >
+                                        index
+                                    ? 'INFANT'
+                                    : ''),
+                  ),
+                );
+              },
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 6.w),
                 height: 50.h,
@@ -57,7 +78,7 @@ class PassengerDetailsContainer extends StatelessWidget {
                                   : ''),
                       Obx(
                         () => controller.passengerDetails[index] == null
-                            ? const Icon(Icons.arrow_drop_down)
+                            ? const Icon(Icons.add_chart_sharp)
                             : const CircleAvatar(
                                 backgroundColor: kGreen,
                                 child: Padding(
@@ -71,22 +92,6 @@ class PassengerDetailsContainer extends StatelessWidget {
                   ),
                 ),
               ),
-              children: [
-                DetailContainer(
-                    index: index,
-                    travellerType: (searchController.adultCount.value) > index
-                        ? "ADULT"
-                        : (searchController.adultCount.value +
-                                    searchController.childrenCount.value) >
-                                index
-                            ? 'CHILD'
-                            : (searchController.adultCount.value +
-                                        searchController.childrenCount.value +
-                                        searchController.infantCount.value) >
-                                    index
-                                ? 'INFANT'
-                                : ''),
-              ],
             ),
           ),
           kHeight20,

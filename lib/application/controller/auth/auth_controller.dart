@@ -155,15 +155,12 @@ class AuthController extends GetxController {
       Get.snackbar('Failed', 'Fields is empty', backgroundColor: kRed);
     }
     if (firstName.text.isEmpty || firstName.text.length <= 2) {
-      Get.showSnackbar(const GetSnackBar(
-        message: 'First name must have 3 letters',
-      ));
+      Get.snackbar('Failed', 'First name must have 3 letters',
+          backgroundColor: kRed);
       return;
     }
     if (!isValidEmail(email.text)) {
-      Get.showSnackbar(const GetSnackBar(
-        message: 'Email is not valid',
-      ));
+      Get.snackbar('Failed', 'Email is not valid', backgroundColor: kRed);
       return;
     }
 

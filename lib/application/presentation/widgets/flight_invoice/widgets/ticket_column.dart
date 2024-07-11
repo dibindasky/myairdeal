@@ -18,16 +18,16 @@ class TicketColumn extends StatelessWidget {
   final String? exit;
 
   const TicketColumn({
+    this.label,
+    this.value,
+    this.subValue,
+    this.exit,
     super.key,
     this.flightCode,
     this.exitStyle,
-    this.exit,
     this.subValueStyle,
     this.valueStyle,
     this.lebelStyle,
-    this.label,
-    this.subValue,
-    this.value,
     this.isBold = false,
     this.isSubValueColumn = false,
     this.crossAxisAlignment,
@@ -44,9 +44,11 @@ class TicketColumn extends StatelessWidget {
                 label!,
                 style: lebelStyle ??
                     textThinStyle1.copyWith(
-                        color: kGreyDark,
-                        fontSize: 11.sp,
-                        fontWeight: FontWeight.w700),
+                      color: kGreyDark,
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.w700,
+                      overflow: TextOverflow.ellipsis,
+                    ),
               )
             : kEmpty,
         kHeight5,

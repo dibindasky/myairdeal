@@ -1,14 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
-
-import 'from_city_or_airport.dart';
-import 'to_city_or_airport.dart';
+import 'package:myairdeal/domain/models/search/flight_search_sort_model/code_airport.dart';
 
 part 'route_info.g.dart';
 
 @JsonSerializable()
 class RouteInfo {
-  FromCityOrAirport? fromCityOrAirport;
-  ToCityOrAirport? toCityOrAirport;
+  CodeAirport? fromCityOrAirport;
+  CodeAirport? toCityOrAirport;
   String? travelDate;
 
   RouteInfo({

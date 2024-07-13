@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
@@ -5,6 +7,7 @@ import 'package:myairdeal/application/presentation/utils/formating/date_formatin
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/booking_canceled_tile_center_items.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/card_side_items.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
+import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_responce.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/item_infos.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
 
@@ -15,15 +18,18 @@ class TicketDetailsSection extends StatelessWidget {
     this.itemInfos,
     this.bookingId,
     required this.flightTicketCardEnum,
+    this.allBookingResponce,
   });
 
   final SearchAirlineInformation? searchAirlineInformation;
   final ItemInfos? itemInfos;
   final String? bookingId;
   final FlightTicketCardEnum flightTicketCardEnum;
+  final AllBookingResponce? allBookingResponce;
 
   @override
   Widget build(BuildContext context) {
+    log('${allBookingResponce?.toJson()}');
     return Stack(
       children: [
         Padding(
@@ -48,8 +54,10 @@ class TicketDetailsSection extends StatelessWidget {
                               itemInfos!.air?.tripInfos?[0].sI?[0].da?.city ??
                                   '',
                           from: 'Departure',
-                          time: DateFormating.getDate(DateTime.parse(
-                              itemInfos!.air?.tripInfos?[0].sI?[0].dt ?? '')),
+                          time: DateFormating.getDate(
+                            DateTime.parse(
+                                itemInfos!.air?.tripInfos?[0].sI?[0].dt ?? ''),
+                          ),
                         )
                       : const CardSideItems(
                           place: 'TTT',
@@ -65,10 +73,14 @@ class TicketDetailsSection extends StatelessWidget {
                               .sI![searchAirlineInformation!.sI!.length - 1]
                               .at!),
                       airline: searchAirlineInformation!.sI![0].fD!.aI!.name,
-                      stops: searchAirlineInformation!.sI!.length - 1)
+                      stops: searchAirlineInformation!.sI!.length - 1,
+                    )
                   : flightTicketCardEnum == FlightTicketCardEnum.complete ||
                           flightTicketCardEnum == FlightTicketCardEnum.cancelled
-                      ? BookingCombletedCancelledTabcenterItems()
+                      ? BookingCombletedCancelledTabcenterItems(
+                          price: itemInfos?.air?.totalPriceInfo?.totalFareDetail
+                                  ?.fC?.tf ??
+                              0)
                       : itemInfos != null
                           ? NormalCenterItems(
                               travelMinutes: bookingId ?? '',
@@ -79,6 +91,9 @@ class TicketDetailsSection extends StatelessWidget {
                                   (itemInfos!.air?.tripInfos?[0].sI?.length ??
                                           0) -
                                       1,
+                              date: allBookingResponce
+                                      ?.allBookingSearchquery?.cabinClass ??
+                                  '',
                             )
                           : kEmpty,
               searchAirlineInformation != null

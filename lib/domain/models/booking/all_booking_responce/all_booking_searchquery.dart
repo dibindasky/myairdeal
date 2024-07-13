@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-
-import 'pax_info.dart';
+import 'package:myairdeal/domain/models/search/flight_search_sort_model/pax_info.dart';
 import 'route_info.dart';
 import 'search_modifiers.dart';
 

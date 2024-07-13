@@ -31,7 +31,8 @@ class SearchAirportTile extends StatelessWidget {
           countrycode: airportModel.countrycode,
         ));
       },
-      child: Padding(
+      child: Container(
+        color: kGreyLightBackground,
         padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
         child: Row(
           children: [

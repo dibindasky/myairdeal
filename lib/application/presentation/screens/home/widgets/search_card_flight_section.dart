@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
-import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/bottom_calender_date_picker.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/choose_person_class_bottom_Sheet.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/place_selection.dart';
@@ -17,10 +16,10 @@ import 'package:myairdeal/application/presentation/widgets/text_icon_button_cust
 class FlightSearchCardHome extends StatelessWidget {
   const FlightSearchCardHome({
     super.key,
-    this.formEdit = false,
+    this.fromEdit = false,
   });
 
-  final bool formEdit;
+  final bool fromEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -119,17 +118,18 @@ class FlightSearchCardHome extends StatelessWidget {
                   texthead: 'Travellers & Class');
             }),
             kHeight20,
-            EventButton(
-                text: 'Search flights',
-                onTap: () {
-                  controller.searchFlights();
-                  if (formEdit) {
-                    Navigator.of(context).pop();
-                  } else {
-                    Get.toNamed(Routes.searchSortFlight, id: 1);
-                  }
-                },
-                width: double.infinity)
+            Obx(() {
+                return EventButton(
+                    color: controller.searchValidated.value ? kBluePrimary : kGrey,
+                    text: 'Search flights',
+                    onTap: () {
+                      if (controller.searchValidated.value) {
+                        controller.searchFlights(false, context, fromEdit);
+                      }
+                    },
+                    width: double.infinity);
+              }
+            )
           ],
         );
       }),

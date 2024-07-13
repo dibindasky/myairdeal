@@ -40,7 +40,7 @@ class OneWayAndRoundTrip extends StatelessWidget {
         GestureDetector(
             onTap: () {
               // change from and to
-              controller.swapFromAndTow();
+              controller.swapFromAndTo();
             },
             child:
                 const Icon(Icons.compare_arrows_outlined, color: kBluePrimary)),
@@ -89,6 +89,10 @@ class MultiCitySelection extends StatelessWidget {
                           from: true, index: index);
                       Get.find<HomeController>().changeSearch();
                     },
+                    borderColor:
+                        controller.airportSelected[index][0].city == null
+                            ? kBlueLight
+                            : kGrey,
                     mainAxisAlignment: MainAxisAlignment.center,
                     first: kEmpty,
                     topRight: const Icon(Icons.arrow_right_alt_rounded,
@@ -118,11 +122,19 @@ class MultiCitySelection extends StatelessWidget {
                           overflow: TextOverflow.ellipsis),
                     ),
                     texthead: 'To',
+                    borderColor:
+                        controller.airportSelected[index][1].city == null
+                            ? kBlueLight
+                            : kGrey,
                   ),
                 ),
                 kWidth5,
                 Expanded(
                   child: TextIconButtonOutlinedCustom(
+                    borderColor:
+                        controller.multiCityDepartureDate[index] == null
+                            ? kBlueLight
+                            : kGrey,
                     topRight: index == 0 || index == 1
                         ? kEmpty
                         : GestureDetector(

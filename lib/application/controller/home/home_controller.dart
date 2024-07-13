@@ -14,6 +14,8 @@ class HomeController extends GetxController {
 
   RxList<CitySearchModel> airportsSearches = <CitySearchModel>[].obs;
 
+  RxList<CitySearchModel> popularCitys = <CitySearchModel>[].obs;
+
   RxList<CitySearchModel> airportRecentSearches = <CitySearchModel>[].obs;
 
   RxBool isLoading = false.obs;
@@ -25,6 +27,7 @@ class HomeController extends GetxController {
     super.onInit();
     fetchRecentSearches();
     fetchAirportRecentSearches();
+    fetchAirportSearchWithCountryCode();
   }
 
   // Recent Searches
@@ -91,16 +94,16 @@ class HomeController extends GetxController {
     airportRecentSearches.insert(0, citySearchModel);
   }
 
-  // // Airport search with country code
-  void fetchAirportSearchWithCountryCode(String countryCode) async {
+  /// Airport search with country code pass the country code according to the location
+  void fetchAirportSearchWithCountryCode() async {
     isLoading.value = true;
     search.value = true;
-    final result = await homeService.getAirportsSearchWithCountryCode(
-        countryCode: countryCode);
+    final result =
+        await homeService.getAirportsSearchWithCountryCode(countryCode: 'IN');
     result.fold(
       (failure) => log(failure.message.toString()),
       (citySearchData) {
-        airportsSearches.value = citySearchData.data ?? [];
+        popularCitys.value = citySearchData.data ?? [];
       },
     );
 

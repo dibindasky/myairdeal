@@ -8,9 +8,7 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/screens/payment/widgets/add_method_card.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
-import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/booking.dart';
@@ -55,7 +53,7 @@ class PaymentTab extends StatelessWidget {
                       )
                     : Align(
                         child: EventButton(
-                            text: 'Conform Booking',
+                            text: 'Confirm Booking',
                             onTap: () {
                               final bookingController =
                                   Get.find<BookingController>();

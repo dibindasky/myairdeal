@@ -5,7 +5,6 @@ import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
-import 'package:myairdeal/application/presentation/utils/test_const.dart';
 import 'package:myairdeal/data/service/flight_sort/flight_service.dart';
 import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/code_airport.dart';
@@ -69,8 +68,14 @@ class FlightSortController extends GetxController {
   // variable responsible for show loading in the search list page
   RxBool searchListLoading = false.obs;
 
-  // variable used to select the trip type 0- oneway, 1- roundtrip, 2- multicity
+  // variable used to select the trip type
+  // 0- oneway
+  // 1- roundtrip
+  // 2- multicity
   RxInt tripType = 0.obs;
+
+  /// searchForm validation checker
+  RxBool searchValidated = false.obs;
 
   // number of adult to be travelled
   RxInt adultCount = 1.obs;
@@ -178,10 +183,41 @@ class FlightSortController extends GetxController {
     adultCount.value = 1;
     infantCount.value = 0;
     childrenCount.value = 0;
+    validateSearchForm();
+  }
+
+  // validate form for search flight
+  bool validateSearchForm() {
+    print("validate working");
+    for (int i = 0; i < airportSelected.length; i++) {
+      if (airportSelected[i][0].code == null ||
+          airportSelected[i][1].code == null) {
+        searchValidated.value = false;
+        return false;
+      }
+      if (tripType.value == 2 && multiCityDepartureDate[i] == null) {
+        searchValidated.value = false;
+        return false;
+      }
+    }
+    searchValidated.value = true;
+    return true;
   }
 
 // search api request for all types of trips
-  void searchFlights() async {
+  void searchFlights(bool fromCalender,
+      [BuildContext? context, bool? fromEdit]) async {
+    final validate = validateSearchForm();
+    if (!validate) {
+      return;
+    }
+    if (!fromCalender) {
+      if (fromEdit!) {
+        Navigator.of(context!).pop();
+      } else {
+        Get.toNamed(Routes.searchSortFlight, id: 1);
+      }
+    }
     comboTrip.value = false;
     searchListLoading.value = true;
     selectedTripListIndex.value = 0;
@@ -414,6 +450,7 @@ class FlightSortController extends GetxController {
                 : onePotion1 * index,
         duration: const Duration(seconds: 1),
         curve: Curves.easeInOut);
+    validateSearchForm();
   }
 
   // sort the data according to the selected sorting variables
@@ -484,7 +521,7 @@ class FlightSortController extends GetxController {
   }
 
 // swap the data between from and to in search field
-  void swapFromAndTow() {
+  void swapFromAndTo() {
     final from = airportSelected[0][0];
     airportSelected[0][0] = airportSelected[0][1];
     airportSelected[0][1] = from;
@@ -533,12 +570,14 @@ class FlightSortController extends GetxController {
         multiCityDepartureDate[i] = date;
       }
     }
+    validateSearchForm();
   }
 
   void removeFromMultiCityTrip(int index) {
     multiCityDepartureDate.removeAt(index);
     airportSelected.removeAt(index);
     multiCityCount.value--;
+    validateSearchForm();
   }
 
   void increaseMulticityField() {
@@ -549,6 +588,7 @@ class FlightSortController extends GetxController {
     multiCityCount.value++;
     multiCityDepartureDate.add(null);
     airportSelected.add(list);
+    validateSearchForm();
   }
 
   void changeTripType(int index) {
@@ -558,6 +598,7 @@ class FlightSortController extends GetxController {
       multiCityDepartureDate.removeRange(2, multiCityDepartureDate.length);
       airportSelected.removeRange(2, airportSelected.length);
     }
+    validateSearchForm();
   }
 
   void changeDepartureDate(DateTime value) {
@@ -565,37 +606,23 @@ class FlightSortController extends GetxController {
     if (depatureDate.value.isAfter(returnDate.value)) {
       returnDate.value = depatureDate.value;
     }
+    validateSearchForm();
   }
 
   void changeRetunDate(DateTime value) {
     returnDate.value = value;
+    validateSearchForm();
   }
 
   void changeClassTypes(String type) {
     classType.value = type;
   }
 
-  void changeSearch(String value) {
-    search.value = value != '';
-    if (value == '') {
-      searchCityList.value = <CitySearchModel>[];
-    } else {
-      List<CitySearchModel> searchList = [];
-      for (var element in searchAirport) {
-        if (element[searchCountry]!.toLowerCase().contains(value) ||
-            element[searchCode]!.toLowerCase().contains(value) ||
-            element[searchcity]!.toLowerCase().contains(value)) {
-          searchList.add(CitySearchModel.fromJson(element));
-        }
-      }
-      searchCityList.value = searchList;
-    }
-  }
-
   void changeSelectedAirport({required bool from, int index = 0}) {
     Get.toNamed(Routes.airportSearch);
     departureAirport = from;
     chooseAirportIndex = index;
+    validateSearchForm();
   }
 
   void setAirportSelection({required CitySearchModel citySearchModel}) {
@@ -610,6 +637,7 @@ class FlightSortController extends GetxController {
       airportSelected[1] = list;
     }
     Get.back();
+    validateSearchForm();
   }
 
   void changeSortTypes(String type) {
@@ -696,6 +724,7 @@ class FlightSortController extends GetxController {
     } else {
       departureTimesSelected.add(value);
     }
+    validateSearchForm();
   }
 
   void selectArrivalTime(String value) {
@@ -704,5 +733,6 @@ class FlightSortController extends GetxController {
     } else {
       arrivesTimesSelected.add(value);
     }
+    validateSearchForm();
   }
 }

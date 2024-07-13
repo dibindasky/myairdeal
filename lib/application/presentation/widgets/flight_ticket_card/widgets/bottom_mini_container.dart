@@ -153,53 +153,21 @@ class BottomMiniContainer extends StatelessWidget {
                                           fontWeight: FontWeight.w800),
                                     ),
                                     kWidth10,
-                                    Text(
-                                      '$price',
-                                      style: textStyle1.copyWith(
-                                          color: kWhite,
-                                          fontSize: 13.sp,
-                                          fontWeight: FontWeight.w800),
-                                    )
+                                    flightTicketCardEnum ==
+                                            FlightTicketCardEnum.upcoming
+                                        ? Text(
+                                            '$price',
+                                            style: textStyle1.copyWith(
+                                                color: kWhite,
+                                                fontSize: 13.sp,
+                                                fontWeight: FontWeight.w800),
+                                          )
+                                        : kEmpty
                                   ],
                                 ),
                                 kHeight10,
                               ],
                             ),
-                            flightTicketCardEnum ==
-                                    FlightTicketCardEnum.homeSort
-                                ? Row(
-                                    children: [
-                                      kWidth20,
-                                      // ClipRRect(
-                                      //   borderRadius: kRadius5,
-                                      //   child: ColoredBox(
-                                      //     color: const Color(0xFF6E93A8),
-                                      //     child: Padding(
-                                      //       padding: const EdgeInsets.symmetric(
-                                      //           horizontal: 10, vertical: 3),
-                                      //       child: Row(
-                                      //         children: [
-                                      //           Icon(
-                                      //             Icons.lock,
-                                      //             size: 15.sp,
-                                      //             color: kWhite,
-                                      //           ),
-                                      //           kWidth5,
-                                      //           Text(
-                                      //             'Lock the price',
-                                      //             style: textStyle1.copyWith(
-                                      //               color: kWhite,
-                                      //               fontSize: 12.sp,
-                                      //             ),
-                                      //           ),
-                                      //         ],
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                    ],
-                                  )
-                                : kEmpty,
                             const Spacer(),
                             flightTicketCardEnum ==
                                     FlightTicketCardEnum.upcoming

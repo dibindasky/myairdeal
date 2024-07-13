@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -26,6 +28,7 @@ class FlightInvoiceCard extends StatelessWidget {
         retrieveSingleBookingresponceModel?.itemInfos?.air?.travellerInfos;
     final tripInfos =
         retrieveSingleBookingresponceModel?.itemInfos?.air?.tripInfos;
+    log('------ Layover Time -${DateFormating.formatDate(tripInfos?[0].sI?[0].dt ?? '')} -----${DateFormating.formatDate(tripInfos?[0].sI?[1].at ?? '')} ');
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -171,7 +174,7 @@ class FlightInvoiceCard extends StatelessWidget {
                           (tripInfos?[index].sI?.length ?? 1) - 1 == stopIndex
                               ? kEmpty
                               : Text(
-                                  '------ Layover Time -${DateFormating.getDifferenceOfDates(tripInfos?[index].sI?[stopIndex].dt ?? '', tripInfos?[index].sI?[stopIndex + 1].at ?? '')} -----',
+                                  '------ Layover Time -${DateFormating.getDifferenceOfDates(tripInfos?[index].sI?[stopIndex + 1].dt ?? '', tripInfos?[index].sI?[stopIndex + 1].at ?? '')} -----',
                                   style: textThinStyle1,
                                 ),
                           (tripInfos?[index].sI?.length ?? 1) - 1 != stopIndex
@@ -226,12 +229,15 @@ class FlightInvoiceCard extends StatelessWidget {
                                   ?.name ??
                               '',
                           exit: tripInfos?[index]
-                                  .sI?[((tripInfos[index].sI?.length ?? 1) - 1)]
+                                  .sI?[(tripInfos[index].sI?.length ?? 1) - 1]
                                   .aa
                                   ?.terminal ??
                               '',
                           flightCode: DateFormating.formatDateMonthYear(
-                            (tripInfos?[index].sI?[0].at ?? ''),
+                            (tripInfos?[index]
+                                    .sI?[(tripInfos[index].sI?.length ?? 1) - 1]
+                                    .at ??
+                                ''),
                           ),
                           isBold: true,
                           crossAxisAlignment: CrossAxisAlignment.end,

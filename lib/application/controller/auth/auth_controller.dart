@@ -118,11 +118,15 @@ class AuthController extends GetxController {
       isLoading.value = false;
       hasError = true;
       update();
-      Get.snackbar('Failed', 'OTP Sending Failed', backgroundColor: kRed);
+      Get.snackbar(
+        'Failed',
+        'OTP Sending Failed. Please try again later.',
+        backgroundColor: kRed,
+      );
     }, (success) {
       isLoading.value = false;
       hasError = false;
-      Get.snackbar('Success', 'OTP Sending Success',
+      Get.snackbar('Success', 'OTP Sent Successfully',
           backgroundColor: kBluePrimary);
       Get.toNamed(Routes.otp);
       update();
@@ -144,7 +148,7 @@ class AuthController extends GetxController {
       isLoading.value = false;
       hasError = true;
       update();
-      Get.snackbar('Failed', 'OTP Verify Failed', backgroundColor: kRed);
+      Get.snackbar('Failed', 'OTP Verification Failed', backgroundColor: kRed);
     }, (r) async {
       await SecureStorage.saveToken(
         tokenModel: TokenModel(token: r.token ?? ''),
@@ -154,7 +158,7 @@ class AuthController extends GetxController {
       hasError = false;
       loginOrNot.value = true;
       update();
-      Get.snackbar('Success', 'OTP Verify Success',
+      Get.snackbar('Success', 'OTP Verified Successfully',
           backgroundColor: kBluePrimary);
       await SecureStorage.setLogin();
       if (r.profile == false) {
@@ -168,10 +172,10 @@ class AuthController extends GetxController {
   void userCreation() async {
     update();
     if (email.text.isEmpty || firstName.text.isEmpty || lastName.text.isEmpty) {
-      Get.snackbar('Failed', 'Fields is Empty', backgroundColor: kRed);
+      Get.snackbar('Failed', 'Fields are Empty', backgroundColor: kRed);
     }
     if (firstName.text.isEmpty || firstName.text.length <= 2) {
-      Get.snackbar('Failed', 'First Name must have 3 letters',
+      Get.snackbar('Failed', 'First Name must have at least 3 characters',
           backgroundColor: kRed);
       return;
     }
@@ -181,7 +185,6 @@ class AuthController extends GetxController {
     }
 
     isLoading.value = true;
-
     final data = await authRepo.userCreation(
       userCreationModel: UserCreationModel(
         email: email.text,
@@ -200,7 +203,7 @@ class AuthController extends GetxController {
         lastName.clear();
         email.clear();
         isLoading.value = false;
-        Get.snackbar('Success', 'User details added',
+        Get.snackbar('Success', 'Account created successfully',
             backgroundColor: kBluePrimary);
         getUserInfo(true);
         Get.offAllNamed(Routes.bottomBar);
@@ -257,6 +260,12 @@ class AuthController extends GetxController {
         Get.offNamed(Routes.profile);
       },
       (r) {
+        Get.snackbar(
+          'Success!',
+          'Your profile has been updated successfully.',
+          backgroundColor: kWhite,
+          snackPosition: SnackPosition.BOTTOM,
+        );
         isLoading.value = false;
         getUserInfo(true);
         // Get.offNamed(Routes.profile);
@@ -272,7 +281,7 @@ class AuthController extends GetxController {
   }
 
   void logOut() async {
-    Get.snackbar('Success', 'Logout success');
+    Get.snackbar('Success', 'Logout Successful');
     Get.offAllNamed(Routes.signUp);
     otpNumber.clear();
     loginOrNot.value = false;

@@ -249,7 +249,7 @@ class FareSummary extends StatelessWidget {
             paymentPage
                 ? kEmpty
                 : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const DottedLines(height: 10),
                       kHeight20,
@@ -276,7 +276,7 @@ class FareSummary extends StatelessWidget {
                       reviewPage
                           ? kEmpty
                           : Align(
-                            child: EventButton(
+                              child: EventButton(
                                 text: controller.bookingLoading.value
                                     ? 'Continue'
                                     : Get.find<TravellerController>()
@@ -290,7 +290,7 @@ class FareSummary extends StatelessWidget {
                                       .changeDetailEnterTab(1);
                                 },
                               ),
-                          ),
+                            ),
                     ],
                   ),
             kHeight10,

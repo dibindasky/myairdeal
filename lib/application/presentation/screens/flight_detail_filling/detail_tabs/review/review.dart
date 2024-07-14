@@ -63,7 +63,7 @@ class ReveiewTab extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text('First Name'),
-                                  Text('Last number'),
+                                  Text('Last Name'),
                                   Text('DOB'),
                                 ],
                               ),

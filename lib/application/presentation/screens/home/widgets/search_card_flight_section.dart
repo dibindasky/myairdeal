@@ -32,16 +32,21 @@ class FlightSearchCardHome extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(
-                  3,
-                  (index) => CustomRadioButton(
-                    selected: index == controller.tripType.value,
-                    onChanged: () {
-                      controller.changeTripType(index);
-                    },
-                    text: controller.tripTypes[index],
+              FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    3,
+                    (index) => Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.h),
+                      child: CustomRadioButton(
+                        selected: index == controller.tripType.value,
+                        onChanged: () {
+                          controller.changeTripType(index);
+                        },
+                        text: controller.tripTypes[index],
+                      ),
+                    ),
                   ),
                 ),
               ),

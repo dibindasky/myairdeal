@@ -173,7 +173,7 @@ class FareSummary extends StatelessWidget {
                               children: [
                                 const Icon(Icons.arrow_drop_down_sharp),
                                 Text(
-                                  '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.taf}',
+                                  '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.taf ?? '--'}',
                                   style: textThinStyle1.copyWith(
                                     color: kBlack,
                                     fontSize: 12.sp,
@@ -213,10 +213,10 @@ class FareSummary extends StatelessWidget {
                             children: [
                               Text(
                                 index == 0
-                                    ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst}'
+                                    ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst ?? '--'}'
                                     : index == 1
-                                        ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot}'
-                                        : '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr}',
+                                        ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot ?? '--'}'
+                                        : '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr ?? '--'}',
                                 style: textThinStyle1.copyWith(
                                   color: kBlack,
                                   fontSize: 12.sp,
@@ -249,7 +249,7 @@ class FareSummary extends StatelessWidget {
             paymentPage
                 ? kEmpty
                 : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const DottedLines(height: 10),
                       kHeight20,
@@ -276,7 +276,7 @@ class FareSummary extends StatelessWidget {
                       reviewPage
                           ? kEmpty
                           : Align(
-                            child: EventButton(
+                              child: EventButton(
                                 text: controller.bookingLoading.value
                                     ? 'Continue'
                                     : Get.find<TravellerController>()
@@ -290,7 +290,7 @@ class FareSummary extends StatelessWidget {
                                       .changeDetailEnterTab(1);
                                 },
                               ),
-                          ),
+                            ),
                     ],
                   ),
             kHeight10,

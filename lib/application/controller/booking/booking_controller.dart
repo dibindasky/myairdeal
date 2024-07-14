@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -114,6 +115,7 @@ class BookingController extends GetxController {
         print(r.errors?[0].message ?? errorMessage);
         message = r.errors?[0].message ?? errorMessage;
       }
+      Get.find<FlightSortController>().clearDataAfterBooking();
     });
     bookingCompleteLoading.value = false;
     Get.back(id: 1);

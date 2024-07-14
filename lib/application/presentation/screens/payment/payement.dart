@@ -10,6 +10,7 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
+import 'package:myairdeal/data/features/razorpay.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/booking.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/delivery_info.dart';
@@ -66,31 +67,46 @@ class PaymentTab extends StatelessWidget {
                                 travellerInfos.add(
                                     travellerController.passengerDetails[i]!);
                               }
-                              bookingController.completeBooking(
-                                BookTicketModel(
-                                  searchQuery: bookingController
-                                      .reviewedDetail?.value.searchQuery,
-                                  booking: Booking(
-                                      bookingId: bookingController
-                                          .reviewedDetail?.value.bookingId,
-                                      paymentInfos: [
-                                        PaymentInfo(
-                                            amount: bookingController
-                                                .reviewedDetail
-                                                ?.value
-                                                .totalPriceInfo
-                                                ?.totalFareDetail
-                                                ?.fC
-                                                ?.tf)
-                                      ],
-                                      travellerInfo: travellerInfos,
-                                      deliveryInfo: DeliveryInfo(contacts: [
-                                        travellerController.phoneController.text
-                                      ], emails: [
-                                        travellerController.emailController.text
-                                      ])),
-                                ),
+                              // bookingController.completeBooking();
+                              final bookTicketModel = BookTicketModel(
+                                searchQuery: bookingController
+                                    .reviewedDetail?.value.searchQuery,
+                                booking: Booking(
+                                    bookingId: bookingController
+                                        .reviewedDetail?.value.bookingId,
+                                    paymentInfos: [
+                                      PaymentInfo(
+                                          amount: bookingController
+                                              .reviewedDetail
+                                              ?.value
+                                              .totalPriceInfo
+                                              ?.totalFareDetail
+                                              ?.fC
+                                              ?.tf)
+                                    ],
+                                    travellerInfo: travellerInfos,
+                                    deliveryInfo: DeliveryInfo(contacts: [
+                                      travellerController.phoneController.text
+                                    ], emails: [
+                                      travellerController.emailController.text
+                                    ])),
                               );
+
+                              final RazorpayGateway razorpayGateway =
+                                  RazorpayGateway(context, bookTicketModel);
+                              razorpayGateway.makePayment(
+                                  amount: (bookingController
+                                              .reviewedDetail
+                                              ?.value
+                                              .totalPriceInfo
+                                              ?.totalFareDetail
+                                              ?.fC
+                                              ?.tf ??
+                                          1)
+                                      .toDouble(),
+                                  description: 'payment to MyAirDeal',
+                                  email: 'testemail@gmail.com',
+                                  phone: '+91 9876543210');
                             },
                             color: kBlueDark));
               }),

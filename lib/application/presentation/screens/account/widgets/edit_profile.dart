@@ -36,6 +36,8 @@ class ScreenEditProfile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text('First Name', style: textThinStyle1),
+                    kHeight5,
                     CustomTextField(
                       controller: controller.updateFirnameController,
                       isBorder: true,
@@ -50,6 +52,8 @@ class ScreenEditProfile extends StatelessWidget {
                       fillColor: kWhite,
                     ),
                     kHeight15,
+                    Text('Last Name', style: textThinStyle1),
+                    kHeight5,
                     CustomTextField(
                       controller: controller.updateLastNameController,
                       isBorder: true,
@@ -64,6 +68,7 @@ class ScreenEditProfile extends StatelessWidget {
                       fillColor: kWhite,
                     ),
                     kHeight15,
+                    Text('Email', style: textThinStyle1), kHeight5,
                     CustomTextField(
                       controller: controller.updateEmailController,
                       isBorder: true,

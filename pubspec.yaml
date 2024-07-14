@@ -51,6 +51,10 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   dartz: ^0.10.1
   shimmer: ^3.0.0
+  pdf_render: ^1.4.6
+  open_file: ^3.3.2
+  path_provider: ^2.1.2
+  permission_handler: ^11.3.0
 
 dev_dependencies:
   flutter_test:

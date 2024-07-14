@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/header_section.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -12,7 +12,7 @@ import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/fl
 class ScreenRefundPage extends StatelessWidget {
   ScreenRefundPage({super.key});
 
-  final bookingController = Get.find<BookingController>();
+  final bookingController = Get.find<RaiceTicketController>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,18 +30,19 @@ class ScreenRefundPage extends StatelessWidget {
         ),
         kHeight10,
         Expanded(
-            child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: ListView.separated(
-            padding: EdgeInsets.zero,
-            itemCount: 2,
-            separatorBuilder: (context, index) => kHeight5,
-            itemBuilder: (context, index) => FlightTicketCard(
-              buttonOnTap: () {},
-              flightTicketCardEnum: FlightTicketCardEnum.refundStatus,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: ListView.separated(
+              padding: EdgeInsets.zero,
+              itemCount: 2,
+              separatorBuilder: (context, index) => kHeight5,
+              itemBuilder: (context, index) => FlightTicketCard(
+                buttonOnTap: () {},
+                flightTicketCardEnum: FlightTicketCardEnum.refundStatus,
+              ),
             ),
           ),
-        )),
+        ),
         Container(
           decoration: const BoxDecoration(color: kWhite),
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),

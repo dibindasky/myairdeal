@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
 import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/chat_bubble.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -13,8 +13,8 @@ class ScreenChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bookingController = Get.find<BookingController>();
     final talkToUsController = Get.find<TalkToUsController>();
+    final raiceController = Get.find<RaiceTicketController>();
     return Scaffold(
       body: Column(
         children: [
@@ -26,7 +26,7 @@ class ScreenChatPage extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    bookingController.changeSelectedYouCouldAlsoTab(-2);
+                    raiceController.changeSelectedYouCouldAlsoTab(-2);
                     talkToUsController.changetab(1);
                     Get.back();
                   },

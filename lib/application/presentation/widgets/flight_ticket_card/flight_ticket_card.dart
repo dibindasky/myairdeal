@@ -61,10 +61,11 @@ class FlightTicketCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TicketDetailsSection(
-                    bookingId: bookingId,
-                    searchAirlineInformation: searchAirlineInformation,
-                    itemInfos: itemInfos,
-                    flightTicketCardEnum: flightTicketCardEnum),
+                  bookingId: bookingId,
+                  searchAirlineInformation: searchAirlineInformation,
+                  itemInfos: itemInfos,
+                  flightTicketCardEnum: flightTicketCardEnum,
+                ),
                 const DottedLines(),
                 BottomMiniContainer(
                   flightTicketCardEnum: flightTicketCardEnum,

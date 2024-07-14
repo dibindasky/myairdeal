@@ -8,7 +8,7 @@ part 'fare_rule_information.g.dart';
 class FareRuleInformation {
   Tfr? tfr;
 
-  FareRuleInformation({ this.tfr});
+  FareRuleInformation({this.tfr});
 
   factory FareRuleInformation.fromJson(Map<String, dynamic> json) {
     return _$FareRuleInformationFromJson(json);

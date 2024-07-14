@@ -8,6 +8,7 @@ class TIcketCancellaionCntroller extends GetxController {
   CancelRepo cancelRepo = CancelService();
   RxBool isLoading = false.obs;
   RxBool hasError = false.obs;
+
   RxList<TicketCancelRequestModel> selectedItems =
       <TicketCancelRequestModel>[].obs;
   Rx<TicketCancelResponce> ticketData = TicketCancelResponce().obs;

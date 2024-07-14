@@ -34,15 +34,19 @@ class QuickLinksContainer extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 45.w,
-                decoration: const BoxDecoration(
-                    color: kBlueDark,
-                    borderRadius: BorderRadius.only(
+                width: 35.w,
+                decoration: BoxDecoration(
+                    color: kBlue.withOpacity(0.5),
+                    borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(6),
                         bottomRight: Radius.circular(6))),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7.w),
-                  child: const Icon(Icons.arrow_forward),
+                  padding: EdgeInsets.symmetric(horizontal: 7, vertical: 8.w),
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: kWhite,
+                    size: 17.h,
+                  ),
                 ),
               )
             ],

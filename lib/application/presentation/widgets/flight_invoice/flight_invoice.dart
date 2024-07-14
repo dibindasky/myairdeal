@@ -28,7 +28,7 @@ class FlightInvoiceCard extends StatelessWidget {
         retrieveSingleBookingresponceModel?.itemInfos?.air?.travellerInfos;
     final tripInfos =
         retrieveSingleBookingresponceModel?.itemInfos?.air?.tripInfos;
-    log('------ Layover Time -${DateFormating.formatDate(tripInfos?[0].sI?[0].dt ?? '')} -----${DateFormating.formatDate(tripInfos?[0].sI?[1].at ?? '')} ');
+    //log('------ Layover Time -${DateFormating.formatDate(tripInfos?[0].sI?[0].dt ?? '')} -----${DateFormating.formatDate(tripInfos?[0].sI?[1].at ?? '')} ');
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -174,7 +174,7 @@ class FlightInvoiceCard extends StatelessWidget {
                           (tripInfos?[index].sI?.length ?? 1) - 1 == stopIndex
                               ? kEmpty
                               : Text(
-                                  '------ Layover Time -${DateFormating.getDifferenceOfDates(tripInfos?[index].sI?[stopIndex + 1].dt ?? '', tripInfos?[index].sI?[stopIndex + 1].at ?? '')} -----',
+                                  '------ Layover Time -${DateFormating.getDifferenceOfDates(tripInfos?[index].sI?[stopIndex].dt ?? '', tripInfos?[index].sI?[stopIndex].at ?? '')} -----',
                                   style: textThinStyle1,
                                 ),
                           (tripInfos?[index].sI?.length ?? 1) - 1 != stopIndex

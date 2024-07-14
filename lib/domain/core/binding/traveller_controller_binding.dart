@@ -4,6 +4,6 @@ import 'package:myairdeal/application/controller/booking/traveler_controller.dar
 class TravellerBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put<TravellerController>(TravellerController(),permanent: true);
+    Get.put<TravellerController>(TravellerController(), permanent: true);
   }
 }

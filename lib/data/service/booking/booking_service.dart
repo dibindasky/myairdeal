@@ -47,8 +47,8 @@ class BookingService implements BookingRepo {
       return Right(ReviewFlightDetailPrice.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException reviewPriceDetails $e');
-      return Left(
-          Failure(message: e.response?.data?['errors'][0]['message'] ?? errorMessage));
+      return Left(Failure(
+          message: e.response?.data?['errors'][0]['message'] ?? errorMessage));
     } catch (e) {
       log('catch reviewPriceDetails');
       return Left(Failure(message: e.toString()));

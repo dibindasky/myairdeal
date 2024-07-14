@@ -19,15 +19,14 @@ class ReviewFlightDetailPrice {
   Conditions? conditions;
   List<Error>? errors;
 
-  ReviewFlightDetailPrice({
-    this.tripInfos,
-    this.searchQuery,
-    this.bookingId,
-    this.totalPriceInfo,
-    this.status,
-    this.conditions,
-    this.errors
-  });
+  ReviewFlightDetailPrice(
+      {this.tripInfos,
+      this.searchQuery,
+      this.bookingId,
+      this.totalPriceInfo,
+      this.status,
+      this.conditions,
+      this.errors});
 
   factory ReviewFlightDetailPrice.fromJson(Map<String, dynamic> json) {
     return _$ReviewFlightDetailPriceFromJson(json);

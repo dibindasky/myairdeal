@@ -16,7 +16,6 @@ class InsurenceTab extends StatefulWidget {
 }
 
 class _InsurenceTabState extends State<InsurenceTab> {
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<TravellerController>();
@@ -57,7 +56,7 @@ class _InsurenceTabState extends State<InsurenceTab> {
                 ),
                 const Text('Email Id'),
                 CustomTextField(
-                  controller:controller. emailController,
+                  controller: controller.emailController,
                   validate: Validate.email,
                   keyboardType: TextInputType.emailAddress,
                   isBorder: true,

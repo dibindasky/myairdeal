@@ -18,4 +18,7 @@ class ApiEndPoints {
   static const String airportRecentSearch = '/search/airportSearchHistory';
   static const airportSearchWithCountryCode =
       '/search/airport-country-code?countrycode=';
+  static const raiceTicket = '/ticket/create-ticket';
+  static const getTickets = '/ticket/view-all-tickets/{created_d}';
+  static const invoiceDownLoad = '/user/generate-invoice/{booking_id}';
 }

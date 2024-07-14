@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class YouCouldAlso extends StatelessWidget {
   YouCouldAlso({super.key});
 
-  final bookingController = Get.find<BookingController>();
+  final raiceController = Get.find<RaiceTicketController>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +41,7 @@ class YouCouldAlso extends StatelessWidget {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          bookingController
-                              .changeSelectedYouCouldAlsoTab(index);
+                          raiceController.changeSelectedYouCouldAlsoTab(index);
                         },
                         child: Obx(
                           () => Container(
@@ -50,26 +49,36 @@ class YouCouldAlso extends StatelessWidget {
                                 vertical: 5.h, horizontal: 5.w),
                             decoration: BoxDecoration(
                                 color: index ==
-                                        bookingController
+                                        raiceController
                                             .selectedYouCouldAlsoTab.value
                                     ? kWhite
                                     : kBlueLightShade,
                                 border: Border.all(
                                     color: kBluePrimary.withOpacity(0.3)),
                                 borderRadius: kRadius10),
-                            child: Column(
-                              children: [
-                                kHeight5,
-                                Icon(icons[index], color: kIndigo),
-                                kHeight5,
-                                FittedBox(
-                                  child: Text(text[index],
-                                      style: textThinStyle1.copyWith(
-                                          color: kIndigo)),
-                                ),
-                                kHeight5
-                              ],
-                            ),
+                            child: text[index] == 'Mails' &&
+                                    raiceController.isLoading.value
+                                ? SizedBox(
+                                    width: 50.h,
+                                    height: 50.h,
+                                    child: const Center(
+                                      child: CircularProgressIndicator(
+                                          color: kBlueLight),
+                                    ),
+                                  )
+                                : Column(
+                                    children: [
+                                      kHeight5,
+                                      Icon(icons[index], color: kIndigo),
+                                      kHeight5,
+                                      FittedBox(
+                                        child: Text(text[index],
+                                            style: textThinStyle1.copyWith(
+                                                color: kIndigo)),
+                                      ),
+                                      kHeight5
+                                    ],
+                                  ),
                           ),
                         ),
                       ),

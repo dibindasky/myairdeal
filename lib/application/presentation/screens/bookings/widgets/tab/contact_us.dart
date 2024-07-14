@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
-import 'package:myairdeal/application/controller/booking/booking_controller.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/widgets/file_picker.dart';
+import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/product_drop_dwn.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
+import 'package:myairdeal/domain/models/ticket_raice/raice_ticket/raice_ticket.dart';
 
 class ContactUsFrom extends StatelessWidget {
-  ContactUsFrom({super.key});
+  ContactUsFrom({super.key, this.bookingId});
+  final String? bookingId;
 
-  final bookingController = Get.find<BookingController>();
+  final ticketRaiceController = Get.find<RaiceTicketController>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,60 +30,22 @@ class ContactUsFrom extends StatelessWidget {
               child: CustomRadioButton(
                 width: kWidth20,
                 onChanged: () {
-                  bookingController.changeContactUsRadioButton(index);
+                  ticketRaiceController.headingChange(
+                    ticketRaiceController.contactusRadioItems[index],
+                  );
                 },
-                selected: index ==
-                    bookingController.selectedcontactUsRadioButton.value,
-                text: bookingController.contactusRadioItems[index],
+                selected: ticketRaiceController.contactusRadioItems[index] ==
+                    ticketRaiceController.selectedheding.value,
+                text: ticketRaiceController.contactusRadioItems[index],
               ),
             ),
           ),
         ),
         kHeight15,
-        const Text('Name'),
-        kHeight5,
-        CustomTextField(
-          isBorder: true,
-          borderRadius: 10,
-          textCapitalization: TextCapitalization.words,
-          enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(width: .3), borderRadius: kRadius5),
-          onTapOutside: () => FocusScope.of(context).unfocus(),
-          hintText: 'Enter name',
-          fillColor: kGreyLightBackground,
-        ),
-        const Text('Mobile number'),
-        kHeight5,
-        CustomTextField(
-          isBorder: true,
-          borderRadius: 10,
-          textCapitalization: TextCapitalization.words,
-          enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(width: .3), borderRadius: kRadius5),
-          onTapOutside: () => FocusScope.of(context).unfocus(),
-          hintText: 'Enter Mobile number',
-          fillColor: kGreyLightBackground,
-        ),
-        const Text('Mail ID'),
-        kHeight5,
-        CustomTextField(
-          maxLines: 1,
-          isBorder: true,
-          borderRadius: 10,
-          textCapitalization: TextCapitalization.words,
-          enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(width: .3), borderRadius: kRadius5),
-          onTapOutside: () => FocusScope.of(context).unfocus(),
-          hintText: 'Enter Mail ID',
-          fillColor: kGreyLightBackground,
-        ),
-        BookingProductdropoDownBuilder(),
-        kHeight15,
-        const BookingFilePicker(),
-        kHeight15,
         const Text('Add Description'),
         kHeight5,
         CustomTextField(
+          controller: ticketRaiceController.descriptionController,
           maxLines: 7,
           isBorder: true,
           borderRadius: 7,
@@ -94,11 +57,21 @@ class ContactUsFrom extends StatelessWidget {
           hintText: 'Description',
           fillColor: kGreyLightBackground,
         ),
+        BookingProductdropoDownBuilder(),
         kHeight15,
         EventButton(
           width: 400.w,
           text: 'Submit',
-          onTap: () {},
+          onTap: () {
+            RaiceTicket raiceTicket = RaiceTicket(
+              bookingId: bookingId,
+              description: ticketRaiceController.descriptionController.text,
+              heading: ticketRaiceController.selectedheding.value,
+              product: ticketRaiceController.selectedProduct?.value ?? 'Flight',
+            );
+            Get.find<RaiceTicketController>()
+                .addRaiceTicket(raiceTicket: raiceTicket);
+          },
         ),
         kHeight20
       ],

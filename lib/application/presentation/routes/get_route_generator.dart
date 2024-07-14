@@ -33,6 +33,7 @@ import 'package:myairdeal/domain/core/binding/home_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/nav_bar_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/notification_binding.dart';
 import 'package:myairdeal/domain/core/binding/payment_controller_binding.dart';
+import 'package:myairdeal/domain/core/binding/raice_ticket_binding.dart';
 import 'package:myairdeal/domain/core/binding/seat_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/talk_to_us_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/ticket_cancellation_binding.dart';
@@ -138,9 +139,7 @@ class GetXRouterConfig {
       page: () => const ScreenExplore(),
     ),
     GetPage(
-      bindings: [
-        BookingBinding(),
-      ],
+      bindings: [BookingBinding(), RaiceTicketBinding()],
       name: Routes.invoice,
       page: () => const ScreenInvoiceDetail(),
     ),

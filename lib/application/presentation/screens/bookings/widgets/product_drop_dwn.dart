@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class BookingProductdropoDownBuilder extends StatelessWidget {
   BookingProductdropoDownBuilder({super.key});
 
-  final bookingController = Get.find<BookingController>();
+  final raiceTicketController = Get.find<RaiceTicketController>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +25,20 @@ class BookingProductdropoDownBuilder extends StatelessWidget {
             border: Border.all(color: kBlack, width: .3),
           ),
           height: 42.h,
-          child: GetBuilder<BookingController>(builder: (controller) {
+          child: GetBuilder<RaiceTicketController>(builder: (controller) {
             return DropdownButton<String>(
               dropdownColor: kGreyLightBackground,
               isExpanded: true,
-              value: bookingController.selectedProduct,
+              value: raiceTicketController.selectedProduct?.value,
               hint: const Text('Choose one'),
-              items: bookingController.dropDwnDatas.map((String value) {
+              items: raiceTicketController.dropDwnDatas.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
                 );
               }).toList(),
               onChanged: (String? newValue) {
-                bookingController.updateProduct(newValue ?? '');
+                raiceTicketController.updateProduct(newValue ?? '');
               },
             );
           }),

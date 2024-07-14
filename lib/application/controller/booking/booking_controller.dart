@@ -11,9 +11,7 @@ import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_mo
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
-import 'package:myairdeal/domain/models/booking/review_flight_detail_price/trip_info.dart';
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
-import 'package:myairdeal/domain/models/search/flight_sort_response_model/pay_type.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
 class BookingController extends GetxController {
@@ -30,12 +28,6 @@ class BookingController extends GetxController {
 
   // Booking tab according to status 1- campleted, 2- Cancelled, 3- Upcoming
   RxInt selectedBookingTab = 1.obs;
-
-  // in except cancel tab Choosing for raice ticket, Connection, Refund and Mail
-  RxInt selectedYouCouldAlsoTab = 6.obs;
-
-  // in combleted and upcoming tab ticket raising value
-  RxInt selectedcontactUsRadioButton = 6.obs;
 
   RxBool bookingLoading = false.obs;
   RxBool invoiceLoading = false.obs;
@@ -62,20 +54,7 @@ class BookingController extends GetxController {
   RxList<AllBookingResponce> retrieveAllCompletedBooking =
       <AllBookingResponce>[].obs;
 
-  final nameController = TextEditingController();
-  final mobileController = TextEditingController();
-  final emailController = TextEditingController();
   String? fileName;
-  final descriptionController = TextEditingController();
-  String? selectedProduct;
-
-  List<String> contactusRadioItems = [
-    '1. New Complaint',
-    '2. Unresolved Complaint',
-    '3. Write to management',
-  ];
-
-  List<String> dropDwnDatas = ['Product 1', 'Product 2', 'Product 3'];
 
   // start timer for booking section
   void startTimer() {
@@ -195,7 +174,7 @@ class BookingController extends GetxController {
   }
 
   // clear all the data after booking to not affect the next booking
-  void clearDataAfterBooking(){
+  void clearDataAfterBooking() {
     travelerTab = 'Add Details';
     remainingTime = 0.obs;
   }
@@ -266,26 +245,6 @@ class BookingController extends GetxController {
 
   void changeTab(int index) {
     selectedBookingTab.value = index;
-    update();
-  }
-
-  void changeSelectedYouCouldAlsoTab(int selectedNewTab) {
-    if (selectedNewTab == 2) {
-      Get.toNamed(Routes.chatPage);
-    } else if (selectedNewTab == 3) {
-      Get.toNamed(Routes.refundsPage);
-    }
-    selectedYouCouldAlsoTab.value = selectedNewTab;
-    update();
-  }
-
-  void changeContactUsRadioButton(int index) {
-    selectedcontactUsRadioButton.value = index;
-    update();
-  }
-
-  void updateProduct(String newValue) {
-    selectedProduct = newValue;
     update();
   }
 }

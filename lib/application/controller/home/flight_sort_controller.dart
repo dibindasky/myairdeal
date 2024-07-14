@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -168,6 +170,8 @@ class FlightSortController extends GetxController {
     update();
   }
 
+  RxBool clearingBool = false.obs;
+
   // clear all the information after booking not to affect the next booking
   void clearDataAfterBooking() {
     comboList.clear();
@@ -189,6 +193,10 @@ class FlightSortController extends GetxController {
     childrenCount.value = 0;
     validateSearchForm();
     update();
+    clearingBool.value = true;
+    Timer(const Duration(seconds: 1), () {
+      clearingBool.value = false;
+    });
   }
 
   void updateSearchToRecent(FlightSearchSortModel flightSearchSortModel) {
@@ -431,7 +439,8 @@ class FlightSortController extends GetxController {
       sortingVariablesSelected[i]![2] =
           [(sortingVariables[i]![2].last ?? 1)].obs;
     }
-    durationSlider.value = ((sortingVariablesSelected[0]?[2].last) ?? 1.0 )* 1.0;
+    durationSlider.value =
+        ((sortingVariablesSelected[0]?[2].last) ?? 1.0) * 1.0;
     sortAirlineList();
   }
 

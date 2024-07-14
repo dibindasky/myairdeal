@@ -188,13 +188,26 @@ class FlightSortController extends GetxController {
 
   // validate form for search flight
   bool validateSearchForm() {
-    print("validate working");
     for (int i = 0; i < airportSelected.length; i++) {
-      if (airportSelected[i][0].code == null ||
-          airportSelected[i][1].code == null) {
+      // for validate one-way and round-trip city selection
+      if (tripType.value != 2 && i == 0) {
+        if (((airportSelected[i][0].code == null &&
+                airportSelected[i][0].city == null) ||
+            (airportSelected[i][1].code == null &&
+                airportSelected[i][1].city == null))) {
+          searchValidated.value = false;
+          return false;
+        }
+      } // for multicity validation
+      else if (tripType.value == 2 &&
+          ((airportSelected[i][0].code == null &&
+                  airportSelected[i][0].city == null) ||
+              (airportSelected[i][1].code == null &&
+                  airportSelected[i][1].city == null))) {
         searchValidated.value = false;
         return false;
       }
+      // for date validation for multicity, one way and round trip allwase auto filled
       if (tripType.value == 2 && multiCityDepartureDate[i] == null) {
         searchValidated.value = false;
         return false;
@@ -204,7 +217,7 @@ class FlightSortController extends GetxController {
     return true;
   }
 
-// search api request for all types of trips
+  // search api request for all types of trips
   void searchFlights(bool fromCalender,
       [BuildContext? context, bool? fromEdit]) async {
     final validate = validateSearchForm();
@@ -591,6 +604,7 @@ class FlightSortController extends GetxController {
     validateSearchForm();
   }
 
+  // change trip type oneway, roundtrip, multicity
   void changeTripType(int index) {
     tripType.value = index;
     if (index != 2) {

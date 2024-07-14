@@ -43,6 +43,10 @@ class SortScreenHeaderSection extends StatelessWidget {
                       onTap: () {
                         // edit selections for search api
                         showModalBottomSheet(
+                          isScrollControlled: true,
+                          constraints: BoxConstraints.tight(Size(
+                              MediaQuery.of(context).size.width,
+                              MediaQuery.of(context).size.height * 0.75)),
                           context: context,
                           builder: (context) =>
                               const FlightSearchCardHome(fromEdit: true),

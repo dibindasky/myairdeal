@@ -33,7 +33,7 @@ class CalenderSectionSortHeader extends StatelessWidget {
             itemBuilder: (context, date, isSelected, onTap) => GestureDetector(
               onTap: () {
                 onTap();
-                controller.searchFlights();
+                controller.searchFlights(true);
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
@@ -52,7 +52,8 @@ class CalenderSectionSortHeader extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        DateFormating.getWeekDay(date.weekday),
+                        // '₹ 3100',
+                        DateFormating.getMonthAbbreviation(date.month),
                         style: textThinStyle1.copyWith(
                             color: isSelected ? kWhite : kBlack),
                       ),
@@ -62,10 +63,10 @@ class CalenderSectionSortHeader extends StatelessWidget {
                             color: isSelected ? kWhite : kBlack),
                       ),
                       Text(
-                        '₹ 3100',
+                        DateFormating.getWeekDay(date.weekday),
                         style: textThinStyle1.copyWith(
                             color: isSelected ? kWhite : kBlack),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -73,7 +74,7 @@ class CalenderSectionSortHeader extends StatelessWidget {
             ),
             onDateChange: (selectedDate) {
               controller.changeDepartureDate(selectedDate);
-              controller.searchFlights();
+              controller.searchFlights(true);
             },
           );
         }),

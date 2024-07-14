@@ -5,7 +5,6 @@ import 'package:myairdeal/application/controller/home/flight_sort_controller.dar
 import 'package:myairdeal/application/presentation/screens/home/widgets/search_card_flight_section.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/custom_appbar_shape.dart';
 
 class SortScreenHeaderSection extends StatelessWidget {
@@ -17,7 +16,7 @@ class SortScreenHeaderSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
     return SizedBox(
-      height: controller.comboTrip.value ? null : 210.h,
+      height: controller.comboTrip.value ? null : 220.h,
       child: AppBarCustomShape(
         child: Obx(() {
           return Column(
@@ -44,9 +43,13 @@ class SortScreenHeaderSection extends StatelessWidget {
                       onTap: () {
                         // edit selections for search api
                         showModalBottomSheet(
+                          isScrollControlled: true,
+                          constraints: BoxConstraints.tight(Size(
+                              MediaQuery.of(context).size.width,
+                              MediaQuery.of(context).size.height * 0.75)),
                           context: context,
                           builder: (context) =>
-                              const FlightSearchCardHome(formEdit: true),
+                              const FlightSearchCardHome(fromEdit: true),
                         );
                       },
                       child: const Icon(Icons.edit_note_sharp, color: kWhite))
@@ -85,28 +88,29 @@ class SortScreenHeaderSection extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Column(
+                        const Column(
                           children: [
-                            Container(
-                              height: 50.h,
-                              width: 50.w,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(imageFlightTrip))),
-                            ),
-                            Text(
-                              controller
-                                      .sortingVariables[controller
-                                          .selectedTripListIndex.value]![2]
-                                      .isEmpty
-                                  ? ''
-                                  : DateFormating.convertMinutesToHoursMinutes(
-                                      controller
-                                          .sortingVariables[controller
-                                              .selectedTripListIndex.value]![2]
-                                          .first),
-                              style: textThinStyle1.copyWith(color: kWhite),
-                            )
+                            Icon(Icons.flight_sharp, color: kWhite),
+                            // Container(
+                            //   height: 50.h,
+                            //   width: 50.w,
+                            //   decoration: BoxDecoration(
+                            //       image: DecorationImage(
+                            //           image: AssetImage(imageFlightTrip))),
+                            // ),
+                            // Text(
+                            //   controller
+                            //           .sortingVariables[controller
+                            //               .selectedTripListIndex.value]![2]
+                            //           .isEmpty
+                            //       ? ''
+                            //       : DateFormating.convertMinutesToHoursMinutes(
+                            //           controller
+                            //               .sortingVariables[controller
+                            //                   .selectedTripListIndex.value]![2]
+                            //               .first),
+                            //   style: textThinStyle1.copyWith(color: kWhite),
+                            // )
                           ],
                         ),
                         Expanded(

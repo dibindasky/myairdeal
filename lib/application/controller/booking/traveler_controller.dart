@@ -73,6 +73,7 @@ class TravellerController extends GetxController {
         if (passengerDetails[i] == null) {
           Get.snackbar(
               'Add all passengers details', 'Add all passengers to continue.',
+              forwardAnimationCurve: Curves.bounceIn,
               backgroundColor: kRed,
               colorText: kWhite,
               snackPosition: SnackPosition.BOTTOM);

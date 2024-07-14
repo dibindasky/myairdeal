@@ -21,15 +21,7 @@ class SearchAirportTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         controller.setAirportSelection(citySearchModel: airportModel);
-        homeController.addAirportRecentSearch(
-            citySearchModel: CitySearchModel(
-          city: airportModel.city,
-          citycode: airportModel.citycode,
-          code: airportModel.code,
-          name: airportModel.name,
-          country: airportModel.country,
-          countrycode: airportModel.countrycode,
-        ));
+        homeController.addAirportRecentSearch(citySearchModel: airportModel);
       },
       child: Container(
         color: kGreyLightBackground,
@@ -60,16 +52,16 @@ class SearchAirportTile extends StatelessWidget {
               width: 80.w,
               child: Row(
                 children: [
-                  Container(
-                    height: 10.h,
-                    width: 20.w,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(splashImage),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   height: 10.h,
+                  //   width: 20.w,
+                  //   decoration: BoxDecoration(
+                  //     image: DecorationImage(
+                  //       image: AssetImage(splashImage),
+                  //       fit: BoxFit.cover,
+                  //     ),
+                  //   ),
+                  // ),
                   kWidth5,
                   Expanded(
                       child: Text(airportModel.country ?? '',

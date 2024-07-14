@@ -31,6 +31,8 @@ class PassengerDetailsContainer extends StatelessWidget {
               onTap: () {
                 Get.dialog(
                   Dialog(
+                    backgroundColor: knill,
+                    surfaceTintColor: knill,
                     child: DetailContainer(
                         index: index,
                         travellerType: (searchController.adultCount.value) >
@@ -53,7 +55,7 @@ class PassengerDetailsContainer extends StatelessWidget {
               },
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 6.w),
-                height: 50.h,
+                // height: 50.h,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: kRadius10,
@@ -64,22 +66,35 @@ class PassengerDetailsContainer extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text((searchController.adultCount.value) > index
-                          ? "Adult ${index + 1}"
-                          : (searchController.adultCount.value +
-                                      searchController.childrenCount.value) >
-                                  index
-                              ? 'Child ${index - searchController.adultCount.value + 1}'
-                              : (searchController.adultCount.value +
-                                          searchController.childrenCount.value +
-                                          searchController.infantCount.value) >
-                                      index
-                                  ? 'Infant ${index - searchController.adultCount.value - searchController.childrenCount.value + 1}'
-                                  : ''),
+                      Obx(
+                        () => controller.passengerDetails[index] != null
+                            // ignore: prefer_interpolation_to_compose_strings
+                            ? Expanded(
+                              child: Text('${controller.passengerDetails[index]!.ti ??
+                                      ''} ${controller.passengerDetails[index]!.fN ?? ''} ${controller.passengerDetails[index]!.lN ?? ''}'),
+                            )
+                            : Text((searchController.adultCount.value) > index
+                                ? "Adult ${index + 1}"
+                                : (searchController.adultCount.value +
+                                            searchController
+                                                .childrenCount.value) >
+                                        index
+                                    ? 'Child ${index - searchController.adultCount.value + 1}'
+                                    : (searchController.adultCount.value +
+                                                searchController
+                                                    .childrenCount.value +
+                                                searchController
+                                                    .infantCount.value) >
+                                            index
+                                        ? 'Infant ${index - searchController.adultCount.value - searchController.childrenCount.value + 1}'
+                                        : ''),
+                      ),
+                      kWidth10,
                       Obx(
                         () => controller.passengerDetails[index] == null
                             ? const Icon(Icons.add_chart_sharp)
                             : const CircleAvatar(
+                              radius: 15,
                                 backgroundColor: kGreen,
                                 child: Padding(
                                   padding: EdgeInsets.all(2.0),

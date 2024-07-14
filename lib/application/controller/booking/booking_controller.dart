@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
@@ -130,11 +129,13 @@ class BookingController extends GetxController {
       Timer(const Duration(seconds: 3), () {
         getSingleBooking(
             retrieveSingleBookingRequestModel:
-                RetrieveSingleBookingRequestModel(bookingId: bookingId));
+                RetrieveSingleBookingRequestModel(bookingId: bookingId),
+            callBookings: true);
       });
     } else {
       Get.snackbar('Booking Failed', message,
           snackPosition: SnackPosition.TOP,
+          forwardAnimationCurve: Curves.bounceIn,
           backgroundColor: kRed,
           colorText: kWhite);
     }
@@ -180,10 +181,10 @@ class BookingController extends GetxController {
   }
 
   // Get Single Booking
-  void getSingleBooking({
-    required RetrieveSingleBookingRequestModel
-        retrieveSingleBookingRequestModel,
-  }) async {
+  void getSingleBooking(
+      {required RetrieveSingleBookingRequestModel
+          retrieveSingleBookingRequestModel,
+      bool callBookings = false}) async {
     invoiceLoading.value = true;
     update();
     final data = await bookingRepo.retrieveSinglleBooking(
@@ -196,6 +197,9 @@ class BookingController extends GetxController {
       invoiceLoading.value = false;
       update();
     });
+    if (callBookings) {
+      getAllUpcomingBooking(true);
+    }
   }
 
   void getAllUpcomingBooking(bool isLoad) async {

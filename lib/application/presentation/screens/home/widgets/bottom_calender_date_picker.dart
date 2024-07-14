@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class DatePickingBottomSheet extends StatefulWidget {
@@ -45,35 +44,7 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime? _selectedDay;
   Map<DateTime, String> prices = {
-    DateTime.utc(2024, 7, 1): '₹3500',
-    DateTime.utc(2024, 7, 2): '₹3500',
-    DateTime.utc(2024, 7, 3): '₹3500',
-    DateTime.utc(2024, 7, 4): '₹3500',
-    DateTime.utc(2024, 7, 5): '₹3500',
-    DateTime.utc(2024, 7, 6): '₹3500',
-    DateTime.utc(2024, 7, 7): '₹3500',
-    DateTime.utc(2024, 7, 8): '₹3500',
-    DateTime.utc(2024, 7, 9): '₹3500',
-    DateTime.utc(2024, 7, 10): '₹3500',
-    DateTime.utc(2024, 7, 11): '₹3500',
-    DateTime.utc(2024, 7, 12): '₹3500',
-    DateTime.utc(2024, 7, 13): '₹3500',
-    DateTime.utc(2024, 7, 14): '₹3500',
-    DateTime.utc(2024, 7, 15): '₹3500',
-    DateTime.utc(2024, 7, 16): '₹3500',
-    DateTime.utc(2024, 7, 17): '₹3500',
-    DateTime.utc(2024, 7, 18): '₹3500',
-    DateTime.utc(2024, 7, 19): '₹3500',
-    DateTime.utc(2024, 7, 20): '₹3500',
-    DateTime.utc(2024, 7, 21): '₹3500',
-    DateTime.utc(2024, 7, 22): '₹3500',
-    DateTime.utc(2024, 7, 23): '₹3500',
-    DateTime.utc(2024, 7, 24): '₹3500',
-    DateTime.utc(2024, 7, 25): '₹3500',
-    DateTime.utc(2024, 7, 26): '₹3500',
-    DateTime.utc(2024, 7, 27): '₹3500',
-    DateTime.utc(2024, 7, 28): '₹3500',
-    DateTime.utc(2024, 7, 29): '₹3500',
+    // DateTime.utc(2024, 7, 1): '₹3500',
   };
 
   @override
@@ -95,14 +66,10 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
               ],
             ),
           ),
-          Column(
-            children: [
-              TableCalendar(
+          TableCalendar(
                 firstDay: widget.initialDate ?? DateTime.now(),
                 lastDay: widget.lastDate ??
-                    DateTime.now().add(const Duration(days: 60)),
-                // firstDay: DateTime.utc(2024, 6, 1),
-                // lastDay: DateTime.utc(2024, 12, 30),
+                    DateTime.now().add(const Duration(days: 31 * 6)),
                 focusedDay: _focusedDay,
                 calendarFormat: _calendarFormat,
                 calendarBuilders: CalendarBuilders(
@@ -169,17 +136,6 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
                       Icon(Icons.chevron_right, color: Colors.blue),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: EventButton(
-                    text: 'Continue',
-                    width: double.infinity,
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    }),
-              )
-            ],
-          ),
         ],
       ),
     );

@@ -20,7 +20,7 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
   final focusNode = FocusNode();
 
   final homeController = Get.find<HomeController>();
-  final Debouncer debouncer = Debouncer(milliseconds: 300);         
+  final Debouncer debouncer = Debouncer(milliseconds: 300);
 
   @override
   Widget build(BuildContext context) {
@@ -198,8 +198,7 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
                                   ),
                                   kHeight10,
                                   ListView.builder(
-                                    itemCount: homeController
-                                        .airportRecentSearches.length,
+                                    itemCount: 5,
                                     shrinkWrap: true,
                                     physics:
                                         const NeverScrollableScrollPhysics(),
@@ -220,24 +219,28 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
                                 ],
                               ),
                               kHeight10,
-                              Text(
-                                'Popular cities',
-                                style: textStyle1.copyWith(color: kBluePrimary),
-                              ),
+                              homeController.popularCitys.isEmpty
+                                  ? kEmpty
+                                  : Text(
+                                      'Popular cities',
+                                      style: textStyle1.copyWith(
+                                          color: kBluePrimary),
+                                    ),
                               kHeight10,
-                              ListView.builder(
-                                itemCount: 10,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) =>
-                                    SearchAirportTile(
-                                  airportModel: CitySearchModel(
-                                    city: 'Popular City',
-                                    code: 'CODE',
-                                    country: 'Country',
-                                  ),
-                                ),
-                              ),
+                              homeController.popularCitys.isEmpty
+                                  ? kEmpty
+                                  : ListView.builder(
+                                      itemCount:
+                                          homeController.popularCitys.length,
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) =>
+                                          SearchAirportTile(
+                                        airportModel:
+                                            homeController.popularCitys[index],
+                                      ),
+                                    ),
                             ],
                           ),
                         ),

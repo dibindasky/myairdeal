@@ -13,6 +13,7 @@ class TextIconButtonOutlinedCustom extends StatelessWidget {
       this.onTap,
       this.padding,
       this.topRight,
+      this.borderColor = kGrey,
       this.mainAxisAlignment = MainAxisAlignment.spaceEvenly});
 
   final Widget first;
@@ -23,6 +24,7 @@ class TextIconButtonOutlinedCustom extends StatelessWidget {
   final VoidCallback? onTap;
   final Widget spacer;
   final EdgeInsetsGeometry? padding;
+  final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,8 @@ class TextIconButtonOutlinedCustom extends StatelessWidget {
             padding:
                 padding ?? EdgeInsets.symmetric(horizontal: 5.w, vertical: 8.h),
             decoration: BoxDecoration(
-                border: Border.all(color: kGrey), borderRadius: kRadius10),
+                border: Border.all(color: borderColor),
+                borderRadius: kRadius10),
             child: Row(
               mainAxisAlignment: mainAxisAlignment,
               children: [first, spacer, second],

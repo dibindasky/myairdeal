@@ -17,12 +17,11 @@ class CancelService implements CancelRepo {
     required TicketCancelRequestModel ticketCancelRequestModel,
   }) async {
     try {
-      log('${ticketCancelRequestModel.toJson()}');
       final responce = await apiService.post(
         ApiEndPoints.amendendMentCharge,
         data: ticketCancelRequestModel.toJson(),
       );
-      log('$responce');
+
       return Right(TicketCancelResponce.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException cancelTicket $e');

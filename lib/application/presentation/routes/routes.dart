@@ -12,7 +12,7 @@ class Routes {
   static const String flightDetailFillling = '/flight_detail_filling';
   static const String homePage = '/home_page';
   static const String searchSortFlight = '/search_sort_flight';
-  static const String editProfile = '/edit_profile';
+  static const String profile = '/edit_profile';
   static const String bookings = '/bookings';
   static const String explore = '/explore';
   static const String invoice = '/invoice';
@@ -28,4 +28,5 @@ class Routes {
   static const String refundsPage = '/refunds_page';
   static const String notificationPage = '/notification_page';
   static const String ticketCancel = '/ticket_cancel';
+  static const String updateProfile = '/update_profile';
 }

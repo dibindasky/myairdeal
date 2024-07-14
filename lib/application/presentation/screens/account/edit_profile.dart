@@ -1,37 +1,62 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/animations/splash_animation.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
-class ScreenProfileEdit extends StatelessWidget {
-  const ScreenProfileEdit({super.key});
+class ScreenProfile extends StatefulWidget {
+  const ScreenProfile({super.key});
+
+  @override
+  State<ScreenProfile> createState() => _ScreenProfileState();
+}
+
+class _ScreenProfileState extends State<ScreenProfile> {
+  final controller = Get.find<AuthController>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.getUserInfo(true);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final name = Get.find<AuthController>().firstName.text.length >= 2
-        ? Get.find<AuthController>().firstName.text.substring(0, 2)
-        : '';
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Get.find<AuthController>().getUserInfo();
-    });
     return Scaffold(
-      body: GetBuilder<AuthController>(builder: (controller) {
-        return ListView(
-          padding: const EdgeInsets.all(0),
-          children: [
-            DetailAppBar(
-              heading: 'User profile',
-              backButton: true,
-              topGap: kHeight10,
+      body: ListView(
+        padding: const EdgeInsets.all(0),
+        children: [
+          DetailAppBar(
+            heading: 'User Profile',
+            backButton: true,
+            topGap: kHeight10,
+            action: IconButton(
+              onPressed: () {
+                Get.toNamed(Routes.updateProfile);
+              },
+              icon: Icon(
+                Icons.edit,
+                color: kWhite,
+                size: 17.h,
+              ),
             ),
-            kHeight50,
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: Column(
+          ),
+          kHeight50,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Obx(() {
+              String? name = controller.firstName.text.length == 2
+                  ? controller.firstName.text.substring(0, 2)
+                  : '';
+              return Column(
                 children: [
                   AnimatedGrowShrinkContainer(
                     milliseconds: 1000,
@@ -60,49 +85,55 @@ class ScreenProfileEdit extends StatelessWidget {
                     ),
                   ),
                   kHeight5,
-                  ProfileField(
-                    data:
-                        controller.userCreationResponceModel.value.firstName ??
-                            '',
-                    label: 'First name',
-                    value: 'name',
-                    iconImage: profileIcon,
-                  ),
-                  ProfileField(
-                    data: controller.userCreationResponceModel.value.lastName ??
-                        '',
-                    label: 'Last name',
-                    value: '',
-                    iconImage: profileIcon,
-                  ),
-                  ProfileField(
-                    data:
-                        controller.userCreationResponceModel.value.email ?? '',
-                    label: 'Email ',
-                    value: '@gmail.com',
-                    iconImage: smsIcon,
-                  ),
-                  ProfileField(
-                    data:
-                        controller.userCreationResponceModel.value.phone ?? '',
-                    label: 'Phone Number',
-                    value: 'xxxxxxxx',
-                    iconImage: smsIcon,
-                  ),
-                  kHeight50,
-                  // EventButton(
-                  //   width: 380.w,
-                  //   text: '',
-                  //   onTap: () {
-                  //     Navigator.pop(context);
-                  //   },
-                  // ),
+                  controller.isLoading.value
+                      ? SizedBox(
+                          height: 300.h,
+                          child: const Center(
+                              child: CircularProgressIndicator(
+                                  color: kBluePrimary)))
+                      : Column(
+                          children: [
+                            ProfileField(
+                              data: controller.userCreationResponceModel.value
+                                      .firstName ??
+                                  '',
+                              label: 'First name',
+                              value: 'name',
+                              iconImage: profileIcon,
+                            ),
+                            ProfileField(
+                              data: controller.userCreationResponceModel.value
+                                      .lastName ??
+                                  '',
+                              label: 'Last name',
+                              value: '',
+                              iconImage: profileIcon,
+                            ),
+                            ProfileField(
+                              data: controller
+                                      .userCreationResponceModel.value.email ??
+                                  '',
+                              label: 'Email ',
+                              value: '@gmail.com',
+                              iconImage: smsIcon,
+                            ),
+                            ProfileField(
+                              data: controller
+                                      .userCreationResponceModel.value.phone ??
+                                  '',
+                              label: 'Phone Number',
+                              value: 'xxxxxxxxx',
+                              iconImage: smsIcon,
+                            ),
+                            kHeight50,
+                          ],
+                        ),
                 ],
-              ),
-            ),
-          ],
-        );
-      }),
+              );
+            }),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -33,12 +33,12 @@ class RouteGenerator {
       case Routes.account:
         return MaterialPageRoute(builder: (ctx) => const ScreenAccountPage());
 
-      case Routes.editProfile:
-        return MaterialPageRoute(builder: (ctx) => const ScreenProfileEdit());
+      case Routes.profile:
+        return MaterialPageRoute(builder: (ctx) => const ScreenProfile());
       case Routes.security:
         return MaterialPageRoute(builder: (ctx) => const ScreenSecurity());
       case Routes.bookings:
-        return MaterialPageRoute(builder: (ctx) => const ScreenBookings());
+        return MaterialPageRoute(builder: (ctx) => ScreenBookings());
       case Routes.invoice:
         return MaterialPageRoute(builder: (ctx) => const ScreenInvoiceDetail());
       case Routes.explore:

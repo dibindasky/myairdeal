@@ -99,7 +99,7 @@ class BookingCombletedCancelledTabcenterItems extends StatelessWidget {
                         color: bookingController.selectedBookingTab.value == 1
                             ? kBlueDark
                             : kRed)),
-                Text('? $price',
+                Text('₹ $price',
                     style: textStyle1.copyWith(
                         fontSize: 11.sp,
                         color: bookingController.selectedBookingTab.value == 1

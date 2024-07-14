@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
@@ -133,11 +134,14 @@ class BookingController extends GetxController {
             callBookings: true);
       });
     } else {
-      Get.snackbar('Booking Failed', message,
-          snackPosition: SnackPosition.TOP,
-          forwardAnimationCurve: Curves.bounceIn,
-          backgroundColor: kRed,
-          colorText: kWhite);
+      Get.snackbar(
+        'Booking Failed',
+        message,
+        snackPosition: SnackPosition.TOP,
+        forwardAnimationCurve: Curves.bounceIn,
+        backgroundColor: kRed,
+        colorText: kWhite,
+      );
     }
   }
 
@@ -212,6 +216,9 @@ class BookingController extends GetxController {
       update();
     }, (r) {
       retrieveAllUpcomingBooking.value = r;
+      for (var element in r) {
+        log('${element.allBookingSearchquery?.toJson()} single data upcming');
+      }
       bookingLoading.value = false;
       update();
     });

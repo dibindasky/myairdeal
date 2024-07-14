@@ -5,19 +5,22 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class CardSideItems extends StatelessWidget {
-  const CardSideItems(
-      {super.key,
-      required this.place,
-      required this.airPort,
-      required this.from,
-      required this.time,
-      this.crossAxisAlignment = CrossAxisAlignment.start});
+  const CardSideItems({
+    super.key,
+    required this.place,
+    required this.airPort,
+    required this.from,
+    required this.time,
+    this.cabinClass,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+  });
 
   final String place;
   final String airPort;
   final String from;
   final String time;
   final CrossAxisAlignment crossAxisAlignment;
+  final String? cabinClass;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +54,16 @@ class CardSideItems extends StatelessWidget {
               fontWeight: FontWeight.w800,
             ),
           ),
+          cabinClass != null
+              ? Text(
+                  cabinClass!,
+                  style: textThinStyle1.copyWith(
+                    color: kBlack,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                  ),
+                )
+              : kEmpty,
         ],
       ),
     );

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
@@ -29,7 +27,6 @@ class TicketDetailsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log('${allBookingResponce?.toJson()}');
     return Stack(
       children: [
         Padding(
@@ -91,7 +88,7 @@ class TicketDetailsSection extends StatelessWidget {
                                   (itemInfos!.air?.tripInfos?[0].sI?.length ??
                                           0) -
                                       1,
-                              date: allBookingResponce
+                              number: allBookingResponce
                                       ?.allBookingSearchquery?.cabinClass ??
                                   '',
                             )

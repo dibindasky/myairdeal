@@ -110,6 +110,8 @@ class ScreenBookings extends StatelessWidget {
                                       Get.toNamed(Routes.invoice);
                                     },
                                     child: FlightTicketCard(
+                                      allBookingResponce: controller
+                                          .retrieveAllCompletedBooking[index],
                                       itemInfos: controller
                                           .retrieveAllCompletedBooking[index]
                                           .retrieveSingleBookingresponceModel
@@ -194,6 +196,8 @@ class ScreenBookings extends StatelessWidget {
                                       Get.toNamed(Routes.invoice);
                                     },
                                     child: FlightTicketCard(
+                                      allBookingResponce: controller
+                                          .retrieveAllCompletedBooking[index],
                                       bookingId: controller
                                           .retrieveAllUpcomingBooking[index]
                                           .bookingId,

@@ -9,7 +9,8 @@ class ApiEndPoints {
   static const String upcomingAllBooking = '/user/upcoming-user-bookings';
   static const String completedAllBooking = '/user/completed-user-bookings';
   static const String cancelledAllBooking = '/user/cancelled-user-bookings';
-  static const String userData = '/user/profile';
+  static const String addUserDetails = '/user/add-detail';
+  static const String getprofile = '/user/profile';
   static const String amendendMentCharge = '/booking/amendment-charges';
   static const String recentSearch = '/search/searchQueryHistory';
   static const String airportSearch = '/search/user-get-all-airports?search=';

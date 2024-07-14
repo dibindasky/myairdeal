@@ -66,7 +66,7 @@ class BookingService implements BookingRepo {
       final responce = await apiService.post(ApiEndPoints.retrieveSingleBooking,
           data: retrieveSingleBookingRequestModel.toJson());
       log('retrieveSinglleBooking done');
-      log('${responce.data}');
+
       return Right(RetrieveSingleBookingresponceModel.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException retrieveSinglleBooking ');
@@ -154,6 +154,7 @@ class BookingService implements BookingRepo {
       );
       log('retrieveUpComimgBooking done');
       //log('${responce.data}');
+
       return Right((responce.data as List<dynamic>?)
               ?.map(
                   (e) => AllBookingResponce.fromJson(e as Map<String, dynamic>))

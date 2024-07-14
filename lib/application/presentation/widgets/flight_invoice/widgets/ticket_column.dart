@@ -9,7 +9,6 @@ class TicketColumn extends StatelessWidget {
   final String? subValue;
   final String? flightCode;
   final bool isBold;
-  final bool isSubValueColumn;
   final CrossAxisAlignment? crossAxisAlignment;
   final TextStyle? valueStyle;
   final TextStyle? lebelStyle;
@@ -29,7 +28,6 @@ class TicketColumn extends StatelessWidget {
     this.valueStyle,
     this.lebelStyle,
     this.isBold = false,
-    this.isSubValueColumn = false,
     this.crossAxisAlignment,
   });
 
@@ -44,9 +42,8 @@ class TicketColumn extends StatelessWidget {
                 label!,
                 style: lebelStyle ??
                     textThinStyle1.copyWith(
-                      color: kGreyDark,
                       fontSize: 11.sp,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       overflow: TextOverflow.ellipsis,
                     ),
               )

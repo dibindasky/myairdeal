@@ -23,7 +23,7 @@ class ScreenNavbar extends StatelessWidget {
         initialRoute: Routes.homePage,
         onGenerateRoute: RouteGenerator().onGenerateRoute,
       ),
-      const ScreenBookings(),
+      ScreenBookings(),
       const ScreenExplore(),
       const ScreenTalkToUsPage(),
       const ScreenAccountPage()

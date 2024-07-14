@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_searchquery.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
+import 'package:myairdeal/domain/models/search/flight_search_sort_model/flight_search_query.dart';
 
 part 'all_booking_responce.g.dart';
 
@@ -11,11 +11,12 @@ class AllBookingResponce {
   String? bookingId;
   String? userId;
   @JsonKey(name: 'searchQuery')
-  AllBookingSearchquery? allBookingSearchquery;
+  FlightSearchQuery? allBookingSearchquery;
   @JsonKey(name: 'data')
   RetrieveSingleBookingresponceModel? retrieveSingleBookingresponceModel;
 
   AllBookingResponce({
+    this.allBookingSearchquery,
     this.id,
     this.bookingId,
     this.userId,

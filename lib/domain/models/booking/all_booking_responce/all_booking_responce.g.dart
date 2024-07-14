@@ -8,6 +8,10 @@ part of 'all_booking_responce.dart';
 
 AllBookingResponce _$AllBookingResponceFromJson(Map<String, dynamic> json) {
   return AllBookingResponce(
+    allBookingSearchquery: json['searchQuery'] == null
+        ? null
+        : FlightSearchQuery.fromJson(
+            json['searchQuery'] as Map<String, dynamic>),
     id: json['_id'] as String?,
     bookingId: json['bookingId'] as String?,
     userId: json['userId'] as String?,
@@ -20,6 +24,7 @@ AllBookingResponce _$AllBookingResponceFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$AllBookingResponceToJson(AllBookingResponce instance) =>
     <String, dynamic>{
+      'searchQuery': instance.allBookingSearchquery,
       '_id': instance.id,
       'bookingId': instance.bookingId,
       'userId': instance.userId,

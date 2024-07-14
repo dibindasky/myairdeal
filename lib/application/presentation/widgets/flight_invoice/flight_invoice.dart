@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -125,13 +123,16 @@ class FlightInvoiceCard extends StatelessWidget {
                               ),
                               const SizedBox(width: 6),
                               TicketColumn(
-                                label:
+                                value:
                                     '${tripInfos?[index].sI?[stopIndex].fD?.aI?.code ?? ''}- ${tripInfos?[index].sI?[stopIndex].fD?.fN ?? ''}',
                                 lebelStyle:
                                     textThinStyle1.copyWith(fontSize: 10.sp),
-                                exit: '',
+                                exit: '--',
                                 subValue: '',
-                                flightCode: "--",
+                                label: '',
+                                flightCode: DateFormating.getDifferenceOfDates(
+                                    tripInfos?[index].sI?[stopIndex].dt ?? '',
+                                    tripInfos?[index].sI?[stopIndex].at ?? ''),
                                 valueStyle: textThinStyle1.copyWith(
                                     fontSize: 10.sp, color: kGreyDark),
                                 isBold: false,
@@ -174,7 +175,7 @@ class FlightInvoiceCard extends StatelessWidget {
                           (tripInfos?[index].sI?.length ?? 1) - 1 == stopIndex
                               ? kEmpty
                               : Text(
-                                  '------ Layover Time -${DateFormating.getDifferenceOfDates(tripInfos?[index].sI?[stopIndex].dt ?? '', tripInfos?[index].sI?[stopIndex].at ?? '')} -----',
+                                  '----- Layover Time - ${DateFormating.getDifferenceOfDates(tripInfos?[index].sI?[stopIndex].at ?? '', tripInfos?[index].sI?[stopIndex + 1].dt ?? '')} -----',
                                   style: textThinStyle1,
                                 ),
                           (tripInfos?[index].sI?.length ?? 1) - 1 != stopIndex
@@ -210,6 +211,13 @@ class FlightInvoiceCard extends StatelessWidget {
                         airline: tripInfos?[index].sI?[0].fD?.aI?.name ?? '',
                         haveImage: false,
                         stops: (tripInfos?[index].sI?.length ?? 0) - 1,
+                        date: DateFormating.getDifferenceOfDates(
+                            (tripInfos?[index].sI?[0].dt ?? ''),
+                            (tripInfos?[index]
+                                    .sI?[(tripInfos[index].sI?.length ?? 1) - 1]
+                                    .at ??
+                                '')),
+                        number: '',
                       ),
                       Expanded(
                         child: TicketColumn(
@@ -250,95 +258,7 @@ class FlightInvoiceCard extends StatelessWidget {
               ),
             ),
           ),
-          kHeight5,
-          // Text('Time details',
-          //     style: textStyle1.copyWith(fontWeight: FontWeight.w800)),
-          // ...List.generate(
-          //   tripInfos?.length ?? 0,
-          //   (index) => (tripInfos?[index].sI?.length ?? 0) == 1
-          //       ? Row(
-          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //           children: [
-          //             Expanded(
-          //               child: TicketColumn(
-          //                 label:
-          //                     '${tripInfos?[index].sI?[0].da?.city ?? ''} TO ${tripInfos?[index].sI?[(tripInfos[index].sI?.length ?? 0) - 1].aa?.city ?? ''} ',
-          //                 value: 'Flight ID',
-          //                 valueStyle: textThinStyle1,
-          //                 subValue:
-          //                     '${tripInfos?[index].sI?[0].fD?.aI?.code ?? ''}- ${tripInfos?[index].sI?[0].fD?.fN ?? ''}',
-          //                 // exit: 'Exit',
-          //                 // flightCode: 'Flight code',
-          //               ),
-          //             ),
-          //             TicketColumn(
-          //               crossAxisAlignment: CrossAxisAlignment.center,
-          //               label: '',
-          //               value: 'Departure',
-          //               valueStyle: textThinStyle1,
-          //               subValue: DateFormating.formatDateMonthYear(
-          //                   (tripInfos?[index].sI?[0].dt ?? '')),
-          //               // exit: 'Exit',
-          //               // flightCode: 'Flight code',
-          //             ),
-          //             Expanded(
-          //               child: TicketColumn(
-          //                 crossAxisAlignment: CrossAxisAlignment.end,
-          //                 label: '',
-          //                 value: 'Arrival',
-          //                 valueStyle: textThinStyle1,
-          //                 subValue: DateFormating.formatDateMonthYear(
-          //                     tripInfos?[index]
-          //                             .sI?[(tripInfos[index].sI?.length ?? 1) -
-          //                                 1]
-          //                             .at ??
-          //                         ''),
-          //                 // exit: 'Exit',
-          //                 // flightCode: 'Flight code',
-          //               ),
-          //             ),
-          //           ],
-          //         )
-          //       : Column(
-          //           children: List.generate(
-          //             tripInfos?[index].sI?.length ?? 0,
-          //             (sIndex) => Row(
-          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //               children: [
-          //                 Expanded(
-          //                   child: TicketColumn(
-          //                     label:
-          //                         '${tripInfos?[index].sI?[sIndex].da?.city ?? ''} TO ${tripInfos?[index].sI?[sIndex].aa?.city ?? ''} ',
-          //                     valueStyle: textThinStyle1,
-          //                     value: 'Flight ID',
-          //                     subValue:
-          //                         '${tripInfos?[index].sI?[sIndex].fD?.aI?.code ?? ''}- ${tripInfos?[index].sI?[sIndex].fD?.fN ?? ''}',
-          //                   ),
-          //                 ),
-          //                 TicketColumn(
-          //                   label: '',
-          //                   crossAxisAlignment: CrossAxisAlignment.center,
-          //                   value: 'Departure',
-          //                   valueStyle: textThinStyle1,
-          //                   subValue: DateFormating.formatDateMonthYear(
-          //                       tripInfos?[index].sI?[sIndex].dt ?? ''),
-          //                 ),
-          //                 Expanded(
-          //                   child: TicketColumn(
-          //                     label: '',
-          //                     crossAxisAlignment: CrossAxisAlignment.end,
-          //                     value: 'Arrival',
-          //                     valueStyle: textThinStyle1,
-          //                     subValue: DateFormating.formatDateMonthYear(
-          //                         tripInfos?[index].sI?[sIndex].at ?? ''),
-          //                   ),
-          //                 ),
-          //               ],
-          //             ),
-          //           ),
-          //         ),
-          // ),
-          kHeight5,
+          kHeight10,
           // const DottedLines(height: 10),
           const Text('Baggage and Meals'),
 

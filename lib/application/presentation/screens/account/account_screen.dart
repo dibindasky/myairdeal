@@ -27,32 +27,34 @@ class ScreenAccountPage extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: [
-                SettingsSection(
-                  title: 'General',
-                  tiles: [
-                    Obx(() {
-                      return controller.loginOrNot.value
-                          ? SettingsTile(
-                              title: 'Edit Profile',
-                              onTap: () {
-                                Get.toNamed(Routes.editProfile);
-                              },
-                            )
-                          : kEmpty;
-                    }),
-                    SettingsTile(
-                      title: 'Security',
-                      onTap: () {
-                        Get.toNamed(Routes.security);
-                      },
-                    ),
-                    SettingsTile(
-                      title: 'Notifications',
-                      onTap: () {
-                        Get.toNamed(Routes.notificationSetup);
-                      },
-                    ),
-                  ],
+                Obx(
+                  () {
+                    return controller.loginOrNot.value
+                        ? SettingsSection(
+                            title: 'General',
+                            tiles: [
+                              SettingsTile(
+                                title: 'User Profile',
+                                onTap: () {
+                                  Get.toNamed(Routes.profile);
+                                },
+                              ),
+                              // SettingsTile(
+                              //   title: 'Security',
+                              //   onTap: () {
+                              //     Get.toNamed(Routes.security);
+                              //   },
+                              // ),
+                              // SettingsTile(
+                              //   title: 'Notifications',
+                              //   onTap: () {
+                              //     Get.toNamed(Routes.notificationSetup);
+                              //   },
+                              // ),
+                            ],
+                          )
+                        : kEmpty;
+                  },
                 ),
                 kHeight20,
                 SettingsSection(

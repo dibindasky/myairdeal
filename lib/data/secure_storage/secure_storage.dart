@@ -11,10 +11,10 @@ class SecureStorage {
   static const String accessKey = 'access_key';
   static const String isLogged = 'is_loggedIn';
   static const String isOnBoarVisted = 'is_onboar_isted';
-  static const String isSaveDetails = 'is_save_details';
-  //   static const String isPartnerKey = 'is_partner';
+  // static const String isSaveDetails = 'is_save_details';
+  // static const String isPartnerKey = 'is_partner';
   static const String phoneKey = 'phone_key';
-  //   static const String notificationKey = 'notification_key';
+  // static const String notificationKey = 'notification_key';
 
   static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
@@ -60,38 +60,6 @@ class SecureStorage {
     log('get setOnbaord =>() $setOnbaord');
     return setOnbaord == 'true';
   }
-
-  static Future<void> setSaveDetails() async {
-    log('set Save details =>()');
-    await _secureStorage.write(key: isSaveDetails, value: 'true');
-  }
-
-  static Future<bool> getSaveDetails() async {
-    log('get Save details =>()');
-    final saveDetails =
-        await _secureStorage.read(key: isSaveDetails) ?? 'false';
-    log('get Save details =>() $saveDetails');
-    return saveDetails == 'true';
-  }
-
-//   static Future<void> setRole({required bool isPartner}) async {
-//     log('set isBusiness token =>() $isPartner');
-//     await _secureStorage.write(key: isPartnerKey, value: isPartner.toString());
-//   }
-
-//   static Future<bool> getRole() async {
-//     final role = await _secureStorage.read(key: isPartnerKey) ?? 'false';
-//     return role == 'true';
-//   }
-
-//   static Future<void> setNotification({required int length}) async {
-//     await _secureStorage.write(key: notificationKey, value: length.toString());
-//   }
-
-//   static Future<int> getNotification() async {
-//     final noti = await _secureStorage.read(key: notificationKey) ?? '0';
-//     return int.parse(noti);
-//   }
 
   static Future<void> setPhone({required String phone}) async {
     log('set phone =>() $phone');

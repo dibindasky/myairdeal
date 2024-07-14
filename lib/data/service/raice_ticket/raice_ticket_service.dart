@@ -56,7 +56,7 @@ class RaiceTicketService implements RaiceTicketRepo {
     try {
       final responce = await apiService.get(
           ApiEndPoints.invoiceDownLoad.replaceFirst('{booking_id}', bookingID));
-      log('ivoiceDownLoad  >> : ${responce.data}');
+      log('ivoiceDownLoad  >> : done');
       return Right(PdfModel.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException ivoiceDownLoad $e');

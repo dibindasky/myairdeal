@@ -6,6 +6,7 @@ import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/bottom_mini_container.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/ticket_detail_section.dart';
+import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_responce.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/item_infos.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
 
@@ -23,6 +24,7 @@ class FlightTicketCard extends StatelessWidget {
     this.bookingId,
     this.flightId,
     this.searchAirlineInformation,
+    this.allBookingResponce,
   });
 
   final VoidCallback? buttonOnTap;
@@ -36,6 +38,7 @@ class FlightTicketCard extends StatelessWidget {
   final bool isSelectedTicket;
   final VoidCallback? onTap;
   final String? bookingId;
+  final AllBookingResponce? allBookingResponce;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +68,7 @@ class FlightTicketCard extends StatelessWidget {
                   searchAirlineInformation: searchAirlineInformation,
                   itemInfos: itemInfos,
                   flightTicketCardEnum: flightTicketCardEnum,
+                  allBookingResponce: allBookingResponce,
                 ),
                 const DottedLines(),
                 BottomMiniContainer(

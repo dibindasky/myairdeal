@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/screens/account/edit_profile.dart';
 import 'package:myairdeal/application/presentation/screens/account/notification_setup.dart';
 import 'package:myairdeal/application/presentation/screens/account/secuurity_screen.dart';
+import 'package:myairdeal/application/presentation/screens/account/widgets/edit_profile.dart';
 import 'package:myairdeal/application/presentation/screens/auth/goto_home_screen.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_in/sign_in.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/al_most_done.dart';
@@ -113,8 +114,8 @@ class GetXRouterConfig {
       page: () => const ScreenFlightDetail(),
     ),
     GetPage(
-      name: Routes.editProfile,
-      page: () => const ScreenProfileEdit(),
+      name: Routes.profile,
+      page: () => const ScreenProfile(),
     ),
     GetPage(
       name: Routes.security,
@@ -131,7 +132,7 @@ class GetXRouterConfig {
     GetPage(
       binding: BookingBinding(),
       name: Routes.bookings,
-      page: () => const ScreenBookings(),
+      page: () => ScreenBookings(),
     ),
     GetPage(
       binding: ExploreBinding(),
@@ -176,6 +177,11 @@ class GetXRouterConfig {
       binding: NotificationBinding(),
       name: Routes.notificationPage,
       page: () => const ScreenNotification(),
+    ),
+    GetPage(
+      bindings: [AuthBinding()],
+      name: Routes.updateProfile,
+      page: () => const ScreenEditProfile(),
     ),
   ];
 }

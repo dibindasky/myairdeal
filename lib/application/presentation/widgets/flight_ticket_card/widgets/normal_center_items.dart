@@ -10,7 +10,7 @@ class NormalCenterItems extends StatelessWidget {
       this.airline,
       this.flightId,
       this.date,
-      this.number = '32',
+      this.number,
       this.travelMinutes = '',
       this.stops = 1});
 
@@ -89,6 +89,9 @@ class NormalCenterItems extends StatelessWidget {
           stops == 0 ? 'Non Stop' : '$stops Stop',
           style: textThinStyle1.copyWith(fontSize: 9.sp),
         ),
+        number != null
+            ? Text(number!, style: textThinStyle1.copyWith(fontSize: 9.sp))
+            : kEmpty,
         date != null
             ? Text(
                 date!,

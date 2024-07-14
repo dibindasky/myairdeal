@@ -32,18 +32,18 @@ class AddOnesContainer extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Obx(
-                      () => Checkbox(
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        visualDensity:
-                            const VisualDensity(horizontal: -4, vertical: -4),
-                        activeColor: kBluePrimary,
-                        value: flightController.addOnsChecked.value,
-                        onChanged: (value) {
-                          flightController.changeAdds(value ?? false);
-                        },
-                      ),
-                    ),
+                    // Obx(
+                    //   () => Checkbox(
+                    //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    //     visualDensity:
+                    //         const VisualDensity(horizontal: -4, vertical: -4),
+                    //     activeColor: kBluePrimary,
+                    //     value: flightController.addOnsChecked.value,
+                    //     onChanged: (value) {
+                    //       flightController.changeAdds(value ?? false);
+                    //     },
+                    //   ),
+                    // ),
                     kWidth5,
                     const CircleAvatar(
                       backgroundImage:

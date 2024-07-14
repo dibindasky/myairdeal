@@ -37,7 +37,7 @@ class SortingChipsSection extends StatelessWidget {
                                 onTap: () {}),
                             SortingChipSortPage(
                                 text:
-                                    'Departure: ${DateFormating.getDate(controller.tripType.value == 2 ? controller.multiCityDepartureDate[controller.selectedTripListIndex.value]! : controller.tripType.value == 1 ? controller.returnDate.value : controller.depatureDate.value)}',
+                                    'Departure: ${DateFormating.getDate(controller.multiCityDepartureDate[controller.selectedTripListIndex.value])}',
                                 selected: true,
                                 onTap: () {}),
                             SortingChipSortPage(
@@ -65,9 +65,9 @@ class SortingChipsSection extends StatelessWidget {
                                 //     }),
                                 SortingChipSortPage(
                                     text: 'Stops',
-                                    selected: controller
+                                    selected:( controller
                                         .sortingVariablesSelected[controller
-                                            .selectedTripListIndex.value]![1]
+                                            .selectedTripListIndex.value]?[1]??[])
                                         .isNotEmpty,
                                     onTap: () {
                                       showModalBottomSheet(
@@ -79,8 +79,15 @@ class SortingChipsSection extends StatelessWidget {
                                     }),
                                 SortingChipSortPage(
                                     text: 'Duration',
-                                    selected:
-                                        controller.durationSlider.value != 1,
+                                    selected: false,
+                                    //  controller.durationSlider.value !=
+                                    //     (controller
+                                    //             .sortingVariablesSelected[
+                                    //                 controller
+                                    //                     .selectedTripListIndex
+                                    //                     .value]?[2]
+                                    //             .last ??
+                                    //         1),
                                     onTap: () {
                                       showModalBottomSheet(
                                         backgroundColor: knill,
@@ -91,9 +98,9 @@ class SortingChipsSection extends StatelessWidget {
                                     }),
                                 SortingChipSortPage(
                                     text: 'Airlines',
-                                    selected: controller
+                                    selected:( controller
                                         .sortingVariablesSelected[controller
-                                            .selectedTripListIndex.value]![0]
+                                            .selectedTripListIndex.value]?[0]??[])
                                         .isNotEmpty,
                                     onTap: () {
                                       showModalBottomSheet(
@@ -107,7 +114,7 @@ class SortingChipsSection extends StatelessWidget {
                                     text: 'Clear Filter',
                                     selected: false,
                                     onTap: () {
-                                     controller.clearFilters();
+                                      controller.clearFilters();
                                     }),
                                 // SortingChipSortPage(
                                 //     text: 'Flight times',

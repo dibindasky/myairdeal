@@ -13,6 +13,17 @@ class TicketsListSorted extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
     return Obx(() {
+      if ((controller.comboTrip.value && controller.comboList.isEmpty) ||
+          (!controller.comboTrip.value &&
+              controller.searchList[controller.selectedTripListIndex.value]
+                  .isEmpty)) {
+        return Center(child: Column(
+          children: [
+            kHeight40,
+            const Text('No Flights Available'),
+          ],
+        ));
+      }
       return ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,

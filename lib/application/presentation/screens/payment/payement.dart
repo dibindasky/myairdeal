@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/payment_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/itenary_tab/inner_content.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/itenary_tab/fare_summary.dart';
 import 'package:myairdeal/application/presentation/screens/payment/widgets/add_method_card.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -38,7 +38,7 @@ class PaymentTab extends StatelessWidget {
                     boxShadow: boxShadow2,
                     color: kWhite),
                 child: Column(
-                  children: [const InnerContents(), kHeight20],
+                  children: [kHeight10, const FareSummary(paymentPage: true)],
                 ),
               ),
               kHeight20,

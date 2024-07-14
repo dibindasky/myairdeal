@@ -38,6 +38,7 @@ class ScreenFlightTicketSort extends StatelessWidget {
           );
         }
         return SingleChildScrollView(
+          controller: controller.flightSortScreenController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

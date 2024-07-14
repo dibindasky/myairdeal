@@ -37,44 +37,57 @@ class StopsSortBottomSheet extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemCount: controller
-                        .sortingVariables[
-                            controller.selectedTripListIndex.value]![1]
-                        .length,
+                            .sortingVariables[
+                                controller.selectedTripListIndex.value]?[1]
+                            .length ??
+                        0,
                     shrinkWrap: true,
-                    itemBuilder: (context, index) => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        controller.selectStops(controller.sortingVariables[
+                            controller.selectedTripListIndex.value]![1][index]);
+                      },
+                      child: Container(
+                        color: kWhite,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                                controller.sortingVariables[controller
-                                            .selectedTripListIndex
-                                            .value]![1][index] ==
-                                        0
-                                    ? 'Non Stop'
-                                    : '${controller.sortingVariables[controller.selectedTripListIndex.value]![1][index]} Stops',
-                                style: textStyle1),
-                            // Text('₹ 3500',
-                            //     style: textStyle1.copyWith(
-                            //         fontSize: 12.sp, color: kGreyDark)),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    controller.sortingVariables[controller
+                                                .selectedTripListIndex
+                                                .value]![1][index] ==
+                                            0
+                                        ? 'Non Stop'
+                                        : '${controller.sortingVariables[controller.selectedTripListIndex.value]![1][index]} Stops',
+                                    style: textStyle1),
+                                // Text('₹ 3500',
+                                //     style: textStyle1.copyWith(
+                                //         fontSize: 12.sp, color: kGreyDark)),
+                              ],
+                            ),
+                            Obx(() {
+                              return Checkbox(
+                                value: controller.sortingVariablesSelected[
+                                        controller
+                                            .selectedTripListIndex.value]![1]
+                                    .contains(controller.sortingVariables[
+                                        controller.selectedTripListIndex
+                                            .value]![1][index]),
+                                onChanged: (value) {
+                                  controller.selectStops(
+                                      controller.sortingVariables[controller
+                                          .selectedTripListIndex
+                                          .value]![1][index]);
+                                },
+                                activeColor: kBluePrimary,
+                              );
+                            }),
                           ],
                         ),
-                        Obx(() {
-                          return Checkbox(
-                            value: controller.sortingVariablesSelected[
-                                    controller.selectedTripListIndex.value]![1]
-                                .contains(controller.sortingVariables[controller
-                                    .selectedTripListIndex.value]![1][index]),
-                            onChanged: (value) {
-                              controller.selectStops(
-                                  controller.sortingVariables[controller
-                                      .selectedTripListIndex.value]![1][index]);
-                            },
-                            activeColor: kBluePrimary,
-                          );
-                        }),
-                      ],
+                      ),
                     ),
                   );
                 }),

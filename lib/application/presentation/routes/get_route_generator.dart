@@ -154,7 +154,7 @@ class GetXRouterConfig {
       page: () => const ScreenTravelerDetails(),
     ),
     GetPage(
-      binding: PaymentBinding(),
+      bindings: [PaymentBinding(), RaiceTicketBinding()],
       name: Routes.paymentSucess,
       page: () => const ScreenSuccessPage(),
     ),

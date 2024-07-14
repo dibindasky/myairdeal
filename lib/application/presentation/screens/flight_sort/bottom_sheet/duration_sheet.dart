@@ -49,12 +49,8 @@ class _DurationBottomSheetState extends State<DurationBottomSheet> {
                   children: [
                     Text('Maximum Travel Time', style: textStyle1),
                     Text(
-                        DateFormating.convertMinutesToHoursMinutes((controller
-                                    .sortingVariables[controller
-                                        .selectedTripListIndex.value]![2]
-                                    .last *
-                                controller.durationSlider.value)
-                            .round()),
+                        DateFormating.convertMinutesToHoursMinutes(
+                            (controller.durationSlider.value).round()),
                         style: textThinStyle1.copyWith(color: kGreyDark)),
                   ],
                 ),
@@ -67,11 +63,30 @@ class _DurationBottomSheetState extends State<DurationBottomSheet> {
             ),
             kHeight5,
             Slider(
+                max: double.parse((controller
+                            .sortingVariables[
+                                controller.selectedTripListIndex.value]![2]
+                            .last ??
+                        1.0)
+                    .toString()),
+                min: 0,
+                // min: double.parse((controller
+                //             .sortingVariables[
+                //                 controller.selectedTripListIndex.value]![2]
+                //             .first ??
+                //         0.1)
+                //     .toString()),
                 value: controller.durationSlider.value,
+                // value: double.parse((controller
+                //             .sortingVariablesSelected[
+                //                 controller.selectedTripListIndex.value]![2]
+                //             .first ??
+                //         0.1)
+                //     .toString()),
                 onChanged: (value) {
-                  debouncer.run(() {
-                    controller.changeDurationSlider(value);
-                  });
+                  // debouncer.run(() {
+                  controller.changeDurationSlider(value);
+                  // });
                 },
                 activeColor: kBluePrimary,
                 inactiveColor: kGreyLight),

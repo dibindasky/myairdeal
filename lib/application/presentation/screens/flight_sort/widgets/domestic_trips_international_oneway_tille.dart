@@ -5,6 +5,7 @@ import 'package:myairdeal/application/controller/booking/traveler_controller.dar
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/flight_ticket_expansion_card.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
@@ -37,6 +38,13 @@ class DomesticTripsAndOneWayInternationalTile extends StatelessWidget {
         controller.searchList[controller.selectedTripListIndex.value][index]
             .totalPriceList!.length,
         (i) => Obx(() {
+          // if (controller
+          //         .searchList[controller.selectedTripListIndex.value][index]
+          //         .totalPriceList![i]
+          //         .fareIdentifier ==
+          //     'SPECIAL_RETURN') {
+          //   return kEmpty;
+          // }
           return TicketDetailExpansionChild(
             isSelected: controller.tripType.value != 0 &&
                 controller.selectedFlights[

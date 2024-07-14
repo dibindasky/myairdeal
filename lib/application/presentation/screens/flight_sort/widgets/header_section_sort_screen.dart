@@ -90,7 +90,9 @@ class SortScreenHeaderSection extends StatelessWidget {
                         ),
                         const Column(
                           children: [
-                            Icon(Icons.flight_sharp, color: kWhite),
+                            RotatedBox(
+                                quarterTurns: 1,
+                                child: Icon(Icons.flight_sharp, color: kWhite)),
                             // Container(
                             //   height: 50.h,
                             //   width: 50.w,

@@ -55,8 +55,8 @@ class TicketColumn extends StatelessWidget {
                 style: valueStyle ??
                     TextStyle(
                       fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-                      fontSize: 18,
-                    ),
+                      fontSize: 16,
+                    ),overflow: TextOverflow.ellipsis,
               )
             : kEmpty,
         kHeight5,

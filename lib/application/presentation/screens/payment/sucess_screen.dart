@@ -48,124 +48,124 @@ class ScreenSuccessPage extends StatelessWidget {
         backgroundColor: kBlueDark,
       ),
       body: SingleChildScrollView(
-        child: Stack(
+        child: Column(
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                children: [
-                  Stack(
+            Stack(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
                     children: [
-                      Container(
-                        height: 190.h,
-                        decoration: const BoxDecoration(
-                          color: kBlueDark,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(70),
-                            bottomRight: Radius.circular(70),
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Obx(() {
-                          if (controller.bookingCompleteLoading.value) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                kHeight50,
-                                const CircularProgressIndicator(color: kWhite),
-                              ],
-                            );
-                          }
-                          return Column(
-                            children: [
-                              AnimatedGrowShrinkContainer(
-                                begin: 0,
-                                end: 1,
-                                milliseconds: 500,
-                                child: Image.asset(
-                                  'asset/icon/success_icon_green.png',
-                                  height: 110.h,
-                                ),
+                      Stack(
+                        children: [
+                          Container(
+                            height: 190.h,
+                            decoration: const BoxDecoration(
+                              color: kBlueDark,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(70),
+                                bottomRight: Radius.circular(70),
                               ),
-                              Text('Booking done successfully!',
-                                  style: textThinStyle1.copyWith(color: kWhite))
-                            ],
-                          );
-                        }),
+                            ),
+                          ),
+                          Center(
+                            child: Obx(() {
+                              if (controller.bookingCompleteLoading.value) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    kHeight50,
+                                    const CircularProgressIndicator(color: kWhite),
+                                  ],
+                                );
+                              }
+                              return Column(
+                                children: [
+                                  AnimatedGrowShrinkContainer(
+                                    begin: 0,
+                                    end: 1,
+                                    milliseconds: 500,
+                                    child: Image.asset(
+                                      'asset/icon/success_icon_green.png',
+                                      height: 110.h,
+                                    ),
+                                  ),
+                                  Text('Booking done successfully!',
+                                      style: textThinStyle1.copyWith(color: kWhite))
+                                ],
+                              );
+                            }),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-            Positioned(
-              left: 0.h,
-              right: 0.h,
-              top: 150.h,
-              child: Obx(() {
-                if (controller.invoiceLoading.value) {
-                  return HorizontalShimmerSkeleton(
-                    itemCount: 1,
-                    scrollDirection: Axis.vertical,
-                    paddingHorizontal: 30.w,
-                    height: 300.h,
-                  );
-                }
-                return Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.h),
-                      child: FlightInvoiceCard(
-                        flightTicketInvoiceEnum:
-                            FlightTicketInvoiceEnum.upcoming,
-                        retrieveSingleBookingresponceModel:
-                            controller.retrieveSingleBookingresponceModel.value,
+                ),
+                Obx(() {
+                  if (controller.invoiceLoading.value) {
+                    return HorizontalShimmerSkeleton(
+                      itemCount: 1,
+                      scrollDirection: Axis.vertical,
+                      paddingHorizontal: 30.w,
+                      height: 300.h,
+                    );
+                  }
+                  return Column(
+                    children: [
+                      SizedBox(height: 150.h,),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.h),
+                        child: FlightInvoiceCard(
+                          flightTicketInvoiceEnum:
+                              FlightTicketInvoiceEnum.upcoming,
+                          retrieveSingleBookingresponceModel:
+                              controller.retrieveSingleBookingresponceModel.value,
+                        ),
                       ),
-                    ),
-                    kHeight20,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        EventButton(
-                          style: textStyle1.copyWith(
-                              fontSize: 13.sp, color: kWhite),
-                          text: 'Back TO Home',
-                          onTap: () {
-                            controller.clearDataAfterBooking();
-                            Get.find<TravellerController>()
-                                .clearDataAfterBooking();
-                            Get.find<FlightSortController>()
-                                .clearDataAfterBooking();
-                            Get.back();
-                          },
-                        ),
-                        EventButton(
-                          style: textStyle1.copyWith(
-                              fontSize: 13.sp, color: kWhite),
-                          text: 'Download Ticket',
-                          onTap: () {
-                            controller.clearDataAfterBooking();
-                            Get.find<TravellerController>()
-                                .clearDataAfterBooking();
-                            Get.find<FlightSortController>()
-                                .clearDataAfterBooking();
-                            Get.back();
-                            Get.find<RaiceTicketController>().invoiceDOwnload(
-                                bookingID: controller
-                                        .retrieveSingleBookingresponceModel
-                                        .value
-                                        .order
-                                        ?.bookingId ??
-                                    '');
-                          },
-                        ),
-                      ],
-                    ),
-                    kHeight50,
-                  ],
-                );
-              }),
+                      kHeight20,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          EventButton(
+                            style: textStyle1.copyWith(
+                                fontSize: 13.sp, color: kWhite),
+                            text: 'Back TO Home',
+                            onTap: () {
+                              controller.clearDataAfterBooking();
+                              Get.find<TravellerController>()
+                                  .clearDataAfterBooking();
+                              Get.find<FlightSortController>()
+                                  .clearDataAfterBooking();
+                              Get.back();
+                            },
+                          ),
+                          EventButton(
+                            style: textStyle1.copyWith(
+                                fontSize: 13.sp, color: kWhite),
+                            text: 'Download Ticket',
+                            onTap: () {
+                              controller.clearDataAfterBooking();
+                              Get.find<TravellerController>()
+                                  .clearDataAfterBooking();
+                              Get.find<FlightSortController>()
+                                  .clearDataAfterBooking();
+                              Get.back();
+                              Get.find<RaiceTicketController>().invoiceDOwnload(
+                                  bookingID: controller
+                                          .retrieveSingleBookingresponceModel
+                                          .value
+                                          .order
+                                          ?.bookingId ??
+                                      '');
+                            },
+                          ),
+                        ],
+                      ),
+                      kHeight50,
+                    ],
+                  );
+                }),
+              ],
             ),
           ],
         ),

@@ -11,9 +11,11 @@ import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 
 class FareSummary extends StatelessWidget {
-  const FareSummary({super.key, this.reviewPage = false});
+  const FareSummary(
+      {super.key, this.reviewPage = false, this.paymentPage = false});
 
   final bool reviewPage;
+  final bool paymentPage;
 
   @override
   Widget build(BuildContext context) {
@@ -244,39 +246,52 @@ class FareSummary extends StatelessWidget {
                 ),
               ],
             ),
-            const DottedLines(height: 10),
-            kHeight20,
-            RichText(
-              text: TextSpan(
-                text: '* Refundable (',
-                style: textStyle1.copyWith(fontSize: 12.sp, color: kBlack),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: 'Penalty rules Applies',
-                    style: textStyle1.copyWith(color: kBlue, fontSize: 12.sp),
-                  ),
-                  TextSpan(
-                    text: ').',
-                    style: textStyle1.copyWith(color: kBlack, fontSize: 12.sp),
-                  ),
-                ],
-              ),
-            ),
-            reviewPage ? kEmpty : kHeight20,
-            reviewPage
+            paymentPage
                 ? kEmpty
-                : EventButton(
-                    text: controller.bookingLoading.value
-                        ? 'Continue'
-                        : Get.find<TravellerController>()
-                                    .selectedMainTab
-                                    .value ==
-                                0
-                            ? 'Add Passenger'
-                            : 'Continue',
-                    onTap: () {
-                      Get.find<TravellerController>().changeDetailEnterTab(1);
-                    },
+                : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const DottedLines(height: 10),
+                      kHeight20,
+                      RichText(
+                        text: TextSpan(
+                          text: '* Refundable (',
+                          style: textStyle1.copyWith(
+                              fontSize: 12.sp, color: kBlack),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Penalty rules Applies',
+                              style: textStyle1.copyWith(
+                                  color: kBlue, fontSize: 12.sp),
+                            ),
+                            TextSpan(
+                              text: ').',
+                              style: textStyle1.copyWith(
+                                  color: kBlack, fontSize: 12.sp),
+                            ),
+                          ],
+                        ),
+                      ),
+                      reviewPage ? kEmpty : kHeight20,
+                      reviewPage
+                          ? kEmpty
+                          : Align(
+                            child: EventButton(
+                                text: controller.bookingLoading.value
+                                    ? 'Continue'
+                                    : Get.find<TravellerController>()
+                                                .selectedMainTab
+                                                .value ==
+                                            0
+                                        ? 'Add Passenger'
+                                        : 'Continue',
+                                onTap: () {
+                                  Get.find<TravellerController>()
+                                      .changeDetailEnterTab(1);
+                                },
+                              ),
+                          ),
+                    ],
                   ),
             kHeight10,
           ],

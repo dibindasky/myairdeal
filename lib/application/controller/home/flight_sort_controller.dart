@@ -6,6 +6,7 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/data/service/flight_sort/flight_service.dart';
+import 'package:myairdeal/data/service/home/home_service.dart';
 import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/code_airport.dart';
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/flight_search_query.dart';
@@ -15,6 +16,7 @@ import 'package:myairdeal/domain/models/search/flight_search_sort_model/route_in
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/search_modifiers.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
 import 'package:myairdeal/domain/repository/service/flight_sort_repo.dart';
+import 'package:myairdeal/domain/repository/service/home_repo.dart';
 
 class FlightSortController extends GetxController {
   // Change category [flights, air ambulance, chatered flight, helicopter]
@@ -22,6 +24,7 @@ class FlightSortController extends GetxController {
 
   // flight service class responsible for api calls
   final FlightRepo flightService = FlightService();
+  final HomeRepo homeService = HomeService();
 
   /// list responsible for international(combo) multicity and round trips airline storing,
   /// [comboList] data provider
@@ -56,7 +59,7 @@ class FlightSortController extends GetxController {
 
   // scroll controller used to show the list[selected flights and selected tabs in sorting] in a auto scroll view
   ScrollController flightSortController = ScrollController();
-  ScrollController flightSortTabController = ScrollController();
+  ScrollController flightSortScreenController = ScrollController();
 
   // map responsible for finding the variables for sorting and showing it in the ui
   RxMap<int, List<RxList<dynamic>>> sortingVariables =
@@ -73,6 +76,12 @@ class FlightSortController extends GetxController {
   // 1- roundtrip
   // 2- multicity
   RxInt tripType = 0.obs;
+
+  /// list of passenger faretypes to show
+  List<String> passengerFareTypes = ['REGULAR', 'STUDENT', 'SENIOR_CITIZEN'];
+
+  // selected passenger fare type default 0 -> Regular
+  RxInt passengerFareType = 0.obs;
 
   /// searchForm validation checker
   RxBool searchValidated = false.obs;
@@ -152,11 +161,6 @@ class FlightSortController extends GetxController {
   List<String> sortTypes = ['Best', 'Fastest', 'Cheapest'];
   List<String> stopTypes = ['Direct', 'Max 1 Stop', 'Max 2 Stops'];
   List<String> tripTypes = ['One-way', 'Round-trip', 'Multi-city'];
-  //Travel Insurence Button
-  RxBool travelInsurence = false.obs;
-  RxInt selectedPromoCode = 300000.obs;
-  //Add ons
-  RxBool addOnsChecked = false.obs;
 
 // change the category in the home section [flights, air ambulance, chatered flight, helicopter]
   void changeCategory(int index) {
@@ -175,7 +179,7 @@ class FlightSortController extends GetxController {
       RxList.generate(2, (index) => CitySearchModel()),
       RxList.generate(2, (index) => CitySearchModel())
     ].obs;
-    durationSlider.value = 1;
+    // durationSlider.value = 1;
     sortingVariables.clear();
     sortAirlinesSelected.clear();
     departureTimesSelected.clear();
@@ -184,6 +188,11 @@ class FlightSortController extends GetxController {
     infantCount.value = 0;
     childrenCount.value = 0;
     validateSearchForm();
+    update();
+  }
+
+  void updateSearchToRecent(FlightSearchSortModel flightSearchSortModel) {
+    homeService.addRecentSearch(flightSearchSortModel: flightSearchSortModel);
   }
 
   // validate form for search flight
@@ -235,7 +244,6 @@ class FlightSortController extends GetxController {
     searchListLoading.value = true;
     selectedTripListIndex.value = 0;
     durationSlider.value = 1;
-    String message = '';
     if (tripType.value == 1) {
       // if it is a round trip add airport as ulta
       airportSelected[1].value = [airportSelected[0][1], airportSelected[0][0]];
@@ -254,8 +262,10 @@ class FlightSortController extends GetxController {
         child: childrenCount.value.toString(),
         infant: infantCount.value.toString(),
       ),
-      searchModifiers:
-          SearchModifiers(isConnectingFlight: true, isDirectFlight: true),
+      searchModifiers: SearchModifiers(
+          isConnectingFlight: true,
+          isDirectFlight: true,
+          pft: passengerFareTypes[passengerFareType.value]),
       routeInfos: List.generate(
         tripType.value == 0
             ? 1
@@ -279,11 +289,16 @@ class FlightSortController extends GetxController {
     );
     final result = await flightService.getAllFlight(
         flightSearchSortModel: FlightSearchSortModel(searchQuery: searchModel));
+
     result.fold((l) {
       searchListLoading.value = false;
-      message = l.message ?? errorMessage;
+      Get.back(id: 1);
+      Get.snackbar('Failed to load data', l.message ?? errorMessage,
+          backgroundColor: kRed, colorText: kWhite);
     }, (r) {
       if (r.errors == null) {
+        print(
+            'available onward length => ${r.searchResult?.tripInfos?.onward?.length ?? 0}');
         searchListMain = [];
         searchList.value = [];
         if (r.searchResult?.tripInfos?.combo != null) {
@@ -334,11 +349,11 @@ class FlightSortController extends GetxController {
             searchList.add(RxList.from(e));
           }
         }
-      }
-      if (message != '') {
-        Get.snackbar('Failed to load data', message,
-            backgroundColor: kRed, colorText: kWhite);
+      } else if (r.errors != null) {
         Get.back(id: 1);
+        Get.snackbar(
+            'Failed to load data', r.errors?[0].message ?? errorMessage,
+            backgroundColor: kRed, colorText: kWhite);
       }
       searchListLoading.value = false;
       if (searchListMain.isEmpty) {
@@ -346,6 +361,7 @@ class FlightSortController extends GetxController {
       }
       if (!comboTrip.value) getSortingVariables();
     });
+    updateSearchToRecent(FlightSearchSortModel(searchQuery: searchModel));
   }
 
   /// for international multi city and round trip need a seperate list from [searchListMain] first index
@@ -412,7 +428,10 @@ class FlightSortController extends GetxController {
       }
       sortingVariables[i]![1].sort();
       sortingVariables[i]![2].sort();
+      sortingVariablesSelected[i]![2] =
+          [(sortingVariables[i]![2].last ?? 1)].obs;
     }
+    durationSlider.value = ((sortingVariablesSelected[0]?[2].last) ?? 1.0 )* 1.0;
     sortAirlineList();
   }
 
@@ -421,7 +440,7 @@ class FlightSortController extends GetxController {
     for (int i = 0; i < searchList.length; i++) {
       final item = searchList[i];
       price += item[selectedFlights[i]]
-              .totalPriceList![selectedTicketPrices[i]]
+              .totalPriceList?[selectedTicketPrices[i]]
               .fd
               ?.adult
               ?.fC
@@ -439,30 +458,35 @@ class FlightSortController extends GetxController {
     getTotalFare();
   }
 
+  /// change passenger fare type change the [passengerFareType] to find type form [passengerFareTypes]
+  void changePassengerFareType(int index) {
+    if (index == passengerFareType.value) {
+      passengerFareType.value = 0;
+    } else {
+      passengerFareType.value = index;
+    }
+  }
+
 // change trip from tab for multicity and round trip for choosing diffrent flights in different list
 // auto scroll the list in the top showing selection accoring to the selection of tab
   void changeSelectedTripIndex(int index) {
     selectedTripListIndex.value = index;
-    final onePotion = flightSortController.position.maxScrollExtent /
-        (selectedFlights.length);
-    flightSortController.animateTo(
-        index < 2
-            ? flightSortController.position.minScrollExtent
-            : index >= selectedFlights.length - 2
-                ? flightSortController.position.maxScrollExtent
-                : onePotion * index,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOut);
-    final onePotion1 = flightSortTabController.position.maxScrollExtent /
-        (selectedFlights.length);
-    flightSortTabController.animateTo(
-        index < 2
-            ? flightSortTabController.position.minScrollExtent
-            : index >= selectedFlights.length - 2
-                ? flightSortTabController.position.maxScrollExtent
-                : onePotion1 * index,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOut);
+    if (index > 1) {
+      final onePotion = flightSortController.position.maxScrollExtent /
+          (selectedFlights.length);
+      flightSortController.animateTo(
+          index < 2
+              ? flightSortController.position.minScrollExtent
+              : index >= selectedFlights.length - 2
+                  ? flightSortController.position.maxScrollExtent
+                  : onePotion * index,
+          duration: const Duration(seconds: 1),
+          curve: Curves.easeInOut);
+    }
+    flightSortScreenController.animateTo(0,
+        duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+    durationSlider.value =
+        double.parse(sortingVariablesSelected[index]?[2].last ?? "1");
     validateSearchForm();
   }
 
@@ -495,10 +519,10 @@ class FlightSortController extends GetxController {
       }
     }
     // sort for duration
-    if (sortingVariablesSelected[selectedTripListIndex.value]![1].isEmpty) {
+    if ((durationSlider.value != 0 || durationSlider.value != 1) &&
+        sortingVariablesSelected[selectedTripListIndex.value]![1].isEmpty) {
       for (int i = 0; i < sort.length; i++) {
-        if (sortingVariables[selectedTripListIndex.value]![2].first *
-                durationSlider.value <
+        if (durationSlider.value <
             DateFormating.getTotalDifferenceInMinutes(sort[i].sI![0].dt ?? '',
                 sort[i].sI![sort[i].sI!.length - 1].at ?? '')) {
           sort.removeAt(i--);
@@ -516,21 +540,6 @@ class FlightSortController extends GetxController {
     } else {
       print("continue");
     }
-  }
-
-  void changeAdds(bool value) {
-    addOnsChecked.value = value;
-    update();
-  }
-
-  void changePromoCode(int index) {
-    selectedPromoCode.value = index;
-    update();
-  }
-
-  void changeTravelValue(bool value) {
-    travelInsurence.value = value;
-    update();
   }
 
 // swap the data between from and to in search field
@@ -619,12 +628,15 @@ class FlightSortController extends GetxController {
     depatureDate.value = value;
     if (depatureDate.value.isAfter(returnDate.value)) {
       returnDate.value = depatureDate.value;
+      multiCityDepartureDate[1] = value;
     }
+    multiCityDepartureDate[0] = value;
     validateSearchForm();
   }
 
   void changeRetunDate(DateTime value) {
     returnDate.value = value;
+    multiCityDepartureDate[1] = value;
     validateSearchForm();
   }
 
@@ -666,31 +678,43 @@ class FlightSortController extends GetxController {
   void clearFilters() {
     sortingVariablesSelected[selectedTripListIndex.value]![0].clear();
     sortingVariablesSelected[selectedTripListIndex.value]![1].clear();
-    sortingVariablesSelected[selectedTripListIndex.value]![2].clear();
+    sortingVariablesSelected[selectedTripListIndex.value]![2] =
+        sortingVariablesSelected[selectedTripListIndex.value]![2].last ?? 1;
+    durationSlider.value =
+        sortingVariablesSelected[selectedTripListIndex.value]![2].last ?? 1;
     sortAirlineList();
   }
 
   // change the duration of the slider for sorting, need to check the least time while changing
   void changeDurationSlider(double value, [bool reset = false]) {
-    if (sortingVariablesSelected[selectedTripListIndex.value]![1].isNotEmpty) {
+    print(sortingVariables[0]?[2]);
+    if (sortingVariablesSelected[selectedTripListIndex.value]![1].isNotEmpty &&
+        !Get.isSnackbarOpen) {
       Get.rawSnackbar(
           backgroundColor: kGreyDark,
-          duration: const Duration(milliseconds: 300),
-          maxWidth: 100.w,
+          // duration: const Duration(milliseconds: 300),
+          forwardAnimationCurve: Curves.bounceIn,
           margin: EdgeInsets.only(bottom: 20.h),
           messageText: Text(
-            'Try differnt filter',
+            'Try differnt combination filter',
             style: textStyle1.copyWith(color: kWhite),
           ));
-      durationSlider.value = 1;
+      durationSlider.value = double.parse(
+          sortingVariables[selectedTripListIndex.value]![2].last ?? 1);
       return;
     }
     if (reset) {
-      sortingVariablesSelected[selectedTripListIndex.value]![2].clear();
+      sortingVariablesSelected[selectedTripListIndex.value]![2] =
+          <dynamic>[1.0.obs].obs;
+      durationSlider.value = double.parse(
+          sortingVariables[selectedTripListIndex.value]![2].last ?? 1);
     } else if (sortingVariables[selectedTripListIndex.value]![2].first <=
         sortingVariables[selectedTripListIndex.value]![2].last * value) {
+      sortingVariablesSelected[selectedTripListIndex.value]![2] =
+          <dynamic>[value.obs].obs;
       durationSlider.value = value;
     }
+    print(sortingVariablesSelected[selectedTripListIndex.value]![2]);
     sortAirlineList();
   }
 

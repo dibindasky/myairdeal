@@ -20,7 +20,6 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
   String selectedPromo = '';
   @override
   Widget build(BuildContext context) {
-    final flightSortController = Get.find<FlightSortController>();
     return Container(
       decoration: BoxDecoration(
           color: kWhite, boxShadow: boxShadow1, borderRadius: kRadius15),
@@ -66,10 +65,10 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
               itemBuilder: (context, index) {
                 return CustomRadioButton(
                   onChanged: () {
-                    flightSortController.changePromoCode(index);
+                    // flightSortController.changePromoCode(index);
                   },
-                  selected:
-                      flightSortController.selectedPromoCode.value == index,
+                  selected:true,
+                      // flightSortController.selectedPromoCode.value == index,
                   child:
                       GetBuilder<FlightSortController>(builder: (controller) {
                     return ListTile(
@@ -100,8 +99,9 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
                         style: textThinStyle1.copyWith(
                             color: kGreyDark, fontSize: 9.sp),
                       ),
-                      leading: flightSortController.selectedPromoCode.value ==
-                              index
+                      leading:index==0
+                      //  flightSortController.selectedPromoCode.value ==
+                      //         index
                           ? const Icon(Icons.radio_button_checked, color: kBlue)
                           : const Icon(Icons.radio_button_unchecked),
                     );

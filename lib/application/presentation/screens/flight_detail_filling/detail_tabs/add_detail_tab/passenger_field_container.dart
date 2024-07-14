@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/presentation/screens/home/widgets/bottom_calender_date_picker.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
+import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
@@ -147,48 +150,121 @@ class _DetailContainerState extends State<DetailContainer> {
                   ),
                   Text('Date Of Birth', style: textThinStyle1),
                   kHeight5,
-                  CustomTextField(
-                    keyboardType: TextInputType.number,
-                    controller: dateOfBirthController,
-                    validate: Validate.notNull,
-                    isBorder: true,
-                    borderRadius: 14,
-                    textCapitalization: TextCapitalization.words,
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(width: .3),
-                        borderRadius: kRadius15),
-                    onTapOutside: () => FocusScope.of(context).unfocus(),
-                    hintText: 'yyyy-mm-dd',
-                    fillColor: kWhite,
-                    onChanged: (v) {
-                      String value = dateOfBirthController.text;
-                      String newValue = '';
-
-                      if (value.isNotEmpty) {
-                        value = value.replaceAll('-', '');
-
-                        for (int i = 0; i < value.length; i++) {
-                          if (i == 4 || i == 6) {
-                            newValue += '-';
-                          }
-                          newValue += value[i];
-                        }
-
-                        if (newValue.length > 10) {
-                          newValue = newValue.substring(0, 10);
-                        }
-                      }
-
-                      if (newValue != dateOfBirthController.text) {
-                        dateOfBirthController.value =
-                            dateOfBirthController.value.copyWith(
-                          text: newValue,
-                          selection:
-                              TextSelection.collapsed(offset: newValue.length),
-                        );
-                      }
+                  GestureDetector(
+                    onTap: () async {
+                      // showModalBottomSheet(
+                      //   context: context,
+                      //   builder: (context) {
+                      //     final date = Get.find<FlightSortController>()
+                      //         .multiCityDepartureDate
+                      //         .first!;
+                      // return DatePickingBottomSheet(
+                      //     focusedDay:
+                      //         date.subtract(widget.travellerType == 'ADULT'
+                      //             ? const Duration(days: 365 * 12)
+                      //             : widget.travellerType == 'CHILD'
+                      //                 ? const Duration(days: 365 * 2)
+                      //                 : const Duration(days: 365 * 0)),
+                      //     initialDate:
+                      //         date.subtract(widget.travellerType == 'ADULT'
+                      //             ? const Duration(days: 365 * 150)
+                      //             : widget.travellerType == 'CHILD'
+                      //                 ? const Duration(days: 365 * 12)
+                      //                 : const Duration(days: 365 * 2)),
+                      //     lastDate:
+                      //         date.subtract(widget.travellerType == 'ADULT'
+                      //             ? const Duration(days: 365 * 12)
+                      //             : widget.travellerType == 'CHILD'
+                      //                 ? const Duration(days: 365 * 2)
+                      //                 : const Duration(days: 0)),
+                      //     onPressed: (date) {
+                      //       print(date.toString());
+                      //       dateOfBirthController.text =
+                      //           DateFormating.getDateApi(date);
+                      //       setState(() {});
+                      //     });
+                      //          },
+                      // );
+                      final date = Get.find<FlightSortController>()
+                          .multiCityDepartureDate
+                          .first!;
+                      final selectedDate = await showDatePicker(
+                        context: context,
+                        firstDate: date.subtract(widget.travellerType == 'ADULT'
+                            ? const Duration(days: 365 * 150)
+                            : widget.travellerType == 'CHILD'
+                                ? const Duration(days: 365 * 12)
+                                : const Duration(days: 365 * 2)),
+                        lastDate: date.subtract(widget.travellerType == 'ADULT'
+                            ? const Duration(days: 365 * 12)
+                            : widget.travellerType == 'CHILD'
+                                ? const Duration(days: 365 * 2)
+                                : const Duration(days: 365 * 0)),
+                      );
+                      dateOfBirthController.text =
+                          DateFormating.getDateApi(selectedDate);
+                      setState(() {});
                     },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 10.h),
+                      decoration: BoxDecoration(
+                          color: kWhite,
+                          borderRadius: kRadius10,
+                          border: Border.all(color: kGrey, width: 0.5)),
+                      child: Row(
+                        children: [
+                          Text(dateOfBirthController.text == ''
+                              ? 'DOB'
+                              : dateOfBirthController.text),
+                          const Spacer(),
+                          const Icon(Icons.calendar_month)
+                        ],
+                      ),
+                    ),
                   ),
+                  // CustomTextField(
+                  //   keyboardType: TextInputType.number,
+                  //   controller: dateOfBirthController,
+                  //   validate: Validate.notNull,
+                  //   isBorder: true,
+                  //   borderRadius: 14,
+                  //   textCapitalization: TextCapitalization.words,
+                  //   enabledBorder: OutlineInputBorder(
+                  //       borderSide: const BorderSide(width: .3),
+                  //       borderRadius: kRadius15),
+                  //   onTapOutside: () => FocusScope.of(context).unfocus(),
+                  //   hintText: 'yyyy-mm-dd',
+                  //   fillColor: kWhite,
+                  //   onChanged: (v) {
+                  //     String value = dateOfBirthController.text;
+                  //     String newValue = '';
+
+                  //     if (value.isNotEmpty) {
+                  //       value = value.replaceAll('-', '');
+
+                  //       for (int i = 0; i < value.length; i++) {
+                  //         if (i == 4 || i == 6) {
+                  //           newValue += '-';
+                  //         }
+                  //         newValue += value[i];
+                  //       }
+
+                  //       if (newValue.length > 10) {
+                  //         newValue = newValue.substring(0, 10);
+                  //       }
+                  //     }
+
+                  //     if (newValue != dateOfBirthController.text) {
+                  //       dateOfBirthController.value =
+                  //           dateOfBirthController.value.copyWith(
+                  //         text: newValue,
+                  //         selection:
+                  //             TextSelection.collapsed(offset: newValue.length),
+                  //       );
+                  //     }
+                  //   },
+                  // ),
                   kHeight5,
                   Align(
                     alignment: Alignment.centerRight,

@@ -65,27 +65,41 @@ class AirlinesBottomSheet extends StatelessWidget {
                               controller.selectedTripListIndex.value]![0]
                           .length,
                       shrinkWrap: true,
-                      itemBuilder: (context, index) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                              controller.sortingVariables[controller
-                                      .selectedTripListIndex.value]![0][index]
-                                  .toString(),
-                              style: textStyle1),
-                          Checkbox(
-                            value: controller.sortingVariablesSelected[
-                                    controller.selectedTripListIndex.value]![0]
-                                .contains(controller.sortingVariables[controller
-                                    .selectedTripListIndex.value]![0][index]),
-                            onChanged: (value) {
-                              controller.selectAirline(
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () {
+                          controller.selectAirline(controller.sortingVariables[
+                                  controller.selectedTripListIndex.value]![0]
+                              [index]);
+                        },
+                        child: Container(
+                          color: kWhite,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
                                   controller.sortingVariables[controller
-                                      .selectedTripListIndex.value]![0][index]);
-                            },
-                            activeColor: kBluePrimary,
-                          )
-                        ],
+                                          .selectedTripListIndex
+                                          .value]![0][index]
+                                      .toString(),
+                                  style: textStyle1),
+                              Checkbox(
+                                value: controller.sortingVariablesSelected[
+                                        controller
+                                            .selectedTripListIndex.value]![0]
+                                    .contains(controller.sortingVariables[
+                                        controller.selectedTripListIndex
+                                            .value]![0][index]),
+                                onChanged: (value) {
+                                  controller.selectAirline(
+                                      controller.sortingVariables[controller
+                                          .selectedTripListIndex
+                                          .value]![0][index]);
+                                },
+                                activeColor: kBluePrimary,
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                     kHeight5,

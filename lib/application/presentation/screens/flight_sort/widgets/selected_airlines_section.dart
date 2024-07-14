@@ -28,8 +28,12 @@ class SelectedAirlinesSections extends StatelessWidget {
               children: List.generate(
                 controller.searchList.length,
                 (index) {
-                  final flightModel = controller.searchList[index]
-                      [controller.selectedFlights[index]];
+                  final rangeError = controller.searchList[index].length <=
+                      controller.selectedFlights[index];
+                  final flightModel = rangeError
+                      ? null
+                      : controller.searchList[index]
+                          [controller.selectedFlights[index]];
                   return GestureDetector(
                     onTap: () {
                       controller.changeSelectedTripIndex(index);
@@ -75,31 +79,19 @@ class SelectedAirlinesSections extends StatelessWidget {
                                   style: textStyle1.copyWith(
                                       fontWeight: FontWeight.bold)),
                               Text(
-                                  '${DateFormating.formatTime(flightModel.sI?[0].dt ?? '')} - ${DateFormating.formatTime(flightModel.sI?[(flightModel.sI?.length ?? 1) - 1].at ?? '')}',
+                                  rangeError
+                                      ? ''
+                                      : '${DateFormating.formatTime(flightModel?.sI?[0].dt ?? '')} - ${DateFormating.formatTime(flightModel?.sI?[(flightModel.sI?.length ?? 1) - 1].at ?? '')}',
                                   style:
                                       textThinStyle1.copyWith(fontSize: 10.sp)),
                               Text(
-                                  (controller
-                                              .searchList[index][controller
-                                                  .selectedFlights[index]]
-                                              .totalPriceList![controller
-                                                  .selectedTicketPrices[index]]
-                                              .fd
-                                              ?.adult
-                                              ?.fC
-                                              ?.tf ??
-                                          '')
+                                  ('₹ ${rangeError ? '----' : (controller.searchList[index][controller.selectedFlights[index]].totalPriceList![controller.selectedTicketPrices[index]].fd?.adult?.fC?.tf ?? '')}')
                                       .toString(),
                                   // '₹ ${flightModel.totalPriceList?[controller.selectedTicketPrices[index]].fd?.adult?.fC?.tf ?? ''}',
                                   style: textThinStyle1.copyWith()),
                               Text(
                                   DateFormating.getDate(
-                                      controller.tripType.value == 1
-                                          ? index == 0
-                                              ? controller.depatureDate.value
-                                              : controller.returnDate.value
-                                          : controller
-                                              .multiCityDepartureDate[index]),
+                                      controller.multiCityDepartureDate[index]),
                                   style: textThinStyle1.copyWith(
                                       color: kGreyDark)),
                             ],

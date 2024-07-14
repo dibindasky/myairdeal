@@ -78,34 +78,50 @@ class InnerContents extends StatelessWidget {
                                   ),
                                 ),
                                 kHeight5,
-                                Text(
-                                  'Depart',
-                                  style: textThinStyle1.copyWith(
-                                      color: kBlack, fontSize: 9.sp),
-                                ),
-                                kHeight5,
-                                Text(
-                                  DateFormating.formatDate(
-                                      model?.sI?[0].dt ?? ''),
-                                  style: textThinStyle1.copyWith(
-                                    color: kBlack,
-                                    fontSize: 12.sp,
-                                  ),
-                                ),
-                                kHeight5,
-                                Text('Class',
-                                    style: textThinStyle1.copyWith(
-                                        color: kBlack, fontSize: 9.sp)),
-                                kHeight5,
-                                Text(
-                                  controller.reviewedDetail?.value.searchQuery
-                                          ?.cabinClass ??
-                                      '',
-                                  style: textThinStyle1.copyWith(
-                                    color: kBlack,
-                                    fontSize: 12.sp,
-                                  ),
-                                ),
+                                (model?.sI?.length ?? 1) > 1
+                                    ? kEmpty
+                                    : Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Depart',
+                                            style: textThinStyle1.copyWith(
+                                                color: kBlack, fontSize: 9.sp),
+                                          ),
+                                          kHeight5,
+                                          Text(
+                                            DateFormating.formatDate(
+                                                model?.sI?[0].dt ?? ''),
+                                            style: textThinStyle1.copyWith(
+                                              color: kBlack,
+                                              fontSize: 12.sp,
+                                            ),
+                                          ),
+                                          Text(
+                                            model?.sI?[0].da?.terminal ?? '',
+                                            style: textThinStyle1.copyWith(
+                                              color: kBlack,
+                                              fontSize: 12.sp,
+                                            ),
+                                          ),
+                                          kHeight5,
+                                          Text('Class',
+                                              style: textThinStyle1.copyWith(
+                                                  color: kBlack,
+                                                  fontSize: 9.sp)),
+                                          kHeight5,
+                                          Text(
+                                            controller.reviewedDetail?.value
+                                                    .searchQuery?.cabinClass ??
+                                                '',
+                                            style: textThinStyle1.copyWith(
+                                              color: kBlack,
+                                              fontSize: 12.sp,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                               ],
                             ),
                           ),
@@ -170,7 +186,7 @@ class InnerContents extends StatelessWidget {
                                     : '${(model?.sI?.length ?? 1) - 1} Stop'),
                                 style: textThinStyle1.copyWith(fontSize: 9.sp),
                               ),
-                              kHeight50,
+                              (model?.sI?.length ?? 1) > 1 ? kEmpty : kHeight50,
                               model?.sI?.length != 1
                                   ? kEmpty
                                   : Text(
@@ -209,272 +225,263 @@ class InnerContents extends StatelessWidget {
                                   ),
                                 ),
                                 kHeight5,
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      'Arrival',
-                                      style: textThinStyle1.copyWith(
-                                          fontSize: 9.sp),
-                                    ),
-                                  ],
-                                ),
-                                kHeight5,
-                                Text(
-                                  DateFormating.formatDate(model
-                                          ?.sI?[(model.sI?.length ?? 1) - 1]
-                                          .at ??
-                                      ''),
-                                  style: textThinStyle1.copyWith(
-                                    color: kBlack,
-                                    fontSize: 12.sp,
-                                  ),
-                                  textAlign: TextAlign.end,
-                                ),
-                                kHeight5,
-                                Text(
-                                  'Seat',
-                                  style: textThinStyle1.copyWith(
-                                      color: kBlack, fontSize: 9.sp),
-                                ),
-                                kHeight5,
-                                Text(
-                                  '--',
-                                  style: textThinStyle1.copyWith(
-                                    color: kBlack,
-                                    fontSize: 12.sp,
-                                  ),
-                                ),
+                                (model?.sI?.length ?? 1) > 1
+                                    ? kEmpty
+                                    : Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            'Arrival',
+                                            style: textThinStyle1.copyWith(
+                                                fontSize: 9.sp),
+                                          ),
+                                          kHeight5,
+                                          Text(
+                                            DateFormating.formatDate(model
+                                                    ?.sI?[(model.sI?.length ??
+                                                            1) -
+                                                        1]
+                                                    .at ??
+                                                ''),
+                                            style: textThinStyle1.copyWith(
+                                              color: kBlack,
+                                              fontSize: 12.sp,
+                                            ),
+                                            textAlign: TextAlign.end,
+                                          ),
+                                          kHeight5,
+                                          Text(
+                                            model
+                                                    ?.sI?[(model.sI?.length ??
+                                                            1) -
+                                                        1]
+                                                    .aa
+                                                    ?.terminal ??
+                                                '--',
+                                            style: textThinStyle1.copyWith(
+                                              color: kBlack,
+                                              fontSize: 12.sp,
+                                            ),
+                                          ),
+                                          kHeight5,
+                                          Text(
+                                            'seat',
+                                            style: textThinStyle1.copyWith(
+                                                color: kBlack, fontSize: 9.sp),
+                                          ),
+                                          Text(
+                                            '--',
+                                            style: textThinStyle1.copyWith(
+                                              color: kBlack,
+                                              fontSize: 12.sp,
+                                            ),
+                                          )
+                                        ],
+                                      ),
                               ],
                             ),
                           ),
                         ],
                       ),
-                      // children: List.generate(
-                      //     controller.reviewedDetail?.value.tripInfos?[index].sI
-                      //             ?.length ??
-                      //         0,
-                      //     (stop) => Row(
-                      //           mainAxisAlignment:
-                      //               MainAxisAlignment.spaceBetween,
-                      //           crossAxisAlignment: CrossAxisAlignment.start,
-                      //           children: [
-                      //             Expanded(
-                      //               child: Column(
-                      //                 crossAxisAlignment:
-                      //                     CrossAxisAlignment.start,
-                      //                 children: [
-                      //                   Text(
-                      //                     model?.sI?[0].da?.city ?? '',
-                      //                     style: textThinStyle1.copyWith(
-                      //                         fontSize: 10.sp),
-                      //                   ),
-                      //                   Text(model?.sI?[0].da?.code ?? '',
-                      //                       style: textHeadStyle1),
-                      //                   kHeight5,
-                      //                   Text(
-                      //                     model?.sI?[0].da?.name ?? '',
-                      //                     style: textThinStyle1.copyWith(
-                      //                       fontSize: 10.sp,
-                      //                       color: kGrey,
-                      //                     ),
-                      //                   ),
-                      //                   kHeight5,
-                      //                   Text(
-                      //                     'Depart',
-                      //                     style: textThinStyle1.copyWith(
-                      //                         color: kBlack, fontSize: 9.sp),
-                      //                   ),
-                      //                   kHeight5,
-                      //                   Text(
-                      //                     DateFormating.formatDate(
-                      //                         model?.sI?[0].dt ?? ''),
-                      //                     style: textThinStyle1.copyWith(
-                      //                       color: kBlack,
-                      //                       fontSize: 12.sp,
-                      //                     ),
-                      //                   ),
-                      //                   kHeight5,
-                      //                   Text('Class',
-                      //                       style: textThinStyle1.copyWith(
-                      //                           color: kBlack, fontSize: 9.sp)),
-                      //                   kHeight5,
-                      //                   Text(
-                      //                     controller.reviewedDetail?.value
-                      //                             .searchQuery?.cabinClass ??
-                      //                         '',
-                      //                     style: textThinStyle1.copyWith(
-                      //                       color: kBlack,
-                      //                       fontSize: 12.sp,
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ),
-                      //             Column(
-                      //               mainAxisAlignment: MainAxisAlignment.center,
-                      //               children: [
-                      //                 kHeight30,
-                      //                 Text(
-                      //                   DateFormating.getDifferenceOfDates(
-                      //                       model?.sI?[0].dt ?? '',
-                      //                       model
-                      //                               ?.sI?[(model.sI?.length ??
-                      //                                       1) -
-                      //                                   1]
-                      //                               .at ??
-                      //                           ''),
-                      //                   style: textThinStyle1.copyWith(
-                      //                       fontSize: 9.sp),
-                      //                 ),
-                      //                 kWidth5,
-                      //                 Row(
-                      //                   children: [
-                      //                     const CircleAvatar(
-                      //                       radius: 3,
-                      //                       backgroundColor: kGrey,
-                      //                     ),
-                      //                     ...List.generate(
-                      //                       6,
-                      //                       (index) => Text(
-                      //                         '-',
-                      //                         style: TextStyle(
-                      //                             fontSize: 8.sp,
-                      //                             fontWeight: FontWeight.w800,
-                      //                             color: kBlack),
-                      //                       ),
-                      //                     ),
-                      //                     Row(
-                      //                       children: List.generate(
-                      //                         (model?.sI?.length ?? 1) - 1,
-                      //                         (index) => RotatedBox(
-                      //                           quarterTurns: 1,
-                      //                           child: Icon(
-                      //                               Icons.flight_rounded,
-                      //                               size: 24.w,
-                      //                               color: kBlue),
-                      //                         ),
-                      //                       ),
-                      //                     ),
-                      //                     ...List.generate(
-                      //                       6,
-                      //                       (index) => Text(
-                      //                         '-',
-                      //                         style: TextStyle(
-                      //                             fontSize: 8.sp,
-                      //                             fontWeight: FontWeight.w800,
-                      //                             color: kBlack),
-                      //                       ),
-                      //                     ),
-                      //                     const CircleAvatar(
-                      //                       radius: 3,
-                      //                       backgroundColor: kGrey,
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //                 Text(
-                      //                   ((model?.sI?.length ?? 1) - 1 == 0
-                      //                       ? 'Non Stop'
-                      //                       : '${(model?.sI?.length ?? 1) - 1} Stop'),
-                      //                   style: textThinStyle1.copyWith(
-                      //                       fontSize: 9.sp),
-                      //                 ),
-                      //                 kHeight50,
-                      //                 model?.sI?.length != 1
-                      //                     ? kEmpty
-                      //                     : Text(
-                      //                         '${model?.sI?[0].fD?.aI?.code ?? ''} - ${model?.sI?[0].fD?.fN ?? ''}',
-                      //                         style: textStyle1.copyWith(
-                      //                             fontSize: 10.sp),
-                      //                       ),
-                      //               ],
-                      //             ),
-                      //             Expanded(
-                      //               child: Column(
-                      //                 crossAxisAlignment:
-                      //                     CrossAxisAlignment.end,
-                      //                 children: [
-                      //                   Text(
-                      //                     model
-                      //                             ?.sI?[
-                      //                                 (model.sI?.length ?? 1) -
-                      //                                     1]
-                      //                             .aa
-                      //                             ?.city ??
-                      //                         '',
-                      //                     style: textThinStyle1.copyWith(
-                      //                         fontSize: 10.sp),
-                      //                   ),
-                      //                   Text(
-                      //                     model
-                      //                             ?.sI?[
-                      //                                 (model.sI?.length ?? 1) -
-                      //                                     1]
-                      //                             .aa
-                      //                             ?.code ??
-                      //                         '',
-                      //                     style: textHeadStyle1,
-                      //                   ),
-                      //                   kHeight5,
-                      //                   Text(
-                      //                     model
-                      //                             ?.sI?[
-                      //                                 (model.sI?.length ?? 1) -
-                      //                                     1]
-                      //                             .aa
-                      //                             ?.name ??
-                      //                         '',
-                      //                     textAlign: TextAlign.end,
-                      //                     style: textThinStyle1.copyWith(
-                      //                       color: kGrey,
-                      //                       fontSize: 10.sp,
-                      //                     ),
-                      //                   ),
-                      //                   kHeight5,
-                      //                   Column(
-                      //                     crossAxisAlignment:
-                      //                         CrossAxisAlignment.end,
-                      //                     children: [
-                      //                       Text(
-                      //                         'Arrival',
-                      //                         style: textThinStyle1.copyWith(
-                      //                             fontSize: 9.sp),
-                      //                       ),
-                      //                     ],
-                      //                   ),
-                      //                   kHeight5,
-                      //                   Text(
-                      //                     DateFormating.formatDate(model
-                      //                             ?.sI?[
-                      //                                 (model.sI?.length ?? 1) -
-                      //                                     1]
-                      //                             .at ??
-                      //                         ''),
-                      //                     style: textThinStyle1.copyWith(
-                      //                       color: kBlack,
-                      //                       fontSize: 12.sp,
-                      //                     ),
-                      //                     textAlign: TextAlign.end,
-                      //                   ),
-                      //                   kHeight5,
-                      //                   Text(
-                      //                     'Seat',
-                      //                     style: textThinStyle1.copyWith(
-                      //                         color: kBlack, fontSize: 9.sp),
-                      //                   ),
-                      //                   kHeight5,
-                      //                   Text(
-                      //                     '--',
-                      //                     style: textThinStyle1.copyWith(
-                      //                       color: kBlack,
-                      //                       fontSize: 12.sp,
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         )),
+                      children: List.generate(
+                        controller.reviewedDetail?.value.tripInfos?[index].sI
+                                ?.length ??
+                            0,
+                        (stop) => Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 3.h),
+                              decoration: BoxDecoration(
+                                  color: kBlueLightShade,
+                                  borderRadius: kRadius10),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 7.w, vertical: 7.h),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          model?.sI?[stop].da?.city ?? '',
+                                          style: textThinStyle1.copyWith(
+                                              fontSize: 10.sp),
+                                        ),
+                                        Text(model?.sI?[stop].da?.code ?? '',
+                                            style: textHeadStyle1),
+                                        kHeight5,
+                                        Text(
+                                          model?.sI?[stop].da?.name ?? '',
+                                          style: textThinStyle1.copyWith(
+                                            fontSize: 10.sp,
+                                            color: kGrey,
+                                          ),
+                                        ),
+                                        kHeight5,
+                                        Text(
+                                          'Depart',
+                                          style: textThinStyle1.copyWith(
+                                              color: kBlack, fontSize: 9.sp),
+                                        ),
+                                        kHeight5,
+                                        Text(
+                                          DateFormating.formatDate(
+                                              model?.sI?[stop].dt ?? ''),
+                                          style: textThinStyle1.copyWith(
+                                            color: kBlack,
+                                            fontSize: 12.sp,
+                                          ),
+                                        ),
+                                        kHeight5,
+                                        Text(
+                                           model?.sI?[stop].da?.terminal ?? '',
+                                         style: textThinStyle1.copyWith(
+                                            color: kBlack,
+                                            fontSize: 12.sp,
+                                          ),
+                                        ),
+                                        kHeight5,
+                                        Text('Class',
+                                            style: textThinStyle1.copyWith(
+                                                color: kBlack, fontSize: 9.sp)),
+                                        kHeight5,
+                                        Text(
+                                          controller.reviewedDetail?.value
+                                                  .searchQuery?.cabinClass ??
+                                              '',
+                                          style: textThinStyle1.copyWith(
+                                            color: kBlack,
+                                            fontSize: 12.sp,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      kHeight10,
+                                      Text(
+                                        DateFormating.getDifferenceOfDates(
+                                            model?.sI?[stop].dt ?? '',
+                                            model?.sI?[stop].at ?? ''),
+                                        style: textThinStyle1.copyWith(
+                                            fontSize: 9.sp),
+                                      ),
+                                      kWidth5,
+                                      Row(
+                                        children: [
+                                          const CircleAvatar(
+                                            radius: 3,
+                                            backgroundColor: kGrey,
+                                          ),
+                                          ...List.generate(
+                                            10,
+                                            (index) => Text(
+                                              '-',
+                                              style: TextStyle(
+                                                  fontSize: 8.sp,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: kBlack),
+                                            ),
+                                          ),
+                                          const CircleAvatar(
+                                            radius: 3,
+                                            backgroundColor: kGrey,
+                                          ),
+                                        ],
+                                      ),
+                                      Text(
+                                        '${model?.sI?[stop].fD?.aI?.code ?? ''} - ${model?.sI?[stop].fD?.fN ?? ''}',
+                                        style: textStyle1.copyWith(
+                                            fontSize: 10.sp),
+                                      ),
+                                    ],
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          model?.sI?[stop].aa?.city ?? '',
+                                          style: textThinStyle1.copyWith(
+                                              fontSize: 10.sp),
+                                        ),
+                                        Text(
+                                          model?.sI?[stop].aa?.code ?? '',
+                                          style: textHeadStyle1,
+                                        ),
+                                        kHeight5,
+                                        Text(
+                                          model?.sI?[stop].aa?.name ?? '',
+                                          textAlign: TextAlign.end,
+                                          style: textThinStyle1.copyWith(
+                                            color: kGrey,
+                                            fontSize: 10.sp,
+                                          ),
+                                        ),
+                                        kHeight5,
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              'Arrival',
+                                              style: textThinStyle1.copyWith(
+                                                  fontSize: 9.sp),
+                                            ),
+                                          ],
+                                        ),
+                                        kHeight5,
+                                        Text(
+                                          DateFormating.formatDate(
+                                              model?.sI?[stop].at ?? ''),
+                                          style: textThinStyle1.copyWith(
+                                            color: kBlack,
+                                            fontSize: 12.sp,
+                                          ),
+                                          textAlign: TextAlign.end,
+                                        ),
+                                        kHeight5,
+                                        Text(
+                                          model?.sI?[stop].aa?.terminal ?? '--',
+                                          style: textThinStyle1.copyWith(
+                                            color: kBlack,
+                                            fontSize: 12.sp,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Seat',
+                                          style: textThinStyle1.copyWith(
+                                              color: kBlack, fontSize: 9.sp),
+                                        ),
+                                        kHeight5,
+                                        Text(
+                                          '--',
+                                          style: textThinStyle1.copyWith(
+                                            color: kBlack,
+                                            fontSize: 12.sp,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            (model?.sI?.length ?? 1) - 1 == stop
+                                ? const DottedLines()
+                                : Text(
+                                    'Layover Time - ${DateFormating.getDifferenceOfDates(model?.sI?[stop].at ?? '', model?.sI?[stop + 1].dt ?? '')}')
+                          ],
+                        ),
+                      ),
                     ),
                   );
                 }),

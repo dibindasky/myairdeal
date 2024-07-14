@@ -154,7 +154,14 @@ class BookingController extends GetxController {
     reviewPriceLoading.value = true;
     final result = await bookingRepo.reviewPriceDetails(
         reviewPriceDetailIdModel: reviewPriceDetailIdModel);
-    result.fold((l) => Get.back(), (r) {
+    result.fold((l) {
+      Get.back();
+      Get.snackbar('Failed to load data', l.message ?? errorMessage,
+          snackPosition: SnackPosition.BOTTOM,
+          forwardAnimationCurve: Curves.bounceIn,
+          backgroundColor: kRed,
+          colorText: kWhite);
+    }, (r) {
       start = true;
       reviewedDetail = r.obs;
     });

@@ -16,7 +16,7 @@ class TripChoosingContainers extends StatelessWidget {
     final controller = Get.find<FlightSortController>();
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      controller: controller.flightSortTabController,
+      // controller: controller.flightSortTabController,
       child: Obx(() {
         return controller.searchList.length == 1
             ? kEmpty

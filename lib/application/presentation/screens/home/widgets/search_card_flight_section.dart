@@ -119,7 +119,31 @@ class FlightSearchCardHome extends StatelessWidget {
                     },
                     texthead: 'Travellers & Class');
               }),
-              kHeight20,
+              kHeight5,
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Passenger Fare Type', style: textStyle1)),
+              Obx(() {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: List.generate(
+                      controller.passengerFareTypes.length - 1,
+                      (index) => Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Checkbox(
+                                    value: controller.passengerFareType.value ==
+                                        index + 1,
+                                    onChanged: (value) {
+                                      controller
+                                          .changePassengerFareType(index + 1);
+                                    },
+                                    activeColor: kBluePrimary),
+                                Text(controller.passengerFareTypes[index + 1])
+                              ])),
+                );
+              }),
               Obx(() {
                 return EventButton(
                     color:

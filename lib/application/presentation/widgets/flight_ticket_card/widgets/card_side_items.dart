@@ -30,12 +30,16 @@ class CardSideItems extends StatelessWidget {
         children: [
           Text(
             place,
-            style: textHeadStyle1,
+            style: textHeadStyle1.copyWith(overflow: TextOverflow.ellipsis),
           ),
           kHeight5,
           Text(
             airPort,
-            style: textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
+            style: textThinStyle1.copyWith(
+              color: kGreyDark,
+              fontSize: 10.sp,
+              overflow: TextOverflow.ellipsis,
+            ),
             textAlign: crossAxisAlignment == CrossAxisAlignment.start
                 ? TextAlign.start
                 : TextAlign.end,
@@ -43,7 +47,11 @@ class CardSideItems extends StatelessWidget {
           kHeight15,
           Text(
             from,
-            style: textThinStyle1.copyWith(color: kBlack, fontSize: 9.sp),
+            style: textThinStyle1.copyWith(
+              color: kBlack,
+              fontSize: 9.sp,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           kHeight5,
           Text(
@@ -52,6 +60,7 @@ class CardSideItems extends StatelessWidget {
               color: kBlack,
               fontSize: 12.sp,
               fontWeight: FontWeight.w800,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           cabinClass != null
@@ -61,6 +70,7 @@ class CardSideItems extends StatelessWidget {
                     color: kBlack,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w800,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 )
               : kEmpty,

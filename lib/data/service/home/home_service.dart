@@ -21,7 +21,7 @@ class HomeService implements HomeRepo {
       final response = await apiService.get(
         ApiEndPoints.recentSearch,
       );
-      log("=> Response Recent Searches : ${response.data}");
+      log("=> Response Recent Searches : ");
       return Right(RecentDetailSearch.fromJson(response.data));
     } on DioException catch (e) {
       log('DioException getRecentSearches $e');
@@ -39,7 +39,7 @@ class HomeService implements HomeRepo {
       final response = await apiService.get(
         ApiEndPoints.airportSearch + cityname,
       );
-      log("=> Response Airports Searches : ${response.data}");
+      log("=> Response Airports Searches : ");
       return Right(CitySearchData.fromJson(response.data));
     } on DioException catch (e) {
       log('DioException getAirportsSearches $e');
@@ -56,7 +56,7 @@ class HomeService implements HomeRepo {
       final response = await apiService.get(
         ApiEndPoints.airportRecentSearch,
       );
-      log("=> Response Airport Recent Searches : ${response.data}");
+      log("=> Response Airport Recent Searches : ");
       return Right(CitySearchData.fromJson(response.data));
     } on DioException catch (e) {
       log('DioException getAirportRecentSearches $e');
@@ -76,7 +76,7 @@ class HomeService implements HomeRepo {
         data: citySearchModel.toJson(),
         addHeader: true,
       );
-      log("=> Response Airport Recent Search Added Successfully : ${response.data}");
+      log("=> Response Airport Recent Search Added Successfully : ");
       return Right(SuccessResponceModel.fromJson(response.data));
     } on DioException catch (e) {
       log('DioException addAirportRecentSearch $e');
@@ -94,7 +94,7 @@ class HomeService implements HomeRepo {
       final response = await apiService.get(
         ApiEndPoints.airportSearchWithCountryCode + countryCode,
       );
-      log("=> Response Airports Searches With Country Code : ${response.data}");
+      log("=> Response Airports Searches With Country Code : ");
       return Right(CitySearchData.fromJson(response.data));
     } on DioException catch (e) {
       log('DioException getAirportsSearchWithCountryCode $e');
@@ -114,7 +114,7 @@ class HomeService implements HomeRepo {
         data: flightSearchSortModel.toJson(),
         addHeader: true,
       );
-      log("=> Response Recent Search Added Successfully : ${response.data}");
+      log("=> Response Recent Search Added Successfully :");
       return Right(SuccessResponceModel.fromJson(response.data));
     } on DioException catch (e) {
       log('DioException addRecentSearch $e');

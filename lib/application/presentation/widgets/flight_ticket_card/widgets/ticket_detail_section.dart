@@ -51,9 +51,8 @@ class TicketDetailsSection extends StatelessWidget {
                               itemInfos!.air?.tripInfos?[0].sI?[0].da?.city ??
                                   '',
                           from: 'Departure',
-                          time: DateFormating.getDate(
-                            DateTime.parse(
-                                itemInfos!.air?.tripInfos?[0].sI?[0].dt ?? ''),
+                          time: DateFormating.formatDate(
+                            itemInfos!.air?.tripInfos?[0].sI?[0].dt ?? '',
                           ),
                         )
                       : const CardSideItems(
@@ -132,8 +131,8 @@ class TicketDetailsSection extends StatelessWidget {
                                   ?.code ??
                               '',
                           from: 'Arrival',
-                          time: DateFormating.getDate(DateTime.parse(
-                              itemInfos!.air?.tripInfos?[0].sI?[0].at ?? '')),
+                          time: DateFormating.formatDate(
+                              itemInfos!.air?.tripInfos?[0].sI?[0].at ?? ''),
                         )
                       : const CardSideItems(
                           crossAxisAlignment: CrossAxisAlignment.end,

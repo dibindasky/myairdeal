@@ -3,6 +3,7 @@ import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
 import 'package:myairdeal/application/presentation/routes/indexed_stack/on_generate_route.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
@@ -23,7 +24,7 @@ class ScreenNavbar extends StatelessWidget {
         initialRoute: Routes.homePage,
         onGenerateRoute: RouteGenerator().onGenerateRoute,
       ),
-      ScreenBookings(),
+      const ScreenBookings(),
       const ScreenExplore(),
       const ScreenTalkToUsPage(),
       const ScreenAccountPage()
@@ -38,6 +39,7 @@ class ScreenNavbar extends StatelessWidget {
       }),
       bottomNavigationBar: Obx(() {
         final selectedIndex = Get.find<NavBarController>().bottomIndex.value;
+
         return CurvedNavigationBar(
           backgroundColor: kGreyLightBackground,
           items: [
@@ -68,6 +70,9 @@ class ScreenNavbar extends StatelessWidget {
             ),
           ],
           onTap: (index) {
+            if (selectedIndex == 1) {
+              Get.find<BookingController>().getAllUpcomingBooking(true);
+            }
             Get.find<NavBarController>().chageIndex(index);
           },
         );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
+import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/account/widgets/settings_tile.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
@@ -39,18 +40,6 @@ class ScreenAccountPage extends StatelessWidget {
                                   Get.toNamed(Routes.profile);
                                 },
                               ),
-                              // SettingsTile(
-                              //   title: 'Security',
-                              //   onTap: () {
-                              //     Get.toNamed(Routes.security);
-                              //   },
-                              // ),
-                              // SettingsTile(
-                              //   title: 'Notifications',
-                              //   onTap: () {
-                              //     Get.toNamed(Routes.notificationSetup);
-                              //   },
-                              // ),
                             ],
                           )
                         : kEmpty;
@@ -79,6 +68,9 @@ class ScreenAccountPage extends StatelessWidget {
                                   heading:
                                       'Are you sure do you want to Log-Out from MY AIRDEAL',
                                   onPressed: () {
+                                    Get.find<NavBarController>()
+                                        .bottomIndex
+                                        .value = 0;
                                     controller.logOut();
                                   },
                                 );

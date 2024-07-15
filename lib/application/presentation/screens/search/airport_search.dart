@@ -7,7 +7,6 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/debouncer/debouncer.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
-import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
 
 class ScreenAirportSearch extends StatefulWidget {
   const ScreenAirportSearch({super.key});
@@ -112,46 +111,43 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: kBlueLightShade.withOpacity(0.5),
-                                  boxShadow: boxShadow2,
-                                  borderRadius: kRadius5,
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 20.w,
-                                  vertical: 10.h,
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.location_searching_sharp,
-                                        color: kBluePrimary),
-                                    kWidth10,
-                                    Text(
-                                      'Nearest Airport',
-                                      style: textStyle1.copyWith(
-                                          color: kBluePrimary),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              kHeight10,
+                              // Container(
+                              //   decoration: BoxDecoration(
+                              //     color: kBlueLightShade.withOpacity(0.5),
+                              //     boxShadow: boxShadow2,
+                              //     borderRadius: kRadius5,
+                              //   ),
+                              //   padding: EdgeInsets.symmetric(
+                              //     horizontal: 20.w,
+                              //     vertical: 10.h,
+                              //   ),
+                              //   child: Row(
+                              //     children: [
+                              //       const Icon(Icons.location_searching_sharp,
+                              //           color: kBluePrimary),
+                              //       kWidth10,
+                              //       Text(
+                              //         'Nearest Airport',
+                              //         style: textStyle1.copyWith(
+                              //             color: kBluePrimary),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              // kHeight10,
                               Text(
                                 'Popular cities',
                                 style: textStyle1.copyWith(color: kBluePrimary),
                               ),
                               kHeight10,
                               ListView.builder(
-                                itemCount: 10,
+                                itemCount: homeController.popularCitys.length,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) =>
                                     SearchAirportTile(
-                                  airportModel: CitySearchModel(
-                                    city: 'Popular City',
-                                    code: 'CODE',
-                                    country: 'Country',
-                                  ),
+                                  airportModel:
+                                      homeController.popularCitys[index],
                                 ),
                               ),
                             ],
@@ -164,29 +160,29 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: kBlueLightShade.withOpacity(0.5),
-                                  boxShadow: boxShadow2,
-                                  borderRadius: kRadius5,
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 20.w,
-                                  vertical: 10.h,
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.location_searching_sharp,
-                                        color: kBluePrimary),
-                                    kWidth10,
-                                    Text(
-                                      'Nearest Airport',
-                                      style: textStyle1.copyWith(
-                                          color: kBluePrimary),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              // Container(
+                              //   decoration: BoxDecoration(
+                              //     color: kBlueLightShade.withOpacity(0.5),
+                              //     boxShadow: boxShadow2,
+                              //     borderRadius: kRadius5,
+                              //   ),
+                              //   padding: EdgeInsets.symmetric(
+                              //     horizontal: 20.w,
+                              //     vertical: 10.h,
+                              //   ),
+                              //   child: Row(
+                              //     children: [
+                              //       const Icon(Icons.location_searching_sharp,
+                              //           color: kBluePrimary),
+                              //       kWidth10,
+                              //       Text(
+                              //         'Nearest Airport',
+                              //         style: textStyle1.copyWith(
+                              //             color: kBluePrimary),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                               kHeight10,
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,22 +194,20 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
                                   ),
                                   kHeight10,
                                   ListView.builder(
-                                    itemCount: 5,
+                                    itemCount: homeController
+                                                .airportRecentSearches.length >
+                                            5
+                                        ? 5
+                                        : homeController
+                                            .airportRecentSearches.length,
                                     shrinkWrap: true,
                                     physics:
                                         const NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, index) =>
                                         SearchAirportTile(
                                       history: true,
-                                      airportModel: CitySearchModel(
-                                        city: homeController
-                                            .airportRecentSearches[index].city,
-                                        code: homeController
-                                            .airportRecentSearches[index].code,
-                                        country: homeController
-                                            .airportRecentSearches[index]
-                                            .country,
-                                      ),
+                                      airportModel: homeController
+                                          .airportRecentSearches[index],
                                     ),
                                   ),
                                 ],

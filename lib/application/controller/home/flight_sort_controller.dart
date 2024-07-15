@@ -183,7 +183,6 @@ class FlightSortController extends GetxController {
       RxList.generate(2, (index) => CitySearchModel()),
       RxList.generate(2, (index) => CitySearchModel())
     ].obs;
-    // durationSlider.value = 1;
     sortingVariables.clear();
     sortAirlinesSelected.clear();
     departureTimesSelected.clear();
@@ -191,6 +190,9 @@ class FlightSortController extends GetxController {
     adultCount.value = 1;
     infantCount.value = 0;
     childrenCount.value = 0;
+    depatureDate.value = DateTime.now();
+    returnDate.value = DateTime.now();
+    multiCityDepartureDate = <DateTime?>[DateTime.now(), DateTime.now()].obs;
     validateSearchForm();
     update();
     clearingBool.value = true;
@@ -469,7 +471,14 @@ class FlightSortController extends GetxController {
 
   /// change passenger fare type change the [passengerFareType] to find type form [passengerFareTypes]
   void changePassengerFareType(int index) {
-    if (index == passengerFareType.value) {
+    if (passengerFareType.value != 0 &&
+        (infantCount.value > 0 || childrenCount.value > 0)) {
+      Get.snackbar('Invalid FareType',
+          'Child or Infant cannot be selected with a ${passengerFareType.value == 1 ? 'student' : 'senior citizen'} fare',
+          backgroundColor: kRed, colorText: kWhite);
+      passengerFareType.value = 0;
+      return;
+    } else if (index == passengerFareType.value) {
       passengerFareType.value = 0;
     } else {
       passengerFareType.value = index;

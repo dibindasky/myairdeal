@@ -136,6 +136,7 @@ class ScreenSuccessPage extends StatelessWidget {
                                   .clearDataAfterBooking();
                               Get.find<FlightSortController>()
                                   .clearDataAfterBooking();
+                                  controller.getAllUpcomingBooking(true);
                               Get.back();
                             },
                           ),
@@ -149,6 +150,7 @@ class ScreenSuccessPage extends StatelessWidget {
                                   .clearDataAfterBooking();
                               Get.find<FlightSortController>()
                                   .clearDataAfterBooking();
+                                   controller.getAllUpcomingBooking(true);
                               Get.back();
                               Get.find<RaiceTicketController>().invoiceDOwnload(
                                   bookingID: controller

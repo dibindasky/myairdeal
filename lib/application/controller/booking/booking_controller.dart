@@ -223,9 +223,6 @@ class BookingController extends GetxController {
       update();
     }, (r) {
       retrieveAllUpcomingBooking.value = r;
-      for (var element in r) {
-        log('${element.allBookingSearchquery?.toJson()} single data upcming');
-      }
       bookingLoading.value = false;
       update();
     });

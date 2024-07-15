@@ -20,86 +20,82 @@ class ScreenEditProfile extends StatelessWidget {
       (timeStamp) => Get.find<AuthController>().getUserInfo(false),
     );
     return Scaffold(
-      body: Stack(
-        children: [
-          ListView(
-            padding: const EdgeInsets.all(0),
-            children: [
-              DetailAppBar(
-                heading: 'Update Profile',
-                backButton: true,
-                topGap: kHeight10,
-              ),
-              kHeight50,
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('First Name', style: textThinStyle1),
-                    kHeight5,
-                    CustomTextField(
-                      controller: controller.updateFirnameController,
-                      isBorder: true,
-                      borderRadius: 10,
-                      textCapitalization: TextCapitalization.words,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(width: .3),
-                        borderRadius: kRadius10,
-                      ),
-                      onTapOutside: () => FocusScope.of(context).unfocus(),
-                      hintText: 'Enter First Name',
-                      fillColor: kWhite,
-                    ),
-                    kHeight15,
-                    Text('Last Name', style: textThinStyle1),
-                    kHeight5,
-                    CustomTextField(
-                      controller: controller.updateLastNameController,
-                      isBorder: true,
-                      borderRadius: 10,
-                      textCapitalization: TextCapitalization.words,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(width: .3),
-                        borderRadius: kRadius10,
-                      ),
-                      onTapOutside: () => FocusScope.of(context).unfocus(),
-                      hintText: 'Enter Last Name',
-                      fillColor: kWhite,
-                    ),
-                    kHeight15,
-                    Text('Email', style: textThinStyle1), kHeight5,
-                    CustomTextField(
-                      controller: controller.updateEmailController,
-                      isBorder: true,
-                      borderRadius: 10,
-                      textCapitalization: TextCapitalization.words,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(width: .3),
-                        borderRadius: kRadius10,
-                      ),
-                      onTapOutside: () => FocusScope.of(context).unfocus(),
-                      hintText: 'Enter Email',
-                      fillColor: kWhite,
-                    ),
-                    kHeight15,
-                    // Add other fields as necessary
-                    kHeight50,
-                  ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
+              children: [
+                DetailAppBar(
+                  heading: 'Update Profile',
+                  backButton: true,
+                  topGap: kHeight10,
                 ),
-              ),
-            ],
-          ),
-          Positioned(
-            bottom: 20.h,
-            left: 12.w,
-            right: 12.w,
-            child: Obx(
+                kHeight50,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('First Name', style: textThinStyle1),
+                      kHeight5,
+                      CustomTextField(
+                        controller: controller.updateFirnameController,
+                        isBorder: true,
+                        borderRadius: 10,
+                        textCapitalization: TextCapitalization.words,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(width: .3),
+                          borderRadius: kRadius10,
+                        ),
+                        onTapOutside: () => FocusScope.of(context).unfocus(),
+                        hintText: 'Enter First Name',
+                        fillColor: kWhite,
+                      ),
+                      kHeight15,
+                      Text('Last Name', style: textThinStyle1),
+                      kHeight5,
+                      CustomTextField(
+                        controller: controller.updateLastNameController,
+                        isBorder: true,
+                        borderRadius: 10,
+                        textCapitalization: TextCapitalization.words,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(width: .3),
+                          borderRadius: kRadius10,
+                        ),
+                        onTapOutside: () => FocusScope.of(context).unfocus(),
+                        hintText: 'Enter Last Name',
+                        fillColor: kWhite,
+                      ),
+                      kHeight15,
+                      Text('Email', style: textThinStyle1), kHeight5,
+                      CustomTextField(
+                        controller: controller.updateEmailController,
+                        isBorder: true,
+                        borderRadius: 10,
+                        textCapitalization: TextCapitalization.words,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(width: .3),
+                          borderRadius: kRadius10,
+                        ),
+                        onTapOutside: () => FocusScope.of(context).unfocus(),
+                        hintText: 'Enter Email',
+                        fillColor: kWhite,
+                      ),
+                      kHeight15,
+                      // Add other fields as necessary
+                      kHeight50,
+                      kHeight20
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Obx(
               () {
                 return controller.isLoading.value
                     ? const Center(
-                        child: CircularProgressIndicator(color: kBluePrimary),
-                      )
+                        child: CircularProgressIndicator(color: kBluePrimary))
                     : EventIconButton(
                         width: MediaQuery.of(context).size.width - 24.w,
                         onTap: () {
@@ -118,8 +114,8 @@ class ScreenEditProfile extends StatelessWidget {
                       );
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

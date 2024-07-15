@@ -56,7 +56,7 @@ class ScreenBookings extends StatelessWidget {
                     )
                   ],
                 )
-              : controller.retrieveAllCompletedBooking.isEmpty ||
+              : controller.retrieveAllCompletedBooking.isEmpty &&
                       controller.retrieveAllUpcomingBooking.isEmpty
                   ? const EmptyBookingScreen()
                   : ListView(

@@ -22,6 +22,11 @@ class TravellerController extends GetxController {
   /// controller and key for traveller contact detail
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController gstEmailController = TextEditingController();
+  TextEditingController gstPhoneController = TextEditingController();
+  TextEditingController gstNumberController = TextEditingController();
+  TextEditingController gstCompanyNameController = TextEditingController();
+  TextEditingController gstAddressController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   /// Add details Screen

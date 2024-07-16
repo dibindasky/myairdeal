@@ -8,7 +8,6 @@ import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_contr
 import 'package:myairdeal/application/presentation/utils/animations/splash_animation.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_invoice/flight_invoice.dart';
@@ -75,7 +74,8 @@ class ScreenSuccessPage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     kHeight50,
-                                    const CircularProgressIndicator(color: kWhite),
+                                    const CircularProgressIndicator(
+                                        color: kWhite),
                                   ],
                                 );
                               }
@@ -91,7 +91,8 @@ class ScreenSuccessPage extends StatelessWidget {
                                     ),
                                   ),
                                   Text('Booking done successfully!',
-                                      style: textThinStyle1.copyWith(color: kWhite))
+                                      style: textThinStyle1.copyWith(
+                                          color: kWhite))
                                 ],
                               );
                             }),
@@ -112,14 +113,12 @@ class ScreenSuccessPage extends StatelessWidget {
                   }
                   return Column(
                     children: [
-                      SizedBox(height: 150.h,),
+                      SizedBox(height: 150.h),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.h),
                         child: FlightInvoiceCard(
-                          flightTicketInvoiceEnum:
-                              FlightTicketInvoiceEnum.upcoming,
-                          retrieveSingleBookingresponceModel:
-                              controller.retrieveSingleBookingresponceModel.value,
+                          retrieveSingleBookingresponceModel: controller
+                              .retrieveSingleBookingresponceModel.value,
                         ),
                       ),
                       kHeight20,
@@ -136,7 +135,7 @@ class ScreenSuccessPage extends StatelessWidget {
                                   .clearDataAfterBooking();
                               Get.find<FlightSortController>()
                                   .clearDataAfterBooking();
-                                  controller.getAllUpcomingBooking(true);
+                              controller.getAllUpcomingBooking(true);
                               Get.back();
                             },
                           ),
@@ -150,7 +149,7 @@ class ScreenSuccessPage extends StatelessWidget {
                                   .clearDataAfterBooking();
                               Get.find<FlightSortController>()
                                   .clearDataAfterBooking();
-                                   controller.getAllUpcomingBooking(true);
+                              controller.getAllUpcomingBooking(true);
                               Get.back();
                               Get.find<RaiceTicketController>().invoiceDOwnload(
                                   bookingID: controller

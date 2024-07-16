@@ -51,7 +51,7 @@ class NormalCenterItems extends StatelessWidget {
                 backgroundColor: kGrey,
               ),
               ...List.generate(
-                5,
+                3,
                 (index) => Text(
                   '-',
                   style: TextStyle(
@@ -60,15 +60,14 @@ class NormalCenterItems extends StatelessWidget {
                       color: kBlack),
                 ),
               ),
+              stops != 0
+                  ? const RotatedBox(
+                      quarterTurns: 1,
+                      child: Icon(Icons.flight_rounded, size: 20, color: kBlue),
+                    )
+                  : kEmpty,
               ...List.generate(
-                  stops,
-                  (index) => const RotatedBox(
-                        quarterTurns: 1,
-                        child:
-                            Icon(Icons.flight_rounded, size: 20, color: kBlue),
-                      )),
-              ...List.generate(
-                5,
+                3,
                 (index) => Text(
                   '-',
                   style: TextStyle(

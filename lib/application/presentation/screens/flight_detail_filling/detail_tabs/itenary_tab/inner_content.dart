@@ -65,7 +65,8 @@ class InnerContents extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TicketColumn(
-                                  label: model?.sI?[0].da?.city ?? '',
+                                  label:
+                                      '${model?.sI?[0].da?.city ?? ''}, ${model?.sI?[0].da?.country ?? ''}',
                                   value: model?.sI?[0].da?.code ?? '',
                                   subValue: model?.sI?[0].da?.name ?? '',
                                 ),
@@ -100,9 +101,8 @@ class InnerContents extends StatelessWidget {
                               children: [
                                 TicketColumn(
                                   crossAxisAlignment: CrossAxisAlignment.end,
-                                  label: model?.sI?[(model.sI?.length ?? 1) - 1]
-                                          .aa?.city ??
-                                      '',
+                                  label:
+                                      '${model?.sI?[(model.sI?.length ?? 1) - 1].aa?.city ?? ''}, ${model?.sI?[(model.sI?.length ?? 1) - 1].aa?.country ?? ''}',
                                   value: model?.sI?[(model.sI?.length ?? 1) - 1]
                                           .aa?.code ??
                                       '',
@@ -169,8 +169,7 @@ class InnerContents extends StatelessWidget {
                                           children: [
                                             TicketColumn(
                                               label:
-                                                  model?.sI?[stop].da?.city ??
-                                                      '',
+                                                  '${model?.sI?[stop].da?.city ?? ''}, ${model?.sI?[stop].da?.country ?? ''}',
                                               value:
                                                   model?.sI?[stop].da?.code ??
                                                       '',
@@ -181,6 +180,7 @@ class InnerContents extends StatelessWidget {
                                           ],
                                         ),
                                       ),
+                                      kWidth5,
                                       Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -224,12 +224,13 @@ class InnerContents extends StatelessWidget {
                                           ),
                                         ],
                                       ),
+                                      kWidth5,
                                       Expanded(
                                         child: TicketColumn(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,
                                           label:
-                                              model?.sI?[stop].aa?.city ?? '',
+                                              '${model?.sI?[stop].aa?.city ?? ''}, ${model?.sI?[stop].aa?.country ?? ''}',
                                           value:
                                               model?.sI?[stop].aa?.code ?? '',
                                           subValue:

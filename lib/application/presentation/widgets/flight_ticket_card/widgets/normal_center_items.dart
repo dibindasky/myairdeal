@@ -34,7 +34,7 @@ class NormalCenterItems extends StatelessWidget {
             : kEmpty,
         kHeight10,
         Text(
-          '${airline ?? 'Airline '}${flightId ?? ''}',
+          '${airline ?? ''}${flightId ?? ''}',
           style: textStyle1.copyWith(fontSize: 12.sp),
         ),
         Text(
@@ -86,7 +86,7 @@ class NormalCenterItems extends StatelessWidget {
           ),
         ),
         Text(
-          stops == 0 ? 'Non Stop' : '$stops Stop',
+          stops == 0 ? 'Non Stop' : '$stops Stops',
           style: textThinStyle1.copyWith(fontSize: 9.sp),
         ),
         number != null

@@ -150,10 +150,15 @@ class AuthController extends GetxController {
       update();
       Get.snackbar('Failed', 'OTP Verification Failed', backgroundColor: kRed);
     }, (r) async {
+      log('profile value ${r.profile}');
+      if (r.profile == null || r.profile == false) {
+        Get.offAllNamed(Routes.alMostDone);
+      } else {
+        Get.offAllNamed(Routes.bottomBar);
+      }
       await SecureStorage.saveToken(
-        tokenModel: TokenModel(token: r.token ?? ''),
-      );
-      log('getx verify token recponce value >> ;  ${r.toJson()}');
+          tokenModel: TokenModel(token: r.token ?? ''));
+
       isLoading.value = false;
       hasError = false;
       loginOrNot.value = true;
@@ -161,11 +166,6 @@ class AuthController extends GetxController {
       Get.snackbar('Success', 'OTP Verified Successfully',
           backgroundColor: kBluePrimary);
       await SecureStorage.setLogin();
-      if (r.profile == false) {
-        Get.offAllNamed(Routes.alMostDone);
-      } else {
-        Get.offAllNamed(Routes.bottomBar);
-      }
     });
   }
 

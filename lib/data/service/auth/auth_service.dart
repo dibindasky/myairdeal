@@ -46,7 +46,7 @@ class AuthService extends AuthRepo {
         data: otpVerifyModel.toJson(),
       );
       log('Success verifyOTP ${responce.data}');
-      return Right(OtpVerifyResponce(token: responce.data['token'] as String));
+      return Right(OtpVerifyResponce.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException verifyOTP $e');
       return Left(Failure(message: e.response?.data['error'] ?? errorMessage));

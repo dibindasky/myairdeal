@@ -21,7 +21,9 @@ class ProgressBar extends StatelessWidget {
               4,
               (index) => GestureDetector(
                 onTap: () {
-                  travelController.changeDetailEnterTab(index);
+                  if (index < travelController.selectedMainTab.value ) {
+                    travelController.changeDetailEnterTab(index);
+                  }
                 },
                 child: Obx(
                   () => Row(

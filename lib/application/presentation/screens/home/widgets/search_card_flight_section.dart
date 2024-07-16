@@ -125,29 +125,29 @@ class FlightSearchCardHome extends StatelessWidget {
                     },
                     texthead: 'Travellers & Class');
               }),
-              kHeight5,
+              kHeight10,
               Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Passenger Fare Type', style: textStyle1)),
               Obx(() {
                 return Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: List.generate(
-                      controller.passengerFareTypes.length - 1,
-                      (index) => Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Checkbox(
-                                    value: controller.passengerFareType.value ==
-                                        index + 1,
-                                    onChanged: (value) {
-                                      controller
-                                          .changePassengerFareType(index + 1);
-                                    },
-                                    activeColor: kBluePrimary),
-                                Text(controller.passengerFareTypes[index + 1])
-                              ])),
+                    controller.passengerFareTypes.length - 1,
+                    (index) => Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CustomCheckbox(
+                              value: controller.passengerFareType.value ==
+                                  index + 1,
+                              onChanged: (value) {
+                                controller.changePassengerFareType(index + 1);
+                              },
+                              activeColor: kBluePrimary),
+                          Text(controller.passengerFareTypes[index + 1])
+                        ]),
+                  ),
                 );
               }),
               Obx(() {
@@ -157,9 +157,13 @@ class FlightSearchCardHome extends StatelessWidget {
                     height: controller.passengerFareType.value != 0 ? 15.h : 0,
                     duration: const Duration(milliseconds: 300),
                     child: FittedBox(
-                      child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Text('* ',style: TextStyle(color: kRed),),
+                          const Text(
+                            '* ',
+                            style: TextStyle(color: kRed),
+                          ),
                           Text(
                             'Can\'t add Child or Infant with special fare',
                             style: textThinStyle1.copyWith(color: kGreyDark),
@@ -187,6 +191,33 @@ class FlightSearchCardHome extends StatelessWidget {
           ),
         );
       }),
+    );
+  }
+}
+
+class CustomCheckbox extends StatelessWidget {
+  final bool value;
+  final Function(bool?) onChanged;
+  final Color activeColor;
+
+  const CustomCheckbox({
+    Key? key,
+    required this.value,
+    required this.onChanged,
+    this.activeColor = kBluePrimary,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.scale(
+      scale: 1, // Adjust the scale to reduce the padding
+      child: Checkbox(
+        value: value,
+        onChanged: onChanged,
+        activeColor: activeColor,
+        materialTapTargetSize:
+            MaterialTapTargetSize.shrinkWrap, // Reduce the tap target size
+      ),
     );
   }
 }

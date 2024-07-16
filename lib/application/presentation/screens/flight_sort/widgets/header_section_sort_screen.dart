@@ -27,6 +27,7 @@ class SortScreenHeaderSection extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      controller.stopSearchTimer();
                       Get.back(id: 1);
                     },
                     child: const Icon(Icons.arrow_back_ios, color: kWhite),
@@ -60,6 +61,7 @@ class SortScreenHeaderSection extends StatelessWidget {
                   ? kEmpty
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           child: Column(
@@ -82,12 +84,20 @@ class SortScreenHeaderSection extends StatelessWidget {
                                 style: textThinStyle1.copyWith(color: kWhite),
                               ),
                               // Text(
+                              //   controller
+                              //           .airportSelected[controller
+                              //               .selectedTripListIndex.value][0]
+                              //           .country ??
+                              //       '',
+                              //   style: textThinStyle1.copyWith(color: kWhite),
+                              // ),
+                              // Text(
                               //   'Airport',
                               //   style: textThinStyle1.copyWith(color: kWhite),
                               // ),
                             ],
                           ),
-                        ),
+                        ),kWidth5,
                         const Column(
                           children: [
                             RotatedBox(
@@ -114,10 +124,11 @@ class SortScreenHeaderSection extends StatelessWidget {
                             //   style: textThinStyle1.copyWith(color: kWhite),
                             // )
                           ],
-                        ),
+                        ),kWidth5,
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 controller
@@ -136,6 +147,15 @@ class SortScreenHeaderSection extends StatelessWidget {
                                 textAlign: TextAlign.end,
                                 style: textThinStyle1.copyWith(color: kWhite),
                               ),
+                              // Text(
+                              //   controller
+                              //           .airportSelected[controller
+                              //               .selectedTripListIndex.value][1]
+                              //           .country ??
+                              //       '',
+                              //   textAlign: TextAlign.end,
+                              //   style: textThinStyle1.copyWith(color: kWhite),
+                              // ),
                               // Text(
                               //   'Airport',
                               //   style: textThinStyle1.copyWith(color: kWhite),

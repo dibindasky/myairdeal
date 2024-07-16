@@ -22,7 +22,10 @@ class SortingChipsSection extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Obx(() => controller.searchListLoading.value
+          child: Obx(() => controller.searchListLoading.value ||
+                  controller
+                      .searchListMain[controller.selectedTripListIndex.value]
+                      .isEmpty
               ? kEmpty
               : Column(
                   children: [
@@ -65,10 +68,13 @@ class SortingChipsSection extends StatelessWidget {
                                 //     }),
                                 SortingChipSortPage(
                                     text: 'Stops',
-                                    selected:( controller
-                                        .sortingVariablesSelected[controller
-                                            .selectedTripListIndex.value]?[1]??[])
-                                        .isNotEmpty,
+                                    selected:
+                                        (controller.sortingVariablesSelected[
+                                                    controller
+                                                        .selectedTripListIndex
+                                                        .value]?[1] ??
+                                                [])
+                                            .isNotEmpty,
                                     onTap: () {
                                       showModalBottomSheet(
                                         backgroundColor: knill,
@@ -79,15 +85,13 @@ class SortingChipsSection extends StatelessWidget {
                                     }),
                                 SortingChipSortPage(
                                     text: 'Duration',
-                                    selected: false,
-                                    //  controller.durationSlider.value !=
-                                    //     (controller
-                                    //             .sortingVariablesSelected[
-                                    //                 controller
-                                    //                     .selectedTripListIndex
-                                    //                     .value]?[2]
-                                    //             .last ??
-                                    //         1),
+                                    selected: controller.durationSlider.value !=
+                                        (controller
+                                                .sortingVariables[controller
+                                                    .selectedTripListIndex
+                                                    .value]?[2]
+                                                .last ??
+                                            1.0),
                                     onTap: () {
                                       showModalBottomSheet(
                                         backgroundColor: knill,
@@ -98,10 +102,13 @@ class SortingChipsSection extends StatelessWidget {
                                     }),
                                 SortingChipSortPage(
                                     text: 'Airlines',
-                                    selected:( controller
-                                        .sortingVariablesSelected[controller
-                                            .selectedTripListIndex.value]?[0]??[])
-                                        .isNotEmpty,
+                                    selected:
+                                        (controller.sortingVariablesSelected[
+                                                    controller
+                                                        .selectedTripListIndex
+                                                        .value]?[0] ??
+                                                [])
+                                            .isNotEmpty,
                                     onTap: () {
                                       showModalBottomSheet(
                                         backgroundColor: knill,

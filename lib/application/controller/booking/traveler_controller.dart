@@ -66,7 +66,6 @@ class TravellerController extends GetxController {
 
   // update the passenger count from other controller for checking
   void updatePassengersNumber(int number) {
-    print('passenger count number is $number');
     passengerLength.value = number;
     selectedMainTab.value = 0;
     selectedAddDetailsStep.value = 0;
@@ -74,6 +73,7 @@ class TravellerController extends GetxController {
   }
 
   changeAddDetailsSubStep(int index) {
+    if (index == 1 || index == 2) return;
     selectedAddDetailsStep.value = index;
     update();
   }
@@ -113,6 +113,15 @@ class TravellerController extends GetxController {
   void clearDataAfterBooking() {
     selectedMainTab = 0.obs;
     selectedAddDetailsStep = 0.obs;
+    passengerDetails =
+        List<TravellerInfo?>.filled(20, null, growable: true).obs;
+    phoneController.text = '';
+    emailController.text = '';
+    gstEmailController.text = '';
+    gstPhoneController.text = '';
+    gstNumberController.text = '';
+    gstCompanyNameController.text = '';
+    gstAddressController.text = '';
   }
 
   changeSelectedDetailStepArrow(bool newValue) {

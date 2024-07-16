@@ -23,7 +23,8 @@ class FlightSearchCardHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
       decoration: BoxDecoration(
           borderRadius: kRadius15, color: kWhite, boxShadow: boxShadow1),
@@ -149,6 +150,19 @@ class FlightSearchCardHome extends StatelessWidget {
                               ])),
                 );
               }),
+              Obx(() {
+                return AnimatedContainer(
+                  height: controller.passengerFareType.value != 0 ? 15.h : 0,
+                  duration: const Duration(milliseconds: 300),
+                  child: FittedBox(
+                    child: Text(
+                      'Can\'t add Child or Infant with special fare',
+                      style: textThinStyle1.copyWith(color: kGreyDark),
+                    ),
+                  ),
+                );
+              }),
+              kHeight5,
               Obx(() {
                 return EventButton(
                     color:

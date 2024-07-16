@@ -471,12 +471,14 @@ class FlightSortController extends GetxController {
 
   /// change passenger fare type change the [passengerFareType] to find type form [passengerFareTypes]
   void changePassengerFareType(int index) {
-    if (passengerFareType.value != 0 &&
-        (infantCount.value > 0 || childrenCount.value > 0)) {
+    if (index != 0 && (infantCount.value > 0 || childrenCount.value > 0)) {
       Get.snackbar('Invalid FareType',
-          'Child or Infant cannot be selected with a ${passengerFareType.value == 1 ? 'student' : 'senior citizen'} fare',
-          backgroundColor: kRed, colorText: kWhite);
-      passengerFareType.value = 0;
+          'Child or Infant cannot be selected with a ${index == 1 ? 'student' : 'senior citizen'} fare',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: kRed,
+          forwardAnimationCurve: Curves.bounceIn,
+          colorText: kWhite);
+      // passengerFareType.value = 0;
       return;
     } else if (index == passengerFareType.value) {
       passengerFareType.value = 0;
@@ -569,6 +571,10 @@ class FlightSortController extends GetxController {
 
 // count changing for adults cannot exceed the total by 9 and cannot decrease the count below 1 atleat one adult should be there
   void changeAdultCount(bool increment) {
+    if (passengerFareType.value != 0) {
+      childrenCount.value = 0;
+      infantCount.value = 0;
+    }
     if (increment && (adultCount.value + childrenCount.value) < 9) {
       adultCount.value++;
     } else if (!increment && adultCount.value != 1) {
@@ -581,7 +587,18 @@ class FlightSortController extends GetxController {
 
 // children cannot travel alone atleast one adult should be there.. cannot exeed max traveller count 9
   void changeChildrenCount(bool increment) {
-    if (increment && (adultCount.value + childrenCount.value) < 9) {
+    if (passengerFareType.value != 0) {
+      childrenCount.value = 0;
+      infantCount.value = 0;
+      if (!Get.isSnackbarOpen) {
+        Get.snackbar('Can\'t add',
+            'Child or Infant cannot be selected with a studen/senior citizen fare',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: kRed,
+            forwardAnimationCurve: Curves.bounceIn,
+            colorText: kWhite);
+      }
+    } else if (increment && (adultCount.value + childrenCount.value) < 9) {
       childrenCount.value++;
     } else if (!increment && childrenCount.value != 0) {
       childrenCount.value--;
@@ -590,7 +607,18 @@ class FlightSortController extends GetxController {
 
 // add infant according to the number of adults number of adult and number of infaunt can be same but cannot exceed the number grater than adult count
   void changeInfantCount(bool increment) {
-    if (increment && infantCount.value < adultCount.value) {
+    if (passengerFareType.value != 0) {
+      childrenCount.value = 0;
+      infantCount.value = 0;
+      if (!Get.isSnackbarOpen) {
+        Get.snackbar('Can\'t add',
+            'Child or Infant cannot be selected with a studen/senior citizen fare',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: kRed,
+            forwardAnimationCurve: Curves.bounceIn,
+            colorText: kWhite);
+      }
+    } else if (increment && infantCount.value < adultCount.value) {
       infantCount.value++;
     } else if (infantCount.value != 0 && !increment) {
       infantCount.value--;

@@ -83,6 +83,12 @@ class BookingController extends GetxController {
     });
   }
 
+  void clear() {
+    retrieveAllUpcomingBooking.clear();
+    retrieveAllCompletedBooking.clear();
+    retrieveAllCancelBooking.clear();
+  }
+
   // end timer
   void endTimer() {
     timer.value.cancel();

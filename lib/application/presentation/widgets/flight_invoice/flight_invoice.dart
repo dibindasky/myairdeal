@@ -96,23 +96,23 @@ class FlightInvoiceCard extends StatelessWidget {
                                               .sI?[stopIndex]
                                               .da
                                               ?.code ??
-                                          '--',
+                                          '',
                                       label: tripInfos?[index]
                                               .sI?[stopIndex]
                                               .da
                                               ?.city ??
-                                          '--',
+                                          '',
                                       valueStyle: textThinStyle1,
                                       subValue: tripInfos?[index]
                                               .sI?[stopIndex]
                                               .da
                                               ?.name ??
-                                          '--',
+                                          '',
                                       exit: tripInfos?[index]
                                               .sI?[stopIndex]
                                               .da
                                               ?.terminal ??
-                                          '--',
+                                          '',
                                       isBold: false,
                                       flightCode:
                                           DateFormating.formatDateMonthYear(
@@ -229,8 +229,7 @@ class FlightInvoiceCard extends StatelessWidget {
                                   fontSize: 13.sp, fontWeight: FontWeight.w700),
                               subValue: tripInfos?[index].sI?[0].da?.name ?? '',
                               isBold: true,
-                              exit:
-                                  tripInfos?[index].sI?[0].da?.terminal ?? '--',
+                              exit: tripInfos?[index].sI?[0].da?.terminal ?? '',
                               flightCode: DateFormating.formatDateMonthYear(
                                 (tripInfos?[index].sI?[0].dt ?? ''),
                               ),
@@ -299,7 +298,7 @@ class FlightInvoiceCard extends StatelessWidget {
                                           1]
                                       .aa
                                       ?.terminal ??
-                                  '--',
+                                  '',
                               flightCode: DateFormating.formatDateMonthYear(
                                 (tripInfos?[index]
                                         .sI?[
@@ -373,16 +372,3 @@ class FlightInvoiceCard extends StatelessWidget {
     );
   }
 }
-//  (model?.sI?.length ?? 1) > 1
-//                                     ? kEmpty
-//                                     : TicketColumn(
-//                                         label: 'Departure',
-//                                         value: DateFormating.formatDate(
-//                                             model?.sI?[0].dt ?? ''),
-//                                         valueStyle: textThinStyle1.copyWith(
-//                                             overflow: TextOverflow.visible),
-//                                         subValue:
-//                                             model?.sI?[0].da?.terminal ?? '',
-//                                         exit: 'Cabin Class',
-//                                         flightCode: 'Seat No',
-//                                       ),

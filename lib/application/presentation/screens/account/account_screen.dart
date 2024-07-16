@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/account/widgets/settings_tile.dart';
@@ -72,6 +73,7 @@ class ScreenAccountPage extends StatelessWidget {
                                         .bottomIndex
                                         .value = 0;
                                     controller.logOut();
+                                    Get.find<BookingController>().clear();
                                   },
                                 );
                               },

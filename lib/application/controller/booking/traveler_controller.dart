@@ -137,15 +137,17 @@ class TravellerController extends GetxController {
   // add gst details to the variable
   void addGstDetails() {
     gstInfo.value = gstInfo.value.copyWith(
-      address:
-          gstAddressController.text == '' ? null : gstAddressController.text,
-      email: gstEmailController.text == '' ? null : gstEmailController.text,
-      gstNumber:
-          gstNumberController.text == '' ? null : gstNumberController.text,
-      mobile: gstPhoneController.text == '' ? null : gstPhoneController.text,
-      registeredName: gstCompanyNameController.text == ''
-          ? null
-          : gstAddressController.text,
+        address:
+            gstAddressController.text == '' ? null : gstAddressController.text,
+        email: gstEmailController.text == '' ? null : gstEmailController.text,
+        gstNumber:
+            gstNumberController.text == '' ? null : gstNumberController.text,
+        mobile: gstPhoneController.text == '' ? null : gstPhoneController.text,
+        registeredName: gstCompanyNameController.text == ''
+            ? null
+            : gstAddressController.text);
+  }
+
   // Get All passengers
   void getAllPassengers(bool isLoad) async {
     if (allPassengers.value.passengers != null && !isLoad) {

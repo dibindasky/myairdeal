@@ -179,11 +179,11 @@ class FlightSortController extends GetxController {
 
   void searchTimer() {
     timer.value.cancel();
+    remainingTime.value = 0;
     timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (remainingTime.value == 0) {
+      if (remainingTime.value == (15 * 60)) {
         timer.cancel();
         Get.back(id: 1);
-        Get.until((route) => Get.currentRoute == Routes.bottomBar);
         Get.dialog(AlertDialog(
           backgroundColor: kRedLight,
           title: const Text('Session expired'),
@@ -191,7 +191,7 @@ class FlightSortController extends GetxController {
               'Your session time has been expired. Search again to get result'),
         ));
       } else {
-        remainingTime.value--;
+        remainingTime.value++;
       }
     });
   }

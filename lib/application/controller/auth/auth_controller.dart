@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -151,21 +152,24 @@ class AuthController extends GetxController {
       Get.snackbar('Failed', 'OTP Verification Failed', backgroundColor: kRed);
     }, (r) async {
       log('profile value ${r.profile}');
+      loginOrNot.value = false;
       if (r.profile == null || r.profile == false) {
         Get.offAllNamed(Routes.alMostDone);
       } else {
         Get.offAllNamed(Routes.bottomBar);
       }
-      await SecureStorage.saveToken(
-          tokenModel: TokenModel(token: r.token ?? ''));
+      SecureStorage.saveToken(tokenModel: TokenModel(token: r.token ?? ''));
 
       isLoading.value = false;
       hasError = false;
-      loginOrNot.value = true;
+
       update();
       Get.snackbar('Success', 'OTP Verified Successfully',
           backgroundColor: kBluePrimary);
-      await SecureStorage.setLogin();
+      SecureStorage.setLogin();
+      Timer(const Duration(milliseconds: 50), () {
+        loginOrNot.value = true;
+      });
     });
   }
 

@@ -70,8 +70,9 @@ class ScreenNavbar extends StatelessWidget {
             ),
           ],
           onTap: (index) {
-            if (selectedIndex == 1) {
+            if (index == 1) {
               Get.find<BookingController>().getAllUpcomingBooking(true);
+              Get.find<BookingController>().getAllCombleteBooking(true);
             }
             Get.find<NavBarController>().chageIndex(index);
           },

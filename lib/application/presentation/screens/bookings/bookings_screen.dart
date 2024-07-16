@@ -82,11 +82,13 @@ class ScreenBookings extends StatelessWidget {
                             } else {
                               if (controller.selectedBookingTab.value == 1) {
                                 if (controller
-                                    .retrieveAllCompletedBooking.isEmpty) {
+                                    .retrieveAllUpcomingBooking.isEmpty) {
                                   return SizedBox(
-                                      height: 250.h,
-                                      child: const Center(
-                                          child: Text('No Combleted Booking')));
+                                    height: 250.h,
+                                    child: const Center(
+                                      child: Text('No Upcoming Tickets'),
+                                    ),
+                                  );
                                 }
                                 return ListView.separated(
                                   physics: const BouncingScrollPhysics(),
@@ -94,30 +96,32 @@ class ScreenBookings extends StatelessWidget {
                                   separatorBuilder: (context, index) =>
                                       kHeight10,
                                   itemCount: controller
-                                      .retrieveAllCompletedBooking.length,
+                                      .retrieveAllUpcomingBooking.length,
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) =>
                                       GestureDetector(
                                     onTap: () {
                                       controller.getSingleBooking(
-                                        retrieveSingleBookingRequestModel:
-                                            RetrieveSingleBookingRequestModel(
-                                                bookingId: controller
-                                                    .retrieveAllCompletedBooking[
-                                                        index]
-                                                    .bookingId),
-                                      );
+                                          retrieveSingleBookingRequestModel:
+                                              RetrieveSingleBookingRequestModel(
+                                                  bookingId: controller
+                                                      .retrieveAllUpcomingBooking[
+                                                          index]
+                                                      .bookingId));
                                       Get.toNamed(Routes.invoice);
                                     },
                                     child: FlightTicketCard(
                                       allBookingResponce: controller
                                           .retrieveAllCompletedBooking[index],
+                                      bookingId: controller
+                                          .retrieveAllUpcomingBooking[index]
+                                          .bookingId,
                                       itemInfos: controller
-                                          .retrieveAllCompletedBooking[index]
+                                          .retrieveAllUpcomingBooking[index]
                                           .retrieveSingleBookingresponceModel
                                           ?.itemInfos,
                                       flightTicketCardEnum:
-                                          FlightTicketCardEnum.complete,
+                                          FlightTicketCardEnum.upcoming,
                                       buttonOnTap: () => Get.toNamed(
                                           Routes.flightDetailFillling),
                                     ),
@@ -167,13 +171,11 @@ class ScreenBookings extends StatelessWidget {
                               } else if (controller.selectedBookingTab.value ==
                                   3) {
                                 if (controller
-                                    .retrieveAllUpcomingBooking.isEmpty) {
+                                    .retrieveAllCompletedBooking.isEmpty) {
                                   return SizedBox(
-                                    height: 250.h,
-                                    child: const Center(
-                                      child: Text('No Upcoming Tickets'),
-                                    ),
-                                  );
+                                      height: 250.h,
+                                      child: const Center(
+                                          child: Text('No Completed Booking')));
                                 }
                                 return ListView.separated(
                                   physics: const BouncingScrollPhysics(),
@@ -181,32 +183,30 @@ class ScreenBookings extends StatelessWidget {
                                   separatorBuilder: (context, index) =>
                                       kHeight10,
                                   itemCount: controller
-                                      .retrieveAllUpcomingBooking.length,
+                                      .retrieveAllCompletedBooking.length,
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) =>
                                       GestureDetector(
                                     onTap: () {
                                       controller.getSingleBooking(
-                                          retrieveSingleBookingRequestModel:
-                                              RetrieveSingleBookingRequestModel(
-                                                  bookingId: controller
-                                                      .retrieveAllUpcomingBooking[
-                                                          index]
-                                                      .bookingId));
+                                        retrieveSingleBookingRequestModel:
+                                            RetrieveSingleBookingRequestModel(
+                                                bookingId: controller
+                                                    .retrieveAllCompletedBooking[
+                                                        index]
+                                                    .bookingId),
+                                      );
                                       Get.toNamed(Routes.invoice);
                                     },
                                     child: FlightTicketCard(
                                       allBookingResponce: controller
                                           .retrieveAllCompletedBooking[index],
-                                      bookingId: controller
-                                          .retrieveAllUpcomingBooking[index]
-                                          .bookingId,
                                       itemInfos: controller
-                                          .retrieveAllUpcomingBooking[index]
+                                          .retrieveAllCompletedBooking[index]
                                           .retrieveSingleBookingresponceModel
                                           ?.itemInfos,
                                       flightTicketCardEnum:
-                                          FlightTicketCardEnum.upcoming,
+                                          FlightTicketCardEnum.complete,
                                       buttonOnTap: () => Get.toNamed(
                                           Routes.flightDetailFillling),
                                     ),

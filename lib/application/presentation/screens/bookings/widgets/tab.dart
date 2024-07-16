@@ -26,7 +26,7 @@ class BookingsTab extends StatelessWidget {
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(24),
                         bottomLeft: Radius.circular(24)),
-                    text: 'Completed',
+                    text: 'Upcoming',
                     onTap: () {
                       controller.changeTab(1);
                     },
@@ -50,7 +50,7 @@ class BookingsTab extends StatelessWidget {
                     borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(24),
                         bottomRight: Radius.circular(24)),
-                    text: 'Upcoming',
+                    text: 'Completed',
                     onTap: () {
                       controller.changeTab(3);
                     },

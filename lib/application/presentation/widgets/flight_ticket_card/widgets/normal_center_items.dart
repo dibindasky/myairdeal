@@ -34,7 +34,7 @@ class NormalCenterItems extends StatelessWidget {
             : kEmpty,
         kHeight10,
         Text(
-          '${airline ?? 'Airline '}${flightId ?? ''}',
+          '${airline ?? ''}${flightId ?? ''}',
           style: textStyle1.copyWith(fontSize: 12.sp),
         ),
         Text(
@@ -51,7 +51,7 @@ class NormalCenterItems extends StatelessWidget {
                 backgroundColor: kGrey,
               ),
               ...List.generate(
-                5,
+                3,
                 (index) => Text(
                   '-',
                   style: TextStyle(
@@ -60,15 +60,14 @@ class NormalCenterItems extends StatelessWidget {
                       color: kBlack),
                 ),
               ),
+              stops != 0
+                  ? const RotatedBox(
+                      quarterTurns: 1,
+                      child: Icon(Icons.flight_rounded, size: 20, color: kBlue),
+                    )
+                  : kEmpty,
               ...List.generate(
-                  stops,
-                  (index) => const RotatedBox(
-                        quarterTurns: 1,
-                        child:
-                            Icon(Icons.flight_rounded, size: 20, color: kBlue),
-                      )),
-              ...List.generate(
-                5,
+                3,
                 (index) => Text(
                   '-',
                   style: TextStyle(
@@ -86,7 +85,7 @@ class NormalCenterItems extends StatelessWidget {
           ),
         ),
         Text(
-          stops == 0 ? 'Non Stop' : '$stops Stop',
+          stops == 0 ? 'Non Stop' : '$stops Stops',
           style: textThinStyle1.copyWith(fontSize: 9.sp),
         ),
         number != null

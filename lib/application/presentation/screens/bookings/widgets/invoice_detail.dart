@@ -14,7 +14,6 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_invoice/flight_invoice.dart';
-import '../../home/widgets/curent_offers_section.dart';
 
 class ScreenInvoiceDetail extends StatelessWidget {
   const ScreenInvoiceDetail({super.key});
@@ -28,7 +27,7 @@ class ScreenInvoiceDetail extends StatelessWidget {
         () => ListView(
           padding: const EdgeInsets.all(0),
           children: [
-            const DetailAppBar(heading: 'Ticket Booking '),
+            const DetailAppBar(heading: 'Ticket Booking'),
             (raiceController.invoiceDownLoadLoading.value)
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -69,8 +68,6 @@ class ScreenInvoiceDetail extends StatelessWidget {
                           return FlightInvoiceCard(
                             retrieveSingleBookingresponceModel: controller
                                 .retrieveSingleBookingresponceModel.value,
-                            flightTicketInvoiceEnum:
-                                FlightTicketInvoiceEnum.cancel,
                           );
                         }),
                         kHeight10,
@@ -161,9 +158,9 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                   return kEmpty;
                                 }
                               }),
-                        bookingController.selectedBookingTab.value == 2
-                            ? kEmpty
-                            : const CurrentOffersSection(),
+                        // bookingController.selectedBookingTab.value == 2
+                        //     ? kEmpty
+                        //     : const CurrentOffersSection(),
                         kHeight15,
                       ],
                     ),

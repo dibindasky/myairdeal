@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
@@ -13,12 +12,7 @@ import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/wi
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
 
 class FlightInvoiceCard extends StatelessWidget {
-  final FlightTicketInvoiceEnum flightTicketInvoiceEnum;
-
-  const FlightInvoiceCard(
-      {super.key,
-      required this.flightTicketInvoiceEnum,
-      this.retrieveSingleBookingresponceModel});
+  const FlightInvoiceCard({super.key, this.retrieveSingleBookingresponceModel});
   final RetrieveSingleBookingresponceModel? retrieveSingleBookingresponceModel;
   @override
   Widget build(BuildContext context) {
@@ -90,83 +84,114 @@ class FlightInvoiceCard extends StatelessWidget {
                       (stopIndex) => Column(
                         children: [
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child: TicketColumn(
-                                  label: tripInfos?[index]
-                                          .sI?[stopIndex]
-                                          .da
-                                          ?.code ??
-                                      '',
-                                  value: tripInfos?[index]
-                                          .sI?[stopIndex]
-                                          .da
-                                          ?.city ??
-                                      '',
-                                  valueStyle: textThinStyle1,
-                                  subValue: tripInfos?[index]
-                                          .sI?[stopIndex]
-                                          .da
-                                          ?.name ??
-                                      '',
-                                  exit: tripInfos?[index]
-                                          .sI?[stopIndex]
-                                          .da
-                                          ?.terminal ??
-                                      '',
-                                  isBold: false,
-                                  flightCode: DateFormating.formatDateMonthYear(
-                                      tripInfos?[index].sI?[stopIndex].dt ??
-                                          ''),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TicketColumn(
+                                      value: tripInfos?[index]
+                                              .sI?[stopIndex]
+                                              .da
+                                              ?.code ??
+                                          '--',
+                                      label: tripInfos?[index]
+                                              .sI?[stopIndex]
+                                              .da
+                                              ?.city ??
+                                          '--',
+                                      valueStyle: textThinStyle1,
+                                      subValue: tripInfos?[index]
+                                              .sI?[stopIndex]
+                                              .da
+                                              ?.name ??
+                                          '--',
+                                      exit: tripInfos?[index]
+                                              .sI?[stopIndex]
+                                              .da
+                                              ?.terminal ??
+                                          '--',
+                                      isBold: false,
+                                      flightCode:
+                                          DateFormating.formatDateMonthYear(
+                                              tripInfos?[index]
+                                                      .sI?[stopIndex]
+                                                      .dt ??
+                                                  ''),
+                                    ),
+                                    const TicketColumn(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      subValue: 'Cabin class',
+                                      exit: 'Seat No',
+                                    )
+                                  ],
                                 ),
                               ),
-                              const SizedBox(width: 6),
+                              const SizedBox(width: 4),
                               TicketColumn(
                                 value:
                                     '${tripInfos?[index].sI?[stopIndex].fD?.aI?.code ?? ''}- ${tripInfos?[index].sI?[stopIndex].fD?.fN ?? ''}',
                                 lebelStyle:
                                     textThinStyle1.copyWith(fontSize: 10.sp),
-                                exit: '--',
+                                exit: '',
                                 subValue: '',
                                 label: '',
                                 flightCode: DateFormating.getDifferenceOfDates(
                                     tripInfos?[index].sI?[stopIndex].dt ?? '',
                                     tripInfos?[index].sI?[stopIndex].at ?? ''),
                                 valueStyle: textThinStyle1.copyWith(
-                                    fontSize: 10.sp, color: kGreyDark),
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600),
                                 isBold: false,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                               ),
-                              const SizedBox(width: 6),
+                              const SizedBox(width: 4),
                               Expanded(
-                                child: TicketColumn(
-                                  label: tripInfos?[index]
-                                          .sI?[stopIndex]
-                                          .aa
-                                          ?.code ??
-                                      '',
-                                  value: tripInfos?[index]
-                                          .sI?[stopIndex]
-                                          .aa
-                                          ?.city ??
-                                      '',
-                                  valueStyle: textThinStyle1,
-                                  subValue: tripInfos?[index]
-                                          .sI?[stopIndex]
-                                          .aa
-                                          ?.name ??
-                                      '',
-                                  exit: tripInfos?[index]
-                                          .sI?[stopIndex]
-                                          .aa
-                                          ?.terminal ??
-                                      '',
-                                  isBold: false,
-                                  flightCode: DateFormating.formatDateMonthYear(
-                                      tripInfos?[index].sI?[stopIndex].at ??
-                                          ''),
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    TicketColumn(
+                                      value: tripInfos?[index]
+                                              .sI?[stopIndex]
+                                              .aa
+                                              ?.code ??
+                                          '',
+                                      label: tripInfos?[index]
+                                              .sI?[stopIndex]
+                                              .aa
+                                              ?.city ??
+                                          '',
+                                      valueStyle: textThinStyle1,
+                                      subValue: tripInfos?[index]
+                                              .sI?[stopIndex]
+                                              .aa
+                                              ?.name ??
+                                          '',
+                                      exit: tripInfos?[index]
+                                              .sI?[stopIndex]
+                                              .aa
+                                              ?.terminal ??
+                                          '',
+                                      isBold: false,
+                                      flightCode:
+                                          DateFormating.formatDateMonthYear(
+                                              tripInfos?[index]
+                                                      .sI?[stopIndex]
+                                                      .at ??
+                                                  ''),
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                    ),
+                                    const TicketColumn(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      subValue: '--',
+                                      exit: '--',
+                                    )
+                                  ],
                                 ),
                               ),
                             ],
@@ -188,26 +213,49 @@ class FlightInvoiceCard extends StatelessWidget {
               child: Column(
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: TicketColumn(
-                          label: tripInfos?[index].sI?[0].da?.code ?? '',
-                          value: tripInfos?[index].sI?[0].da?.city ?? '',
-                          subValue: tripInfos?[index].sI?[0].da?.name ?? '',
-                          isBold: true,
-                          exit: tripInfos?[index].sI?[0].da?.terminal ?? '',
-                          flightCode: DateFormating.formatDateMonthYear(
-                            (tripInfos?[index].sI?[0].dt ?? ''),
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TicketColumn(
+                              value: tripInfos?[index].sI?[0].da?.code ?? '',
+                              valueStyle:
+                                  textThinStyle1.copyWith(fontSize: 13.sp),
+                              label: tripInfos?[index].sI?[0].da?.city ?? '',
+                              lebelStyle: textThinStyle1.copyWith(
+                                  fontSize: 13.sp, fontWeight: FontWeight.w700),
+                              subValue: tripInfos?[index].sI?[0].da?.name ?? '',
+                              isBold: true,
+                              exit:
+                                  tripInfos?[index].sI?[0].da?.terminal ?? '--',
+                              flightCode: DateFormating.formatDateMonthYear(
+                                (tripInfos?[index].sI?[0].dt ?? ''),
+                              ),
+                            ),
+                            (tripInfos?[index].sI?.length ?? 0) == 1
+                                ? TicketColumn(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    label: 'Cabin Class',
+                                    lebelStyle: textThinStyle1.copyWith(
+                                        fontSize: 11.sp, color: kGreyDark),
+                                    value: 'Seat No',
+                                    valueStyle: textThinStyle1.copyWith(
+                                        color: kGreyDark, fontSize: 10.sp),
+                                  )
+                                : kEmpty
+                          ],
                         ),
                       ),
                       NormalCenterItems(
-                        travelMinutes:
-                            (tripInfos?[index].sI?.length ?? 0) > 1 ? '' : '--',
-                        flightId: (tripInfos?[index].sI?.length ?? 0) > 1
+                        travelMinutes: (tripInfos?[index].sI?.length ?? 0) > 1
                             ? ''
-                            : '(${tripInfos?[index].sI?[0].fD?.aI?.code ?? ''}- ${tripInfos?[index].sI?[0].fD?.fN ?? ''})',
+                            : '${tripInfos?[index].sI?[0].fD?.aI?.code ?? ''}- ${tripInfos?[index].sI?[0].fD?.fN ?? ''}',
+                        flightId:
+                            (tripInfos?[index].sI?.length ?? 0) > 1 ? '' : '',
                         airline: tripInfos?[index].sI?[0].fD?.aI?.name ?? '',
                         haveImage: false,
                         stops: (tripInfos?[index].sI?.length ?? 0) - 1,
@@ -220,35 +268,61 @@ class FlightInvoiceCard extends StatelessWidget {
                         number: '',
                       ),
                       Expanded(
-                        child: TicketColumn(
-                          label: tripInfos?[index]
-                                  .sI?[((tripInfos[index].sI?.length ?? 1) - 1)]
-                                  .aa
-                                  ?.code ??
-                              '',
-                          value: tripInfos?[index]
-                                  .sI?[((tripInfos[index].sI?.length ?? 1) - 1)]
-                                  .aa
-                                  ?.city ??
-                              '',
-                          subValue: tripInfos?[index]
-                                  .sI?[((tripInfos[index].sI?.length ?? 1) - 1)]
-                                  .aa
-                                  ?.name ??
-                              '',
-                          exit: tripInfos?[index]
-                                  .sI?[(tripInfos[index].sI?.length ?? 1) - 1]
-                                  .aa
-                                  ?.terminal ??
-                              '',
-                          flightCode: DateFormating.formatDateMonthYear(
-                            (tripInfos?[index]
-                                    .sI?[(tripInfos[index].sI?.length ?? 1) - 1]
-                                    .at ??
-                                ''),
-                          ),
-                          isBold: true,
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            TicketColumn(
+                              value: tripInfos?[index]
+                                      .sI?[((tripInfos[index].sI?.length ?? 1) -
+                                          1)]
+                                      .aa
+                                      ?.code ??
+                                  '',
+                              valueStyle:
+                                  textThinStyle1.copyWith(fontSize: 13.sp),
+                              lebelStyle: textThinStyle1.copyWith(
+                                  fontSize: 13.sp, fontWeight: FontWeight.w700),
+                              label: tripInfos?[index]
+                                      .sI?[((tripInfos[index].sI?.length ?? 1) -
+                                          1)]
+                                      .aa
+                                      ?.city ??
+                                  '',
+                              subValue: tripInfos?[index]
+                                      .sI?[((tripInfos[index].sI?.length ?? 1) -
+                                          1)]
+                                      .aa
+                                      ?.name ??
+                                  '',
+                              exit: tripInfos?[index]
+                                      .sI?[(tripInfos[index].sI?.length ?? 1) -
+                                          1]
+                                      .aa
+                                      ?.terminal ??
+                                  '--',
+                              flightCode: DateFormating.formatDateMonthYear(
+                                (tripInfos?[index]
+                                        .sI?[
+                                            (tripInfos[index].sI?.length ?? 1) -
+                                                1]
+                                        .at ??
+                                    ''),
+                              ),
+                              isBold: true,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                            ),
+                            (tripInfos?[index].sI?.length ?? 1) == 1
+                                ? TicketColumn(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    label: '--',
+                                    lebelStyle: textThinStyle1.copyWith(
+                                        fontSize: 11.sp, color: kGreyDark),
+                                    value: '--',
+                                    valueStyle: textThinStyle1.copyWith(
+                                        color: kGreyDark, fontSize: 10.sp),
+                                  )
+                                : kEmpty
+                          ],
                         ),
                       ),
                     ],
@@ -299,3 +373,16 @@ class FlightInvoiceCard extends StatelessWidget {
     );
   }
 }
+//  (model?.sI?.length ?? 1) > 1
+//                                     ? kEmpty
+//                                     : TicketColumn(
+//                                         label: 'Departure',
+//                                         value: DateFormating.formatDate(
+//                                             model?.sI?[0].dt ?? ''),
+//                                         valueStyle: textThinStyle1.copyWith(
+//                                             overflow: TextOverflow.visible),
+//                                         subValue:
+//                                             model?.sI?[0].da?.terminal ?? '',
+//                                         exit: 'Cabin Class',
+//                                         flightCode: 'Seat No',
+//                                       ),

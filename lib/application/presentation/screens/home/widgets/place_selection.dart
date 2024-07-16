@@ -18,51 +18,60 @@ class OneWayAndRoundTrip extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
     return Obx(
-      () => Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Expanded(
-          child: TextIconButtonOutlinedCustom(
-            onTap: () {
-              controller.changeSelectedAirport(from: true, index: 0);
-              Get.find<HomeController>().changeSearch();
-            },
-            first: const Icon(
-              Icons.flight_takeoff_rounded,
-              color: kBluePrimary,
+      () => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: TextIconButtonOutlinedCustom(
+              onTap: () {
+                controller.changeSelectedAirport(from: true, index: 0);
+                Get.find<HomeController>().changeSearch();
+              },
+              borderColor: controller.airportSelected[0][0].city == null
+                  ? kRed.withOpacity(.6)
+                  : kGrey,
+              first: const Icon(
+                Icons.flight_takeoff_rounded,
+                color: kBluePrimary,
+              ),
+              spacer: kWidth10,
+              second: Expanded(
+                child: Text(controller.airportSelected[0][0].city ?? 'From',
+                    overflow: TextOverflow.ellipsis),
+              ),
+              texthead: 'From',
             ),
-            spacer: kWidth10,
-            second: Expanded(
-              child: Text(controller.airportSelected[0][0].city ?? 'From',
-                  overflow: TextOverflow.ellipsis),
-            ),
-            texthead: 'From',
           ),
-        ),
-        GestureDetector(
-            onTap: () {
-              // change from and to
-              controller.swapFromAndTo();
-            },
-            child:
-                const Icon(Icons.compare_arrows_outlined, color: kBluePrimary)),
-        Expanded(
-          child: TextIconButtonOutlinedCustom(
-            onTap: () {
-              controller.changeSelectedAirport(from: false, index: 0);
-              Get.find<HomeController>().changeSearch();
-            },
-            first: const Icon(
-              Icons.flight_land_rounded,
-              color: kBluePrimary,
+          GestureDetector(
+              onTap: () {
+                // change from and to
+                controller.swapFromAndTo();
+              },
+              child: const Icon(Icons.compare_arrows_outlined,
+                  color: kBluePrimary)),
+          Expanded(
+            child: TextIconButtonOutlinedCustom(
+              borderColor: controller.airportSelected[0][1].city == null
+                  ? kRed.withOpacity(.6)
+                  : kGrey,
+              onTap: () {
+                controller.changeSelectedAirport(from: false, index: 0);
+                Get.find<HomeController>().changeSearch();
+              },
+              first: const Icon(
+                Icons.flight_land_rounded,
+                color: kBluePrimary,
+              ),
+              spacer: kWidth10,
+              second: Expanded(
+                child: Text(controller.airportSelected[0][1].city ?? 'To',
+                    overflow: TextOverflow.ellipsis),
+              ),
+              texthead: 'To',
             ),
-            spacer: kWidth10,
-            second: Expanded(
-              child: Text(controller.airportSelected[0][1].city ?? 'To',
-                  overflow: TextOverflow.ellipsis),
-            ),
-            texthead: 'To',
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

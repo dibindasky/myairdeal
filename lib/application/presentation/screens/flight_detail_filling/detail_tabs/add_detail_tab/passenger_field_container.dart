@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
@@ -73,15 +74,20 @@ class _DetailContainerState extends State<DetailContainer> {
                       ),
                       kWidth10,
                       Expanded(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10.w, vertical: 2.w),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: kBlue),
-                              borderRadius: kRadius10),
-                          child: Text(
-                            'Select From history',
-                            style: textThinStyle1.copyWith(color: kBlue),
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.toNamed(Routes.savedPassengers);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 2.w),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: kBlue),
+                                borderRadius: kRadius10),
+                            child: Text(
+                              'Select From history',
+                              style: textThinStyle1.copyWith(color: kBlue),
+                            ),
                           ),
                         ),
                       ),
@@ -269,7 +275,7 @@ class _DetailContainerState extends State<DetailContainer> {
                 child: const Icon(Icons.close, color: kBluePrimary),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

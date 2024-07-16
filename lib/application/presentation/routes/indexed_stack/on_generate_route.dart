@@ -9,7 +9,6 @@ import 'package:myairdeal/application/presentation/screens/bookings/widgets/invo
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/flight_detail_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/review_detail.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_detail.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/flight_Sort_page.dart';
 import 'package:myairdeal/application/presentation/screens/home/home_screen.dart';
 import 'package:myairdeal/application/presentation/screens/seats/seats_selection.dart';
@@ -27,9 +26,7 @@ class RouteGenerator {
       case Routes.reviewFlightDetail:
         return MaterialPageRoute(
             builder: (ctx) => const ScreenReviewFlightDetails());
-      case Routes.travelerDetails:
-        return MaterialPageRoute(
-            builder: (ctx) => const ScreenTravelerDetails());
+
       case Routes.account:
         return MaterialPageRoute(builder: (ctx) => const ScreenAccountPage());
 
@@ -38,7 +35,7 @@ class RouteGenerator {
       case Routes.security:
         return MaterialPageRoute(builder: (ctx) => const ScreenSecurity());
       case Routes.bookings:
-        return MaterialPageRoute(builder: (ctx) => ScreenBookings());
+        return MaterialPageRoute(builder: (ctx) => const ScreenBookings());
       case Routes.invoice:
         return MaterialPageRoute(builder: (ctx) => const ScreenInvoiceDetail());
       case Routes.explore:

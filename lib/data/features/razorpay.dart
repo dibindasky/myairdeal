@@ -40,9 +40,8 @@ class RazorpayGateway {
         'email': email, // User's email address
         'contact': phone, // User's phone number
       },
-      "external": {
-        "wallets": ["paytm", "Gpay", "PhonePe", "Amazon Pay"],
-        "features": ["cashback", "rewards", "UPI integration", "bill payments"]
+      'external': {
+        'wallets': ['paytm']
       },
       'method': {
         'netbanking': true,

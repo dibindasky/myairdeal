@@ -13,6 +13,7 @@ class Routes {
   static const String homePage = '/home_page';
   static const String searchSortFlight = '/search_sort_flight';
   static const String profile = '/edit_profile';
+  static const String savedPassengers = '/saved_passengers';
   static const String bookings = '/bookings';
   static const String explore = '/explore';
   static const String invoice = '/invoice';

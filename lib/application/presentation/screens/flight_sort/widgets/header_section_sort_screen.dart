@@ -73,7 +73,9 @@ class SortScreenHeaderSection extends StatelessWidget {
                                             .selectedTripListIndex.value][0]
                                         .city ??
                                     '',
-                                style: textHeadStyle1.copyWith(color: kWhite),
+                                style: textHeadStyle1.copyWith(
+                                    color: kWhite,
+                                    overflow: TextOverflow.ellipsis),
                               ),
                               Text(
                                 controller
@@ -81,7 +83,10 @@ class SortScreenHeaderSection extends StatelessWidget {
                                             .selectedTripListIndex.value][0]
                                         .name ??
                                     '',
-                                style: textThinStyle1.copyWith(color: kWhite),
+                                maxLines: 2,
+                                style: textThinStyle1.copyWith(
+                                  color: kWhite,
+                                ),
                               ),
                               // Text(
                               //   controller
@@ -97,7 +102,8 @@ class SortScreenHeaderSection extends StatelessWidget {
                               // ),
                             ],
                           ),
-                        ),kWidth5,
+                        ),
+                        kWidth5,
                         const Column(
                           children: [
                             RotatedBox(
@@ -124,7 +130,8 @@ class SortScreenHeaderSection extends StatelessWidget {
                             //   style: textThinStyle1.copyWith(color: kWhite),
                             // )
                           ],
-                        ),kWidth5,
+                        ),
+                        kWidth5,
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -136,7 +143,9 @@ class SortScreenHeaderSection extends StatelessWidget {
                                             .selectedTripListIndex.value][1]
                                         .city ??
                                     '',
-                                style: textHeadStyle1.copyWith(color: kWhite),
+                                style: textHeadStyle1.copyWith(
+                                    color: kWhite,
+                                    overflow: TextOverflow.ellipsis),
                               ),
                               Text(
                                 controller
@@ -144,8 +153,11 @@ class SortScreenHeaderSection extends StatelessWidget {
                                             .selectedTripListIndex.value][1]
                                         .name ??
                                     '',
+                                maxLines: 2,
                                 textAlign: TextAlign.end,
-                                style: textThinStyle1.copyWith(color: kWhite),
+                                style: textThinStyle1.copyWith(
+                                    color: kWhite,
+                                    overflow: TextOverflow.ellipsis),
                               ),
                               // Text(
                               //   controller

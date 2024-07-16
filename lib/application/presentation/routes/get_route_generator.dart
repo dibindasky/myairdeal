@@ -14,7 +14,7 @@ import 'package:myairdeal/application/presentation/screens/bookings/widgets/invo
 import 'package:myairdeal/application/presentation/screens/bookings/ticket_cancel/ticket_cancelation.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/flight_detail_screen.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_detail.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_widgets/saved_detail_builder.dart';
 import 'package:myairdeal/application/presentation/screens/navbar/navbar.dart';
 import 'package:myairdeal/application/presentation/screens/notification/notification_screen.dart';
 import 'package:myairdeal/application/presentation/screens/onboarding/onboarding_screen.dart';
@@ -80,7 +80,6 @@ class GetXRouterConfig {
       bindings: [TicketCancellationBinding()],
       page: () => const ScreenTicetCanceallation(),
     ),
-
     GetPage(
       bindings: [
         AuthBinding(),
@@ -125,14 +124,14 @@ class GetXRouterConfig {
       name: Routes.notificationSetup,
       page: () => const ScreenNotificationSetup(),
     ),
-    // GetPage(
-    //   name: Routes.payment,
-    //   page: () => const ScreenPaymentMethods(),
-    // ),
+    GetPage(
+      name: Routes.savedPassengers,
+      page: () => const ScreenSavedPassengers(),
+    ),
     GetPage(
       binding: BookingBinding(),
       name: Routes.bookings,
-      page: () => ScreenBookings(),
+      page: () => const ScreenBookings(),
     ),
     GetPage(
       binding: ExploreBinding(),
@@ -148,11 +147,6 @@ class GetXRouterConfig {
       binding: SeatBinding(),
       name: Routes.seatSelection,
       page: () => const ScreenSeatSelection(),
-    ),
-    GetPage(
-      binding: TravellerBinding(),
-      name: Routes.travelerDetails,
-      page: () => const ScreenTravelerDetails(),
     ),
     GetPage(
       bindings: [PaymentBinding(), RaiceTicketBinding()],

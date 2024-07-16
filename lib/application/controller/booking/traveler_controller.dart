@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/data/service/passengers/passengers.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
+import 'package:myairdeal/domain/models/passengers/get_all_passengers/get_all_passengers.dart';
+import 'package:myairdeal/domain/repository/service/passengers_repo.dart';
 
 class TravellerController extends GetxController {
+  final PassengersRepo _passengersRepo = PassengersService();
+
   /// Gender type [genderType] 0- Mr, 1- Mrs, 2- Ms
   RxInt genderType = 0.obs;
   RxList genderList = ['Mr', 'Mrs', 'Ms'].obs;
@@ -11,6 +16,9 @@ class TravellerController extends GetxController {
   RxInt selectedSavedDetailData = 0.obs;
   String travelerTab = 'Add Details';
   List<String> detailList = [' Itinerary', 'Add Details', 'Review', 'Payments'];
+  Rx<GetAllPassengers> allPassengers = GetAllPassengers().obs;
+  RxBool isLoading = false.obs;
+  RxBool hasError = false.obs;
 
   List<String> addDetailsSubList = [
     'Passenger details',
@@ -119,5 +127,24 @@ class TravellerController extends GetxController {
   void changesAvedDetail(int index) {
     selectedSavedDetailData.value = index;
     update();
+  }
+
+  // Get All passengers
+  void getAllPassengers(bool isLoad) async {
+    if (allPassengers.value.passengers != null && !isLoad) {
+      return;
+    }
+    isLoading.value = true;
+    final data = await _passengersRepo.getPassengers();
+    data.fold(
+      (l) {
+        isLoading.value = false;
+      },
+      (r) {
+        isLoading.value = false;
+        allPassengers.value = r;
+        update();
+      },
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/gst_info.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
 
 class TravellerController extends GetxController {
@@ -35,6 +36,9 @@ class TravellerController extends GetxController {
   RxInt selectedAddDetailsStep = 0.obs;
   int totalSubStepLength = 4;
 
+  // gst deatils of booking
+  Rx<GstInfo> gstInfo = GstInfo().obs;
+
   // total number of passengers
   RxInt passengerLength = 1.obs;
 
@@ -52,6 +56,7 @@ class TravellerController extends GetxController {
     update();
   }
 
+  // update the passenger count from other controller for checking
   void updatePassengersNumber(int number) {
     print('passenger count number is $number');
     passengerLength.value = number;
@@ -119,5 +124,20 @@ class TravellerController extends GetxController {
   void changesAvedDetail(int index) {
     selectedSavedDetailData.value = index;
     update();
+  }
+
+  // add gst details to the variable
+  void addGstDetails() {
+    gstInfo.value = gstInfo.value.copyWith(
+      address:
+          gstAddressController.text == '' ? null : gstAddressController.text,
+      email: gstEmailController.text == '' ? null : gstEmailController.text,
+      gstNumber:
+          gstNumberController.text == '' ? null : gstNumberController.text,
+      mobile: gstPhoneController.text == '' ? null : gstPhoneController.text,
+      registeredName: gstCompanyNameController.text == ''
+          ? null
+          : gstAddressController.text,
+    );
   }
 }

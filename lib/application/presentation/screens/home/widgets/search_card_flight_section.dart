@@ -151,13 +151,21 @@ class FlightSearchCardHome extends StatelessWidget {
                 );
               }),
               Obx(() {
-                return AnimatedContainer(
-                  height: controller.passengerFareType.value != 0 ? 15.h : 0,
-                  duration: const Duration(milliseconds: 300),
-                  child: FittedBox(
-                    child: Text(
-                      'Can\'t add Child or Infant with special fare',
-                      style: textThinStyle1.copyWith(color: kGreyDark),
+                return Align(
+                  alignment: Alignment.topLeft,
+                  child: AnimatedContainer(
+                    height: controller.passengerFareType.value != 0 ? 15.h : 0,
+                    duration: const Duration(milliseconds: 300),
+                    child: FittedBox(
+                      child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text('* ',style: TextStyle(color: kRed),),
+                          Text(
+                            'Can\'t add Child or Infant with special fare',
+                            style: textThinStyle1.copyWith(color: kGreyDark),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

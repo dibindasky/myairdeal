@@ -37,6 +37,7 @@ class PersonClassBottomSheet extends StatelessWidget {
                         Column(
                           children: [
                             BuildCounterTile(
+                                active: true,
                                 title: 'Adult',
                                 subTitle: '12 yrs & above',
                                 bottomText: 'On the day of travel',
@@ -49,6 +50,7 @@ class PersonClassBottomSheet extends StatelessWidget {
                                 value: controller.adultCount.value.toString()),
                             kHeight20,
                             BuildCounterTile(
+                                active: controller.passengerFareType.value == 0,
                                 title: 'Children',
                                 subTitle: '2 - 12 yrs',
                                 bottomText: 'On the day of travel',
@@ -62,6 +64,7 @@ class PersonClassBottomSheet extends StatelessWidget {
                                     controller.childrenCount.value.toString()),
                             kHeight20,
                             BuildCounterTile(
+                              active: controller.passengerFareType.value == 0,
                               title: 'Infant',
                               subTitle: 'Under 2 yrs',
                               bottomText: 'On the day of travel',
@@ -157,6 +160,7 @@ class BuildCounterTile extends StatelessWidget {
     required this.decrement,
     required this.increment,
     required this.value,
+    required this.active,
   });
 
   final String title;
@@ -165,6 +169,7 @@ class BuildCounterTile extends StatelessWidget {
   final String value;
   final VoidCallback decrement;
   final VoidCallback increment;
+  final bool active;
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +205,9 @@ class BuildCounterTile extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-              color: kWhite, boxShadow: boxShadow2, borderRadius: kRadius10),
+              color: active ? kWhite : kGrey,
+              boxShadow: active ? boxShadow2 : null,
+              borderRadius: kRadius10),
           child: Row(
             children: [
               IconButton(

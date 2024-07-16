@@ -162,7 +162,12 @@ class _DetailContainerState extends State<DetailContainer> {
                                 ? const Duration(days: 365 * 12)
                                 : const Duration(days: 365 * 2)),
                         lastDate: date.subtract(widget.travellerType == 'ADULT'
-                            ? const Duration(days: 365 * 12)
+                            ? Get.find<FlightSortController>()
+                                        .passengerFareType
+                                        .value ==
+                                    2
+                                ? const Duration(days: 365 * 60)
+                                : const Duration(days: 365 * 12)
                             : widget.travellerType == 'CHILD'
                                 ? const Duration(days: 365 * 2)
                                 : const Duration(days: 365 * 0)),

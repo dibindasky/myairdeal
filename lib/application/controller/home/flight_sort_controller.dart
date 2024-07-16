@@ -177,21 +177,31 @@ class FlightSortController extends GetxController {
     update();
   }
 
-  void searchTimer() {
+  // end search timer
+  void stopSearchTimer() {
     timer.value.cancel();
-    remainingTime.value = 0;
+  }
+
+  // start search timer
+  void startSearchTimer() {
+    timer.value.cancel();
+    remainingTime.value = (15 * 60);
     timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (remainingTime.value == (15 * 60)) {
+      if (remainingTime.value == (0)) {
         timer.cancel();
         Get.back(id: 1);
-        Get.dialog(AlertDialog(
-          backgroundColor: kRedLight,
-          title: const Text('Session expired'),
-          content: const Text(
-              'Your session time has been expired. Search again to get result'),
-        ));
+        if (Get.currentRoute == Routes.bottomBar) {
+          Get.dialog(
+            AlertDialog(
+              backgroundColor: kRedLight,
+              title: const Text('Session expired'),
+              content: const Text(
+                  'Your session time has been expired. Search again to get result'),
+            ),
+          );
+        }
       } else {
-        remainingTime.value++;
+        remainingTime.value--;
       }
     });
   }
@@ -347,32 +357,38 @@ class FlightSortController extends GetxController {
             searchListMain.add(RxList.from(r.searchResult?.tripInfos?.returns ??
                 <SearchAirlineInformation>[]));
           }
-          if (r.searchResult?.tripInfos?.multicity1 != null) {
+          if ((tripType.value == 2 && multiCityCount.value >= 1) ||
+              r.searchResult?.tripInfos?.multicity1 != null) {
             searchListMain.add(RxList.from(
                 r.searchResult?.tripInfos?.multicity1 ??
                     <SearchAirlineInformation>[]));
           }
-          if (r.searchResult?.tripInfos?.multicity2 != null) {
+          if ((tripType.value == 2 && multiCityCount.value >= 2) ||
+              r.searchResult?.tripInfos?.multicity2 != null) {
             searchListMain.add(RxList.from(
                 r.searchResult?.tripInfos?.multicity2 ??
                     <SearchAirlineInformation>[]));
           }
-          if (r.searchResult?.tripInfos?.multicity3 != null) {
+          if ((tripType.value == 2 && multiCityCount.value >= 3) ||
+              r.searchResult?.tripInfos?.multicity3 != null) {
             searchListMain.add(RxList.from(
                 r.searchResult?.tripInfos?.multicity3 ??
                     <SearchAirlineInformation>[]));
           }
-          if (r.searchResult?.tripInfos?.multicity4 != null) {
+          if ((tripType.value == 2 && multiCityCount.value >= 4) ||
+              r.searchResult?.tripInfos?.multicity4 != null) {
             searchListMain.add(RxList.from(
                 r.searchResult?.tripInfos?.multicity4 ??
                     <SearchAirlineInformation>[]));
           }
-          if (r.searchResult?.tripInfos?.multicity5 != null) {
+          if ((tripType.value == 2 && multiCityCount.value >= 5) ||
+              r.searchResult?.tripInfos?.multicity5 != null) {
             searchListMain.add(RxList.from(
                 r.searchResult?.tripInfos?.multicity5 ??
                     <SearchAirlineInformation>[]));
           }
-          if (r.searchResult?.tripInfos?.multicity6 != null) {
+          if ((tripType.value == 2 && multiCityCount.value >= 6) ||
+              r.searchResult?.tripInfos?.multicity6 != null) {
             searchListMain.add(RxList.from(
                 r.searchResult?.tripInfos?.multicity6 ??
                     <SearchAirlineInformation>[]));
@@ -381,6 +397,7 @@ class FlightSortController extends GetxController {
             searchList.add(RxList.from(e));
           }
         }
+        startSearchTimer();
       } else if (r.errors != null) {
         Get.back(id: 1);
         Get.snackbar(
@@ -453,8 +470,8 @@ class FlightSortController extends GetxController {
         if (item.sI!.length > 1) {
           int minutes = DateFormating.getTotalDifferenceInMinutes(
               item.sI![0].dt ?? '', item.sI![item.sI!.length - 1].at ?? '');
-          if (!sortingVariables[i]![2].contains(minutes)) {
-            sortingVariables[i]![2].add(minutes);
+          if (!sortingVariables[i]![2].contains(minutes.toDouble())) {
+            sortingVariables[i]![2].add(minutes.toDouble());
           }
         }
       }
@@ -532,9 +549,13 @@ class FlightSortController extends GetxController {
     validateSearchForm();
   }
 
+  // sort rebuild helper variable
+  RxBool sortingRebuild = false.obs;
+
   // sort the data according to the selected sorting variables
   void sortAirlineList() {
     print('SORTING...');
+    sortingRebuild.value = true;
     List<SearchAirlineInformation> sort = [];
     // sort for airline
     if (sortingVariablesSelected[selectedTripListIndex.value]![0].isEmpty ||
@@ -572,7 +593,11 @@ class FlightSortController extends GetxController {
       }
     }
     searchList[selectedTripListIndex.value].value = sort.obs;
+    update();
     getTotalFare();
+    Timer(const Duration(milliseconds: 1), () {
+      sortingRebuild.value = false;
+    });
   }
 
   // button for choosing diferent airlines and on the last index need to call review page
@@ -743,39 +768,44 @@ class FlightSortController extends GetxController {
   }
 
   // clear all filters
+  // 0 -> airlines
+  // 1 -> stops
+  // 2 -> duration
   void clearFilters() {
-    sortingVariablesSelected[selectedTripListIndex.value]![0].clear();
-    sortingVariablesSelected[selectedTripListIndex.value]![1].clear();
+    sortingVariablesSelected[selectedTripListIndex.value]![0] = [].obs;
+    sortingVariablesSelected[selectedTripListIndex.value]![1] = [].obs;
     sortingVariablesSelected[selectedTripListIndex.value]![2] =
-        sortingVariablesSelected[selectedTripListIndex.value]![2].last ?? 1;
+        [sortingVariables[selectedTripListIndex.value]![2].last ?? 1.0].obs;
     durationSlider.value =
-        sortingVariablesSelected[selectedTripListIndex.value]![2].last ?? 1;
+        (sortingVariables[selectedTripListIndex.value]![2].last ?? 1.0);
+    update();
     sortAirlineList();
   }
 
   // change the duration of the slider for sorting, need to check the least time while changing
   void changeDurationSlider(double value, [bool reset = false]) {
-    print(sortingVariables[0]?[2]);
-    if (sortingVariablesSelected[selectedTripListIndex.value]![1].isNotEmpty &&
-        !Get.isSnackbarOpen) {
-      Get.rawSnackbar(
-          backgroundColor: kGreyDark,
-          // duration: const Duration(milliseconds: 300),
-          forwardAnimationCurve: Curves.bounceIn,
-          margin: EdgeInsets.only(bottom: 20.h),
-          messageText: Text(
-            'Try differnt combination filter',
-            style: textStyle1.copyWith(color: kWhite),
-          ));
-      durationSlider.value = double.parse(
-          sortingVariables[selectedTripListIndex.value]![2].last ?? 1);
+    if (sortingVariablesSelected[selectedTripListIndex.value]![1].isNotEmpty) {
+      if (!Get.isSnackbarOpen) {
+        Get.rawSnackbar(
+            backgroundColor: kGreyDark,
+            // duration: const Duration(milliseconds: 300),
+            forwardAnimationCurve: Curves.bounceIn,
+            margin: EdgeInsets.only(bottom: 20.h),
+            messageText: Text(
+              'Try differnt combination filter',
+              style: textStyle1.copyWith(color: kWhite),
+            ));
+      }
+      durationSlider.value =
+          sortingVariables[selectedTripListIndex.value]![2].last ?? 1.0;
       return;
     }
     if (reset) {
-      sortingVariablesSelected[selectedTripListIndex.value]![2] =
-          <dynamic>[1.0.obs].obs;
-      durationSlider.value = double.parse(
-          sortingVariables[selectedTripListIndex.value]![2].last ?? 1);
+      sortingVariablesSelected[selectedTripListIndex.value]![2] = <dynamic>[
+        sortingVariables[selectedTripListIndex.value]![2].last ?? 1.0
+      ].obs;
+      durationSlider.value =
+          sortingVariables[selectedTripListIndex.value]![2].last ?? 1.0;
     } else if (sortingVariables[selectedTripListIndex.value]![2].first <=
         sortingVariables[selectedTripListIndex.value]![2].last * value) {
       sortingVariablesSelected[selectedTripListIndex.value]![2] =

@@ -54,8 +54,16 @@ class ScreenFlightTicketSort extends StatelessWidget {
                   ],
                 ),
               ),
-              const SortingChipsSection(),
-              const TicketsListSorted(),
+              controller.sortingRebuild.value
+                  ? kEmpty
+                  : const SortingChipsSection(),
+              controller.sortingRebuild.value
+                  ? Container(
+                      margin: EdgeInsets.only(top: 100.h),
+                      child: const Center(
+                          child: CircularProgressIndicator(
+                              color: kBluePrimary)))
+                  : const TicketsListSorted(),
               kHeight20
             ],
           ),

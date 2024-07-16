@@ -114,7 +114,9 @@ class BookingController extends GetxController {
       Get.find<FlightSortController>().clearDataAfterBooking();
     });
     bookingCompleteLoading.value = false;
-    Get.back(id: 1);
+    if (Get.find<FlightSortController>().remainingTime.value != 0) {
+      Get.back(id: 1);
+    }
     Get.until((route) => Get.currentRoute == Routes.bottomBar);
     if (bookingCompleteSuccess.value) {
       Get.toNamed(Routes.paymentSucess);

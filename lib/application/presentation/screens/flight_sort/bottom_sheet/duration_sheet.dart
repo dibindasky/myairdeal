@@ -63,12 +63,11 @@ class _DurationBottomSheetState extends State<DurationBottomSheet> {
             ),
             kHeight5,
             Slider(
-                max: double.parse((controller
+                max:controller
                             .sortingVariables[
                                 controller.selectedTripListIndex.value]![2]
                             .last ??
-                        1.0)
-                    .toString()),
+                        1.0,
                 min: 0,
                 // min: double.parse((controller
                 //             .sortingVariables[
@@ -98,7 +97,13 @@ class _DurationBottomSheetState extends State<DurationBottomSheet> {
                     isBorder: true,
                     text: 'Reset',
                     onTap: () {
-                      controller.changeDurationSlider(1, true);
+                      print((controller
+                              .sortingVariables[
+                                  controller.selectedTripListIndex.value]![2]
+                              .last ??
+                          1).runtimeType);
+                      controller.changeDurationSlider(1.0,
+                          true);
                       Navigator.of(context).pop();
                     },
                     color: kWhite,

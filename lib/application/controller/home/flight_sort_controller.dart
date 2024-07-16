@@ -145,6 +145,10 @@ class FlightSortController extends GetxController {
   // list responsible for search of city and airport in the search airport page
   RxList<CitySearchModel> searchCityList = <CitySearchModel>[].obs;
 
+  // timer for search expiary
+  Rx<Timer> timer = Timer(const Duration(seconds: 1), () {}).obs;
+  RxInt remainingTime = 0.obs;
+
   List<String> departureTimes = [
     '00:00 to 05:59',
     '06:00 to 11:59',
@@ -164,13 +168,33 @@ class FlightSortController extends GetxController {
   List<String> stopTypes = ['Direct', 'Max 1 Stop', 'Max 2 Stops'];
   List<String> tripTypes = ['One-way', 'Round-trip', 'Multi-city'];
 
+  // for rebuilding the homepage search form
+  RxBool clearingBool = false.obs;
+
 // change the category in the home section [flights, air ambulance, chatered flight, helicopter]
   void changeCategory(int index) {
     selectedCategoryType.value = index;
     update();
   }
 
-  RxBool clearingBool = false.obs;
+  void searchTimer() {
+    timer.value.cancel();
+    timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (remainingTime.value == 0) {
+        timer.cancel();
+        Get.back(id: 1);
+        Get.until((route) => Get.currentRoute == Routes.bottomBar);
+        Get.dialog(AlertDialog(
+          backgroundColor: kRedLight,
+          title: const Text('Session expired'),
+          content: const Text(
+              'Your session time has been expired. Search again to get result'),
+        ));
+      } else {
+        remainingTime.value--;
+      }
+    });
+  }
 
   // clear all the information after booking not to affect the next booking
   void clearDataAfterBooking() {
@@ -307,8 +331,6 @@ class FlightSortController extends GetxController {
           backgroundColor: kRed, colorText: kWhite);
     }, (r) {
       if (r.errors == null) {
-        print(
-            'available onward length => ${r.searchResult?.tripInfos?.onward?.length ?? 0}');
         searchListMain = [];
         searchList.value = [];
         if (r.searchResult?.tripInfos?.combo != null) {

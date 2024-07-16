@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
@@ -78,9 +77,6 @@ class BookingController extends GetxController {
           content: const Text(
               'Your session time has been expired. You have to complete booking before the timer ends.'),
         ));
-        // Get.snackbar('Session has been expired',
-        //     'Your session time has been expired you have to complete booking before the timer ends',
-        //     backgroundColor: kRed, colorText: kWhite);
       } else {
         remainingTime.value--;
       }

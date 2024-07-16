@@ -19,21 +19,21 @@ class _InsurenceTabState extends State<InsurenceTab> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<TravellerController>();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        kHeight10,
-        // const TravelInsurenceContainer(),
-       // traveller contact information
-        Container(
-          decoration: BoxDecoration(
-            color: kBlueLightShade,
-            boxShadow: boxShadow1,
-            borderRadius: kRadius15,
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 10.w),
-          child: Form(
-            key: controller.formKey,
+    return Form(
+      key: controller.formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          kHeight10,
+          // const TravelInsurenceContainer(),
+          // traveller contact information
+          Container(
+            decoration: BoxDecoration(
+              color: kBlueLightShade,
+              boxShadow: boxShadow1,
+              borderRadius: kRadius15,
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 10.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -73,106 +73,105 @@ class _InsurenceTabState extends State<InsurenceTab> {
               ],
             ),
           ),
-        ),
-        kHeight20,
-        // gst details
-        Container(
-          decoration: BoxDecoration(
-            color: kBlueLightShade,
-            boxShadow: boxShadow1,
-            borderRadius: kRadius15,
+          kHeight20,
+          // gst details
+          Container(
+            decoration: BoxDecoration(
+              color: kBlueLightShade,
+              boxShadow: boxShadow1,
+              borderRadius: kRadius15,
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 10.w),
+            child: Column(
+              children: [
+                Align(
+                    child: Text('GST Number for Business Travel (Optional)',
+                        style: textStyle1)),
+                kHeight10,
+                CustomTextField(
+                  controller: controller.gstNumberController,
+                  keyboardType: TextInputType.text,
+                  validate: Validate.noneOrGst,
+                  isBorder: true,
+                  borderRadius: 14,
+                  maxLength: 15,
+                  textCapitalization: TextCapitalization.characters,
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(width: .3),
+                      borderRadius: kRadius15),
+                  onTapOutside: () => FocusScope.of(context).unfocus(),
+                  hintText: 'Registration Number',
+                  fillColor: kWhite,
+                ),
+                CustomTextField(
+                  controller: controller.gstCompanyNameController,
+                  validate: Validate.noneOrNotNull,
+                  isBorder: true,
+                  borderRadius: 14,
+                  textCapitalization: TextCapitalization.characters,
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(width: .3),
+                      borderRadius: kRadius15),
+                  onTapOutside: () => FocusScope.of(context).unfocus(),
+                  hintText: 'Registered Company Name',
+                  fillColor: kWhite,
+                ),
+                CustomTextField(
+                  controller: controller.gstEmailController,
+                  validate: Validate.noneOrEmail,
+                  keyboardType: TextInputType.emailAddress,
+                  isBorder: true,
+                  borderRadius: 14,
+                  textCapitalization: TextCapitalization.none,
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(width: .3),
+                      borderRadius: kRadius15),
+                  onTapOutside: () => FocusScope.of(context).unfocus(),
+                  hintText: 'Registered Email',
+                  fillColor: kWhite,
+                ),
+                CustomTextField(
+                  controller: controller.gstPhoneController,
+                  validate: Validate.noneOrPhone,
+                  keyboardType: TextInputType.number,
+                  isBorder: true,
+                  borderRadius: 14,
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(width: .3),
+                      borderRadius: kRadius15),
+                  onTapOutside: () => FocusScope.of(context).unfocus(),
+                  hintText: 'Registered Phone',
+                  fillColor: kWhite,
+                ),
+                CustomTextField(
+                  controller: controller.gstAddressController,
+                  keyboardType: TextInputType.emailAddress,
+                  validate: Validate.noneOrNotNull,
+                  isBorder: true,
+                  borderRadius: 14,
+                  textCapitalization: TextCapitalization.words,
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(width: .3),
+                      borderRadius: kRadius15),
+                  onTapOutside: () => FocusScope.of(context).unfocus(),
+                  hintText: 'Registered Address',
+                  fillColor: kWhite,
+                ),
+              ],
+            ),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 10.w),
-          child: Column(
-            children: [
-              Align(
-                  child: Text('GST Number for Business Travel (Optional)',
-                      style: textStyle1)),
-              kHeight10,
-              CustomTextField(
-                controller: controller.gstNumberController,
-                keyboardType: TextInputType.text,
-                isBorder: true,
-                borderRadius: 14,
-                textCapitalization: TextCapitalization.characters,
-                enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(width: .3),
-                    borderRadius: kRadius15),
-                onTapOutside: () => FocusScope.of(context).unfocus(),
-                hintText: 'Registration Number',
-                fillColor: kWhite,
-              ),
-              CustomTextField(
-                controller: controller.gstCompanyNameController,
-                keyboardType: TextInputType.emailAddress,
-                isBorder: true,
-                borderRadius: 14,
-                textCapitalization: TextCapitalization.characters,
-                enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(width: .3),
-                    borderRadius: kRadius15),
-                onTapOutside: () => FocusScope.of(context).unfocus(),
-                hintText: 'Registered Company Name',
-                fillColor: kWhite,
-              ),
-              CustomTextField(
-                controller: controller.gstEmailController,
-                validate: Validate.email,
-                keyboardType: TextInputType.emailAddress,
-                isBorder: true,
-                borderRadius: 14,
-                textCapitalization: TextCapitalization.none,
-                enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(width: .3),
-                    borderRadius: kRadius15),
-                onTapOutside: () => FocusScope.of(context).unfocus(),
-                hintText: 'Registered Email',
-                fillColor: kWhite,
-              ),
-              CustomTextField(
-                controller: controller.gstPhoneController,
-                validate: Validate.phone,
-                keyboardType: TextInputType.emailAddress,
-                isBorder: true,
-                borderRadius: 14,
-                enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(width: .3),
-                    borderRadius: kRadius15),
-                onTapOutside: () => FocusScope.of(context).unfocus(),
-                hintText: 'Registered Phone',
-                fillColor: kWhite,
-              ),
-              CustomTextField(
-                controller: controller.gstAddressController,
-                keyboardType: TextInputType.emailAddress,
-                isBorder: true,
-                borderRadius: 14,
-                textCapitalization: TextCapitalization.words,
-                enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(width: .3),
-                    borderRadius: kRadius15),
-                onTapOutside: () => FocusScope.of(context).unfocus(),
-                hintText: 'Registered Address',
-                fillColor: kWhite,
-              ),
-            ],
+          kHeight30,
+          BottomButton(
+            onTap: () {
+              if (controller.formKey.currentState!.validate()) {
+                controller.addGstDetails();
+                controller.changeDetailEnterTab(2);
+              }
+            },
           ),
-        ),
-        kHeight30,
-        BottomButton(
-          onTap: () {
-            if (controller.formKey.currentState!.validate()) {
-              Get.find<TravellerController>().changeDetailEnterTab(2);
-            }
-            // showModalBottomSheet(
-            //   enableDrag: true,
-            //   context: context,
-            //   builder: (context) => const ConfrimBottomSheet(),
-            // );
-          },
-        ),
-        kHeight15
-      ],
+          kHeight15
+        ],
+      ),
     );
   }
 }

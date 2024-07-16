@@ -149,6 +149,30 @@ class _CustomTextFieldState extends State<CustomTextField> {
         } else if (Validate.rePassword == widget.validate &&
             widget.password!.text.trim() != value) {
           return 'Password must be same';
+        } else if (Validate.noneOrGst == widget.validate) {
+          if (value == '') {
+            return null;
+          } else if (!isValidGst(value!)) {
+            return 'Enter valid gst number';
+          }
+        } else if (Validate.noneOrNotNull == widget.validate) {
+          if (value == '') {
+            return null;
+          } else if (value!.length < 3) {
+            return 'Enter valid ${widget.hintText}';
+          }
+        } else if (Validate.noneOrEmail == widget.validate) {
+          if (value == '') {
+            return null;
+          } else if (!isValidEmail(value!)) {
+            return 'Enter valid email';
+          }
+        } else if (Validate.noneOrPhone == widget.validate) {
+          if (value == '') {
+            return null;
+          } else if (!isValidPhoneNumber(value!)) {
+            return 'Enter valid phone';
+          }
         }
         return null;
       },

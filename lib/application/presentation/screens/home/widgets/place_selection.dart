@@ -91,7 +91,7 @@ class MultiCitySelection extends StatelessWidget {
                     },
                     borderColor:
                         controller.airportSelected[index][0].city == null
-                            ? kBlueLight
+                            ? kRed.withOpacity(.6)
                             : kGrey,
                     mainAxisAlignment: MainAxisAlignment.center,
                     first: kEmpty,
@@ -124,7 +124,7 @@ class MultiCitySelection extends StatelessWidget {
                     texthead: 'To',
                     borderColor:
                         controller.airportSelected[index][1].city == null
-                            ? kBlueLight
+                            ? kRed.withOpacity(.6)
                             : kGrey,
                   ),
                 ),
@@ -133,7 +133,7 @@ class MultiCitySelection extends StatelessWidget {
                   child: TextIconButtonOutlinedCustom(
                     borderColor:
                         controller.multiCityDepartureDate[index] == null
-                            ? kBlueLight
+                            ? kRed.withOpacity(.6)
                             : kGrey,
                     topRight: index == 0 || index == 1
                         ? kEmpty

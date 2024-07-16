@@ -36,13 +36,13 @@ class RazorpayGateway {
       "currency": "INR",
       "status": "created",
       "notes": [],
-      // 'timeout': 60,
       'prefill': {
         'email': email, // User's email address
         'contact': phone, // User's phone number
       },
-      'external': {
-        'wallets': ['paytm']
+      "external": {
+        "wallets": ["paytm", "Gpay", "PhonePe", "Amazon Pay"],
+        "features": ["cashback", "rewards", "UPI integration", "bill payments"]
       },
       'method': {
         'netbanking': true,

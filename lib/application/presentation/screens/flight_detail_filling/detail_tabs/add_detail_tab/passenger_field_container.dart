@@ -4,10 +4,12 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/screens/home/widgets/search_card_flight_section.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
+import 'package:myairdeal/application/presentation/widgets/custom_check_box.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
@@ -29,6 +31,7 @@ class _DetailContainerState extends State<DetailContainer> {
   TextEditingController dateOfBirthController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   int gender = 0;
+  bool savePassenger = false;
   final travelController = Get.find<TravellerController>();
 
   @override
@@ -76,7 +79,10 @@ class _DetailContainerState extends State<DetailContainer> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            Get.toNamed(Routes.savedPassengers);
+                            Get.toNamed(Routes.savedPassengers, arguments: {
+                              'index': widget.index,
+                              'type': widget.travellerType
+                            });
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(
@@ -203,56 +209,74 @@ class _DetailContainerState extends State<DetailContainer> {
                   kHeight5,
                   Align(
                     alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        // add passenger details
-                        if (formKey.currentState!.validate()) {
-                          travelController.addPassengerDetail(
-                            widget.index,
-                            TravellerInfo(
-                                dob: dateOfBirthController.text,
-                                fN: firstNameController.text,
-                                lN: lastNameController.text,
-                                ti: widget.travellerType == 'ADULT'
-                                    ? travelController.genderList[gender]
-                                    : travelController.genderListchild[gender],
-                                pt: widget.travellerType),
-                          );
-                          Get.back();
-                        }
-                      },
-                      child: Obx(() {
-                        return Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10.w, vertical: 5.h),
-                          decoration: BoxDecoration(
-                              boxShadow: boxShadow3,
-                              color: travelController
-                                          .passengerDetails[widget.index] !=
-                                      null
-                                  ? kBluePrimary
-                                  : kWhite,
-                              border: Border.all(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CustomCheckbox(
+                          value: savePassenger,
+                          onChanged: (value) {
+                            setState(() {
+                              savePassenger = value ?? false;
+                            });
+                          },
+                          activeColor: kBluePrimary,
+                        ),
+                        const Text('Save Details'),
+                        kWidth20,
+                        GestureDetector(
+                          onTap: () {
+                            // add passenger details
+                            if (formKey.currentState!.validate()) {
+                              travelController.addPassengerDetail(
+                                  widget.index,
+                                  TravellerInfo(
+                                      dob: dateOfBirthController.text,
+                                      fN: firstNameController.text,
+                                      lN: lastNameController.text,
+                                      ti: widget.travellerType == 'ADULT'
+                                          ? travelController.genderList[gender]
+                                          : travelController
+                                              .genderListchild[gender],
+                                      pt: widget.travellerType),
+                                  savePassenger);
+                              Get.back();
+                            }
+                          },
+                          child: Obx(() {
+                            return Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10.w, vertical: 5.h),
+                              decoration: BoxDecoration(
+                                  boxShadow: boxShadow3,
                                   color: travelController
                                               .passengerDetails[widget.index] !=
                                           null
-                                      ? kWhite
-                                      : kBluePrimary),
-                              borderRadius: kRadius10),
-                          child: Text(
-                            travelController.passengerDetails[widget.index] !=
-                                    null
-                                ? 'Update'
-                                : 'Add',
-                            style: textStyle1.copyWith(
-                                color: travelController
+                                      ? kBluePrimary
+                                      : kWhite,
+                                  border: Border.all(
+                                      color: travelController.passengerDetails[
+                                                  widget.index] !=
+                                              null
+                                          ? kWhite
+                                          : kBluePrimary),
+                                  borderRadius: kRadius10),
+                              child: Text(
+                                travelController
                                             .passengerDetails[widget.index] !=
                                         null
-                                    ? kWhite
-                                    : kBluePrimary),
-                          ),
-                        );
-                      }),
+                                    ? 'Update'
+                                    : 'Add',
+                                style: textStyle1.copyWith(
+                                    color: travelController.passengerDetails[
+                                                widget.index] !=
+                                            null
+                                        ? kWhite
+                                        : kBluePrimary),
+                              ),
+                            );
+                          }),
+                        ),
+                      ],
                     ),
                   ),
                   kHeight15

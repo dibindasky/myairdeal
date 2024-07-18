@@ -57,7 +57,7 @@ class RouteGenerator {
           title: const Text("Error"),
         ),
         body: const Center(
-          child: Text("Error while navigating"),
+          child: Text("Error"),
         ),
       );
     });

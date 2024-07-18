@@ -9,7 +9,7 @@ part of 'get_all_passengers.dart';
 GetAllPassengers _$GetAllPassengersFromJson(Map<String, dynamic> json) =>
     GetAllPassengers(
       passengers: (json['passengers'] as List<dynamic>?)
-          ?.map((e) => Passenger.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => TravellerInfo.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

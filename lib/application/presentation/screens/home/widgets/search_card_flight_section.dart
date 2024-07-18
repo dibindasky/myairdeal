@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/bottom_calender_date_picker.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/choose_person_class_bottom_Sheet.dart';
@@ -184,6 +185,7 @@ class FlightSearchCardHome extends StatelessWidget {
                     onTap: () {
                       if (controller.searchValidated.value) {
                         controller.searchFlights(false, context, fromEdit);
+                        Get.find<BookingController>().endTimer();
                       }
                     },
                     width: double.infinity);

@@ -39,7 +39,6 @@ class ScreenNavbar extends StatelessWidget {
       }),
       bottomNavigationBar: Obx(() {
         final selectedIndex = Get.find<NavBarController>().bottomIndex.value;
-
         return CurvedNavigationBar(
           backgroundColor: kGreyLightBackground,
           items: [

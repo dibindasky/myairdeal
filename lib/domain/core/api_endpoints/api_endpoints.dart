@@ -23,4 +23,5 @@ class ApiEndPoints {
   static const getTickets = '/ticket/view-all-tickets/{created_d}';
   static const invoiceDownLoad = '/user/generate-invoice/{booking_id}';
   static const getAllPassengers = '/user/all-passengers';
+  static const addPassengers = '/user/add-passenger';
 }

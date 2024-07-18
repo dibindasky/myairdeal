@@ -1,12 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
-
-import 'passenger.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
 
 part 'get_all_passengers.g.dart';
 
 @JsonSerializable()
 class GetAllPassengers {
-  List<Passenger>? passengers;
+  List<TravellerInfo>? passengers;
 
   GetAllPassengers({this.passengers});
 

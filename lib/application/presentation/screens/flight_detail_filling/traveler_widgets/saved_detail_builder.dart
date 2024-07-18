@@ -11,9 +11,12 @@ class ScreenSavedPassengers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = Get.arguments as Map<String, dynamic>;
+    final travellerIndex = arguments['index'] as int;
+    final travellerType = arguments['type'] as String;
     final travelerController = Get.find<TravellerController>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      travelerController.getAllPassengers(true);
+      travelerController.getAllPassengers(travellerType);
     });
 
     return Scaffold(
@@ -22,7 +25,7 @@ class ScreenSavedPassengers extends StatelessWidget {
           const DetailAppBar(heading: 'Travellers Lists'),
           Obx(() {
             // Check if passengers list is null
-            if (travelerController.allPassengers.value.passengers == null) {
+            if (travelerController.isLoading.value) {
               return SizedBox(
                 height: 400.h,
                 child: const Center(
@@ -30,7 +33,7 @@ class ScreenSavedPassengers extends StatelessWidget {
               );
             }
             // Check if passengers list is empty
-            if (travelerController.allPassengers.value.passengers!.isEmpty) {
+            if (travelerController.allPassengers.isEmpty) {
               return SizedBox(
                   height: 400.h,
                   child: const Center(
@@ -40,15 +43,20 @@ class ScreenSavedPassengers extends StatelessWidget {
             // Build the ListView with passengers data
             return Expanded(
               child: ListView.builder(
-                itemCount:
-                    travelerController.allPassengers.value.passengers?.length ??
-                        0,
+                itemCount: travelerController.allPassengers.length,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
-                  return SavedDetailsCard(
-                      index: index,
-                      passengers: travelerController
-                          .allPassengers.value.passengers?[index]);
+                  return GestureDetector(
+                    onTap: () {
+                      travelerController.addPassengerDetail(travellerIndex,
+                          travelerController.allPassengers[index], false);
+                      Get.back();
+                      Get.back();
+                    },
+                    child: SavedDetailsCard(
+                        index: index,
+                        passengers: travelerController.allPassengers[index]),
+                  );
                 },
               ),
             );

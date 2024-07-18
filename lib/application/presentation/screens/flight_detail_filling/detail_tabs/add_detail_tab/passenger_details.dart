@@ -68,7 +68,6 @@ class PassengerDetailsContainer extends StatelessWidget {
                     children: [
                       Obx(
                         () => controller.passengerDetails[index] != null
-                            // ignore: prefer_interpolation_to_compose_strings
                             ? Expanded(
                               child: Text('${controller.passengerDetails[index]!.ti ??
                                       ''} ${controller.passengerDetails[index]!.fN ?? ''} ${controller.passengerDetails[index]!.lN ?? ''}'),

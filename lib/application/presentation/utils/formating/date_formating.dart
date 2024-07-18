@@ -128,6 +128,16 @@ class DateFormating {
     return difference.inMinutes;
   }
 
+  // return DateTime from string yyyy-mm-dd
+  static DateTime? convertStringToDateTime(String dateString) {
+  try {
+    return DateTime.parse(dateString);
+  } catch (e) {
+    return null;
+  }
+}
+
+
   // Will return the abbreviated month name
   static String getMonthAbbreviation(int month) {
     switch (month) {

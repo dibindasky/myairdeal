@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/gst_info.dart';
 import 'package:myairdeal/data/service/passengers/passengers.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
-import 'package:myairdeal/domain/models/passengers/get_all_passengers/get_all_passengers.dart';
 import 'package:myairdeal/domain/repository/service/passengers_repo.dart';
 
 class TravellerController extends GetxController {
@@ -17,10 +18,11 @@ class TravellerController extends GetxController {
   RxInt selectedSavedDetailData = 0.obs;
   String travelerTab = 'Add Details';
   List<String> detailList = [' Itinerary', 'Add Details', 'Review', 'Payments'];
-  Rx<GetAllPassengers> allPassengers = GetAllPassengers().obs;
+  RxList<TravellerInfo> allPassengers = <TravellerInfo>[].obs;
   RxBool isLoading = false.obs;
   RxBool hasError = false.obs;
 
+  // sub steps in add details section
   List<String> addDetailsSubList = [
     'Passenger details',
     'Select seat',
@@ -55,8 +57,16 @@ class TravellerController extends GetxController {
       List<TravellerInfo?>.filled(20, null, growable: true).obs;
 
   /// add passenger details to the list to submit while booking
-  void addPassengerDetail(int index, TravellerInfo travellerInfo) {
+  void addPassengerDetail(int index, TravellerInfo travellerInfo, bool save) {
     passengerDetails[index] = travellerInfo;
+    if (save) {
+      savePassengerDetails(travellerInfo);
+    }
+  }
+
+  // add passengers details to server
+  void savePassengerDetails(TravellerInfo travellerInfo) async {
+    await _passengersRepo.addPassengers(travellerInfo: travellerInfo);
   }
 
   changeDetailEnterTab(int index) {
@@ -138,11 +148,6 @@ class TravellerController extends GetxController {
     update();
   }
 
-  void changesAvedDetail(int index) {
-    selectedSavedDetailData.value = index;
-    update();
-  }
-
   // add gst details to the variable
   void addGstDetails() {
     gstInfo.value = gstInfo.value.copyWith(
@@ -158,20 +163,57 @@ class TravellerController extends GetxController {
   }
 
   // Get All passengers
-  void getAllPassengers(bool isLoad) async {
-    if (allPassengers.value.passengers != null && !isLoad) {
-      return;
-    }
+  void getAllPassengers(
+    String type,
+  ) async {
     isLoading.value = true;
     final data = await _passengersRepo.getPassengers();
+    allPassengers.value = [];
     data.fold(
       (l) {
         isLoading.value = false;
       },
       (r) {
-        isLoading.value = false;
-        allPassengers.value = r;
+        List<TravellerInfo> temp = [];
+        final travelDate =
+            Get.find<FlightSortController>().multiCityDepartureDate.first!;
+
+        for (var passenger in r.passengers ?? <TravellerInfo>[]) {
+          print('passenger => ${passenger.fN}');
+          final dob =
+              DateFormating.convertStringToDateTime(passenger.dob ?? '');
+          if (dob == null) continue;
+
+          final ageOnTravelDate = travelDate.difference(dob).inDays ~/ 365;
+          final fareType =
+              Get.find<FlightSortController>().passengerFareType.value;
+
+          if (type == 'ADULT' && passenger.ti != 'Master') {
+            print('adult');
+            if ((fareType == 2 && ageOnTravelDate >= 60) ||
+                (fareType != 2 && ageOnTravelDate >= 12)) {
+              print('adult added');
+              temp.add(passenger);
+            }
+          } else if (type == 'CHILD') {
+            print('child');
+            if (ageOnTravelDate >= 2 && ageOnTravelDate < 12) {
+              print('child added');
+              temp.add(passenger);
+            }
+          } else if (type == 'INFANT') {
+            print('infant');
+            if (ageOnTravelDate < 2) {
+              print('infant added');
+              temp.add(passenger);
+            }
+          }
+        }
+
+        print('passenger count end -> ${temp.length}');
+        allPassengers.value = temp;
         update();
+        isLoading.value = false;
       },
     );
   }

@@ -9,6 +9,7 @@ import 'package:myairdeal/application/presentation/screens/home/widgets/place_se
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
+import 'package:myairdeal/application/presentation/widgets/custom_check_box.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_icon_button_custom.dart';
@@ -191,33 +192,6 @@ class FlightSearchCardHome extends StatelessWidget {
           ),
         );
       }),
-    );
-  }
-}
-
-class CustomCheckbox extends StatelessWidget {
-  final bool value;
-  final Function(bool?) onChanged;
-  final Color activeColor;
-
-  const CustomCheckbox({
-    Key? key,
-    required this.value,
-    required this.onChanged,
-    this.activeColor = kBluePrimary,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Transform.scale(
-      scale: 1, // Adjust the scale to reduce the padding
-      child: Checkbox(
-        value: value,
-        onChanged: onChanged,
-        activeColor: activeColor,
-        materialTapTargetSize:
-            MaterialTapTargetSize.shrinkWrap, // Reduce the tap target size
-      ),
     );
   }
 }

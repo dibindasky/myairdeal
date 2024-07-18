@@ -81,23 +81,19 @@ class BookingController extends GetxController {
         (reviewedDetail?.value.conditions?.st ?? 900 - elapsedSeconds)
             .clamp(0, 900);
     timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
-      print('search timer => ${remainingTime.value}');
       if (remainingTime.value == 0) {
-        print('timer search canceled');
-        final navigatorState = Get.nestedKey(1)!.currentState;
-        final routeLength = navigatorState!.widget.pages.length;
-        print('route length => $routeLength');
         bool showDialog = false;
         if (Get.currentRoute != Routes.bottomBar) showDialog = true;
-        // Get.until((route) => Get.currentRoute == Routes.homePage, id: 1);
         Get.until((route) => Get.currentRoute == Routes.bottomBar);
         if (showDialog) {
-          Get.dialog(AlertDialog(
-            backgroundColor: kRedLight,
-            title: const Text('Session expired'),
-            content: const Text(
-                'Your session time has been expired. You have to complete booking before the timer ends.'),
-          ));
+          Get.dialog(
+            AlertDialog(
+              backgroundColor: kRedLight,
+              title: const Text('Session expired'),
+              content: const Text(
+                  'Your session time has been expired. You have to complete booking before the timer ends.'),
+            ),
+          );
         }
         timer.cancel();
       } else {

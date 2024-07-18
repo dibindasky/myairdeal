@@ -70,7 +70,7 @@ class BaggageAndMealsSelection extends StatelessWidget {
                           child: Container(
                             padding: EdgeInsets.only(left: 10.w),
                             decoration: BoxDecoration(
-                                boxShadow: boxShadow2,
+                                boxShadow: boxShadow4,
                                 color: kWhite,
                                 borderRadius: kRadius15),
                             child: DropdownButton<String>(
@@ -115,7 +115,7 @@ class BaggageAndMealsSelection extends StatelessWidget {
                           child: Container(
                             padding: EdgeInsets.only(left: 10.w),
                             decoration: BoxDecoration(
-                                boxShadow: boxShadow2,
+                                boxShadow: boxShadow4,
                                 color: kWhite,
                                 borderRadius: kRadius15),
                             child: DropdownButton<String>(

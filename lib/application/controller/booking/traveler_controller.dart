@@ -83,7 +83,7 @@ class TravellerController extends GetxController {
   }
 
   changeAddDetailsSubStep(int index) {
-    if (index == 1 || index == 2) return;
+    // if (index == 1 || index == 2) return;
     selectedAddDetailsStep.value = index;
     update();
   }
@@ -110,7 +110,7 @@ class TravellerController extends GetxController {
       }
       // remove later after adding seat,meal,baggage
       // changeDetailEnterTab(3);
-      selectedAddDetailsStep.value = 3;
+      selectedAddDetailsStep.value += 1;
       update();
       return;
     } else if (selectedAddDetailsStep.value < totalSubStepLength - 1) {

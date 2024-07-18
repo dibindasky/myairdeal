@@ -9,8 +9,19 @@ class TravellerInfo {
   String? lN;
   String? pt;
   String? dob;
+  String? pNum;
+  String? eD;
+  String? pid;
 
-  TravellerInfo({this.ti, this.fN, this.lN, this.pt, this.dob});
+  TravellerInfo(
+      {this.ti,
+      this.fN,
+      this.lN,
+      this.pt,
+      this.dob,
+      this.eD,
+      this.pNum,
+      this.pid});
 
   factory TravellerInfo.fromJson(Map<String, dynamic> json) {
     return _$TravellerInfoFromJson(json);
@@ -24,6 +35,9 @@ class TravellerInfo {
     String? lN,
     String? pt,
     String? dob,
+    String? pNum,
+    String? eD,
+    String? pid,
   }) {
     return TravellerInfo(
       ti: ti ?? this.ti,
@@ -31,6 +45,9 @@ class TravellerInfo {
       lN: lN ?? this.lN,
       pt: pt ?? this.pt,
       dob: dob ?? this.dob,
+      eD: eD ?? this.eD,
+      pid: pid ?? this.pid,
+      pNum: pNum ?? this.pNum,
     );
   }
 }

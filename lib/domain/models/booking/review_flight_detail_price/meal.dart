@@ -6,8 +6,9 @@ part 'meal.g.dart';
 class Meal {
   String? code;
   String? desc;
+  int? amount;
 
-  Meal({this.code, this.desc});
+  Meal({this.code, this.desc, this.amount});
 
   factory Meal.fromJson(Map<String, dynamic> json) => _$MealFromJson(json);
 
@@ -16,10 +17,12 @@ class Meal {
   Meal copyWith({
     String? code,
     String? desc,
+    int? amount,
   }) {
     return Meal(
       code: code ?? this.code,
       desc: desc ?? this.desc,
+      amount: amount ?? this.amount,
     );
   }
 }

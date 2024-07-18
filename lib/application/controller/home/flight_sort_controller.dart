@@ -166,7 +166,7 @@ class FlightSortController extends GetxController {
   RxList<String> arrivesTimesSelected = <String>[].obs;
   List<String> sortTypes = ['Best', 'Fastest', 'Cheapest'];
   List<String> stopTypes = ['Direct', 'Max 1 Stop', 'Max 2 Stops'];
-  List<String> tripTypes = ['One-way', 'Round-trip', 'Multi-city'];
+  List<String> tripTypes = ['One-Way', 'Round-Trip', 'Multi-City'];
 
   // for rebuilding the homepage search form
   RxBool clearingBool = false.obs;
@@ -194,7 +194,7 @@ class FlightSortController extends GetxController {
           Get.dialog(
             AlertDialog(
               backgroundColor: kRedLight,
-              title: const Text('Session expired'),
+              title: const Text('Session Expired'),
               content: const Text(
                   'Your session time has been expired. Search again to get result'),
             ),

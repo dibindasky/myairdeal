@@ -132,7 +132,7 @@ class FlightSearchCardHome extends StatelessWidget {
                   child: Text('Passenger Fare Type', style: textStyle1)),
               Obx(() {
                 return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(
                     controller.passengerFareTypes.length - 1,
                     (index) => Row(
@@ -180,7 +180,7 @@ class FlightSearchCardHome extends StatelessWidget {
                 return EventButton(
                     color:
                         controller.searchValidated.value ? kBluePrimary : kGrey,
-                    text: 'Search flights',
+                    text: 'Search Flights',
                     onTap: () {
                       if (controller.searchValidated.value) {
                         controller.searchFlights(false, context, fromEdit);

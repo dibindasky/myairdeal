@@ -187,8 +187,9 @@ class FlightSortController extends GetxController {
     timer.value.cancel();
     remainingTime.value = (15 * 60);
     timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
+      print('itinary timer => ${remainingTime.value}');
       if (remainingTime.value == (0)) {
-        timer.cancel();
+        print('timer cancel');
         Get.back(id: 1);
         if (Get.currentRoute == Routes.bottomBar) {
           Get.dialog(
@@ -197,9 +198,17 @@ class FlightSortController extends GetxController {
               title: const Text('Session Expired'),
               content: const Text(
                   'Your session time has been expired. Search again to get result'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: const Text('Ok'))
+              ],
             ),
           );
         }
+        timer.cancel();
       } else {
         remainingTime.value--;
       }

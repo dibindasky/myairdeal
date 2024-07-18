@@ -5,6 +5,7 @@ import 'package:myairdeal/application/controller/booking/traveler_controller.dar
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_widgets/saved_detailcard.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class ScreenSavedPassengers extends StatelessWidget {
   const ScreenSavedPassengers({Key? key}) : super(key: key);
@@ -42,9 +43,10 @@ class ScreenSavedPassengers extends StatelessWidget {
             }
             // Build the ListView with passengers data
             return Expanded(
-              child: ListView.builder(
+              child: ListView.separated(
                 itemCount: travelerController.allPassengers.length,
                 physics: const BouncingScrollPhysics(),
+                separatorBuilder: (context, index) => kHeight10,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
@@ -54,7 +56,6 @@ class ScreenSavedPassengers extends StatelessWidget {
                       Get.back();
                     },
                     child: SavedDetailsCard(
-                        index: index,
                         passengers: travelerController.allPassengers[index]),
                   );
                 },

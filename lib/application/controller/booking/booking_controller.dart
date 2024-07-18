@@ -76,16 +76,25 @@ class BookingController extends GetxController {
         (reviewedDetail?.value.conditions?.st ?? 900 - elapsedSeconds)
             .clamp(0, 900);
     timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
+      print('search timer => ${remainingTime.value}');
       if (remainingTime.value == 0) {
-        timer.cancel();
-        Get.back(id: 1);
+        print('timer search canceled');
+        final navigatorState = Get.nestedKey(1)!.currentState;
+        final routeLength = navigatorState!.widget.pages.length;
+        print('route length => $routeLength');
+        bool showDialog = false;
+        if (Get.currentRoute != Routes.bottomBar) showDialog = true;
+        // Get.until((route) => Get.currentRoute == Routes.homePage, id: 1);
         Get.until((route) => Get.currentRoute == Routes.bottomBar);
-        Get.dialog(AlertDialog(
-          backgroundColor: kRedLight,
-          title: const Text('Session expired'),
-          content: const Text(
-              'Your session time has been expired. You have to complete booking before the timer ends.'),
-        ));
+        if (showDialog) {
+          Get.dialog(AlertDialog(
+            backgroundColor: kRedLight,
+            title: const Text('Session expired'),
+            content: const Text(
+                'Your session time has been expired. You have to complete booking before the timer ends.'),
+          ));
+        }
+        timer.cancel();
       } else {
         remainingTime.value--;
       }
@@ -101,6 +110,7 @@ class BookingController extends GetxController {
   // end timer
   void endTimer() {
     timer.value.cancel();
+    remainingTime.value = 0;
   }
 
   // complete booking api calling
@@ -163,6 +173,7 @@ class BookingController extends GetxController {
   // review price details before going to the booking section
   void reviewPriceDetailChecking(
       {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
+    endTimer();
     bool start = false;
     Get.toNamed(Routes.flightDetailFillling);
     reviewedDetail = null;

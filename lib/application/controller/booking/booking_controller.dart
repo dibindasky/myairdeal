@@ -17,6 +17,8 @@ import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 class BookingController extends GetxController {
   BookingRepo bookingRepo = BookingService();
 
+  final ScrollController scrollController = ScrollController();
+
   // loading for review pice for booking
   RxBool reviewPriceLoading = false.obs;
 
@@ -55,6 +57,13 @@ class BookingController extends GetxController {
       <AllBookingResponce>[].obs;
 
   String? fileName;
+
+  // Arrow Change In itinrery screen for tax and Taes
+  RxBool selectedArrowItinerary = false.obs;
+  void changeArrowItinerary() {
+    selectedArrowItinerary.value = !selectedArrowItinerary.value;
+    update();
+  }
 
   // start timer for booking section
   void startTimer() {

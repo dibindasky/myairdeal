@@ -39,7 +39,6 @@ class BookingService implements BookingRepo {
   Future<Either<Failure, ReviewFlightDetailPrice>> reviewPriceDetails(
       {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
     try {
-      print(reviewPriceDetailIdModel.priceIds!);
       final responce = await apiService.post(ApiEndPoints.reviewPriceDetails,
           data: reviewPriceDetailIdModel.toJson(), addHeader: true);
       log('reviewPriceDetails done');

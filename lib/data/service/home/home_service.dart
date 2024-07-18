@@ -21,7 +21,7 @@ class HomeService implements HomeRepo {
       final response = await apiService.get(
         ApiEndPoints.recentSearch,
       );
-      log("=> Response Recent Searches : ");
+      log("=> Response Recent Searches : ${response.data}");
       return Right(RecentDetailSearch.fromJson(response.data));
     } on DioException catch (e) {
       log('DioException getRecentSearches $e');

@@ -7,7 +7,7 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
-import 'package:myairdeal/application/presentation/widgets/flight_invoice/widgets/ticket_column.dart';
+import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
 
 class InnerContents extends StatelessWidget {
@@ -249,6 +249,7 @@ class InnerContents extends StatelessWidget {
                                         label: 'Departure',
                                         value: DateFormating.formatDate(
                                             model?.sI?[stop].dt ?? ''),
+                                        valueStyle: textThinStyle1,
                                         subValue:
                                             model?.sI?[stop].da?.terminal ?? '',
                                         exit: 'Cabin Class',
@@ -261,6 +262,7 @@ class InnerContents extends StatelessWidget {
                                         value: DateFormating.formatDate(
                                           model?.sI?[stop].at ?? '',
                                         ),
+                                        valueStyle: textThinStyle1,
                                         subValue:
                                             model?.sI?[stop].aa?.terminal ??
                                                 '--',

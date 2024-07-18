@@ -149,6 +149,9 @@ class FareSummary extends StatelessWidget {
                     null
                 ? kEmpty
                 : CustomExpansionTile(
+                    whileTap: (isTap) {
+                      controller.changeArrowItinerary();
+                    },
                     isBorder: false,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,7 +174,9 @@ class FareSummary extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                const Icon(Icons.arrow_drop_down_sharp),
+                                Icon(controller.selectedArrowItinerary.value
+                                    ? Icons.arrow_drop_up
+                                    : Icons.arrow_drop_down_sharp),
                                 Text(
                                   '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.taf ?? '--'}',
                                   style: textThinStyle1.copyWith(

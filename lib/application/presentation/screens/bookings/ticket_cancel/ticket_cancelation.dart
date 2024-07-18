@@ -11,7 +11,7 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
-import 'package:myairdeal/application/presentation/widgets/flight_invoice/widgets/ticket_column.dart';
+import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/ticket_cancel_request_model.dart';
 
@@ -43,11 +43,9 @@ class ScreenTicetCanceallation extends StatelessWidget {
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
-                    child: controller.bookingLoading.value
+                    child: cancelController.isLoading.value
                         ? const HorizontalShimmerSkeleton(
-                            itemCount: 10,
-                            scrollDirection: Axis.vertical,
-                          )
+                            itemCount: 10, scrollDirection: Axis.vertical)
                         : Column(
                             children: List.generate(
                               tripInfos?.length ?? 0,
@@ -218,16 +216,16 @@ class ScreenTicetCanceallation extends StatelessWidget {
   }
 
   void showCancelDialog(BuildContext context) {
+    final cancelController = Get.find<TIcketCancellaionCntroller>();
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            'Unable to raise amendment. Please try again after sometime',
+            'Errors',
             style: textStyle1.copyWith(fontSize: 16.sp),
           ),
-          content: const Text(
-              'Amendment unable to be raised due to AutoCancellation is not enabled for supplier  , Please contact support team'),
+          content: Text(cancelController.tripJackErrorMessage.value),
           actions: [
             kHeight10,
             ElevatedButton(

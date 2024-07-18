@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
+import 'package:myairdeal/application/presentation/screens/bookings/widgets/file_picker.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/product_drop_dwn.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -57,6 +58,10 @@ class ContactUsFrom extends StatelessWidget {
           hintText: 'Description',
           fillColor: kGreyLightBackground,
         ),
+        const BookingFilePicker(),
+        kHeight10,
+        const ImageBuilder(),
+        kHeight10,
         BookingProductdropoDownBuilder(),
         kHeight15,
         EventButton(
@@ -75,6 +80,33 @@ class ContactUsFrom extends StatelessWidget {
         ),
         kHeight20
       ],
+    );
+  }
+}
+
+class ImageBuilder extends StatelessWidget {
+  const ImageBuilder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 70.h,
+      child: ListView.builder(
+        itemCount: 0,
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        itemBuilder: (context, index) => Container(
+          margin: EdgeInsets.only(right: 10.w),
+          decoration:
+              BoxDecoration(color: kBlueLightShade, borderRadius: kRadius5),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(
+              flightDetailIcon,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

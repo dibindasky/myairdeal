@@ -179,7 +179,6 @@ class TravellerController extends GetxController {
             Get.find<FlightSortController>().multiCityDepartureDate.first!;
 
         for (var passenger in r.passengers ?? <TravellerInfo>[]) {
-          print('passenger => ${passenger.fN}');
           final dob =
               DateFormating.convertStringToDateTime(passenger.dob ?? '');
           if (dob == null) continue;
@@ -189,28 +188,20 @@ class TravellerController extends GetxController {
               Get.find<FlightSortController>().passengerFareType.value;
 
           if (type == 'ADULT' && passenger.ti != 'Master') {
-            print('adult');
             if ((fareType == 2 && ageOnTravelDate >= 60) ||
                 (fareType != 2 && ageOnTravelDate >= 12)) {
-              print('adult added');
               temp.add(passenger);
             }
           } else if (type == 'CHILD') {
-            print('child');
             if (ageOnTravelDate >= 2 && ageOnTravelDate < 12) {
-              print('child added');
               temp.add(passenger);
             }
           } else if (type == 'INFANT') {
-            print('infant');
             if (ageOnTravelDate < 2) {
-              print('infant added');
               temp.add(passenger);
             }
           }
         }
-
-        print('passenger count end -> ${temp.length}');
         allPassengers.value = temp;
         update();
         isLoading.value = false;

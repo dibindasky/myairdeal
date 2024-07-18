@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/status.dart';
 
 import 'trip.dart';
 
@@ -9,6 +10,9 @@ class TicketCancelRequestModel {
   String? bookingId;
   String? type;
   List<Trip>? trips;
+
+  Status? status;
+  List<Error>? errors;
 
   TicketCancelRequestModel({this.bookingId, this.type, this.trips});
 

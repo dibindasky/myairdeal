@@ -51,7 +51,7 @@ class NormalCenterItems extends StatelessWidget {
                 backgroundColor: kGrey,
               ),
               ...List.generate(
-                3,
+                4,
                 (index) => Text(
                   '-',
                   style: TextStyle(
@@ -67,7 +67,7 @@ class NormalCenterItems extends StatelessWidget {
                     )
                   : kEmpty,
               ...List.generate(
-                3,
+                4,
                 (index) => Text(
                   '-',
                   style: TextStyle(

@@ -123,7 +123,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           return 'Password must contavin at least 8 characters';
         } else if (widget.validate == Validate.notNull &&
             (value == null || value == '')) {
-          return 'This field cannot be empty';
+          return 'This Field cannot be Empty';
         } else if (widget.validate == Validate.password) {
           if (!hasLowerCase(value!)) {
             return 'Password must contains lowerCase letters';

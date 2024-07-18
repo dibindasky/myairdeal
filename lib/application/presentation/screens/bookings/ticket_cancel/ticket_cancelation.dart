@@ -9,11 +9,12 @@ import 'package:myairdeal/application/presentation/screens/bookings/ticket_cance
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
-import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/ticket_cancel_request_model.dart';
+import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 
 class ScreenTicetCanceallation extends StatelessWidget {
   const ScreenTicetCanceallation({super.key});
@@ -24,7 +25,6 @@ class ScreenTicetCanceallation extends StatelessWidget {
     final cancelController = Get.find<TIcketCancellaionCntroller>();
     final tripInfos = controller
         .retrieveSingleBookingresponceModel.value.itemInfos?.air?.tripInfos;
-
     return Scaffold(
       body: Stack(
         children: [
@@ -47,159 +47,152 @@ class ScreenTicetCanceallation extends StatelessWidget {
                         ? const HorizontalShimmerSkeleton(
                             itemCount: 10, scrollDirection: Axis.vertical)
                         : Column(
-                            children: List.generate(
-                              tripInfos?.length ?? 0,
-                              (index) => Padding(
-                                padding: EdgeInsets.symmetric(vertical: 2.w),
-                                child: Stack(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: CustomExpansionTile(
-                                        children: const [TravelersInfo()],
-                                        child: Container(
-                                          padding: EdgeInsets.all(10.w),
-                                          decoration: BoxDecoration(
-                                            color: kWhite,
-                                            borderRadius: kRadius15,
-                                            boxShadow: boxShadow3,
-                                            border: Border.all(
-                                                width: .3,
-                                                color:
-                                                    kRedLight.withOpacity(.9)),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: TicketColumn(
-                                                  label: tripInfos?[index]
+                            children: [
+                              ...List.generate(
+                                tripInfos?.length ?? 0,
+                                (index) => Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 2.w),
+                                  child: Stack(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 8.0),
+                                        child: CustomExpansionTile(
+                                          children: const [TravelersDetails()],
+                                          child: Container(
+                                            padding: EdgeInsets.all(10.w),
+                                            decoration: BoxDecoration(
+                                              color: kWhite,
+                                              borderRadius: kRadius15,
+                                              boxShadow: boxShadow3,
+                                              border: Border.all(
+                                                  width: .3,
+                                                  color: kRedLight
+                                                      .withOpacity(.9)),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: TicketColumn(
+                                                    label: tripInfos?[index]
+                                                            .sI?[0]
+                                                            .da
+                                                            ?.code ??
+                                                        '',
+                                                    value: tripInfos?[index]
+                                                            .sI?[0]
+                                                            .da
+                                                            ?.city ??
+                                                        '',
+                                                    subValue: tripInfos?[index]
+                                                            .sI?[0]
+                                                            .da
+                                                            ?.name ??
+                                                        '',
+                                                    isBold: true,
+                                                  ),
+                                                ),
+                                                NormalCenterItems(
+                                                  airline: tripInfos?[index]
                                                           .sI?[0]
-                                                          .da
-                                                          ?.code ??
-                                                      '',
-                                                  value: tripInfos?[index]
-                                                          .sI?[0]
-                                                          .da
-                                                          ?.city ??
-                                                      '',
-                                                  subValue: tripInfos?[index]
-                                                          .sI?[0]
-                                                          .da
+                                                          .fD
+                                                          ?.aI
                                                           ?.name ??
                                                       '',
-                                                  isBold: true,
+                                                  travelMinutes:
+                                                      '${tripInfos?[index].sI?[0].fD?.aI?.code ?? ''} ${tripInfos?[index].sI?[0].fD?.fN ?? ''}',
+                                                  haveImage: false,
+                                                  stops: (tripInfos?[index]
+                                                              .sI
+                                                              ?.length ??
+                                                          0) -
+                                                      1,
                                                 ),
-                                              ),
-                                              NormalCenterItems(
-                                                airline: tripInfos?[index]
-                                                        .sI?[0]
-                                                        .fD
-                                                        ?.aI
-                                                        ?.name ??
-                                                    '',
-                                                haveImage: false,
-                                                stops: (tripInfos?[index]
-                                                            .sI
-                                                            ?.length ??
-                                                        0) -
-                                                    1,
-                                              ),
-                                              Expanded(
-                                                child: TicketColumn(
-                                                  label: tripInfos?[index]
-                                                          .sI?[((tripInfos[
-                                                                          index]
-                                                                      .sI
-                                                                      ?.length ??
-                                                                  1) -
-                                                              1)]
-                                                          .aa
-                                                          ?.code ??
-                                                      '',
-                                                  value: tripInfos?[index]
-                                                          .sI?[((tripInfos[
-                                                                          index]
-                                                                      .sI
-                                                                      ?.length ??
-                                                                  1) -
-                                                              1)]
-                                                          .aa
-                                                          ?.city ??
-                                                      '',
-                                                  subValue: tripInfos?[index]
-                                                          .sI?[((tripInfos[
-                                                                          index]
-                                                                      .sI
-                                                                      ?.length ??
-                                                                  1) -
-                                                              1)]
-                                                          .aa
-                                                          ?.name ??
-                                                      '',
-                                                  isBold: true,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
+                                                Expanded(
+                                                  child: TicketColumn(
+                                                    label: tripInfos?[index]
+                                                            .sI?[((tripInfos[
+                                                                            index]
+                                                                        .sI
+                                                                        ?.length ??
+                                                                    1) -
+                                                                1)]
+                                                            .aa
+                                                            ?.code ??
+                                                        '',
+                                                    value: tripInfos?[index]
+                                                            .sI?[((tripInfos[
+                                                                            index]
+                                                                        .sI
+                                                                        ?.length ??
+                                                                    1) -
+                                                                1)]
+                                                            .aa
+                                                            ?.city ??
+                                                        '',
+                                                    subValue: tripInfos?[index]
+                                                            .sI?[((tripInfos[
+                                                                            index]
+                                                                        .sI
+                                                                        ?.length ??
+                                                                    1) -
+                                                                1)]
+                                                            .aa
+                                                            ?.name ??
+                                                        '',
+                                                    isBold: true,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Positioned(
-                                      right: 0,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          final bookingId = controller
-                                              .retrieveSingleBookingresponceModel
-                                              .value
-                                              .order
-                                              ?.bookingId;
-                                          cancelController.addItem(
-                                            TicketCancelRequestModel(
-                                                bookingId: bookingId),
-                                          );
-                                        },
-                                        child: GetBuilder<
-                                            TIcketCancellaionCntroller>(
-                                          builder: (controllerr) {
-                                            final bookingId = controller
-                                                .retrieveSingleBookingresponceModel
-                                                .value
-                                                .order
-                                                ?.bookingId;
-                                            final isSelected = bookingId !=
-                                                    null &&
-                                                cancelController.selectedItems
-                                                    .contains(
-                                                        TicketCancelRequestModel(
-                                                            bookingId:
-                                                                bookingId));
-                                            return CircleAvatar(
-                                              backgroundColor: kBlueLightShade,
-                                              radius: 10.w,
-                                              child: isSelected
-                                                  ? Icon(
-                                                      Icons.cancel,
-                                                      size: 16.w,
-                                                      color: kRed,
-                                                    )
-                                                  : Icon(
-                                                      Icons.check,
-                                                      size: 16.w,
-                                                      color: kBlue,
-                                                    ),
-                                            );
-                                          },
-                                        ),
+                                      Positioned(
+                                        right: 0,
+                                        child: GestureDetector(
+                                            onTap: () {},
+                                            child: CircleAvatar(
+                                                backgroundColor:
+                                                    kBlueLightShade,
+                                                radius: 10.w,
+                                                child: Icon(
+                                                  Icons.cancel,
+                                                  size: 16.w,
+                                                  color: kRed,
+                                                ))),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
+                              kHeight10,
+                              Form(
+                                key: cancelController.formKey,
+                                child: CustomTextField(
+                                  validate: Validate.notNull,
+                                  controller:
+                                      cancelController.cancellationRason,
+                                  maxLines: 1,
+                                  isBorder: true,
+                                  borderRadius: 10,
+                                  textCapitalization: TextCapitalization.words,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: kRadius15,
+                                    borderSide: const BorderSide(width: .3),
+                                  ),
+                                  onTapOutside: () =>
+                                      FocusScope.of(context).unfocus(),
+                                  fillColor: kGreyLightBackground,
+                                  hintText: 'Enter Cancellation reason',
+                                ),
+                              )
+                            ],
                           ),
                   ),
                   kHeight50,
@@ -209,7 +202,7 @@ class ScreenTicetCanceallation extends StatelessWidget {
             },
           ),
           const SelectedContainers(),
-          const PriceContainer()
+          const PriceContainer(),
         ],
       ),
     );

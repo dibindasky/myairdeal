@@ -12,6 +12,8 @@ class TIcketCancellaionCntroller extends GetxController {
   RxBool isLoading = false.obs;
   RxBool hasError = false.obs;
   RxString tripJackErrorMessage = ''.obs;
+  TextEditingController cancellationRason = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   RxList<TicketCancelRequestModel> selectedItems =
       <TicketCancelRequestModel>[].obs;

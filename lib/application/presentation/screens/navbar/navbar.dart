@@ -1,5 +1,3 @@
-import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
-import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -11,6 +9,7 @@ import 'package:myairdeal/application/presentation/screens/account/account_scree
 import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/talk_to_us_page.dart';
+import 'package:myairdeal/application/presentation/utils/anim.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 
 class ScreenNavbar extends StatelessWidget {
@@ -40,6 +39,7 @@ class ScreenNavbar extends StatelessWidget {
       bottomNavigationBar: Obx(() {
         final selectedIndex = Get.find<NavBarController>().bottomIndex.value;
         return CurvedNavigationBar(
+          index: selectedIndex,
           backgroundColor: kGreyLightBackground,
           items: [
             CurvedNavigationBarItem(
@@ -79,4 +79,21 @@ class ScreenNavbar extends StatelessWidget {
       }),
     );
   }
+}
+
+class CurvedNavigationBarItem {
+  /// Icon of [CurvedNavigationBarItem].
+  final Widget child;
+
+  /// Text of [CurvedNavigationBarItem].
+  final String? label;
+
+  /// TextStyle for [label].
+  final TextStyle? labelStyle;
+
+  const CurvedNavigationBarItem({
+    required this.child,
+    this.label,
+    this.labelStyle,
+  });
 }

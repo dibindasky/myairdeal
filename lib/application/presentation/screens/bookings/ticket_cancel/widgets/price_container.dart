@@ -94,7 +94,9 @@ class _PriceContainerState extends State<PriceContainer> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        showCancelDialog();
+                        if (cancelController.formKey.currentState!.validate()) {
+                          showCancelDialog();
+                        }
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(
@@ -122,7 +124,9 @@ class _PriceContainerState extends State<PriceContainer> {
                     kHeight5,
                     GestureDetector(
                       onTap: () {
-                        showCancelDialog();
+                        if (cancelController.formKey.currentState!.validate()) {
+                          showCancelDialog();
+                        }
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(

@@ -32,7 +32,7 @@ class EmptyBookingScreen extends StatelessWidget {
             width: 400.w,
             text: 'Book a trip',
             onTap: () {
-              Get.find<NavBarController>().chageIndex(0);
+              Get.find<NavBarController>().bottomIndex.value = 0;
             },
           )
         ],

@@ -5,5 +5,6 @@ class NavBarController extends GetxController {
 
   void chageIndex(int index) {
     bottomIndex.value = index;
+    update();
   }
 }

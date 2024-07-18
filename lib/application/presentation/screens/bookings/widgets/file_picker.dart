@@ -29,14 +29,7 @@ class BookingFilePicker extends StatelessWidget {
           style: textThinStyle1.copyWith(fontSize: 10.sp, color: kWhite),
           width: 60.w,
           text: 'Browse',
-          onTap: () async {
-            // FilePickerResult? result = await FilePicker.platform.pickFiles();
-            // if (result != null) {
-            //   setState(() {
-            //     _fileName = result.files.single.name;
-            //   });
-            // }
-          },
+          onTap: () async {},
         ),
         kHeight10
       ],

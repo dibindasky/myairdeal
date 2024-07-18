@@ -87,7 +87,7 @@ class HomeController extends GetxController {
 // Add new airport search
   void addAirportRecentSearch(
       {required CitySearchModel citySearchModel}) async {
-        print(citySearchModel.toJson());
+    print(citySearchModel.toJson());
     await homeService.addAirportRecentSearch(citySearchModel: citySearchModel);
 
     airportRecentSearches

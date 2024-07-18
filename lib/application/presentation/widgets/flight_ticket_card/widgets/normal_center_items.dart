@@ -91,6 +91,7 @@ class NormalCenterItems extends StatelessWidget {
         number != null
             ? Text(number!, style: textThinStyle1.copyWith(fontSize: 9.sp))
             : kEmpty,
+        kHeight5,
         date != null
             ? Text(
                 date!,

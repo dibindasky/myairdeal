@@ -25,7 +25,8 @@ class CancelService implements CancelRepo {
       return Right(TicketCancelResponce.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException cancelTicket $e');
-      return Left(Failure(message: errorMessage));
+      return Left(Failure(
+          message: e.response?.data?['errors'][0]['message'] ?? errorMessage));
     } catch (e) {
       log('catch cancelTicket $e');
       return Left(Failure(message: e.toString()));

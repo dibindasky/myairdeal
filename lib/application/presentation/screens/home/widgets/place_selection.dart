@@ -42,13 +42,17 @@ class OneWayAndRoundTrip extends StatelessWidget {
               texthead: 'From',
             ),
           ),
+          kWidth5,
           GestureDetector(
               onTap: () {
                 // change from and to
                 controller.swapFromAndTo();
               },
-              child: const Icon(Icons.compare_arrows_outlined,
-                  color: kBluePrimary)),
+              child: const Icon(
+                Icons.compare_arrows_outlined,
+                color: kBluePrimary,
+              )),
+          kWidth5,
           Expanded(
             child: TextIconButtonOutlinedCustom(
               borderColor: controller.airportSelected[0][1].city == null
@@ -198,7 +202,8 @@ class MultiCitySelection extends StatelessWidget {
                 },
                 first: const Text('Add City'),
                 second: kEmpty,
-                mainAxisAlignment: MainAxisAlignment.center)
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
       ]);
     });
   }

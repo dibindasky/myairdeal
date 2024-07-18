@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
-
+import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/widgets/ticket_column.dart';
 import '../../../../controller/home/home_controller.dart';
 
 class RecentSearchSection extends StatelessWidget {
@@ -37,112 +37,69 @@ class RecentSearchSection extends StatelessWidget {
           );
         } else if (homeController.recentSearches.isEmpty) {
           return kEmpty;
-        } else {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              kHeight10,
-              Text('Recent searches', style: textHeadStyle1),
-              kHeight5,
-              SizedBox(
-                height: 90.h,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (context, index) => kWidth10,
-                  itemCount: homeController.recentSearches.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height: 90.h,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 10.w, vertical: 10.h),
-                      decoration: BoxDecoration(
-                        color: kBluePrimary,
-                        borderRadius: kRadius10,
-                      ),
-                      child: FittedBox(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            kHeight10,
+            Text('Recent searches', style: textHeadStyle1),
+            kHeight5,
+            SizedBox(
+              height: 95.h,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                separatorBuilder: (context, index) => kWidth10,
+                itemCount: homeController.recentSearches.length,
+                itemBuilder: (context, index) {
+                  final routeInfo = homeController.recentSearches[index]
+                      .searchQuery?.searchQuery?.routeInfos;
+                  return Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                    decoration: BoxDecoration(
+                      color: kBluePrimary,
+                      borderRadius: kRadius10,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Dubai',
-                                      style: textThinStyle1.copyWith(
-                                          color: kWhite),
-                                    ),
-                                    kHeight5,
-                                    Text(
-                                        homeController
-                                                .recentSearches[index]
-                                                .searchQuery!
-                                                .searchQuery
-                                                ?.routeInfos?[0]
-                                                .fromCityOrAirport
-                                                ?.code ??
-                                            '',
-                                        style: textThinStyle1.copyWith(
-                                            color: kWhite)),
-                                  ],
-                                ),
-                                kWidth20,
-                                Container(
-                                  height: 50.h,
-                                  width: 50.w,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        imageFlightTrip,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                kWidth20,
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      'Banglore',
-                                      style: textThinStyle1.copyWith(
-                                          color: kWhite),
-                                    ),
-                                    kHeight5,
-                                    Text(
-                                      homeController
-                                              .recentSearches[index]
-                                              .searchQuery!
-                                              .searchQuery
-                                              ?.routeInfos?[0]
-                                              .toCityOrAirport
-                                              ?.code ??
-                                          '',
-                                      style: textThinStyle1.copyWith(
-                                          color: kWhite),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            kHeight5,
-                            Text(
-                              homeController.recentSearches[index].searchQuery!
-                                      .searchQuery?.routeInfos?[0].travelDate ??
+                            TicketColumn(
+                              label:
+                                  '${routeInfo?[0].fromCityOrAirport?.city ?? 'City'}, ${routeInfo?[0].fromCityOrAirport?.country ?? 'Country'}'
                                   '',
-                              style: textThinStyle1.copyWith(color: kWhite),
-                            )
+                              value: routeInfo?[0].fromCityOrAirport?.name ??
+                                  'Name',
+                              subValue:
+                                  routeInfo?[0].fromCityOrAirport?.country ??
+                                      'Airport',
+                            ),
+                            kWidth20,
+                            Image.asset(imageFlightTrip, height: 30.h),
+                            kWidth20,
+                            TicketColumn(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              label:
+                                  '${routeInfo?[0].toCityOrAirport?.city ?? 'City'}, ${routeInfo?[0].toCityOrAirport?.country ?? 'Country'}'
+                                  '',
+                              value:
+                                  routeInfo?[0].toCityOrAirport?.name ?? 'Name',
+                              subValue:
+                                  routeInfo?[0].toCityOrAirport?.country ??
+                                      'Airport',
+                            ),
                           ],
                         ),
-                      ),
-                    );
-                  },
-                ),
+                      ],
+                    ),
+                  );
+                },
               ),
-            ],
-          );
-        }
+            ),
+          ],
+        );
       },
     );
   }

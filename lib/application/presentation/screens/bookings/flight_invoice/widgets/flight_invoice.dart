@@ -7,7 +7,7 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
-import 'package:myairdeal/application/presentation/widgets/flight_invoice/widgets/ticket_column.dart';
+import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
 
@@ -20,7 +20,7 @@ class FlightInvoiceCard extends StatelessWidget {
         retrieveSingleBookingresponceModel?.itemInfos?.air?.travellerInfos;
     final tripInfos =
         retrieveSingleBookingresponceModel?.itemInfos?.air?.tripInfos;
-    //log('------ Layover Time -${DateFormating.formatDate(tripInfos?[0].sI?[0].dt ?? '')} -----${DateFormating.formatDate(tripInfos?[0].sI?[1].at ?? '')} ');
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -97,11 +97,8 @@ class FlightInvoiceCard extends StatelessWidget {
                                               .da
                                               ?.code ??
                                           '',
-                                      label: tripInfos?[index]
-                                              .sI?[stopIndex]
-                                              .da
-                                              ?.city ??
-                                          '',
+                                      label:
+                                          '${tripInfos?[index].sI?[stopIndex].da?.city ?? ''}, ${tripInfos?[index].sI?[stopIndex].da?.country ?? ''}',
                                       valueStyle: textThinStyle1,
                                       subValue: tripInfos?[index]
                                               .sI?[stopIndex]
@@ -159,11 +156,8 @@ class FlightInvoiceCard extends StatelessWidget {
                                               .aa
                                               ?.code ??
                                           '',
-                                      label: tripInfos?[index]
-                                              .sI?[stopIndex]
-                                              .aa
-                                              ?.city ??
-                                          '',
+                                      label:
+                                          '${tripInfos?[index].sI?[stopIndex].aa?.city ?? ''}, ${tripInfos?[index].sI?[stopIndex].aa?.country ?? ''}',
                                       valueStyle: textThinStyle1,
                                       subValue: tripInfos?[index]
                                               .sI?[stopIndex]
@@ -224,7 +218,8 @@ class FlightInvoiceCard extends StatelessWidget {
                               value: tripInfos?[index].sI?[0].da?.code ?? '',
                               valueStyle:
                                   textThinStyle1.copyWith(fontSize: 13.sp),
-                              label: tripInfos?[index].sI?[0].da?.city ?? '',
+                              label:
+                                  '${tripInfos?[index].sI?[0].da?.city ?? ''}, ${tripInfos?[index].sI?[0].da?.country ?? ''}',
                               lebelStyle: textThinStyle1.copyWith(
                                   fontSize: 13.sp, fontWeight: FontWeight.w700),
                               subValue: tripInfos?[index].sI?[0].da?.name ?? '',
@@ -281,12 +276,8 @@ class FlightInvoiceCard extends StatelessWidget {
                                   textThinStyle1.copyWith(fontSize: 13.sp),
                               lebelStyle: textThinStyle1.copyWith(
                                   fontSize: 13.sp, fontWeight: FontWeight.w700),
-                              label: tripInfos?[index]
-                                      .sI?[((tripInfos[index].sI?.length ?? 1) -
-                                          1)]
-                                      .aa
-                                      ?.city ??
-                                  '',
+                              label:
+                                  '${tripInfos?[index].sI?[((tripInfos[index].sI?.length ?? 1) - 1)].aa?.city ?? ''}, ${tripInfos?[index].sI?[((tripInfos[index].sI?.length ?? 1) - 1)].aa?.country ?? ''}',
                               subValue: tripInfos?[index]
                                       .sI?[((tripInfos[index].sI?.length ?? 1) -
                                           1)]

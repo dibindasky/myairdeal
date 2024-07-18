@@ -10,7 +10,7 @@ import 'package:myairdeal/application/presentation/screens/auth/sign_up/al_most_
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_screen.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/widgets/invoice_detail.dart';
+import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/invoice_detail.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/ticket_cancel/ticket_cancelation.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/flight_detail_screen.dart';

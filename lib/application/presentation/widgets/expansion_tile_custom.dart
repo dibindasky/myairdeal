@@ -6,6 +6,7 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 class CustomExpansionTile extends StatefulWidget {
   const CustomExpansionTile(
       {super.key,
+      this.whileTap,
       this.isBorder = true,
       this.isExpandable = true,
       this.children,
@@ -16,6 +17,7 @@ class CustomExpansionTile extends StatefulWidget {
   final bool isExpandable;
   final bool isBorder;
   final Color? expansionColor;
+  final Function(bool)? whileTap;
 
   @override
   State<CustomExpansionTile> createState() => _CustomExpansionTileState();
@@ -42,6 +44,9 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
               setState(() {
                 if (widget.isExpandable) {
                   isExpanded = !isExpanded;
+                }
+                if (widget.whileTap != null) {
+                  widget.whileTap!(isExpanded);
                 }
               });
             },

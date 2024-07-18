@@ -58,7 +58,7 @@ class FlightInvoiceCard extends StatelessWidget {
                           ? 'Passengers name'
                           : 'Passenger name',
                       style: textStyle1.copyWith(
-                          fontSize: 14.sp, fontWeight: FontWeight.w700),
+                          fontSize: 14.sp, fontWeight: FontWeight.w600),
                     ),
                     kHeight5,
                     ...List.generate(
@@ -66,7 +66,7 @@ class FlightInvoiceCard extends StatelessWidget {
                       (index) => Text(
                         '${travelersData?[index].ti}  ${travelersData?[index].fN} ${travelersData?[index].lN}  (${travelersData?[index].pt})',
                         style: textThinStyle1.copyWith(
-                            fontWeight: FontWeight.w600),
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
                   ],
@@ -221,7 +221,9 @@ class FlightInvoiceCard extends StatelessWidget {
                               label:
                                   '${tripInfos?[index].sI?[0].da?.city ?? ''}, ${tripInfos?[index].sI?[0].da?.country ?? ''}',
                               lebelStyle: textThinStyle1.copyWith(
-                                  fontSize: 13.sp, fontWeight: FontWeight.w700),
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w700,
+                                  overflow: TextOverflow.ellipsis),
                               subValue: tripInfos?[index].sI?[0].da?.name ?? '',
                               isBold: true,
                               exit: tripInfos?[index].sI?[0].da?.terminal ?? '',
@@ -244,6 +246,7 @@ class FlightInvoiceCard extends StatelessWidget {
                           ],
                         ),
                       ),
+                      kWidth5,
                       NormalCenterItems(
                         travelMinutes: (tripInfos?[index].sI?.length ?? 0) > 1
                             ? ''
@@ -261,6 +264,7 @@ class FlightInvoiceCard extends StatelessWidget {
                                 '')),
                         number: '',
                       ),
+                      kWidth5,
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -275,7 +279,9 @@ class FlightInvoiceCard extends StatelessWidget {
                               valueStyle:
                                   textThinStyle1.copyWith(fontSize: 13.sp),
                               lebelStyle: textThinStyle1.copyWith(
-                                  fontSize: 13.sp, fontWeight: FontWeight.w700),
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.w700,
+                                  overflow: TextOverflow.ellipsis),
                               label:
                                   '${tripInfos?[index].sI?[((tripInfos[index].sI?.length ?? 1) - 1)].aa?.city ?? ''}, ${tripInfos?[index].sI?[((tripInfos[index].sI?.length ?? 1) - 1)].aa?.country ?? ''}',
                               subValue: tripInfos?[index]

@@ -187,12 +187,23 @@ class BottomMiniContainer extends StatelessWidget {
                             kWidth10,
                             flightTicketCardEnum ==
                                     FlightTicketCardEnum.homeSort
-                                ? Text(
-                                    '₹ $price',
-                                    style: textStyle1.copyWith(
-                                        color: kWhite,
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.bold),
+                                ? Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        '(Per Adult)',
+                                        style: textStyle1.copyWith(
+                                            color: kWhite, fontSize: 8.sp),
+                                      ),
+                                      kWidth5,
+                                      Text(
+                                        '₹ $price',
+                                        style: textStyle1.copyWith(
+                                            color: kWhite,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
                                   )
                                 : buttonOnTap == null
                                     ? kEmpty

@@ -187,7 +187,7 @@ class FlightSortController extends GetxController {
     timer.value.cancel();
     remainingTime.value = (15 * 60);
     timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
-      print('itinary timer => ${remainingTime.value}');
+      print('search timer => ${remainingTime.value}');
       if (remainingTime.value == (0)) {
         print('timer cancel');
         Get.back(id: 1);
@@ -539,7 +539,7 @@ class FlightSortController extends GetxController {
 // auto scroll the list in the top showing selection accoring to the selection of tab
   void changeSelectedTripIndex(int index) {
     selectedTripListIndex.value = index;
-    if (index > 1) {
+    if (index > 1 && searchList.length>2) {
       final onePotion = flightSortController.position.maxScrollExtent /
           (selectedFlights.length);
       flightSortController.animateTo(

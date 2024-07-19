@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/ssr_info.dart';
 
 part 'traveller_info.g.dart';
 
@@ -9,8 +10,28 @@ class TravellerInfo {
   String? lN;
   String? pt;
   String? dob;
+  String? pNum;
+  String? eD;
+  String? pid;
+  @JsonKey(name: 'ssrMealInfos')
+  List<SsrInfo>? ssrMealInfos;
+  @JsonKey(name: 'ssrSeatInfos')
+  List<SsrInfo>? ssrSeatInfos;
+  @JsonKey(name: 'ssrBaggageInfos')
+  List<SsrInfo>? ssrBaggageInfos;
 
-  TravellerInfo({this.ti, this.fN, this.lN, this.pt, this.dob});
+  TravellerInfo(
+      {this.ti,
+      this.fN,
+      this.lN,
+      this.pt,
+      this.dob,
+      this.eD,
+      this.pNum,
+      this.pid,
+      this.ssrBaggageInfos,
+      this.ssrMealInfos,
+      this.ssrSeatInfos});
 
   factory TravellerInfo.fromJson(Map<String, dynamic> json) {
     return _$TravellerInfoFromJson(json);
@@ -24,6 +45,12 @@ class TravellerInfo {
     String? lN,
     String? pt,
     String? dob,
+    String? pNum,
+    String? eD,
+    String? pid,
+    List<SsrInfo>? ssrMealInfos,
+    List<SsrInfo>? ssrSeatInfos,
+    List<SsrInfo>? ssrBaggageInfos,
   }) {
     return TravellerInfo(
       ti: ti ?? this.ti,
@@ -31,6 +58,16 @@ class TravellerInfo {
       lN: lN ?? this.lN,
       pt: pt ?? this.pt,
       dob: dob ?? this.dob,
+      eD: eD ?? this.eD,
+      pid: pid ?? this.pid,
+      pNum: pNum ?? this.pNum,
+      ssrBaggageInfos: ssrBaggageInfos ?? this.ssrBaggageInfos,
+      ssrSeatInfos: ssrSeatInfos ?? this.ssrSeatInfos,
+      ssrMealInfos: ssrMealInfos ?? this.ssrMealInfos,
     );
+  }
+
+  String getName() {
+    return '${ti ?? ''} ${fN ?? ''} ${lN ?? ''}';
   }
 }

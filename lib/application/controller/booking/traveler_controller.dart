@@ -5,6 +5,7 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/gst_info.dart';
 import 'package:myairdeal/data/service/passengers/passengers.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/ssr_info.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
 import 'package:myairdeal/domain/repository/service/passengers_repo.dart';
 
@@ -56,6 +57,27 @@ class TravellerController extends GetxController {
   RxList<TravellerInfo?> passengerDetails =
       List<TravellerInfo?>.filled(20, null, growable: true).obs;
 
+  /// add meals information to the passenger to the traveller in the given index
+  void addMealsInfo(SsrInfo ssrInfo, int index) {
+    TravellerInfo traveller = passengerDetails[index]!;
+    traveller.ssrMealInfos ??= <SsrInfo>[];
+    traveller.ssrMealInfos!.add(ssrInfo);
+  }
+
+  /// add Baggage information to the passenger to the traveller in the given index
+  void addBaggagesInfo(SsrInfo ssrInfo, int index) {
+    TravellerInfo traveller = passengerDetails[index]!;
+    traveller.ssrBaggageInfos ??= <SsrInfo>[];
+    traveller.ssrBaggageInfos!.add(ssrInfo);
+  }
+
+  /// add seat information to the passenger to the traveller in the given index
+  void addSeatsInfo(SsrInfo ssrInfo, int index) {
+    TravellerInfo traveller = passengerDetails[index]!;
+    traveller.ssrSeatInfos ??= <SsrInfo>[];
+    traveller.ssrSeatInfos!.add(ssrInfo);
+  }
+
   /// add passenger details to the list to submit while booking
   void addPassengerDetail(int index, TravellerInfo travellerInfo, bool save) {
     passengerDetails[index] = travellerInfo;
@@ -83,7 +105,7 @@ class TravellerController extends GetxController {
   }
 
   changeAddDetailsSubStep(int index) {
-    if (index == 1 || index == 2) return;
+    // if (index == 1 || index == 2) return;
     selectedAddDetailsStep.value = index;
     update();
   }
@@ -110,7 +132,7 @@ class TravellerController extends GetxController {
       }
       // remove later after adding seat,meal,baggage
       // changeDetailEnterTab(3);
-      selectedAddDetailsStep.value = 3;
+      selectedAddDetailsStep.value += 1;
       update();
       return;
     } else if (selectedAddDetailsStep.value < totalSubStepLength - 1) {

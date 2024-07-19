@@ -47,8 +47,8 @@ List<BoxShadow> boxShadow3 = const [
       spreadRadius: 1, blurRadius: 3, offset: Offset(0, 1), color: kGreyLight)
 ];
 List<BoxShadow> boxShadow4 = [
-  BoxShadow(
-      spreadRadius: -1, blurRadius: -3, offset: Offset(0, -1), color: kGreyLightBackground)
+  const BoxShadow(
+      spreadRadius: 2, blurRadius: 5, offset: Offset(0, 0), color: kGreyLight)
 ];
 List<BoxShadow> boxShadow2Blue = const [
   BoxShadow(

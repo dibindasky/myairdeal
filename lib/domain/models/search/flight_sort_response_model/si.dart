@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../booking/review_flight_detail_price/ssr_info.dart';
+import '../../booking/review_flight_detail_price/ssr_infos.dart';
 import 'aa.dart';
 import 'da.dart';
 import 'fd.dart';
@@ -24,7 +24,7 @@ class SI {
   bool? isRs;
   int? sN;
   @JsonKey(name: 'ssrInfo')
-  SsrInfo? ssrInfo;
+  SsrInfos? ssrInfo;
 
   SI(
       {this.id,
@@ -62,7 +62,7 @@ class SI {
     bool? iand,
     bool? isRs,
     int? sN,
-    SsrInfo? ssrInfo,
+    SsrInfos? ssrInfo,
   }) {
     return SI(
       id: id ?? this.id,

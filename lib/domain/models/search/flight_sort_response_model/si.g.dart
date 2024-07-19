@@ -29,7 +29,7 @@ SI _$SIFromJson(Map<String, dynamic> json) => SI(
       sN: (json['sN'] as num?)?.toInt(),
       ssrInfo: json['ssrInfo'] == null
           ? null
-          : SsrInfo.fromJson(json['ssrInfo'] as Map<String, dynamic>),
+          : SsrInfos.fromJson(json['ssrInfo'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$SIToJson(SI instance) => <String, dynamic>{

@@ -61,13 +61,26 @@ class TravellerController extends GetxController {
   void addMealsInfo(SsrInfo ssrInfo, int index) {
     TravellerInfo traveller = passengerDetails[index]!;
     traveller.ssrMealInfos ??= <SsrInfo>[];
+    for (int i = 0; i < traveller.ssrMealInfos!.length; i++) {
+      if (traveller.ssrMealInfos![i].key == ssrInfo.key) {
+        traveller.ssrMealInfos!.removeAt(i);
+        break;
+      }
+    }
     traveller.ssrMealInfos!.add(ssrInfo);
+    print(traveller.ssrMealInfos);
   }
 
   /// add Baggage information to the passenger to the traveller in the given index
   void addBaggagesInfo(SsrInfo ssrInfo, int index) {
     TravellerInfo traveller = passengerDetails[index]!;
     traveller.ssrBaggageInfos ??= <SsrInfo>[];
+    for (int i = 0; i < traveller.ssrBaggageInfos!.length; i++) {
+      if (traveller.ssrBaggageInfos![i].key == ssrInfo.key) {
+        traveller.ssrBaggageInfos!.removeAt(i);
+        break;
+      }
+    }
     traveller.ssrBaggageInfos!.add(ssrInfo);
   }
 
@@ -75,6 +88,12 @@ class TravellerController extends GetxController {
   void addSeatsInfo(SsrInfo ssrInfo, int index) {
     TravellerInfo traveller = passengerDetails[index]!;
     traveller.ssrSeatInfos ??= <SsrInfo>[];
+    for (int i = 0; i < traveller.ssrSeatInfos!.length; i++) {
+      if (traveller.ssrSeatInfos![i].key == ssrInfo.key) {
+        traveller.ssrSeatInfos!.removeAt(i);
+        break;
+      }
+    }
     traveller.ssrSeatInfos!.add(ssrInfo);
   }
 

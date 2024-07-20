@@ -10,7 +10,6 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/ssr_info.dart';
-import 'package:myairdeal/domain/models/booking/review_flight_detail_price/trip_info.dart';
 
 class BaggageAndMealsSelection extends StatelessWidget {
   const BaggageAndMealsSelection({super.key});
@@ -34,7 +33,7 @@ class BaggageAndMealsSelection extends StatelessWidget {
                   bookingController.reviewedDetail?.value.tripInfos?[tripIndex]
                           .sI?.length ??
                       0,
-                      // meals andd baggage selection for each passenger
+                  // meals andd baggage selection for each passenger
                   (siIndex) => SelectionTileMealsAndBaggage(
                     siIndex: siIndex,
                     tripIndex: tripIndex,
@@ -149,38 +148,27 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                                 0) <
                                             1
                                         ? null
-                                        : DropdownButton<SsrInfo?>(
-                                            icon: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 8.0),
-                                              child: RotatedBox(
-                                                quarterTurns: 1,
-                                                child: Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  size: 17.w,
-                                                  color: kBluePrimary,
-                                                ),
-                                              ),
-                                            ),
-                                            isDense: false,
-                                            isExpanded: true,
-                                            value: null,
-                                            hint: const Text('Select Meal'),
-                                            items: (bookingController
-                                                        .reviewedDetail
-                                                        ?.value
-                                                        .tripInfos?[tripIndex]
-                                                        .sI?[siIndex]
-                                                        .ssrInfo
-                                                        ?.meal ??
-                                                    <SsrInfo?>[])
-                                                .map((SsrInfo? value) {
-                                              return DropdownMenuItem<SsrInfo?>(
-                                                value: SsrInfo(),
-                                                child: Text(value?.desc ?? ''),
-                                              );
-                                            }).toList(),
-                                            onChanged: (SsrInfo? newValue) {},
+                                        : DropDownSsrInfo(
+                                            ssrList: (bookingController
+                                                    .reviewedDetail
+                                                    ?.value
+                                                    .tripInfos?[tripIndex]
+                                                    .sI?[siIndex]
+                                                    .ssrInfo
+                                                    ?.meal ??
+                                                <SsrInfo?>[]),
+                                            hintText: 'Select Meals',
+                                            onChanged: (ssrInfo) {
+                                              travellerController.addMealsInfo(
+                                                  ssrInfo!.copyWith(
+                                                      key: bookingController
+                                                          .reviewedDetail
+                                                          ?.value
+                                                          .tripInfos?[tripIndex]
+                                                          .sI?[siIndex]
+                                                          .id),
+                                                  travellerIndex);
+                                            },
                                           ),
                                   ),
                                 )
@@ -238,6 +226,69 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                   )),
         )
       ],
+    );
+  }
+}
+
+class DropDownSsrInfo extends StatefulWidget {
+  const DropDownSsrInfo(
+      {super.key,
+      required this.ssrList,
+      required this.hintText,
+      required this.onChanged});
+
+  final List<SsrInfo?> ssrList;
+  final String hintText;
+  final Function(SsrInfo? ssrInfo) onChanged;
+
+  @override
+  State<DropDownSsrInfo> createState() => _DropDownSsrInfoState();
+}
+
+class _DropDownSsrInfoState extends State<DropDownSsrInfo> {
+  SsrInfo? value;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<SsrInfo?>(
+      underline: kEmpty,
+      icon: Padding(
+        padding: const EdgeInsets.only(right: 8.0),
+        child: RotatedBox(
+          quarterTurns: 1,
+          child: Icon(
+            Icons.arrow_forward_ios_sharp,
+            size: 17.w,
+            color: kBluePrimary,
+          ),
+        ),
+      ),
+      isDense: false,
+      isExpanded: true,
+      value: value,
+      dropdownColor: kBlueThinLIght,
+      hint: Text(widget.hintText),
+      items: widget.ssrList.map((SsrInfo? value) {
+        return DropdownMenuItem<SsrInfo?>(
+          value: value,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(child: Text(value?.desc ?? '')),
+              kWidth5,
+              Text(value?.amount == null || value?.amount == 0
+                  ? 'Free'
+                  : '@ ₹${value?.amount ?? ''}'),
+            ],
+          ),
+        );
+      }).toList(),
+      onChanged: (value) {
+        setState(() {
+          this.value = value;
+        });
+        widget.onChanged(value);
+      },
     );
   }
 }

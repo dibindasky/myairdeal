@@ -23,8 +23,8 @@ class SsrInfos {
     List<SsrInfo>? baggage,
   }) {
     return SsrInfos(
-      baggage: baggage ?? this.baggage,
       meal: meal ?? this.meal,
+      baggage: baggage ?? this.baggage,
     );
   }
 }

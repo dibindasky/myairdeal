@@ -68,6 +68,7 @@ class TravellerController extends GetxController {
       }
     }
     traveller.ssrMealInfos!.add(ssrInfo);
+    print(traveller.toJson());
     print(traveller.ssrMealInfos);
   }
 

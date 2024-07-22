@@ -8,11 +8,12 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/data/service/booking/booking_service.dart';
 import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_responce.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
+import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_booking.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
-import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/traveller_info.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
+import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/ticket_cancel_request_model.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
 class BookingController extends GetxController {
@@ -45,9 +46,9 @@ class BookingController extends GetxController {
   RxBool bookingCompleteSuccess = false.obs;
   RxBool bookingCompleteFailure = false.obs;
 
-  // Retrive sinle booking model
-  Rx<RetrieveSingleBookingresponceModel> retrieveSingleBookingresponceModel =
-      RetrieveSingleBookingresponceModel().obs;
+  // Retrive single booking model
+  Rx<GetSingleBooking> retrieveSingleBookingresponceModel =
+      GetSingleBooking().obs;
 
   // Retrieve all booking
   RxList<AllBookingResponce> retrieveAllUpcomingBooking =
@@ -59,6 +60,10 @@ class BookingController extends GetxController {
 
   //File picking
   RxString? fileName = ''.obs;
+
+  // Ticket cancel request model
+  Rx<TicketCancelRequestModel> ticketCancelRequestModel =
+      TicketCancelRequestModel().obs;
 
   //Selected travelers List
   RxList<TravellerInfo> selectedTravelers = <TravellerInfo>[].obs;

@@ -9,17 +9,17 @@ import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
-import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
+import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_booking.dart';
 
 class FlightInvoiceCard extends StatelessWidget {
   const FlightInvoiceCard({super.key, this.retrieveSingleBookingresponceModel});
-  final RetrieveSingleBookingresponceModel? retrieveSingleBookingresponceModel;
+  final GetSingleBooking? retrieveSingleBookingresponceModel;
   @override
   Widget build(BuildContext context) {
-    final travelersData =
-        retrieveSingleBookingresponceModel?.itemInfos?.air?.travellerInfos;
-    final tripInfos =
-        retrieveSingleBookingresponceModel?.itemInfos?.air?.tripInfos;
+    final travelersData = retrieveSingleBookingresponceModel
+        ?.retrieveSingleBookingresponceModel?.itemInfos?.air?.travellerInfos;
+    final tripInfos = retrieveSingleBookingresponceModel
+        ?.retrieveSingleBookingresponceModel?.itemInfos?.air?.tripInfos;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -28,10 +28,11 @@ class FlightInvoiceCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: boxShadow2,
         border: Border.all(
-          color:
-              retrieveSingleBookingresponceModel?.order?.status == 'CANCELLED'
-                  ? kRed
-                  : knill,
+          color: retrieveSingleBookingresponceModel
+                      ?.retrieveSingleBookingresponceModel?.order?.status ==
+                  'CANCELLED'
+              ? kRed
+              : knill,
         ),
       ),
       child: Column(
@@ -43,7 +44,12 @@ class FlightInvoiceCard extends StatelessWidget {
               kWidth20,
               const Text(' :'),
               kWidth20,
-              Text(retrieveSingleBookingresponceModel?.order?.bookingId ?? '--',
+              Text(
+                  retrieveSingleBookingresponceModel
+                          ?.retrieveSingleBookingresponceModel
+                          ?.order
+                          ?.bookingId ??
+                      '--',
                   style: textStyle1),
             ],
           ),
@@ -179,10 +185,14 @@ class FlightInvoiceCard extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
                                     ),
-                                    const TicketColumn(
+                                    TicketColumn(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
-                                      subValue: '--',
+                                      subValue: retrieveSingleBookingresponceModel
+                                              ?.retrieveSingleBookingresponceModel
+                                              ?.allBookingSearchquery
+                                              ?.cabinClass ??
+                                          '--',
                                       exit: '--',
                                     )
                                   ],
@@ -310,7 +320,11 @@ class FlightInvoiceCard extends StatelessWidget {
                             (tripInfos?[index].sI?.length ?? 1) == 1
                                 ? TicketColumn(
                                     crossAxisAlignment: CrossAxisAlignment.end,
-                                    label: '--',
+                                    label: retrieveSingleBookingresponceModel
+                                            ?.retrieveSingleBookingresponceModel
+                                            ?.allBookingSearchquery
+                                            ?.cabinClass ??
+                                        '--',
                                     lebelStyle: textThinStyle1.copyWith(
                                         fontSize: 11.sp, color: kGreyDark),
                                     value: '--',
@@ -356,7 +370,7 @@ class FlightInvoiceCard extends StatelessWidget {
               ),
               kWidth10,
               Text(
-                '₹ ${retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.tf.toString() ?? 0.toString()}',
+                '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.tf.toString() ?? 0.toString()}',
                 style: textStyle1.copyWith(
                     color: kBlack,
                     fontSize: 13.sp,

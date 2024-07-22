@@ -132,7 +132,8 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                                 bookingID: bookingController
                                                         .retrieveSingleBookingresponceModel
                                                         .value
-                                                        .order
+                                                        .retrieveSingleBookingresponceModel
+                                                        ?.order
                                                         ?.bookingId ??
                                                     '');
                                           },
@@ -156,7 +157,8 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                     bookingId: bookingController
                                             .retrieveSingleBookingresponceModel
                                             .value
-                                            .order
+                                            .retrieveSingleBookingresponceModel
+                                            ?.order
                                             ?.bookingId ??
                                         '',
                                   );

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,8 +12,13 @@ class TravelersDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bookingController = Get.find<BookingController>();
-    final travelersData = bookingController.retrieveSingleBookingresponceModel
-        .value.itemInfos?.air?.travellerInfos;
+    final travelersData = bookingController
+        .retrieveSingleBookingresponceModel
+        .value
+        .retrieveSingleBookingresponceModel
+        ?.itemInfos
+        ?.air
+        ?.travellerInfos;
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 3.w),
@@ -38,7 +41,6 @@ class TravelersDetails extends StatelessWidget {
 
               return GestureDetector(
                 onTap: () {
-                  log('$isAlreadyAdded');
                   if (isAlreadyAdded) {
                     bookingController.selectedTravelers.removeWhere(
                         (participant) => participant.checkEquel(traveler));

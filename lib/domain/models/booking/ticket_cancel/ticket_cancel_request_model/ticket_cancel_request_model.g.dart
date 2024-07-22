@@ -9,6 +9,7 @@ part of 'ticket_cancel_request_model.dart';
 TicketCancelRequestModel _$TicketCancelRequestModelFromJson(
         Map<String, dynamic> json) =>
     TicketCancelRequestModel(
+      remarks: json['remarks'] as String,
       bookingId: json['bookingId'] as String?,
       type: json['type'] as String?,
       trips: (json['trips'] as List<dynamic>?)
@@ -19,6 +20,7 @@ TicketCancelRequestModel _$TicketCancelRequestModelFromJson(
 Map<String, dynamic> _$TicketCancelRequestModelToJson(
         TicketCancelRequestModel instance) =>
     <String, dynamic>{
+      'remarks': instance.remarks,
       'bookingId': instance.bookingId,
       'type': instance.type,
       'trips': instance.trips,

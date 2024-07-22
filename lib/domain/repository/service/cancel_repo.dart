@@ -4,6 +4,7 @@ import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_requ
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_responce/ticket_cancel_responce.dart';
 
 abstract class CancelRepo {
-  Future<Either<Failure, TicketCancelResponce>> cancelTicket(
-      {required TicketCancelRequestModel ticketCancelRequestModel});
+  Future<Either<Failure, TicketCancelResponce>> cancelTicket({
+    required TicketCancelRequestModel ticketCancelRequestModel,
+  });
 }

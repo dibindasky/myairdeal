@@ -187,9 +187,9 @@ class FlightSortController extends GetxController {
     timer.value.cancel();
     remainingTime.value = (15 * 60);
     timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
-      print('search timer => ${remainingTime.value}');
+      // print('search timer => ${remainingTime.value}');
       if (remainingTime.value == (0)) {
-        print('timer cancel');
+        print('timer canceled time ends');
         Get.back(id: 1);
         if (Get.currentRoute == Routes.bottomBar) {
           Get.dialog(

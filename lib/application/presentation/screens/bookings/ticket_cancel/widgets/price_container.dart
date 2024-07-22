@@ -186,7 +186,8 @@ class _PriceContainerState extends State<PriceContainer> {
                         bookingId: bookingController
                             .retrieveSingleBookingresponceModel
                             .value
-                            .order
+                            .retrieveSingleBookingresponceModel
+                            ?.order
                             ?.bookingId,
                         type: 'CANCELLATION');
                 cancelController.ticketCancel(ticketCancelRequestModel);

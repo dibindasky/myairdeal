@@ -12,8 +12,8 @@ class SelectedContainers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<BookingController>();
-    final tripInfos = controller
-        .retrieveSingleBookingresponceModel.value.itemInfos?.air?.tripInfos;
+    final tripInfos = controller.retrieveSingleBookingresponceModel.value
+        .retrieveSingleBookingresponceModel?.itemInfos?.air?.tripInfos;
     return Positioned(
       bottom: 10,
       left: 0,

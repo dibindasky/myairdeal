@@ -9,8 +9,8 @@ import 'package:myairdeal/application/presentation/screens/account/account_scree
 import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/talk_to_us_page.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/widgets/custom_bottom_bar/custom_bottom_bar.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
 
 class ScreenNavbar extends StatelessWidget {
   const ScreenNavbar({super.key});

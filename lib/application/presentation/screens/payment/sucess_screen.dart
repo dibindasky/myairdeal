@@ -155,7 +155,8 @@ class ScreenSuccessPage extends StatelessWidget {
                                   bookingID: controller
                                           .retrieveSingleBookingresponceModel
                                           .value
-                                          .order
+                                          .retrieveSingleBookingresponceModel
+                                          ?.order
                                           ?.bookingId ??
                                       '');
                             },

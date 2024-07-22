@@ -23,8 +23,8 @@ class ScreenTicetCanceallation extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<BookingController>();
     final cancelController = Get.find<TIcketCancellaionCntroller>();
-    final tripInfos = controller
-        .retrieveSingleBookingresponceModel.value.itemInfos?.air?.tripInfos;
+    final tripInfos = controller.retrieveSingleBookingresponceModel.value
+        .retrieveSingleBookingresponceModel?.itemInfos?.air?.tripInfos;
     return Scaffold(
       body: Stack(
         children: [
@@ -55,10 +55,11 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                   child: Stack(
                                     children: [
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 8.0),
+                                        padding: EdgeInsets.only(top: 12.0.w),
                                         child: CustomExpansionTile(
-                                          children: const [TravelersDetails()],
+                                          children: const [
+                                            TravelersDetails(),
+                                          ],
                                           child: Container(
                                             padding: EdgeInsets.all(10.w),
                                             decoration: BoxDecoration(
@@ -113,6 +114,8 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                                 ),
                                                 Expanded(
                                                   child: TicketColumn(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
                                                     label: tripInfos?[index]
                                                             .sI?[((tripInfos[
                                                                             index]
@@ -144,8 +147,6 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                                             ?.name ??
                                                         '',
                                                     isBold: true,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
                                                   ),
                                                 ),
                                               ],

@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:myairdeal/domain/models/search/flight_sort_response_model/status.dart';
 
 import 'trip.dart';
 
@@ -9,12 +8,11 @@ part 'ticket_cancel_request_model.g.dart';
 class TicketCancelRequestModel {
   String? bookingId;
   String? type;
+  String? remarks;
   List<Trip>? trips;
 
-  Status? status;
-  List<Error>? errors;
-
-  TicketCancelRequestModel({this.bookingId, this.type, this.trips});
+  TicketCancelRequestModel(
+      {this.bookingId, this.type, this.trips, this.remarks});
 
   factory TicketCancelRequestModel.fromJson(Map<String, dynamic> json) {
     return _$TicketCancelRequestModelFromJson(json);

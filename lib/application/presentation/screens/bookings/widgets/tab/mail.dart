@@ -20,7 +20,8 @@ class EmailListScreen extends StatelessWidget {
             createdId: Get.find<BookingController>()
                     .retrieveSingleBookingresponceModel
                     .value
-                    .order
+                    .retrieveSingleBookingresponceModel
+                    ?.order
                     ?.bookingId ??
                 '');
       },

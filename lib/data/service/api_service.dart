@@ -96,12 +96,10 @@ class ApiService {
       if (addHeader) {
         final token =
             await SecureStorage.getToken().then((token) => token.token);
-        _dio.options.headers.addAll(
-          {
-            'authorization': "Bearer $token",
-            ...headers ?? {'content-Type': 'application/json'}
-          },
-        );
+        _dio.options.headers.addAll({
+          'authorization': "Bearer $token",
+          ...headers ?? {'content-Type': 'application/json'}
+        });
       } else {
         _dio.options.headers['content-Type'] = 'application/json';
       }

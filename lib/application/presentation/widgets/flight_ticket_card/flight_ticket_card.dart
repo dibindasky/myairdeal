@@ -164,9 +164,6 @@ class FlightTicketCard extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                // (tripInfos?[0].sI?.length ?? 1) - 1 != tripIndex
-                                //     ? kEmpty
-                                //     : const DottedLines(height: 10)
                               ],
                             );
                           },

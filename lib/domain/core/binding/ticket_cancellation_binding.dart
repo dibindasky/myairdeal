@@ -4,6 +4,7 @@ import 'package:myairdeal/application/controller/booking/ticket_cancel_controlle
 class TicketCancellationBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<TIcketCancellaionCntroller>(() => TIcketCancellaionCntroller());
+    Get.lazyPut<TicketCancellationController>(
+        () => TicketCancellationController());
   }
 }

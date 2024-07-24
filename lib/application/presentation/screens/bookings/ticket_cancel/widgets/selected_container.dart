@@ -20,11 +20,11 @@ class SelectedContainers extends StatelessWidget {
       right: 120,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child:
-            GetBuilder<TIcketCancellaionCntroller>(builder: (cancelController) {
+        child: GetBuilder<TicketCancellationController>(
+            builder: (cancelController) {
           return Row(
             children: List.generate(
-              cancelController.selectedItems.length,
+              cancelController.cancelSelectedItems.value.trips?.length ?? 0,
               (index) => Container(
                 margin: EdgeInsets.symmetric(horizontal: 5.w),
                 decoration: BoxDecoration(
@@ -32,29 +32,30 @@ class SelectedContainers extends StatelessWidget {
                   border: Border.all(color: kBlack),
                   borderRadius: kRadius10,
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 7.w),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 4.w),
-                      child: Image.asset(
-                        flightDetailIcon,
-                        height: 13.h,
-                      ),
-                    ),
                     kWidth5,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 4.w),
+                          child: Image.asset(
+                            flightDetailIcon,
+                            height: 13.h,
+                          ),
+                        ),
                         Text(
                             '${tripInfos?[index].sI?[0].da?.city ?? ''}- ${tripInfos?[index].sI?[((tripInfos[index].sI?.length ?? 1) - 1)].aa?.city ?? ''}',
                             style: textStyle1.copyWith(
                                 fontWeight: FontWeight.bold)),
-                        Text('Passengers count - 10',
+                        Text(
+                            'Passengers count - ${cancelController.cancelSelectedItems.value.trips?[index].travellers?.length}',
                             style: textThinStyle1.copyWith(fontSize: 10.sp)),
-                        Text(('Amount'),
-                            style: textThinStyle1.copyWith(fontSize: 10.sp))
+                        kHeight5,
+                        kHeight5
                       ],
                     ),
                   ],

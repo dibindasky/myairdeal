@@ -50,7 +50,7 @@ class FlightInvoiceCard extends StatelessWidget {
                           ?.order
                           ?.bookingId ??
                       '--',
-                  style: textStyle1),
+                  style: textThinStyle1),
             ],
           ),
           const DottedLines(height: 10),
@@ -343,9 +343,7 @@ class FlightInvoiceCard extends StatelessWidget {
             ),
           ),
           kHeight10,
-          // const DottedLines(height: 10),
           const Text('Baggage and Meals'),
-
           kHeight10,
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,

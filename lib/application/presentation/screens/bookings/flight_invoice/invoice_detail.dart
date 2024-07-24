@@ -115,18 +115,19 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                     },
                                     text: 'Call',
                                   ),
-                                  QuickLinksContainer(
-                                    onTap: () {
-                                      bookingController.bookingLoading.value ==
-                                              false
-                                          ? Get.toNamed(Routes.ticketCancel)
-                                          : null;
-                                    },
-                                    text: 'Ticket Cancellation',
-                                  ),
+                                  bookingController.invoiceLoading.value
+                                      ? kEmpty
+                                      : QuickLinksContainer(
+                                          onTap: () {
+                                            Get.toNamed(Routes.ticketCancel);
+                                          },
+                                          text: 'Ticket Cancellation',
+                                        ),
                                   bookingController.selectedBookingTab.value !=
-                                          2
-                                      ? QuickLinksContainer(
+                                              2 &&
+                                          bookingController.invoiceLoading.value
+                                      ? kEmpty
+                                      : QuickLinksContainer(
                                           onTap: () {
                                             raiceController.invoiceDOwnload(
                                                 bookingID: bookingController
@@ -139,7 +140,6 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                           },
                                           text: 'Invoice Download',
                                         )
-                                      : kEmpty,
                                 ],
                               ),
                         kHeight10,

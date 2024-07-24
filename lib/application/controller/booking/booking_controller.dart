@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -75,6 +76,7 @@ class BookingController extends GetxController {
     update();
   }
 
+  /// uncoment [startTimer] after complete meals,seat and baggage
   // start timer for booking section
   void startTimer() {
     // timer.value.cancel();
@@ -200,6 +202,8 @@ class BookingController extends GetxController {
     reviewPriceLoading.value = false;
     if (start) {
       startTimer();
+      Get.find<TravellerController>()
+          .getSeatsAvailable(bookingId: reviewedDetail?.value.bookingId ?? '');
     }
   }
 

@@ -43,8 +43,10 @@ import 'package:myairdeal/domain/core/binding/traveller_controller_binding.dart'
 class GetXRouterConfig {
   static final List<GetPage> routes = [
     GetPage(
+      // bindings: [TravellerBinding(),BookingBinding(),SeatBinding(),FlightSortBinding()],
       binding: AuthBinding(),
       name: Routes.initial,
+      // page: () => const ScreenFlightDetail(),
       page: () => const ScreenSplash(),
     ),
     GetPage(

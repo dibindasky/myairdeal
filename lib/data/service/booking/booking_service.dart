@@ -9,9 +9,9 @@ import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_mo
 import 'package:myairdeal/domain/models/booking/booking_response_model/booking_response_model.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_booking.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
-import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/retrieve_single_bookingresponce_model.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
+import 'package:myairdeal/domain/models/booking/seat_selection_response/seat_selection_response.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
 class BookingService implements BookingRepo {
@@ -164,6 +164,25 @@ class BookingService implements BookingRepo {
       return Left(Failure(message: e.response?.data?['error'] ?? errorMessage));
     } catch (e) {
       log('catch retrieveUpComimgBooking');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SeatSelectionResponse>> getSeatMap(
+      {required RetrieveSingleBookingRequestModel bookingId}) async {
+    try {
+      final responce = await apiService.post(
+        ApiEndPoints.getSeatMap,
+        data: bookingId.toJson(),
+      );
+      log('getSeatMap done');
+      return Right(SeatSelectionResponse.fromJson(responce.data));
+    } on DioException catch (e) {
+      log('DioException getSeatMap ');
+      return Left(Failure(message: e.response?.data?['error'] ?? errorMessage));
+    } catch (e) {
+      log('catch getSeatMap');
       return Left(Failure(message: e.toString()));
     }
   }

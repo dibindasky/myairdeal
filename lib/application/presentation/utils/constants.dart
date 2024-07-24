@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
+import 'package:myairdeal/domain/core/api_endpoints/api_endpoints.dart';
 
 const errorMessage = 'something went wrong, please try again';
 
@@ -104,6 +105,11 @@ Color findInvoiceColor(FlightTicketInvoiceEnum flightTicketInvoiceEnum) {
     default:
       return kBlueLightShade;
   }
+}
+
+String getAirlineLogo(String code) {
+  return ApiEndPoints.baseUrl +
+      ApiEndPoints.airllineLogo.replaceFirst('{airlinecode}', code);
 }
 
 // NetWork image

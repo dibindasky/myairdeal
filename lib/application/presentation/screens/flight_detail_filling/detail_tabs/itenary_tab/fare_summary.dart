@@ -292,7 +292,9 @@ class FareSummary extends StatelessWidget {
                                         : 'Continue',
                                 onTap: () {
                                   Get.find<TravellerController>()
-                                      .changeDetailEnterTab(1);
+                                      .changeDetailEnterTab(1,
+                                          bookingId: controller
+                                              .reviewedDetail?.value.bookingId);
                                 },
                               ),
                             ),

@@ -17,11 +17,15 @@ class ApiEndPoints {
   static const String reviewPriceDetails = '/booking/review-price';
   static const String completeBooking = '/booking/complete';
   static const String airportRecentSearch = '/search/airportSearchHistory';
-  static const airportSearchWithCountryCode =
+  static const String airportSearchWithCountryCode =
       '/search/airport-country-code?countrycode=';
-  static const raiceTicket = '/ticket/create-ticket';
-  static const getTickets = '/ticket/view-all-tickets/{created_d}';
-  static const invoiceDownLoad = '/user/generate-invoice/{booking_id}';
-  static const getAllPassengers = '/user/all-passengers';
-  static const addPassengers = '/user/add-passenger';
+  static const String raiceTicket = '/ticket/create-ticket';
+  static const String getTickets = '/ticket/view-all-tickets/{created_d}';
+  static const String invoiceDownLoad = '/user/generate-invoice/{booking_id}';
+  static const String getAllPassengers = '/user/all-passengers';
+  static const String addPassengers = '/user/add-passenger';
+  static const String getSeatMap = '/booking/seat-map';
+
+  // change {airlinecode} for logo
+  static const String airllineLogo = "/uploads/AirlinesLogo/{airlinecode}.png";
 }

@@ -7,6 +7,7 @@ import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_bo
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
+import 'package:myairdeal/domain/models/booking/seat_selection_response/seat_selection_response.dart';
 
 abstract class BookingRepo {
   Future<Either<Failure, GetSingleBooking>> retrieveSinglleBooking(
@@ -20,4 +21,6 @@ abstract class BookingRepo {
       {required ReviewPriceDetailIdModel reviewPriceDetailIdModel});
   Future<Either<Failure, BookingResponseModel>> bookTicket(
       {required BookTicketModel bookTicketModel});
+  Future<Either<Failure, SeatSelectionResponse>> getSeatMap(
+      {required RetrieveSingleBookingRequestModel bookingId});
 }

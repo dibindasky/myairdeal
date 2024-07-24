@@ -31,7 +31,6 @@ class BookingFilePicker extends StatelessWidget {
           text: 'Browse',
           onTap: () async {},
         ),
-        kHeight10
       ],
     );
   }

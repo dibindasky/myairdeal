@@ -69,6 +69,14 @@ class DateFormating {
     return '$formattedDate, $formattedTime';
   }
 
+  // 2020-10-12
+  static String formatYearMonthDate(String date) {
+    if (date.isEmpty) return '';
+    DateTime dateTime = DateTime.parse(date);
+    String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+    return formattedDate;
+  }
+
   static String convertMinutesToHoursMinutes(int totalMinutes) {
     int days = totalMinutes ~/ 1440;
     int hours = (totalMinutes % 1440) ~/ 60;
@@ -130,13 +138,12 @@ class DateFormating {
 
   // return DateTime from string yyyy-mm-dd
   static DateTime? convertStringToDateTime(String dateString) {
-  try {
-    return DateTime.parse(dateString);
-  } catch (e) {
-    return null;
+    try {
+      return DateTime.parse(dateString);
+    } catch (e) {
+      return null;
+    }
   }
-}
-
 
   // Will return the abbreviated month name
   static String getMonthAbbreviation(int month) {

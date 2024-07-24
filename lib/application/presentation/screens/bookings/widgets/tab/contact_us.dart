@@ -92,7 +92,7 @@ class ImageBuilder extends StatelessWidget {
     return SizedBox(
       height: 70.h,
       child: ListView.builder(
-        itemCount: 0,
+        itemCount: 1,
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         itemBuilder: (context, index) => Container(

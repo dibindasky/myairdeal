@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/traveller_info.dart';
 
 part 'traveller.g.dart';
 
@@ -14,4 +15,19 @@ class Traveller {
   }
 
   Map<String, dynamic> toJson() => _$TravellerToJson(this);
+
+  //For identifying diffrent traveler objects
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Traveller && other.fn == fn && other.ln == ln;
+  }
+
+  @override
+  int get hashCode => fn.hashCode ^ ln.hashCode;
+
+  static Traveller getTraveler(TravellerInfo tra) {
+    return Traveller(fn: tra.fN, ln: tra.lN);
+  }
 }

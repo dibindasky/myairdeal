@@ -18,7 +18,7 @@ import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
 class BookingController extends GetxController {
   BookingRepo bookingRepo = BookingService();
-
+  //Controller for page comes bottom 
   final ScrollController scrollController = ScrollController();
 
   // loading for review pice for booking

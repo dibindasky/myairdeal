@@ -9,7 +9,7 @@ import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_requ
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_responce/ticket_cancel_responce.dart';
 import 'package:myairdeal/domain/repository/service/cancel_repo.dart';
 
-class TIcketCancellaionCntroller extends GetxController {
+class TicketCancellationController extends GetxController {
   CancelRepo cancelRepo = CancelService();
   RxBool isLoading = false.obs;
   RxBool hasError = false.obs;
@@ -17,62 +17,116 @@ class TIcketCancellaionCntroller extends GetxController {
   TextEditingController cancellationRason = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  RxList<TicketCancelRequestModel> selectedItems =
-      <TicketCancelRequestModel>[].obs;
+  Rx<TicketCancelRequestModel> cancelSelectedItems =
+      TicketCancelRequestModel().obs;
   Rx<TicketCancelResponce> ticketData = TicketCancelResponce().obs;
 
-  void addItem(TicketCancelRequestModel item) {
-    final existingIndex = selectedItems
-        .indexWhere((element) => element.bookingId == item.bookingId);
+  void addTraveler(Trip trip, Traveller traveler) {
+    int tripIndex = cancelSelectedItems.value.trips?.indexWhere(
+            (existingTrip) =>
+                existingTrip.src == trip.src &&
+                existingTrip.dest == trip.dest &&
+                existingTrip.departureDate == trip.departureDate) ??
+        -1;
 
-    if (existingIndex != -1) {
-      selectedItems.removeAt(existingIndex);
+    if (tripIndex == -1) {
+      trip.travellers = [traveler];
+      cancelSelectedItems.value.trips ??= [];
+      cancelSelectedItems.value.trips!.add(trip);
     } else {
-      selectedItems.add(item);
+      cancelSelectedItems.value.trips![tripIndex].travellers ??= [];
+      cancelSelectedItems.value.trips![tripIndex].travellers!.add(traveler);
     }
+
     update();
+  }
+
+  //
+  void toggleTripSelection(Trip trip) {
+    if (cancelSelectedItems.value.trips!.contains(trip)) {
+      cancelSelectedItems.update((val) {
+        val?.trips?.remove(trip);
+      });
+      update();
+    } else {
+      cancelSelectedItems.update((val) {
+        val?.trips?.add(trip);
+      });
+      update();
+    }
+  }
+
+  bool isTripSelected(Trip trip) {
+    if (cancelSelectedItems.value.trips != null) {
+      return cancelSelectedItems.value.trips!.contains(trip);
+    }
+    return false;
+  }
+
+  // void removeTraveler(Trip trip, Traveller traveler) {
+  //   int tripIndex = cancelSelectedItems.value.trips?.indexWhere(
+  //           (existingTrip) =>
+  //               existingTrip.src == trip.src &&
+  //               existingTrip.dest == trip.dest &&
+  //               existingTrip.departureDate == trip.departureDate) ??
+  //       -1;
+
+  //   if (tripIndex != -1) {
+  //     cancelSelectedItems.value.trips![tripIndex].travellers?.removeWhere(
+  //         (existingTraveler) =>
+  //             existingTraveler.fn == traveler.fn &&
+  //             existingTraveler.ln == traveler.ln);
+
+  //     if (cancelSelectedItems.value.trips![tripIndex].travellers?.isEmpty ??
+  //         true) {
+  //       cancelSelectedItems.value.trips!.removeAt(tripIndex);
+  //     }
+  //   }
+
+  //   update();
+  // }
+
+  bool isTravelerSelected(Trip trip, Traveller traveler) {
+    int tripIndex = cancelSelectedItems.value.trips?.indexWhere(
+            (existingTrip) =>
+                existingTrip.src == trip.src &&
+                existingTrip.dest == trip.dest &&
+                existingTrip.departureDate == trip.departureDate) ??
+        -1;
+
+    if (tripIndex == -1) return false;
+
+    return cancelSelectedItems.value.trips![tripIndex].travellers?.any(
+            (existingTraveler) =>
+                existingTraveler.fn == traveler.fn &&
+                existingTraveler.ln == traveler.ln) ??
+        false;
   }
 
   var tripCancelErrorMessage = ''.obs;
   var selectedTravelers = <Traveller>[].obs;
 
-  void cancelTicket(String bookingId, String type, List<Trip> trips) async {
-    isLoading.value = true;
-    hasError.value = false;
-
-    try {
-      // Assuming you have a method to perform the actual cancellation request
-      ticketCancel(TicketCancelRequestModel(
-        bookingId: bookingId,
-        type: type,
-        trips: trips,
-      ));
-    } catch (error) {
-      tripCancelErrorMessage.value = error.toString();
-      hasError.value = true;
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  void ticketCancel(TicketCancelRequestModel ticketCancelRequestModel) async {
+  void ticketCancel() async {
     hasError.value = false;
     isLoading.value = false;
+
     final data = await cancelRepo.cancelTicket(
-        ticketCancelRequestModel: ticketCancelRequestModel);
+        ticketCancelRequestModel: cancelSelectedItems.value);
     data.fold(
       (l) {
         tripJackErrorMessage.value = l.message ?? errorMessage;
+        isLoading.value = false;
+        hasError.value = true;
+        cancellationRason.clear();
+        update();
         Get.snackbar('Failure', l.message ?? errorMessage,
             snackPosition: SnackPosition.BOTTOM,
             forwardAnimationCurve: Curves.bounceIn,
             backgroundColor: kRed,
             colorText: kWhite);
-        isLoading.value = false;
-        hasError.value = true;
-        update();
       },
       (r) {
+        cancellationRason.clear();
         hasError.value = false;
         isLoading.value = false;
         ticketData.value = r;

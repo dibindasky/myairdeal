@@ -6,7 +6,6 @@ import 'package:myairdeal/application/controller/booking/ticket_cancel_controlle
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
-import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/ticket_cancel_request_model.dart';
 
 class PriceContainer extends StatefulWidget {
   const PriceContainer({super.key});
@@ -15,11 +14,11 @@ class PriceContainer extends StatefulWidget {
   _PriceContainerState createState() => _PriceContainerState();
 }
 
+final bookingController = Get.find<BookingController>();
+final cancelController = Get.find<TicketCancellationController>();
+
 class _PriceContainerState extends State<PriceContainer> {
   bool _isExpanded = false;
-
-  final cancelController = Get.find<TIcketCancellaionCntroller>();
-  final bookingController = Get.find<BookingController>();
 
   void _toggleExpand() {
     setState(() {
@@ -181,16 +180,14 @@ class _PriceContainerState extends State<PriceContainer> {
             kHeight10,
             ElevatedButton(
               onPressed: () {
-                TicketCancelRequestModel ticketCancelRequestModel =
-                    TicketCancelRequestModel(
-                        bookingId: bookingController
-                            .retrieveSingleBookingresponceModel
-                            .value
-                            .retrieveSingleBookingresponceModel
-                            ?.order
-                            ?.bookingId,
-                        type: 'CANCELLATION');
-                cancelController.ticketCancel(ticketCancelRequestModel);
+                cancelController.cancelSelectedItems.value.bookingId =
+                    bookingController.retrieveSingleBookingresponceModel.value
+                        .retrieveSingleBookingresponceModel?.order?.bookingId;
+                cancelController.cancelSelectedItems.value.remarks =
+                    cancelController.cancellationRason.text;
+                cancelController.cancelSelectedItems.value.type =
+                    'CANCELLATION';
+                cancelController.ticketCancel();
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(

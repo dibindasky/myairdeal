@@ -176,7 +176,7 @@ class BookingService implements BookingRepo {
         ApiEndPoints.getSeatMap,
         data: bookingId.toJson(),
       );
-      log('getSeatMap done');
+      log('getSeatMap done \n data => ${responce.data}');
       return Right(SeatSelectionResponse.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException getSeatMap ');

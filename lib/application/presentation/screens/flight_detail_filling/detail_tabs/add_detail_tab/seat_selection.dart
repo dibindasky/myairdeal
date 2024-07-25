@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/bottom_button..dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
 
 class SelectSeatContainer extends StatelessWidget {
   const SelectSeatContainer({super.key});
@@ -16,176 +21,261 @@ class SelectSeatContainer extends StatelessWidget {
           ? const Center(
               child: CircularProgressIndicator(color: kBluePrimary),
             )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Select seat', style: textStyle1),
-                kHeight15,
-                Wrap(
+          : controller.keysList.isEmpty
+              ? Column(
                   children: [
-                    ...List.generate(
-                      5,
-                      (index) => Column(
+                    kHeight50,
+                    CircleAvatar(
+                      backgroundColor: kRed.withOpacity(0.3),
+                      child: const RotatedBox(
+                        quarterTurns: 1,
+                        child: Icon(Iconsax.check),
+                      ),
+                    ),
+                    kHeight10,
+                    const Text('Seat Selection Not Applicable'),
+                    kHeight50,
+                    const BottomButton(),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Select seat', style: textStyle1),
+                    kHeight15,
+                    const FlightsListForSeatSelection(),
+                    kHeight15,
+                    const SeatDemoViewer(),
+                    const SizedBox(height: 20),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 30,
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      decoration: BoxDecoration(
+                          boxShadow: boxShadow1,
+                          color: kWhite,
+                          borderRadius: kRadius10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          kHeight5,
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 6.w),
-                            decoration: BoxDecoration(
-                              borderRadius: kRadius10,
-                              color: kRed.withOpacity(.2),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 18.w, vertical: 3.w),
-                              child: const Text('200'),
-                            ),
+                          kHeight10,
+                          Text('Class',
+                              style:
+                                  textThinStyle1.copyWith(color: kBluePrimary)),
+                          Text('Economy',
+                              style: textStyle1.copyWith(color: kBlueDark)),
+                          kHeight10,
+                          Obx(
+                            () {
+                              return controller.seatLoader.value
+                                  ? const Skeleton(
+                                      crossAxisCount: 7, itemCount: 70)
+                                  : SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      physics: const BouncingScrollPhysics(),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: List.generate(
+                                          controller.row.value,
+                                          (row) {
+                                            return Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: List.generate(
+                                                controller.col.value,
+                                                (col) {
+                                                  return Obx(() {
+                                                    final seat = controller
+                                                        .seatList[row][col];
+                                                    final bool selected = (controller
+                                                                    .selectedSeats[
+                                                                controller
+                                                                    .selectedSeatFlightKey
+                                                                    .value] ??
+                                                            <String>[])
+                                                        .contains(seat.code);
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        if (!(seat.isBooked ??
+                                                            true)) {
+                                                          controller.selectSeat(
+                                                              passengerIndex: 0,
+                                                              code: seat.code ??
+                                                                  '');
+                                                        }
+                                                      },
+                                                      child: AnimatedContainer(
+                                                        duration:
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    300),
+                                                        margin: EdgeInsets.only(
+                                                            left: seat.freeSpace ??
+                                                                    false
+                                                                ? 0
+                                                                : 5,
+                                                            right: seat
+                                                                        .freeSpace ??
+                                                                    false
+                                                                ? 0
+                                                                : 5,
+                                                            top:
+                                                                seat.freeSpace ??
+                                                                        false
+                                                                    ? 0
+                                                                    : 5,
+                                                            bottom:
+                                                                seat.freeSpace ??
+                                                                        false
+                                                                    ? 0
+                                                                    : 5),
+                                                        height: seat.freeSpace ??
+                                                                false
+                                                            ? 0
+                                                            : seat.isLegroom ??
+                                                                    false
+                                                                ? 30.h
+                                                                : 25.h,
+                                                        width: 25.w,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: selected
+                                                              ? kGreen
+                                                              : seat.freeSpace ??
+                                                                      false
+                                                                  ? knill
+                                                                  : (seat.isBooked ??
+                                                                          true)
+                                                                      ? kGrey
+                                                                      : kWhite,
+                                                          border: seat.isBooked ??
+                                                                  true
+                                                              ? null
+                                                              : Border.all(
+                                                                  color: seat.freeSpace ??
+                                                                          false
+                                                                      ? knill
+                                                                      : kBlueDark),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                        ),
+                                                        child:
+                                                            (seat.freeSpace ??
+                                                                    false)
+                                                                ? kEmpty
+                                                                : Column(
+                                                                    children: [
+                                                                      seat.isLegroom ??
+                                                                              false
+                                                                          ? Container(
+                                                                              height: 5.h,
+                                                                              decoration: const BoxDecoration(
+                                                                                color: kIndigo,
+                                                                                borderRadius: BorderRadius.only(
+                                                                                  topLeft: Radius.circular(4),
+                                                                                  topRight: Radius.circular(4),
+                                                                                ),
+                                                                              ),
+                                                                            )
+                                                                          : kEmpty,
+                                                                      const Spacer(),
+                                                                      (seat.isBooked ??
+                                                                              true)
+                                                                          ? kEmpty
+                                                                          : FittedBox(
+                                                                              child: Padding(
+                                                                              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 3),
+                                                                              child: Column(
+                                                                                children: [
+                                                                                  Text(
+                                                                                    selected
+                                                                                        ? seat.seatNo ?? ''
+                                                                                        : seat.amount == null || seat.amount == 0
+                                                                                            ? 'Free'
+                                                                                            : '₹ ${seat.amount ?? '0'}',
+                                                                                    style: textThinStyle1.copyWith(color: selected ? kWhite : null, fontSize: 7.sp),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ))
+                                                                    ],
+                                                                  ),
+                                                      ),
+                                                    );
+                                                  });
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    );
+                            },
                           ),
+                          kHeight10
                         ],
                       ),
                     ),
+                    kHeight20,
+                    const BottomButton(),
+                    kHeight15
                   ],
-                ),
-                kHeight15,
-                const SeatDemoViewer(),
-                const SizedBox(height: 20),
-                Container(
-                  width: MediaQuery.of(context).size.width - 30,
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
-                  decoration: BoxDecoration(
-                      boxShadow: boxShadow1,
-                      color: kWhite,
-                      borderRadius: kRadius10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      kHeight10,
-                      Text('Class',
-                          style: textThinStyle1.copyWith(color: kBluePrimary)),
-                      Text('Economy',
-                          style: textStyle1.copyWith(color: kBlueDark)),
-                      kHeight10,
-                      Obx(
-                        () {
-                          return SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: List.generate(
-                                controller.row.value,
-                                (row) {
-                                  return Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: List.generate(
-                                      controller.col.value,
-                                      (col) {
-                                        final seat =
-                                            controller.seatList[row][col];
-                                        return Container(
-                                          margin: EdgeInsets.only(
-                                              left: seat.freeSpace ?? false
-                                                  ? 0
-                                                  : 5,
-                                              right: seat.freeSpace ?? false
-                                                  ? 0
-                                                  : 5,
-                                              top: seat.freeSpace ?? false
-                                                  ? 0
-                                                  : 5,
-                                              bottom: seat.freeSpace ?? false
-                                                  ? 0
-                                                  : 5),
-                                          height: seat.freeSpace ?? false
-                                              ? 0
-                                              : seat.isLegroom ?? false
-                                                  ? 30.h
-                                                  : 25.h,
-                                          width: 25.w,
-                                          decoration: BoxDecoration(
-                                            color: seat.freeSpace ?? false
-                                                ? knill
-                                                : (seat.isBooked ?? true)
-                                                    ? kGrey
-                                                    : kWhite,
-                                            border: seat.isBooked ?? true
-                                                ? null
-                                                : Border.all(
-                                                    color:
-                                                        seat.freeSpace ?? false
-                                                            ? knill
-                                                            : kBlueDark),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: (seat.freeSpace ??
-                                                  false ||
-                                                      (seat.isBooked ?? true))
-                                              ? kEmpty
-                                              : Column(
-                                                  children: [
-                                                    seat.isLegroom ?? false
-                                                        ? Container(
-                                                            height: 5.h,
-                                                            decoration:
-                                                                const BoxDecoration(
-                                                              color: kIndigo,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        4),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        4),
-                                                              ),
-                                                            ),
-                                                          )
-                                                        : kEmpty,
-                                                    const Spacer(),
-                                                    FittedBox(
-                                                        child: Padding(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 2,
-                                                          vertical: 3),
-                                                      child: Column(
-                                                        children: [
-                                                          Text(
-                                                            seat.amount ==
-                                                                        null ||
-                                                                    seat.amount ==
-                                                                        0
-                                                                ? 'Free'
-                                                                : '₹ ${seat.amount ?? '0'}',
-                                                            style: textThinStyle1
-                                                                .copyWith(
-                                                                    fontSize:
-                                                                        7.sp),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ))
-                                                  ],
-                                                ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          );
-                        },
+                );
+    });
+  }
+}
+
+class FlightsListForSeatSelection extends StatelessWidget {
+  const FlightsListForSeatSelection({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final travellerController = Get.find<TravellerController>();
+    final bookingController = Get.find<BookingController>();
+    return Obx(() {
+      return travellerController.seatIsLoading.value
+          ? HorizontalShimmerSkeleton(
+              itemCount: 4,
+              scrollDirection: Axis.horizontal,
+              height: 30.h,
+              width: 60.w,
+              totalHeight: 30.h,
+            )
+          : Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                ...List.generate(
+                  travellerController.keysList.length,
+                  (index) {
+                    final selected =
+                        travellerController.selectedSeatFlightKey.value ==
+                            travellerController.keysList[index];
+                    return GestureDetector(
+                      onTap: () {
+                        travellerController.chnageSelectedFlightUsingId(
+                            travellerController.keysList[index]);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 6.w),
+                        decoration: BoxDecoration(
+                            borderRadius: kRadius10,
+                            color: selected
+                                ? kBluePrimary.withOpacity(0.6)
+                                : kRed.withOpacity(0.3),
+                            boxShadow: selected ? boxShadow2 : boxShadow3),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: selected ? 20.w : 18.w,
+                              vertical: selected ? 5.w : 3.w),
+                          child: Text(travellerController.keysList[index]),
+                        ),
                       ),
-                      kHeight10
-                    ],
-                  ),
+                    );
+                  },
                 ),
-                kHeight10,
-                kHeight20,
-                // const BottomButton(),
-                kHeight15
               ],
             );
     });
@@ -306,34 +396,3 @@ class SeatDemoViewer extends StatelessWidget {
     );
   }
 }
-
-//  AnimatedContainer(
-//                                   duration: const Duration(milliseconds: 300),
-//                                   margin: EdgeInsets.only(
-//                                       left: col == 3 ? 20 : 10,
-//                                       right: col == 2 ? 20 : 10,
-//                                       top: 5,
-//                                       bottom: 5),
-//                                   height: 35.h,
-//                                   width: 30.w,
-//                                   decoration: BoxDecoration(
-//                                     color: controller.getSeatColor(row, col),
-//                                     border: controller.seatLayout[row][col] ==
-//                                             'free'
-//                                         ? Border.all(color: kBlueDark)
-//                                         : null,
-//                                     borderRadius: BorderRadius.circular(5),
-//                                   ),
-//                                   child: controller.selectedSeats[row][col]
-//                                       ? Center(
-//                                           child: Text(
-//                                             '${String.fromCharCode(65 + col)}${row + 1}',
-//                                             style: textThinStyle1.copyWith(
-//                                                 color: controller
-//                                                         .selectedSeats[row][col]
-//                                                     ? kWhite
-//                                                     : kBlack),
-//                                           ),
-//                                         )
-//                                       : null,
-//                                 )

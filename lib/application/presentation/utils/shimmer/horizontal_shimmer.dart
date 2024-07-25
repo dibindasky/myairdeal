@@ -10,6 +10,7 @@ class HorizontalShimmerSkeleton extends StatelessWidget {
   final double width;
   final double paddingvertical;
   final double paddingHorizontal;
+  final double totalHeight;
 
   const HorizontalShimmerSkeleton({
     Key? key,
@@ -17,6 +18,7 @@ class HorizontalShimmerSkeleton extends StatelessWidget {
     required this.scrollDirection,
     this.height = 200,
     this.width = 100,
+    this.totalHeight=125,
     this.paddingHorizontal = 0,
     this.paddingvertical = 0,
   }) : super(key: key);
@@ -27,7 +29,7 @@ class HorizontalShimmerSkeleton extends StatelessWidget {
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: SizedBox(
-        height: scrollDirection == Axis.vertical ? null : 125,
+        height: scrollDirection == Axis.vertical ? null : totalHeight,
         child: ListView.separated(
           shrinkWrap: scrollDirection == Axis.vertical ? true : false,
           separatorBuilder: (context, index) =>

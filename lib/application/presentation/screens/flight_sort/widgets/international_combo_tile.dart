@@ -149,7 +149,9 @@ class InternationalMutliComboTile extends StatelessWidget {
                   Get.find<TravellerController>().updatePassengersNumber(
                       controller.adultCount.value +
                           controller.childrenCount.value +
-                          controller.infantCount.value);
+                          controller.infantCount.value,
+                      controller.adultCount.value +
+                          controller.childrenCount.value);
                   // book ticket for international mutli city and round trip
                   Get.find<BookingController>().reviewPriceDetailChecking(
                       reviewPriceDetailIdModel:

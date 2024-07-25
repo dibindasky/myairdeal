@@ -58,7 +58,8 @@ class DomesticTripsAndOneWayInternationalTile extends StatelessWidget {
               Get.find<TravellerController>().updatePassengersNumber(
                   controller.adultCount.value +
                       controller.childrenCount.value +
-                      controller.infantCount.value);
+                      controller.infantCount.value,controller.adultCount.value +
+                      controller.childrenCount.value);
               Get.find<BookingController>().reviewPriceDetailChecking(
                   reviewPriceDetailIdModel: ReviewPriceDetailIdModel(priceIds: [
                 controller

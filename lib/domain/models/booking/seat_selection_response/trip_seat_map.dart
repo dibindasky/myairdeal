@@ -4,6 +4,7 @@ part 'trip_seat_map.g.dart';
 
 @JsonSerializable()
 class TripSeatMap {
+  @JsonKey(name: 'tripSeat')
   Map<String, dynamic>? tripSeats;
 
   TripSeatMap({this.tripSeats});

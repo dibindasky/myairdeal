@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
@@ -68,6 +70,7 @@ class TravellerController extends GetxController {
 
   // total number of passengers
   RxInt passengerLength = 1.obs;
+  RxInt passengerLengthWithoutInfant = 1.obs;
 
   /// list responsible for entering the passenger details
   RxList<TravellerInfo?> passengerDetails =
@@ -137,10 +140,11 @@ class TravellerController extends GetxController {
   }
 
   // update the passenger count from other controller for checking
-  void updatePassengersNumber(int number) {
+  void updatePassengersNumber(int number, int passengerLengthWithoutInfant) {
     passengerLength.value = number;
     selectedMainTab.value = 0;
     selectedAddDetailsStep.value = 0;
+    this.passengerLengthWithoutInfant.value = passengerLengthWithoutInfant;
     update();
   }
 
@@ -175,6 +179,8 @@ class TravellerController extends GetxController {
       selectedAddDetailsStep.value += 1;
       update();
       return;
+    } else if (selectedAddDetailsStep.value == 1) {
+      chnageSelectedFlightToNext();
     } else if (selectedAddDetailsStep.value < totalSubStepLength - 1) {
       selectedAddDetailsStep.value += 1;
       update();
@@ -272,46 +278,93 @@ class TravellerController extends GetxController {
   }
 
   // selectedSeats
-  Map<int, RxList<String>> selectedSeats = {};
+  Map<String, RxList<String>> selectedSeats = {};
   // selected flight id
   RxString selectedSeatFlightKey = ''.obs;
+  RxList<String> keysList = <String>[].obs;
+  RxBool seatLoader = false.obs;
 
-  void selectSeat({required int passengerIndex, required String code}) {}
+  // select seats for each flights
+  void selectSeat({required int passengerIndex, required String code}) {
+    if (selectedSeats[selectedSeatFlightKey.value]!.contains(code)) {
+      final index = selectedSeats[selectedSeatFlightKey.value]!
+          .lastIndexWhere((element) => element == code);
+      selectedSeats[selectedSeatFlightKey.value]![index] = '';
+    } else if (selectedSeats[selectedSeatFlightKey.value]!.contains('')) {
+      final index = selectedSeats[selectedSeatFlightKey.value]!
+          .lastIndexWhere((element) => element == '');
+      selectedSeats[selectedSeatFlightKey.value]![index] = code;
+    }
+  }
+
+  void chnageSelectedFlightUsingId(String id) {
+    selectedSeatFlightKey.value = id;
+    buildSeatUI();
+  }
+
+  void chnageSelectedFlightToNext() {
+    if (keysList.isEmpty) {
+      selectedAddDetailsStep.value += 1;
+      update();
+      return;
+    }
+    int index = keysList
+        .indexWhere((element) => element == selectedSeatFlightKey.value);
+    if (index == keysList.length - 1 || index == -1) {
+      selectedAddDetailsStep.value += 1;
+      update();
+    } else {
+      selectedSeatFlightKey.value = keysList[index + 1];
+      buildSeatUI();
+    }
+  }
+
+  void buildSeatUI() {
+    seatLoader.value = true;
+    row.value = seatsAvilable[selectedSeatFlightKey.value]?.sData?.row ?? 0;
+    col.value = seatsAvilable[selectedSeatFlightKey.value]?.sData?.column ?? 0;
+    seatList = RxList.generate(row.value,
+        (i) => List.generate(col.value, (j) => SInfo(freeSpace: true)));
+    for (SInfo s
+        in seatsAvilable[selectedSeatFlightKey.value]?.sInfo ?? <SInfo>[]) {
+      seatList[s.seatPosition!.row! - 1][s.seatPosition!.column! - 1] = s;
+    }
+    if (selectedSeats[selectedSeatFlightKey.value] == null) {
+      selectedSeats[selectedSeatFlightKey.value] = RxList.generate(
+        passengerLengthWithoutInfant.value,
+        (index) => '',
+      );
+    }
+    Timer(const Duration(milliseconds: 500), () {
+      seatLoader.value = false;
+    });
+  }
 
   void getSeatsAvailable({required String bookingId}) async {
     seatList.value = [];
     seatIsLoading.value = true;
-    // seatsAvilable['756'] = TripSeatsInfo.fromJson(((seatMap['tripSeatMap']
-    //     as Map<String, dynamic>)['tripSeat']!['756']) as Map<String, dynamic>);
-    // row.value = seatsAvilable['756']?.sData?.row ?? 0;
-    // col.value = seatsAvilable['756']?.sData?.column ?? 0;
-    // seatList = RxList.generate(row.value,
-    //     (i) => List.generate(col.value, (j) => SInfo(freeSpace: true)));
-    // for (SInfo s in seatsAvilable['756']?.sInfo ?? <SInfo>[]) {
-    //   print(s.seatPosition?.toJson());
-    //   seatList[s.seatPosition!.row! - 1][s.seatPosition!.column! - 1] = s;
-    // }
-
+    keysList.value = [];
+    selectedSeats = {};
     seatsAvilable = <String, TripSeatsInfo>{}.obs;
     final result = await bookingRepo.getSeatMap(
         bookingId: RetrieveSingleBookingRequestModel(bookingId: bookingId));
     result.fold((l) => null, (r) {
-      final List<String> keysList =
-          r.tripSeatMap?.tripSeats?.keys.toList() ?? [];
+      keysList.value = r.tripSeatMap?.tripSeats?.keys.toList() ?? <String>[];
+      print('number of keys => ${keysList.length}');
       for (var element in keysList) {
         seatsAvilable[element] = TripSeatsInfo.fromJson(
             r.tripSeatMap?.tripSeats?[element] ?? <String, dynamic>{});
       }
       if (seatsAvilable.isNotEmpty) {
-        row.value = seatsAvilable[keysList.first]?.sData?.row ?? 0;
-        col.value = seatsAvilable[keysList.first]?.sData?.column ?? 0;
-
-        seatList = RxList.generate(row.value,
-            (i) => List.generate(col.value, (j) => SInfo(freeSpace: true)));
-        for (SInfo s in seatsAvilable[keysList.first]?.sInfo ?? <SInfo>[]) {
-          seatList[s.seatPosition!.row! - 1][s.seatPosition!.column! - 1] = s;
-        }
+        // row.value = seatsAvilable[keysList.first]?.sData?.row ?? 0;
+        // col.value = seatsAvilable[keysList.first]?.sData?.column ?? 0;
+        // seatList = RxList.generate(row.value,
+        //     (i) => List.generate(col.value, (j) => SInfo(freeSpace: true)));
+        // for (SInfo s in seatsAvilable[keysList.first]?.sInfo ?? <SInfo>[]) {
+        //   seatList[s.seatPosition!.row! - 1][s.seatPosition!.column! - 1] = s;
+        // }
         selectedSeatFlightKey.value = keysList.first;
+        buildSeatUI();
       }
     });
     seatIsLoading.value = false;

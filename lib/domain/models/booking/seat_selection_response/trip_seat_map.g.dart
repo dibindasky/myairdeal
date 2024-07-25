@@ -7,10 +7,10 @@ part of 'trip_seat_map.dart';
 // **************************************************************************
 
 TripSeatMap _$TripSeatMapFromJson(Map<String, dynamic> json) => TripSeatMap(
-      tripSeats: json['tripSeats'] as Map<String, dynamic>?,
+      tripSeats: json['tripSeat'] as Map<String, dynamic>?,
     );
 
 Map<String, dynamic> _$TripSeatMapToJson(TripSeatMap instance) =>
     <String, dynamic>{
-      'tripSeats': instance.tripSeats,
+      'tripSeat': instance.tripSeats,
     };

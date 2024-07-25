@@ -34,6 +34,7 @@ class QuickLinksContainer extends StatelessWidget {
                 ),
               ),
               Container(
+                height: 35.w,
                 width: 35.w,
                 decoration: BoxDecoration(
                     color: kBlue.withOpacity(0.5),

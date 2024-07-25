@@ -61,8 +61,8 @@ class ScreenFlightTicketSort extends StatelessWidget {
                   ? Container(
                       margin: EdgeInsets.only(top: 100.h),
                       child: const Center(
-                          child: CircularProgressIndicator(
-                              color: kBluePrimary)))
+                          child:
+                              CircularProgressIndicator(color: kBluePrimary)))
                   : const TicketsListSorted(),
               kHeight20
             ],

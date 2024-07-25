@@ -140,6 +140,7 @@ class AuthController extends GetxController {
     isLoading.value = true;
     hasError = false;
     update();
+    log(replaceWhiteSpace);
     final data = await authRepo.verifyOTP(
         otpVerifyModel: OtpVerifyModel(
       phone: replaceWhiteSpace,

@@ -539,7 +539,7 @@ class FlightSortController extends GetxController {
 // auto scroll the list in the top showing selection accoring to the selection of tab
   void changeSelectedTripIndex(int index) {
     selectedTripListIndex.value = index;
-    if (index > 1 && searchList.length>2) {
+    if (index > 1 && searchList.length > 2) {
       final onePotion = flightSortController.position.maxScrollExtent /
           (selectedFlights.length);
       flightSortController.animateTo(

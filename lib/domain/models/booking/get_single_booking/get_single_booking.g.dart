@@ -16,10 +16,14 @@ GetSingleBooking _$GetSingleBookingFromJson(Map<String, dynamic> json) =>
           ? null
           : RetrieveSingleBookingresponceModel.fromJson(
               json['data'] as Map<String, dynamic>),
+      amendment: (json['amendment'] as List<dynamic>?)
+          ?.map((e) => Amendment.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$GetSingleBookingToJson(GetSingleBooking instance) =>
     <String, dynamic>{
+      'amendment': instance.amendment,
       'searchQuery': instance.searchQuery,
       'data': instance.retrieveSingleBookingresponceModel,
     };

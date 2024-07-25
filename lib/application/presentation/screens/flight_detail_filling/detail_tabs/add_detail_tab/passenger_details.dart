@@ -69,9 +69,9 @@ class PassengerDetailsContainer extends StatelessWidget {
                       Obx(
                         () => controller.passengerDetails[index] != null
                             ? Expanded(
-                              child: Text('${controller.passengerDetails[index]!.ti ??
-                                      ''} ${controller.passengerDetails[index]!.fN ?? ''} ${controller.passengerDetails[index]!.lN ?? ''}'),
-                            )
+                                child: Text(
+                                    '${controller.passengerDetails[index]!.ti ?? ''} ${controller.passengerDetails[index]!.fN ?? ''} ${controller.passengerDetails[index]!.lN ?? ''}'),
+                              )
                             : Text((searchController.adultCount.value) > index
                                 ? "Adult ${index + 1}"
                                 : (searchController.adultCount.value +
@@ -93,7 +93,7 @@ class PassengerDetailsContainer extends StatelessWidget {
                         () => controller.passengerDetails[index] == null
                             ? const Icon(Icons.add_chart_sharp)
                             : const CircleAvatar(
-                              radius: 15,
+                                radius: 15,
                                 backgroundColor: kGreen,
                                 child: Padding(
                                   padding: EdgeInsets.all(2.0),

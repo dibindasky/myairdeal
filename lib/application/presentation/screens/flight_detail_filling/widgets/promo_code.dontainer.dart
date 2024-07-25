@@ -67,8 +67,8 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
                   onChanged: () {
                     // flightSortController.changePromoCode(index);
                   },
-                  selected:true,
-                      // flightSortController.selectedPromoCode.value == index,
+                  selected: true,
+                  // flightSortController.selectedPromoCode.value == index,
                   child:
                       GetBuilder<FlightSortController>(builder: (controller) {
                     return ListTile(
@@ -99,9 +99,9 @@ class _PromoCodeContainerState extends State<PromoCodeContainer> {
                         style: textThinStyle1.copyWith(
                             color: kGreyDark, fontSize: 9.sp),
                       ),
-                      leading:index==0
-                      //  flightSortController.selectedPromoCode.value ==
-                      //         index
+                      leading: index == 0
+                          //  flightSortController.selectedPromoCode.value ==
+                          //         index
                           ? const Icon(Icons.radio_button_checked, color: kBlue)
                           : const Icon(Icons.radio_button_unchecked),
                     );

@@ -60,8 +60,6 @@ class ContactUsFrom extends StatelessWidget {
         ),
         const BookingFilePicker(),
         kHeight10,
-        const ImageBuilder(),
-        kHeight10,
         BookingProductdropoDownBuilder(),
         kHeight15,
         EventButton(
@@ -80,33 +78,6 @@ class ContactUsFrom extends StatelessWidget {
         ),
         kHeight20
       ],
-    );
-  }
-}
-
-class ImageBuilder extends StatelessWidget {
-  const ImageBuilder({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 70.h,
-      child: ListView.builder(
-        itemCount: 1,
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        itemBuilder: (context, index) => Container(
-          margin: EdgeInsets.only(right: 10.w),
-          decoration:
-              BoxDecoration(color: kBlueLightShade, borderRadius: kRadius5),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(
-              flightDetailIcon,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

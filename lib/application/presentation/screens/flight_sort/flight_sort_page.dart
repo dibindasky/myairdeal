@@ -9,7 +9,6 @@ import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/h
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/selected_airlines_section.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/sorting_section.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/tickets_list_sorted.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
 

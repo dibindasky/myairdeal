@@ -21,6 +21,7 @@ class BookingService implements BookingRepo {
   Future<Either<Failure, BookingResponseModel>> bookTicket(
       {required BookTicketModel bookTicketModel}) async {
     try {
+      log(bookTicketModel.booking!.toJson().toString());
       final responce = await apiService.post(ApiEndPoints.completeBooking,
           data: bookTicketModel.toJson(), addHeader: true);
       log('bookTicket done');

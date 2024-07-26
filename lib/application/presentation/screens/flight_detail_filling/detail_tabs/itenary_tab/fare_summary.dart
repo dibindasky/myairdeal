@@ -20,6 +20,7 @@ class FareSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<BookingController>();
+    final travellerController = Get.find<TravellerController>();
     return Obx(() {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -144,6 +145,25 @@ class FareSummary extends StatelessWidget {
                       ),
                     ],
                   ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Seat, Meal & Baggage',
+                  style: textThinStyle1.copyWith(
+                    color: kBlack,
+                    fontSize: 12.sp,
+                  ),
+                ),
+                Text(
+                  '₹ ${travellerController.addOnsprice.value}',
+                  style: textThinStyle1.copyWith(
+                    color: kBlack,
+                    fontSize: 12.sp,
+                  ),
+                ),
+              ],
+            ),
             controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC
                         ?.taf ==
                     null
@@ -174,7 +194,7 @@ class FareSummary extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Icon(controller.selectedArrowItinerary.value
+                                Icon(!controller.selectedArrowItinerary.value
                                     ? Icons.arrow_drop_up
                                     : Icons.arrow_drop_down_sharp),
                                 Text(
@@ -245,7 +265,7 @@ class FareSummary extends StatelessWidget {
                       fontSize: 14.sp, fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? ''}',
+                  '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0 + travellerController.addOnsprice.value}',
                   style: textThinStyle1.copyWith(
                       fontSize: 14.sp, fontWeight: FontWeight.w700),
                 ),
@@ -260,12 +280,12 @@ class FareSummary extends StatelessWidget {
                       kHeight20,
                       RichText(
                         text: TextSpan(
-                          text: '* Refundable (',
+                          text: '* Rules (',
                           style: textStyle1.copyWith(
                               fontSize: 12.sp, color: kBlack),
                           children: <TextSpan>[
                             TextSpan(
-                              text: 'Penalty rules Applies',
+                              text: 'Fare rules',
                               style: textStyle1.copyWith(
                                   color: kBlue, fontSize: 12.sp),
                             ),

@@ -100,8 +100,7 @@ class SelectSeatContainer extends StatelessWidget {
                                                             true)) {
                                                           controller.selectSeat(
                                                               passengerIndex: 0,
-                                                              code: seat.code ??
-                                                                  '');
+                                                              seat: seat);
                                                         }
                                                       },
                                                       child: AnimatedContainer(
@@ -253,6 +252,8 @@ class FlightsListForSeatSelection extends StatelessWidget {
                     final selected =
                         travellerController.selectedSeatFlightKey.value ==
                             travellerController.keysList[index];
+                    final si = bookingController.getSegmentInfoUsingId(
+                        travellerController.keysList[index]);
                     return GestureDetector(
                       onTap: () {
                         travellerController.chnageSelectedFlightUsingId(
@@ -270,7 +271,24 @@ class FlightsListForSeatSelection extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               horizontal: selected ? 20.w : 18.w,
                               vertical: selected ? 5.w : 3.w),
-                          child: Text(travellerController.keysList[index]),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.network(
+                                  getAirlineLogo(si?.fD?.aI?.code ?? ''),
+                                  height: 20.h,
+                                  width: 20.h),
+                              kWidth5,
+                              Text(si?.da?.code ?? ''),
+                              kWidth5,
+                              Icon(
+                                Icons.arrow_forward,
+                                size: 13.sp,
+                              ),
+                              kWidth5,
+                              Text(si?.aa?.code ?? ''),
+                            ],
+                          ),
                         ),
                       ),
                     );

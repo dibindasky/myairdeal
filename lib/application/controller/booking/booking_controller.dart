@@ -13,8 +13,10 @@ import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_bo
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/traveller_info.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
+import 'package:myairdeal/domain/models/booking/review_flight_detail_price/trip_info.dart';
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/ticket_cancel_request_model.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
 class BookingController extends GetxController {
@@ -129,6 +131,7 @@ class BookingController extends GetxController {
     String message = '';
     String bookingId = '';
     endTimer();
+    print(bookTicketModel.toJson());
     final result =
         await bookingRepo.bookTicket(bookTicketModel: bookTicketModel);
     result.fold((l) {
@@ -207,6 +210,7 @@ class BookingController extends GetxController {
     }
   }
 
+  // get the total price by calculating the price seperate for all types
   double getPrice(String type) {
     double price = 0.0;
     for (var element in reviewedDetail!.value.tripInfos!) {
@@ -219,6 +223,18 @@ class BookingController extends GetxController {
       }
     }
     return price;
+  }
+
+  // get Segment info using flight id
+  SI? getSegmentInfoUsingId(String id) {
+    for (var trip in reviewedDetail?.value.tripInfos ?? <TripInfo>[]) {
+      for (var si in trip.sI ?? <SI>[]) {
+        if (si.id == id) {
+          return si;
+        }
+      }
+    }
+    return null;
   }
 
   // clear all the data after booking to not affect the next booking

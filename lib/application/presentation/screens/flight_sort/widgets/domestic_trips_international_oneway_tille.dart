@@ -5,7 +5,6 @@ import 'package:myairdeal/application/controller/booking/traveler_controller.dar
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/flight_ticket_expansion_card.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
-import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
@@ -32,6 +31,12 @@ class DomesticTripsAndOneWayInternationalTile extends StatelessWidget {
               : kWhite,
           searchAirlineInformation: controller
               .searchList[controller.selectedTripListIndex.value][index],
+          airlineCode: controller
+              .searchList[controller.selectedTripListIndex.value][index]
+              .sI?[0]
+              .fD
+              ?.aI
+              ?.code,
         );
       }),
       children: List.generate(
@@ -58,8 +63,8 @@ class DomesticTripsAndOneWayInternationalTile extends StatelessWidget {
               Get.find<TravellerController>().updatePassengersNumber(
                   controller.adultCount.value +
                       controller.childrenCount.value +
-                      controller.infantCount.value,controller.adultCount.value +
-                      controller.childrenCount.value);
+                      controller.infantCount.value,
+                  controller.adultCount.value + controller.childrenCount.value);
               Get.find<BookingController>().reviewPriceDetailChecking(
                   reviewPriceDetailIdModel: ReviewPriceDetailIdModel(priceIds: [
                 controller

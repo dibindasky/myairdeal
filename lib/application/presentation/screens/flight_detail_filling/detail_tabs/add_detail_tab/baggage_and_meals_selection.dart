@@ -147,7 +147,10 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                                     ?.length ??
                                                 0) <
                                             1
-                                        ? null
+                                        ? const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text('Meals not applicable'),
+                                          )
                                         : DropDownSsrInfo(
                                             ssrList: (bookingController
                                                     .reviewedDetail
@@ -175,48 +178,61 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                               ],
                             ),
                             kHeight15,
-                            // Row(
-                            //   children: [
-                            //     const Expanded(child: Text('Baggage')),
-                            //     kWidth10,
-                            //     Expanded(
-                            //       flex: 3,
-                            //       child: Container(
-                            //         padding: EdgeInsets.only(left: 10.w),
-                            //         decoration: BoxDecoration(
-                            //             boxShadow: boxShadow4,
-                            //             color: kWhite,
-                            //             borderRadius: kRadius15),
-                            //         child: DropdownButton<SsrInfo>(
-                            //           icon: Padding(
-                            //             padding:
-                            //                 const EdgeInsets.only(right: 8.0),
-                            //             child: RotatedBox(
-                            //               quarterTurns: 1,
-                            //               child: Icon(
-                            //                 Icons.arrow_forward_ios_sharp,
-                            //                 size: 17.w,
-                            //                 color: kBluePrimary,
-                            //               ),
-                            //             ),
-                            //           ),
-                            //           isDense: false,
-                            //           isExpanded: true,
-                            //           value: null,
-                            //           hint: const Text('Add extra baggage'),
-                            //           items: <SsrInfo>[SsrInfo()]
-                            //               .map((SsrInfo value) {
-                            //             return DropdownMenuItem<SsrInfo>(
-                            //               value: value,
-                            //               child: Text(value.desc ?? ''),
-                            //             );
-                            //           }).toList(),
-                            //           onChanged: (SsrInfo? newValue) {},
-                            //         ),
-                            //       ),
-                            //     )
-                            //   ],
-                            // ),
+                            Row(
+                              children: [
+                                const Expanded(child: Text('Baggage')),
+                                kWidth10,
+                                Expanded(
+                                  flex: 3,
+                                  child: Container(
+                                    padding: EdgeInsets.only(left: 10.w),
+                                    decoration: BoxDecoration(
+                                        boxShadow: boxShadow4,
+                                        color: kWhite,
+                                        borderRadius: kRadius15),
+                                    child: (bookingController
+                                                    .reviewedDetail
+                                                    ?.value
+                                                    .tripInfos?[tripIndex]
+                                                    .sI?[siIndex]
+                                                    .ssrInfo
+                                                    ?.baggage
+                                                    ?.length ??
+                                                0) <
+                                            1
+                                        ? const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child:
+                                                Text('Baggage not applicable'),
+                                          )
+                                        : DropDownSsrInfo(
+                                            ssrList: (bookingController
+                                                    .reviewedDetail
+                                                    ?.value
+                                                    .tripInfos?[tripIndex]
+                                                    .sI?[siIndex]
+                                                    .ssrInfo
+                                                    ?.baggage ??
+                                                <SsrInfo?>[]),
+                                            hintText: 'Choose baggage',
+                                            onChanged: (ssrInfo) {
+                                              travellerController
+                                                  .addBaggagesInfo(
+                                                      ssrInfo!.copyWith(
+                                                          key: bookingController
+                                                              .reviewedDetail
+                                                              ?.value
+                                                              .tripInfos?[
+                                                                  tripIndex]
+                                                              .sI?[siIndex]
+                                                              .id),
+                                                      travellerIndex);
+                                            },
+                                          ),
+                                  ),
+                                )
+                              ],
+                            ),
                             kHeight10
                           ],
                         ),

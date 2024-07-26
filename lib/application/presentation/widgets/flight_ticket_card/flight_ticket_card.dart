@@ -28,6 +28,7 @@ class FlightTicketCard extends StatelessWidget {
     this.flightId,
     this.searchAirlineInformation,
     this.allBookingResponce,
+    this.airlineCode,
   });
 
   final VoidCallback? buttonOnTap;
@@ -42,6 +43,7 @@ class FlightTicketCard extends StatelessWidget {
   final VoidCallback? onTap;
   final String? bookingId;
   final AllBookingResponce? allBookingResponce;
+  final String? airlineCode;
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +106,7 @@ class FlightTicketCard extends StatelessWidget {
                                                 ''),
                                       ),
                                       NormalCenterItems(
+                                        airlineCode: airlineCode,
                                         stops:
                                             (tripInfos?[tripIndex].sI?.length ??
                                                     0) -
@@ -170,6 +173,7 @@ class FlightTicketCard extends StatelessWidget {
                         ),
                       )
                     : TicketDetailsSection(
+                        airlineCode: airlineCode,
                         bookingId: bookingId,
                         searchAirlineInformation: searchAirlineInformation,
                         itemInfos: itemInfos,

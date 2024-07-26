@@ -15,6 +15,7 @@ class TicketDetailsSection extends StatelessWidget {
     required this.searchAirlineInformation,
     this.itemInfos,
     this.bookingId,
+    this.airlineCode,
     required this.flightTicketCardEnum,
     this.allBookingResponce,
   });
@@ -22,6 +23,7 @@ class TicketDetailsSection extends StatelessWidget {
   final SearchAirlineInformation? searchAirlineInformation;
   final ItemInfos? itemInfos;
   final String? bookingId;
+  final String? airlineCode;
   final FlightTicketCardEnum flightTicketCardEnum;
   final AllBookingResponce? allBookingResponce;
 
@@ -63,6 +65,7 @@ class TicketDetailsSection extends StatelessWidget {
                         ),
               searchAirlineInformation != null
                   ? NormalCenterItems(
+                      airlineCode: airlineCode,
                       travelMinutes: DateFormating.getDifferenceOfDates(
                           searchAirlineInformation!.sI![0].dt!,
                           searchAirlineInformation!
@@ -79,6 +82,7 @@ class TicketDetailsSection extends StatelessWidget {
                               0)
                       : itemInfos != null
                           ? NormalCenterItems(
+                              airlineCode: airlineCode,
                               travelMinutes: bookingId ?? '',
                               airline: itemInfos!
                                       .air?.tripInfos?[0].sI?[0].fD?.aI?.name ??

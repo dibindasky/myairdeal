@@ -11,6 +11,7 @@ import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/s
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/tickets_list_sorted.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
 
 class ScreenFlightTicketSort extends StatelessWidget {
   const ScreenFlightTicketSort({super.key});
@@ -29,7 +30,12 @@ class ScreenFlightTicketSort extends StatelessWidget {
               Expanded(
                 child: Center(
                   child: controller.searchListLoading.value
-                      ? const CircularProgressIndicator(color: kBluePrimary)
+                      ? Skeleton(
+                          crossAxisCount: 1,
+                          itemCount: 10,
+                          height: 150.h,
+                          childAspectRatio: 1 / 0.45,
+                        )
                       : const Text('No Flights Available'),
                 ),
               ),
@@ -58,11 +64,12 @@ class ScreenFlightTicketSort extends StatelessWidget {
                   ? kEmpty
                   : const SortingChipsSection(),
               controller.sortingRebuild.value
-                  ? Container(
-                      margin: EdgeInsets.only(top: 100.h),
-                      child: const Center(
-                          child: CircularProgressIndicator(
-                              color: kBluePrimary)))
+                  ? Skeleton(
+                      crossAxisCount: 1,
+                      itemCount: 10,
+                      height: 150.h,
+                      childAspectRatio: 1 / 0.45,
+                    )
                   : const TicketsListSorted(),
               kHeight20
             ],

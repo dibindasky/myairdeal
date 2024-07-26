@@ -72,6 +72,9 @@ class TravellerController extends GetxController {
   RxInt passengerLength = 1.obs;
   RxInt passengerLengthWithoutInfant = 1.obs;
 
+  /// addons prices to be add to total
+  RxDouble addOnsprice = 0.0.obs;
+
   /// list responsible for entering the passenger details
   RxList<TravellerInfo?> passengerDetails =
       List<TravellerInfo?>.filled(20, null, growable: true).obs;
@@ -82,13 +85,14 @@ class TravellerController extends GetxController {
     traveller.ssrMealInfos ??= <SsrInfo>[];
     for (int i = 0; i < traveller.ssrMealInfos!.length; i++) {
       if (traveller.ssrMealInfos![i].key == ssrInfo.key) {
+        addOnsprice.value -= ssrInfo.amount ?? 0;
         traveller.ssrMealInfos!.removeAt(i);
         break;
       }
     }
     traveller.ssrMealInfos!.add(ssrInfo);
-    print(traveller.toJson());
-    print(traveller.ssrMealInfos);
+    addOnsprice.value += ssrInfo.amount ?? 0;
+    print(addOnsprice.value);
   }
 
   /// add Baggage information to the passenger to the traveller in the given index
@@ -97,11 +101,14 @@ class TravellerController extends GetxController {
     traveller.ssrBaggageInfos ??= <SsrInfo>[];
     for (int i = 0; i < traveller.ssrBaggageInfos!.length; i++) {
       if (traveller.ssrBaggageInfos![i].key == ssrInfo.key) {
+        addOnsprice.value -= ssrInfo.amount ?? 0;
         traveller.ssrBaggageInfos!.removeAt(i);
         break;
       }
     }
     traveller.ssrBaggageInfos!.add(ssrInfo);
+    addOnsprice.value += ssrInfo.amount ?? 0;
+    print(addOnsprice.value);
   }
 
   /// add seat information to the passenger to the traveller in the given index
@@ -285,23 +292,27 @@ class TravellerController extends GetxController {
   RxBool seatLoader = false.obs;
 
   // select seats for each flights
-  void selectSeat({required int passengerIndex, required String code}) {
-    if (selectedSeats[selectedSeatFlightKey.value]!.contains(code)) {
+  void selectSeat({required int passengerIndex, required SInfo seat}) {
+    if (selectedSeats[selectedSeatFlightKey.value]!.contains(seat.code)) {
       final index = selectedSeats[selectedSeatFlightKey.value]!
-          .lastIndexWhere((element) => element == code);
+          .lastIndexWhere((element) => element == seat.code);
       selectedSeats[selectedSeatFlightKey.value]![index] = '';
+      addOnsprice.value -= seat.amount ?? 0;
     } else if (selectedSeats[selectedSeatFlightKey.value]!.contains('')) {
       final index = selectedSeats[selectedSeatFlightKey.value]!
           .lastIndexWhere((element) => element == '');
-      selectedSeats[selectedSeatFlightKey.value]![index] = code;
+      selectedSeats[selectedSeatFlightKey.value]![index] = seat.code ?? '';
+      addOnsprice.value += seat.amount ?? 0;
     }
   }
 
+  // change selected flight using flight id for seat selection
   void chnageSelectedFlightUsingId(String id) {
     selectedSeatFlightKey.value = id;
     buildSeatUI();
   }
 
+  // change selected flight to next for seat selection
   void chnageSelectedFlightToNext() {
     if (keysList.isEmpty) {
       selectedAddDetailsStep.value += 1;
@@ -319,6 +330,7 @@ class TravellerController extends GetxController {
     }
   }
 
+  // build the seats in the ui using the selected flight
   void buildSeatUI() {
     seatLoader.value = true;
     row.value = seatsAvilable[selectedSeatFlightKey.value]?.sData?.row ?? 0;
@@ -335,7 +347,7 @@ class TravellerController extends GetxController {
         (index) => '',
       );
     }
-    Timer(const Duration(milliseconds: 500), () {
+    Timer(const Duration(milliseconds: 300), () {
       seatLoader.value = false;
     });
   }

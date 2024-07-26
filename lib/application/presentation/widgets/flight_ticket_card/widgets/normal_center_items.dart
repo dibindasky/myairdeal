@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/network_image_loader.dart';
 
 class NormalCenterItems extends StatelessWidget {
   const NormalCenterItems(
@@ -12,6 +13,7 @@ class NormalCenterItems extends StatelessWidget {
       this.date,
       this.number,
       this.travelMinutes = '',
+      this.airlineCode,
       this.stops = 1});
 
   final bool haveImage;
@@ -21,16 +23,20 @@ class NormalCenterItems extends StatelessWidget {
   final String? date;
   final String? flightId;
   final String? number;
+  final String? airlineCode;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        haveImage
-            ? Image.asset(
-                flightDetailIcon,
-                height: 20.h,
-              )
+        airlineCode != null
+            ? NetworkImageWithLoading(imageUrl: getAirlineLogo(airlineCode!),height: 20)
+            // ? Image.network(getAirlineLogo(airlineCode!),height: 20.h)
+            : haveImage
+                ? Image.asset(
+                    flightDetailIcon,
+                    height: 20.h,
+                  )
             : kEmpty,
         kHeight10,
         Text(

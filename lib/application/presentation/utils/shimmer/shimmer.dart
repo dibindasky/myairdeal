@@ -9,11 +9,13 @@ class Skeleton extends StatelessWidget {
     required this.crossAxisCount,
     required this.itemCount,
     this.height,
+    this.childAspectRatio = 1,
   }) : super(key: key);
 
   final int crossAxisCount;
   final int itemCount;
   final double? height;
+  final double childAspectRatio;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class Skeleton extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio: childAspectRatio,
           crossAxisCount: crossAxisCount,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,

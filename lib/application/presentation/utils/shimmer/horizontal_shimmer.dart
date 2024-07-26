@@ -31,6 +31,7 @@ class HorizontalShimmerSkeleton extends StatelessWidget {
       child: SizedBox(
         height: scrollDirection == Axis.vertical ? null : totalHeight,
         child: ListView.separated(
+          padding: EdgeInsets.zero,
           shrinkWrap: scrollDirection == Axis.vertical ? true : false,
           separatorBuilder: (context, index) =>
               scrollDirection != Axis.horizontal ? kHeight10 : kWidth10,

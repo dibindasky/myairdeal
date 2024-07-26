@@ -12,6 +12,7 @@ import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_
 import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/invoice_detail.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/ticket_cancel/ticket_cancelation.dart';
+import 'package:myairdeal/application/presentation/screens/bookings/view_amendment_status/view_amendment_status.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/flight_detail_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_widgets/saved_detail_builder.dart';
@@ -106,6 +107,10 @@ class GetXRouterConfig {
       page: () => const ScreenReviewFlightDetails(),
     ),
     GetPage(
+      name: Routes.viewAmendmetStatus,
+      page: () => const ScreenViewAmendMentStatus(),
+    ),
+    GetPage(
       bindings: [
         SeatBinding(),
         TravellerBinding(),
@@ -141,7 +146,11 @@ class GetXRouterConfig {
       page: () => const ScreenExplore(),
     ),
     GetPage(
-      bindings: [BookingBinding(), RaiceTicketBinding()],
+      bindings: [
+        BookingBinding(),
+        RaiceTicketBinding(),
+        TicketCancellationBinding()
+      ],
       name: Routes.invoice,
       page: () => const ScreenInvoiceDetail(),
     ),

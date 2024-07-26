@@ -67,75 +67,72 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
             ),
           ),
           TableCalendar(
-                firstDay: widget.initialDate ?? DateTime.now(),
-                lastDay: widget.lastDate ??
-                    DateTime.now().add(const Duration(days: 31 * 6)),
-                focusedDay: _focusedDay,
-                calendarFormat: _calendarFormat,
-                calendarBuilders: CalendarBuilders(
-                  defaultBuilder: (context, day, focusedDay) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${day.day}',
-                          style: const TextStyle(color: kBlack),
-                        ),
-                        if (prices.containsKey(day))
-                          Text(
-                            prices[day]!,
-                            style:
-                                TextStyle(color: kBluePrimary, fontSize: 9.sp),
-                          ),
-                      ],
-                    );
-                  },
-                ),
-                selectedDayPredicate: (day) {
-                  return isSameDay(_selectedDay, day);
-                },
-                onDaySelected: (selectedDay, focusedDay) {
-                  setState(() {
-                    _selectedDay = selectedDay;
-                    _focusedDay = focusedDay;
-                  });
-                  widget.onPressed(_selectedDay!);
-                  Timer(const Duration(microseconds: 300), () {
-                    Navigator.of(context).pop();
-                  });
-                },
-                onFormatChanged: (format) {
-                  if (_calendarFormat != format) {
-                    setState(() {
-                      _calendarFormat = format;
-                    });
-                  }
-                },
-                onPageChanged: (focusedDay) {
-                  _focusedDay = focusedDay;
-                },
-                calendarStyle: CalendarStyle(
-                  // Customize here
-                  todayDecoration: const BoxDecoration(
-                    color: kBluePrimary,
-                    shape: BoxShape.circle,
-                  ),
-                  selectedDecoration: const BoxDecoration(
-                    color: kRed,
-                    shape: BoxShape.circle,
-                  ),
-                  weekendTextStyle: const TextStyle().copyWith(color: kRed),
-                  holidayTextStyle:
-                      const TextStyle().copyWith(color: kBluePrimary),
-                ),
-                headerStyle: const HeaderStyle(
-                  titleCentered: true,
-                  formatButtonVisible: false,
-                  leftChevronIcon: Icon(Icons.chevron_left, color: Colors.blue),
-                  rightChevronIcon:
-                      Icon(Icons.chevron_right, color: Colors.blue),
-                ),
+            firstDay: widget.initialDate ?? DateTime.now(),
+            lastDay: widget.lastDate ??
+                DateTime.now().add(const Duration(days: 31 * 6)),
+            focusedDay: _focusedDay,
+            calendarFormat: _calendarFormat,
+            calendarBuilders: CalendarBuilders(
+              defaultBuilder: (context, day, focusedDay) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${day.day}',
+                      style: const TextStyle(color: kBlack),
+                    ),
+                    if (prices.containsKey(day))
+                      Text(
+                        prices[day]!,
+                        style: TextStyle(color: kBluePrimary, fontSize: 9.sp),
+                      ),
+                  ],
+                );
+              },
+            ),
+            selectedDayPredicate: (day) {
+              return isSameDay(_selectedDay, day);
+            },
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                _selectedDay = selectedDay;
+                _focusedDay = focusedDay;
+              });
+              widget.onPressed(_selectedDay!);
+              Timer(const Duration(microseconds: 300), () {
+                Navigator.of(context).pop();
+              });
+            },
+            onFormatChanged: (format) {
+              if (_calendarFormat != format) {
+                setState(() {
+                  _calendarFormat = format;
+                });
+              }
+            },
+            onPageChanged: (focusedDay) {
+              _focusedDay = focusedDay;
+            },
+            calendarStyle: CalendarStyle(
+              // Customize here
+              todayDecoration: const BoxDecoration(
+                color: kBluePrimary,
+                shape: BoxShape.circle,
               ),
+              selectedDecoration: const BoxDecoration(
+                color: kRed,
+                shape: BoxShape.circle,
+              ),
+              weekendTextStyle: const TextStyle().copyWith(color: kRed),
+              holidayTextStyle: const TextStyle().copyWith(color: kBluePrimary),
+            ),
+            headerStyle: const HeaderStyle(
+              titleCentered: true,
+              formatButtonVisible: false,
+              leftChevronIcon: Icon(Icons.chevron_left, color: Colors.blue),
+              rightChevronIcon: Icon(Icons.chevron_right, color: Colors.blue),
+            ),
+          ),
         ],
       ),
     );

@@ -30,4 +30,5 @@ class Routes {
   static const String notificationPage = '/notification_page';
   static const String ticketCancel = '/ticket_cancel';
   static const String updateProfile = '/update_profile';
+  static const String viewAmendmetStatus = '/view_amendmet_status';
 }

@@ -17,7 +17,8 @@ class TicketsListSorted extends StatelessWidget {
           (!controller.comboTrip.value &&
               controller.searchList[controller.selectedTripListIndex.value]
                   .isEmpty)) {
-        return Center(child: Column(
+        return Center(
+            child: Column(
           children: [
             kHeight40,
             const Text('No Flights Available'),

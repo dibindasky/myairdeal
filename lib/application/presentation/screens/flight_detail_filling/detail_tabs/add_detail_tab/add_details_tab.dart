@@ -89,8 +89,7 @@ class _PassengerDetailsTabState extends State<PassengerDetailsTab> {
                   child: Row(
                     children: List.generate(
                       controller.totalSubStepLength,
-                      (index) =>
-                       GestureDetector(
+                      (index) => GestureDetector(
                         onTap: () {
                           if (travelController.selectedAddDetailsStep.value >
                               index) {

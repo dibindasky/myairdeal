@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/controller/booking/ticket_cancel_controller.dart';
 import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab/contact_us.dart';
@@ -14,6 +15,7 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/widgets/flight_invoice.dart';
+import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_request_model/amendment_details_request_model.dart';
 
 class ScreenInvoiceDetail extends StatelessWidget {
   const ScreenInvoiceDetail({super.key});
@@ -22,6 +24,7 @@ class ScreenInvoiceDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final bookingController = Get.find<BookingController>();
     final raiceController = Get.find<RaiceTicketController>();
+    final cancellationController = Get.find<TicketCancellationController>();
     return Scaffold(
       body: Obx(
         () => ListView(
@@ -55,7 +58,7 @@ class ScreenInvoiceDetail extends StatelessWidget {
                               : bookingController.selectedBookingTab.value == 2
                                   ? 'Cancel Ticket'
                                   : 'Campleted Ticket',
-                          style: textHeadStyle1,
+                          style: textStyle1,
                         ),
                         kHeight10,
                         GetBuilder<BookingController>(builder: (controller) {
@@ -82,6 +85,41 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                         fontSize: 16.sp,
                                         fontWeight: FontWeight.w600),
                                   ),
+                                  bookingController
+                                                  .retrieveSingleBookingresponceModel
+                                                  .value
+                                                  .amendment !=
+                                              null &&
+                                          bookingController
+                                              .retrieveSingleBookingresponceModel
+                                              .value
+                                              .amendment!
+                                              .isNotEmpty
+                                      ? QuickLinksContainer(
+                                          onTap: () {
+                                            cancellationController
+                                                .viewAmendmentDetail(
+                                                    amendmentDetailRequestModel:
+                                                        List.generate(
+                                              bookingController
+                                                      .retrieveSingleBookingresponceModel
+                                                      .value
+                                                      .amendment
+                                                      ?.length ??
+                                                  0,
+                                              (index) =>
+                                                  AmendmentDetailsRequestModel(
+                                                amendmentId: bookingController
+                                                    .retrieveSingleBookingresponceModel
+                                                    .value
+                                                    .amendment?[index]
+                                                    .id,
+                                              ),
+                                            ));
+                                          },
+                                          text: 'Check amend ment details',
+                                        )
+                                      : kEmpty,
                                   QuickLinksContainer(
                                     onTap: () {
                                       raiceController

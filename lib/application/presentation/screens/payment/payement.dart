@@ -76,13 +76,16 @@ class PaymentTab extends StatelessWidget {
                                         .reviewedDetail?.value.bookingId,
                                     paymentInfos: [
                                       PaymentInfo(
-                                          amount: bookingController
-                                              .reviewedDetail
-                                              ?.value
-                                              .totalPriceInfo
-                                              ?.totalFareDetail
-                                              ?.fC
-                                              ?.tf)
+                                          amount: (bookingController
+                                                      .reviewedDetail
+                                                      ?.value
+                                                      .totalPriceInfo
+                                                      ?.totalFareDetail
+                                                      ?.fC
+                                                      ?.tf ??
+                                                  0) +
+                                              travellerController
+                                                  .addOnsprice.value)
                                     ],
                                     gstInfo: travellerController.gstInfo.value,
                                     travellerInfo: travellerInfos,

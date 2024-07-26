@@ -65,6 +65,15 @@ class TravellerController extends GetxController {
   RxInt selectedAddDetailsStep = 0.obs;
   int totalSubStepLength = 4;
 
+  // selectedSeats
+  Map<String, RxList<String>> selectedSeats = {};
+  // selected flight id
+  RxString selectedSeatFlightKey = ''.obs;
+
+  RxList<String> keysList = <String>[].obs;
+  // loader to handle seat building
+  RxBool seatLoader = false.obs;
+
   // gst deatils of booking
   Rx<GstInfo> gstInfo = GstInfo().obs;
 
@@ -152,6 +161,8 @@ class TravellerController extends GetxController {
     selectedMainTab.value = 0;
     selectedAddDetailsStep.value = 0;
     this.passengerLengthWithoutInfant.value = passengerLengthWithoutInfant;
+    passengerDetails =
+        List<TravellerInfo?>.filled(20, null, growable: true).obs;
     update();
   }
 
@@ -284,13 +295,6 @@ class TravellerController extends GetxController {
     );
   }
 
-  // selectedSeats
-  Map<String, RxList<String>> selectedSeats = {};
-  // selected flight id
-  RxString selectedSeatFlightKey = ''.obs;
-  RxList<String> keysList = <String>[].obs;
-  RxBool seatLoader = false.obs;
-
   // select seats for each flights
   void selectSeat({required int passengerIndex, required SInfo seat}) {
     if (selectedSeats[selectedSeatFlightKey.value]!.contains(seat.code)) {
@@ -321,9 +325,26 @@ class TravellerController extends GetxController {
     }
     int index = keysList
         .indexWhere((element) => element == selectedSeatFlightKey.value);
+    // if the seatselection happening in last index change the tab to next
     if (index == keysList.length - 1 || index == -1) {
       selectedAddDetailsStep.value += 1;
       update();
+      // add selected seats to passengers
+      for (int i = 0; i < passengerLengthWithoutInfant.value; i++) {
+        for (var key in keysList) {
+          if (selectedSeats[key] != null && selectedSeats[key]!.length > i) {
+            (passengerDetails[i]!.ssrSeatInfos ?? [])
+                .removeWhere((element) => element.key == key);
+            passengerDetails[i]!.ssrSeatInfos = [
+              ...passengerDetails[i]!.ssrSeatInfos ?? [],
+              SsrInfo(
+                key: key,
+                code: selectedSeats[key]![i],
+              )
+            ];
+          }
+        }
+      }
     } else {
       selectedSeatFlightKey.value = keysList[index + 1];
       buildSeatUI();

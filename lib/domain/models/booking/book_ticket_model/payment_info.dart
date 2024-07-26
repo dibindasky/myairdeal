@@ -4,7 +4,7 @@ part 'payment_info.g.dart';
 
 @JsonSerializable()
 class PaymentInfo {
-  int? amount;
+  double? amount;
 
   PaymentInfo({this.amount});
 
@@ -15,7 +15,7 @@ class PaymentInfo {
   Map<String, dynamic> toJson() => _$PaymentInfoToJson(this);
 
   PaymentInfo copyWith({
-    int? amount,
+    double? amount,
   }) {
     return PaymentInfo(
       amount: amount ?? this.amount,

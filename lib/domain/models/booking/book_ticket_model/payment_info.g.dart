@@ -7,7 +7,7 @@ part of 'payment_info.dart';
 // **************************************************************************
 
 PaymentInfo _$PaymentInfoFromJson(Map<String, dynamic> json) => PaymentInfo(
-      amount: json['amount'] as int?,
+      amount: json['amount'] as double?,
     );
 
 Map<String, dynamic> _$PaymentInfoToJson(PaymentInfo instance) =>

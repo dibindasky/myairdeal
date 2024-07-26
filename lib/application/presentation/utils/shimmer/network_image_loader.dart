@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:shimmer/shimmer.dart';
 
 class NetworkImageWithLoading extends StatelessWidget {
   final String imageUrl;
   final double? height;
+  final double? width;
 
   const NetworkImageWithLoading(
-      {super.key, required this.imageUrl, this.height});
+      {super.key, required this.imageUrl, this.height, this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +23,20 @@ class NetworkImageWithLoading extends StatelessWidget {
           return child;
         } else {
           return Center(
-            child: CircularProgressIndicator(
-              color: kGrey,
-              value: loadingProgress.expectedTotalBytes != null
-                  ? loadingProgress.cumulativeBytesLoaded /
-                      (loadingProgress.expectedTotalBytes ?? 1)
-                  : null,
+              child: SizedBox(
+            height: height,
+            width: width,
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: kWhite,
+                  borderRadius: kRadius5,
+                ),
+              ),
             ),
-          );
+          ));
         }
       },
       errorBuilder:

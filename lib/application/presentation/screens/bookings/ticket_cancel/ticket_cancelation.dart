@@ -56,9 +56,8 @@ class ScreenTicetCanceallation extends StatelessWidget {
                   children: [
                     const DetailAppBar(heading: 'Ticket Cancellation'),
                     kHeight10,
-                    GetBuilder<TicketCancellationController>(
-                        builder: (controller) {
-                      return Padding(
+                    Obx(
+                      () => Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 12.w, vertical: 10.h),
                         child: Column(
@@ -94,10 +93,10 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                         child: CustomExpansionTile(
                                           children: [
                                             TravelersDetails(
-                                                trips: cancellationController
+                                                trip: cancellationController
                                                     .cancelSelectedItems
                                                     .value
-                                                    .trips,
+                                                    .trips?[tripIndex],
                                                 travellerInfos: travelersData,
                                                 tripIndex: tripIndex)
                                           ],
@@ -259,8 +258,8 @@ class ScreenTicetCanceallation extends StatelessWidget {
                             ),
                           ],
                         ),
-                      );
-                    }),
+                      ),
+                    ),
                     kHeight10
                   ],
                 ),

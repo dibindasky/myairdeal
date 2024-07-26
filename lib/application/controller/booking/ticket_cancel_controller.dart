@@ -36,37 +36,21 @@ class TicketCancellationController extends GetxController {
   RxList<AmendmentDetailsResponceModel?> amendmentDetails =
       <AmendmentDetailsResponceModel>[].obs;
 
-  void addTraveler(Trip trip, Traveller traveler) {
+  // Trip selection unselection Func
+  void toggleTripSelection(Trip trip) {
     int tripIndex = cancelSelectedItems.value.trips?.indexWhere(
             (existingTrip) =>
                 existingTrip.src == trip.src &&
                 existingTrip.dest == trip.dest &&
                 existingTrip.departureDate == trip.departureDate) ??
         -1;
-
-    if (tripIndex == -1) {
-      trip.travellers = [traveler];
-      cancelSelectedItems.value.trips ??= [];
-      cancelSelectedItems.value.trips!.add(trip);
-    } else {
-      cancelSelectedItems.value.trips![tripIndex].travellers ??= [];
-      cancelSelectedItems.value.trips![tripIndex].travellers!.add(traveler);
-    }
-    update();
-  }
-
-  // Trip selection unselection Func
-  void toggleTripSelection(Trip trip) {
-    cancelSelectedItems.value.trips ??= [];
-
-    if (cancelSelectedItems.value.trips!.contains(trip)) {
-      // Remove the trip if it is already in the list
+    if (tripIndex != -1) {
       cancelSelectedItems.update((val) {
-        val?.trips?.remove(trip);
+        val?.trips?.removeAt(tripIndex);
       });
     } else {
-      // Add the trip if it is not in the list
       cancelSelectedItems.update((val) {
+        val?.trips ??= [];
         val?.trips?.add(trip);
       });
     }
@@ -81,6 +65,31 @@ class TicketCancellationController extends GetxController {
     return false;
   }
 
+  void toggleTravelerSelection(Trip trip, Traveller traveler) {
+    int tripIndex = cancelSelectedItems.value.trips?.indexWhere(
+            (existingTrip) =>
+                existingTrip.src == trip.src &&
+                existingTrip.dest == trip.dest &&
+                existingTrip.departureDate == trip.departureDate) ??
+        -1;
+
+    if (tripIndex != -1) {
+      var selectedTravelers =
+          cancelSelectedItems.value.trips?[tripIndex].travellers ?? [];
+      if (selectedTravelers.contains(traveler)) {
+        selectedTravelers.remove(traveler);
+      } else {
+        selectedTravelers.add(traveler);
+      }
+    } else {
+      // If the trip does not exist, add the trip with the traveler
+      trip.travellers = [traveler];
+      cancelSelectedItems.value.trips ??= [];
+      cancelSelectedItems.value.trips!.add(trip);
+    }
+    update();
+  }
+
   bool isTravelerSelected(Trip trip, Traveller traveler) {
     int tripIndex = cancelSelectedItems.value.trips?.indexWhere(
             (existingTrip) =>
@@ -89,13 +98,36 @@ class TicketCancellationController extends GetxController {
                 existingTrip.departureDate == trip.departureDate) ??
         -1;
 
-    if (tripIndex == -1) return false;
+    if (tripIndex != -1) {
+      return cancelSelectedItems.value.trips?[tripIndex].travellers
+              ?.contains(traveler) ??
+          false;
+    }
+    return false;
+  }
 
-    return cancelSelectedItems.value.trips![tripIndex].travellers?.any(
-            (existingTraveler) =>
-                existingTraveler.fn == traveler.fn &&
-                existingTraveler.ln == traveler.ln) ??
-        false;
+  void addTraveler(Trip trip, Traveller traveler) {
+    int tripIndex = cancelSelectedItems.value.trips?.indexWhere(
+            (existingTrip) =>
+                existingTrip.src == trip.src &&
+                existingTrip.dest == trip.dest &&
+                existingTrip.departureDate == trip.departureDate) ??
+        -1;
+
+    if (tripIndex == -1) {
+      // Trip not found, add the trip with the traveler
+      trip.travellers = [traveler];
+      cancelSelectedItems.value.trips ??= [];
+      cancelSelectedItems.value.trips!.add(trip);
+    } else {
+      // Trip found, add the traveler to the existing trip
+      cancelSelectedItems.value.trips![tripIndex].travellers ??= [];
+      if (!cancelSelectedItems.value.trips![tripIndex].travellers!
+          .contains(traveler)) {
+        cancelSelectedItems.value.trips![tripIndex].travellers!.add(traveler);
+      }
+    }
+    update();
   }
 
   var tripCancelErrorMessage = ''.obs;

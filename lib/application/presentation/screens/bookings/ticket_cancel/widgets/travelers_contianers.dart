@@ -5,21 +5,20 @@ import 'package:myairdeal/application/controller/booking/ticket_cancel_controlle
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/traveller_info.dart';
-import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/trip_info.dart';
 
 import '../../../../../../domain/models/booking/ticket_cancel/ticket_cancel_request_model/trip.dart';
 
 class TravelersDetails extends StatelessWidget {
   const TravelersDetails(
-      {super.key, this.tripIndex, this.travellerInfos, this.trips});
-  final int? tripIndex;
+      {super.key, this.trip, this.travellerInfos, this.tripIndex});
+  final Trip? trip;
   final List<TravellerInfo>? travellerInfos;
-  final List<Trip>? trips;
+  final int? tripIndex;
 
   @override
   Widget build(BuildContext context) {
-    // final cancellationController = Get.find<TicketCancellationController>();
-    // final bookingController = Get.find<BookingController>();
+    final cancellationController = Get.find<TicketCancellationController>();
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 3.w),
       padding: EdgeInsets.all(10.w),
@@ -27,9 +26,8 @@ class TravelersDetails extends StatelessWidget {
         borderRadius: kRadius10,
         border: Border.all(color: kBlueLight),
       ),
-      child: GetBuilder<TicketCancellationController>(
-          builder: (tickeCancelationController) {
-        return Column(
+      child: Obx(
+        () => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Travelers info',
@@ -37,14 +35,22 @@ class TravelersDetails extends StatelessWidget {
             ...List.generate(
               (travellerInfos?.length ?? 0),
               (index) {
-                const isAlreadyAdded = true;
+                final traveler = travellerInfos?[index];
+                TravellerInfo travellerInfo =
+                    TravellerInfo(fN: traveler?.fN, lN: traveler?.lN);
+                final convertToTra = TravellerInfo.getTraveler(travellerInfo);
+                final isSelected = cancellationController.isTravelerSelected(
+                    trip ?? Trip(), convertToTra);
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    cancellationController.toggleTravelerSelection(
+                        trip ?? Trip(), convertToTra);
+                  },
                   child: Container(
                     decoration: BoxDecoration(
-                        color: isAlreadyAdded
-                            ? kBlueLightShade.withOpacity(.3)
-                            : knill),
+                      color:
+                          isSelected ? kBlueLightShade.withOpacity(.3) : knill,
+                    ),
                     padding:
                         EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.w),
                     child: Column(
@@ -55,11 +61,11 @@ class TravelersDetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '${travellerInfos?[index].ti}  ${travellerInfos?[index].fN} ${travellerInfos?[index].lN}  (${travellerInfos?[index].pt})',
+                              '${traveler?.ti}  ${traveler?.fN} ${traveler?.lN}  (${traveler?.pt})',
                               style: textThinStyle1.copyWith(
                                   fontWeight: FontWeight.w600),
                             ),
-                            isAlreadyAdded
+                            isSelected
                                 ? CircleAvatar(
                                     backgroundColor: kBlueLight,
                                     radius: 8.w,
@@ -78,8 +84,8 @@ class TravelersDetails extends StatelessWidget {
               },
             ),
           ],
-        );
-      }),
+        ),
+      ),
     );
   }
 }

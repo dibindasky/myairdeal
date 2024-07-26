@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/traveller.dart';
 
 import 'checkin_status_map.dart';
 import 'pnr_details.dart';
@@ -44,5 +45,9 @@ class TravellerInfo {
       return true;
     }
     return false;
+  }
+
+  static Traveller getTraveler(TravellerInfo tra) {
+    return Traveller(fn: tra.fN, ln: tra.lN);
   }
 }

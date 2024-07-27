@@ -567,8 +567,7 @@ class FlightSortController extends GetxController {
     }
     flightSortScreenController.animateTo(0,
         duration: const Duration(seconds: 1), curve: Curves.easeInOut);
-    durationSlider.value =
-        double.parse(sortingVariablesSelected[index]?[2].last ?? "1");
+    durationSlider.value = sortingVariablesSelected[index]?[2].last ?? 1.0;
     validateSearchForm();
   }
 

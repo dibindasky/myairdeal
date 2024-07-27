@@ -8,7 +8,9 @@ part of 'traveller_info.dart';
 
 TravellerInfo _$TravellerInfoFromJson(Map<String, dynamic> json) =>
     TravellerInfo(
-      dob: json['dob'] as String,
+      ssrMealInfos: json['ssrMealInfos'] == null
+          ? null
+          : SsrMealInfos.fromJson(json['ssrMealInfos'] as Map<String, dynamic>),
       pnrDetails: json['pnrDetails'] == null
           ? null
           : PnrDetails.fromJson(json['pnrDetails'] as Map<String, dynamic>),
@@ -28,7 +30,7 @@ TravellerInfo _$TravellerInfoFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TravellerInfoToJson(TravellerInfo instance) =>
     <String, dynamic>{
-      'dob': instance.dob,
+      'ssrMealInfos': instance.ssrMealInfos,
       'pnrDetails': instance.pnrDetails,
       'ticketNumberDetails': instance.ticketNumberDetails,
       'checkinStatusMap': instance.checkinStatusMap,

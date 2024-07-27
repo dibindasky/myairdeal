@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/ticket_cancel_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/traveller_info.dart';
-
+import 'package:myairdeal/domain/models/booking/get_single_booking/traveller_info.dart';
 import '../../../../../../domain/models/booking/ticket_cancel/ticket_cancel_request_model/trip.dart';
 
 class TravelersDetails extends StatelessWidget {

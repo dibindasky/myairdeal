@@ -216,11 +216,11 @@ class FlightInvoiceCard extends StatelessWidget {
                                     TicketColumn(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
-                                      subValue: retrieveSingleBookingresponceModel
-                                              ?.retrieveSingleBookingresponceModel
-                                              ?.allBookingSearchquery
-                                              ?.cabinClass ??
-                                          '--',
+                                      subValue:
+                                          retrieveSingleBookingresponceModel
+                                                  ?.flightSearchQuery
+                                                  ?.cabinClass ??
+                                              '--',
                                       exit: '--',
                                     )
                                   ],
@@ -363,9 +363,7 @@ class FlightInvoiceCard extends StatelessWidget {
                                 ? TicketColumn(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     label: retrieveSingleBookingresponceModel
-                                            ?.retrieveSingleBookingresponceModel
-                                            ?.allBookingSearchquery
-                                            ?.cabinClass ??
+                                            ?.flightSearchQuery?.cabinClass ??
                                         '--',
                                     lebelStyle: textThinStyle1.copyWith(
                                         fontSize: 10.sp, color: kGreyDark),

@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:myairdeal/domain/models/booking/get_single_booking/traveller_info.dart';
 
 import 'total_price_info.dart';
+import 'traveller_info.dart';
 import 'trip_info.dart';
 
 part 'air.g.dart';

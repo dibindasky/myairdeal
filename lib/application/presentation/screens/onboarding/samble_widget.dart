@@ -25,13 +25,22 @@ class ScreenOnBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final imageHeight = screenHeight * 0.6;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: ListView(
             children: [
-              Image.asset(image ?? onBoardImage),
+              SizedBox(
+                height: imageHeight,
+                child: Image.asset(
+                  image ?? onBoardImage,
+                  fit: BoxFit.cover,
+                ),
+              ),
               kHeight40,
               Align(
                 alignment: Alignment.bottomLeft,
@@ -48,27 +57,33 @@ class ScreenOnBoard extends StatelessWidget {
                 ),
               ),
               kHeight20,
-              Row(
-                children: [
-                  Expanded(
-                    child: EventButton(
-                      onTap: skipOnTap,
-                      text: 'Skip',
-                    ),
-                  ),
-                  kWidth10,
-                  Expanded(
-                    child: EventIconButton(
-                      suffixIcon: const Icon(
-                        Icons.arrow_circle_right_outlined,
-                        color: kWhite,
-                        size: 18,
+              Hero(
+                tag: 'hero',
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: EventButton(
+                          onTap: skipOnTap,
+                          text: 'Skip',
+                        ),
                       ),
-                      onTap: nextTap,
-                      text: 'Next',
-                    ),
+                      kWidth10,
+                      Expanded(
+                        child: EventIconButton(
+                          suffixIcon: const Icon(
+                            Icons.arrow_circle_right_outlined,
+                            color: kWhite,
+                            size: 18,
+                          ),
+                          onTap: nextTap,
+                          text: 'Next',
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ],
           ),

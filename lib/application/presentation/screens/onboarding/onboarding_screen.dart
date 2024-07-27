@@ -56,7 +56,7 @@ class OnbaordThird extends StatelessWidget {
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
     return ScreenOnBoard(
-      image: onBoardImage,
+      image: myOnbaordThree,
       text: 'Book',
       secText: 'Appointment',
       thirdText: 'in Easiest Way!',

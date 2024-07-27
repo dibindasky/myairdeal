@@ -9,7 +9,7 @@ part of 'recent_detail_search_item.dart';
 RecentDetailSearchItem _$RecentDetailSearchItemFromJson(
         Map<String, dynamic> json) =>
     RecentDetailSearchItem(
-      type: json['type'] as String?,
+      type: json['_id'] as String?,
       searchQuery: json['searchQuery'] == null
           ? null
           : SearchQueryVariable.fromJson(
@@ -19,6 +19,6 @@ RecentDetailSearchItem _$RecentDetailSearchItemFromJson(
 Map<String, dynamic> _$RecentDetailSearchItemToJson(
         RecentDetailSearchItem instance) =>
     <String, dynamic>{
-      'type': instance.type,
+      '_id': instance.type,
       'searchQuery': instance.searchQuery?.toJson(),
     };

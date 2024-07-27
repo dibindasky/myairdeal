@@ -100,6 +100,8 @@ class FlightSortController extends GetxController {
 
   // bool responsible for halnle ui for combo(international multicity and round trip)
   RxBool comboTrip = false.obs;
+  // bool responsible for handle the round trip identification, used to handle special return
+  RxBool roundTrip = false.obs;
 
   /// class type to be travelled can be choose form [classTypes]
   RxString classType = "ECONOMY".obs;
@@ -294,6 +296,7 @@ class FlightSortController extends GetxController {
       }
     }
     comboTrip.value = false;
+    roundTrip.value = false;
     searchListLoading.value = true;
     selectedTripListIndex.value = 0;
     durationSlider.value = 1;
@@ -326,10 +329,20 @@ class FlightSortController extends GetxController {
                 ? 2
                 : airportSelected.length,
         (index) => RouteInfo(
-          // fromCityOrAirport: CodeAirport(code: 'MAA'),
-          // toCityOrAirport: CodeAirport(code: 'DEL'),
-          fromCityOrAirport: CodeAirport(code: airportSelected[index][0].code),
-          toCityOrAirport: CodeAirport(code: airportSelected[index][1].code),
+          fromCityOrAirport: CodeAirport(
+              code: airportSelected[index][0].code,
+              city: airportSelected[index][0].city,
+              cityCode: airportSelected[index][0].citycode,
+              country: airportSelected[index][0].country,
+              countryCode: airportSelected[index][0].countrycode,
+              name: airportSelected[index][0].name),
+          toCityOrAirport: CodeAirport(
+              code: airportSelected[index][1].code,
+              city: airportSelected[index][1].city,
+              cityCode: airportSelected[index][1].citycode,
+              country: airportSelected[index][1].country,
+              countryCode: airportSelected[index][1].countrycode,
+              name: airportSelected[index][1].name),
           travelDate: DateFormating.getDateApi(
             tripType.value == 2
                 ? multiCityDepartureDate[index]!
@@ -363,6 +376,7 @@ class FlightSortController extends GetxController {
                 <SearchAirlineInformation>[]));
           }
           if (r.searchResult?.tripInfos?.returns != null) {
+            roundTrip.value = true;
             searchListMain.add(RxList.from(r.searchResult?.tripInfos?.returns ??
                 <SearchAirlineInformation>[]));
           }

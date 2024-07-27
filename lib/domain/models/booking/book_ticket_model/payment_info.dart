@@ -21,4 +21,9 @@ class PaymentInfo {
       amount: amount ?? this.amount,
     );
   }
+
+  @override
+  String toString() {
+    return 'PaymentInfo{amount: $amount}';
+  }
 }

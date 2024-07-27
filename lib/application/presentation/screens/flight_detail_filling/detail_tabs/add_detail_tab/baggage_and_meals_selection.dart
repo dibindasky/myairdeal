@@ -152,6 +152,31 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                             child: Text('Meals not applicable'),
                                           )
                                         : DropDownSsrInfo(
+                                            value: (travellerController.passengerDetails[travellerIndex]?.ssrMealInfos ?? <SsrInfo>[]).any((meal) =>
+                                                    meal.key ==
+                                                    bookingController
+                                                        .reviewedDetail
+                                                        ?.value
+                                                        .tripInfos?[tripIndex]
+                                                        .sI?[siIndex]
+                                                        .id)
+                                                ? (bookingController.reviewedDetail?.value.tripInfos?[tripIndex].sI?[siIndex].ssrInfo?.meal ?? <SsrInfo>[]).firstWhere((meal) =>
+                                                    meal.code ==
+                                                    (travellerController
+                                                                .passengerDetails[
+                                                                    travellerIndex]
+                                                                ?.ssrMealInfos ??
+                                                            <SsrInfo>[])
+                                                        .firstWhere((meal) =>
+                                                            meal.key ==
+                                                            bookingController
+                                                                .reviewedDetail
+                                                                ?.value
+                                                                .tripInfos?[tripIndex]
+                                                                .sI?[siIndex]
+                                                                .id)
+                                                        .code)
+                                                : null,
                                             ssrList: (bookingController
                                                     .reviewedDetail
                                                     ?.value
@@ -206,6 +231,31 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                                 Text('Baggage not applicable'),
                                           )
                                         : DropDownSsrInfo(
+                                            value:(travellerController.passengerDetails[travellerIndex]?.ssrBaggageInfos ?? <SsrInfo>[]).any((baggage) =>
+                                                    baggage.key ==
+                                                    bookingController
+                                                        .reviewedDetail
+                                                        ?.value
+                                                        .tripInfos?[tripIndex]
+                                                        .sI?[siIndex]
+                                                        .id)
+                                                ? (bookingController.reviewedDetail?.value.tripInfos?[tripIndex].sI?[siIndex].ssrInfo?.baggage ?? <SsrInfo>[]).firstWhere((baggage) =>
+                                                    baggage.code ==
+                                                    (travellerController
+                                                                .passengerDetails[
+                                                                    travellerIndex]
+                                                                ?.ssrBaggageInfos ??
+                                                            <SsrInfo>[])
+                                                        .firstWhere((baggage) =>
+                                                            baggage.key ==
+                                                            bookingController
+                                                                .reviewedDetail
+                                                                ?.value
+                                                                .tripInfos?[tripIndex]
+                                                                .sI?[siIndex]
+                                                                .id)
+                                                        .code)
+                                                : null,
                                             ssrList: (bookingController
                                                     .reviewedDetail
                                                     ?.value
@@ -251,11 +301,13 @@ class DropDownSsrInfo extends StatefulWidget {
       {super.key,
       required this.ssrList,
       required this.hintText,
+      required this.value,
       required this.onChanged});
 
   final List<SsrInfo?> ssrList;
   final String hintText;
   final Function(SsrInfo? ssrInfo) onChanged;
+  final SsrInfo? value;
 
   @override
   State<DropDownSsrInfo> createState() => _DropDownSsrInfoState();
@@ -263,6 +315,11 @@ class DropDownSsrInfo extends StatefulWidget {
 
 class _DropDownSsrInfoState extends State<DropDownSsrInfo> {
   SsrInfo? value;
+  @override
+  void initState() {
+    value = widget.value;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

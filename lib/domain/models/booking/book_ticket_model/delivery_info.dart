@@ -24,4 +24,9 @@ class DeliveryInfo {
       contacts: contacts ?? this.contacts,
     );
   }
+
+  @override
+  String toString() {
+    return 'DeliveryInfo{emails: $emails, contacts: $contacts}';
+  }
 }

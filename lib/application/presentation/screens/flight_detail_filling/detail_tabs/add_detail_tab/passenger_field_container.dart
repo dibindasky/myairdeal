@@ -229,7 +229,9 @@ class _DetailContainerState extends State<DetailContainer> {
                               travelController.addPassengerDetail(
                                   widget.index,
                                   TravellerInfo(
-                                      dob: dateOfBirthController.text,
+                                      dob: dateOfBirthController.text == ''
+                                          ? null
+                                          : dateOfBirthController.text,
                                       fN: firstNameController.text,
                                       lN: lastNameController.text,
                                       ti: widget.travellerType == 'ADULT'

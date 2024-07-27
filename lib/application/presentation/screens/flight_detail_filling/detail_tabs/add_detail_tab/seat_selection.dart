@@ -9,6 +9,7 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/ssr_info.dart';
 
 class SelectSeatContainer extends StatelessWidget {
   const SelectSeatContainer({super.key});
@@ -87,13 +88,15 @@ class SelectSeatContainer extends StatelessWidget {
                                                   return Obx(() {
                                                     final seat = controller
                                                         .seatList[row][col];
-                                                    final bool selected = (controller
-                                                                    .selectedSeats[
-                                                                controller
-                                                                    .selectedSeatFlightKey
-                                                                    .value] ??
-                                                            <String>[])
-                                                        .contains(seat.code);
+                                                    final bool selected =
+                                                        (controller.selectedSeats[
+                                                                    controller
+                                                                        .selectedSeatFlightKey
+                                                                        .value] ??
+                                                                <SsrInfo?>[])
+                                                            .any((element) =>
+                                                                element?.code ==
+                                                                seat.code);
                                                     return GestureDetector(
                                                       onTap: () {
                                                         if (!(seat.isBooked ??

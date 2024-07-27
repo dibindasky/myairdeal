@@ -66,7 +66,7 @@ class TravellerController extends GetxController {
   int totalSubStepLength = 4;
 
   // selectedSeats
-  Map<String, RxList<String>> selectedSeats = {};
+  Map<String, RxList<SsrInfo?>> selectedSeats = {};
   // selected flight id
   RxString selectedSeatFlightKey = ''.obs;
 
@@ -100,8 +100,15 @@ class TravellerController extends GetxController {
       }
     }
     traveller.ssrMealInfos!.add(ssrInfo);
+    passengerDetails[index] = traveller;
+    print('ssr info => ${ssrInfo.toString()}');
+    for (var traveller in passengerDetails) {
+      for (var element in traveller?.ssrMealInfos ?? <SsrInfo>[]) {
+        print(element.toString());
+      }
+    }
     addOnsprice.value += ssrInfo.amount ?? 0;
-    print(addOnsprice.value);
+    print('add on price => ${addOnsprice.value}');
   }
 
   /// add Baggage information to the passenger to the traveller in the given index
@@ -116,8 +123,15 @@ class TravellerController extends GetxController {
       }
     }
     traveller.ssrBaggageInfos!.add(ssrInfo);
+    passengerDetails[index] = traveller;
+    print('ssr info => ${ssrInfo.toString()}');
+    for (var traveller in passengerDetails) {
+      for (var element in traveller?.ssrBaggageInfos ?? <SsrInfo>[]) {
+        print(element.toString());
+      }
+    }
     addOnsprice.value += ssrInfo.amount ?? 0;
-    print(addOnsprice.value);
+    print('add on price => ${addOnsprice.value}');
   }
 
   /// add seat information to the passenger to the traveller in the given index
@@ -131,6 +145,11 @@ class TravellerController extends GetxController {
       }
     }
     traveller.ssrSeatInfos!.add(ssrInfo);
+    for (var traveller in passengerDetails) {
+      for (var element in traveller?.ssrSeatInfos ?? <SsrInfo>[]) {
+        print(element.toString());
+      }
+    }
   }
 
   /// add passenger details to the list to submit while booking
@@ -199,6 +218,28 @@ class TravellerController extends GetxController {
       return;
     } else if (selectedAddDetailsStep.value == 1) {
       chnageSelectedFlightToNext();
+    } else if (selectedAddDetailsStep.value == 2) {
+      selectedAddDetailsStep.value += 1;
+      update();
+      // // clear baggage and meals from passenger details
+      // for (var passenger in passengerDetails) {
+      //   if (passenger?.ssrBaggageInfos != null) {
+      //     for (var element in passenger!.ssrBaggageInfos!) {
+      //       addOnsprice.value -= element.amount ?? 0;
+      //     }
+      //   }
+      //   if (passenger?.ssrMealInfos != null) {
+      //     for (var element in passenger!.ssrMealInfos!) {
+      //       addOnsprice.value -= element.amount ?? 0;
+      //     }
+      //   }
+      //   passenger?.ssrBaggageInfos = null;
+      //   passenger?.ssrMealInfos = null;
+      // }
+      // // add baggage and meals to model
+      // for (var passenger in passengerDetails) {
+
+      // }
     } else if (selectedAddDetailsStep.value < totalSubStepLength - 1) {
       selectedAddDetailsStep.value += 1;
       update();
@@ -297,15 +338,22 @@ class TravellerController extends GetxController {
 
   // select seats for each flights
   void selectSeat({required int passengerIndex, required SInfo seat}) {
-    if (selectedSeats[selectedSeatFlightKey.value]!.contains(seat.code)) {
+    if (selectedSeats[selectedSeatFlightKey.value]!.any((element) =>
+        element?.code == seat.code &&
+        element?.key == selectedSeatFlightKey.value)) {
       final index = selectedSeats[selectedSeatFlightKey.value]!
-          .lastIndexWhere((element) => element == seat.code);
-      selectedSeats[selectedSeatFlightKey.value]![index] = '';
+          .lastIndexWhere((element) => element?.code == seat.code);
+      selectedSeats[selectedSeatFlightKey.value]![index] = null;
       addOnsprice.value -= seat.amount ?? 0;
     } else if (selectedSeats[selectedSeatFlightKey.value]!.contains('')) {
-      final index = selectedSeats[selectedSeatFlightKey.value]!
-          .lastIndexWhere((element) => element == '');
-      selectedSeats[selectedSeatFlightKey.value]![index] = seat.code ?? '';
+      final index = selectedSeats[selectedSeatFlightKey.value]!.lastIndexWhere(
+          (element) =>
+              element?.code == seat.code &&
+              element?.key == selectedSeatFlightKey.value);
+      selectedSeats[selectedSeatFlightKey.value]![index] = SsrInfo(
+          key: selectedSeatFlightKey.value,
+          code: seat.code,
+          amount: seat.amount);
       addOnsprice.value += seat.amount ?? 0;
     }
   }
@@ -329,7 +377,17 @@ class TravellerController extends GetxController {
     if (index == keysList.length - 1 || index == -1) {
       selectedAddDetailsStep.value += 1;
       update();
+      // clear seatinfo from passenger details
+      for (var passenger in passengerDetails) {
+        if (passenger?.ssrBaggageInfos != null) {
+          for (var element in passenger!.ssrBaggageInfos!) {
+            addOnsprice.value -= element.amount ?? 0;
+          }
+        }
+        passenger?.ssrSeatInfos = null;
+      }
       // add selected seats to passengers
+      print('seat added to passenger');
       for (int i = 0; i < passengerLengthWithoutInfant.value; i++) {
         for (var key in keysList) {
           if (selectedSeats[key] != null && selectedSeats[key]!.length > i) {
@@ -337,10 +395,7 @@ class TravellerController extends GetxController {
                 .removeWhere((element) => element.key == key);
             passengerDetails[i]!.ssrSeatInfos = [
               ...passengerDetails[i]!.ssrSeatInfos ?? [],
-              SsrInfo(
-                key: key,
-                code: selectedSeats[key]![i],
-              )
+              selectedSeats[key]![i]!,
             ];
           }
         }
@@ -365,7 +420,7 @@ class TravellerController extends GetxController {
     if (selectedSeats[selectedSeatFlightKey.value] == null) {
       selectedSeats[selectedSeatFlightKey.value] = RxList.generate(
         passengerLengthWithoutInfant.value,
-        (index) => '',
+        (index) => null,
       );
     }
     Timer(const Duration(milliseconds: 300), () {

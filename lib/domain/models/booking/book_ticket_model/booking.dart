@@ -44,4 +44,9 @@ class Booking {
       deliveryInfo: deliveryInfo ?? this.deliveryInfo,
     );
   }
+
+  @override
+  String toString() {
+    return 'Booking{bookingId: $bookingId, paymentInfos: ${paymentInfos?.map((e) => e.toString()).toList()}, travellerInfo: ${travellerInfo?.map((e) => e.toString()).toList()}, gstInfo: ${gstInfo.toString()}, deliveryInfo: ${deliveryInfo.toString()}}';
+  }
 }

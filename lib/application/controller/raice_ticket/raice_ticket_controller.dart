@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/data/features/pdf_generator.dart';
 import 'package:myairdeal/data/service/raice_ticket/raice_ticket_service.dart';
 import 'package:myairdeal/domain/models/ticket_raice/get_all_tickets_model/tasks.dart';
 import 'package:myairdeal/domain/models/ticket_raice/raice_ticket/raice_ticket.dart';
 import 'package:myairdeal/domain/repository/service/raice_ticket_repo.dart';
+import 'package:pinput/pinput.dart';
 
 class RaiceTicketController extends GetxController {
   // flight service class responsible for api calls
@@ -14,6 +16,8 @@ class RaiceTicketController extends GetxController {
   RxBool invoiceDownLoadLoading = false.obs;
   RxList<Tasks> allTickets = <Tasks>[].obs;
 
+  // Validating for ticket raising
+  final GlobalKey<FormState> raiceTicketFormKey = GlobalKey<FormState>();
   final descriptionController = TextEditingController();
 
   // in combleted and upcoming tab ticket raising value
@@ -51,24 +55,33 @@ class RaiceTicketController extends GetxController {
     update();
   }
 
-  void addRaiceTicket({required RaiceTicket raiceTicket}) async {
+  void createRaiceTicket({required RaiceTicket raiceTicket}) async {
+    if (descriptionController.text.isEmpty) {
+      return;
+    } else if (descriptionController.length < 15) {
+      return;
+    }
     isLoading.value = true;
-    final data = await raiceTicketRepo.raiceTicket(raiceTicket: raiceTicket);
+    final data =
+        await raiceTicketRepo.createRaiceTicket(raiceTicket: raiceTicket);
     data.fold(
       (l) {
         isLoading.value = false;
       },
       (r) {
         isLoading.value = false;
-        Get.snackbar('Sucess', 'Ticket Raicing Sucess');
-        selectedYouCouldAlsoTab.value = 2;
+        Get.snackbar('Sucess', 'Ticket Raicing Sucess',
+            backgroundColor: kBluePrimary);
+        selectedYouCouldAlsoTab.value = 1;
+        // getAllRaisedTickets();
       },
     );
   }
 
   void getAllRaisedTickets({required String createdId}) async {
     isLoading.value = true;
-    final data = await raiceTicketRepo.getraiceTickets(createdId: createdId);
+    final data =
+        await raiceTicketRepo.getAllRaisedTickets(createdId: createdId);
     data.fold(
       (l) {
         isLoading.value = false;
@@ -80,7 +93,7 @@ class RaiceTicketController extends GetxController {
     );
   }
 
-  void invoiceDOwnload({required String bookingID}) async {
+  void ivoiceDownLoad({required String bookingID}) async {
     final permission = await takePermission();
     if (!permission) return;
     invoiceDownLoadLoading.value = true;

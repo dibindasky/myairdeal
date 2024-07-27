@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/data/service/home/home_service.dart';
 import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
@@ -17,6 +18,9 @@ class HomeController extends GetxController {
   RxList<CitySearchModel> popularCitys = <CitySearchModel>[].obs;
 
   RxList<CitySearchModel> airportRecentSearches = <CitySearchModel>[].obs;
+
+  // Home screen Scroll controller
+  ScrollController homeScrollController = ScrollController();
 
   RxBool isLoading = false.obs;
 

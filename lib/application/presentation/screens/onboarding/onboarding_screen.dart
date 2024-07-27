@@ -1,73 +1,73 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/screens/onboarding/samble_widget.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 
-class ScreenOnBoard extends StatelessWidget {
-  const ScreenOnBoard({super.key});
+class OnBoardInitail extends StatelessWidget {
+  const OnBoardInitail({super.key});
 
   @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: ListView(
-            children: [
-              Stack(
-                children: [
-                  Image.asset(onBoardImage),
-                  Positioned(
-                    top: 25.h,
-                    left: 0,
-                    right: 0,
-                    child: Hero(
-                      tag: 'onbaordImage',
-                      child: Image.asset(
-                        splashImage,
-                        height: 30.h,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              kHeight40,
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Text(
-                    strutStyle: const StrutStyle(leading: 2, height: 1),
-                    '''Get the Best \nFlight Tickets \nfor You..''',
-                    style: textHeadStyle1.copyWith(
-                      fontSize: 25.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ),
-              kHeight20,
-              EventIconButton(
-                suffixIcon: const Icon(
-                  Icons.arrow_circle_right_outlined,
-                  color: kWhite,
-                  size: 18,
-                ),
-                onTap: () {
-                  authController.skipOnBoard();
-                  Get.offAllNamed(Routes.signUp);
-                },
-                text: 'Get Started',
-              )
-            ],
-          ),
-        ),
-      ),
+    return ScreenOnBoard(
+      image: myOnbaordOne,
+      text: 'Discover The',
+      secText: 'Magnificent',
+      thirdText: 'World..',
+      skipOnTap: () {
+        authController.skipOnBoard();
+        Get.offAllNamed(Routes.signUp);
+      },
+      nextTap: () {
+        Get.to(const OnBoardSecond());
+      },
+    );
+  }
+}
+
+class OnBoardSecond extends StatelessWidget {
+  const OnBoardSecond({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final authController = Get.find<AuthController>();
+    return ScreenOnBoard(
+      image: myOnboardTwo,
+      text: 'Get the Best',
+      secText: 'Flight Tickets',
+      thirdText: 'for You..',
+      skipOnTap: () {
+        authController.skipOnBoard();
+        Get.offAllNamed(Routes.signUp);
+      },
+      nextTap: () {
+        Get.to(const OnbaordThird());
+      },
+    );
+  }
+}
+
+class OnbaordThird extends StatelessWidget {
+  const OnbaordThird({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final authController = Get.find<AuthController>();
+    return ScreenOnBoard(
+      image: onBoardImage,
+      text: 'Book',
+      secText: 'Appointment',
+      thirdText: 'in Easiest Way!',
+      skipOnTap: () {
+        authController.skipOnBoard();
+        Get.offAllNamed(Routes.signUp);
+      },
+      nextTap: () {
+        authController.skipOnBoard();
+        Get.offAllNamed(Routes.signUp);
+      },
     );
   }
 }

@@ -117,7 +117,7 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                               ),
                                             ));
                                           },
-                                          text: 'Check amend ment details',
+                                          text: 'Check Amendment Details',
                                         )
                                       : kEmpty,
                                   QuickLinksContainer(
@@ -137,22 +137,22 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                                 curve: Curves.bounceIn),
                                       );
                                     },
-                                    text: 'Raise Ticket',
+                                    text: 'Raise a Ticket',
                                   ),
-                                  QuickLinksContainer(
-                                    onTap: () {
-                                      raiceController
-                                          .changeSelectedYouCouldAlsoTab(3);
-                                    },
-                                    text: 'Check refunds & Refund status',
-                                  ),
-                                  QuickLinksContainer(
-                                    onTap: () {
-                                      raiceController
-                                          .changeSelectedYouCouldAlsoTab(2);
-                                    },
-                                    text: 'Call',
-                                  ),
+                                  // QuickLinksContainer(
+                                  //   onTap: () {
+                                  //     raiceController
+                                  //         .changeSelectedYouCouldAlsoTab(3);
+                                  //   },
+                                  //   text: 'Check refunds & Refund status',
+                                  // ),
+                                  // QuickLinksContainer(
+                                  //   onTap: () {
+                                  //     raiceController
+                                  //         .changeSelectedYouCouldAlsoTab(2);
+                                  //   },
+                                  //   text: 'Call',
+                                  // ),
                                   bookingController.invoiceLoading.value
                                       ? kEmpty
                                       : QuickLinksContainer(
@@ -167,7 +167,7 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                       ? kEmpty
                                       : QuickLinksContainer(
                                           onTap: () {
-                                            raiceController.invoiceDOwnload(
+                                            raiceController.ivoiceDownLoad(
                                                 bookingID: bookingController
                                                         .retrieveSingleBookingresponceModel
                                                         .value

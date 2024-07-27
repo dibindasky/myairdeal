@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/booking_qurreys_sections.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/curent_offers_section.dart';
@@ -21,6 +22,7 @@ class ScreenHomePage extends StatelessWidget {
     final controller = Get.find<FlightSortController>();
     return Scaffold(
       body: SingleChildScrollView(
+        controller: Get.find<HomeController>().homeScrollController,
         child: Column(
           children: [
             HomeHeaderSection(

@@ -7,6 +7,7 @@ import 'package:myairdeal/application/presentation/screens/bookings/widgets/file
 import 'package:myairdeal/application/presentation/screens/bookings/widgets/product_drop_dwn.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
@@ -45,18 +46,22 @@ class ContactUsFrom extends StatelessWidget {
         kHeight15,
         const Text('Add Description'),
         kHeight5,
-        CustomTextField(
-          controller: ticketRaiceController.descriptionController,
-          maxLines: 7,
-          isBorder: true,
-          borderRadius: 7,
-          textCapitalization: TextCapitalization.words,
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(width: .3),
+        Form(
+          key: ticketRaiceController.raiceTicketFormKey,
+          child: CustomTextField(
+            controller: ticketRaiceController.descriptionController,
+            maxLines: 7,
+            isBorder: true,
+            borderRadius: 7,
+            textCapitalization: TextCapitalization.words,
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(width: .3),
+            ),
+            validate: Validate.notNullAndLength15,
+            onTapOutside: () => FocusScope.of(context).unfocus(),
+            fillColor: kGreyLightBackground,
+            hintText: 'Description',
           ),
-          onTapOutside: () => FocusScope.of(context).unfocus(),
-          fillColor: kGreyLightBackground,
-          hintText: 'Description',
         ),
         const BookingFilePicker(),
         kHeight10,
@@ -66,14 +71,18 @@ class ContactUsFrom extends StatelessWidget {
           width: 400.w,
           text: 'Submit',
           onTap: () {
-            RaiceTicket raiceTicket = RaiceTicket(
-              bookingId: bookingId,
-              description: ticketRaiceController.descriptionController.text,
-              heading: ticketRaiceController.selectedheding.value,
-              product: ticketRaiceController.selectedProduct?.value ?? 'Flight',
-            );
-            Get.find<RaiceTicketController>()
-                .addRaiceTicket(raiceTicket: raiceTicket);
+            if (ticketRaiceController.raiceTicketFormKey.currentState!
+                .validate()) {
+              RaiceTicket raiceTicket = RaiceTicket(
+                bookingId: bookingId,
+                description: ticketRaiceController.descriptionController.text,
+                heading: ticketRaiceController.selectedheding.value,
+                product:
+                    ticketRaiceController.selectedProduct?.value ?? 'Flight',
+              );
+              Get.find<RaiceTicketController>()
+                  .createRaiceTicket(raiceTicket: raiceTicket);
+            }
           },
         ),
         kHeight20

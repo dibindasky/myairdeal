@@ -5,16 +5,17 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/network_image_loader.dart';
 
 class NormalCenterItems extends StatelessWidget {
-  const NormalCenterItems(
-      {super.key,
-      this.haveImage = true,
-      this.airline,
-      this.flightId,
-      this.date,
-      this.number,
-      this.travelMinutes = '',
-      this.airlineCode,
-      this.stops = 1});
+  const NormalCenterItems({
+    super.key,
+    this.haveImage = true,
+    this.airline,
+    this.flightId,
+    this.date,
+    this.number,
+    this.travelMinutes = '',
+    this.airlineCode,
+    this.stops = 1,
+  });
 
   final bool haveImage;
   final String? airline;
@@ -29,25 +30,25 @@ class NormalCenterItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        kHeight5,
         airlineCode != null
-            ? NetworkImageWithLoading(imageUrl: getAirlineLogo(airlineCode!),height: 20)
-            // ? Image.network(getAirlineLogo(airlineCode!),height: 20.h)
+            ? NetworkImageWithLoading(
+                imageUrl: getAirlineLogo(airlineCode!), height: 20)
             : haveImage
-                ? Image.asset(
-                    flightDetailIcon,
-                    height: 20.h,
-                  )
-            : kEmpty,
-        kHeight10,
+                ? Image.asset(flightDetailIcon, height: 20.h)
+                : kEmpty,
+        kHeight5,
         Text(
           '${airline ?? ''}${flightId ?? ''}',
           style: textStyle1.copyWith(fontSize: 12.sp),
         ),
-        Text(
-          travelMinutes,
-          style: textThinStyle1.copyWith(fontSize: 9.sp),
-        ),
-        kWidth5,
+        kHeight5,
+        travelMinutes == ''
+            ? kEmpty
+            : Text(
+                travelMinutes,
+                style: textThinStyle1.copyWith(fontSize: 9.sp),
+              ),
         FittedBox(
           child: Row(
             children: [
@@ -97,7 +98,6 @@ class NormalCenterItems extends StatelessWidget {
         number != null
             ? Text(number!, style: textThinStyle1.copyWith(fontSize: 9.sp))
             : kEmpty,
-        kHeight5,
         date != null
             ? Text(
                 date!,

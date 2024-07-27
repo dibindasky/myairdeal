@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -53,46 +55,58 @@ class RecentSearchSection extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final routeInfo = homeController.recentSearches[index]
                       .searchQuery?.searchQuery?.routeInfos;
-                  return Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-                    decoration: BoxDecoration(
-                      color: kBluePrimary,
-                      borderRadius: kRadius10,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            TicketColumn(
-                              label:
-                                  '${routeInfo?[0].fromCityOrAirport?.city ?? 'City'}, ${routeInfo?[0].fromCityOrAirport?.country ?? 'Country'}'
-                                  '',
-                              value: routeInfo?[0].fromCityOrAirport?.name ??
-                                  'Name',
-                              subValue:
-                                  routeInfo?[0].fromCityOrAirport?.country ??
-                                      'Airport',
-                            ),
-                            kWidth20,
-                            Image.asset(imageFlightTrip, height: 30.h),
-                            kWidth20,
-                            TicketColumn(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              label:
-                                  '${routeInfo?[0].toCityOrAirport?.city ?? 'City'}, ${routeInfo?[0].toCityOrAirport?.country ?? 'Country'}'
-                                  '',
-                              value:
-                                  routeInfo?[0].toCityOrAirport?.name ?? 'Name',
-                              subValue:
-                                  routeInfo?[0].toCityOrAirport?.country ??
-                                      'Airport',
-                            ),
-                          ],
-                        ),
-                      ],
+                  return GestureDetector(
+                    onTap: () {
+                      Timer(
+                        const Duration(milliseconds: 400),
+                        () => homeController.homeScrollController.animateTo(
+                            homeController
+                                .homeScrollController.position.minScrollExtent,
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.bounceIn),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 10.h),
+                      decoration: BoxDecoration(
+                        color: kBluePrimary,
+                        borderRadius: kRadius10,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              TicketColumn(
+                                label:
+                                    '${routeInfo?[0].fromCityOrAirport?.city ?? 'City'}, ${routeInfo?[0].fromCityOrAirport?.country ?? 'Country'}'
+                                    '',
+                                value: routeInfo?[0].fromCityOrAirport?.name ??
+                                    'Name',
+                                subValue:
+                                    routeInfo?[0].fromCityOrAirport?.country ??
+                                        'Airport',
+                              ),
+                              kWidth20,
+                              Image.asset(imageFlightTrip, height: 30.h),
+                              kWidth20,
+                              TicketColumn(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                label:
+                                    '${routeInfo?[0].toCityOrAirport?.city ?? 'City'}, ${routeInfo?[0].toCityOrAirport?.country ?? 'Country'}'
+                                    '',
+                                value: routeInfo?[0].toCityOrAirport?.name ??
+                                    'Name',
+                                subValue:
+                                    routeInfo?[0].toCityOrAirport?.country ??
+                                        'Airport',
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

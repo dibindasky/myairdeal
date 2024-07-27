@@ -20,7 +20,7 @@ class SelectedContainers extends StatelessWidget {
           GetBuilder<TicketCancellationController>(builder: (cancelController) {
         return Row(
           children: List.generate(
-            cancelController.cancelSelectedItems.value.trips?.length ?? 0,
+            cancelController.selectedTrips.length,
             (index) => Container(
               margin: EdgeInsets.symmetric(horizontal: 5.w),
               decoration: BoxDecoration(

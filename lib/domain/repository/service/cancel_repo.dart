@@ -10,8 +10,7 @@ abstract class CancelRepo {
   Future<Either<Failure, TicketCancelResponce>> submitAmendment({
     required TicketCancelRequestModel ticketCancelRequestModel,
   });
-  Future<Either<Failure, AmendmentChargesResponceModel>>
-      submitAmendmentCharges({
+  Future<Either<Failure, AmendmentChargesResponceModel>> amendmentCharges({
     required TicketCancelRequestModel ticketCancelRequestModel,
   });
 

@@ -14,7 +14,7 @@ import 'package:myairdeal/domain/repository/service/raice_ticket_repo.dart';
 class RaiceTicketService implements RaiceTicketRepo {
   final ApiService apiService = ApiService();
   @override
-  Future<Either<Failure, GetAllTicketsModel>> getraiceTickets(
+  Future<Either<Failure, GetAllTicketsModel>> getAllRaisedTickets(
       {required String createdId}) async {
     try {
       final responce = await apiService.get(
@@ -31,7 +31,7 @@ class RaiceTicketService implements RaiceTicketRepo {
   }
 
   @override
-  Future<Either<Failure, SuccessResponceModel>> raiceTicket(
+  Future<Either<Failure, SuccessResponceModel>> createRaiceTicket(
       {required RaiceTicket raiceTicket}) async {
     try {
       log('${raiceTicket.toJson()}');

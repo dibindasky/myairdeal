@@ -121,6 +121,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
           return 'Please enter a valid email address';
         } else if (widget.validate == Validate.password && value!.length < 8) {
           return 'Password must contavin at least 8 characters';
+        } else if (widget.validate == Validate.notNullAndLength15) {
+          if (value == null || value == '') {
+            return 'Description should not be Empty';
+          } else if (value.length < 15) {
+            return 'Description should be at least 15 letters.';
+          } else {
+            return null;
+          }
         } else if (widget.validate == Validate.notNull &&
             (value == null || value == '')) {
           return 'This Field cannot be Empty';

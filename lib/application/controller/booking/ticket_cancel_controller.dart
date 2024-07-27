@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
@@ -10,7 +8,6 @@ import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_charges_
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_request_model/amendment_details_request_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_responce_model/amendment_details_responce_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/ticket_cancel_request_model.dart';
-import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/traveller.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/trip.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_responce/ticket_cancel_responce.dart';
 import 'package:myairdeal/domain/repository/service/cancel_repo.dart';
@@ -30,114 +27,35 @@ class TicketCancellationController extends GetxController {
   //Amend ment charges responce model
   Rx<AmendmentChargesResponceModel> checkAmendMentCharges =
       AmendmentChargesResponceModel().obs;
+
   Rx<TicketCancelResponce> ticketCancelResponce = TicketCancelResponce().obs;
 
   //Amendment Charges after submiting cancel
   RxList<AmendmentDetailsResponceModel?> amendmentDetails =
       <AmendmentDetailsResponceModel>[].obs;
 
-  // Trip selection unselection Func
-  void toggleTripSelection(Trip trip) {
-    int tripIndex = cancelSelectedItems.value.trips?.indexWhere(
-            (existingTrip) =>
-                existingTrip.src == trip.src &&
-                existingTrip.dest == trip.dest &&
-                existingTrip.departureDate == trip.departureDate) ??
-        -1;
-    if (tripIndex != -1) {
-      cancelSelectedItems.update((val) {
-        val?.trips?.removeAt(tripIndex);
-      });
+  // List of selected trips
+  RxList<Trip> selectedTrips = <Trip>[].obs;
+
+  // Function to select a trip
+  void selectTrip(Trip trip) {
+    if (selectedTrips.contains(trip)) {
+      selectedTrips.remove(trip);
     } else {
-      cancelSelectedItems.update((val) {
-        val?.trips ??= [];
-        val?.trips?.add(trip);
-      });
+      selectedTrips.add(trip);
     }
     update();
   }
 
-  // for identifying selected or not
+  // Function to check if a trip is selected
   bool isTripSelected(Trip trip) {
-    if (cancelSelectedItems.value.trips != null) {
-      return cancelSelectedItems.value.trips!.contains(trip);
-    }
-    return false;
+    return selectedTrips.contains(trip);
   }
 
-  void toggleTravelerSelection(Trip trip, Traveller traveler) {
-    int tripIndex = cancelSelectedItems.value.trips?.indexWhere(
-            (existingTrip) =>
-                existingTrip.src == trip.src &&
-                existingTrip.dest == trip.dest &&
-                existingTrip.departureDate == trip.departureDate) ??
-        -1;
-
-    if (tripIndex != -1) {
-      var selectedTravelers =
-          cancelSelectedItems.value.trips?[tripIndex].travellers ?? [];
-      if (selectedTravelers.contains(traveler)) {
-        selectedTravelers.remove(traveler);
-      } else {
-        selectedTravelers.add(traveler);
-      }
-    } else {
-      // If the trip does not exist, add the trip with the traveler
-      trip.travellers = [traveler];
-      cancelSelectedItems.value.trips ??= [];
-      cancelSelectedItems.value.trips!.add(trip);
-    }
-    update();
-  }
-
-  bool isTravelerSelected(Trip trip, Traveller traveler) {
-    int tripIndex = cancelSelectedItems.value.trips?.indexWhere(
-            (existingTrip) =>
-                existingTrip.src == trip.src &&
-                existingTrip.dest == trip.dest &&
-                existingTrip.departureDate == trip.departureDate) ??
-        -1;
-
-    if (tripIndex != -1) {
-      return cancelSelectedItems.value.trips?[tripIndex].travellers
-              ?.contains(traveler) ??
-          false;
-    }
-    return false;
-  }
-
-  void addTraveler(Trip trip, Traveller traveler) {
-    int tripIndex = cancelSelectedItems.value.trips?.indexWhere(
-            (existingTrip) =>
-                existingTrip.src == trip.src &&
-                existingTrip.dest == trip.dest &&
-                existingTrip.departureDate == trip.departureDate) ??
-        -1;
-
-    if (tripIndex == -1) {
-      // Trip not found, add the trip with the traveler
-      trip.travellers = [traveler];
-      cancelSelectedItems.value.trips ??= [];
-      cancelSelectedItems.value.trips!.add(trip);
-    } else {
-      // Trip found, add the traveler to the existing trip
-      cancelSelectedItems.value.trips![tripIndex].travellers ??= [];
-      if (!cancelSelectedItems.value.trips![tripIndex].travellers!
-          .contains(traveler)) {
-        cancelSelectedItems.value.trips![tripIndex].travellers!.add(traveler);
-      }
-    }
-    update();
-  }
-
-  var tripCancelErrorMessage = ''.obs;
-  var selectedTravelers = <Traveller>[].obs;
-
-  void checkAmendmentDetails() async {
+  void amendmentCharges() async {
     hasError.value = false;
     isLoading.value = true;
-    log('${cancelSelectedItems.value.trips?.toList()}');
-    final data = await cancelRepo.submitAmendmentCharges(
+    final data = await cancelRepo.amendmentCharges(
         ticketCancelRequestModel: cancelSelectedItems.value);
     data.fold(
       (l) {
@@ -145,7 +63,7 @@ class TicketCancellationController extends GetxController {
         isLoading.value = false;
         hasError.value = true;
         update();
-        Get.snackbar('Failure', l.message ?? errorMessage,
+        Get.snackbar(l.message ?? errorMessage, l.subMessage ?? errorMessage,
             snackPosition: SnackPosition.BOTTOM,
             forwardAnimationCurve: Curves.bounceIn,
             backgroundColor: kRed,

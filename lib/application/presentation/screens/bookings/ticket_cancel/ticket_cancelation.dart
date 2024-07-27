@@ -56,208 +56,200 @@ class ScreenTicetCanceallation extends StatelessWidget {
                   children: [
                     const DetailAppBar(heading: 'Ticket Cancellation'),
                     kHeight10,
-                    Obx(
-                      () => Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 12.w, vertical: 10.h),
-                        child: Column(
-                          children: [
-                            ...List.generate(
-                              tripInfos?.length ?? 0,
-                              (tripIndex) {
-                                Trip trip = Trip(
-                                  src: tripInfos?[tripIndex].sI?[0].da?.code ??
-                                      '',
-                                  dest: tripInfos?[tripIndex]
-                                          .sI?[(tripInfos[tripIndex]
-                                                      .sI
-                                                      ?.length ??
-                                                  1) -
-                                              1]
-                                          .aa
-                                          ?.code ??
-                                      '',
-                                  departureDate:
-                                      DateFormating.formatYearMonthDate(
-                                          tripInfos?[tripIndex].sI?[0].dt ??
-                                              ''),
-                                );
-                                final isSelected =
-                                    cancellationController.isTripSelected(trip);
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 2.w),
-                                  child: Stack(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 12.0.w),
-                                        child: CustomExpansionTile(
-                                          children: [
-                                            TravelersDetails(
-                                                trip: cancellationController
-                                                    .cancelSelectedItems
-                                                    .value
-                                                    .trips?[tripIndex],
-                                                travellerInfos: travelersData,
-                                                tripIndex: tripIndex)
-                                          ],
-                                          child: Container(
-                                            padding: EdgeInsets.all(10.w),
-                                            decoration: BoxDecoration(
-                                                color: kWhite,
-                                                borderRadius: kRadius15,
-                                                boxShadow: boxShadow3,
-                                                border: Border.all(
-                                                    width: .3,
-                                                    color: kRedLight
-                                                        .withOpacity(.9))),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Expanded(
-                                                  child: TicketColumn(
-                                                    label: tripInfos?[tripIndex]
-                                                            .sI?[0]
-                                                            .da
-                                                            ?.code ??
-                                                        '',
-                                                    value: tripInfos?[tripIndex]
-                                                            .sI?[0]
-                                                            .da
-                                                            ?.city ??
-                                                        '',
-                                                    subValue:
-                                                        tripInfos?[tripIndex]
-                                                                .sI?[0]
-                                                                .da
-                                                                ?.name ??
-                                                            '',
-                                                    isBold: true,
-                                                    exit: DateFormating
-                                                        .formatDateMonthYear(
-                                                      (tripInfos?[tripIndex]
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 12.w, vertical: 10.h),
+                      child: Column(
+                        children: [
+                          ...List.generate(
+                            tripInfos?.length ?? 0,
+                            (tripIndex) {
+                              Trip trip = Trip(
+                                src:
+                                    tripInfos?[tripIndex].sI?[0].da?.code ?? '',
+                                dest: tripInfos?[tripIndex]
+                                        .sI?[(tripInfos[tripIndex].sI?.length ??
+                                                1) -
+                                            1]
+                                        .aa
+                                        ?.code ??
+                                    '',
+                                departureDate:
+                                    DateFormating.formatYearMonthDate(
+                                        tripInfos?[tripIndex].sI?[0].dt ?? ''),
+                              );
+                              // final isSelected =
+                              //     cancellationController.isTripSelected(trip);
+                              return Padding(
+                                padding: EdgeInsets.symmetric(vertical: 2.w),
+                                child: Stack(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 12.0.w),
+                                      child: CustomExpansionTile(
+                                        children: [
+                                          TravelersDetails(
+                                              trip: cancellationController
+                                                  .cancelSelectedItems
+                                                  .value
+                                                  .trips?[tripIndex],
+                                              travellerInfos: travelersData,
+                                              tripIndex: tripIndex)
+                                        ],
+                                        child: Container(
+                                          padding: EdgeInsets.all(10.w),
+                                          decoration: BoxDecoration(
+                                              color: kWhite,
+                                              borderRadius: kRadius15,
+                                              boxShadow: boxShadow3,
+                                              border: Border.all(
+                                                  width: .3,
+                                                  color: kRedLight
+                                                      .withOpacity(.9))),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: TicketColumn(
+                                                  label: tripInfos?[tripIndex]
+                                                          .sI?[0]
+                                                          .da
+                                                          ?.code ??
+                                                      '',
+                                                  value: tripInfos?[tripIndex]
+                                                          .sI?[0]
+                                                          .da
+                                                          ?.city ??
+                                                      '',
+                                                  subValue:
+                                                      tripInfos?[tripIndex]
                                                               .sI?[0]
-                                                              .dt ??
-                                                          ''),
-                                                    ),
+                                                              .da
+                                                              ?.name ??
+                                                          '',
+                                                  isBold: true,
+                                                  exit: DateFormating
+                                                      .formatDateMonthYear(
+                                                    (tripInfos?[tripIndex]
+                                                            .sI?[0]
+                                                            .dt ??
+                                                        ''),
                                                   ),
                                                 ),
-                                                NormalCenterItems(
-                                                  airline: tripInfos?[tripIndex]
-                                                          .sI?[0]
-                                                          .fD
-                                                          ?.aI
+                                              ),
+                                              NormalCenterItems(
+                                                airline: tripInfos?[tripIndex]
+                                                        .sI?[0]
+                                                        .fD
+                                                        ?.aI
+                                                        ?.name ??
+                                                    '',
+                                                travelMinutes:
+                                                    '${tripInfos?[tripIndex].sI?[0].fD?.aI?.code ?? ''} ${tripInfos?[tripIndex].sI?[0].fD?.fN ?? ''}',
+                                                haveImage: false,
+                                                stops: (tripInfos?[tripIndex]
+                                                            .sI
+                                                            ?.length ??
+                                                        0) -
+                                                    1,
+                                              ),
+                                              Expanded(
+                                                child: TicketColumn(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  label: tripInfos?[tripIndex]
+                                                          .sI?[((tripInfos[
+                                                                          tripIndex]
+                                                                      .sI
+                                                                      ?.length ??
+                                                                  1) -
+                                                              1)]
+                                                          .aa
+                                                          ?.code ??
+                                                      '',
+                                                  value: tripInfos?[tripIndex]
+                                                          .sI?[((tripInfos[
+                                                                          tripIndex]
+                                                                      .sI
+                                                                      ?.length ??
+                                                                  1) -
+                                                              1)]
+                                                          .aa
+                                                          ?.city ??
+                                                      '',
+                                                  subValue: tripInfos?[
+                                                              tripIndex]
+                                                          .sI?[((tripInfos[
+                                                                          tripIndex]
+                                                                      .sI
+                                                                      ?.length ??
+                                                                  1) -
+                                                              1)]
+                                                          .aa
                                                           ?.name ??
                                                       '',
-                                                  travelMinutes:
-                                                      '${tripInfos?[tripIndex].sI?[0].fD?.aI?.code ?? ''} ${tripInfos?[tripIndex].sI?[0].fD?.fN ?? ''}',
-                                                  haveImage: false,
-                                                  stops: (tripInfos?[tripIndex]
-                                                              .sI
-                                                              ?.length ??
-                                                          0) -
-                                                      1,
+                                                  exit: DateFormating
+                                                      .formatDateMonthYear((tripInfos?[
+                                                                  tripIndex]
+                                                              .sI?[(tripInfos[tripIndex]
+                                                                          .sI
+                                                                          ?.length ??
+                                                                      1) -
+                                                                  1]
+                                                              .at ??
+                                                          '')),
+                                                  isBold: true,
                                                 ),
-                                                Expanded(
-                                                  child: TicketColumn(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    label: tripInfos?[tripIndex]
-                                                            .sI?[((tripInfos[
-                                                                            tripIndex]
-                                                                        .sI
-                                                                        ?.length ??
-                                                                    1) -
-                                                                1)]
-                                                            .aa
-                                                            ?.code ??
-                                                        '',
-                                                    value: tripInfos?[tripIndex]
-                                                            .sI?[((tripInfos[
-                                                                            tripIndex]
-                                                                        .sI
-                                                                        ?.length ??
-                                                                    1) -
-                                                                1)]
-                                                            .aa
-                                                            ?.city ??
-                                                        '',
-                                                    subValue: tripInfos?[
-                                                                tripIndex]
-                                                            .sI?[((tripInfos[
-                                                                            tripIndex]
-                                                                        .sI
-                                                                        ?.length ??
-                                                                    1) -
-                                                                1)]
-                                                            .aa
-                                                            ?.name ??
-                                                        '',
-                                                    exit: DateFormating
-                                                        .formatDateMonthYear((tripInfos?[
-                                                                    tripIndex]
-                                                                .sI?[(tripInfos[tripIndex]
-                                                                            .sI
-                                                                            ?.length ??
-                                                                        1) -
-                                                                    1]
-                                                                .at ??
-                                                            '')),
-                                                    isBold: true,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
-                                      Positioned(
-                                        right: 0,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            cancellationController
-                                                .toggleTripSelection(trip);
-                                          },
-                                          child: CircleAvatar(
-                                              radius: 10.w,
-                                              child: isSelected
-                                                  ? Icon(
-                                                      Icons.check,
-                                                      size: 16.w,
-                                                      color: kRed,
-                                                    )
-                                                  : kEmpty),
-                                        ),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          cancellationController
+                                              .selectTrip(trip);
+                                        },
+                                        child: CircleAvatar(
+                                            radius: 10.w,
+                                            child: Icon(
+                                              Icons.check,
+                                              size: 16.w,
+                                              color: kRed,
+                                            )),
                                       ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                            kHeight10,
-                            Form(
-                              key: cancellationController.formKey,
-                              child: CustomTextField(
-                                validate: Validate.notNull,
-                                controller:
-                                    cancellationController.cancellationRason,
-                                maxLines: 1,
-                                isBorder: true,
-                                borderRadius: 10,
-                                textCapitalization: TextCapitalization.words,
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: kRadius10,
-                                  borderSide: const BorderSide(width: .3),
+                                    ),
+                                  ],
                                 ),
-                                onTapOutside: () =>
-                                    FocusScope.of(context).unfocus(),
-                                fillColor: kGreyLightBackground,
-                                hintText: 'Enter Cancellation Reason',
+                              );
+                            },
+                          ),
+                          kHeight10,
+                          Form(
+                            key: cancellationController.formKey,
+                            child: CustomTextField(
+                              validate: Validate.notNull,
+                              controller:
+                                  cancellationController.cancellationRason,
+                              maxLines: 1,
+                              isBorder: true,
+                              borderRadius: 10,
+                              textCapitalization: TextCapitalization.words,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: kRadius10,
+                                borderSide: const BorderSide(width: .3),
                               ),
+                              onTapOutside: () =>
+                                  FocusScope.of(context).unfocus(),
+                              fillColor: kGreyLightBackground,
+                              hintText: 'Enter Cancellation Reason',
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     kHeight10
@@ -274,7 +266,7 @@ class ScreenTicetCanceallation extends StatelessWidget {
                       child: EventButton(
                         style: textThinStyle1.copyWith(color: kWhite),
                         hieght: 30.h,
-                        text: 'Check Amend Ment',
+                        text: 'Check Amendment',
                         onTap: () {
                           cancellationController
                                   .cancelSelectedItems.value.bookingId =
@@ -286,7 +278,7 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                   ?.bookingId;
                           cancellationController
                               .cancelSelectedItems.value.type = 'CANCELLATION';
-                          cancellationController.checkAmendmentDetails();
+                          cancellationController.amendmentCharges();
                         },
                       ),
                     ),
@@ -319,8 +311,6 @@ class ScreenTicetCanceallation extends StatelessWidget {
                     kWidth10,
                   ],
                 ),
-                // const Align(
-                //     alignment: Alignment.bottomRight, child: PriceContainer()),
                 kHeight15
               ],
             );

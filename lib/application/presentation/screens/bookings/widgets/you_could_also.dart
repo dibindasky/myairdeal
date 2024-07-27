@@ -64,8 +64,7 @@ class YouCouldAlso extends StatelessWidget {
                                     child: const Center(
                                       child: CircularProgressIndicator(
                                           color: kBlueLight),
-                                    ),
-                                  )
+                                    ))
                                 : Column(
                                     children: [
                                       kHeight5,

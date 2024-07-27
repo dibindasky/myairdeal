@@ -18,7 +18,6 @@ class TravelersDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cancellationController = Get.find<TicketCancellationController>();
-
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 3.w),
       padding: EdgeInsets.all(10.w),
@@ -26,65 +25,54 @@ class TravelersDetails extends StatelessWidget {
         borderRadius: kRadius10,
         border: Border.all(color: kBlueLight),
       ),
-      child: Obx(
-        () => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Travelers info',
-                style: textStyle1.copyWith(fontWeight: FontWeight.w700)),
-            ...List.generate(
-              (travellerInfos?.length ?? 0),
-              (index) {
-                final traveler = travellerInfos?[index];
-                TravellerInfo travellerInfo =
-                    TravellerInfo(fN: traveler?.fN, lN: traveler?.lN);
-                final convertToTra = TravellerInfo.getTraveler(travellerInfo);
-                final isSelected = cancellationController.isTravelerSelected(
-                    trip ?? Trip(), convertToTra);
-                return GestureDetector(
-                  onTap: () {
-                    cancellationController.toggleTravelerSelection(
-                        trip ?? Trip(), convertToTra);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color:
-                          isSelected ? kBlueLightShade.withOpacity(.3) : knill,
-                    ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.w),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '${traveler?.ti}  ${traveler?.fN} ${traveler?.lN}  (${traveler?.pt})',
-                              style: textThinStyle1.copyWith(
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            isSelected
-                                ? CircleAvatar(
-                                    backgroundColor: kBlueLight,
-                                    radius: 8.w,
-                                    child: Icon(
-                                      color: kWhite,
-                                      Icons.check,
-                                      size: 14.w,
-                                    ))
-                                : kEmpty,
-                          ],
-                        ),
-                      ],
-                    ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Travelers info',
+              style: textStyle1.copyWith(fontWeight: FontWeight.w700)),
+          ...List.generate(
+            (travellerInfos?.length ?? 0),
+            (index) {
+              final traveler = travellerInfos?[index];
+              const isSelected = true;
+              return GestureDetector(
+                onTap: () {
+                  // cancellationController.selectTraveler(traveler);
+                },
+                child: Container(
+                  decoration: const BoxDecoration(color: knill),
+                  padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.w),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${traveler?.ti}  ${traveler?.fN} ${traveler?.lN}  (${traveler?.pt})',
+                            style: textThinStyle1.copyWith(
+                                fontWeight: FontWeight.w600),
+                          ),
+                          isSelected
+                              ? CircleAvatar(
+                                  backgroundColor: kBlueLight,
+                                  radius: 8.w,
+                                  child: Icon(
+                                    color: kWhite,
+                                    Icons.check,
+                                    size: 14.w,
+                                  ))
+                              : kEmpty,
+                        ],
+                      ),
+                    ],
                   ),
-                );
-              },
-            ),
-          ],
-        ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

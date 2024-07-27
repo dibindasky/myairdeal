@@ -151,7 +151,7 @@ class ScreenSuccessPage extends StatelessWidget {
                                   .clearDataAfterBooking();
                               controller.getAllUpcomingBooking(true);
                               Get.back();
-                              Get.find<RaiceTicketController>().invoiceDOwnload(
+                              Get.find<RaiceTicketController>().ivoiceDownLoad(
                                   bookingID: controller
                                           .retrieveSingleBookingresponceModel
                                           .value

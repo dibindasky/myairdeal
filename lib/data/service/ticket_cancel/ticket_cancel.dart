@@ -40,8 +40,7 @@ class CancelService implements CancelRepo {
   }
 
   @override
-  Future<Either<Failure, AmendmentChargesResponceModel>>
-      submitAmendmentCharges({
+  Future<Either<Failure, AmendmentChargesResponceModel>> amendmentCharges({
     required TicketCancelRequestModel ticketCancelRequestModel,
   }) async {
     try {
@@ -57,7 +56,9 @@ class CancelService implements CancelRepo {
     } on DioException catch (e) {
       log('DioException submit Amendment Charges $e');
       return Left(Failure(
-          message: e.response?.data?['errors'][0]['message'] ?? errorMessage));
+          message: e.response?.data?['errors'][0]['message'] ?? errorMessage,
+          subMessage:
+              e.response?.data?['errors'][0]['details'] ?? errorMessage));
     } catch (e) {
       log('catch submit Amendment Charges $e');
       return Left(Failure(message: e.toString()));

@@ -53,7 +53,7 @@ class GetXRouterConfig {
     GetPage(
       binding: AuthBinding(),
       name: Routes.onboard,
-      page: () => const ScreenOnBoard(),
+      page: () => const OnBoardInitail(),
     ),
     GetPage(
       binding: AuthBinding(),

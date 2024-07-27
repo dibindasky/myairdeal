@@ -108,11 +108,11 @@ class FlightInvoiceCard extends StatelessWidget {
           const DottedLines(height: 10),
           ...List.generate(
             (tripInfos?.length ?? 0),
-            (index) => CustomExpansionTile(
+            (tripIndex) => CustomExpansionTile(
               isBorder: false,
-              children: (tripInfos?[index].sI?.length ?? 0) > 1
+              children: (tripInfos?[tripIndex].sI?.length ?? 0) > 1
                   ? List.generate(
-                      (tripInfos?[index].sI?.length) ?? 0,
+                      (tripInfos?[tripIndex].sI?.length) ?? 0,
                       (stopIndex) => Column(
                         children: [
                           Row(
@@ -124,20 +124,20 @@ class FlightInvoiceCard extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TicketColumn(
-                                      value: tripInfos?[index]
+                                      value: tripInfos?[tripIndex]
                                               .sI?[stopIndex]
                                               .da
                                               ?.code ??
                                           '',
                                       label:
-                                          '${tripInfos?[index].sI?[stopIndex].da?.city ?? ''}, ${tripInfos?[index].sI?[stopIndex].da?.country ?? ''}',
+                                          '${tripInfos?[tripIndex].sI?[stopIndex].da?.city ?? ''}, ${tripInfos?[tripIndex].sI?[stopIndex].da?.country ?? ''}',
                                       valueStyle: textThinStyle1,
-                                      subValue: tripInfos?[index]
+                                      subValue: tripInfos?[tripIndex]
                                               .sI?[stopIndex]
                                               .da
                                               ?.name ??
                                           '',
-                                      exit: tripInfos?[index]
+                                      exit: tripInfos?[tripIndex]
                                               .sI?[stopIndex]
                                               .da
                                               ?.terminal ??
@@ -145,7 +145,7 @@ class FlightInvoiceCard extends StatelessWidget {
                                       isBold: false,
                                       flightCode:
                                           DateFormating.formatDateMonthYear(
-                                              tripInfos?[index]
+                                              tripInfos?[tripIndex]
                                                       .sI?[stopIndex]
                                                       .dt ??
                                                   ''),
@@ -162,15 +162,17 @@ class FlightInvoiceCard extends StatelessWidget {
                               const SizedBox(width: 4),
                               TicketColumn(
                                 value:
-                                    '${tripInfos?[index].sI?[stopIndex].fD?.aI?.code ?? ''}- ${tripInfos?[index].sI?[stopIndex].fD?.fN ?? ''}',
+                                    '${tripInfos?[tripIndex].sI?[stopIndex].fD?.aI?.code ?? ''}- ${tripInfos?[tripIndex].sI?[stopIndex].fD?.fN ?? ''}',
                                 lebelStyle:
                                     textThinStyle1.copyWith(fontSize: 10.sp),
                                 exit: '',
                                 subValue: '',
                                 label: '',
                                 flightCode: DateFormating.getDifferenceOfDates(
-                                    tripInfos?[index].sI?[stopIndex].dt ?? '',
-                                    tripInfos?[index].sI?[stopIndex].at ?? ''),
+                                    tripInfos?[tripIndex].sI?[stopIndex].dt ??
+                                        '',
+                                    tripInfos?[tripIndex].sI?[stopIndex].at ??
+                                        ''),
                                 valueStyle: textThinStyle1.copyWith(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600),
@@ -183,20 +185,20 @@ class FlightInvoiceCard extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     TicketColumn(
-                                      value: tripInfos?[index]
+                                      value: tripInfos?[tripIndex]
                                               .sI?[stopIndex]
                                               .aa
                                               ?.code ??
                                           '',
                                       label:
-                                          '${tripInfos?[index].sI?[stopIndex].aa?.city ?? ''}, ${tripInfos?[index].sI?[stopIndex].aa?.country ?? ''}',
+                                          '${tripInfos?[tripIndex].sI?[stopIndex].aa?.city ?? ''}, ${tripInfos?[tripIndex].sI?[stopIndex].aa?.country ?? ''}',
                                       valueStyle: textThinStyle1,
-                                      subValue: tripInfos?[index]
+                                      subValue: tripInfos?[tripIndex]
                                               .sI?[stopIndex]
                                               .aa
                                               ?.name ??
                                           '',
-                                      exit: tripInfos?[index]
+                                      exit: tripInfos?[tripIndex]
                                               .sI?[stopIndex]
                                               .aa
                                               ?.terminal ??
@@ -204,7 +206,7 @@ class FlightInvoiceCard extends StatelessWidget {
                                       isBold: false,
                                       flightCode:
                                           DateFormating.formatDateMonthYear(
-                                              tripInfos?[index]
+                                              tripInfos?[tripIndex]
                                                       .sI?[stopIndex]
                                                       .at ??
                                                   ''),
@@ -227,13 +229,15 @@ class FlightInvoiceCard extends StatelessWidget {
                             ],
                           ),
                           kHeight10,
-                          (tripInfos?[index].sI?.length ?? 1) - 1 == stopIndex
+                          (tripInfos?[tripIndex].sI?.length ?? 1) - 1 ==
+                                  stopIndex
                               ? kEmpty
                               : Text(
-                                  '----- Layover Time - ${DateFormating.getDifferenceOfDates(tripInfos?[index].sI?[stopIndex].at ?? '', tripInfos?[index].sI?[stopIndex + 1].dt ?? '')} -----',
+                                  '----- Layover Time - ${DateFormating.getDifferenceOfDates(tripInfos?[tripIndex].sI?[stopIndex].at ?? '', tripInfos?[tripIndex].sI?[stopIndex + 1].dt ?? '')} -----',
                                   style: textThinStyle1,
                                 ),
-                          (tripInfos?[index].sI?.length ?? 1) - 1 != stopIndex
+                          (tripInfos?[tripIndex].sI?.length ?? 1) - 1 !=
+                                  stopIndex
                               ? kEmpty
                               : const DottedLines(height: 10)
                         ],
@@ -251,29 +255,32 @@ class FlightInvoiceCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TicketColumn(
-                              value: tripInfos?[index].sI?[0].da?.code ?? '',
+                              value:
+                                  tripInfos?[tripIndex].sI?[0].da?.code ?? '',
                               valueStyle:
                                   textThinStyle1.copyWith(fontSize: 13.sp),
                               label:
-                                  '${tripInfos?[index].sI?[0].da?.city ?? ''}, ${tripInfos?[index].sI?[0].da?.country ?? ''}',
+                                  '${tripInfos?[tripIndex].sI?[0].da?.city ?? ''}, ${tripInfos?[tripIndex].sI?[0].da?.country ?? ''}',
                               lebelStyle: textThinStyle1.copyWith(
                                   fontSize: 13.sp,
                                   fontWeight: FontWeight.w700,
                                   overflow: TextOverflow.ellipsis),
-                              subValue: tripInfos?[index].sI?[0].da?.name ?? '',
+                              subValue:
+                                  tripInfos?[tripIndex].sI?[0].da?.name ?? '',
                               isBold: true,
-                              exit: tripInfos?[index].sI?[0].da?.terminal ?? '',
+                              exit: tripInfos?[tripIndex].sI?[0].da?.terminal ??
+                                  '',
                               flightCode: DateFormating.formatDateMonthYear(
-                                (tripInfos?[index].sI?[0].dt ?? ''),
+                                (tripInfos?[tripIndex].sI?[0].dt ?? ''),
                               ),
                             ),
-                            (tripInfos?[index].sI?.length ?? 0) == 1
+                            (tripInfos?[tripIndex].sI?.length ?? 0) == 1
                                 ? TicketColumn(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     label: 'Cabin Class',
                                     lebelStyle: textThinStyle1.copyWith(
-                                        fontSize: 11.sp, color: kGreyDark),
+                                        fontSize: 10.sp, color: kGreyDark),
                                     value: 'Seat No',
                                     valueStyle: textThinStyle1.copyWith(
                                         color: kGreyDark, fontSize: 10.sp),
@@ -284,18 +291,24 @@ class FlightInvoiceCard extends StatelessWidget {
                       ),
                       kWidth5,
                       NormalCenterItems(
-                        travelMinutes: (tripInfos?[index].sI?.length ?? 0) > 1
+                        travelMinutes: (tripInfos?[tripIndex].sI?.length ?? 0) >
+                                1
                             ? ''
-                            : '${tripInfos?[index].sI?[0].fD?.aI?.code ?? ''}- ${tripInfos?[index].sI?[0].fD?.fN ?? ''}',
-                        flightId:
-                            (tripInfos?[index].sI?.length ?? 0) > 1 ? '' : '',
-                        airline: tripInfos?[index].sI?[0].fD?.aI?.name ?? '',
-                        haveImage: false,
-                        stops: (tripInfos?[index].sI?.length ?? 0) - 1,
+                            : '${tripInfos?[tripIndex].sI?[0].fD?.aI?.code ?? ''}- ${tripInfos?[tripIndex].sI?[0].fD?.fN ?? ''}',
+                        flightId: (tripInfos?[tripIndex].sI?.length ?? 0) > 1
+                            ? ''
+                            : '',
+                        airline:
+                            tripInfos?[tripIndex].sI?[0].fD?.aI?.name ?? '',
+                        airlineCode:
+                            tripInfos?[tripIndex].sI?[0].fD?.aI?.code ?? '',
+                        stops: (tripInfos?[tripIndex].sI?.length ?? 0) - 1,
                         date: DateFormating.getDifferenceOfDates(
-                            (tripInfos?[index].sI?[0].dt ?? ''),
-                            (tripInfos?[index]
-                                    .sI?[(tripInfos[index].sI?.length ?? 1) - 1]
+                            (tripInfos?[tripIndex].sI?[0].dt ?? ''),
+                            (tripInfos?[tripIndex]
+                                    .sI?[
+                                        (tripInfos[tripIndex].sI?.length ?? 1) -
+                                            1]
                                     .at ??
                                 '')),
                         number: '',
@@ -306,8 +319,9 @@ class FlightInvoiceCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             TicketColumn(
-                              value: tripInfos?[index]
-                                      .sI?[((tripInfos[index].sI?.length ?? 1) -
+                              value: tripInfos?[tripIndex]
+                                      .sI?[((tripInfos[tripIndex].sI?.length ??
+                                              1) -
                                           1)]
                                       .aa
                                       ?.code ??
@@ -319,31 +333,33 @@ class FlightInvoiceCard extends StatelessWidget {
                                   fontWeight: FontWeight.w700,
                                   overflow: TextOverflow.ellipsis),
                               label:
-                                  '${tripInfos?[index].sI?[((tripInfos[index].sI?.length ?? 1) - 1)].aa?.city ?? ''}, ${tripInfos?[index].sI?[((tripInfos[index].sI?.length ?? 1) - 1)].aa?.country ?? ''}',
-                              subValue: tripInfos?[index]
-                                      .sI?[((tripInfos[index].sI?.length ?? 1) -
+                                  '${tripInfos?[tripIndex].sI?[((tripInfos[tripIndex].sI?.length ?? 1) - 1)].aa?.city ?? ''}, ${tripInfos?[tripIndex].sI?[((tripInfos[tripIndex].sI?.length ?? 1) - 1)].aa?.country ?? ''}',
+                              subValue: tripInfos?[tripIndex]
+                                      .sI?[((tripInfos[tripIndex].sI?.length ??
+                                              1) -
                                           1)]
                                       .aa
                                       ?.name ??
                                   '',
-                              exit: tripInfos?[index]
-                                      .sI?[(tripInfos[index].sI?.length ?? 1) -
+                              exit: tripInfos?[tripIndex]
+                                      .sI?[(tripInfos[tripIndex].sI?.length ??
+                                              1) -
                                           1]
                                       .aa
                                       ?.terminal ??
                                   '',
                               flightCode: DateFormating.formatDateMonthYear(
-                                (tripInfos?[index]
-                                        .sI?[
-                                            (tripInfos[index].sI?.length ?? 1) -
-                                                1]
+                                (tripInfos?[tripIndex]
+                                        .sI?[(tripInfos[tripIndex].sI?.length ??
+                                                1) -
+                                            1]
                                         .at ??
                                     ''),
                               ),
                               isBold: true,
                               crossAxisAlignment: CrossAxisAlignment.end,
                             ),
-                            (tripInfos?[index].sI?.length ?? 1) == 1
+                            (tripInfos?[tripIndex].sI?.length ?? 1) == 1
                                 ? TicketColumn(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     label: retrieveSingleBookingresponceModel
@@ -352,7 +368,7 @@ class FlightInvoiceCard extends StatelessWidget {
                                             ?.cabinClass ??
                                         '--',
                                     lebelStyle: textThinStyle1.copyWith(
-                                        fontSize: 11.sp, color: kGreyDark),
+                                        fontSize: 10.sp, color: kGreyDark),
                                     value: '--',
                                     valueStyle: textThinStyle1.copyWith(
                                         color: kGreyDark, fontSize: 10.sp),

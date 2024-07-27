@@ -122,7 +122,7 @@ class ScreenBookings extends StatelessWidget {
                                         },
                                         child: FlightTicketCard(
                                           airlineCode: controller
-                                                  .retrieveAllCompletedBooking[
+                                                  .retrieveAllUpcomingBooking[
                                                       index]
                                                   .retrieveSingleBookingresponceModel
                                                   ?.itemInfos
@@ -183,7 +183,7 @@ class ScreenBookings extends StatelessWidget {
                                         },
                                         child: FlightTicketCard(
                                           airlineCode: controller
-                                                  .retrieveAllCompletedBooking[
+                                                  .retrieveAllCancelBooking[
                                                       index]
                                                   .retrieveSingleBookingresponceModel
                                                   ?.itemInfos

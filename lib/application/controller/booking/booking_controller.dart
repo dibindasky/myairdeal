@@ -35,7 +35,6 @@ class BookingController extends GetxController {
 
   // Booking tab according to status 1- campleted, 2- Cancelled, 3- Upcoming
   RxInt selectedBookingTab = 1.obs;
-
   RxBool bookingLoading = false.obs;
   RxBool invoiceLoading = false.obs;
 

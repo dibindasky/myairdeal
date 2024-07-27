@@ -43,13 +43,6 @@ class DomesticTripsAndOneWayInternationalTile extends StatelessWidget {
         controller.searchList[controller.selectedTripListIndex.value][index]
             .totalPriceList!.length,
         (i) => Obx(() {
-          // if (controller
-          //         .searchList[controller.selectedTripListIndex.value][index]
-          //         .totalPriceList![i]
-          //         .fareIdentifier ==
-          //     'SPECIAL_RETURN') {
-          //   return kEmpty;
-          // }
           return TicketDetailExpansionChild(
             isSelected: controller.tripType.value != 0 &&
                 controller.selectedFlights[

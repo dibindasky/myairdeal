@@ -6,6 +6,7 @@ import 'package:myairdeal/application/presentation/screens/flight_sort/bottom_sh
 import 'package:myairdeal/application/presentation/screens/flight_sort/bottom_sheet/duration_sheet.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/bottom_sheet/flight_times_sheet.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/bottom_sheet/sort_sheet.dart';
+import 'package:myairdeal/application/presentation/screens/flight_sort/bottom_sheet/special_return_sheet.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/bottom_sheet/stop_sort_sheet.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -134,6 +135,18 @@ class SortingChipsSection extends StatelessWidget {
                                 //             const FlightTimesBottomSheet(),
                                 //       );
                                 //     }),
+                                SortingChipSortPage(
+                                    text: 'Special Return',
+                                    selected: false,
+                                    onTap: () {
+                                      // special return bottom bar
+                                      showModalBottomSheet(
+                                        backgroundColor: knill,
+                                        context: context,
+                                        builder: (context) =>
+                                            const SpecialReturnBottomSheet(),
+                                      );
+                                    }),
                               ],
                             ),
                           ),

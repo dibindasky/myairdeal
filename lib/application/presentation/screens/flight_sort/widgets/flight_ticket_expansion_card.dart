@@ -70,10 +70,7 @@ class TicketDetailExpansionChild extends StatelessWidget {
           ),
           const Divider(color: kBluePrimary),
           TicketDetailTile(
-              first: 'Seat Remaining',
-              second: '${totalPriceList.fd!.adult!.sR ?? 0} Seats Remaining'),
-          TicketDetailTile(
-              first: 'Checked bag',
+              first: 'Checked Bag',
               second: totalPriceList.fd!.adult!.bI!.iB ?? ''),
           TicketDetailTile(
               first: 'Hand Bag',
@@ -82,10 +79,21 @@ class TicketDetailExpansionChild extends StatelessWidget {
               first: 'Meal',
               second:
                   totalPriceList.fd?.adult?.mI ?? false ? 'Free' : 'Chargable'),
-          // TicketDetailTile(
-          //     first: 'Cancelation', second: 'INR 3250 with in 72 hours'),
-          // TicketDetailTile(
-          //     first: 'Date change', second: 'INR 3250 with in 72 hours'),
+          TicketDetailTile(
+              first: 'Cancelation',
+              second: totalPriceList.fd?.adult?.rT == null
+                  ? 'NA'
+                  : totalPriceList.fd?.adult?.rT == 0
+                      ? 'Non Refundable'
+                      : totalPriceList.fd?.adult?.rT == 1
+                          ? 'Refundable'
+                          : 'Partialy Refundable'),
+          TicketDetailTile(
+              first: 'Cabin Class',
+              second: totalPriceList.fd?.adult?.cc ?? 'NA'),
+          TicketDetailTile(
+              first: 'Seat Remaining',
+              second: '${totalPriceList.fd!.adult!.sR ?? 0} Seats Remaining'),
         ]),
       ),
     );
@@ -106,9 +114,9 @@ class TicketDetailTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(flex: 1, child: Text(first, style: textThinStyle1)),
+        Expanded(flex: 2, child: Text(first, style: textThinStyle1)),
         Expanded(
-          flex: 2,
+          flex: 3,
           child: Text(second,
               style: textThinStyle1.copyWith(fontSize: 9.sp, color: kGreyDark)),
         ),

@@ -131,7 +131,8 @@ class BookingController extends GetxController {
     String message = '';
     String bookingId = '';
     endTimer();
-    print(bookTicketModel.toJson());
+    print('book ticket model ');
+    print(bookTicketModel.toString());
     final result =
         await bookingRepo.bookTicket(bookTicketModel: bookTicketModel);
     result.fold((l) {

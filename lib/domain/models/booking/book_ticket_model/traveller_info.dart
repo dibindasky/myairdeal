@@ -67,6 +67,11 @@ class TravellerInfo {
     );
   }
 
+  @override
+  String toString() {
+    return 'TravellerInfo{ti: $ti, fN: $fN, lN: $lN, pt: $pt, dob: $dob, pNum: $pNum, eD: $eD, pid: $pid, ssrMealInfos: ${ssrMealInfos?.map((e) => e.toString()).toList()}, ssrSeatInfos: ${ssrSeatInfos?.map((e) => e.toString()).toList()}, ssrBaggageInfos: ${ssrBaggageInfos?.map((e) => e.toString()).toList()}}';
+  }
+
   String getName() {
     return '${ti ?? ''} ${fN ?? ''} ${lN ?? ''}';
   }

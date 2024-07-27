@@ -39,4 +39,41 @@ class GstInfo {
       address: address ?? this.address,
     );
   }
+
+  @override
+  String toString() {
+    return 'GstInfo{gstNumber: $gstNumber, email: $email, registeredName: $registeredName, mobile: $mobile, address: $address}';
+  }
+
+  GstInfo? validateAndCleanDetails() {
+    // Replace empty strings with null
+    final cleanedGstNumber =
+        (gstNumber == null || gstNumber!.isEmpty) ? null : gstNumber;
+    final cleanedEmail = (email == null || email!.isEmpty) ? null : email;
+    final cleanedRegisteredName =
+        (registeredName == null || registeredName!.isEmpty)
+            ? null
+            : registeredName;
+    final cleanedMobile = (mobile == null || mobile!.isEmpty) ? null : mobile;
+    final cleanedAddress =
+        (address == null || address!.isEmpty) ? null : address;
+
+    // Check if all fields are null
+    if (cleanedGstNumber == null &&
+        cleanedEmail == null &&
+        cleanedRegisteredName == null &&
+        cleanedMobile == null &&
+        cleanedAddress == null) {
+      return null; // Return null if all fields are null or empty
+    }
+
+    // Return the updated model with cleaned details
+    return GstInfo(
+      gstNumber: cleanedGstNumber,
+      email: cleanedEmail,
+      registeredName: cleanedRegisteredName,
+      mobile: cleanedMobile,
+      address: cleanedAddress,
+    );
+  }
 }

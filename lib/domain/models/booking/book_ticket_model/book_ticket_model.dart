@@ -27,4 +27,9 @@ class BookTicketModel {
       searchQuery: searchQuery ?? this.searchQuery,
     );
   }
+
+  @override
+  String toString() {
+    return 'BookTicketModel{booking: ${booking.toString()}, searchQuery: $searchQuery}';
+  }
 }

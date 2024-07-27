@@ -29,4 +29,9 @@ class SsrInfo {
       amount: amount ?? this.amount,
     );
   }
+  
+  @override
+  String toString() {
+    return 'SsrInfo{key: $key, code: $code, desc: $desc, amount: $amount}';
+  }
 }

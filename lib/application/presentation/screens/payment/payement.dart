@@ -87,7 +87,8 @@ class PaymentTab extends StatelessWidget {
                                               travellerController
                                                   .addOnsprice.value)
                                     ],
-                                    gstInfo: travellerController.gstInfo.value,
+                                    gstInfo: travellerController.gstInfo.value
+                                        .validateAndCleanDetails(),
                                     travellerInfo: travellerInfos,
                                     deliveryInfo: DeliveryInfo(contacts: [
                                       travellerController.phoneController.text

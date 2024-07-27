@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,6 +15,7 @@ class ReveiewTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<TravellerController>();
+    final bookingController = Get.find<BookingController>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,7 +44,7 @@ class ReveiewTab extends StatelessWidget {
                     style: textStyle1.copyWith(fontSize: 16.sp)),
                 ...List.generate(
                   controller.passengerLength.value,
-                  (index) => Column(
+                  (travelrIndex) => Column(
                     children: [
                       kHeight10,
                       Container(
@@ -56,46 +56,184 @@ class ReveiewTab extends StatelessWidget {
                           color: kBlueLightShade,
                         ),
                         width: double.infinity,
-                        child: Row(
+                        child: Column(
                           children: [
-                            const Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('First Name'),
-                                  Text('Last Name'),
-                                  Text('DOB'),
-                                  Text('Seat ID'),
-                                  Text('Baggage'),
-                                  Text('Meal'),
-                                ],
-                              ),
-                            ),
-                            const Column(
+                            Row(
                               children: [
-                                Text(':  '),
-                                Text(':  '),
-                                Text(':  '),
-                                Text(':  '),
-                                Text(':  '),
-                                Text(':  '),
+                                const Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text('First Name'),
+                                      Text('Last Name'),
+                                      Text('DOB'),
+                                    ],
+                                  ),
+                                ),
+                                const Column(
+                                  children: [
+                                    Text(':  '),
+                                    Text(':  '),
+                                    Text(':  '),
+                                  ],
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(controller
+                                              .passengerDetails[travelrIndex]
+                                              ?.fN ??
+                                          ''),
+                                      Text(controller
+                                              .passengerDetails[travelrIndex]
+                                              ?.lN ??
+                                          ''),
+                                      Text(controller
+                                              .passengerDetails[travelrIndex]
+                                              ?.dob ??
+                                          ''),
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(controller.passengerDetails[index]?.fN ??
-                                      ''),
-                                  Text(controller.passengerDetails[index]?.lN ??
-                                      ''),
-                                  Text(
-                                      controller.passengerDetails[index]?.dob ??
-                                          ''),
-                                  const Text('BS1232#33'),
-                                  const Text('Yes'),
-                                  const Text('Yes'),
-                                ],
+                            ...List.generate(
+                              bookingController.reviewedDetail?.value.tripInfos
+                                      ?.length ??
+                                  0,
+                              (tripIndex) => Column(
+                                children: List.generate(
+                                  bookingController.reviewedDetail?.value
+                                          .tripInfos?[tripIndex].sI?.length ??
+                                      0,
+                                  (siIndex) {
+                                    final seatIndex = controller
+                                        .passengerDetails[travelrIndex]
+                                        ?.ssrSeatInfos
+                                        ?.indexWhere((element) =>
+                                            element.key ==
+                                            bookingController
+                                                .reviewedDetail
+                                                ?.value
+                                                .tripInfos?[tripIndex]
+                                                .sI?[siIndex]
+                                                .id);
+                                    final mealIndex = controller
+                                        .passengerDetails[travelrIndex]
+                                        ?.ssrMealInfos
+                                        ?.indexWhere((element) =>
+                                            element.key ==
+                                            bookingController
+                                                .reviewedDetail
+                                                ?.value
+                                                .tripInfos?[tripIndex]
+                                                .sI?[siIndex]
+                                                .id);
+                                    final baggageIndex = controller
+                                        .passengerDetails[travelrIndex]
+                                        ?.ssrBaggageInfos
+                                        ?.indexWhere((element) =>
+                                            element.key ==
+                                            bookingController
+                                                .reviewedDetail
+                                                ?.value
+                                                .tripInfos?[tripIndex]
+                                                .sI?[siIndex]
+                                                .id);
+                                    return Column(
+                                      children: [
+                                        (seatIndex == null ||
+                                                    seatIndex == -1) &&
+                                                (mealIndex == null ||
+                                                    mealIndex == -1) &&
+                                                (baggageIndex == null ||
+                                                    baggageIndex == -1)
+                                            ? kEmpty
+                                            : Row(
+                                                children: [
+                                                  Text(
+                                                      bookingController
+                                                              .reviewedDetail
+                                                              ?.value
+                                                              .tripInfos?[
+                                                                  tripIndex]
+                                                              .sI?[siIndex]
+                                                              .da
+                                                              ?.city ??
+                                                          'From',
+                                                      style: textThinStyle1
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700)),
+                                                  kWidth10,
+                                                  Icon(
+                                                      Icons
+                                                          .arrow_forward_ios_outlined,
+                                                      size: 13.w),
+                                                  kWidth10,
+                                                  Text(
+                                                      bookingController
+                                                              .reviewedDetail
+                                                              ?.value
+                                                              .tripInfos?[
+                                                                  tripIndex]
+                                                              .sI?[siIndex]
+                                                              .aa
+                                                              ?.city ??
+                                                          'To',
+                                                      style: textThinStyle1
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700)),
+                                                ],
+                                              ),
+                                        seatIndex != null && seatIndex != -1
+                                            ? Row(
+                                                children: [
+                                                  const Expanded(
+                                                      child: Text('Seat NO')),
+                                                  const Text(':  '),
+                                                  Expanded(
+                                                      child: Text(
+                                                          '${controller.passengerDetails[travelrIndex]?.ssrSeatInfos?[seatIndex].desc}')),
+                                                ],
+                                              )
+                                            : kEmpty,
+                                        mealIndex != null && mealIndex != -1
+                                            ? Row(
+                                                children: [
+                                                  const Expanded(
+                                                      child: Text('Meals')),
+                                                  const Text(':  '),
+                                                  Expanded(
+                                                      child: Text(
+                                                          '${controller.passengerDetails[travelrIndex]?.ssrMealInfos?[mealIndex].desc}')),
+                                                ],
+                                              )
+                                            : kEmpty,
+                                        baggageIndex != null &&
+                                                baggageIndex != -1
+                                            ? Row(
+                                                children: [
+                                                  const Expanded(
+                                                      child: Text('Baggage')),
+                                                  const Text(':  '),
+                                                  Expanded(
+                                                      child: Text(
+                                                          "${controller.passengerDetails[travelrIndex]?.ssrBaggageInfos?[baggageIndex].desc}'}")),
+                                                ],
+                                              )
+                                            : kEmpty,
+                                        kHeight5,
+                                      ],
+                                    );
+                                  },
+                                ),
                               ),
                             )
                           ],

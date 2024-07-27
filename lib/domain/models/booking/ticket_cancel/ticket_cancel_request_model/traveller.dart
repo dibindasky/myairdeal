@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/traveller_info.dart';
+import 'package:myairdeal/domain/models/booking/get_single_booking/traveller_info.dart';
 
 part 'traveller.g.dart';
 

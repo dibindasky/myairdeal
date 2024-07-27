@@ -273,7 +273,6 @@ class AuthController extends GetxController {
         );
         isLoading.value = false;
         getUserInfo(true);
-        // Get.offNamed(Routes.profile);
         Get.until((route) => Get.currentRoute == Routes.profile);
         updateEmailController.clear();
         updateFirnameController.clear();
@@ -286,7 +285,7 @@ class AuthController extends GetxController {
   }
 
   void logOut() async {
-    Get.snackbar('Success', 'Logout Successful');
+    Get.snackbar('Success', 'Logout Successful', backgroundColor: kBluePrimary);
     Get.offAllNamed(Routes.signUp);
     otpNumber.clear();
     loginOrNot.value = false;

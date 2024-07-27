@@ -5,6 +5,7 @@ import 'package:myairdeal/application/controller/home/flight_sort_controller.dar
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/network_image_loader.dart';
 
 class SelectedAirlinesSections extends StatelessWidget {
   const SelectedAirlinesSections({
@@ -57,19 +58,12 @@ class SelectedAirlinesSections extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            height: 15.h,
-                            width: 15.h,
-                            margin: EdgeInsets.only(
-                              top: 4.h,
-                            ),
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                    'asset/image/flight_detail_image.png'),
-                              ),
-                            ),
-                          ),
+                          NetworkImageWithLoading(
+                              imageUrl: getAirlineLogo(
+                                  flightModel?.sI?[0].fD?.aI?.code ?? ""),
+                              height: 15.h,
+                              width: 15.h,
+                              margin: const EdgeInsets.all(2),),
                           kWidth5,
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

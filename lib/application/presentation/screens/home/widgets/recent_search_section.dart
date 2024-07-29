@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -53,8 +52,8 @@ class RecentSearchSection extends StatelessWidget {
                 separatorBuilder: (context, index) => kWidth10,
                 itemCount: homeController.recentSearches.length,
                 itemBuilder: (context, index) {
-                  final routeInfo = homeController.recentSearches[index]
-                      .searchQuery?.searchQuery?.routeInfos;
+                  final routeInfo = homeController
+                      .recentSearches[index].searchQuery?.routeInfos;
                   return GestureDetector(
                     onTap: () {
                       Timer(
@@ -67,6 +66,7 @@ class RecentSearchSection extends StatelessWidget {
                       );
                     },
                     child: Container(
+                      width: 280.w,
                       padding: EdgeInsets.symmetric(
                           horizontal: 10.w, vertical: 10.h),
                       decoration: BoxDecoration(
@@ -79,29 +79,40 @@ class RecentSearchSection extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              TicketColumn(
-                                label:
-                                    '${routeInfo?[0].fromCityOrAirport?.city ?? 'City'}, ${routeInfo?[0].fromCityOrAirport?.country ?? 'Country'}'
-                                    '',
-                                value: routeInfo?[0].fromCityOrAirport?.name ??
-                                    'Name',
-                                subValue:
-                                    routeInfo?[0].fromCityOrAirport?.country ??
-                                        'Airport',
+                              Expanded(
+                                child: TicketColumn(
+                                  label:
+                                      '${routeInfo?[0].fromCityOrAirport?.city ?? 'City'}, ${routeInfo?[0].fromCityOrAirport?.country ?? 'Country'}'
+                                      '',
+                                  value: routeInfo?[0]
+                                          .fromCityOrAirport
+                                          ?.countryCode ??
+                                      'code',
+                                  subValue:
+                                      routeInfo?[0].fromCityOrAirport?.name ??
+                                          'airpoert',
+                                  subValueStyle:
+                                      textThinStyle1.copyWith(color: kBlack),
+                                ),
                               ),
                               kWidth20,
                               Image.asset(imageFlightTrip, height: 30.h),
                               kWidth20,
-                              TicketColumn(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                label:
-                                    '${routeInfo?[0].toCityOrAirport?.city ?? 'City'}, ${routeInfo?[0].toCityOrAirport?.country ?? 'Country'}'
-                                    '',
-                                value: routeInfo?[0].toCityOrAirport?.name ??
-                                    'Name',
-                                subValue:
-                                    routeInfo?[0].toCityOrAirport?.country ??
-                                        'Airport',
+                              Expanded(
+                                child: TicketColumn(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  label:
+                                      '${routeInfo?[0].toCityOrAirport?.city ?? 'City'}, ${routeInfo?[0].toCityOrAirport?.country ?? 'Country'}'
+                                      '',
+                                  value:
+                                      routeInfo?[0].toCityOrAirport?.cityCode ??
+                                          'Airport',
+                                  subValue:
+                                      routeInfo?[0].toCityOrAirport?.name ??
+                                          'Name',
+                                  subValueStyle:
+                                      textThinStyle1.copyWith(color: kBlack),
+                                ),
                               ),
                             ],
                           ),

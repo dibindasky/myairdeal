@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/data/service/home/home_service.dart';
 import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
-import 'package:myairdeal/domain/models/search/recent_deatil_search/recent_detail_search_item.dart';
+import 'package:myairdeal/domain/models/search/recent_detail_search/recent_detail_search_item.dart';
 import 'package:myairdeal/domain/repository/service/home_repo.dart';
 
 class HomeController extends GetxController {
@@ -107,6 +107,7 @@ class HomeController extends GetxController {
       (failure) => log(failure.message.toString()),
       (citySearchData) {
         popularCitys.value = citySearchData.data ?? [];
+        fetchRecentSearches();
       },
     );
 

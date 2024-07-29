@@ -250,7 +250,7 @@ class BookingController extends GetxController {
       bool callBookings = false}) async {
     invoiceLoading.value = true;
     update();
-    final data = await bookingRepo.retrieveSinglleBooking(
+    final data = await bookingRepo.retrieveSingleBooking(
         retrieveSingleBookingRequestModel: retrieveSingleBookingRequestModel);
     data.fold((l) {
       invoiceLoading.value = false;

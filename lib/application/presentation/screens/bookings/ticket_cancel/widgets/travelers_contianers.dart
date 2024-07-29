@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/booking/ticket_cancel_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/traveller_info.dart';
 import '../../../../../../domain/models/booking/ticket_cancel/ticket_cancel_request_model/trip.dart';
 
 class TravelersDetails extends StatelessWidget {
-  const TravelersDetails(
-      {super.key, this.trip, this.travellerInfos, this.tripIndex});
+  const TravelersDetails({
+    super.key,
+    this.trip,
+    this.travellerInfos,
+    this.tripIndex,
+  });
+
   final Trip? trip;
   final List<TravellerInfo>? travellerInfos;
   final int? tripIndex;
 
   @override
   Widget build(BuildContext context) {
-    final cancellationController = Get.find<TicketCancellationController>();
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 3.w),
       padding: EdgeInsets.all(10.w),

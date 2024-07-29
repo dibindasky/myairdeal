@@ -247,63 +247,6 @@ class ReveiewTab extends StatelessWidget {
           );
         }),
         kHeight10,
-        // Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: 14.w),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       Text('Seat, Baggage & Meal',
-        //           style: textStyle1.copyWith(fontSize: 16.sp)),
-        //       ...List.generate(
-        //         3,
-        //         (index) => Column(
-        //           children: [
-        //             kHeight10,
-        //             Container(
-        //               padding: EdgeInsets.symmetric(vertical: 10.w),
-        //               decoration: BoxDecoration(
-        //                 border: Border.all(color: kBlue),
-        //                 borderRadius: kRadius10,
-        //                 color: kBlueLightShade,
-        //               ),
-        //               width: double.infinity,
-        //               child: const Row(
-        //                 children: [
-        //                   Expanded(
-        //                     child: Column(
-        //                       children: [
-        //                         Text('Seat ID'),
-        //                         Text('Baggage'),
-        //                         Text('Meal'),
-        //                       ],
-        //                     ),
-        //                   ),
-        //                   Column(
-        //                     children: [
-        //                       Text(':  '),
-        //                       Text(':  '),
-        //                       Text(':  '),
-        //                     ],
-        //                   ),
-        //                   Expanded(
-        //                     child: Column(
-        //                       crossAxisAlignment: CrossAxisAlignment.start,
-        //                       children: [
-        //                         Text('BS1232#33'),
-        //                         Text('Yes'),
-        //                         Text('Yes'),
-        //                       ],
-        //                     ),
-        //                   )
-        //                 ],
-        //               ),
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

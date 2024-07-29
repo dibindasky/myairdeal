@@ -23,135 +23,141 @@ class SortingChipsSection extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Obx(() => controller.searchListLoading.value ||
-                  controller
-                      .searchListMain[controller.selectedTripListIndex.value]
-                      .isEmpty
-              ? kEmpty
-              : Column(
-                  children: [
-                    FittedBox(
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            SortingChipSortPage(
-                                text:
-                                    'Flight: ${controller.airportSelected[controller.selectedTripListIndex.value][0].code ?? ''} - ${controller.airportSelected[controller.selectedTripListIndex.value][1].code ?? ''}',
-                                selected: true,
-                                onTap: () {}),
-                            SortingChipSortPage(
-                                text:
-                                    'Departure: ${DateFormating.getDate(controller.multiCityDepartureDate[controller.selectedTripListIndex.value])}',
-                                selected: true,
-                                onTap: () {}),
-                            SortingChipSortPage(
-                                text:
-                                    'Class: ${Get.find<FlightSortController>().classType.value}',
-                                selected: true,
-                                onTap: () {}),
-                          ]),
-                    ),
-                    controller.comboTrip.value
-                        ? kEmpty
-                        : FittedBox(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                // SortingChipSortPage(
-                                //     text: 'Sort By: Best',
-                                //     selected: false,
-                                //     onTap: () {
-                                //       showModalBottomSheet(
-                                //         backgroundColor: knill,
-                                //         context: context,
-                                //         builder: (context) => const SortFlightBottomSheet(),
-                                //       );
-                                //     }),
-                                SortingChipSortPage(
-                                    text: 'Stops',
-                                    selected:
-                                        (controller.sortingVariablesSelected[
-                                                    controller
-                                                        .selectedTripListIndex
-                                                        .value]?[1] ??
-                                                [])
-                                            .isNotEmpty,
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                        backgroundColor: knill,
-                                        context: context,
-                                        builder: (context) =>
-                                            const StopsSortBottomSheet(),
-                                      );
-                                    }),
-                                SortingChipSortPage(
-                                    text: 'Duration',
-                                    selected: controller.durationSlider.value !=
-                                        (controller
-                                                .sortingVariables[controller
-                                                    .selectedTripListIndex
-                                                    .value]?[2]
-                                                .last ??
-                                            1.0),
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                        backgroundColor: knill,
-                                        context: context,
-                                        builder: (context) =>
-                                            const DurationBottomSheet(),
-                                      );
-                                    }),
-                                SortingChipSortPage(
-                                    text: 'Airlines',
-                                    selected:
-                                        (controller.sortingVariablesSelected[
-                                                    controller
-                                                        .selectedTripListIndex
-                                                        .value]?[0] ??
-                                                [])
-                                            .isNotEmpty,
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                        backgroundColor: knill,
-                                        context: context,
-                                        builder: (context) =>
-                                            const AirlinesBottomSheet(),
-                                      );
-                                    }),
-                                SortingChipSortPage(
-                                    text: 'Clear Filter',
-                                    selected: false,
-                                    onTap: () {
-                                      controller.clearFilters();
-                                    }),
-                                // SortingChipSortPage(
-                                //     text: 'Flight times',
-                                //     selected: false,
-                                //     onTap: () {
-                                //       showBottomSheet(
-                                //         backgroundColor: knill,
-                                //         context: context,
-                                //         builder: (context) =>
-                                //             const FlightTimesBottomSheet(),
-                                //       );
-                                //     }),
-                                SortingChipSortPage(
-                                    text: 'Special Return',
-                                    selected: false,
-                                    onTap: () {
-                                      // special return bottom bar
-                                      showModalBottomSheet(
-                                        backgroundColor: knill,
-                                        context: context,
-                                        builder: (context) =>
-                                            const SpecialReturnBottomSheet(),
-                                      );
-                                    }),
-                              ],
+          child: Obx(
+            () => controller.searchListLoading.value ||
+                    controller
+                        .searchListMain[controller.selectedTripListIndex.value]
+                        .isEmpty
+                ? kEmpty
+                : Column(
+                    children: [
+                      FittedBox(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SortingChipSortPage(
+                                  text:
+                                      'Flight: ${controller.airportSelected[controller.selectedTripListIndex.value][0].code ?? ''} - ${controller.airportSelected[controller.selectedTripListIndex.value][1].code ?? ''}',
+                                  selected: true,
+                                  onTap: () {}),
+                              SortingChipSortPage(
+                                  text:
+                                      'Departure: ${DateFormating.getDate(controller.multiCityDepartureDate[controller.selectedTripListIndex.value])}',
+                                  selected: true,
+                                  onTap: () {}),
+                              SortingChipSortPage(
+                                  text:
+                                      'Class: ${Get.find<FlightSortController>().classType.value}',
+                                  selected: true,
+                                  onTap: () {}),
+                            ]),
+                      ),
+                      controller.comboTrip.value
+                          ? kEmpty
+                          : FittedBox(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  // SortingChipSortPage(
+                                  //     text: 'Sort By: Best',
+                                  //     selected: false,
+                                  //     onTap: () {
+                                  //       showModalBottomSheet(
+                                  //         backgroundColor: knill,
+                                  //         context: context,
+                                  //         builder: (context) => const SortFlightBottomSheet(),
+                                  //       );
+                                  //     }),
+                                  SortingChipSortPage(
+                                      text: 'Stops',
+                                      selected:
+                                          (controller.sortingVariablesSelected[
+                                                      controller
+                                                          .selectedTripListIndex
+                                                          .value]?[1] ??
+                                                  [])
+                                              .isNotEmpty,
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          backgroundColor: knill,
+                                          context: context,
+                                          builder: (context) =>
+                                              const StopsSortBottomSheet(),
+                                        );
+                                      }),
+                                  SortingChipSortPage(
+                                      text: 'Duration',
+                                      selected: controller
+                                              .durationSlider.value !=
+                                          (controller
+                                                  .sortingVariables[controller
+                                                      .selectedTripListIndex
+                                                      .value]?[2]
+                                                  .last ??
+                                              1.0),
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          backgroundColor: knill,
+                                          context: context,
+                                          builder: (context) =>
+                                              const DurationBottomSheet(),
+                                        );
+                                      }),
+                                  SortingChipSortPage(
+                                      text: 'Airlines',
+                                      selected:
+                                          (controller.sortingVariablesSelected[
+                                                      controller
+                                                          .selectedTripListIndex
+                                                          .value]?[0] ??
+                                                  [])
+                                              .isNotEmpty,
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          backgroundColor: knill,
+                                          context: context,
+                                          builder: (context) =>
+                                              const AirlinesBottomSheet(),
+                                        );
+                                      }),
+                                  SortingChipSortPage(
+                                      text: 'Clear Filter',
+                                      selected: false,
+                                      onTap: () {
+                                        controller.clearFilters();
+                                      }),
+                                  // SortingChipSortPage(
+                                  //     text: 'Flight times',
+                                  //     selected: false,
+                                  //     onTap: () {
+                                  //       showBottomSheet(
+                                  //         backgroundColor: knill,
+                                  //         context: context,
+                                  //         builder: (context) =>
+                                  //             const FlightTimesBottomSheet(),
+                                  //       );
+                                  //     }),
+                                  controller.roundTrip.value
+                                      ? SortingChipSortPage(
+                                          text: 'Special Return',
+                                          selected: false,
+                                          onTap: () {
+                                            // special return bottom bar
+                                            showModalBottomSheet(
+                                              backgroundColor: knill,
+                                              context: context,
+                                              builder: (context) =>
+                                                  const SpecialReturnBottomSheet(),
+                                            );
+                                          })
+                                      : kEmpty,
+                                ],
+                              ),
                             ),
-                          ),
-                  ],
-                )),
+                    ],
+                  ),
+          ),
         ),
       ],
     );

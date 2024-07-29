@@ -17,6 +17,7 @@ import 'package:myairdeal/domain/models/search/flight_search_sort_model/pax_info
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/route_info.dart';
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/search_modifiers.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/total_price_list.dart';
 import 'package:myairdeal/domain/repository/service/flight_sort_repo.dart';
 import 'package:myairdeal/domain/repository/service/home_repo.dart';
 
@@ -45,6 +46,14 @@ class FlightSortController extends GetxController {
   List<List<SearchAirlineInformation>> searchListMain =
       <List<SearchAirlineInformation>>[].obs;
 
+  /// list responsible to work with special return on round trip
+  List<Map<String, List<SearchAirlineInformation>>> specialReturnFlights =
+      <Map<String, List<SearchAirlineInformation>>>[].obs;
+
+  // list responsible for storing the normal list while searching for special return
+  List<List<SearchAirlineInformation>> searchListforSpecialReturn =
+      <List<SearchAirlineInformation>>[].obs;
+
   /// variable used for showing the selection of flights for multi city and round trip,
   /// responsible for work with [searchList]
   RxList<int> selectedFlights = [0, 0].obs;
@@ -69,6 +78,12 @@ class FlightSortController extends GetxController {
   // map responsible for storing the selected varibales for sorting
   RxMap<int, List<RxList<dynamic>>> sortingVariablesSelected =
       <int, List<RxList<dynamic>>>{}.obs;
+
+  // special return airlines
+  RxMap<String, String> specialRetrunAirlines = <String, String>{}.obs;
+
+  // selected Special return
+  RxString selectedSpecialReturnAirline = ''.obs;
 
   // variable responsible for show loading in the search list page
   RxBool searchListLoading = false.obs;
@@ -473,6 +488,7 @@ class FlightSortController extends GetxController {
   void getSortingVariables() {
     sortingVariables = <int, List<RxList<dynamic>>>{}.obs;
     sortingVariablesSelected = <int, List<RxList<dynamic>>>{}.obs;
+    specialRetrunAirlines.clear();
     // loop for all trips
     for (int i = 0; i < searchListMain.length; i++) {
       sortingVariables[i] = List.generate(5, (index) => [].obs);
@@ -495,6 +511,15 @@ class FlightSortController extends GetxController {
               item.sI![0].dt ?? '', item.sI![item.sI!.length - 1].at ?? '');
           if (!sortingVariables[i]![2].contains(minutes.toDouble())) {
             sortingVariables[i]![2].add(minutes.toDouble());
+          }
+        }
+        // if round trip sorting the airlines with round trip
+        if (roundTrip.value &&
+            (item.totalPriceList ?? <TotalPriceList>[])
+                .any((e) => e.fareIdentifier == 'SPECIAL_RETURN')) {
+          if (!specialRetrunAirlines.containsKey(item.sI?[0].fD?.aI?.code)) {
+            specialRetrunAirlines[item.sI?[0].fD?.aI?.code ?? ''] =
+                item.sI?[0].fD?.aI?.name ?? '';
           }
         }
       }
@@ -521,6 +546,15 @@ class FlightSortController extends GetxController {
           0.0;
     }
     totalTicketPrice.value = price;
+  }
+
+  // change the special retrun selection
+  void changeSpecialReturnSelection(String code) {
+    if (selectedSpecialReturnAirline.value == code) {
+      selectedSpecialReturnAirline.value = '';
+    } else {
+      selectedSpecialReturnAirline.value = code;
+    }
   }
 
 // change the selected flight for multi city and round trips on list

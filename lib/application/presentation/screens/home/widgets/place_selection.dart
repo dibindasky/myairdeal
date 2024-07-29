@@ -30,10 +30,8 @@ class OneWayAndRoundTrip extends StatelessWidget {
               borderColor: controller.airportSelected[0][0].city == null
                   ? kRed.withOpacity(.6)
                   : kGrey,
-              first: const Icon(
-                Icons.flight_takeoff_rounded,
-                color: kBluePrimary,
-              ),
+              first:
+                  const Icon(Icons.flight_takeoff_rounded, color: kBluePrimary),
               spacer: kWidth10,
               second: Expanded(
                 child: Text(controller.airportSelected[0][0].city ?? 'From',
@@ -44,14 +42,13 @@ class OneWayAndRoundTrip extends StatelessWidget {
           ),
           kWidth5,
           GestureDetector(
-              onTap: () {
-                // change from and to
-                controller.swapFromAndTo();
-              },
-              child: const Icon(
-                Icons.compare_arrows_outlined,
-                color: kBluePrimary,
-              )),
+            onTap: () {
+              // change from and to
+              controller.swapFromAndTo();
+            },
+            child:
+                const Icon(Icons.compare_arrows_outlined, color: kBluePrimary),
+          ),
           kWidth5,
           Expanded(
             child: TextIconButtonOutlinedCustom(

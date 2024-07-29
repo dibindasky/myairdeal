@@ -78,8 +78,8 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                     DateFormating.formatYearMonthDate(
                                         tripInfos?[tripIndex].sI?[0].dt ?? ''),
                               );
-                              // final isSelected =
-                              //     cancellationController.isTripSelected(trip);
+                              final isSelected =
+                                  cancellationController.isTripSelected(trip);
                               return Padding(
                                 padding: EdgeInsets.symmetric(vertical: 2.w),
                                 child: Stack(
@@ -216,11 +216,13 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                         },
                                         child: CircleAvatar(
                                             radius: 10.w,
-                                            child: Icon(
-                                              Icons.check,
-                                              size: 16.w,
-                                              color: kRed,
-                                            )),
+                                            child: isSelected
+                                                ? Icon(
+                                                    Icons.check,
+                                                    size: 16.w,
+                                                    color: kRed,
+                                                  )
+                                                : kEmpty),
                                       ),
                                     ),
                                   ],

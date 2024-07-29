@@ -57,7 +57,7 @@ class BookingService implements BookingRepo {
   }
 
   @override
-  Future<Either<Failure, GetSingleBooking>> retrieveSinglleBooking({
+  Future<Either<Failure, GetSingleBooking>> retrieveSingleBooking({
     required RetrieveSingleBookingRequestModel
         retrieveSingleBookingRequestModel,
   }) async {

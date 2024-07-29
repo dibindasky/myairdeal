@@ -10,7 +10,7 @@ import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/rev
 import 'package:myairdeal/domain/models/booking/seat_selection_response/seat_selection_response.dart';
 
 abstract class BookingRepo {
-  Future<Either<Failure, GetSingleBooking>> retrieveSinglleBooking(
+  Future<Either<Failure, GetSingleBooking>> retrieveSingleBooking(
       {required RetrieveSingleBookingRequestModel
           retrieveSingleBookingRequestModel});
   Future<Either<Failure, List<AllBookingResponce>>> retrieveAllBooking();

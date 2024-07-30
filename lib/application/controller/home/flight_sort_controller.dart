@@ -17,6 +17,7 @@ import 'package:myairdeal/domain/models/search/flight_search_sort_model/pax_info
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/route_info.dart';
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/search_modifiers.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/total_price_list.dart';
 import 'package:myairdeal/domain/repository/service/flight_sort_repo.dart';
 import 'package:myairdeal/domain/repository/service/home_repo.dart';
 
@@ -45,6 +46,16 @@ class FlightSortController extends GetxController {
   List<List<SearchAirlineInformation>> searchListMain =
       <List<SearchAirlineInformation>>[].obs;
 
+  /// list responsible to work with special return on round trip
+  /// store the list of special returns in the map according to the selected airline[selectedSpecialReturnAirline]
+  List<Map<String, List<SearchAirlineInformation>>> specialReturnFlights =
+      <Map<String, List<SearchAirlineInformation>>>[].obs;
+
+  /// list responsible for storing the normal list while searching for special return
+  /// will store all the data data with out special returns.
+  List<List<SearchAirlineInformation>> searchListforSpecialReturn =
+      <List<SearchAirlineInformation>>[].obs;
+
   /// variable used for showing the selection of flights for multi city and round trip,
   /// responsible for work with [searchList]
   RxList<int> selectedFlights = [0, 0].obs;
@@ -69,6 +80,12 @@ class FlightSortController extends GetxController {
   // map responsible for storing the selected varibales for sorting
   RxMap<int, List<RxList<dynamic>>> sortingVariablesSelected =
       <int, List<RxList<dynamic>>>{}.obs;
+
+  // special return airlines
+  RxMap<String, String> specialRetrunAirlines = <String, String>{}.obs;
+
+  // selected Special return
+  RxString selectedSpecialReturnAirline = ''.obs;
 
   // variable responsible for show loading in the search list page
   RxBool searchListLoading = false.obs;
@@ -151,6 +168,8 @@ class FlightSortController extends GetxController {
   Rx<Timer> timer = Timer(const Duration(seconds: 1), () {}).obs;
   RxInt remainingTime = 0.obs;
 
+  List<String> timesString = ['Early Morning', 'Morning', 'Evening', 'Night'];
+
   List<String> departureTimes = [
     '00:00 to 05:59',
     '06:00 to 11:59',
@@ -158,14 +177,13 @@ class FlightSortController extends GetxController {
     '18:00 to 23:59'
   ];
 
-  RxList<String> departureTimesSelected = <String>[].obs;
   List<String> arrivesTimes = [
     '00:00 to 05:59',
     '06:00 to 11:59',
     '12:00 to 17:59',
     '18:00 to 23:59'
   ];
-  RxList<String> arrivesTimesSelected = <String>[].obs;
+
   List<String> sortTypes = ['Best', 'Fastest', 'Cheapest'];
   List<String> stopTypes = ['Direct', 'Max 1 Stop', 'Max 2 Stops'];
   List<String> tripTypes = ['One-Way', 'Round-Trip', 'Multi-City'];
@@ -230,8 +248,6 @@ class FlightSortController extends GetxController {
     ].obs;
     sortingVariables.clear();
     sortAirlinesSelected.clear();
-    departureTimesSelected.clear();
-    arrivesTimesSelected.clear();
     adultCount.value = 1;
     infantCount.value = 0;
     childrenCount.value = 0;
@@ -300,6 +316,7 @@ class FlightSortController extends GetxController {
     searchListLoading.value = true;
     selectedTripListIndex.value = 0;
     durationSlider.value = 1;
+    selectedSpecialReturnAirline.value == '';
     if (tripType.value == 1) {
       // if it is a round trip add airport as ulta
       airportSelected[1].value = [airportSelected[0][1], airportSelected[0][0]];
@@ -416,8 +433,56 @@ class FlightSortController extends GetxController {
                 r.searchResult?.tripInfos?.multicity6 ??
                     <SearchAirlineInformation>[]));
           }
-          for (var e in searchListMain) {
-            searchList.add(RxList.from(e));
+          selectedFlights.value = [0, 0];
+          selectedTicketPrices.value = [0, 0];
+          searchListforSpecialReturn =
+              List.generate(2, (x) => <SearchAirlineInformation>[]);
+          specialReturnFlights = List.generate(
+              2, (x) => <String, List<SearchAirlineInformation>>{});
+
+          /// add all items to the [searchList] to show in ui
+          for (int i = 0; i < searchListMain.length; i++) {
+            if (roundTrip.value) {
+              print(
+                  '------------------seperate data form trips => round$i <=--------------------------');
+              // list of search items e
+              for (var e in searchListMain[i]) {
+                print('e.totalprice list => ${e.totalPriceList?.length}');
+
+                /// add special return fares to the [specialReturnFlights]
+                if ((e.totalPriceList ?? <TotalPriceList>[])
+                    .any((price) => price.fareIdentifier == 'SPECIAL_RETURN')) {
+                  print('e.contains(special return)');
+                  SearchAirlineInformation temp = e.copyWith(
+                      totalPriceList: (e.totalPriceList ?? <TotalPriceList>[])
+                          .where((price) =>
+                              price.fareIdentifier == 'SPECIAL_RETURN')
+                          .toList());
+                  print(
+                      'special return length => ${temp.totalPriceList?.length}');
+                  if (!specialReturnFlights
+                      .contains(temp.sI?[0].fD?.aI?.code ?? '')) {
+                    specialReturnFlights[i]
+                        [temp.sI?[0].fD?.aI?.code ?? ''] = [];
+                  }
+                  specialReturnFlights[i][temp.sI?[0].fD?.aI?.code ?? ''] = [
+                    ...specialReturnFlights[i][temp.sI?[0].fD?.aI?.code ?? '']!,
+                    e
+                  ];
+                }
+                // find the airline offers dosent have special return offer
+                SearchAirlineInformation temp = e.copyWith(
+                    totalPriceList: (e.totalPriceList ?? <TotalPriceList>[])
+                        .where(
+                            (price) => price.fareIdentifier != 'SPECIAL_RETURN')
+                        .toList());
+                searchListforSpecialReturn[i].add(temp);
+              }
+              searchList.add(RxList.from(searchListforSpecialReturn[i]));
+              searchListMain[i] = searchListforSpecialReturn[i];
+            } else {
+              searchList.add(RxList.from(searchListMain[i]));
+            }
           }
         }
         startSearchTimer();
@@ -439,16 +504,12 @@ class FlightSortController extends GetxController {
   /// for international multi city and round trip need a seperate list from [searchListMain] first index
   /// sort and add the airlines list to [comboListMain] and [comboList] for sort and ui
   void getComboList() {
-    print('in combo making function');
-    print('searchListMain => ${searchListMain[0].length}');
     for (var trip in searchListMain[0]) {
       int j = 0, k = 0;
       List<SearchAirlineInformation> tempList = [];
       for (int i = 0; i < (trip.sI?.length ?? 0); i++) {
-        print(i);
         if (trip.sI![k].sN == 0 &&
             (trip.sI!.length - 1 == i || trip.sI![i + 1].sN == 0)) {
-          print('conditon success');
           tempList.add(SearchAirlineInformation(
               sI: trip.sI!.sublist(k, i + 1),
               totalPriceList: trip.totalPriceList));
@@ -468,15 +529,17 @@ class FlightSortController extends GetxController {
 // 0 -> airlines
 // 1 -> stops
 // 2 -> duration
-// 3 -> arrival times
-// 4 -> departure times
+// 3 -> price
+// 4 -> arrival times
+// 5 -> departure times
   void getSortingVariables() {
     sortingVariables = <int, List<RxList<dynamic>>>{}.obs;
     sortingVariablesSelected = <int, List<RxList<dynamic>>>{}.obs;
+    specialRetrunAirlines.clear();
     // loop for all trips
     for (int i = 0; i < searchListMain.length; i++) {
-      sortingVariables[i] = List.generate(5, (index) => [].obs);
-      sortingVariablesSelected[i] = List.generate(5, (index) => [].obs);
+      sortingVariables[i] = List.generate(6, (index) => [].obs);
+      sortingVariablesSelected[i] = List.generate(6, (index) => [].obs);
       // loop for iterate in the single list items
       for (var item in searchListMain[i]) {
         // finding available airlines and add it for sorting
@@ -497,9 +560,25 @@ class FlightSortController extends GetxController {
             sortingVariables[i]![2].add(minutes.toDouble());
           }
         }
+        // available price range from the given list
+        for (var e in item.totalPriceList ?? <TotalPriceList>[]) {
+          if (!sortingVariables[i]![3].contains(e.fd?.adult?.fC?.tf ?? 0)) {
+            sortingVariables[i]![3].add(e.fd?.adult?.fC?.tf ?? 0);
+          }
+        }
       }
+      // found the special return flights and airline
+      for (var key in specialReturnFlights[i].keys) {
+        for (var item in specialReturnFlights[i][key]!) {
+          if (!specialRetrunAirlines.containsKey(key)) {
+            specialRetrunAirlines[key] = item.sI?[0].fD?.aI?.name ?? '';
+          }
+        }
+      }
+
       sortingVariables[i]![1].sort();
       sortingVariables[i]![2].sort();
+      sortingVariables[i]![3].sort();
       sortingVariablesSelected[i]![2] =
           [(sortingVariables[i]![2].last ?? 1)].obs;
     }
@@ -511,16 +590,39 @@ class FlightSortController extends GetxController {
   void getTotalFare() {
     double price = 0.0;
     for (int i = 0; i < searchList.length; i++) {
-      final item = searchList[i];
-      price += item[selectedFlights[i]]
-              .totalPriceList?[selectedTicketPrices[i]]
-              .fd
-              ?.adult
-              ?.fC
-              ?.tf ??
-          0.0;
+      if (searchList[i].isNotEmpty) {
+        final item = searchList[i];
+        price += item[selectedFlights[i]]
+                .totalPriceList?[selectedTicketPrices[i]]
+                .fd
+                ?.adult
+                ?.fC
+                ?.tf ??
+            0.0;
+      }
     }
     totalTicketPrice.value = price;
+  }
+
+  // change the special retrun selection
+  void changeSpecialReturnSelection(String code) {
+    selectedFlights.value = [0, 0];
+    selectedTicketPrices.value = [0, 0];
+    if (selectedSpecialReturnAirline.value == code) {
+      selectedSpecialReturnAirline.value = '';
+      for (int i = 0; i < 2; i++) {
+        searchListMain[i] = searchListforSpecialReturn[i];
+      }
+    } else {
+      selectedSpecialReturnAirline.value = code;
+      for (int i = 0; i < 2; i++) {
+        searchListMain[i] =
+            specialReturnFlights[i][code] ?? <SearchAirlineInformation>[];
+      }
+    }
+    for (int i = 0; i < 2; i++) {
+      sortAirlineList(selectedIndex: i);
+    }
   }
 
 // change the selected flight for multi city and round trips on list
@@ -575,37 +677,52 @@ class FlightSortController extends GetxController {
   RxBool sortingRebuild = false.obs;
 
   // sort the data according to the selected sorting variables
-  void sortAirlineList() {
+  // 0 -> airlines
+  // 1 -> stops
+  // 2 -> duration
+  // 3 -> price
+  // 4 -> arrival times
+  // 5 -> departure times
+  void sortAirlineList({int? selectedIndex}) {
+    int index = selectedIndex ?? selectedTripListIndex.value;
     print('SORTING...');
     sortingRebuild.value = true;
+    print('sorting index => $index');
+    print(searchListMain[index].length);
     List<SearchAirlineInformation> sort = [];
-    // sort for airline
-    if (sortingVariablesSelected[selectedTripListIndex.value]![0].isEmpty ||
-        sortingVariablesSelected[selectedTripListIndex.value]![0].length ==
-            sortingVariables[selectedTripListIndex.value]![0].length) {
-      // add all if no airlines selected or everything has been selected
-      sort.addAll(searchListMain[selectedTripListIndex.value]);
-    } else {
-      // iterate and add the airline information if ailine is present in the selected list
-      for (var airline in searchListMain[selectedTripListIndex.value]) {
-        if (sortingVariablesSelected[selectedTripListIndex.value]![0]
-            .contains(airline.sI![0].fD!.aI!.name ?? '')) {
-          sort.add(airline);
+    // sort for airline, dont sort if it is a special retun
+    if (selectedSpecialReturnAirline.value == '') {
+      print('inside airline sort');
+      if (sortingVariablesSelected[index]![0].isEmpty ||
+          sortingVariablesSelected[index]![0].length ==
+              sortingVariables[index]![0].length) {
+        // add all if no airlines selected or everything has been selected
+        sort.addAll(searchListMain[index]);
+      } else {
+        // iterate and add the airline information if ailine is present in the selected list
+        for (var airline in searchListMain[index]) {
+          if (sortingVariablesSelected[index]![0]
+              .contains(airline.sI![0].fD!.aI!.name ?? '')) {
+            sort.add(airline);
+          }
         }
       }
+    } else {
+      sort = searchListMain[index];
     }
+    print('after airline sort ${sort.length}');
     // sort in base of stops
     for (int i = 0; i < sort.length; i++) {
-      if (sortingVariablesSelected[selectedTripListIndex.value]![1]
-              .isNotEmpty &&
-          !sortingVariablesSelected[selectedTripListIndex.value]![1]
+      if (sortingVariablesSelected[index]![1].isNotEmpty &&
+          !sortingVariablesSelected[index]![1]
               .contains(sort[i].sI!.length - 1)) {
         sort.removeAt(i--);
       }
     }
+    print('after stop sort ${sort.length}');
     // sort for duration
     if ((durationSlider.value != 0 || durationSlider.value != 1) &&
-        sortingVariablesSelected[selectedTripListIndex.value]![1].isEmpty) {
+        sortingVariablesSelected[index]![1].isEmpty) {
       for (int i = 0; i < sort.length; i++) {
         if (durationSlider.value <
             DateFormating.getTotalDifferenceInMinutes(sort[i].sI![0].dt ?? '',
@@ -614,11 +731,71 @@ class FlightSortController extends GetxController {
         }
       }
     }
-    searchList[selectedTripListIndex.value].value = sort.obs;
+    print('after duration sort ${sort.length}');
+    // sort for price
+    if (sortingVariablesSelected[index]![3].isNotEmpty) {
+      for (int i = 0; i < sort.length; i++) {
+        bool isLesser = false;
+        for (var e in sort[i].totalPriceList ?? <TotalPriceList>[]) {
+          if (e.fd?.adult?.fC?.tf != null &&
+              e.fd!.adult!.fC!.tf! <
+                  sortingVariablesSelected[index]![3].first) {
+            isLesser = true;
+          }
+        }
+        if (!isLesser) {
+          sort.removeAt(i--);
+        }
+      }
+    }
+    print('after price sort ${sort.length}');
+    // sort with arrival times
+    if (sortingVariablesSelected[selectedTripListIndex.value]![4].isNotEmpty) {
+      for (int i = 0; i < sort.length; i++) {
+        bool isInRange = false;
+        for (int x = 0;
+            x <
+                sortingVariablesSelected[selectedTripListIndex.value]![4]
+                    .length;
+            x++) {
+          if (DateFormating.isTimeWithinSlot(
+              sort[i].sI?[(sort[i].sI?.length ?? 1)-1].at,
+              sortingVariablesSelected[selectedTripListIndex.value]![4][x])) {
+            isInRange = true;
+          }
+        }
+        if (!isInRange) {
+          sort.removeAt(i--);
+        }
+      }
+    }
+
+    // sort with departure times
+    if (sortingVariablesSelected[selectedTripListIndex.value]![5].isNotEmpty) {
+      for (int i = 0; i < sort.length; i++) {
+        bool isInRange = false;
+        for (int x = 0;
+            x <
+                sortingVariablesSelected[selectedTripListIndex.value]![5]
+                    .length;
+            x++) {
+          if (DateFormating.isTimeWithinSlot(
+              sort[i].sI?[0].dt,
+              sortingVariablesSelected[selectedTripListIndex.value]![5][x])) {
+            isInRange = true;
+          }
+        }
+        if (!isInRange) {
+          sort.removeAt(i--);
+        }
+      }
+    }
+    searchList[index].value = sort.obs;
     update();
     getTotalFare();
     Timer(const Duration(milliseconds: 1), () {
       sortingRebuild.value = false;
+      print('after sort ${searchList[index].length}');
     });
   }
 
@@ -793,6 +970,9 @@ class FlightSortController extends GetxController {
   // 0 -> airlines
   // 1 -> stops
   // 2 -> duration
+  // 3 -> price
+  // 4 -> arrival times
+  // 5 -> departure times
   void clearFilters() {
     sortingVariablesSelected[selectedTripListIndex.value]![0] = [].obs;
     sortingVariablesSelected[selectedTripListIndex.value]![1] = [].obs;
@@ -800,6 +980,9 @@ class FlightSortController extends GetxController {
         [sortingVariables[selectedTripListIndex.value]![2].last ?? 1.0].obs;
     durationSlider.value =
         (sortingVariables[selectedTripListIndex.value]![2].last ?? 1.0);
+    sortingVariablesSelected[selectedTripListIndex.value]![3] = [].obs;
+    sortingVariablesSelected[selectedTripListIndex.value]![4] = [].obs;
+    sortingVariablesSelected[selectedTripListIndex.value]![5] = [].obs;
     update();
     sortAirlineList();
   }
@@ -835,6 +1018,18 @@ class FlightSortController extends GetxController {
       durationSlider.value = value;
     }
     print(sortingVariablesSelected[selectedTripListIndex.value]![2]);
+    sortAirlineList();
+  }
+
+  // select price range
+  void sortPrice(double value, [bool reset = false]) {
+    if (reset ||
+        value == sortingVariables[selectedTripListIndex.value]![3].last) {
+      sortingVariablesSelected[selectedTripListIndex.value]![3].clear();
+    } else {
+      sortingVariablesSelected[selectedTripListIndex.value]![3].clear();
+      sortingVariablesSelected[selectedTripListIndex.value]![3].add(value);
+    }
     sortAirlineList();
   }
 
@@ -876,21 +1071,25 @@ class FlightSortController extends GetxController {
     sortAirlineList();
   }
 
+  // select and unselect departure time
   void selectDepartureTime(String value) {
-    if (departureTimesSelected.contains(value)) {
-      departureTimesSelected.remove(value);
+    if (sortingVariablesSelected[selectedTripListIndex.value]![5]
+        .contains(value)) {
+      sortingVariablesSelected[selectedTripListIndex.value]![5].remove(value);
     } else {
-      departureTimesSelected.add(value);
+      sortingVariablesSelected[selectedTripListIndex.value]![5].add(value);
     }
-    validateSearchForm();
+    sortAirlineList();
   }
 
+  // select and unselect arrival time
   void selectArrivalTime(String value) {
-    if (arrivesTimesSelected.contains(value)) {
-      arrivesTimesSelected.remove(value);
+    if (sortingVariablesSelected[selectedTripListIndex.value]![4]
+        .contains(value)) {
+      sortingVariablesSelected[selectedTripListIndex.value]![4].remove(value);
     } else {
-      arrivesTimesSelected.add(value);
+      sortingVariablesSelected[selectedTripListIndex.value]![4].add(value);
     }
-    validateSearchForm();
+    sortAirlineList();
   }
 }

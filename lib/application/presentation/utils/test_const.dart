@@ -8,7 +8,7 @@ const String searchCountryCode = 'countrycode';
 final seatMap = {
   "tripSeatMap": {
     "tripSeat": {
-      "755": {
+      "465": {
         "sData": {"row": 26, "column": 7},
         "sInfo": [
           {

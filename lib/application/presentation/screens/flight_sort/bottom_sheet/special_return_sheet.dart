@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/network_image_loader.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 
 class SpecialReturnBottomSheet extends StatelessWidget {
@@ -25,6 +26,7 @@ class SpecialReturnBottomSheet extends StatelessWidget {
         ),
       ),
       child: Obx(() {
+        final airlinesKeys = controller.specialRetrunAirlines.keys.toList();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -40,43 +42,40 @@ class SpecialReturnBottomSheet extends StatelessWidget {
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.zero,
-                      itemCount: controller
-                          .sortingVariables[
-                              controller.selectedTripListIndex.value]![0]
-                          .length,
+                      itemCount: airlinesKeys.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) => GestureDetector(
                         onTap: () {
-                          // controller.selectAirline(controller.sortingVariables[
-                          //         controller.selectedTripListIndex.value]![0]
-                          //     [index]);
+                          controller.changeSpecialReturnSelection(
+                              airlinesKeys[index]);
                         },
                         child: Container(
                           color: kWhite,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              NetworkImageWithLoading(
+                                  height: 20.h,
+                                  width: 20.h,
+                                  margin: EdgeInsets.only(right: 10.h),
+                                  imageUrl:
+                                      getAirlineLogo(airlinesKeys[index])),
                               Text(
-                                  controller.sortingVariables[controller
-                                          .selectedTripListIndex
-                                          .value]![0][index]
-                                      .toString(),
+                                  controller.specialRetrunAirlines[
+                                      airlinesKeys[index]]!,
                                   style: textStyle1),
-                              Checkbox(
-                                value: controller.sortingVariablesSelected[
-                                        controller
-                                            .selectedTripListIndex.value]![0]
-                                    .contains(controller.sortingVariables[
-                                        controller.selectedTripListIndex
-                                            .value]![0][index]),
-                                onChanged: (value) {
-                                  // controller.selectAirline(
-                                  //     controller.sortingVariables[controller
-                                  //         .selectedTripListIndex
-                                  //         .value]![0][index]);
-                                },
-                                activeColor: kBluePrimary,
-                              )
+                              const Spacer(),
+                              Obx(() {
+                                return Checkbox(
+                                  value: airlinesKeys[index] ==
+                                      controller
+                                          .selectedSpecialReturnAirline.value,
+                                  onChanged: (value) {
+                                    controller.changeSpecialReturnSelection(
+                                        airlinesKeys[index]);
+                                  },
+                                  activeColor: kBluePrimary,
+                                );
+                              })
                             ],
                           ),
                         ),

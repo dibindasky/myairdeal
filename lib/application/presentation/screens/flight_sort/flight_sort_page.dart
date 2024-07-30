@@ -60,7 +60,12 @@ class ScreenFlightTicketSort extends StatelessWidget {
                 ),
               ),
               controller.sortingRebuild.value
-                  ? kEmpty
+                  ? Skeleton(
+                      crossAxisCount: 4,
+                      itemCount: 4,
+                      height: 10.h,
+                      childAspectRatio: 1 / 0.45,
+                    )
                   : const SortingChipsSection(),
               controller.sortingRebuild.value
                   ? Skeleton(

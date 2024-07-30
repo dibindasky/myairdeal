@@ -25,7 +25,6 @@ class FlightTimesBottomSheet extends StatelessWidget {
         ),
       ),
       child: Obx(() {
-        controller.arrivesTimesSelected == controller.departureTimesSelected;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -39,7 +38,8 @@ class FlightTimesBottomSheet extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     kHeight10,
-                    Text('Departs From Blr',
+                    Text(
+                        'Departs From ${controller.airportSelected[controller.selectedTripListIndex.value][0].city ?? ''}',
                         style: textStyle1.copyWith(color: kBluePrimary)),
                     kHeight5,
                     ListView.builder(
@@ -47,25 +47,44 @@ class FlightTimesBottomSheet extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       itemCount: controller.departureTimes.length,
                       shrinkWrap: true,
-                      itemBuilder: (context, index) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(controller.departureTimes[index],
-                              style: textThinStyle1),
-                          Checkbox(
-                            value: controller.departureTimesSelected
-                                .contains(controller.departureTimes[index]),
-                            onChanged: (value) {
-                              controller.selectDepartureTime(
-                                  controller.departureTimes[index]);
-                            },
-                            activeColor: kBluePrimary,
-                          )
-                        ],
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () {
+                          controller.selectDepartureTime(
+                              controller.departureTimes[index]);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(controller.timesString[index],
+                                    style: textThinStyle1.copyWith(
+                                        color: kGreyDark)),
+                                Text(controller.departureTimes[index],
+                                    style: textThinStyle1),
+                              ],
+                            ),
+                            Obx(() {
+                              return Checkbox(
+                                value: controller.sortingVariablesSelected[
+                                        controller
+                                            .selectedTripListIndex.value]![5]
+                                    .contains(controller.departureTimes[index]),
+                                onChanged: (value) {
+                                  controller.selectDepartureTime(
+                                      controller.departureTimes[index]);
+                                },
+                                activeColor: kBluePrimary,
+                              );
+                            })
+                          ],
+                        ),
                       ),
                     ),
                     kHeight5,
-                    Text('Arrives to Hyd',
+                    Text(
+                        'Arrives to ${controller.airportSelected[controller.selectedTripListIndex.value][1].city ?? ''}',
                         style: textStyle1.copyWith(color: kBluePrimary)),
                     kHeight5,
                     ListView.builder(
@@ -73,21 +92,39 @@ class FlightTimesBottomSheet extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       itemCount: controller.arrivesTimes.length,
                       shrinkWrap: true,
-                      itemBuilder: (context, index) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(controller.arrivesTimes[index],
-                              style: textThinStyle1),
-                          Checkbox(
-                            value: controller.arrivesTimesSelected
-                                .contains(controller.arrivesTimes[index]),
-                            onChanged: (value) {
-                              controller.selectArrivalTime(
-                                  controller.arrivesTimes[index]);
-                            },
-                            activeColor: kBluePrimary,
-                          )
-                        ],
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () {
+                          controller.selectArrivalTime(
+                              controller.departureTimes[index]);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(controller.timesString[index],
+                                    style: textThinStyle1.copyWith(
+                                        color: kGreyDark)),
+                                Text(controller.arrivesTimes[index],
+                                    style: textThinStyle1),
+                              ],
+                            ),
+                            Obx(() {
+                              return Checkbox(
+                                value: controller.sortingVariablesSelected[
+                                        controller
+                                            .selectedTripListIndex.value]![4]
+                                    .contains(controller.departureTimes[index]),
+                                onChanged: (value) {
+                                  controller.selectArrivalTime(
+                                      controller.arrivesTimes[index]);
+                                },
+                                activeColor: kBluePrimary,
+                              );
+                            })
+                          ],
+                        ),
                       ),
                     ),
                     kHeight5,

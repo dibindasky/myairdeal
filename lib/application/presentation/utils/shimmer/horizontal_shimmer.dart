@@ -18,38 +18,38 @@ class HorizontalShimmerSkeleton extends StatelessWidget {
     required this.scrollDirection,
     this.height = 200,
     this.width = 100,
-    this.totalHeight=125,
+    this.totalHeight = 125,
     this.paddingHorizontal = 0,
     this.paddingvertical = 0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: SizedBox(
-        height: scrollDirection == Axis.vertical ? null : totalHeight,
-        child: ListView.separated(
-          padding: EdgeInsets.zero,
-          shrinkWrap: scrollDirection == Axis.vertical ? true : false,
-          separatorBuilder: (context, index) =>
-              scrollDirection != Axis.horizontal ? kHeight10 : kWidth10,
-          scrollDirection: scrollDirection,
-          itemCount: itemCount,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: paddingHorizontal, vertical: paddingvertical),
+    return SizedBox(
+      height: scrollDirection == Axis.vertical ? null : totalHeight,
+      child: ListView.separated(
+        padding: EdgeInsets.zero,
+        shrinkWrap: scrollDirection == Axis.vertical ? true : false,
+        separatorBuilder: (context, index) =>
+            scrollDirection != Axis.horizontal ? kHeight10 : kWidth10,
+        scrollDirection: scrollDirection,
+        itemCount: itemCount,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: paddingHorizontal, vertical: paddingvertical),
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
               child: Container(
                 width: width,
                 height: height,
                 decoration:
                     BoxDecoration(color: kWhite, borderRadius: kRadius10),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

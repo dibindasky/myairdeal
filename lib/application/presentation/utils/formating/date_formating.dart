@@ -176,4 +176,36 @@ class DateFormating {
         return '';
     }
   }
+
+  // given time will check wether in the given time slot or not
+  // '00:00 to 05:59','06:00 to 11:59','12:00 to 17:59','18:00 to 23:59'
+  static bool isTimeWithinSlot(String? dateTimeStr, String timeSlot) {
+    if (dateTimeStr == null) return false;
+    // Parse the given datetime string
+    DateTime dateTime = DateTime.parse(dateTimeStr);
+
+    // Extract the start and end times from the time slot
+    List<String> timeRange = timeSlot.split(' to ');
+    String startTimeStr = timeRange[0];
+    String endTimeStr = timeRange[1];
+
+    // Parse the start and end times into DateTime objects on the same day
+    DateTime startTime = DateTime(
+        dateTime.year,
+        dateTime.month,
+        dateTime.day,
+        int.parse(startTimeStr.split(':')[0]),
+        int.parse(startTimeStr.split(':')[1]));
+    DateTime endTime = DateTime(
+        dateTime.year,
+        dateTime.month,
+        dateTime.day,
+        int.parse(endTimeStr.split(':')[0]),
+        int.parse(endTimeStr.split(':')[1]));
+
+    // Check if the given time falls within the time slot
+    return dateTime.isAfter(startTime) && dateTime.isBefore(endTime) ||
+        dateTime.isAtSameMomentAs(startTime) ||
+        dateTime.isAtSameMomentAs(endTime);
+  }
 }

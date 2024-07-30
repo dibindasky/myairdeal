@@ -28,6 +28,11 @@ class _DetailContainerState extends State<DetailContainer> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
+  TextEditingController passportNumberController = TextEditingController();
+  TextEditingController passengerNationalityController =
+      TextEditingController();
+  TextEditingController expiryDController = TextEditingController();
+  TextEditingController pIDController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   int gender = 0;
   bool savePassenger = false;
@@ -40,6 +45,10 @@ class _DetailContainerState extends State<DetailContainer> {
       firstNameController.text = model.fN ?? '';
       lastNameController.text = model.lN ?? '';
       dateOfBirthController.text = model.dob ?? '';
+      passportNumberController.text = model.pNum ?? '';
+      passengerNationalityController.text = model.pN ?? '';
+      expiryDController.text = model.eD ?? '';
+      pIDController.text = model.pid ?? '';
     }
     super.initState();
   }
@@ -206,6 +215,109 @@ class _DetailContainerState extends State<DetailContainer> {
                     ),
                   ),
                   kHeight5,
+                  Text('Passport Number', style: textThinStyle1),
+                  kHeight5,
+                  CustomTextField(
+                    maxLength: 8,
+                    keyboardType: TextInputType.number,
+                    controller: passportNumberController,
+                    validate: Validate.passportNumber,
+                    isBorder: true,
+                    borderRadius: 14,
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(width: .3),
+                        borderRadius: kRadius15),
+                    onTapOutside: () => FocusScope.of(context).unfocus(),
+                    hintText: 'Enter Your Passport Number',
+                    fillColor: kWhite,
+                  ),
+                  kHeight5,
+                  Text('Passport Issue Date', style: textThinStyle1),
+                  kHeight5,
+                  GestureDetector(
+                    onTap: () async {
+                      final date = DateTime.now();
+                      final selectedDate = await showDatePicker(
+                        context: context,
+                        firstDate:
+                            date.subtract(const Duration(days: 365 * 150)),
+                        lastDate: date.subtract(const Duration(days: 365 * 0)),
+                      );
+                      pIDController.text =
+                          DateFormating.getDateApi(selectedDate);
+                      setState(() {});
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 10.h),
+                      decoration: BoxDecoration(
+                          color: kWhite,
+                          borderRadius: kRadius10,
+                          border: Border.all(color: kGrey, width: 0.5)),
+                      child: Row(
+                        children: [
+                          Text(pIDController.text == ''
+                              ? 'PID'
+                              : pIDController.text),
+                          const Spacer(),
+                          const Icon(Icons.calendar_month)
+                        ],
+                      ),
+                    ),
+                  ),
+                  kHeight5,
+                  Text('Passport Expiry Date', style: textThinStyle1),
+                  kHeight5,
+                  GestureDetector(
+                    onTap: () async {
+                      final date = DateTime.now();
+                      final selectedDate = await showDatePicker(
+                        context: context,
+                        firstDate: date,
+                        lastDate: date.add(const Duration(days: 365 * 10)),
+                      );
+
+                      if (selectedDate != null) {
+                        expiryDController.text =
+                            DateFormating.getDateApi(selectedDate);
+                        setState(() {});
+                      }
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 10.h),
+                      decoration: BoxDecoration(
+                          color: kWhite,
+                          borderRadius: kRadius10,
+                          border: Border.all(color: kGrey, width: 0.5)),
+                      child: Row(
+                        children: [
+                          Text(expiryDController.text == ''
+                              ? 'PED'
+                              : expiryDController.text),
+                          const Spacer(),
+                          const Icon(Icons.calendar_month)
+                        ],
+                      ),
+                    ),
+                  ),
+                  kHeight5,
+                  Text('Passenger Nationality', style: textThinStyle1),
+                  kHeight5,
+                  CustomTextField(
+                    controller: passengerNationalityController,
+                    validate: Validate.notNull,
+                    isBorder: true,
+                    borderRadius: 14,
+                    textCapitalization: TextCapitalization.characters,
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(width: .3),
+                        borderRadius: kRadius15),
+                    onTapOutside: () => FocusScope.of(context).unfocus(),
+                    hintText: 'Enter Your Nationality',
+                    fillColor: kWhite,
+                  ),
+                  kHeight5,
                   Align(
                     alignment: Alignment.centerRight,
                     child: Row(
@@ -227,19 +339,25 @@ class _DetailContainerState extends State<DetailContainer> {
                             // add passenger details
                             if (formKey.currentState!.validate()) {
                               travelController.addPassengerDetail(
-                                  widget.index,
-                                  TravellerInfo(
-                                      dob: dateOfBirthController.text == ''
-                                          ? null
-                                          : dateOfBirthController.text,
-                                      fN: firstNameController.text,
-                                      lN: lastNameController.text,
-                                      ti: widget.travellerType == 'ADULT'
-                                          ? travelController.genderList[gender]
-                                          : travelController
-                                              .genderListchild[gender],
-                                      pt: widget.travellerType),
-                                  savePassenger);
+                                widget.index,
+                                TravellerInfo(
+                                  dob: dateOfBirthController.text == ''
+                                      ? null
+                                      : dateOfBirthController.text,
+                                  fN: firstNameController.text,
+                                  lN: lastNameController.text,
+                                  ti: widget.travellerType == 'ADULT'
+                                      ? travelController.genderList[gender]
+                                      : travelController
+                                          .genderListchild[gender],
+                                  pt: widget.travellerType,
+                                  eD: expiryDController.text,
+                                  pNum: passportNumberController.text,
+                                  pid: pIDController.text,
+                                  pN: passengerNationalityController.text,
+                                ),
+                                savePassenger,
+                              );
                               Get.back();
                             }
                           },

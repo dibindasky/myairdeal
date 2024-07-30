@@ -83,6 +83,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       textCapitalization: widget.textCapitalization ?? TextCapitalization.none,
       controller: widget.controller,
       decoration: InputDecoration(
+        errorMaxLines: 5,
         fillColor: widget.fillColor,
         filled: true,
         enabledBorder: widget.enabledBorder,
@@ -126,6 +127,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
             return 'Description should not be Empty';
           } else if (value.length < 15) {
             return 'Description should be at least 15 letters.';
+          } else {
+            return null;
+          }
+        } else if (widget.validate == Validate.passportNumber) {
+          if (value == null || value == '') {
+            return 'Passport Number should not be Empty';
+          } else if (value.length < 8) {
+            return 'Passport Number should be at least 8 letters.';
+          } else if (!isValidIndianPassportNumber(value)) {
+            return 'The first character must be an uppercase alphabet. The next two characters should be numbers, with the first character ranging from 1 to 9 and the second character from 0 to 9.';
           } else {
             return null;
           }

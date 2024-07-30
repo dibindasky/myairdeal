@@ -13,7 +13,8 @@ enum Validate {
   ifValidnumber,
   ifValidWebsite,
   ifValidEmail,
-  notNullAndLength15
+  notNullAndLength15,
+  passportNumber,
 }
 
 enum FlightTicketCardEnum {

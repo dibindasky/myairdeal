@@ -7,7 +7,7 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/widgets/ticket_column.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_booking.dart';
 
@@ -112,7 +112,7 @@ class FlightInvoiceCard extends StatelessWidget {
               isBorder: false,
               children: (tripInfos?[tripIndex].sI?.length ?? 0) > 1
                   ? List.generate(
-                      (tripInfos?[tripIndex].sI?.length) ?? 0,
+                      (tripInfos?[tripIndex].sI?.length) ?? 1,
                       (stopIndex) => Column(
                         children: [
                           Row(
@@ -161,13 +161,20 @@ class FlightInvoiceCard extends StatelessWidget {
                               ),
                               const SizedBox(width: 4),
                               TicketColumn(
-                                value:
+                                subValue:
                                     '${tripInfos?[tripIndex].sI?[stopIndex].fD?.aI?.code ?? ''}- ${tripInfos?[tripIndex].sI?[stopIndex].fD?.fN ?? ''}',
                                 lebelStyle:
                                     textThinStyle1.copyWith(fontSize: 10.sp),
                                 exit: '',
-                                subValue: '',
-                                label: '',
+                                value: tripInfos?[tripIndex]
+                                        .sI?[stopIndex]
+                                        .fD
+                                        ?.aI
+                                        ?.name ??
+                                    '',
+                                airlineCode:
+                                    tripInfos?[tripIndex].sI?[0].fD?.aI?.code ??
+                                        '',
                                 flightCode: DateFormating.getDifferenceOfDates(
                                     tripInfos?[tripIndex].sI?[stopIndex].dt ??
                                         '',
@@ -222,13 +229,12 @@ class FlightInvoiceCard extends StatelessWidget {
                                                   ?.cabinClass ??
                                               '--',
                                       exit: '--',
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
                             ],
                           ),
-                          kHeight10,
                           (tripInfos?[tripIndex].sI?.length ?? 1) - 1 ==
                                   stopIndex
                               ? kEmpty
@@ -298,10 +304,12 @@ class FlightInvoiceCard extends StatelessWidget {
                         flightId: (tripInfos?[tripIndex].sI?.length ?? 0) > 1
                             ? ''
                             : '',
-                        airline:
-                            tripInfos?[tripIndex].sI?[0].fD?.aI?.name ?? '',
-                        airlineCode:
-                            tripInfos?[tripIndex].sI?[0].fD?.aI?.code ?? '',
+                        airline: (tripInfos?[tripIndex].sI?.length ?? 0) > 1
+                            ? null
+                            : tripInfos?[tripIndex].sI?[0].fD?.aI?.name ?? '',
+                        airlineCode: (tripInfos?[tripIndex].sI?.length ?? 0) > 1
+                            ? null
+                            : tripInfos?[tripIndex].sI?[0].fD?.aI?.code ?? '',
                         stops: (tripInfos?[tripIndex].sI?.length ?? 0) - 1,
                         date: DateFormating.getDifferenceOfDates(
                             (tripInfos?[tripIndex].sI?[0].dt ?? ''),
@@ -312,6 +320,7 @@ class FlightInvoiceCard extends StatelessWidget {
                                     .at ??
                                 '')),
                         number: '',
+                        haveImage: false,
                       ),
                       kWidth5,
                       Expanded(

@@ -9,10 +9,10 @@ import 'package:myairdeal/application/presentation/screens/auth/sign_in/sign_in.
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/al_most_done.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_screen.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_screen.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/invoice_detail.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/ticket_cancel/ticket_cancelation.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/view_amendment_status/view_amendment_status.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/bookings_screen.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/invoice_detail.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/ticket_cancel/ticket_cancelation.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/view_amendment_status/view_amendment_status.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/flight_detail_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_widgets/saved_detail_builder.dart';

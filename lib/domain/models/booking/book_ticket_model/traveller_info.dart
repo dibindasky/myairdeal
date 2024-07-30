@@ -13,6 +13,7 @@ class TravellerInfo {
   String? pNum;
   String? eD;
   String? pid;
+  String? pN;
   @JsonKey(name: 'ssrMealInfos')
   List<SsrInfo>? ssrMealInfos;
   @JsonKey(name: 'ssrSeatInfos')
@@ -20,18 +21,20 @@ class TravellerInfo {
   @JsonKey(name: 'ssrBaggageInfos')
   List<SsrInfo>? ssrBaggageInfos;
 
-  TravellerInfo(
-      {this.ti,
-      this.fN,
-      this.lN,
-      this.pt,
-      this.dob,
-      this.eD,
-      this.pNum,
-      this.pid,
-      this.ssrBaggageInfos,
-      this.ssrMealInfos,
-      this.ssrSeatInfos});
+  TravellerInfo({
+    this.ti,
+    this.fN,
+    this.lN,
+    this.pt,
+    this.dob,
+    this.eD,
+    this.pN,
+    this.pNum,
+    this.pid,
+    this.ssrBaggageInfos,
+    this.ssrMealInfos,
+    this.ssrSeatInfos,
+  });
 
   factory TravellerInfo.fromJson(Map<String, dynamic> json) {
     return _$TravellerInfoFromJson(json);

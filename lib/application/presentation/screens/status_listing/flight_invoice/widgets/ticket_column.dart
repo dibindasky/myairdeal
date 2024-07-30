@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/network_image_loader.dart';
 
 class TicketColumn extends StatelessWidget {
   final String? label;
@@ -15,8 +16,10 @@ class TicketColumn extends StatelessWidget {
   final TextStyle? subValueStyle;
   final TextStyle? exitStyle;
   final String? exit;
+  final String? airlineCode;
 
   const TicketColumn({
+    this.airlineCode,
     this.label,
     this.value,
     this.subValue,
@@ -47,7 +50,10 @@ class TicketColumn extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
               )
-            : kEmpty,
+            : airlineCode != null
+                ? NetworkImageWithLoading(
+                    imageUrl: getAirlineLogo(airlineCode!), height: 20)
+                : kEmpty,
         kHeight5,
         value != null
             ? Text(

@@ -8,6 +8,8 @@ import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_charges_
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_request_model/amendment_details_request_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_responce_model/amendment_details_responce_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/ticket_cancel_request_model.dart';
+import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/traveller.dart';
+import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/trip.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_responce/ticket_cancel_responce.dart';
 import 'package:myairdeal/domain/repository/service/cancel_repo.dart';
 
@@ -44,10 +46,17 @@ class CancelService implements CancelRepo {
     required TicketCancelRequestModel ticketCancelRequestModel,
   }) async {
     try {
-      String? trip = ticketCancelRequestModel.trips
-          ?.map((trip) => trip.toJson())
-          .join(', ');
-      log(trip.toString());
+      // String? trip = ticketCancelRequestModel.trips
+      //     ?.map((trip) => trip.toJson())
+      //     .join(', ');
+      // log(trip.toString());
+
+      // for (var elements in ticketCancelRequestModel.trips ?? <Trip>[]) {
+      //   for (var element in elements.travellers ?? <Traveller>[]) {
+      //     log('${element.toJson()}');
+      //   }
+      // }
+
       final responce = await apiService.post(
         ApiEndPoints.amendendMentCharges,
         data: ticketCancelRequestModel.toJson(),

@@ -15,6 +15,7 @@ TravellerInfo _$TravellerInfoFromJson(Map<String, dynamic> json) =>
       dob: json['dob'] as String?,
       eD: json['eD'] as String?,
       pNum: json['pNum'] as String?,
+      pN: json['pNat'] as String?,
       pid: json['pid'] as String?,
       ssrBaggageInfos: (json['ssrBaggageInfos'] as List<dynamic>?)
           ?.map((e) => SsrInfo.fromJson(e as Map<String, dynamic>))
@@ -29,6 +30,7 @@ TravellerInfo _$TravellerInfoFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TravellerInfoToJson(TravellerInfo instance) =>
     <String, dynamic>{
+      'pNat': instance.pN,
       'ti': instance.ti,
       'fN': instance.fN,
       'lN': instance.lN,

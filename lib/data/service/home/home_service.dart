@@ -19,7 +19,7 @@ class HomeService implements HomeRepo {
   Future<Either<Failure, RecentDetailSearch>> getRecentSearches() async {
     try {
       final response = await apiService.get(ApiEndPoints.recentSearch);
-      log("=> Response Recent Searches : ${response.data}");
+      log("=> Response Recent Searches : ");
       return Right(RecentDetailSearch.fromJson(response.data));
     } on DioException catch (e) {
       log('DioException getRecentSearches $e');

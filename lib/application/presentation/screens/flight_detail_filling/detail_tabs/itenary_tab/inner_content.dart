@@ -7,7 +7,7 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/widgets/ticket_column.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
 
 class InnerContents extends StatelessWidget {

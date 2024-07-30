@@ -19,9 +19,7 @@ class SelectSeatContainer extends StatelessWidget {
     final controller = Get.find<TravellerController>();
     return Obx(() {
       return controller.seatIsLoading.value
-          ? const Center(
-              child: CircularProgressIndicator(color: kBluePrimary),
-            )
+          ? const Center(child: CircularProgressIndicator(color: kBluePrimary))
           : controller.keysList.isEmpty
               ? Column(
                   children: [

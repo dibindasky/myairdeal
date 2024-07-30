@@ -77,3 +77,8 @@ bool isValidGst(String input) {
       RegExp(r'^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$');
   return hasRegExp.hasMatch(input);
 }
+
+bool isValidIndianPassportNumber(String passportNumber) {
+  final regex = RegExp(r'^[A-Z][1-9][0-9][A-Z0-9]{5}$');
+  return regex.hasMatch(passportNumber);
+}

@@ -3,8 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/widgets/file_picker.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/widgets/product_drop_dwn.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/widgets/product_drop_dwn.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
@@ -50,7 +49,7 @@ class ContactUsFrom extends StatelessWidget {
           key: ticketRaiceController.raiceTicketFormKey,
           child: CustomTextField(
             controller: ticketRaiceController.descriptionController,
-            maxLines: 7,
+            maxLines: 1,
             isBorder: true,
             borderRadius: 7,
             textCapitalization: TextCapitalization.words,
@@ -63,7 +62,7 @@ class ContactUsFrom extends StatelessWidget {
             hintText: 'Description',
           ),
         ),
-        const BookingFilePicker(),
+        //const BookingFilePicker(),
         kHeight10,
         BookingProductdropoDownBuilder(),
         kHeight15,

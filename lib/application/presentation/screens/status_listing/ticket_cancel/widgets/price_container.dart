@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/ticket_cancel_controller.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/ticket_cancel/check_amendmet_charges/check_amendment.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/ticket_cancel/check_amendmet_charges/check_amendment.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';

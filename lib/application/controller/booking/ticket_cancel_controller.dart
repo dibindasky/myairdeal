@@ -1,13 +1,18 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/data/service/ticket_cancel/ticket_cancel.dart';
+import 'package:myairdeal/domain/models/booking/get_single_booking/traveller_info.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_charges_responce_model/amendment_charges_responce_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_request_model/amendment_details_request_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_responce_model/amendment_details_responce_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/ticket_cancel_request_model.dart';
+import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/traveller.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/trip.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_responce/ticket_cancel_responce.dart';
 import 'package:myairdeal/domain/repository/service/cancel_repo.dart';
@@ -34,27 +39,121 @@ class TicketCancellationController extends GetxController {
   RxList<AmendmentDetailsResponceModel?> amendmentDetails =
       <AmendmentDetailsResponceModel>[].obs;
 
-  // List of selected trips
-  RxList<Trip> selectedTrips = <Trip>[].obs;
-
+  final bookingController = Get.find<BookingController>();
   // Function to select a trip
-  void selectTrip(Trip trip) {
-    if (selectedTrips.contains(trip)) {
-      selectedTrips.remove(trip);
+  void selectTripUsingIndex(int tripIndex) {
+    final tripInfo = bookingController
+        .retrieveSingleBookingresponceModel
+        .value
+        .retrieveSingleBookingresponceModel
+        ?.itemInfos
+        ?.air
+        ?.tripInfos?[tripIndex];
+
+    // log('select Trip Using Index inside ${tripInfo?.toJson()}');
+
+    final tripConvert = Trip.getTrip(tripInfo);
+    cancelSelectedItems.value.trips =
+        cancelSelectedItems.value.trips ?? <Trip>[];
+    if (cancelSelectedItems.value.trips!.contains(tripConvert)) {
+      cancelSelectedItems.value.trips?.remove(tripConvert);
+      update();
     } else {
-      selectedTrips.add(trip);
+      cancelSelectedItems.value.trips?.add(tripConvert);
+      update();
     }
-    update();
+    update(['cancel']);
   }
 
   // Function to check if a trip is selected
   bool isTripSelected(Trip trip) {
-    return selectedTrips.contains(trip);
+    return cancelSelectedItems.value.trips != null &&
+        cancelSelectedItems.value.trips!.contains(trip);
+  }
+
+  //Traveller slection
+  void travellerChoose(int tripIndex, int travelerIndex) {
+    final tripInfo = bookingController
+        .retrieveSingleBookingresponceModel
+        .value
+        .retrieveSingleBookingresponceModel
+        ?.itemInfos
+        ?.air
+        ?.tripInfos?[tripIndex];
+    log('trip info inside travellerChoose ${tripInfo?.sI?[0].dt} ${tripInfo?.sI?[0].da?.code} ${tripInfo?.sI?[(tripInfo.sI?.length ?? 1) - 1].aa?.code}');
+
+    final tripConvert = Trip.getTrip(tripInfo);
+    final traveler = bookingController
+        .retrieveSingleBookingresponceModel
+        .value
+        .retrieveSingleBookingresponceModel
+        ?.itemInfos
+        ?.air
+        ?.travellerInfos?[travelerIndex];
+
+    if (traveler != null) {
+      final travelerConvert = Traveller.getTraveler(traveler);
+
+      // Ensure the trip is in the selected list
+      cancelSelectedItems.value.trips ??= [];
+      if (!cancelSelectedItems.value.trips!.contains(tripConvert)) {
+        cancelSelectedItems.value.trips!.add(tripConvert);
+      }
+
+      // Manage selected travelers for the trip
+      final existingTrip = cancelSelectedItems.value.trips!
+          .firstWhere((t) => t == tripConvert, orElse: () {
+        // If trip is not found in the list, create a new one with an empty traveler list
+        final newTrip = Trip(
+          src: tripConvert.src,
+          dest: tripConvert.dest,
+          departureDate: tripConvert.departureDate,
+        );
+        cancelSelectedItems.value.trips!.add(newTrip);
+        return newTrip;
+      });
+
+      existingTrip.travellers = existingTrip.travellers ?? [];
+      if (existingTrip.travellers!.contains(travelerConvert)) {
+        existingTrip.travellers!.remove(travelerConvert);
+      } else {
+        existingTrip.travellers!.add(travelerConvert);
+      }
+
+      log('Total selected travelers for trip $tripIndex: ${tripConvert.travellers?.length}');
+      update(['cancel']);
+    }
+  }
+
+  bool isTravelerSelected(int tripIndex, TravellerInfo? traveler) {
+    if (traveler == null) return false;
+
+    final tripInfo = bookingController
+        .retrieveSingleBookingresponceModel
+        .value
+        .retrieveSingleBookingresponceModel
+        ?.itemInfos
+        ?.air
+        ?.tripInfos?[tripIndex];
+
+    if (tripInfo == null) return false;
+
+    final tripConvert = Trip.getTrip(tripInfo);
+
+    final existingTrip =
+        cancelSelectedItems.value.trips?.firstWhere((t) => t == tripConvert);
+
+    if (existingTrip == null) return false;
+
+    final travelerConvert = Traveller.getTraveler(traveler);
+
+    return existingTrip.travellers?.contains(travelerConvert) ?? false;
   }
 
   void amendmentCharges() async {
     hasError.value = false;
     isLoading.value = true;
+    log('${cancelSelectedItems.value.trips?.toList()}');
     final data = await cancelRepo.amendmentCharges(
         ticketCancelRequestModel: cancelSelectedItems.value);
     data.fold(

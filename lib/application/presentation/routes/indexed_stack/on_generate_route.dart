@@ -4,8 +4,8 @@ import 'package:myairdeal/application/presentation/screens/account/account_scree
 import 'package:myairdeal/application/presentation/screens/account/edit_profile.dart';
 import 'package:myairdeal/application/presentation/screens/account/notification_setup.dart';
 import 'package:myairdeal/application/presentation/screens/account/secuurity_screen.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/bookings_screen.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/invoice_detail.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/bookings_screen.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/invoice_detail.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/flight_detail_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/review_detail.dart';

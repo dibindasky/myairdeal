@@ -10,7 +10,7 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/widgets/flight_invoice.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/flight_invoice.dart';
 
 class ScreenSuccessPage extends StatelessWidget {
   const ScreenSuccessPage({super.key});

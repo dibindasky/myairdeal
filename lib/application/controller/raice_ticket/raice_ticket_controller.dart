@@ -23,7 +23,12 @@ class RaiceTicketController extends GetxController {
   // in combleted and upcoming tab ticket raising value
   RxString selectedheding = 'New Complaint'.obs;
 
-  List<String> dropDwnDatas = ['Product 1', 'Product 2', 'Product 3'];
+  List<String> dropDwnDatas = [
+    'Flights',
+    'Air ambulance',
+    'Chatered Flights',
+    'Helicopter'
+  ];
   RxString? selectedProduct;
 
   // in except cancel tab Choosing for raice ticket, Connection, Refund and Mail

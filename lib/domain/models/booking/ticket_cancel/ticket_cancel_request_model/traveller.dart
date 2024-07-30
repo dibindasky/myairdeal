@@ -27,7 +27,7 @@ class Traveller {
   @override
   int get hashCode => fn.hashCode ^ ln.hashCode;
 
-  static Traveller getTraveler(TravellerInfo tra) {
-    return Traveller(fn: tra.fN, ln: tra.lN);
+  static Traveller getTraveler(TravellerInfo? tra) {
+    return Traveller(fn: tra?.fN, ln: tra?.lN);
   }
 }

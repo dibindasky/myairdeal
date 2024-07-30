@@ -106,7 +106,12 @@ class FlightTicketCard extends StatelessWidget {
                                                 ''),
                                       ),
                                       NormalCenterItems(
-                                        airlineCode: airlineCode,
+                                        airlineCode:
+                                            (tripInfos?[tripIndex].sI?.length ??
+                                                        0) >
+                                                    1
+                                                ? null
+                                                : airlineCode,
                                         stops:
                                             (tripInfos?[tripIndex].sI?.length ??
                                                     0) -

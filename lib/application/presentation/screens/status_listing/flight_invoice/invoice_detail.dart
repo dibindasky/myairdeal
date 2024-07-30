@@ -6,15 +6,15 @@ import 'package:myairdeal/application/controller/booking/booking_controller.dart
 import 'package:myairdeal/application/controller/booking/ticket_cancel_controller.dart';
 import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab/contact_us.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/widgets/tab/mail.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/widgets/quick_links.container.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/widgets/you_could_also.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/widgets/tab/contact_us.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/widgets/tab/mail.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/widgets/quick_links.container.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/widgets/you_could_also.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
-import 'package:myairdeal/application/presentation/screens/bookings/flight_invoice/widgets/flight_invoice.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/flight_invoice.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_request_model/amendment_details_request_model.dart';
 
 class ScreenInvoiceDetail extends StatelessWidget {

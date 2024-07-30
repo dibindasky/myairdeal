@@ -6,6 +6,7 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/ticket_column.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
 import '../../../../controller/home/home_controller.dart';
 
 class RecentSearchSection extends StatelessWidget {
@@ -15,25 +16,20 @@ class RecentSearchSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
+      (_) {
         homeController.fetchRecentSearches();
       },
     );
     return Obx(
       () {
-        if (homeController.isLoading.value) {
+        if (!homeController.isLoading.value) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               kHeight10,
               Text('Recent searches', style: textHeadStyle1),
               kHeight5,
-              const HorizontalShimmerSkeleton(
-                width: 190,
-                itemCount: 10,
-                scrollDirection: Axis.horizontal,
-                height: 100,
-              )
+              const Skeleton(crossAxisCount: 2, itemCount: 2,childAspectRatio: 2/1.3,)
             ],
           );
         } else if (homeController.recentSearches.isEmpty) {
@@ -82,15 +78,15 @@ class RecentSearchSection extends StatelessWidget {
                               Expanded(
                                 child: TicketColumn(
                                   label:
-                                      '${routeInfo?[0].fromCityOrAirport?.city ?? 'City'}, ${routeInfo?[0].fromCityOrAirport?.country ?? 'Country'}'
+                                      '${routeInfo?[0].fromCityOrAirport?.city ?? ''}, ${routeInfo?[0].fromCityOrAirport?.country ?? ''}'
                                       '',
                                   value: routeInfo?[0]
                                           .fromCityOrAirport
-                                          ?.countryCode ??
-                                      'code',
+                                          ?.code ??
+                                      '',
                                   subValue:
                                       routeInfo?[0].fromCityOrAirport?.name ??
-                                          'airpoert',
+                                          '',
                                   subValueStyle:
                                       textThinStyle1.copyWith(color: kBlack),
                                 ),
@@ -102,14 +98,14 @@ class RecentSearchSection extends StatelessWidget {
                                 child: TicketColumn(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   label:
-                                      '${routeInfo?[0].toCityOrAirport?.city ?? 'City'}, ${routeInfo?[0].toCityOrAirport?.country ?? 'Country'}'
+                                      '${routeInfo?[0].toCityOrAirport?.city ?? ''}, ${routeInfo?[0].toCityOrAirport?.country ?? ''}'
                                       '',
                                   value:
                                       routeInfo?[0].toCityOrAirport?.cityCode ??
-                                          'Airport',
+                                          '',
                                   subValue:
                                       routeInfo?[0].toCityOrAirport?.name ??
-                                          'Name',
+                                          '',
                                   subValueStyle:
                                       textThinStyle1.copyWith(color: kBlack),
                                 ),

@@ -15,11 +15,10 @@ class NationalityCodeDropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<TravellerController>(builder: (controller) {
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
         width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: kRadius10,
-        ),
+            borderRadius: kRadius10,
+            border: Border.all(color: kBlack.withOpacity(.3))),
         child: DropdownButtonHideUnderline(
           child: DropdownButton2<String>(
             buttonStyleData: ButtonStyleData(
@@ -28,7 +27,7 @@ class NationalityCodeDropDown extends StatelessWidget {
                 borderRadius: kRadius5,
               ),
               elevation: 0,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
               height: 40,
               width: 0,
             ),

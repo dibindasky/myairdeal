@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -27,6 +29,18 @@ class InternationalMutliComboTile extends StatelessWidget {
     final controller = Get.find<FlightSortController>();
     return Obx(() {
       return CustomExpansionTile(
+              whileTap: (open) {
+        if (open) {
+         Timer(const Duration(milliseconds: 300), () {
+            double position =
+              controller.flightSortScreenController.position.pixels;
+          controller.flightSortScreenController.animateTo(
+              position + 100,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeIn);
+         },);
+        }
+      },
         expansionColor: kGrey,
         child: Stack(
           children: [

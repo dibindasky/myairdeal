@@ -130,7 +130,9 @@ class FlightTimesBottomSheet extends StatelessWidget {
                     kHeight5,
                     EventButton(
                         text: 'Search flights',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
                         width: double.infinity),
                     kHeight20
                   ],

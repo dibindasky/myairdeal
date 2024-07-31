@@ -13,6 +13,7 @@ TotalPriceList _$TotalPriceListFromJson(Map<String, dynamic> json) =>
           : FdPrice.fromJson(json['fd'] as Map<String, dynamic>),
       fareIdentifier: json['fareIdentifier'] as String?,
       id: json['id'] as String?,
+      sri: json['sri'] as String?,
       msri: json['msri'] as List<dynamic>?,
       messages: json['messages'] as List<dynamic>?,
       icca: json['icca'] as bool?,
@@ -26,4 +27,5 @@ Map<String, dynamic> _$TotalPriceListToJson(TotalPriceList instance) =>
       'msri': instance.msri,
       'messages': instance.messages,
       'icca': instance.icca,
+      'sri': instance.sri,
     };

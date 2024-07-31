@@ -23,6 +23,9 @@ Conditions _$ConditionsFromJson(Map<String, dynamic> json) => Conditions(
       gst: json['gst'] == null
           ? null
           : Gst.fromJson(json['gst'] as Map<String, dynamic>),
+      pcs: json['pcs'] == null
+          ? null
+          : Pcs.fromJson(json['pcs'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ConditionsToJson(Conditions instance) =>
@@ -37,4 +40,5 @@ Map<String, dynamic> _$ConditionsToJson(Conditions instance) =>
       'st': instance.st,
       'sct': instance.sct,
       'gst': instance.gst,
+      'pcs': instance.pcs,
     };

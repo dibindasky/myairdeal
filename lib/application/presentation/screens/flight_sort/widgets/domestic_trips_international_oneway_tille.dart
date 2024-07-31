@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
@@ -20,6 +22,18 @@ class DomesticTripsAndOneWayInternationalTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
     return CustomExpansionTile(
+      whileTap: (open) {
+        if (open) {
+         Timer(const Duration(milliseconds: 300), () {
+            double position =
+              controller.flightSortScreenController.position.pixels;
+          controller.flightSortScreenController.animateTo(
+              position + 100,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeIn);
+         },);
+        }
+      },
       child: Obx(() {
         return FlightTicketCard(
           flightTicketCardEnum: FlightTicketCardEnum.homeSort,

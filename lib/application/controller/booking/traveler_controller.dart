@@ -28,6 +28,9 @@ class TravellerController extends GetxController {
   String travelerTab = 'Add Details';
   List<String> detailList = [' Itinerary', 'Add Details', 'Review', 'Payments'];
 
+  // Selected coutry code in passenger selection dailog
+  RxString selectedCoutryCode = 'IN'.obs;
+
   // list responsible for showing passenger history
   RxList<TravellerInfo> allPassengers = <TravellerInfo>[].obs;
   RxBool isLoading = false.obs;
@@ -87,6 +90,11 @@ class TravellerController extends GetxController {
   /// list responsible for entering the passenger details
   RxList<TravellerInfo?> passengerDetails =
       List<TravellerInfo?>.filled(20, null, growable: true).obs;
+
+  void changeCoutryCode(String code) {
+    selectedCoutryCode.value = code;
+    update();
+  }
 
   /// add meals information to the passenger to the traveller in the given index
   void addMealsInfo(SsrInfo ssrInfo, int index) {

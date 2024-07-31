@@ -20,6 +20,8 @@ class TravellerController extends GetxController {
   final PassengersRepo _passengersRepo = PassengersService();
   final BookingRepo bookingRepo = BookingService();
 
+  final ScrollController travellerScreenScrollController= ScrollController();
+
   /// Gender type [genderType] 0- Mr, 1- Mrs, 2- Ms
   RxInt genderType = 0.obs;
   RxList genderList = ['Mr', 'Mrs', 'Ms'].obs;

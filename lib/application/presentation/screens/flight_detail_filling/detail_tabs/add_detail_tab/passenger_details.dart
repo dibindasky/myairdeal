@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/passenger_field_container.dart';
@@ -14,6 +15,7 @@ class PassengerDetailsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final searchController = Get.find<FlightSortController>();
+    final bookingController = Get.find<BookingController>();
     final controller = Get.find<TravellerController>();
     return Obx(() {
       return Column(
@@ -34,6 +36,10 @@ class PassengerDetailsContainer extends StatelessWidget {
                     backgroundColor: knill,
                     surfaceTintColor: knill,
                     child: DetailContainer(
+                      dob: bookingController
+                            .reviewedDetail?.value.conditions?.dob,
+                        pcs: bookingController
+                            .reviewedDetail?.value.conditions?.pcs,
                         index: index,
                         travellerType: (searchController.adultCount.value) >
                                 index

@@ -3,6 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'dc.dart';
 import 'dob.dart';
 import 'gst.dart';
+import 'pcs.dart';
 
 part 'conditions.g.dart';
 
@@ -19,6 +20,7 @@ class Conditions {
   int? st;
   String? sct;
   Gst? gst;
+  Pcs? pcs;
 
   Conditions({
     this.ffas,
@@ -31,6 +33,7 @@ class Conditions {
     this.st,
     this.sct,
     this.gst,
+    this.pcs
   });
 
   factory Conditions.fromJson(Map<String, dynamic> json) {
@@ -50,6 +53,7 @@ class Conditions {
     int? st,
     String? sct,
     Gst? gst,
+    Pcs? pcs,
   }) {
     return Conditions(
       ffas: ffas ?? this.ffas,
@@ -62,6 +66,7 @@ class Conditions {
       st: st ?? this.st,
       sct: sct ?? this.sct,
       gst: gst ?? this.gst,
+      pcs: pcs ?? this.pcs,
     );
   }
 }

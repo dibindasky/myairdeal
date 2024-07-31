@@ -318,7 +318,7 @@ class FlightSortController extends GetxController {
     durationSlider.value = 1;
     selectedSpecialReturnAirline.value == '';
     if (tripType.value == 1) {
-      // if it is a round trip add airport as ulta
+      // if it is a round trip add second airport as ulta to first one for searching
       airportSelected[1].value = [airportSelected[0][1], airportSelected[0][0]];
       selectedFlights.value = [0, 0];
       selectedTicketPrices.value = [0, 0];
@@ -370,6 +370,7 @@ class FlightSortController extends GetxController {
         ),
       ),
     );
+    // api call for get all flights
     final result = await flightService.getAllFlight(
         flightSearchSortModel: FlightSearchSortModel(searchQuery: searchModel));
 
@@ -442,32 +443,26 @@ class FlightSortController extends GetxController {
 
           /// add all items to the [searchList] to show in ui
           for (int i = 0; i < searchListMain.length; i++) {
+            // if round trip need to find out the special return and need to seperate it to show seperatly
             if (roundTrip.value) {
-              print(
-                  '------------------seperate data form trips => round$i <=--------------------------');
               // list of search items e
               for (var e in searchListMain[i]) {
-                print('e.totalprice list => ${e.totalPriceList?.length}');
-
                 /// add special return fares to the [specialReturnFlights]
                 if ((e.totalPriceList ?? <TotalPriceList>[])
                     .any((price) => price.fareIdentifier == 'SPECIAL_RETURN')) {
-                  print('e.contains(special return)');
                   SearchAirlineInformation temp = e.copyWith(
                       totalPriceList: (e.totalPriceList ?? <TotalPriceList>[])
                           .where((price) =>
                               price.fareIdentifier == 'SPECIAL_RETURN')
                           .toList());
-                  print(
-                      'special return length => ${temp.totalPriceList?.length}');
-                  if (!specialReturnFlights
-                      .contains(temp.sI?[0].fD?.aI?.code ?? '')) {
-                    specialReturnFlights[i]
-                        [temp.sI?[0].fD?.aI?.code ?? ''] = [];
+                  if (!(specialReturnFlights[i]
+                      .containsKey(temp.sI?[0].fD?.aI?.code ?? ''))) {
+                    specialReturnFlights[i][temp.sI?[0].fD?.aI?.code ?? ''] =
+                        <SearchAirlineInformation>[];
                   }
                   specialReturnFlights[i][temp.sI?[0].fD?.aI?.code ?? ''] = [
                     ...specialReturnFlights[i][temp.sI?[0].fD?.aI?.code ?? '']!,
-                    e
+                    temp
                   ];
                 }
                 // find the airline offers dosent have special return offer
@@ -630,7 +625,22 @@ class FlightSortController extends GetxController {
   void changeFlightSelectionMultiCityAndRound(int index, int i) {
     selectedFlights[selectedTripListIndex.value] = index;
     selectedTicketPrices[selectedTripListIndex.value] = i;
+    if (roundTrip.value &&
+        selectedTripListIndex.value == 0 &&
+        searchList[selectedTripListIndex.value][index].totalPriceList![i].sri !=
+            null) {
+      sortWithMsri(searchList[selectedTripListIndex.value][index]
+          .totalPriceList![i]
+          .sri!);
+    }
     getTotalFare();
+  }
+
+  void sortWithMsri(String sri) {
+    searchList[1].value = searchList[1]
+        .where((e) => (e.totalPriceList ?? <TotalPriceList>[])
+            .any((p) => (p.msri ?? []).contains(sri)))
+        .toList();
   }
 
   /// change passenger fare type change the [passengerFareType] to find type form [passengerFareTypes]
@@ -687,12 +697,9 @@ class FlightSortController extends GetxController {
     int index = selectedIndex ?? selectedTripListIndex.value;
     print('SORTING...');
     sortingRebuild.value = true;
-    print('sorting index => $index');
-    print(searchListMain[index].length);
     List<SearchAirlineInformation> sort = [];
     // sort for airline, dont sort if it is a special retun
     if (selectedSpecialReturnAirline.value == '') {
-      print('inside airline sort');
       if (sortingVariablesSelected[index]![0].isEmpty ||
           sortingVariablesSelected[index]![0].length ==
               sortingVariables[index]![0].length) {
@@ -710,7 +717,6 @@ class FlightSortController extends GetxController {
     } else {
       sort = searchListMain[index];
     }
-    print('after airline sort ${sort.length}');
     // sort in base of stops
     for (int i = 0; i < sort.length; i++) {
       if (sortingVariablesSelected[index]![1].isNotEmpty &&
@@ -719,7 +725,6 @@ class FlightSortController extends GetxController {
         sort.removeAt(i--);
       }
     }
-    print('after stop sort ${sort.length}');
     // sort for duration
     if ((durationSlider.value != 0 || durationSlider.value != 1) &&
         sortingVariablesSelected[index]![1].isEmpty) {
@@ -731,7 +736,6 @@ class FlightSortController extends GetxController {
         }
       }
     }
-    print('after duration sort ${sort.length}');
     // sort for price
     if (sortingVariablesSelected[index]![3].isNotEmpty) {
       for (int i = 0; i < sort.length; i++) {
@@ -748,7 +752,6 @@ class FlightSortController extends GetxController {
         }
       }
     }
-    print('after price sort ${sort.length}');
     // sort with arrival times
     if (sortingVariablesSelected[selectedTripListIndex.value]![4].isNotEmpty) {
       for (int i = 0; i < sort.length; i++) {
@@ -759,7 +762,7 @@ class FlightSortController extends GetxController {
                     .length;
             x++) {
           if (DateFormating.isTimeWithinSlot(
-              sort[i].sI?[(sort[i].sI?.length ?? 1)-1].at,
+              sort[i].sI?[(sort[i].sI?.length ?? 1) - 1].at,
               sortingVariablesSelected[selectedTripListIndex.value]![4][x])) {
             isInRange = true;
           }
@@ -779,8 +782,7 @@ class FlightSortController extends GetxController {
                 sortingVariablesSelected[selectedTripListIndex.value]![5]
                     .length;
             x++) {
-          if (DateFormating.isTimeWithinSlot(
-              sort[i].sI?[0].dt,
+          if (DateFormating.isTimeWithinSlot(sort[i].sI?[0].dt,
               sortingVariablesSelected[selectedTripListIndex.value]![5][x])) {
             isInRange = true;
           }
@@ -795,7 +797,6 @@ class FlightSortController extends GetxController {
     getTotalFare();
     Timer(const Duration(milliseconds: 1), () {
       sortingRebuild.value = false;
-      print('after sort ${searchList[index].length}');
     });
   }
 

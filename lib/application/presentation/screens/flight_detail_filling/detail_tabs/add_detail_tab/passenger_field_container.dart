@@ -12,13 +12,21 @@ import 'package:myairdeal/application/presentation/widgets/custom_check_box.dart
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
+import 'package:myairdeal/domain/models/booking/review_flight_detail_price/dob.dart';
+import 'package:myairdeal/domain/models/booking/review_flight_detail_price/pcs.dart';
 
 class DetailContainer extends StatefulWidget {
   const DetailContainer(
-      {super.key, required this.index, required this.travellerType});
+      {super.key,
+      required this.index,
+      required this.travellerType,
+      this.pcs,
+      this.dob});
 
   final int index;
   final String travellerType;
+  final Pcs? pcs;
+  final Dob? dob;
 
   @override
   State<DetailContainer> createState() => _DetailContainerState();
@@ -167,156 +175,223 @@ class _DetailContainerState extends State<DetailContainer> {
                     hintText: 'Enter Your Last Name',
                     fillColor: kWhite,
                   ),
-                  Text('Date Of Birth', style: textThinStyle1),
-                  kHeight5,
-                  GestureDetector(
-                    onTap: () async {
-                      final date = Get.find<FlightSortController>()
-                          .multiCityDepartureDate
-                          .first!;
-                      final selectedDate = await showDatePicker(
-                        context: context,
-                        firstDate: date.subtract(widget.travellerType == 'ADULT'
-                            ? const Duration(days: 365 * 150)
-                            : widget.travellerType == 'CHILD'
-                                ? const Duration(days: 365 * 12)
-                                : const Duration(days: 365 * 2)),
-                        lastDate: date.subtract(widget.travellerType == 'ADULT'
-                            ? Get.find<FlightSortController>()
-                                        .passengerFareType
-                                        .value ==
-                                    2
-                                ? const Duration(days: 365 * 60)
-                                : const Duration(days: 365 * 12)
-                            : widget.travellerType == 'CHILD'
-                                ? const Duration(days: 365 * 2)
-                                : const Duration(days: 365 * 0)),
-                      );
-                      dateOfBirthController.text =
-                          DateFormating.getDateApi(selectedDate);
-                      setState(() {});
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 10.w, vertical: 10.h),
-                      decoration: BoxDecoration(
-                          color: kWhite,
-                          borderRadius: kRadius10,
-                          border: Border.all(color: kGrey, width: 0.5)),
-                      child: Row(
-                        children: [
-                          Text(dateOfBirthController.text == ''
-                              ? 'DOB'
-                              : dateOfBirthController.text),
-                          const Spacer(),
-                          const Icon(Icons.calendar_month)
-                        ],
-                      ),
-                    ),
-                  ),
-                  kHeight5,
-                  Text('Passport Number', style: textThinStyle1),
-                  kHeight5,
-                  CustomTextField(
-                    maxLength: 8,
-                    keyboardType: TextInputType.number,
-                    controller: passportNumberController,
-                    validate: Validate.passportNumber,
-                    isBorder: true,
-                    borderRadius: 14,
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(width: .3),
-                        borderRadius: kRadius15),
-                    onTapOutside: () => FocusScope.of(context).unfocus(),
-                    hintText: 'Enter Your Passport Number',
-                    fillColor: kWhite,
-                  ),
-                  kHeight5,
-                  Text('Passport Issue Date', style: textThinStyle1),
-                  kHeight5,
-                  GestureDetector(
-                    onTap: () async {
-                      final date = DateTime.now();
-                      final selectedDate = await showDatePicker(
-                        context: context,
-                        firstDate:
-                            date.subtract(const Duration(days: 365 * 150)),
-                        lastDate: date.subtract(const Duration(days: 365 * 0)),
-                      );
-                      pIDController.text =
-                          DateFormating.getDateApi(selectedDate);
-                      setState(() {});
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 10.w, vertical: 10.h),
-                      decoration: BoxDecoration(
-                          color: kWhite,
-                          borderRadius: kRadius10,
-                          border: Border.all(color: kGrey, width: 0.5)),
-                      child: Row(
-                        children: [
-                          Text(pIDController.text == ''
-                              ? 'PID'
-                              : pIDController.text),
-                          const Spacer(),
-                          const Icon(Icons.calendar_month)
-                        ],
-                      ),
-                    ),
-                  ),
-                  kHeight5,
-                  Text('Passport Expiry Date', style: textThinStyle1),
-                  kHeight5,
-                  GestureDetector(
-                    onTap: () async {
-                      final date = DateTime.now();
-                      final selectedDate = await showDatePicker(
-                        context: context,
-                        firstDate: date,
-                        lastDate: date.add(const Duration(days: 365 * 10)),
-                      );
+                  (widget.pcs != null && widget.pcs!.dobe == true) ||
+                          (widget.dob != null &&
+                              ((widget.dob!.adobr == true &&
+                                      widget.travellerType == 'ADULT') ||
+                                  ((widget.dob!.cdobr == true &&
+                                          widget.travellerType == 'CHILD') ||
+                                      (widget.dob!.idobr == true &&
+                                          widget.travellerType == 'INFANT'))))
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Date Of Birth', style: textThinStyle1),
+                            kHeight5,
+                            GestureDetector(
+                              onTap: () async {
+                                final date = Get.find<FlightSortController>()
+                                    .multiCityDepartureDate
+                                    .first!;
+                                final selectedDate = await showDatePicker(
+                                  context: context,
+                                  firstDate: date
+                                      .subtract(widget.travellerType == 'ADULT'
+                                          ? const Duration(days: 365 * 150)
+                                          : widget.travellerType == 'CHILD'
+                                              ? const Duration(days: 365 * 12)
+                                              : const Duration(days: 365 * 2)),
+                                  lastDate: date.subtract(
+                                      widget.travellerType == 'ADULT'
+                                          ? Get.find<FlightSortController>()
+                                                      .passengerFareType
+                                                      .value ==
+                                                  2
+                                              ? const Duration(days: 365 * 60)
+                                              : const Duration(days: 365 * 12)
+                                          : widget.travellerType == 'CHILD'
+                                              ? const Duration(days: 365 * 2)
+                                              : const Duration(days: 365 * 0)),
+                                );
+                                dateOfBirthController.text =
+                                    DateFormating.getDateApi(selectedDate);
+                                setState(() {});
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10.w, vertical: 10.h),
+                                decoration: BoxDecoration(
+                                    color: kWhite,
+                                    borderRadius: kRadius10,
+                                    border:
+                                        Border.all(color: kGrey, width: 0.5)),
+                                child: Row(
+                                  children: [
+                                    Text(dateOfBirthController.text == ''
+                                        ? 'DOB'
+                                        : dateOfBirthController.text),
+                                    const Spacer(),
+                                    const Icon(Icons.calendar_month)
+                                  ],
+                                ),
+                              ),
+                            ),
+                            kHeight5,
+                          ],
+                        )
+                      : kEmpty,
+                  widget.pcs != null
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            widget.pcs!.pm == true
+                                ? Column(
+                                    children: [
+                                      Text('Passport Number',
+                                          style: textThinStyle1),
+                                      kHeight5,
+                                      CustomTextField(
+                                        maxLength: 8,
+                                        controller: passportNumberController,
+                                        validate: Validate.passportNumber,
+                                        isBorder: true,
+                                        borderRadius: 14,
+                                        enabledBorder: OutlineInputBorder(
+                                            borderSide:
+                                                const BorderSide(width: .3),
+                                            borderRadius: kRadius15),
+                                        onTapOutside: () =>
+                                            FocusScope.of(context).unfocus(),
+                                        hintText: 'Enter Your Passport Number',
+                                        fillColor: kWhite,
+                                      ),
+                                      kHeight5,
+                                    ],
+                                  )
+                                : kEmpty,
+                            widget.pcs!.pid == true
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Passport Issue Date',
+                                          style: textThinStyle1),
+                                      kHeight5,
+                                      GestureDetector(
+                                        onTap: () async {
+                                          final date = DateTime.now();
+                                          final selectedDate =
+                                              await showDatePicker(
+                                            context: context,
+                                            firstDate: date.subtract(
+                                                const Duration(
+                                                    days: 365 * 150)),
+                                            lastDate: date.subtract(
+                                                const Duration(days: 365 * 0)),
+                                          );
+                                          pIDController.text =
+                                              DateFormating.getDateApi(
+                                                  selectedDate);
+                                          setState(() {});
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10.w, vertical: 10.h),
+                                          decoration: BoxDecoration(
+                                              color: kWhite,
+                                              borderRadius: kRadius10,
+                                              border: Border.all(
+                                                  color: kGrey, width: 0.5)),
+                                          child: Row(
+                                            children: [
+                                              Text(pIDController.text == ''
+                                                  ? 'PID'
+                                                  : pIDController.text),
+                                              const Spacer(),
+                                              const Icon(Icons.calendar_month)
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      kHeight5,
+                                    ],
+                                  )
+                                : kEmpty,
+                            widget.pcs!.pped == true
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Passport Expiry Date',
+                                          style: textThinStyle1),
+                                      kHeight5,
+                                      GestureDetector(
+                                        onTap: () async {
+                                          final date = DateTime.now();
+                                          final selectedDate =
+                                              await showDatePicker(
+                                            context: context,
+                                            firstDate: date,
+                                            lastDate: date.add(
+                                                const Duration(days: 365 * 10)),
+                                          );
 
-                      if (selectedDate != null) {
-                        expiryDController.text =
-                            DateFormating.getDateApi(selectedDate);
-                        setState(() {});
-                      }
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 10.w, vertical: 10.h),
-                      decoration: BoxDecoration(
-                          color: kWhite,
-                          borderRadius: kRadius10,
-                          border: Border.all(color: kGrey, width: 0.5)),
-                      child: Row(
-                        children: [
-                          Text(expiryDController.text == ''
-                              ? 'PED'
-                              : expiryDController.text),
-                          const Spacer(),
-                          const Icon(Icons.calendar_month)
-                        ],
-                      ),
-                    ),
-                  ),
-                  kHeight5,
-                  Text('Passenger Nationality', style: textThinStyle1),
-                  kHeight5,
-                  CustomTextField(
-                    controller: passengerNationalityController,
-                    validate: Validate.notNull,
-                    isBorder: true,
-                    borderRadius: 14,
-                    textCapitalization: TextCapitalization.characters,
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(width: .3),
-                        borderRadius: kRadius15),
-                    onTapOutside: () => FocusScope.of(context).unfocus(),
-                    hintText: 'Enter Your Nationality',
-                    fillColor: kWhite,
-                  ),
+                                          if (selectedDate != null) {
+                                            expiryDController.text =
+                                                DateFormating.getDateApi(
+                                                    selectedDate);
+                                            setState(() {});
+                                          }
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10.w, vertical: 10.h),
+                                          decoration: BoxDecoration(
+                                              color: kWhite,
+                                              borderRadius: kRadius10,
+                                              border: Border.all(
+                                                  color: kGrey, width: 0.5)),
+                                          child: Row(
+                                            children: [
+                                              Text(expiryDController.text == ''
+                                                  ? 'PED'
+                                                  : expiryDController.text),
+                                              const Spacer(),
+                                              const Icon(Icons.calendar_month)
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      kHeight5,
+                                    ],
+                                  )
+                                : kEmpty,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Passenger Nationality',
+                                    style: textThinStyle1),
+                                kHeight5,
+                                CustomTextField(
+                                  controller: passengerNationalityController,
+                                  validate: Validate.notNull,
+                                  isBorder: true,
+                                  borderRadius: 14,
+                                  textCapitalization:
+                                      TextCapitalization.characters,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(width: .3),
+                                      borderRadius: kRadius15),
+                                  onTapOutside: () =>
+                                      FocusScope.of(context).unfocus(),
+                                  hintText: 'Enter Your Nationality',
+                                  fillColor: kWhite,
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : kEmpty,
                   kHeight5,
                   Align(
                     alignment: Alignment.centerRight,

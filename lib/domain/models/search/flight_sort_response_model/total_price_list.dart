@@ -9,6 +9,7 @@ class TotalPriceList {
   FdPrice? fd;
   String? fareIdentifier;
   String? id;
+  String? sri;
   List<dynamic>? msri;
   List<dynamic>? messages;
   bool? icca;
@@ -18,6 +19,7 @@ class TotalPriceList {
     this.fareIdentifier,
     this.id,
     this.msri,
+    this.sri,
     this.messages,
     this.icca,
   });
@@ -32,6 +34,7 @@ class TotalPriceList {
     FdPrice? fd,
     String? fareIdentifier,
     String? id,
+    String? sri,
     List<dynamic>? msri,
     List<dynamic>? messages,
     bool? icca,
@@ -41,6 +44,7 @@ class TotalPriceList {
       fareIdentifier: fareIdentifier ?? this.fareIdentifier,
       id: id ?? this.id,
       msri: msri ?? this.msri,
+      sri: sri ?? this.sri,
       messages: messages ?? this.messages,
       icca: icca ?? this.icca,
     );

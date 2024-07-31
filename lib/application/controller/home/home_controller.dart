@@ -10,6 +10,9 @@ import 'package:myairdeal/domain/repository/service/home_repo.dart';
 class HomeController extends GetxController {
   final HomeRepo homeService = HomeService();
 
+  RxBool isLoading = false.obs;
+  RxBool search = false.obs;
+
   RxList<RecentDetailSearchItem> recentSearches =
       <RecentDetailSearchItem>[].obs;
 
@@ -21,10 +24,6 @@ class HomeController extends GetxController {
 
   // Home screen Scroll controller
   ScrollController homeScrollController = ScrollController();
-
-  RxBool isLoading = false.obs;
-
-  RxBool search = false.obs;
 
   @override
   void onInit() {

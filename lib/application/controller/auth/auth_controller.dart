@@ -80,23 +80,26 @@ class AuthController extends GetxController {
   }
 
   Future<void> skipOnBoard() async {
-    await SecureStorage.setOnBoard();
+    await SharedPreferecesStorage.setOnBoard();
   }
 
   Future<void> whereToGo() async {
-    final isLogin = await SecureStorage.getLogin();
-    final onBoard = await SecureStorage.getOnBoard();
+    final isLogin = await SharedPreferecesStorage.getLogin();
+    final onBoard = await SharedPreferecesStorage.getOnBoard();
+    final profile = await SharedPreferecesStorage.getProfile();
     if (!onBoard) {
       Get.toNamed(Routes.onboard);
     } else if (!isLogin) {
       Get.toNamed(Routes.signUp);
+    } else if (!profile) {
+      Get.offAndToNamed(Routes.alMostDone);
     } else if (onBoard && isLogin) {
       Get.offAndToNamed(Routes.bottomBar);
     }
   }
 
   Future<void> logOrNot() async {
-    loginOrNot.value = await SecureStorage.getLogin();
+    loginOrNot.value = await SharedPreferecesStorage.getLogin();
     update();
   }
 
@@ -154,12 +157,14 @@ class AuthController extends GetxController {
     }, (r) async {
       log('profile value ${r.profile}');
       loginOrNot.value = false;
+      SharedPreferecesStorage.setProfile(r.profile ?? false);
       if (r.profile == null || r.profile == false) {
         Get.offAllNamed(Routes.alMostDone);
       } else {
         Get.offAllNamed(Routes.bottomBar);
       }
-      SecureStorage.saveToken(tokenModel: TokenModel(token: r.token ?? ''));
+      SharedPreferecesStorage.saveToken(
+          tokenModel: TokenModel(token: r.token ?? ''));
 
       isLoading.value = false;
       hasError = false;
@@ -167,7 +172,7 @@ class AuthController extends GetxController {
       update();
       Get.snackbar('Success', 'OTP Verified Successfully',
           backgroundColor: kBluePrimary);
-      SecureStorage.setLogin();
+      SharedPreferecesStorage.setLogin();
       Timer(const Duration(milliseconds: 50), () {
         loginOrNot.value = true;
       });
@@ -211,6 +216,7 @@ class AuthController extends GetxController {
         Get.snackbar('Success', 'Account created successfully',
             backgroundColor: kBluePrimary);
         getUserInfo(true);
+        await SharedPreferecesStorage.setProfile(true);
         Get.offAllNamed(Routes.bottomBar);
         update();
       },
@@ -291,7 +297,7 @@ class AuthController extends GetxController {
     loginOrNot.value = false;
     loginNumber.clear();
     update();
-    await SecureStorage.clearLogin();
-    await SecureStorage.setOnBoard();
+    await SharedPreferecesStorage.clearLogin();
+    await SharedPreferecesStorage.setOnBoard();
   }
 }

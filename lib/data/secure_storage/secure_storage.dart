@@ -2,10 +2,11 @@ import 'dart:developer';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:myairdeal/domain/models/token/token_model.dart';
 
-class SecureStorage {
+class SharedPreferecesStorage {
   static const String accessKey = 'access_key';
   static const String isLogged = 'is_loggedIn';
-  static const String isOnBoarVisted = 'is_onboar_isted';
+  static const String isOnBoarVisted = 'is_onboar_visted';
+  static const String isProfileCreated = 'is_profile_visited';
   static const String phoneKey = 'phone_key';
 
   static Future<void> saveToken({required TokenModel tokenModel}) async {
@@ -65,5 +66,19 @@ class SecureStorage {
     final prefs = await SharedPreferences.getInstance();
     final phone = prefs.getString(phoneKey);
     return phone;
+  }
+
+  static Future<void> setProfile(bool profile) async {
+    log('set setProfile =>()');
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(isProfileCreated, profile);
+  }
+
+  static Future<bool> getProfile() async {
+    log('get setProfile =>()');
+    final prefs = await SharedPreferences.getInstance();
+    final setOnboard = prefs.getBool(isProfileCreated) ?? false;
+    log('get setProfile =>() $setOnboard');
+    return setOnboard;
   }
 }

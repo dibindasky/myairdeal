@@ -27,7 +27,8 @@ class ApiEndPoints {
   static const String getAllPassengers = '/user/all-passengers';
   static const String addPassengers = '/user/add-passenger';
   static const String getSeatMap = '/booking/seat-map';
+  static const String getNotification = '/user/notifications';
 
-  // change {airlinecode} for logo
+  // Change {airlinecode} for logo
   static const String airllineLogo = "/uploads/AirlinesLogo/{airlinecode}.png";
 }

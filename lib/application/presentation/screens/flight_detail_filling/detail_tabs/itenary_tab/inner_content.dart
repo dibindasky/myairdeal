@@ -131,7 +131,7 @@ class InnerContents extends StatelessWidget {
                                                     (model.sI?.length ?? 1) - 1]
                                                 .aa
                                                 ?.terminal ??
-                                            '--',
+                                            '',
                                         exit: controller.reviewedDetail?.value
                                                 .searchQuery?.cabinClass ??
                                             '',
@@ -264,8 +264,7 @@ class InnerContents extends StatelessWidget {
                                         ),
                                         valueStyle: textThinStyle1,
                                         subValue:
-                                            model?.sI?[stop].aa?.terminal ??
-                                                '--',
+                                            model?.sI?[stop].aa?.terminal ?? '',
                                         exit: controller.reviewedDetail?.value
                                                 .searchQuery?.cabinClass ??
                                             '',

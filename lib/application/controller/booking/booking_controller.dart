@@ -80,34 +80,34 @@ class BookingController extends GetxController {
   /// uncoment [startTimer] after complete meals,seat and baggage
   // start timer for booking section
   void startTimer() {
-    // timer.value.cancel();
-    // final DateTime currentTime = DateTime.now();
-    // final Duration elapsedTime = currentTime.difference(
-    //     DateTime.parse(reviewedDetail?.value.conditions?.sct ?? ''));
-    // final int elapsedSeconds = elapsedTime.inSeconds;
-    // remainingTime.value =
-    //     (reviewedDetail?.value.conditions?.st ?? 900 - elapsedSeconds)
-    //         .clamp(0, 900);
-    // timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
-    //   if (remainingTime.value == 0) {
-    //     bool showDialog = false;
-    //     if (Get.currentRoute != Routes.bottomBar) showDialog = true;
-    //     Get.until((route) => Get.currentRoute == Routes.bottomBar);
-    //     if (showDialog) {
-    //       Get.dialog(
-    //         AlertDialog(
-    //           backgroundColor: kRedLight,
-    //           title: const Text('Session expired'),
-    //           content: const Text(
-    //               'Your session time has been expired. You have to complete booking before the timer ends.'),
-    //         ),
-    //       );
-    //     }
-    //     timer.cancel();
-    //   } else {
-    //     remainingTime.value--;
-    //   }
-    // });
+    timer.value.cancel();
+    final DateTime currentTime = DateTime.now();
+    final Duration elapsedTime = currentTime.difference(
+        DateTime.parse(reviewedDetail?.value.conditions?.sct ?? ''));
+    final int elapsedSeconds = elapsedTime.inSeconds;
+    remainingTime.value =
+        (reviewedDetail?.value.conditions?.st ?? 900 - elapsedSeconds)
+            .clamp(0, 900);
+    timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (remainingTime.value == 0) {
+        bool showDialog = false;
+        if (Get.currentRoute != Routes.bottomBar) showDialog = true;
+        Get.until((route) => Get.currentRoute == Routes.bottomBar);
+        if (showDialog) {
+          Get.dialog(
+            AlertDialog(
+              backgroundColor: kRedLight,
+              title: const Text('Session expired'),
+              content: const Text(
+                  'Your session time has been expired. You have to complete booking before the timer ends.'),
+            ),
+          );
+        }
+        timer.cancel();
+      } else {
+        remainingTime.value--;
+      }
+    });
   }
 
   void clear() {

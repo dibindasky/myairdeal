@@ -447,6 +447,10 @@ class FlightSortController extends GetxController {
             if (roundTrip.value) {
               // list of search items e
               for (var e in searchListMain[i]) {
+                (e.totalPriceList ?? <TotalPriceList>[]).sort((a, b) =>
+                    (a.fd?.adult?.fC?.tf ?? 0)
+                        .compareTo(b.fd?.adult?.fC?.tf ?? 0));
+
                 /// add special return fares to the [specialReturnFlights]
                 if ((e.totalPriceList ?? <TotalPriceList>[])
                     .any((price) => price.fareIdentifier == 'SPECIAL_RETURN')) {
@@ -476,6 +480,11 @@ class FlightSortController extends GetxController {
               searchList.add(RxList.from(searchListforSpecialReturn[i]));
               searchListMain[i] = searchListforSpecialReturn[i];
             } else {
+              for (var e in searchListMain[i]) {
+                (e.totalPriceList ?? <TotalPriceList>[]).sort((a, b) =>
+                    (a.fd?.adult?.fC?.tf ?? 0)
+                        .compareTo(b.fd?.adult?.fC?.tf ?? 0));
+              }
               searchList.add(RxList.from(searchListMain[i]));
             }
           }
@@ -637,7 +646,7 @@ class FlightSortController extends GetxController {
   }
 
   void sortWithMsri(String sri) {
-    searchList[1].value = searchList[1]
+    searchList[1].value = searchListMain[1]
         .where((e) => (e.totalPriceList ?? <TotalPriceList>[])
             .any((p) => (p.msri ?? []).contains(sri)))
         .toList();

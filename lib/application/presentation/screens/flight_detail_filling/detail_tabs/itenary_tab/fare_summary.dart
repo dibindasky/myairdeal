@@ -149,7 +149,7 @@ class FareSummary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Seat, Meal & Baggage',
+                  'Seat, Meals & Baggage',
                   style: textThinStyle1.copyWith(
                     color: kBlack,
                     fontSize: 12.sp,

@@ -15,8 +15,8 @@ class ApiService {
   }) async {
     try {
       if (addHeader) {
-        final token =
-            await SecureStorage.getToken().then((token) => token.token);
+        final token = await SharedPreferecesStorage.getToken()
+            .then((token) => token.token);
         _dio.options.headers.addAll(
           {
             'authorization': "Bearer $token",
@@ -52,8 +52,8 @@ class ApiService {
   }) async {
     try {
       if (addHeader) {
-        final token =
-            await SecureStorage.getToken().then((token) => token.token);
+        final token = await SharedPreferecesStorage.getToken()
+            .then((token) => token.token);
         _dio.options.headers.addAll(
           {
             'authorization': "Bearer $token",
@@ -94,8 +94,8 @@ class ApiService {
   }) async {
     try {
       if (addHeader) {
-        final token =
-            await SecureStorage.getToken().then((token) => token.token);
+        final token = await SharedPreferecesStorage.getToken()
+            .then((token) => token.token);
         _dio.options.headers.addAll({
           'authorization': "Bearer $token",
           ...headers ?? {'content-Type': 'application/json'}
@@ -130,8 +130,8 @@ class ApiService {
   }) async {
     try {
       if (addHeader) {
-        final token =
-            await SecureStorage.getToken().then((token) => token.token);
+        final token = await SharedPreferecesStorage.getToken()
+            .then((token) => token.token);
         _dio.options.headers.addAll(
           {
             'authorization': "Bearer $token",
@@ -167,8 +167,8 @@ class ApiService {
   }) async {
     try {
       if (addHeader) {
-        final token =
-            await SecureStorage.getToken().then((token) => token.token);
+        final token = await SharedPreferecesStorage.getToken()
+            .then((token) => token.token);
         _dio.options.headers.addAll(
           {
             'authorization': "Bearer $token",

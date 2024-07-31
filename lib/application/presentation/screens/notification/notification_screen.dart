@@ -1,103 +1,191 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/notification/notification_controller.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
+import 'package:myairdeal/application/presentation/utils/refresh_indicator/refresh_custom.dart';
+import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 
-class ScreenNotification extends StatelessWidget {
+class ScreenNotification extends StatefulWidget {
   const ScreenNotification({super.key});
 
   @override
+  State<ScreenNotification> createState() => _ScreenNotificationState();
+}
+
+class _ScreenNotificationState extends State<ScreenNotification> {
+  final ScrollController scrollController = ScrollController();
+  final notificationController = Get.find<NotificationController>();
+  @override
+  void initState() {
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        notificationController.getNotificationNext();
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final controller = Get.find<NotificationController>();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        notificationController.getNotification();
+      },
+    );
     return Scaffold(
-        body: Column(
-      children: [
-        DetailAppBar(
-          heading: 'Notifications',
-          actionButton: 'Clear all',
-          onActionButtonTap: () {},
-          bottomgap: kHeight10,
-          topGap: kHeight10,
-        ),
-        kHeight10,
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Obx(() {
-            return Row(
-              children: List.generate(
-                  controller.notificationType.length,
-                  (index) => GestureDetector(
-                        onTap: () {
-                          controller.changeNotificationType(index);
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 15.w, vertical: 5.h),
-                          margin: EdgeInsets.symmetric(horizontal: 5.w),
-                          decoration: BoxDecoration(
-                              boxShadow: boxShadow2,
-                              borderRadius: kRadius5,
-                              color: controller.notificationIndex.value == index
-                                  ? kBlueDark
-                                  : kWhite),
-                          child: Text(
-                            controller.notificationType[index],
-                            style: textStyle1.copyWith(
-                                color:
-                                    controller.notificationIndex.value == index
+      body: Column(
+        children: [
+          DetailAppBar(
+            heading: 'Notifications',
+            onActionButtonTap: () {},
+            bottomgap: kHeight10,
+            topGap: kHeight10,
+          ),
+          kHeight10,
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Obx(() {
+                return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(
+                      notificationController.notificationType.length,
+                      (index) => GestureDetector(
+                          onTap: () {
+                            notificationController
+                                .changeNotificationType(index);
+                          },
+                          child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 15.w, vertical: 5.h),
+                              margin: EdgeInsets.symmetric(horizontal: 5.w),
+                              decoration: BoxDecoration(
+                                  boxShadow: boxShadow2,
+                                  borderRadius: kRadius5,
+                                  color: notificationController
+                                              .notificationIndex.value ==
+                                          index
+                                      ? kBlueDark
+                                      : kWhite),
+                              child: Text(
+                                notificationController.notificationType[index],
+                                style: textStyle1.copyWith(
+                                    color: notificationController
+                                                .notificationIndex.value ==
+                                            index
                                         ? kWhite
                                         : kBlack),
-                          ),
-                        ),
-                      )),
-            );
-          }),
-        ),
-        Divider(endIndent: 20.w, indent: 20.w),
-        Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            itemBuilder: (context, index) => Container(
-              // height: 100.h,
-              color: index == 0 ? kBlueLightShade : kWhite,
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.h),
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  CircleAvatar(
-                    backgroundImage: AssetImage(imageChatPerson),
+                              ))),
+                    ));
+              })),
+          Divider(endIndent: 20.w, indent: 20.w),
+          Expanded(
+            child: GetBuilder<NotificationController>(builder: (contxt) {
+              if (notificationController.notificationList == null) {
+                return SizedBox(
+                  height: 250.h,
+                  child: Center(
+                    child: Text(notificationController
+                                .notificationIndex.value ==
+                            0
+                        ? 'No Notifications'
+                        : notificationController.notificationIndex.value == 1
+                            ? 'No Unread Notifications'
+                            : 'No Read Notifications'),
                   ),
-                  kWidth10,
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                );
+              } else if (notificationController.notificationList!.isEmpty) {
+                return ErrorRefreshIndicator(
+                  errorMessage:
+                      notificationController.notificationIndex.value == 0
+                          ? 'No Notifications'
+                          : notificationController.notificationIndex.value == 1
+                              ? 'No Unread Notifications'
+                              : 'No Read Notifications',
+                  onRefresh: () {
+                    notificationController.getNotification();
+                  },
+                );
+              }
+              int length = notificationController.notificationLoading.value
+                  ? (notificationController.notificationList?.length ?? 0) + 1
+                  : notificationController.notificationList?.length ?? 0;
+              return RefreshIndicator(
+                onRefresh: () async {
+                  notificationController.getNotification();
+                },
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: length,
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    final notification =
+                        notificationController.notificationList?[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Get.find<BookingController>().getSingleBooking(
+                          retrieveSingleBookingRequestModel:
+                              RetrieveSingleBookingRequestModel(
+                                  bookingId: notification?.bookingID ?? ''),
+                        );
+                        Get.toNamed(Routes.invoice);
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 3.h),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.w, vertical: 10.h),
+                        decoration: BoxDecoration(
+                            color: notification?.status == false
+                                ? kBlueLightShade
+                                : kWhite,
+                            borderRadius: kRadius10),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
                           children: [
-                            Text('Super Offer', style: textHeadStyle1),
-                            Text('Mon,11:50pm',
-                                style:
-                                    textThinStyle1.copyWith(color: kGreyDark))
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(notification?.title ?? '',
+                                          style: textStyle1.copyWith(
+                                              fontSize: 15.sp)),
+                                      Text(
+                                          DateFormating.getDate(
+                                              notification?.createdAt),
+                                          style: textThinStyle1.copyWith(
+                                              color: kGreyDark))
+                                    ],
+                                  ),
+                                  Text(notification?.body ?? '',
+                                      style: textThinStyle1.copyWith(
+                                          color: kGreyDark, fontSize: 13.sp))
+                                ],
+                              ),
+                            )
                           ],
                         ),
-                        Text('Get 60% off in our first booking',
-                            style: textStyle1.copyWith(color: kGreyDark))
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        )
-      ],
-    ));
+                      ),
+                    );
+                  },
+                ),
+              );
+            }),
+          )
+        ],
+      ),
+    );
   }
 }

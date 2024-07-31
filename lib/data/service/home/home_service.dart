@@ -104,8 +104,9 @@ class HomeService implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, SuccessResponceModel>> addRecentSearch(
-      {required FlightSearchSortModel flightSearchSortModel}) async {
+  Future<Either<Failure, SuccessResponceModel>> addRecentSearch({
+    required FlightSearchSortModel flightSearchSortModel,
+  }) async {
     try {
       final response = await apiService.post(
         ApiEndPoints.recentSearch,

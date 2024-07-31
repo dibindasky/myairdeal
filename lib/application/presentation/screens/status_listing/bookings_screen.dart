@@ -81,197 +81,199 @@ class ScreenBookings extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10.h),
                               child: GetBuilder<BookingController>(
-                                  builder: (controller) {
-                                if (controller.bookingLoading.value) {
-                                  return const HorizontalShimmerSkeleton(
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: 4,
-                                  );
-                                } else {
-                                  if (controller.selectedBookingTab.value ==
-                                      1) {
-                                    if (controller
-                                        .retrieveAllUpcomingBooking.isEmpty) {
-                                      return SizedBox(
-                                        height: 250.h,
-                                        child: const Center(
-                                          child: Text('No Upcoming Tickets'),
-                                        ),
-                                      );
-                                    }
-                                    return ListView.separated(
-                                      physics: const BouncingScrollPhysics(),
-                                      padding: EdgeInsets.only(bottom: 23.w),
-                                      separatorBuilder: (context, index) =>
-                                          kHeight10,
-                                      itemCount: controller
-                                          .retrieveAllUpcomingBooking.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) =>
-                                          GestureDetector(
-                                        onTap: () {
-                                          controller.getSingleBooking(
-                                            retrieveSingleBookingRequestModel:
-                                                RetrieveSingleBookingRequestModel(
-                                                    bookingId: controller
-                                                        .retrieveAllUpcomingBooking[
-                                                            index]
-                                                        .bookingId),
-                                          );
-                                          Get.toNamed(Routes.invoice);
-                                        },
-                                        child: FlightTicketCard(
-                                          airlineCode: controller
-                                                  .retrieveAllUpcomingBooking[
-                                                      index]
-                                                  .retrieveSingleBookingresponceModel
-                                                  ?.itemInfos
-                                                  ?.air
-                                                  ?.tripInfos?[0]
-                                                  .sI?[0]
-                                                  .fD
-                                                  ?.aI
-                                                  ?.code ??
-                                              '',
-                                          allBookingResponce: controller
-                                                  .retrieveAllCompletedBooking[
-                                              index],
-                                          bookingId: controller
-                                              .retrieveAllUpcomingBooking[index]
-                                              .bookingId,
-                                          itemInfos: controller
-                                              .retrieveAllUpcomingBooking[index]
-                                              .retrieveSingleBookingresponceModel
-                                              ?.itemInfos,
-                                          flightTicketCardEnum:
-                                              FlightTicketCardEnum.upcoming,
-                                          buttonOnTap: () => Get.toNamed(
-                                              Routes.flightDetailFillling),
-                                        ),
-                                      ),
+                                builder: (controller) {
+                                  if (controller.bookingLoading.value) {
+                                    return const HorizontalShimmerSkeleton(
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: 4,
                                     );
-                                  } else if (controller
-                                          .selectedBookingTab.value ==
-                                      2) {
-                                    if (controller
-                                        .retrieveAllCancelBooking.isEmpty) {
-                                      return SizedBox(
+                                  } else {
+                                    if (controller.selectedBookingTab.value ==
+                                        1) {
+                                      if (controller
+                                          .retrieveAllUpcomingBooking.isEmpty) {
+                                        return SizedBox(
                                           height: 250.h,
                                           child: const Center(
-                                              child: Text(
-                                                  'No Cancelled Tickets')));
-                                    }
-                                    return ListView.separated(
-                                      physics: const BouncingScrollPhysics(),
-                                      padding: EdgeInsets.only(bottom: 23.w),
-                                      separatorBuilder: (context, index) =>
-                                          kHeight10,
-                                      itemCount: controller
-                                          .retrieveAllCancelBooking.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) =>
-                                          GestureDetector(
-                                        onTap: () {
-                                          controller.getSingleBooking(
+                                            child: Text('No Upcoming Tickets'),
+                                          ),
+                                        );
+                                      }
+                                      return ListView.separated(
+                                        physics: const BouncingScrollPhysics(),
+                                        padding: EdgeInsets.only(bottom: 23.w),
+                                        separatorBuilder: (context, index) =>
+                                            kHeight10,
+                                        itemCount: controller
+                                            .retrieveAllUpcomingBooking.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) =>
+                                            GestureDetector(
+                                          onTap: () {
+                                            controller.getSingleBooking(
                                               retrieveSingleBookingRequestModel:
                                                   RetrieveSingleBookingRequestModel(
                                                       bookingId: controller
-                                                          .retrieveAllCancelBooking[
+                                                          .retrieveAllUpcomingBooking[
                                                               index]
-                                                          .bookingId));
-                                          Get.toNamed(Routes.invoice);
-                                        },
-                                        child: FlightTicketCard(
-                                          airlineCode: controller
-                                                  .retrieveAllCancelBooking[
-                                                      index]
-                                                  .retrieveSingleBookingresponceModel
-                                                  ?.itemInfos
-                                                  ?.air
-                                                  ?.tripInfos?[0]
-                                                  .sI?[0]
-                                                  .fD
-                                                  ?.aI
-                                                  ?.code ??
-                                              '',
-                                          itemInfos: controller
-                                              .retrieveAllCancelBooking[index]
-                                              .retrieveSingleBookingresponceModel
-                                              ?.itemInfos,
-                                          flightTicketCardEnum:
-                                              FlightTicketCardEnum.cancelled,
-                                          buttonOnTap: () => Get.toNamed(
-                                              Routes.flightDetailFillling),
+                                                          .bookingId),
+                                            );
+                                            Get.toNamed(Routes.invoice);
+                                          },
+                                          child: FlightTicketCard(
+                                            airlineCode: controller
+                                                    .retrieveAllUpcomingBooking[
+                                                        index]
+                                                    .retrieveSingleBookingresponceModel
+                                                    ?.itemInfos
+                                                    ?.air
+                                                    ?.tripInfos?[0]
+                                                    .sI?[0]
+                                                    .fD
+                                                    ?.aI
+                                                    ?.code ??
+                                                '',
+                                            allBookingResponce: controller
+                                                    .retrieveAllCompletedBooking[
+                                                index],
+                                            bookingId: controller
+                                                .retrieveAllUpcomingBooking[
+                                                    index]
+                                                .bookingId,
+                                            itemInfos: controller
+                                                .retrieveAllUpcomingBooking[
+                                                    index]
+                                                .retrieveSingleBookingresponceModel
+                                                ?.itemInfos,
+                                            flightTicketCardEnum:
+                                                FlightTicketCardEnum.upcoming,
+                                            buttonOnTap: () => Get.toNamed(
+                                                Routes.flightDetailFillling),
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  } else if (controller
-                                          .selectedBookingTab.value ==
-                                      3) {
-                                    if (controller
-                                        .retrieveAllCompletedBooking.isEmpty) {
-                                      return SizedBox(
-                                          height: 250.h,
-                                          child: const Center(
-                                              child: Text(
-                                                  'No Completed Booking')));
+                                      );
+                                    } else if (controller
+                                            .selectedBookingTab.value ==
+                                        2) {
+                                      if (controller
+                                          .retrieveAllCancelBooking.isEmpty) {
+                                        return SizedBox(
+                                            height: 250.h,
+                                            child: const Center(
+                                                child: Text(
+                                                    'No Cancelled Tickets')));
+                                      }
+                                      return ListView.separated(
+                                        physics: const BouncingScrollPhysics(),
+                                        padding: EdgeInsets.only(bottom: 23.w),
+                                        separatorBuilder: (context, index) =>
+                                            kHeight10,
+                                        itemCount: controller
+                                            .retrieveAllCancelBooking.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) =>
+                                            GestureDetector(
+                                          onTap: () {
+                                            controller.getSingleBooking(
+                                                retrieveSingleBookingRequestModel:
+                                                    RetrieveSingleBookingRequestModel(
+                                                        bookingId: controller
+                                                            .retrieveAllCancelBooking[
+                                                                index]
+                                                            .bookingId));
+                                            Get.toNamed(Routes.invoice);
+                                          },
+                                          child: FlightTicketCard(
+                                            airlineCode: controller
+                                                    .retrieveAllCancelBooking[
+                                                        index]
+                                                    .retrieveSingleBookingresponceModel
+                                                    ?.itemInfos
+                                                    ?.air
+                                                    ?.tripInfos?[0]
+                                                    .sI?[0]
+                                                    .fD
+                                                    ?.aI
+                                                    ?.code ??
+                                                '',
+                                            itemInfos: controller
+                                                .retrieveAllCancelBooking[index]
+                                                .retrieveSingleBookingresponceModel
+                                                ?.itemInfos,
+                                            flightTicketCardEnum:
+                                                FlightTicketCardEnum.cancelled,
+                                            buttonOnTap: () => Get.toNamed(
+                                                Routes.flightDetailFillling),
+                                          ),
+                                        ),
+                                      );
+                                    } else if (controller
+                                            .selectedBookingTab.value ==
+                                        3) {
+                                      if (controller.retrieveAllCompletedBooking
+                                          .isEmpty) {
+                                        return SizedBox(
+                                            height: 250.h,
+                                            child: const Center(
+                                                child: Text(
+                                                    'No Completed Booking')));
+                                      }
+                                      return ListView.separated(
+                                        physics: const BouncingScrollPhysics(),
+                                        padding: EdgeInsets.only(bottom: 23.w),
+                                        separatorBuilder: (context, index) =>
+                                            kHeight10,
+                                        itemCount: controller
+                                            .retrieveAllCompletedBooking.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) =>
+                                            GestureDetector(
+                                          onTap: () {
+                                            controller.getSingleBooking(
+                                              retrieveSingleBookingRequestModel:
+                                                  RetrieveSingleBookingRequestModel(
+                                                      bookingId: controller
+                                                          .retrieveAllCompletedBooking[
+                                                              index]
+                                                          .bookingId),
+                                            );
+                                            Get.toNamed(Routes.invoice);
+                                          },
+                                          child: FlightTicketCard(
+                                            airlineCode: controller
+                                                    .retrieveAllCompletedBooking[
+                                                        index]
+                                                    .retrieveSingleBookingresponceModel
+                                                    ?.itemInfos
+                                                    ?.air
+                                                    ?.tripInfos?[0]
+                                                    .sI?[0]
+                                                    .fD
+                                                    ?.aI
+                                                    ?.code ??
+                                                '',
+                                            allBookingResponce: controller
+                                                    .retrieveAllCompletedBooking[
+                                                index],
+                                            itemInfos: controller
+                                                .retrieveAllCompletedBooking[
+                                                    index]
+                                                .retrieveSingleBookingresponceModel
+                                                ?.itemInfos,
+                                            flightTicketCardEnum:
+                                                FlightTicketCardEnum.complete,
+                                            buttonOnTap: () => Get.toNamed(
+                                                Routes.flightDetailFillling),
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return kEmpty;
                                     }
-                                    return ListView.separated(
-                                      physics: const BouncingScrollPhysics(),
-                                      padding: EdgeInsets.only(bottom: 23.w),
-                                      separatorBuilder: (context, index) =>
-                                          kHeight10,
-                                      itemCount: controller
-                                          .retrieveAllCompletedBooking.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) =>
-                                          GestureDetector(
-                                        onTap: () {
-                                          controller.getSingleBooking(
-                                            retrieveSingleBookingRequestModel:
-                                                RetrieveSingleBookingRequestModel(
-                                                    bookingId: controller
-                                                        .retrieveAllCompletedBooking[
-                                                            index]
-                                                        .bookingId),
-                                          );
-                                          Get.toNamed(Routes.invoice);
-                                        },
-                                        child: FlightTicketCard(
-                                          airlineCode: controller
-                                                  .retrieveAllCompletedBooking[
-                                                      index]
-                                                  .retrieveSingleBookingresponceModel
-                                                  ?.itemInfos
-                                                  ?.air
-                                                  ?.tripInfos?[0]
-                                                  .sI?[0]
-                                                  .fD
-                                                  ?.aI
-                                                  ?.code ??
-                                              '',
-                                          allBookingResponce: controller
-                                                  .retrieveAllCompletedBooking[
-                                              index],
-                                          itemInfos: controller
-                                              .retrieveAllCompletedBooking[
-                                                  index]
-                                              .retrieveSingleBookingresponceModel
-                                              ?.itemInfos,
-                                          flightTicketCardEnum:
-                                              FlightTicketCardEnum.complete,
-                                          buttonOnTap: () => Get.toNamed(
-                                              Routes.flightDetailFillling),
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    return kEmpty;
                                   }
-                                }
-                              }),
+                                },
+                              ),
                             ),
-                            // const EmptyBookingScreen()
                           ],
                         ),
         ),

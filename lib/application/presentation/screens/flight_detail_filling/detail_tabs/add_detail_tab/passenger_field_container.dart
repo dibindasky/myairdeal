@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/nationality_drop_down.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
@@ -16,12 +17,13 @@ import 'package:myairdeal/domain/models/booking/review_flight_detail_price/dob.d
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/pcs.dart';
 
 class DetailContainer extends StatefulWidget {
-  const DetailContainer(
-      {super.key,
-      required this.index,
-      required this.travellerType,
-      this.pcs,
-      this.dob});
+  const DetailContainer({
+    super.key,
+    required this.index,
+    required this.travellerType,
+    this.pcs,
+    this.dob,
+  });
 
   final int index;
   final String travellerType;
@@ -372,21 +374,7 @@ class _DetailContainerState extends State<DetailContainer> {
                                 Text('Passenger Nationality',
                                     style: textThinStyle1),
                                 kHeight5,
-                                CustomTextField(
-                                  controller: passengerNationalityController,
-                                  validate: Validate.notNull,
-                                  isBorder: true,
-                                  borderRadius: 14,
-                                  textCapitalization:
-                                      TextCapitalization.characters,
-                                  enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(width: .3),
-                                      borderRadius: kRadius15),
-                                  onTapOutside: () =>
-                                      FocusScope.of(context).unfocus(),
-                                  hintText: 'Enter Your Nationality',
-                                  fillColor: kWhite,
-                                ),
+                                NationalityCodeDropDown()
                               ],
                             ),
                           ],

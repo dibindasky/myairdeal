@@ -21,6 +21,7 @@ class ScreenFlightDetail extends StatelessWidget {
     final bookingController = Get.find<BookingController>();
     return Scaffold(
       body: SingleChildScrollView(
+        controller: travelController.travellerScreenScrollController,
         child: Column(
           children: [
             Obx(

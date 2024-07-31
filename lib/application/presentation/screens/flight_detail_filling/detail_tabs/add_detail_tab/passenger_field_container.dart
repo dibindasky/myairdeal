@@ -179,10 +179,10 @@ class _DetailContainerState extends State<DetailContainer> {
                           (widget.dob != null &&
                               ((widget.dob!.adobr == true &&
                                       widget.travellerType == 'ADULT') ||
-                                  ((widget.dob!.cdobr == true &&
-                                          widget.travellerType == 'CHILD') ||
-                                      (widget.dob!.idobr == true &&
-                                          widget.travellerType == 'INFANT'))))
+                                  (widget.dob!.cdobr == true &&
+                                      widget.travellerType == 'CHILD') ||
+                                  (widget.dob!.idobr == true &&
+                                      widget.travellerType == 'INFANT')))
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -426,10 +426,18 @@ class _DetailContainerState extends State<DetailContainer> {
                                       : travelController
                                           .genderListchild[gender],
                                   pt: widget.travellerType,
-                                  eD: expiryDController.text,
-                                  pNum: passportNumberController.text,
-                                  pid: pIDController.text,
-                                  pN: passengerNationalityController.text,
+                                  eD: expiryDController.text == ''
+                                      ? null
+                                      : expiryDController.text,
+                                  pNum: passportNumberController.text == ''
+                                      ? null
+                                      : passportNumberController.text,
+                                  pid: pIDController.text == ''
+                                      ? null
+                                      : pIDController.text,
+                                  pN: passengerNationalityController.text == ''
+                                      ? null
+                                      : passengerNationalityController.text,
                                 ),
                                 savePassenger,
                               );

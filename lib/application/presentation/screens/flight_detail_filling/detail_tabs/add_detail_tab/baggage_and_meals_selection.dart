@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -91,6 +93,32 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
               travellerController.passengerLength.value -
                   searchController.infantCount.value,
               (travellerIndex) => CustomExpansionTile(
+                    whileTap: (open) {
+                      if (open &&
+                          ((travellerController.passengerLength.value -
+                                      searchController.infantCount.value) >
+                                  1 ||
+                              (bookingController.reviewedDetail?.value
+                                              .tripInfos ??
+                                          [])
+                                      .length >
+                                  1)) {
+                        Timer(
+                          const Duration(milliseconds: 300),
+                          () {
+                            travellerController.travellerScreenScrollController
+                                .animateTo(
+                                    travellerController
+                                            .travellerScreenScrollController
+                                            .position
+                                            .pixels +
+                                        100,
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.easeIn);
+                          },
+                        );
+                      }
+                    },
                     isBorder: false,
                     child: Container(
                       margin: EdgeInsets.symmetric(vertical: 6.w),
@@ -231,7 +259,7 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                                 Text('Baggage not applicable'),
                                           )
                                         : DropDownSsrInfo(
-                                            value:(travellerController.passengerDetails[travellerIndex]?.ssrBaggageInfos ?? <SsrInfo>[]).any((baggage) =>
+                                            value: (travellerController.passengerDetails[travellerIndex]?.ssrBaggageInfos ?? <SsrInfo>[]).any((baggage) =>
                                                     baggage.key ==
                                                     bookingController
                                                         .reviewedDetail
@@ -239,22 +267,23 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                                         .tripInfos?[tripIndex]
                                                         .sI?[siIndex]
                                                         .id)
-                                                ? (bookingController.reviewedDetail?.value.tripInfos?[tripIndex].sI?[siIndex].ssrInfo?.baggage ?? <SsrInfo>[]).firstWhere((baggage) =>
-                                                    baggage.code ==
-                                                    (travellerController
-                                                                .passengerDetails[
-                                                                    travellerIndex]
-                                                                ?.ssrBaggageInfos ??
-                                                            <SsrInfo>[])
-                                                        .firstWhere((baggage) =>
-                                                            baggage.key ==
-                                                            bookingController
-                                                                .reviewedDetail
-                                                                ?.value
-                                                                .tripInfos?[tripIndex]
-                                                                .sI?[siIndex]
-                                                                .id)
-                                                        .code)
+                                                ? (bookingController
+                                                            .reviewedDetail
+                                                            ?.value
+                                                            .tripInfos?[
+                                                                tripIndex]
+                                                            .sI?[siIndex]
+                                                            .ssrInfo
+                                                            ?.baggage ??
+                                                        <SsrInfo>[])
+                                                    .firstWhere((baggage) =>
+                                                        baggage.code ==
+                                                        (travellerController
+                                                                    .passengerDetails[travellerIndex]
+                                                                    ?.ssrBaggageInfos ??
+                                                                <SsrInfo>[])
+                                                            .firstWhere((baggage) => baggage.key == bookingController.reviewedDetail?.value.tripInfos?[tripIndex].sI?[siIndex].id)
+                                                            .code)
                                                 : null,
                                             ssrList: (bookingController
                                                     .reviewedDetail

@@ -113,7 +113,7 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                             .position
                                             .pixels +
                                         100,
-                                    duration: Duration(milliseconds: 300),
+                                    duration: const Duration(milliseconds: 300),
                                     curve: Curves.easeIn);
                           },
                         );

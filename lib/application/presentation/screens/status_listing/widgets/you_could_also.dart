@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -11,6 +14,7 @@ class YouCouldAlso extends StatelessWidget {
   YouCouldAlso({super.key});
 
   final raiceController = Get.find<RaiceTicketController>();
+  final bookingController = Get.find<BookingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +45,18 @@ class YouCouldAlso extends StatelessWidget {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
+                          if (text[index] == 'Contact us') {
+                            Timer(
+                              const Duration(milliseconds: 300),
+                              () => bookingController.scrollController
+                                  .animateTo(
+                                      bookingController.scrollController
+                                          .position.maxScrollExtent,
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.bounceIn),
+                            );
+                          }
                           raiceController.changeSelectedYouCouldAlsoTab(index);
                         },
                         child: Obx(

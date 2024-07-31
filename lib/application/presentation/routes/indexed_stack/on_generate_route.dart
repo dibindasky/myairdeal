@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/account/account_screen.dart';
 import 'package:myairdeal/application/presentation/screens/account/edit_profile.dart';
@@ -56,8 +57,17 @@ class RouteGenerator {
         appBar: AppBar(
           title: const Text("Error"),
         ),
-        body: const Center(
-          child: Text("Error"),
+        body: GestureDetector(
+          onTap: () {
+            Get.offAllNamed(Routes.initial);
+          },
+          child: const SizedBox(
+            height: double.infinity,
+            width: double.infinity,
+            child: Center(
+              child: Text("Tap to restart application"),
+            ),
+          ),
         ),
       );
     });

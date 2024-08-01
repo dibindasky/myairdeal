@@ -6,10 +6,12 @@ import 'package:myairdeal/domain/models/auth/otp_verify_responce/otp_verify_resp
 import 'package:myairdeal/domain/models/auth/profile_update_model/profile_update_model.dart';
 import 'package:myairdeal/domain/models/auth/user_creation_model/user_creation_model.dart';
 import 'package:myairdeal/domain/models/auth/user_creation_responce_model/user_creation_responce_model.dart';
+import 'package:myairdeal/domain/models/splash_model/splash_model.dart';
 import 'package:myairdeal/domain/models/success_responce_model/success_responce_model.dart';
 
 abstract class AuthRepo {
-  Future<Either<Failure, SuccessResponceModel>> sendOTP({
+  Future<Either<Failure, SplashModel>> getSplash();
+  Future<Either<Failure, SuccessResponceModel>> sendSMS({
     required LoginModel loginModel,
   });
 

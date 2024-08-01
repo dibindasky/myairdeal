@@ -96,15 +96,15 @@ class _ScreenProfileState extends State<ScreenProfile> {
                               data: controller.userCreationResponceModel.value
                                       .firstName ??
                                   '',
-                              label: 'First name',
-                              value: 'name',
+                              label: 'First Name',
+                              value: 'Name',
                               iconImage: profileIcon,
                             ),
                             ProfileField(
                               data: controller.userCreationResponceModel.value
                                       .lastName ??
                                   '',
-                              label: 'Last name',
+                              label: 'Last Name',
                               value: '',
                               iconImage: profileIcon,
                             ),

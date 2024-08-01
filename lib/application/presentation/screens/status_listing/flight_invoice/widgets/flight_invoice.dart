@@ -87,8 +87,8 @@ class FlightInvoiceCard extends StatelessWidget {
                   children: [
                     Text(
                       (travelersData?.length ?? 0) > 1
-                          ? 'Passengers name'
-                          : 'Passenger name',
+                          ? 'Passengers Name'
+                          : 'Passenger Name',
                       style: textStyle1.copyWith(
                           fontSize: 14.sp, fontWeight: FontWeight.w600),
                     ),

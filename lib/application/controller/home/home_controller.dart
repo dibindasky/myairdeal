@@ -11,6 +11,7 @@ class HomeController extends GetxController {
   final HomeRepo homeService = HomeService();
 
   RxBool isLoading = false.obs;
+  RxBool recentLoading = false.obs;
   RxBool search = false.obs;
 
   RxList<RecentDetailSearchItem> recentSearches =
@@ -35,15 +36,19 @@ class HomeController extends GetxController {
 
   // Recent Searches
   void fetchRecentSearches() async {
-    isLoading.value = true;
+    recentLoading.value = true;
     final result = await homeService.getRecentSearches();
     result.fold(
-      (failure) => log(failure.message.toString()),
+      (failure) {
+        log(failure.message.toString());
+        recentLoading.value = false;
+      },
       (recentDetailSearch) {
         recentSearches.value = recentDetailSearch.data ?? [];
+        recentLoading.value = false;
       },
     );
-    isLoading.value = false;
+    recentLoading.value = false;
   }
 
   // Airport Searches

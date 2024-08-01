@@ -20,23 +20,21 @@ class ScreenSignUp extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ListView(
             children: [
-              kHeight40,
+              kHeight50,
+              kHeight20,
+              Image.asset(myAirDealLogo, height: 150.w),
+              kHeight50,
               Text(
-                'Create an Account',
+                'Login',
                 style: textHeadStyle1.copyWith(
                   fontSize: 25.sp,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               kHeight10,
-              Text(
-                'You will be sent a code on this number to verify if you are the owner of the number. ',
-                style: textThinStyle1.copyWith(color: kbuttonGrey),
-              ),
-              kHeight50,
-              kHeight30,
-              kHeight50,
-              const Text('Mobile Number'),
+              Text('Enter Mobile Number',
+                  style: textStyle1.copyWith(
+                      fontSize: 12.sp, fontWeight: FontWeight.w700)),
               kHeight5,
               InternationalPhoneNumberInput(
                 selectorButtonOnErrorPadding: 0,
@@ -71,12 +69,18 @@ class ScreenSignUp extends StatelessWidget {
                       width: 1.0,
                     ),
                   ),
-                  hintText: 'Mobile Number',
+                  hintText: 'Enter Mobile Number',
                 ),
                 maxLength: controller.maxLength.value + 1,
                 onSaved: (PhoneNumber number) {},
               ),
+              kHeight10,
+              Text(
+                'You will receive a verification code on this number.',
+                style: textThinStyle1.copyWith(color: kbuttonGrey),
+              ),
               kHeight50,
+              //const Text('Dont\t have an account'),
               kHeight50,
               GetBuilder<AuthController>(builder: (cont) {
                 return Column(
@@ -103,7 +107,7 @@ class ScreenSignUp extends StatelessWidget {
                             onTap: () {
                               if (controller.loginNumber.text.length >=
                                   controller.maxLength.value + 1) {
-                                controller.otpSent();
+                                controller.sendSMS();
                               } else {
                                 Get.snackbar(
                                   'Failed',

@@ -22,7 +22,6 @@ import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 
 class AuthController extends GetxController {
   AuthRepo authRepo = AuthService();
-
   RxBool isLoading = false.obs;
   bool hasError = false;
   RxBool loginOrNot = false.obs;
@@ -46,8 +45,13 @@ class AuthController extends GetxController {
   RxList genderList = ['Mr', 'Mrs', 'Ms'].obs;
   RxInt maxLength = 10.obs;
   RxInt maxOTPLength = 4.obs;
+
+  // In Almost done screen
   Rx<UserCreationResponceModel> userCreationResponceModel =
       UserCreationResponceModel().obs;
+
+  // Splash model
+  RxString splashModelImage = ''.obs;
 
   @override
   void onInit() {
@@ -83,6 +87,25 @@ class AuthController extends GetxController {
     await SharedPreferecesStorage.setOnBoard();
   }
 
+  void getSplash() async {
+    isLoading.value = true;
+    hasError = false;
+    final data = await authRepo.getSplash();
+    data.fold(
+      (l) {
+        isLoading.value = false;
+        hasError = true;
+      },
+      (r) {
+        String image = r.base64String ?? '';
+        image = image.startsWith('data') ? image.substring(22) : image;
+        splashModelImage.value = image;
+        isLoading.value = false;
+        hasError = false;
+      },
+    );
+  }
+
   Future<void> whereToGo() async {
     final isLogin = await SharedPreferecesStorage.getLogin();
     final onBoard = await SharedPreferecesStorage.getOnBoard();
@@ -103,19 +126,19 @@ class AuthController extends GetxController {
     update();
   }
 
-  Future<void> otpSent() async {
+  Future<void> sendSMS() async {
     String trimmedNumber = loginNumber.text.trim();
     String replaceWhiteSpace = trimmedNumber.replaceAll(' ', '');
     isLoading.value = true;
     hasError = false;
     update();
-    final data = await authRepo.sendOTP(
+    final data = await authRepo.sendSMS(
       loginModel: LoginModel(
         mobileNumber: replaceWhiteSpace,
         country: Country(
-            dialCode: dialCode?.value,
-            countryCode: countryCode?.value,
-            countryName: countryName?.value),
+            dialCode: dialCode?.value ?? '+91',
+            countryCode: countryCode?.value ?? 'IN',
+            countryName: countryName?.value ?? 'India'),
       ),
     );
     data.fold((failure) {

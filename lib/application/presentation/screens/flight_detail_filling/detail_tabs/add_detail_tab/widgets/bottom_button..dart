@@ -35,7 +35,7 @@ class BottomButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'total',
+              'Total',
               style: textThinStyle1.copyWith(fontSize: 10.sp),
             ),
             Text(

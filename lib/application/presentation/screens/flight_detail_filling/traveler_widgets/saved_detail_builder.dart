@@ -6,6 +6,7 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 
 class ScreenSavedPassengers extends StatelessWidget {
   const ScreenSavedPassengers({Key? key}) : super(key: key);
@@ -27,10 +28,9 @@ class ScreenSavedPassengers extends StatelessWidget {
           Obx(() {
             // Check if passengers list is null
             if (travelerController.isLoading.value) {
-              return SizedBox(
-                height: 400.h,
-                child: const Center(
-                    child: CircularProgressIndicator(color: kBluePrimary)),
+              return const HorizontalShimmerSkeleton(
+                scrollDirection: Axis.vertical,
+                itemCount: 3,
               );
             }
             // Check if passengers list is empty
@@ -38,27 +38,32 @@ class ScreenSavedPassengers extends StatelessWidget {
               return SizedBox(
                   height: 400.h,
                   child: const Center(
-                    child: Text('No passengers found.'),
+                    child: Text('No Passengers Found.'),
                   ));
             }
             // Build the ListView with passengers data
             return Expanded(
-              child: ListView.separated(
-                itemCount: travelerController.allPassengers.length,
-                physics: const BouncingScrollPhysics(),
-                separatorBuilder: (context, index) => kHeight10,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      travelerController.addPassengerDetail(travellerIndex,
-                          travelerController.allPassengers[index], false);
-                      Get.back();
-                      Get.back();
-                    },
-                    child: SavedDetailsCard(
-                        passengers: travelerController.allPassengers[index]),
-                  );
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  travelerController.getAllPassengers(travellerType);
                 },
+                child: ListView.separated(
+                  itemCount: travelerController.allPassengers.length,
+                  physics: const BouncingScrollPhysics(),
+                  separatorBuilder: (context, index) => kHeight10,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        travelerController.addPassengerDetail(travellerIndex,
+                            travelerController.allPassengers[index], false);
+                        Get.back();
+                        Get.back();
+                      },
+                      child: SavedDetailsCard(
+                          passengers: travelerController.allPassengers[index]),
+                    );
+                  },
+                ),
               ),
             );
           }),

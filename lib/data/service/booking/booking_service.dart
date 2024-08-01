@@ -70,7 +70,7 @@ class BookingService implements BookingRepo {
       return Right(GetSingleBooking.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException retrieveSinglleBooking ');
-      return Left(Failure(message: e.response?.data?['error'] ?? errorMessage));
+      return Left(Failure(message: e.message ?? errorMessage));
     } catch (e) {
       log('catch retrieveSinglleBooking');
       return Left(Failure(message: e.toString()));
@@ -138,7 +138,7 @@ class BookingService implements BookingRepo {
           []);
     } on DioException catch (e) {
       log('DioException retrieveCombletedBooking ');
-      return Left(Failure(message: e.response?.data?['error'] ?? errorMessage));
+      return Left(Failure(message: errorMessage));
     } catch (e) {
       log('catch retrieveCombletedBooking');
       return Left(Failure(message: e.toString()));
@@ -162,7 +162,7 @@ class BookingService implements BookingRepo {
           []);
     } on DioException catch (e) {
       log('DioException retrieveUpComimgBooking ');
-      return Left(Failure(message: e.response?.data?['error'] ?? errorMessage));
+      return Left(Failure(message: e.message ?? errorMessage));
     } catch (e) {
       log('catch retrieveUpComimgBooking');
       return Left(Failure(message: e.toString()));
@@ -181,7 +181,7 @@ class BookingService implements BookingRepo {
       return Right(SeatSelectionResponse.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException getSeatMap ');
-      return Left(Failure(message: e.response?.data?['error'] ?? errorMessage));
+      return Left(Failure(message: e.message ?? errorMessage));
     } catch (e) {
       log('catch getSeatMap');
       return Left(Failure(message: e.toString()));

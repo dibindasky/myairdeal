@@ -195,7 +195,7 @@ class FareSummary extends StatelessWidget {
                             Row(
                               children: [
                                 Icon(
-                                  controller.selectedArrowItinerary.value
+                                  !controller.selectedArrowItinerary.value
                                       ? Icons.arrow_drop_down_sharp
                                       : Icons.arrow_drop_up,
                                 ),

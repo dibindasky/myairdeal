@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:myairdeal/data/service/notification/notification_service.dart';
 import 'package:myairdeal/domain/models/notification_model/notification.dart';
-import 'package:myairdeal/domain/models/notification_model/notification_model.dart';
 import 'package:myairdeal/domain/models/page_query/page_query.dart';
 import 'package:myairdeal/domain/repository/service/notification_repo.dart';
 
@@ -15,22 +14,24 @@ class NotificationController extends GetxController {
   RxBool notificstionNext = false.obs;
 
   // For Notification Listing
-  Rx<NotificationModel> notification = NotificationModel().obs;
+  RxList<Notification>? notification = <Notification>[].obs;
+
+  // For filteration
+  RxList<Notification>? notificationList = <Notification>[].obs;
 
   void changeNotificationType(int value) {
     notificationIndex.value = value;
     if (notificationIndex.value == 0) {
-      notificationList =
-          (notification.value.notification ?? <Notification>[]).obs;
+      notificationList = (notification ?? <Notification>[]).obs;
       update();
     } else if (notificationIndex.value == 1) {
-      notificationList = ((notification.value.notification ?? <Notification>[])
+      notificationList = ((notification ?? <Notification>[])
               .where((e) => e.status == false)
               .toList())
           .obs;
       update();
     } else {
-      notificationList = ((notification.value.notification ?? <Notification>[])
+      notificationList = ((notification ?? <Notification>[])
               .where((e) => e.status == true)
               .toList())
           .obs;
@@ -38,19 +39,21 @@ class NotificationController extends GetxController {
     }
   }
 
-  RxList<Notification>? notificationList = <Notification>[].obs;
-
   // Notification Get All
   void getNotification() async {
     notificationLoading.value = true;
+    update();
     final data = await notificationService.getNotification();
     data.fold(
       (l) {
         notificationLoading.value = false;
+        update();
       },
       (r) {
-        notification.value = r;
+        notification?.value = r.notification ?? <Notification>[];
+        notificationList?.value = r.notification ?? <Notification>[];
         notificationLoading.value = false;
+        update();
       },
     );
   }
@@ -58,6 +61,7 @@ class NotificationController extends GetxController {
   void getNotificationNext() async {
     notificationLoading.value = true;
     nextNotification++;
+    update();
     final data = await notificationService.getNotificationNext(
         pageQuery: PageQuery(
       pageSize: nextNotification += nextNotification,
@@ -65,11 +69,13 @@ class NotificationController extends GetxController {
     data.fold(
       (l) {
         notificationLoading.value = false;
+        update();
       },
       (r) {
-        notification.value = r;
+        notification?.value = r.notification ?? <Notification>[];
         notificationList?.value = r.notification ?? [];
         notificationLoading.value = false;
+        update();
       },
     );
   }

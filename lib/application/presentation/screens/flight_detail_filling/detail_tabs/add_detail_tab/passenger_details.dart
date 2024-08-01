@@ -36,7 +36,7 @@ class PassengerDetailsContainer extends StatelessWidget {
                     backgroundColor: knill,
                     surfaceTintColor: knill,
                     child: DetailContainer(
-                      dob: bookingController
+                        dob: bookingController
                             .reviewedDetail?.value.conditions?.dob,
                         pcs: bookingController
                             .reviewedDetail?.value.conditions?.pcs,
@@ -61,7 +61,6 @@ class PassengerDetailsContainer extends StatelessWidget {
               },
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 6.w),
-                // height: 50.h,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: kRadius10,

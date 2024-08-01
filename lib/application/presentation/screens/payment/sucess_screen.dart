@@ -32,7 +32,7 @@ class ScreenSuccessPage extends StatelessWidget {
         ),
         title: Obx(() {
           if (controller.bookingCompleteLoading.value) {
-            return Text('Loading...',
+            return Text('Loading...!',
                 style: textStyle1.copyWith(
                     color: kWhite,
                     fontSize: 14.sp,
@@ -90,7 +90,7 @@ class ScreenSuccessPage extends StatelessWidget {
                                       height: 110.h,
                                     ),
                                   ),
-                                  Text('Booking done successfully!',
+                                  Text('Booking done Successfully!',
                                       style: textThinStyle1.copyWith(
                                           color: kWhite))
                                 ],
@@ -128,7 +128,7 @@ class ScreenSuccessPage extends StatelessWidget {
                           EventButton(
                             style: textStyle1.copyWith(
                                 fontSize: 13.sp, color: kWhite),
-                            text: 'Back TO Home',
+                            text: 'Back To Home',
                             onTap: () {
                               controller.clearDataAfterBooking();
                               Get.find<TravellerController>()

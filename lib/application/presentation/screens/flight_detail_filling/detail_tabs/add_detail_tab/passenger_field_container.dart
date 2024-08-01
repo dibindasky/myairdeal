@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
@@ -39,28 +40,78 @@ class _DetailContainerState extends State<DetailContainer> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
   TextEditingController passportNumberController = TextEditingController();
-  TextEditingController passengerNationalityController =
-      TextEditingController();
+
   TextEditingController expiryDController = TextEditingController();
   TextEditingController pIDController = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
   int gender = 0;
   bool savePassenger = false;
   final travelController = Get.find<TravellerController>();
+  final bookigController = Get.find<BookingController>();
+
+  String lastTraveldate = '';
+  String selectLastTravelDate() {
+    return bookigController
+            .reviewedDetail?.value.searchQuery?.routeInfos?.last.travelDate ??
+        '';
+  }
 
   @override
   void initState() {
+    lastTraveldate = selectLastTravelDate();
     final model = travelController.passengerDetails[widget.index];
     if (model != null) {
       firstNameController.text = model.fN ?? '';
       lastNameController.text = model.lN ?? '';
       dateOfBirthController.text = model.dob ?? '';
       passportNumberController.text = model.pNum ?? '';
-      passengerNationalityController.text = model.pN ?? '';
       expiryDController.text = model.eD ?? '';
       pIDController.text = model.pid ?? '';
+      travelController.selectedCoutryCode.value = model.pN ?? '';
     }
     super.initState();
+  }
+
+  DateTime selectedIssueDate = DateTime.now();
+
+  Future<void> selectIssueDate(BuildContext context) async {
+    final DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(const Duration(days: 365 * 150)),
+      lastDate: DateTime.now(),
+    );
+    if (selectedDate != null) {
+      pIDController.text = DateFormating.getDateApi(selectedDate);
+      setState(() {
+        selectedIssueDate = selectedDate;
+        setExpiryDate();
+      });
+    }
+  }
+
+  void setExpiryDate() {
+    final int additionalYears =
+        widget.travellerType == 'CHILD' || widget.travellerType == 'INFANT'
+            ? 5
+            : 10;
+    final DateTime calculatedExpiryDate =
+        selectedIssueDate.add(Duration(days: 365 * additionalYears));
+
+    // Get the last travel date from the booking controller
+    final String lastTravelDateString = lastTraveldate;
+    final DateTime lastTravelDate = DateTime.parse(lastTravelDateString);
+    final DateTime minExpiryDate =
+        lastTravelDate.add(const Duration(days: 365 ~/ 2)); // Add 6 months
+
+    // Check if the calculated expiry date is at least 6 months after the last travel date
+    final DateTime finalExpiryDate =
+        calculatedExpiryDate.isBefore(minExpiryDate)
+            ? minExpiryDate
+            : calculatedExpiryDate;
+
+    expiryDController.text = DateFormating.getDateApi(finalExpiryDate);
   }
 
   @override
@@ -133,7 +184,6 @@ class _DetailContainerState extends State<DetailContainer> {
                           (index) => CustomRadioButton(
                             selected: gender == index,
                             onChanged: () {
-                              // travelController.changeGenderType(index);
                               setState(() {
                                 gender = index;
                               });
@@ -281,20 +331,24 @@ class _DetailContainerState extends State<DetailContainer> {
                                       kHeight5,
                                       GestureDetector(
                                         onTap: () async {
-                                          final date = DateTime.now();
-                                          final selectedDate =
-                                              await showDatePicker(
-                                            context: context,
-                                            firstDate: date.subtract(
-                                                const Duration(
-                                                    days: 365 * 150)),
-                                            lastDate: date.subtract(
-                                                const Duration(days: 365 * 0)),
-                                          );
-                                          pIDController.text =
-                                              DateFormating.getDateApi(
-                                                  selectedDate);
-                                          setState(() {});
+                                          // final date = DateTime.now();
+                                          // final selectedDate =
+                                          //     await showDatePicker(
+                                          //   context: context,
+                                          //   firstDate: date.subtract(
+                                          //       const Duration(
+                                          //           days: 365 * 150)),
+                                          //   lastDate: date.subtract(
+                                          //       const Duration(days: 365 * 0)),
+                                          // );
+                                          // pIDController.text =
+                                          //     DateFormating.getDateApi(
+                                          //         selectedDate);
+                                          // setState(() {
+                                          //   selectedIssueDate =
+                                          //       selectedDate ?? DateTime.now();
+                                          // });
+                                          selectIssueDate(context);
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -329,15 +383,23 @@ class _DetailContainerState extends State<DetailContainer> {
                                       kHeight5,
                                       GestureDetector(
                                         onTap: () async {
-                                          final date = DateTime.now();
+                                          final date = selectedIssueDate;
                                           final selectedDate =
                                               await showDatePicker(
                                             context: context,
+                                            initialDate: selectedIssueDate.add(
+                                              widget.travellerType == 'CHILD' ||
+                                                      widget.travellerType ==
+                                                          'INFANT'
+                                                  ? const Duration(
+                                                      days: 365 * 5)
+                                                  : const Duration(
+                                                      days: 365 * 10),
+                                            ),
                                             firstDate: date,
-                                            lastDate: date.add(
-                                                const Duration(days: 365 * 10)),
+                                            lastDate: date.add(const Duration(
+                                                days: 365 * 150)),
                                           );
-
                                           if (selectedDate != null) {
                                             expiryDController.text =
                                                 DateFormating.getDateApi(
@@ -371,7 +433,7 @@ class _DetailContainerState extends State<DetailContainer> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Passenger Nationality',
+                                Text('Nationality (Country code)',
                                     style: textThinStyle1),
                                 kHeight5,
                                 NationalityCodeDropDown()
@@ -423,9 +485,12 @@ class _DetailContainerState extends State<DetailContainer> {
                                   pid: pIDController.text == ''
                                       ? null
                                       : pIDController.text,
-                                  pN: passengerNationalityController.text == ''
+                                  pN: travelController
+                                              .selectedCoutryCode.value ==
+                                          ''
                                       ? null
-                                      : passengerNationalityController.text,
+                                      : travelController
+                                          .selectedCoutryCode.value,
                                 ),
                                 savePassenger,
                               );

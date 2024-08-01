@@ -20,7 +20,7 @@ class TravellerController extends GetxController {
   final PassengersRepo _passengersRepo = PassengersService();
   final BookingRepo bookingRepo = BookingService();
 
-  final ScrollController travellerScreenScrollController= ScrollController();
+  final ScrollController travellerScreenScrollController = ScrollController();
 
   /// Gender type [genderType] 0- Mr, 1- Mrs, 2- Ms
   RxInt genderType = 0.obs;
@@ -403,10 +403,12 @@ class TravellerController extends GetxController {
           if (selectedSeats[key] != null && selectedSeats[key]!.length > i) {
             (passengerDetails[i]!.ssrSeatInfos ?? [])
                 .removeWhere((element) => element.key == key);
-            passengerDetails[i]!.ssrSeatInfos = [
-              ...passengerDetails[i]!.ssrSeatInfos ?? [],
-              selectedSeats[key]![i]!,
-            ];
+            if (selectedSeats[key]?[i] != null) {
+              passengerDetails[i]!.ssrSeatInfos = [
+                ...passengerDetails[i]!.ssrSeatInfos ?? [],
+                selectedSeats[key]![i]!,
+              ];
+            }
           }
         }
       }
@@ -425,6 +427,9 @@ class TravellerController extends GetxController {
         (i) => List.generate(col.value, (j) => SInfo(freeSpace: true)));
     for (SInfo s
         in seatsAvilable[selectedSeatFlightKey.value]?.sInfo ?? <SInfo>[]) {
+      if (s.seatPosition?.row == null || s.seatPosition?.column == null) {
+        continue;
+      }
       seatList[s.seatPosition!.row! - 1][s.seatPosition!.column! - 1] = s;
     }
     if (selectedSeats[selectedSeatFlightKey.value] == null) {

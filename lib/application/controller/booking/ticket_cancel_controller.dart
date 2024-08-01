@@ -7,7 +7,6 @@ import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/data/service/ticket_cancel/ticket_cancel.dart';
-import 'package:myairdeal/domain/models/booking/get_single_booking/traveller_info.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_charges_responce_model/amendment_charges_responce_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_request_model/amendment_details_request_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_responce_model/amendment_details_responce_model.dart';
@@ -25,9 +24,20 @@ class TicketCancellationController extends GetxController {
   TextEditingController cancellationRason = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  // list of selected trips
+  RxList<Trip> selectedTrips = <Trip>[].obs;
+
+  // selected passengers in each trip
+  Map<Trip, RxList<Traveller>> selectedTravellers =
+      <Trip, RxList<Traveller>>{}.obs;
+
   // Pick trips and travlers for cancelling and get amndment charges
   Rx<TicketCancelRequestModel> cancelSelectedItems =
       TicketCancelRequestModel().obs;
+
+  // trip length and trqaveller length to check while creating model
+  int tripLength = 1;
+  int travellerLength = 1;
 
   //Amend ment charges responce model
   Rx<AmendmentChargesResponceModel> checkAmendMentCharges =
@@ -40,117 +50,122 @@ class TicketCancellationController extends GetxController {
       <AmendmentDetailsResponceModel>[].obs;
 
   final bookingController = Get.find<BookingController>();
-  // Function to select a trip
-  void selectTripUsingIndex(int tripIndex) {
-    final tripInfo = bookingController
-        .retrieveSingleBookingresponceModel
-        .value
-        .retrieveSingleBookingresponceModel
-        ?.itemInfos
-        ?.air
-        ?.tripInfos?[tripIndex];
 
-    // log('select Trip Using Index inside ${tripInfo?.toJson()}');
-
-    final tripConvert = Trip.getTrip(tripInfo);
-    cancelSelectedItems.value.trips =
-        cancelSelectedItems.value.trips ?? <Trip>[];
-    if (cancelSelectedItems.value.trips!.contains(tripConvert)) {
-      cancelSelectedItems.value.trips?.remove(tripConvert);
-      update();
+  // select and unselect trip form list
+  void selectTrip({required Trip trip}) {
+    if (selectedTrips.any((t) => t == trip)) {
+      selectedTrips.remove(trip);
+      selectedTravellers.removeWhere((k, v) => k == trip);
     } else {
-      cancelSelectedItems.value.trips?.add(tripConvert);
-      update();
+      selectedTrips.add(trip);
     }
-    update(['cancel']);
   }
 
-  // Function to check if a trip is selected
-  bool isTripSelected(Trip trip) {
-    return cancelSelectedItems.value.trips != null &&
-        cancelSelectedItems.value.trips!.contains(trip);
-  }
-
-  //Traveller slection
-  void travellerChoose(int tripIndex, int travelerIndex) {
-    final tripInfo = bookingController
-        .retrieveSingleBookingresponceModel
-        .value
-        .retrieveSingleBookingresponceModel
-        ?.itemInfos
-        ?.air
-        ?.tripInfos?[tripIndex];
-    log('trip info inside travellerChoose ${tripInfo?.sI?[0].dt} ${tripInfo?.sI?[0].da?.code} ${tripInfo?.sI?[(tripInfo.sI?.length ?? 1) - 1].aa?.code}');
-
-    final tripConvert = Trip.getTrip(tripInfo);
-    final traveler = bookingController
-        .retrieveSingleBookingresponceModel
-        .value
-        .retrieveSingleBookingresponceModel
-        ?.itemInfos
-        ?.air
-        ?.travellerInfos?[travelerIndex];
-
-    if (traveler != null) {
-      final travelerConvert = Traveller.getTraveler(traveler);
-
-      // Ensure the trip is in the selected list
-      cancelSelectedItems.value.trips ??= [];
-      if (!cancelSelectedItems.value.trips!.contains(tripConvert)) {
-        cancelSelectedItems.value.trips!.add(tripConvert);
-      }
-
-      // Manage selected travelers for the trip
-      final existingTrip = cancelSelectedItems.value.trips!
-          .firstWhere((t) => t == tripConvert, orElse: () {
-        // If trip is not found in the list, create a new one with an empty traveler list
-        final newTrip = Trip(
-          src: tripConvert.src,
-          dest: tripConvert.dest,
-          departureDate: tripConvert.departureDate,
-        );
-        cancelSelectedItems.value.trips!.add(newTrip);
-        return newTrip;
+  // select and unselct passenger
+  void selectPassenger({required Trip trip, required Traveller traveller}) {
+    print('1');
+    if (!selectedTravellers.containsKey(trip)) {
+      selectedTrips.add(trip);
+      selectedTravellers[trip] = <Traveller>[].obs;
+    }
+    print('2');
+    if (selectedTravellers[trip]!.contains(traveller)) {
+      selectedTravellers[trip]!.remove(traveller);
+    } else {
+      selectedTravellers[trip]!.add(traveller);
+    }
+    print('3');
+    if (selectedTravellers[trip]!.isEmpty) {
+      selectedTrips.remove(trip);
+      selectedTravellers.removeWhere((k, v) {
+        print('trip check => ${k==trip}');
+        return k == trip;
       });
-
-      existingTrip.travellers = existingTrip.travellers ?? [];
-      if (existingTrip.travellers!.contains(travelerConvert)) {
-        existingTrip.travellers!.remove(travelerConvert);
-      } else {
-        existingTrip.travellers!.add(travelerConvert);
-      }
-
-      log('Total selected travelers for trip $tripIndex: ${tripConvert.travellers?.length}');
-      update(['cancel']);
     }
+    // for (var e in selectedTrips) {
+    //   print(e.toJson());
+    // }
   }
 
-  bool isTravelerSelected(int tripIndex, TravellerInfo? traveler) {
-    if (traveler == null) return false;
+  // clear variables and take the booking id to the model for new cancelation
+  void resetCancelVariables(
+      {String? bookingId, int? tripLength, int? travellerLength}) {
+    selectedTrips = <Trip>[].obs;
+    selectedTravellers = <Trip, RxList<Traveller>>{}.obs;
+    cancelSelectedItems = TicketCancelRequestModel(bookingId: bookingId).obs;
+    this.tripLength = tripLength ?? 1;
+    this.travellerLength = travellerLength ?? 1;
+  }
 
-    final tripInfo = bookingController
-        .retrieveSingleBookingresponceModel
-        .value
-        .retrieveSingleBookingresponceModel
-        ?.itemInfos
-        ?.air
-        ?.tripInfos?[tripIndex];
-
-    if (tripInfo == null) return false;
-
-    final tripConvert = Trip.getTrip(tripInfo);
-
-    final existingTrip =
-        cancelSelectedItems.value.trips?.firstWhere((t) => t == tripConvert);
-
-    if (existingTrip == null) return false;
-
-    final travelerConvert = Traveller.getTraveler(traveler);
-
-    return existingTrip.travellers?.contains(travelerConvert) ?? false;
+  // make model for cancelation or amandement checking
+  makeModel() {
+    // cancelSelectedItems.value = cancelSelectedItems.value
+    //     .copyWith(remarks: null, trips: null, type: null);
+    // bool cancelBooking = true;
+    // if (selectedTrips.length == tripLength) {
+    //   for (var e in selectedTrips) {
+    //     if (selectedTravellers[e]!.length != travellerLength) {
+    //       cancelBooking = false;
+    //     }
+    //   }
+    // }
+    // // cancel entire booking
+    // if (cancelBooking) {
+    //   cancelSelectedItems.value = cancelSelectedItems.value
+    //       .copyWith(remarks: cancellationRason.text, type: 'CANCELLATION');
+    //   return;
+    // }
+    // // selected trip
+    // Create a list of trips with their corresponding travellers
+    if (selectedTrips.length == tripLength) {
+      bool allTrip = true;
+      for (var trip in selectedTravellers.keys) {
+        if (selectedTravellers[trip]!.length != travellerLength) {
+          allTrip = false;
+        }
+      }
+      if (allTrip) {
+        cancelSelectedItems.value = cancelSelectedItems.value.copyWith(
+          type: 'CANCELLATION',
+          remarks: cancellationRason.text,
+          trips: null,
+        );
+      }
+      print(cancelSelectedItems.value.toJson());
+      for (var e in cancelSelectedItems.value.trips ?? <Trip>[]) {
+        print(e.toJson());
+        for (var x in e.travellers ?? <Traveller>[]) {
+          print(x.toJson());
+        }
+      }
+      return;
+    }
+    print('ticket');
+    List<Trip> tripsWithTravellers = selectedTravellers.keys.map((trip) {
+      List<Traveller>? travellers = selectedTravellers[trip]?.isNotEmpty == true
+          ? selectedTravellers[trip]?.toList()
+          : null;
+      return trip.copyWith(travellers: travellers);
+    }).toList();
+    cancelSelectedItems.value = cancelSelectedItems.value.copyWith(
+      type: 'CANCELLATION',
+      remarks: cancellationRason.text,
+      trips: tripsWithTravellers.isEmpty ||
+              tripsWithTravellers.length == tripLength
+          ? null
+          : tripsWithTravellers,
+    );
+    print(cancelSelectedItems.value.toJson());
+    for (var e in cancelSelectedItems.value.trips ?? <Trip>[]) {
+      print(e.toJson());
+      for (var x in e.travellers ?? <Traveller>[]) {
+        print(x.toJson());
+      }
+    }
   }
 
   void amendmentCharges() async {
+    makeModel();
     hasError.value = false;
     isLoading.value = true;
     log('${cancelSelectedItems.value.trips?.toList()}');
@@ -177,6 +192,8 @@ class TicketCancellationController extends GetxController {
   }
 
   void ticketCancel() async {
+    makeModel();
+    return;
     hasError.value = false;
     isLoading.value = true;
     final data = await cancelRepo.submitAmendment(

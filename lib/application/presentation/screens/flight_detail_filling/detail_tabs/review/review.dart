@@ -40,7 +40,10 @@ class ReveiewTab extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Passenger Details',
+                Text(
+                    controller.passengerLength.value <= 1
+                        ? 'Passenger Details'
+                        : 'Passengers Details',
                     style: textStyle1.copyWith(fontSize: 16.sp)),
                 ...List.generate(
                   controller.passengerLength.value,
@@ -60,44 +63,125 @@ class ReveiewTab extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                const Expanded(
+                                Expanded(
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('First Name'),
-                                      Text('Last Name'),
-                                      Text('DOB'),
+                                      controller.passengerDetails[travelrIndex]
+                                                      ?.fN !=
+                                                  null &&
+                                              controller
+                                                      .passengerDetails[
+                                                          travelrIndex]
+                                                      ?.lN !=
+                                                  null &&
+                                              controller
+                                                      .passengerDetails[
+                                                          travelrIndex]
+                                                      ?.pt !=
+                                                  null
+                                          ? const Text('Name  ')
+                                          : kEmpty,
+                                      controller.passengerDetails[travelrIndex]
+                                                  ?.dob !=
+                                              null
+                                          ? const Text('DOB  ')
+                                          : kEmpty,
+                                      controller.passengerDetails[travelrIndex]
+                                                  ?.pNum !=
+                                              null
+                                          ? const Text('Passport Number  ')
+                                          : kEmpty,
+                                      controller.passengerDetails[travelrIndex]
+                                                  ?.pid !=
+                                              null
+                                          ? const Text('Passport Issue Date  ')
+                                          : kEmpty,
+                                      controller.passengerDetails[travelrIndex]
+                                                  ?.eD !=
+                                              null
+                                          ? const Text('Passport Expiry Date  ')
+                                          : kEmpty,
+                                      controller.passengerDetails[travelrIndex]
+                                                  ?.pN !=
+                                              null
+                                          ? const Text(
+                                              'Nationality (Country code)  ',
+                                              overflow: TextOverflow.ellipsis)
+                                          : kEmpty
                                     ],
                                   ),
-                                ),
-                                const Column(
-                                  children: [
-                                    Text(':  '),
-                                    Text(':  '),
-                                    Text(':  '),
-                                  ],
                                 ),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(controller
-                                              .passengerDetails[travelrIndex]
-                                              ?.fN ??
-                                          ''),
-                                      Text(controller
-                                              .passengerDetails[travelrIndex]
-                                              ?.lN ??
-                                          ''),
-                                      Text(controller
-                                              .passengerDetails[travelrIndex]
-                                              ?.dob ??
-                                          ''),
+                                      controller.passengerDetails[travelrIndex]
+                                                      ?.fN !=
+                                                  null &&
+                                              controller
+                                                      .passengerDetails[
+                                                          travelrIndex]
+                                                      ?.lN !=
+                                                  null &&
+                                              controller
+                                                      .passengerDetails[
+                                                          travelrIndex]
+                                                      ?.pt !=
+                                                  null
+                                          ? Text(
+                                              '${controller.passengerDetails[travelrIndex]?.fN ?? ''} ${controller.passengerDetails[travelrIndex]?.lN ?? ''} (${controller.passengerDetails[travelrIndex]?.pt?.substring(0, 1) ?? ''})')
+                                          : kEmpty,
+                                      controller.passengerDetails[travelrIndex]
+                                                  ?.dob !=
+                                              null
+                                          ? Text(controller
+                                                  .passengerDetails[
+                                                      travelrIndex]
+                                                  ?.dob ??
+                                              '')
+                                          : kEmpty,
+                                      controller.passengerDetails[travelrIndex]
+                                                  ?.pNum !=
+                                              null
+                                          ? Text(controller
+                                                  .passengerDetails[
+                                                      travelrIndex]
+                                                  ?.pNum ??
+                                              '')
+                                          : kEmpty,
+                                      controller.passengerDetails[travelrIndex]
+                                                  ?.pid !=
+                                              null
+                                          ? Text(controller
+                                                  .passengerDetails[
+                                                      travelrIndex]
+                                                  ?.pid ??
+                                              '')
+                                          : kEmpty,
+                                      controller.passengerDetails[travelrIndex]
+                                                  ?.eD !=
+                                              null
+                                          ? Text(controller
+                                                  .passengerDetails[
+                                                      travelrIndex]
+                                                  ?.eD ??
+                                              '')
+                                          : kEmpty,
+                                      controller.passengerDetails[travelrIndex]
+                                                  ?.pN !=
+                                              null
+                                          ? Text(controller
+                                                  .passengerDetails[
+                                                      travelrIndex]
+                                                  ?.pN ??
+                                              '')
+                                          : kEmpty
                                     ],
                                   ),
-                                )
+                                ),
                               ],
                             ),
                             ...List.generate(

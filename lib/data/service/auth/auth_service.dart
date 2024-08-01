@@ -10,6 +10,7 @@ import 'package:myairdeal/domain/models/auth/otp_verify_responce/otp_verify_resp
 import 'package:myairdeal/domain/models/auth/profile_update_model/profile_update_model.dart';
 import 'package:myairdeal/domain/models/auth/user_creation_model/user_creation_model.dart';
 import 'package:myairdeal/domain/models/auth/user_creation_responce_model/user_creation_responce_model.dart';
+import 'package:myairdeal/domain/models/splash_model/splash_model.dart';
 import 'package:myairdeal/domain/models/success_responce_model/success_responce_model.dart';
 import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 
@@ -17,7 +18,22 @@ class AuthService extends AuthRepo {
   final ApiService apiService = ApiService();
 
   @override
-  Future<Either<Failure, SuccessResponceModel>> sendOTP(
+  Future<Either<Failure, SplashModel>> getSplash() async {
+    try {
+      final responce = await apiService.get(ApiEndPoints.getSplash);
+      log('Success getSplash');
+      return Right(SplashModel.fromJson(responce.data));
+    } on DioException catch (e) {
+      log('DioException getSplash $e');
+      return Left(Failure(message: e.message ?? errorMessage));
+    } catch (e) {
+      log('catch getSplash $e');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SuccessResponceModel>> sendSMS(
       {required LoginModel loginModel}) async {
     try {
       log('OTP data ${loginModel.toJson()}');

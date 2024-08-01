@@ -70,17 +70,17 @@ class TicketDetailExpansionChild extends StatelessWidget {
           ),
           const Divider(color: kBluePrimary),
           TicketDetailTile(
-              first: 'Checked Bag',
+              first: 'Check In Baggage',
               second: totalPriceList.fd!.adult!.bI!.iB ?? ''),
           TicketDetailTile(
-              first: 'Hand Bag',
+              first: 'Cabin Baggage',
               second: totalPriceList.fd!.adult!.bI!.cB ?? ''),
           TicketDetailTile(
-              first: 'Meal',
+              first: 'Meals',
               second:
                   totalPriceList.fd?.adult?.mI ?? false ? 'Free' : 'Chargable'),
           TicketDetailTile(
-              first: 'Cancelation',
+              first: 'Cancellation',
               second: totalPriceList.fd?.adult?.rT == null
                   ? 'NA'
                   : totalPriceList.fd?.adult?.rT == 0

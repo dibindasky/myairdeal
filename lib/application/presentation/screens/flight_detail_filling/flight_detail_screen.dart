@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/detail_tab_selection.dart';
@@ -19,6 +20,9 @@ class ScreenFlightDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final travelController = Get.find<TravellerController>();
     final bookingController = Get.find<BookingController>();
+    final controller = Get.find<AuthController>();
+    WidgetsBinding.instance
+        .addPostFrameCallback((timeStamp) => controller.getUserInfo(true));
     return Scaffold(
       body: SingleChildScrollView(
         controller: travelController.travellerScreenScrollController,

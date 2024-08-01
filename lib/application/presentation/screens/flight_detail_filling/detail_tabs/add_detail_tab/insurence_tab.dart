@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/bottom_button..dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -16,17 +17,27 @@ class InsurenceTab extends StatefulWidget {
 }
 
 class _InsurenceTabState extends State<InsurenceTab> {
+  final controller = Get.find<TravellerController>();
+  final authController = Get.find<AuthController>();
+  @override
+  void initState() {
+    controller.phoneController.text = controller.phoneController.text.isEmpty
+        ? authController.userCreationResponceModel.value.phone ?? ''
+        : controller.phoneController.text;
+    controller.emailController.text = controller.emailController.text.isEmpty
+        ? authController.userCreationResponceModel.value.email ?? ''
+        : controller.emailController.text;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<TravellerController>();
     return Form(
       key: controller.formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           kHeight10,
-          // const TravelInsurenceContainer(),
-          // traveller contact information
           Container(
             decoration: BoxDecoration(
               color: kBlueLightShade,

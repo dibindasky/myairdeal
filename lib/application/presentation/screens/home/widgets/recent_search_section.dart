@@ -14,21 +14,22 @@ class RecentSearchSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        homeController.fetchRecentSearches();
-      },
-    );
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => homeController.fetchRecentSearches());
     return Obx(
       () {
-        if (!homeController.isLoading.value) {
+        if (homeController.recentLoading.value) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               kHeight10,
               Text('Recent searches', style: textHeadStyle1),
               kHeight5,
-              const Skeleton(crossAxisCount: 2, itemCount: 2,childAspectRatio: 2/1.3,)
+              const Skeleton(
+                crossAxisCount: 2,
+                itemCount: 2,
+                childAspectRatio: 2 / 1.3,
+              ),
             ],
           );
         } else if (homeController.recentSearches.isEmpty) {
@@ -79,10 +80,9 @@ class RecentSearchSection extends StatelessWidget {
                                   label:
                                       '${routeInfo?[0].fromCityOrAirport?.city ?? ''}, ${routeInfo?[0].fromCityOrAirport?.country ?? ''}'
                                       '',
-                                  value: routeInfo?[0]
-                                          .fromCityOrAirport
-                                          ?.code ??
-                                      '',
+                                  value:
+                                      routeInfo?[0].fromCityOrAirport?.code ??
+                                          '',
                                   subValue:
                                       routeInfo?[0].fromCityOrAirport?.name ??
                                           '',
@@ -103,8 +103,7 @@ class RecentSearchSection extends StatelessWidget {
                                       routeInfo?[0].toCityOrAirport?.cityCode ??
                                           '',
                                   subValue:
-                                      routeInfo?[0].toCityOrAirport?.name ??
-                                          '',
+                                      routeInfo?[0].toCityOrAirport?.name ?? '',
                                   subValueStyle:
                                       textThinStyle1.copyWith(color: kBlack),
                                 ),

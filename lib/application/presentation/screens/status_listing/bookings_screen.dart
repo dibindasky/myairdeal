@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,7 @@ class ScreenBookings extends StatelessWidget {
       controller.getAllCombleteBooking(false);
       controller.getAllUpcomingBooking(false);
     });
+
     return Scaffold(
       body: Obx(
         () => RefreshIndicator(
@@ -64,8 +66,9 @@ class ScreenBookings extends StatelessWidget {
                         itemCount: 4,
                       ),
                     )
-                  : controller.retrieveAllCompletedBooking.isEmpty ||
-                          controller.retrieveAllUpcomingBooking.isEmpty
+                  : controller.retrieveAllCompletedBooking.isEmpty &&
+                          controller.retrieveAllUpcomingBooking.isEmpty &&
+                          controller.retrieveAllCancelBooking.isEmpty
                       ? const EmptyBookingScreen()
                       : ListView(
                           padding: const EdgeInsets.all(0),
@@ -134,7 +137,7 @@ class ScreenBookings extends StatelessWidget {
                                                     ?.code ??
                                                 '',
                                             allBookingResponce: controller
-                                                    .retrieveAllCompletedBooking[
+                                                    .retrieveAllUpcomingBooking[
                                                 index],
                                             bookingId: controller
                                                 .retrieveAllUpcomingBooking[
@@ -278,39 +281,6 @@ class ScreenBookings extends StatelessWidget {
                         ),
         ),
       ),
-    );
-  }
-
-  void showCancelDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'Unable to raise amendment. Please try again after sometime',
-            style: textStyle1.copyWith(fontSize: 16.sp),
-          ),
-          content: const Text(
-              'Amendment unable to be raised due to AutoCancellation is not enabled for supplier  , Please contact support team'),
-          actions: [
-            kHeight10,
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Get.back();
-              },
-              style: ElevatedButton.styleFrom(
-                  side: const BorderSide(color: kBlue),
-                  backgroundColor: kBlueThinLIght,
-                  foregroundColor: kWhite),
-              child: Text(
-                'OK',
-                style: textStyle1.copyWith(color: kBlue, fontSize: 12.sp),
-              ),
-            )
-          ],
-        );
-      },
     );
   }
 }

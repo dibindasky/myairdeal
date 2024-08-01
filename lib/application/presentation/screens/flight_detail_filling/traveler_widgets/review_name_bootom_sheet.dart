@@ -33,7 +33,7 @@ class ReviewNameBottomSheet extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                Text('Review your name', style: textHeadStyle1),
+                Text('Review your Name', style: textHeadStyle1),
                 kHeight10,
                 Text(
                   'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took',
@@ -74,7 +74,7 @@ class ReviewNameBottomSheet extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Mobile num'),
+                                Text('Mobile Num'),
                                 Text('Adult 1'),
                               ],
                             ),

@@ -1,6 +1,7 @@
 class ApiEndPoints {
   static const String baseUrl = 'https://myairdeal-backend.onrender.com';
-
+  //static const String baseUrl = 'https://b7fzq0cn-5001.inc1.devtunnels.ms';
+  static const String getSplash = '/splash/get';
   static const String sendOTP = '/user/send-sms';
   static const String verifyOTP = '/user/verify-otp';
   static const String flightSort = '/search/flight';

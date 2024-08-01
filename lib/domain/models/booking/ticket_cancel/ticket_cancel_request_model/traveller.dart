@@ -30,4 +30,14 @@ class Traveller {
   static Traveller getTraveler(TravellerInfo? tra) {
     return Traveller(fn: tra?.fN, ln: tra?.lN);
   }
+
+  Traveller copyWith({
+    String? fn,
+    String? ln,
+  }) {
+    return Traveller(
+      fn: fn ?? this.fn,
+      ln: ln ?? this.ln,
+    );
+  }
 }

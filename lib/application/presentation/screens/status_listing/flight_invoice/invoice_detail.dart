@@ -157,6 +157,31 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                       ? kEmpty
                                       : QuickLinksContainer(
                                           onTap: () {
+                                            Get.find<TicketCancellationController>().resetCancelVariables(
+                                                bookingId: bookingController
+                                                    .retrieveSingleBookingresponceModel
+                                                    .value
+                                                    .retrieveSingleBookingresponceModel
+                                                    ?.order
+                                                    ?.bookingId,
+                                                tripLength: bookingController
+                                                        .retrieveSingleBookingresponceModel
+                                                        .value
+                                                        .retrieveSingleBookingresponceModel
+                                                        ?.itemInfos
+                                                        ?.air
+                                                        ?.tripInfos
+                                                        ?.length ??
+                                                    1,
+                                                travellerLength: bookingController
+                                                        .retrieveSingleBookingresponceModel
+                                                        .value
+                                                        .retrieveSingleBookingresponceModel
+                                                        ?.itemInfos
+                                                        ?.air
+                                                        ?.travellerInfos
+                                                        ?.length ??
+                                                    1);
                                             Get.toNamed(Routes.ticketCancel);
                                           },
                                           text: 'Ticket Cancellation',

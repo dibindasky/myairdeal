@@ -572,10 +572,12 @@ class FlightSortController extends GetxController {
         }
       }
       // found the special return flights and airline
-      for (var key in specialReturnFlights[i].keys) {
-        for (var item in specialReturnFlights[i][key]!) {
-          if (!specialRetrunAirlines.containsKey(key)) {
-            specialRetrunAirlines[key] = item.sI?[0].fD?.aI?.name ?? '';
+      if (roundTrip.value) {
+        for (var key in specialReturnFlights[i].keys) {
+          for (var item in specialReturnFlights[i][key]!) {
+            if (!specialRetrunAirlines.containsKey(key)) {
+              specialRetrunAirlines[key] = item.sI?[0].fD?.aI?.name ?? '';
+            }
           }
         }
       }
@@ -596,6 +598,8 @@ class FlightSortController extends GetxController {
     for (int i = 0; i < searchList.length; i++) {
       if (searchList[i].isNotEmpty) {
         final item = searchList[i];
+        if (item.isEmpty ||
+            (item[selectedFlights[i]].totalPriceList ?? []).isEmpty) continue;
         price += item[selectedFlights[i]]
                 .totalPriceList?[selectedTicketPrices[i]]
                 .fd

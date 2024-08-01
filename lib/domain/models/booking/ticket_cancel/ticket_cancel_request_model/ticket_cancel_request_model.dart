@@ -19,4 +19,18 @@ class TicketCancelRequestModel {
   }
 
   Map<String, dynamic> toJson() => _$TicketCancelRequestModelToJson(this);
+
+  TicketCancelRequestModel copyWith({
+  String? bookingId,
+  String? type,
+  String? remarks,
+  List<Trip>? trips,
+}) {
+  return TicketCancelRequestModel(
+    bookingId: bookingId ?? this.bookingId,
+    type: type ?? this.type,
+    remarks: remarks ?? this.remarks,
+    trips: trips ?? this.trips,
+  );
+}
 }

@@ -9,6 +9,8 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
+import 'package:myairdeal/domain/models/fare_rule/fare_rule_request/fare_rule_request.dart';
+import 'package:shimmer/shimmer.dart';
 
 class FareSummary extends StatelessWidget {
   const FareSummary(
@@ -280,24 +282,50 @@ class FareSummary extends StatelessWidget {
                     children: [
                       const DottedLines(height: 10),
                       kHeight20,
-                      RichText(
-                        text: TextSpan(
-                          text: '* Rules (',
-                          style: textStyle1.copyWith(
-                              fontSize: 12.sp, color: kBlack),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Fare rules',
-                              style: textStyle1.copyWith(
-                                  color: kBlue, fontSize: 12.sp),
+                      Obx(
+                        () {
+                          if (controller.fareRuleLoading.value) {
+                            return Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: kWhite,
+                                    borderRadius: BorderRadius.circular(5)),
+                                width: 110.w,
+                                height: 13.h,
+                              ),
+                            );
+                          }
+                          return GestureDetector(
+                            onTap: () {
+                              controller.getFareRule(
+                                  fareRuleRequest: FareRuleRequest(
+                                      bookingId: controller
+                                          .reviewedDetail?.value.bookingId,
+                                      flowType: 'REVIEW'));
+                            },
+                            child: RichText(
+                              text: TextSpan(
+                                text: '* Rules (',
+                                style: textStyle1.copyWith(
+                                    fontSize: 12.sp, color: kBlack),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Fare rules',
+                                    style: textStyle1.copyWith(
+                                        color: kBlue, fontSize: 12.sp),
+                                  ),
+                                  TextSpan(
+                                    text: ').',
+                                    style: textStyle1.copyWith(
+                                        color: kBlack, fontSize: 12.sp),
+                                  ),
+                                ],
+                              ),
                             ),
-                            TextSpan(
-                              text: ').',
-                              style: textStyle1.copyWith(
-                                  color: kBlack, fontSize: 12.sp),
-                            ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                       reviewPage ? kEmpty : kHeight20,
                       reviewPage

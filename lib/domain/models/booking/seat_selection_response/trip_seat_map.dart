@@ -15,11 +15,7 @@ class TripSeatMap {
 
   Map<String, dynamic> toJson() => _$TripSeatMapToJson(this);
 
-  TripSeatMap copyWith({
-    Map<String, dynamic>? tripSeats,
-  }) {
-    return TripSeatMap(
-      tripSeats: tripSeats ?? this.tripSeats,
-    );
+  TripSeatMap copyWith({Map<String, dynamic>? tripSeats}) {
+    return TripSeatMap(tripSeats: tripSeats ?? this.tripSeats);
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
@@ -16,6 +17,9 @@ import 'package:myairdeal/domain/models/booking/review_flight_detail_price/revie
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/trip_info.dart';
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/ticket_cancel_request_model.dart';
+import 'package:myairdeal/domain/models/fare_rule/fare_rule_request/fare_rule_request.dart';
+import 'package:myairdeal/domain/models/fare_rule/fare_rule_responce/fare_rule_responce.dart';
+import 'package:myairdeal/domain/models/fare_rule/fare_rule_responce/fare_rule_section.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
@@ -37,6 +41,7 @@ class BookingController extends GetxController {
   RxInt selectedBookingTab = 1.obs;
   RxBool bookingLoading = false.obs;
   RxBool invoiceLoading = false.obs;
+  RxBool fareRuleLoading = false.obs;
 
   // timer for booking
   Rx<Timer> timer = Timer(const Duration(seconds: 1), () {}).obs;
@@ -60,15 +65,43 @@ class BookingController extends GetxController {
   RxList<AllBookingResponce> retrieveAllCompletedBooking =
       <AllBookingResponce>[].obs;
 
-  //File picking
-  RxString? fileName = ''.obs;
-
   // Ticket cancel request model
   Rx<TicketCancelRequestModel> ticketCancelRequestModel =
       TicketCancelRequestModel().obs;
 
   //Selected travelers List
   RxList<TravellerInfo> selectedTravelers = <TravellerInfo>[].obs;
+
+  // FareRule Information
+  Rx<FareRuleResponce> fareRule = FareRuleResponce().obs;
+  Rx<FareRuleSection> fareRuleSection = FareRuleSection().obs;
+
+  // fare rule keys list
+  RxList<String> fareRuleKeysList = <String>[].obs;
+
+  /// Fare rule based on the key means [fareRuleKeysList]
+  void getFareRule({required FareRuleRequest fareRuleRequest}) async {
+    fareRuleLoading.value = true;
+    fareRuleKeysList.value = [];
+    final data =
+        await bookingRepo.getFareRule(fareRuleRequest: fareRuleRequest);
+    data.fold(
+      (l) => null,
+      (r) {
+        FareRuleSection? ruleSection = FareRuleSection();
+        fareRuleKeysList.value = r.fareRule?.keys.toList() ?? <String>[];
+
+        for (var element in fareRuleKeysList) {
+          ruleSection = FareRuleSection.fromJson(
+              r.fareRule?[element] ?? <String, dynamic>{});
+        }
+        fareRuleSection.value = ruleSection ?? FareRuleSection();
+        log('${fareRuleSection.value.tfr?.toJson()}');
+        Get.toNamed(Routes.fareRule);
+      },
+    );
+    fareRuleLoading.value = false;
+  }
 
   // Arrow Change In itinrery screen for tax and Taes
   RxBool selectedArrowItinerary = false.obs;

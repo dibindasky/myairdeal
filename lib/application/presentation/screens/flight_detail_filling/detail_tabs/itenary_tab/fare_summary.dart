@@ -214,7 +214,11 @@ class FareSummary extends StatelessWidget {
                       ],
                     ),
                     children: List.generate(
-                      3,
+                      controller.reviewedDetail?.value.totalPriceInfo
+                                  ?.totalFareDetail?.afC?.taf?.yq !=
+                              null
+                          ? 4
+                          : 3,
                       (index) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -226,7 +230,9 @@ class FareSummary extends StatelessWidget {
                                     ? 'Airline GST'
                                     : index == 1
                                         ? 'Other Taxes'
-                                        : 'YR',
+                                        : index == 3
+                                            ? 'YQ'
+                                            : 'YR',
                                 style: textThinStyle1.copyWith(
                                   color: kBlack,
                                   fontSize: 12.sp,
@@ -243,7 +249,9 @@ class FareSummary extends StatelessWidget {
                                     ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst ?? '--'}'
                                     : index == 1
                                         ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot ?? '--'}'
-                                        : '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr ?? '--'}',
+                                        :controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq!=null?
+                                         '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq ?? '--'}':
+                                         '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr ?? '--'}',
                                 style: textThinStyle1.copyWith(
                                   color: kBlack,
                                   fontSize: 12.sp,

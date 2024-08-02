@@ -6,6 +6,8 @@ part 'taf.g.dart';
 class Taf {
   @JsonKey(name: 'YQ')
   int? yq;
+  @JsonKey(name: 'YR')
+  int? yr;
   @JsonKey(name: 'MFT')
   double? mft;
   @JsonKey(name: 'OT')
@@ -15,7 +17,7 @@ class Taf {
   @JsonKey(name: 'AGST')
   int? agst;
 
-  Taf({this.yq, this.mft, this.ot, this.mf, this.agst});
+  Taf({this.yq, this.mft, this.ot, this.mf, this.agst, this.yr});
 
   factory Taf.fromJson(Map<String, dynamic> json) => _$TafFromJson(json);
 
@@ -27,9 +29,11 @@ class Taf {
     int? ot,
     int? mf,
     int? agst,
+    int? yr,
   }) {
     return Taf(
       yq: yq ?? this.yq,
+      yr: yr ?? this.yr,
       mft: mft ?? this.mft,
       ot: ot ?? this.ot,
       mf: mf ?? this.mf,

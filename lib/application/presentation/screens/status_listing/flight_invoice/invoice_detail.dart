@@ -201,7 +201,7 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                                         ?.bookingId ??
                                                     '');
                                           },
-                                          text: 'Invoice Download',
+                                          text: 'Ticket Download',
                                         )
                                 ],
                               ),

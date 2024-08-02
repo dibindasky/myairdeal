@@ -12,6 +12,8 @@ import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
 import 'package:myairdeal/domain/models/booking/seat_selection_response/seat_selection_response.dart';
+import 'package:myairdeal/domain/models/fare_rule/fare_rule_request/fare_rule_request.dart';
+import 'package:myairdeal/domain/models/fare_rule/fare_rule_responce/fare_rule_responce.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
 class BookingService implements BookingRepo {
@@ -184,6 +186,26 @@ class BookingService implements BookingRepo {
       return Left(Failure(message: e.message ?? errorMessage));
     } catch (e) {
       log('catch getSeatMap');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, FareRuleResponce>> getFareRule({
+    required FareRuleRequest fareRuleRequest,
+  }) async {
+    try {
+      final responce = await apiService.post(
+        ApiEndPoints.fareRule,
+        data: fareRuleRequest.toJson(),
+      );
+      log('getFareRule done');
+      return Right(FareRuleResponce.fromJson(responce.data));
+    } on DioException catch (e) {
+      log('DioException getFareRule');
+      return Left(Failure(message: e.message ?? errorMessage));
+    } catch (e) {
+      log('catch getFareRule');
       return Left(Failure(message: e.toString()));
     }
   }

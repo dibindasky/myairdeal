@@ -105,7 +105,8 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                                         .withOpacity(.9))),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
                                               children: [
                                                 Row(
                                                   mainAxisAlignment:
@@ -114,22 +115,24 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                                   children: [
                                                     Expanded(
                                                       child: TicketColumn(
-                                                        label: tripInfos?[tripIndex]
+                                                        label: tripInfos?[
+                                                                    tripIndex]
                                                                 .sI?[0]
                                                                 .da
                                                                 ?.code ??
                                                             '',
-                                                        value: tripInfos?[tripIndex]
+                                                        value: tripInfos?[
+                                                                    tripIndex]
                                                                 .sI?[0]
                                                                 .da
                                                                 ?.city ??
                                                             '',
-                                                        subValue:
-                                                            tripInfos?[tripIndex]
-                                                                    .sI?[0]
-                                                                    .da
-                                                                    ?.name ??
-                                                                '',
+                                                        subValue: tripInfos?[
+                                                                    tripIndex]
+                                                                .sI?[0]
+                                                                .da
+                                                                ?.name ??
+                                                            '',
                                                         isBold: true,
                                                         exit: DateFormating
                                                             .formatDateMonthYear(
@@ -141,16 +144,18 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                                       ),
                                                     ),
                                                     NormalCenterItems(
-                                                      airline: tripInfos?[tripIndex]
-                                                              .sI?[0]
-                                                              .fD
-                                                              ?.aI
-                                                              ?.name ??
-                                                          '',
+                                                      airline:
+                                                          tripInfos?[tripIndex]
+                                                                  .sI?[0]
+                                                                  .fD
+                                                                  ?.aI
+                                                                  ?.name ??
+                                                              '',
                                                       travelMinutes:
                                                           '${tripInfos?[tripIndex].sI?[0].fD?.aI?.code ?? ''} ${tripInfos?[tripIndex].sI?[0].fD?.fN ?? ''}',
                                                       haveImage: false,
-                                                      stops: (tripInfos?[tripIndex]
+                                                      stops: (tripInfos?[
+                                                                      tripIndex]
                                                                   .sI
                                                                   ?.length ??
                                                               0) -
@@ -159,10 +164,11 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                                     Expanded(
                                                       child: TicketColumn(
                                                         crossAxisAlignment:
-                                                            CrossAxisAlignment.end,
-                                                        label: tripInfos?[tripIndex]
-                                                                .sI?[((tripInfos[
-                                                                                tripIndex]
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        label: tripInfos?[
+                                                                    tripIndex]
+                                                                .sI?[((tripInfos[tripIndex]
                                                                             .sI
                                                                             ?.length ??
                                                                         1) -
@@ -170,9 +176,9 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                                                 .aa
                                                                 ?.code ??
                                                             '',
-                                                        value: tripInfos?[tripIndex]
-                                                                .sI?[((tripInfos[
-                                                                                tripIndex]
+                                                        value: tripInfos?[
+                                                                    tripIndex]
+                                                                .sI?[((tripInfos[tripIndex]
                                                                             .sI
                                                                             ?.length ??
                                                                         1) -
@@ -182,8 +188,7 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                                             '',
                                                         subValue: tripInfos?[
                                                                     tripIndex]
-                                                                .sI?[((tripInfos[
-                                                                                tripIndex]
+                                                                .sI?[((tripInfos[tripIndex]
                                                                             .sI
                                                                             ?.length ??
                                                                         1) -
@@ -192,21 +197,19 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                                                 ?.name ??
                                                             '',
                                                         exit: DateFormating
-                                                            .formatDateMonthYear((tripInfos?[
-                                                                        tripIndex]
-                                                                    .sI?[(tripInfos[tripIndex]
-                                                                                .sI
-                                                                                ?.length ??
-                                                                            1) -
-                                                                        1]
-                                                                    .at ??
-                                                                '')),
+                                                            .formatDateMonthYear(
+                                                                (tripInfos?[tripIndex]
+                                                                        .sI?[(tripInfos[tripIndex].sI?.length ??
+                                                                                1) -
+                                                                            1]
+                                                                        .at ??
+                                                                    '')),
                                                         isBold: true,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                              // Icon(Icons.arrow_drop_down)
+                                                // Icon(Icons.arrow_drop_down)
                                               ],
                                             ),
                                           ),
@@ -219,7 +222,7 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                       //   }, child: Obx(() {
                                       //     return CircleAvatar(
                                       //         radius: 10.w,
-                                      //         child: controller.selectedTrips.contains(trip) 
+                                      //         child: controller.selectedTrips.contains(trip)
                                       //             ? Icon(
                                       //                 Icons.check,
                                       //                 size: 16.w,
@@ -263,39 +266,21 @@ class ScreenTicetCanceallation extends StatelessWidget {
                 ),
                 kHeight10,
                 kHeight10,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    kWidth10,
-                    Expanded(
-                      child: EventButton(
-                        style: textThinStyle1.copyWith(color: kWhite),
-                        hieght: 30.h,
-                        text: 'Check Amendment',
-                        onTap: () {
-                          cancellationController
-                                  .cancelSelectedItems.value.bookingId =
-                              bookingController
-                                  .retrieveSingleBookingresponceModel
-                                  .value
-                                  .retrieveSingleBookingresponceModel
-                                  ?.order
-                                  ?.bookingId;
-                          cancellationController
-                              .cancelSelectedItems.value.type = 'CANCELLATION';
-                          cancellationController.amendmentCharges();
-                        },
-                      ),
-                    ),
-                    kWidth10,
-                    Expanded(
-                      child: EventButton(
+                Obx(() {
+                  cancellationController.selectedTrips;
+                  final bool enable = cancellationController.enableButton.value;
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      kWidth10,
+                      Expanded(
+                        child: EventButton(
                           style: textThinStyle1.copyWith(color: kWhite),
+                          color: enable ? kBluePrimary : kGrey,
                           hieght: 30.h,
-                          text: 'Cancel Ticket',
+                          text: 'Check Amendment',
                           onTap: () {
-                            if (cancellationController.formKey.currentState!
-                                .validate()) {
+                            if (enable) {
                               cancellationController
                                       .cancelSelectedItems.value.bookingId =
                                   bookingController
@@ -304,18 +289,47 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                       .retrieveSingleBookingresponceModel
                                       ?.order
                                       ?.bookingId;
-                              cancellationController
-                                      .cancelSelectedItems.value.remarks =
-                                  cancellationController.cancellationRason.text;
                               cancellationController.cancelSelectedItems.value
                                   .type = 'CANCELLATION';
-                              cancellationController.ticketCancel();
+                              cancellationController.amendmentCharges();
                             }
-                          }),
-                    ),
-                    kWidth10,
-                  ],
-                ),
+                          },
+                        ),
+                      ),
+                      kWidth10,
+                      Expanded(
+                        child: EventButton(
+                            style: textThinStyle1.copyWith(color: kWhite),
+                            hieght: 30.h,
+                            text: 'Cancel Ticket',
+                            color: enable ? kBluePrimary : kGrey,
+                            onTap: () {
+                              if (enable) {
+                                if (cancellationController.formKey.currentState!
+                                    .validate()) {
+                                  cancellationController
+                                          .cancelSelectedItems.value.bookingId =
+                                      bookingController
+                                          .retrieveSingleBookingresponceModel
+                                          .value
+                                          .retrieveSingleBookingresponceModel
+                                          ?.order
+                                          ?.bookingId;
+                                  cancellationController
+                                          .cancelSelectedItems.value.remarks =
+                                      cancellationController
+                                          .cancellationRason.text;
+                                  cancellationController.cancelSelectedItems
+                                      .value.type = 'CANCELLATION';
+                                  cancellationController.ticketCancel();
+                                }
+                              }
+                            }),
+                      ),
+                      kWidth10,
+                    ],
+                  );
+                }),
                 kHeight15
               ],
             );

@@ -24,6 +24,9 @@ class TicketCancellationController extends GetxController {
   TextEditingController cancellationRason = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  // button enable or disable for cancel
+  RxBool enableButton = false.obs;
+
   // list of selected trips
   RxList<Trip> selectedTrips = <Trip>[].obs;
 
@@ -64,6 +67,7 @@ class TicketCancellationController extends GetxController {
   // select and unselct passenger
   void selectPassenger({required Trip trip, required Traveller traveller}) {
     if (!selectedTravellers.containsKey(trip)) {
+      enableButton.value = true;
       selectedTrips.add(trip);
       selectedTravellers[trip] = <Traveller>[].obs;
     }
@@ -77,8 +81,10 @@ class TicketCancellationController extends GetxController {
       selectedTravellers.removeWhere((k, v) {
         return k == trip;
       });
+      if (selectedTravellers.isEmpty) {
+        enableButton.value = false;
+      }
     }
-
   }
 
   // clear variables and take the booking id to the model for new cancelation
@@ -89,6 +95,7 @@ class TicketCancellationController extends GetxController {
     cancelSelectedItems = TicketCancelRequestModel(bookingId: bookingId).obs;
     this.tripLength = tripLength ?? 1;
     this.travellerLength = travellerLength ?? 1;
+    enableButton.value = false;
   }
 
   // make model for cancelation or amandement checking
@@ -121,9 +128,7 @@ class TicketCancellationController extends GetxController {
     cancelSelectedItems.value = cancelRequestModel.copyWith(
       type: 'CANCELLATION',
       remarks: cancellationRason.text,
-      trips: tripsWithTravellers.isEmpty
-          ? null
-          : tripsWithTravellers,
+      trips: tripsWithTravellers.isEmpty ? null : tripsWithTravellers,
     );
   }
 

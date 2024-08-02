@@ -434,8 +434,10 @@ class FlightSortController extends GetxController {
                 r.searchResult?.tripInfos?.multicity6 ??
                     <SearchAirlineInformation>[]));
           }
-          selectedFlights.value = [0, 0];
-          selectedTicketPrices.value = [0, 0];
+          selectedFlights.value =
+              List.generate(searchListMain.length, (x) => 0);
+          selectedTicketPrices.value =
+              List.generate(searchListMain.length, (x) => 0);
           searchListforSpecialReturn =
               List.generate(2, (x) => <SearchAirlineInformation>[]);
           specialReturnFlights = List.generate(
@@ -804,6 +806,34 @@ class FlightSortController extends GetxController {
           sort.removeAt(i--);
         }
       }
+    }
+    print(
+        'before length check ${sort.length - 1} < ${selectedFlights[selectedTripListIndex.value]}');
+    // set selected tile as the last one if the sorting item dosent have the previous length
+    if ((sort.length - 1) < selectedFlights[selectedTripListIndex.value]) {
+      print('sort length lesser than selected list');
+      selectedFlights[selectedTripListIndex.value] = sort.length - 1;
+    }
+    // set the selected trip index as the max available length
+    print('selected trip price => ${((sort[selectedFlights[selectedTripListIndex.value]]
+                    .totalPriceList
+                    ?.length ??
+                1) -
+            1 <
+        selectedTicketPrices[selectedTripListIndex.value])}');
+    if (((sort[selectedFlights[selectedTripListIndex.value]]
+                    .totalPriceList
+                    ?.length ??
+                1) -
+            1 <
+        selectedTicketPrices[selectedTripListIndex.value])) {
+      print(
+          'sort total price list length lesser than selected trip list lenghth');
+      selectedTicketPrices[selectedTripListIndex.value] =
+          (sort[selectedFlights[selectedTripListIndex.value]]
+                  .totalPriceList
+                  ?.length ??
+              1)-1;
     }
     searchList[index].value = sort.obs;
     update();

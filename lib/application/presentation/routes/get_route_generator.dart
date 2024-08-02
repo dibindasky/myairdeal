@@ -23,7 +23,6 @@ import 'package:myairdeal/application/presentation/screens/payment/sucess_screen
 import 'package:myairdeal/application/presentation/screens/refunds/refund_screen.dart';
 import 'package:myairdeal/application/presentation/screens/search/airport_search.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/review_detail.dart';
-import 'package:myairdeal/application/presentation/screens/seats/seats_selection.dart';
 import 'package:myairdeal/application/presentation/screens/splash/splash_screen.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/chat_page.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/tab.dart';
@@ -36,7 +35,6 @@ import 'package:myairdeal/domain/core/binding/nav_bar_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/notification_binding.dart';
 import 'package:myairdeal/domain/core/binding/payment_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/raice_ticket_binding.dart';
-import 'package:myairdeal/domain/core/binding/seat_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/talk_to_us_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/ticket_cancellation_binding.dart';
 import 'package:myairdeal/domain/core/binding/traveller_controller_binding.dart';
@@ -112,7 +110,6 @@ class GetXRouterConfig {
     ),
     GetPage(
       bindings: [
-        SeatBinding(),
         TravellerBinding(),
         PaymentBinding(),
       ],
@@ -153,11 +150,6 @@ class GetXRouterConfig {
       ],
       name: Routes.invoice,
       page: () => const ScreenInvoiceDetail(),
-    ),
-    GetPage(
-      binding: SeatBinding(),
-      name: Routes.seatSelection,
-      page: () => const ScreenSeatSelection(),
     ),
     GetPage(
       bindings: [PaymentBinding(), RaiceTicketBinding()],

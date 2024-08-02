@@ -106,8 +106,7 @@ class ReveiewTab extends StatelessWidget {
                                       controller.passengerDetails[travelrIndex]
                                                   ?.pN !=
                                               null
-                                          ? const Text(
-                                              'Nationality (Country code)  ',
+                                          ? const Text('Nationality  ',
                                               overflow: TextOverflow.ellipsis)
                                           : kEmpty
                                     ],
@@ -284,7 +283,7 @@ class ReveiewTab extends StatelessWidget {
                                                   const Text(':  '),
                                                   Expanded(
                                                       child: Text(
-                                                          '${controller.passengerDetails[travelrIndex]?.ssrSeatInfos?[seatIndex].desc}')),
+                                                          '${controller.passengerDetails[travelrIndex]?.ssrSeatInfos?[seatIndex].code}')),
                                                 ],
                                               )
                                             : kEmpty,

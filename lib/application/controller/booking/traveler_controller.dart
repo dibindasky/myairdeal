@@ -116,6 +116,10 @@ class TravellerController extends GetxController {
       for (var element in traveller?.ssrMealInfos ?? <SsrInfo>[]) {
         print(element.toString());
       }
+      print('seat');
+      for (var element in traveller?.ssrSeatInfos ?? <SsrInfo>[]) {
+        print(element.toString());
+      }
     }
     addOnsprice.value += ssrInfo.amount ?? 0;
     print('add on price => ${addOnsprice.value}');
@@ -348,23 +352,32 @@ class TravellerController extends GetxController {
 
   // select seats for each flights
   void selectSeat({required int passengerIndex, required SInfo seat}) {
+    print(seat.toJson());
     if (selectedSeats[selectedSeatFlightKey.value]!.any((element) =>
         element?.code == seat.code &&
         element?.key == selectedSeatFlightKey.value)) {
+      print('seat alredy there reomve it form list');
       final index = selectedSeats[selectedSeatFlightKey.value]!
           .lastIndexWhere((element) => element?.code == seat.code);
       selectedSeats[selectedSeatFlightKey.value]![index] = null;
       addOnsprice.value -= seat.amount ?? 0;
-    } else if (selectedSeats[selectedSeatFlightKey.value]!.contains('')) {
-      final index = selectedSeats[selectedSeatFlightKey.value]!.lastIndexWhere(
-          (element) =>
-              element?.code == seat.code &&
-              element?.key == selectedSeatFlightKey.value);
+    } else if (selectedSeats[selectedSeatFlightKey.value]!.contains(null)) {
+      print('add to list');
+      final index = selectedSeats[selectedSeatFlightKey.value]!
+          .lastIndexWhere((element) => element == null
+              // element?.code == seat.code &&
+              // element?.key == selectedSeatFlightKey.value
+              );
       selectedSeats[selectedSeatFlightKey.value]![index] = SsrInfo(
           key: selectedSeatFlightKey.value,
           code: seat.code,
           amount: seat.amount);
       addOnsprice.value += seat.amount ?? 0;
+    } else {
+      print('no conditions satisfys');
+    }
+    for (var e in selectedSeats[selectedSeatFlightKey.value] ?? <SsrInfo?>[]) {
+      print(e?.code);
     }
   }
 
@@ -410,6 +423,9 @@ class TravellerController extends GetxController {
               ];
             }
           }
+        }
+        for (var e in passengerDetails[i]?.ssrSeatInfos ?? <SsrInfo>[]) {
+          print(e.toJson());
         }
       }
     } else {

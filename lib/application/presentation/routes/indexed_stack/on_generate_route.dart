@@ -12,7 +12,6 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/review_detail.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/flight_Sort_page.dart';
 import 'package:myairdeal/application/presentation/screens/home/home_screen.dart';
-import 'package:myairdeal/application/presentation/screens/seats/seats_selection.dart';
 
 class RouteGenerator {
   Route onGenerateRoute(RouteSettings settings) {
@@ -44,8 +43,6 @@ class RouteGenerator {
       case Routes.notificationSetup:
         return MaterialPageRoute(
             builder: (ctx) => const ScreenNotificationSetup());
-      case Routes.seatSelection:
-        return MaterialPageRoute(builder: (ctx) => const ScreenSeatSelection());
       default:
         return _errorScreen();
     }

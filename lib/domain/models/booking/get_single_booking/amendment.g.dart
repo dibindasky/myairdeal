@@ -7,13 +7,14 @@ part of 'amendment.dart';
 // **************************************************************************
 
 Amendment _$AmendmentFromJson(Map<String, dynamic> json) => Amendment(
-      id: json['_id'] as String?,
+      id: json['id'] as String?,
       createdId: json['_id'] as String?,
       time:
           json['time'] == null ? null : DateTime.parse(json['time'] as String),
     );
 
 Map<String, dynamic> _$AmendmentToJson(Amendment instance) => <String, dynamic>{
-      '_id': instance.id,
+      'id': instance.id,
+      '_id': instance.createdId,
       'time': instance.time?.toIso8601String(),
     };

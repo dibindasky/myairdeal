@@ -53,12 +53,19 @@ class FlightInvoiceCard extends StatelessWidget {
                   style: textThinStyle1),
             ],
           ),
+          kHeight5,
           retrieveSingleBookingresponceModel != null &&
                   retrieveSingleBookingresponceModel?.amendment != null &&
                   retrieveSingleBookingresponceModel!.amendment!.isNotEmpty
               ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Amendment ID'),
+                    Text((retrieveSingleBookingresponceModel
+                                    ?.amendment?.length ??
+                                0) >
+                            1
+                        ? 'Amendment ID\'s'
+                        : 'Amendment ID'),
                     kWidth10,
                     const Text(':'),
                     kWidth5,
@@ -67,13 +74,11 @@ class FlightInvoiceCard extends StatelessWidget {
                         retrieveSingleBookingresponceModel?.amendment?.length ??
                             0,
                         (index) => Text(
-                          retrieveSingleBookingresponceModel
-                                  ?.amendment?[index].id
-                                  ?.trim() ??
-                              '--',
-                          style: textThinStyle1,
-                          maxLines: 2,
-                        ),
+                            retrieveSingleBookingresponceModel
+                                    ?.amendment?[index].id
+                                    ?.trim() ??
+                                '--',
+                            style: textThinStyle1),
                       ),
                     )
                   ],

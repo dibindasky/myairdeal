@@ -53,6 +53,12 @@ class AuthController extends GetxController {
   // Splash model
   RxString splashModelImage = ''.obs;
 
+  // Change login section to sign up
+  RxBool changeLogin = false.obs;
+  void changeLoginBool() async {
+    changeLogin.value = !changeLogin.value;
+  }
+
   @override
   void onInit() {
     super.onInit();

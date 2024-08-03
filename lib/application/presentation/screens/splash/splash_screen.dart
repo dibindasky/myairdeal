@@ -30,7 +30,7 @@ class ScreenSplash extends StatelessWidget {
         child: Obx(
           () {
             log('splash ${authController.splashModelImage.value}');
-            return authController.isLoading.value
+            return authController.splashImageLoading.value
                 ? const Center(
                     child: CircularProgressIndicator(color: kBlueLight))
                 : Center(

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "891202200982",
+    "project_id": "myairdeal-d764e",
+    "storage_bucket": "myairdeal-d764e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891202200982:android:87cee5e4ff7e091ea8e9b7",
+        "android_client_info": {
+          "package_name": "com.myairdealapp.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTJLrBnThWsqMoNPF7Ku_IHar3ucCIJpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,9 +38,7 @@ class BaggageAndMealsSelection extends StatelessWidget {
                       0,
                   // meals andd baggage selection for each passenger
                   (siIndex) => SelectionTileMealsAndBaggage(
-                    siIndex: siIndex,
-                    tripIndex: tripIndex,
-                  ),
+                      siIndex: siIndex, tripIndex: tripIndex),
                 ),
               ),
             ),
@@ -180,6 +179,11 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                             child: Text('Meals not applicable'),
                                           )
                                         : DropDownSsrInfo(
+                                            clearSelection: (ssrInfo) {
+                                              travellerController.clearMealInfo(
+                                                  ssrInfo ?? SsrInfo(),
+                                                  travellerIndex);
+                                            },
                                             value: (travellerController.passengerDetails[travellerIndex]?.ssrMealInfos ?? <SsrInfo>[]).any((meal) =>
                                                     meal.key ==
                                                     bookingController
@@ -259,6 +263,12 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                                 Text('Baggage not applicable'),
                                           )
                                         : DropDownSsrInfo(
+                                            clearSelection: (ssrInfo) {
+                                              travellerController
+                                                  .clearBaggagesInfo(
+                                                      ssrInfo ?? SsrInfo(),
+                                                      travellerIndex);
+                                            },
                                             value: (travellerController.passengerDetails[travellerIndex]?.ssrBaggageInfos ?? <SsrInfo>[]).any((baggage) =>
                                                     baggage.key ==
                                                     bookingController
@@ -326,17 +336,20 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
 }
 
 class DropDownSsrInfo extends StatefulWidget {
-  const DropDownSsrInfo(
-      {super.key,
-      required this.ssrList,
-      required this.hintText,
-      required this.value,
-      required this.onChanged});
+  const DropDownSsrInfo({
+    super.key,
+    required this.ssrList,
+    required this.hintText,
+    required this.value,
+    required this.onChanged,
+    required this.clearSelection,
+  });
 
   final List<SsrInfo?> ssrList;
   final String hintText;
   final Function(SsrInfo? ssrInfo) onChanged;
   final SsrInfo? value;
+  final Function(SsrInfo? ssrInfo) clearSelection;
 
   @override
   State<DropDownSsrInfo> createState() => _DropDownSsrInfoState();
@@ -355,15 +368,19 @@ class _DropDownSsrInfoState extends State<DropDownSsrInfo> {
     return DropdownButton<SsrInfo?>(
       underline: kEmpty,
       icon: Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: RotatedBox(
-          quarterTurns: 1,
-          child: Icon(
-            Icons.arrow_forward_ios_sharp,
-            size: 17.w,
-            color: kBluePrimary,
-          ),
-        ),
+        padding: EdgeInsets.only(right: 12.w, left: 10.w),
+        child: value != null
+            ? GestureDetector(
+                onTap: () {
+                  widget.clearSelection(value);
+                  value = null;
+                  setState(() {});
+                },
+                child: Icon(Icons.cancel, color: kRed, size: 18.w))
+            : RotatedBox(
+                quarterTurns: 1,
+                child: Icon(Icons.arrow_forward_ios_sharp, size: 15.w),
+              ),
       ),
       isDense: false,
       isExpanded: true,

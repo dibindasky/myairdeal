@@ -26,6 +26,14 @@ class StopsSortBottomSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          kHeight5,
+          Center(
+            child: Container(
+              width: 80.w,
+              height: 5.h,
+              decoration: BoxDecoration(color: kGrey, borderRadius: kRadius5),
+            ),
+          ),
           kHeight40,
           Text('Stops', style: textHeadStyle1),
           kHeight10,

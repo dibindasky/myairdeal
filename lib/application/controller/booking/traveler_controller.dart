@@ -98,6 +98,18 @@ class TravellerController extends GetxController {
     update();
   }
 
+  void clearMealInfo(SsrInfo ssrInfo, int index) {
+    TravellerInfo traveller = passengerDetails[index]!;
+    traveller.ssrMealInfos ??= <SsrInfo>[];
+    for (int i = 0; i < traveller.ssrMealInfos!.length; i++) {
+      if (traveller.ssrMealInfos![i].key == ssrInfo.key) {
+        addOnsprice.value -= ssrInfo.amount ?? 0;
+        traveller.ssrMealInfos!.removeAt(i);
+        break;
+      }
+    }
+  }
+
   /// add meals information to the passenger to the traveller in the given index
   void addMealsInfo(SsrInfo ssrInfo, int index) {
     TravellerInfo traveller = passengerDetails[index]!;
@@ -146,6 +158,18 @@ class TravellerController extends GetxController {
     }
     addOnsprice.value += ssrInfo.amount ?? 0;
     print('add on price => ${addOnsprice.value}');
+  }
+
+  void clearBaggagesInfo(SsrInfo ssrInfo, int index) {
+    TravellerInfo traveller = passengerDetails[index]!;
+    traveller.ssrBaggageInfos ??= <SsrInfo>[];
+    for (int i = 0; i < traveller.ssrBaggageInfos!.length; i++) {
+      if (traveller.ssrBaggageInfos![i].key == ssrInfo.key) {
+        addOnsprice.value -= ssrInfo.amount ?? 0;
+        traveller.ssrBaggageInfos!.removeAt(i);
+        break;
+      }
+    }
   }
 
   /// add seat information to the passenger to the traveller in the given index

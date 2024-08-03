@@ -22,26 +22,26 @@ class InnerContents extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              kHeight10,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    controller.reviewPriceLoading.value
-                        ? flightDetailIcon
-                        : flightDetailIcon,
-                    height: 20.h,
-                  ),
-                  kWidth5,
-                  Text(
-                      controller.reviewedDetail?.value.tripInfos?[0].sI?[0].fD
-                              ?.aI?.name ??
-                          '',
-                      style: textHeadStyle1),
-                ],
-              ),
-              kHeight10,
-              const DottedLines(height: 10),
+              // kHeight10,
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Image.asset(
+              //       controller.reviewPriceLoading.value
+              //           ? flightDetailIcon
+              //           : flightDetailIcon,
+              //       height: 20.h,
+              //     ),
+              //     kWidth5,
+              //     Text(
+              //         controller.reviewedDetail?.value.tripInfos?[0].sI?[0].fD
+              //                 ?.aI?.name ??
+              //             '',
+              //         style: textHeadStyle1),
+              //   ],
+              // ),
+              // kHeight10,
+              // const DottedLines(height: 10),
               Column(
                 children: List.generate(
                     controller.reviewedDetail?.value.tripInfos?.length ?? 0,
@@ -88,6 +88,8 @@ class InnerContents extends StatelessWidget {
                             ),
                           ),
                           NormalCenterItems(
+                            airline: model?.sI?[0].fD?.aI?.name ?? '',
+                            airlineCode: model?.sI?[0].fD?.aI?.code ?? '',
                             haveImage: false,
                             travelMinutes: DateFormating.getDifferenceOfDates(
                               model?.sI?[0].dt ?? '',

@@ -38,6 +38,14 @@ class _PriceSortBottomSheetState extends State<PriceSortBottomSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            kHeight5,
+            Center(
+              child: Container(
+                width: 80.w,
+                height: 5.h,
+                decoration: BoxDecoration(color: kGrey, borderRadius: kRadius5),
+              ),
+            ),
             kHeight40,
             Text('Price', style: textHeadStyle1),
             kHeight10,
@@ -47,8 +55,7 @@ class _PriceSortBottomSheetState extends State<PriceSortBottomSheet> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Max Price',
-                        style: textStyle1),
+                    Text('Max Price', style: textStyle1),
                     Text(
                         '₹ ${(controller.sortingVariablesSelected[controller.selectedTripListIndex.value]![3].isEmpty ? controller.sortingVariables[controller.selectedTripListIndex.value]![3].last : controller.sortingVariablesSelected[controller.selectedTripListIndex.value]![3].first).round()}',
                         style: textThinStyle1.copyWith(color: kGreyDark)),

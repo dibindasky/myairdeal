@@ -88,7 +88,7 @@ class FareRulesScreen extends StatelessWidget {
                           title: controller
                                       .fareRuleSection.value.tfr?.datechange !=
                                   null
-                              ? 'DATECHANGE'
+                              ? 'DATE CHANGE'
                               : '',
                           content: 'Policy Info',
                           subTiitle: controller.fareRuleSection.value.tfr
@@ -193,28 +193,27 @@ class FareRulesScreen extends StatelessWidget {
       children: [
         title != null && title != '' ? Text(title, style: textStyle1) : kEmpty,
         title != null && title != '' ? kHeight5 : kEmpty,
-        content != null || subTiitle != null && subTiitle != ''
+        (content != null && content != '') &&
+                subTiitle != null &&
+                subTiitle != ''
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    content ?? 'N/A',
+                    content,
                     style: textThinStyle1.copyWith(
                         fontSize: 13.sp, fontWeight: FontWeight.w700),
                     maxLines: 4,
                   ),
                   kWidth20,
                   Expanded(
-                    child: Text(subTiitle ?? 'N/A',
-                        style: textThinStyle1, maxLines: 4),
+                    child: Text(subTiitle, style: textThinStyle1, maxLines: 4),
                   ),
                 ],
               )
             : kEmpty,
-        subTiitle != null &&
-                subTiitle != '' &&
-                (title != null && title != '') &&
+        (title != null && title != '') &&
                 amountSecond != null &&
                 amountSecond != 'null' &&
                 amountSecond != ''

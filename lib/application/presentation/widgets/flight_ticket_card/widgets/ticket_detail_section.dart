@@ -8,6 +8,7 @@ import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/wi
 import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_responce.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/item_infos.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 
 class TicketDetailsSection extends StatelessWidget {
   const TicketDetailsSection({
@@ -66,11 +67,8 @@ class TicketDetailsSection extends StatelessWidget {
               searchAirlineInformation != null
                   ? NormalCenterItems(
                       airlineCode: airlineCode,
-                      travelMinutes: DateFormating.getDifferenceOfDates(
-                          searchAirlineInformation!.sI![0].dt!,
-                          searchAirlineInformation!
-                              .sI![searchAirlineInformation!.sI!.length - 1]
-                              .at!),
+                      travelMinutes: DateFormating.getDurationOfFlights(
+                          si: searchAirlineInformation?.sI ?? <SI>[]),
                       airline: searchAirlineInformation!.sI![0].fD!.aI!.name,
                       stops: searchAirlineInformation!.sI!.length - 1,
                     )

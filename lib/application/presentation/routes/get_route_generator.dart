@@ -5,7 +5,6 @@ import 'package:myairdeal/application/presentation/screens/account/notification_
 import 'package:myairdeal/application/presentation/screens/account/secuurity_screen.dart';
 import 'package:myairdeal/application/presentation/screens/account/widgets/edit_profile.dart';
 import 'package:myairdeal/application/presentation/screens/auth/goto_home_screen.dart';
-import 'package:myairdeal/application/presentation/screens/auth/sign_in/sign_in.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/al_most_done.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_screen.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_screen.dart';
@@ -67,10 +66,6 @@ class GetXRouterConfig {
       binding: AuthBinding(),
       name: Routes.otp,
       page: () => const ScreenOTP(),
-    ),
-    GetPage(
-      name: Routes.signIn,
-      page: () => const ScreenSignIn(),
     ),
     GetPage(
       name: Routes.alMostDone,

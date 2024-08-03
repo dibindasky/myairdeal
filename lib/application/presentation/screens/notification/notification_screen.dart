@@ -136,12 +136,14 @@ class _ScreenNotificationState extends State<ScreenNotification> {
                           notificationController.notificationList?[index];
                       return GestureDetector(
                         onTap: () {
-                          Get.find<BookingController>().getSingleBooking(
-                            retrieveSingleBookingRequestModel:
-                                RetrieveSingleBookingRequestModel(
-                                    bookingId: notification?.bookingID ?? ''),
-                          );
-                          Get.toNamed(Routes.invoice);
+                          if (notification?.bookingID != null) {
+                            Get.find<BookingController>().getSingleBooking(
+                              retrieveSingleBookingRequestModel:
+                                  RetrieveSingleBookingRequestModel(
+                                      bookingId: notification?.bookingID ?? ''),
+                            );
+                            Get.toNamed(Routes.invoice);
+                          }
                         },
                         child: Container(
                           width: double.infinity,

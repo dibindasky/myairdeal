@@ -22,7 +22,7 @@ class _ScreenOTPState extends State<ScreenOTP> {
 
   bool _canResend = false;
 
-  Color resendButtonColor = Colors.grey;
+  Color resendButtonColor = kGrey;
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _ScreenOTPState extends State<ScreenOTP> {
   }
 
   void startCountdown() {
-    _timer = Timer(const Duration(seconds: 30), () {
+    _timer = Timer(const Duration(seconds: 60), () {
       setState(() {
         _canResend = true;
         resendButtonColor = kBlack;
@@ -48,7 +48,7 @@ class _ScreenOTPState extends State<ScreenOTP> {
   void _startResendCooldown() {
     setState(() {
       _canResend = false;
-      resendButtonColor = Colors.grey;
+      resendButtonColor = kGrey;
     });
     startCountdown();
   }
@@ -64,6 +64,9 @@ class _ScreenOTPState extends State<ScreenOTP> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ListView(
               children: [
+                kHeight50,
+                kHeight20,
+                Image.asset(myAirDealLogo, height: 150.w),
                 kHeight40,
                 Text(
                   'OTP Verification',
@@ -77,9 +80,7 @@ class _ScreenOTPState extends State<ScreenOTP> {
                   'Enter the verification code we just send to your number +91 ${loginController.loginNumber.text}.',
                   style: textThinStyle1.copyWith(color: kGrey),
                 ),
-                kHeight50,
-                kHeight30,
-                kHeight50,
+                kHeight20,
                 GetBuilder<AuthController>(builder: (controller) {
                   if (controller.isLoading.value) {
                     return const Center(
@@ -88,11 +89,13 @@ class _ScreenOTPState extends State<ScreenOTP> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text('Enter OTP'),
-                      kHeight15,
-                      kHeight10,
+                      Text('Enter OTP',
+                          style: textStyle1.copyWith(
+                              fontSize: 12.sp, fontWeight: FontWeight.w700)),
+
+                      kHeight5,
                       const Center(child: PinEnterField()),
-                      kHeight30,
+                      kHeight20,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

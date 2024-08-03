@@ -331,24 +331,24 @@ class _DetailContainerState extends State<DetailContainer> {
                                       kHeight5,
                                       GestureDetector(
                                         onTap: () async {
-                                          // final date = DateTime.now();
-                                          // final selectedDate =
-                                          //     await showDatePicker(
-                                          //   context: context,
-                                          //   firstDate: date.subtract(
-                                          //       const Duration(
-                                          //           days: 365 * 150)),
-                                          //   lastDate: date.subtract(
-                                          //       const Duration(days: 365 * 0)),
-                                          // );
-                                          // pIDController.text =
-                                          //     DateFormating.getDateApi(
-                                          //         selectedDate);
-                                          // setState(() {
-                                          //   selectedIssueDate =
-                                          //       selectedDate ?? DateTime.now();
-                                          // });
-                                          selectIssueDate(context);
+                                          final date = DateTime.now();
+                                          final selectedDate =
+                                              await showDatePicker(
+                                            context: context,
+                                            firstDate: date.subtract(
+                                                const Duration(
+                                                    days: 365 * 150)),
+                                            lastDate: date.subtract(
+                                                const Duration(days: 365 * 0)),
+                                          );
+                                          pIDController.text =
+                                              DateFormating.getDateApi(
+                                                  selectedDate);
+                                          setState(() {
+                                            selectedIssueDate =
+                                                selectedDate ?? DateTime.now();
+                                          });
+                                          //selectIssueDate(context);
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(

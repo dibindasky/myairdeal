@@ -18,8 +18,12 @@ import 'package:myairdeal/domain/models/booking/review_flight_detail_price/trip_
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/ticket_cancel_request_model.dart';
 import 'package:myairdeal/domain/models/fare_rule/fare_rule_request/fare_rule_request.dart';
+import 'package:myairdeal/domain/models/fare_rule/fare_rule_responce/cancellation.dart';
+import 'package:myairdeal/domain/models/fare_rule/fare_rule_responce/datechange.dart';
 import 'package:myairdeal/domain/models/fare_rule/fare_rule_responce/fare_rule_responce.dart';
 import 'package:myairdeal/domain/models/fare_rule/fare_rule_responce/fare_rule_section.dart';
+import 'package:myairdeal/domain/models/fare_rule/fare_rule_responce/no_show.dart';
+import 'package:myairdeal/domain/models/fare_rule/fare_rule_responce/seat_chargeable.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
@@ -90,13 +94,27 @@ class BookingController extends GetxController {
       (r) {
         FareRuleSection? ruleSection = FareRuleSection();
         fareRuleKeysList.value = r.fareRule?.keys.toList() ?? <String>[];
-
         for (var element in fareRuleKeysList) {
           ruleSection = FareRuleSection.fromJson(
               r.fareRule?[element] ?? <String, dynamic>{});
         }
         fareRuleSection.value = ruleSection ?? FareRuleSection();
-        log('${fareRuleSection.value.tfr?.toJson()}');
+        //log('noShow ${fareRuleSection.value.tfr?.noShow?.toList()}');
+        for (var element in fareRuleSection.value.tfr?.noShow ?? <NoShow>[]) {
+          log('No show ${element.et}');
+        }
+        for (var element
+            in fareRuleSection.value.tfr?.cancellation ?? <Cancellation>[]) {
+          log('No Cancellation ${element.et}');
+        }
+        for (var element
+            in fareRuleSection.value.tfr?.datechange ?? <Datechange>[]) {
+          log('No Datechange ${element.et}');
+        }
+        for (var element in fareRuleSection.value.tfr?.seatChargeable ??
+            <SeatChargeable>[]) {
+          log('No SeatChargeable ${element.et}');
+        }
         Get.toNamed(Routes.fareRule);
       },
     );

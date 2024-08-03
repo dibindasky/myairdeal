@@ -15,17 +15,17 @@ class ScreenSplash extends StatefulWidget {
 }
 
 class _ScreenSplashState extends State<ScreenSplash> {
-  NotificationServices notificationServices = NotificationServices();
+  // NotificationServices notificationServices = NotificationServices();
 
-  @override
-  void initState() {
-    super.initState();
-    notificationServices.requestNotificationPermission();
-    notificationServices.forgroundMessage();
-    notificationServices.firebaseInit(context);
-    notificationServices.setupInteractMessage(context);
-    notificationServices.isTokenRefresh();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   notificationServices.requestNotificationPermission();
+  //   notificationServices.forgroundMessage();
+  //   notificationServices.firebaseInit(context);
+  //   notificationServices.setupInteractMessage(context);
+  //   notificationServices.isTokenRefresh();
+  // }
 
   @override
   Widget build(BuildContext context) {

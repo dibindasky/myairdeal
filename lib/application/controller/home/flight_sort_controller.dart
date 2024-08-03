@@ -807,33 +807,28 @@ class FlightSortController extends GetxController {
         }
       }
     }
-    print(
-        'before length check ${sort.length - 1} < ${selectedFlights[selectedTripListIndex.value]}');
     // set selected tile as the last one if the sorting item dosent have the previous length
     if ((sort.length - 1) < selectedFlights[selectedTripListIndex.value]) {
-      print('sort length lesser than selected list');
-      selectedFlights[selectedTripListIndex.value] = sort.length - 1;
+      selectedFlights[selectedTripListIndex.value] =
+          sort.isEmpty ? 0 : sort.length - 1;
     }
     // set the selected trip index as the max available length
-    print('selected trip price => ${((sort[selectedFlights[selectedTripListIndex.value]]
-                    .totalPriceList
-                    ?.length ??
-                1) -
-            1 <
-        selectedTicketPrices[selectedTripListIndex.value])}');
-    if (((sort[selectedFlights[selectedTripListIndex.value]]
+    if (sort.isEmpty) {
+      selectedTicketPrices[selectedTripListIndex.value] = 0;
+    } else if (((sort[selectedFlights[selectedTripListIndex.value]]
                     .totalPriceList
                     ?.length ??
                 1) -
             1 <
         selectedTicketPrices[selectedTripListIndex.value])) {
-      print(
-          'sort total price list length lesser than selected trip list lenghth');
-      selectedTicketPrices[selectedTripListIndex.value] =
+      final int ticketprice =
           (sort[selectedFlights[selectedTripListIndex.value]]
-                  .totalPriceList
-                  ?.length ??
-              1)-1;
+                      .totalPriceList
+                      ?.length ??
+                  1) -
+              1;
+      selectedTicketPrices[selectedTripListIndex.value] =
+          ticketprice < 0 ? 0 : ticketprice;
     }
     searchList[index].value = sort.obs;
     update();
@@ -1100,6 +1095,22 @@ class FlightSortController extends GetxController {
 
   // add a stop for sorting if it is alredy added remove it form the list
   void selectStops(int value) {
+    if (sortingVariablesSelected[selectedTripListIndex.value]![2].isNotEmpty &&
+        (sortingVariablesSelected[selectedTripListIndex.value]![2].last !=
+            sortingVariables[selectedTripListIndex.value]![2].last)) {
+      if (!Get.isSnackbarOpen) {
+        Get.rawSnackbar(
+            backgroundColor: kGreyDark,
+            // duration: const Duration(milliseconds: 300),
+            forwardAnimationCurve: Curves.bounceIn,
+            margin: EdgeInsets.only(bottom: 20.h),
+            messageText: Text(
+              'Try differnt combination filter',
+              style: textStyle1.copyWith(color: kWhite),
+            ));
+      }
+      return;
+    }
     if (sortingVariablesSelected[selectedTripListIndex.value]![1]
         .contains(value)) {
       sortingVariablesSelected[selectedTripListIndex.value]![1].remove(value);

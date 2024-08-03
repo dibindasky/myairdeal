@@ -12,6 +12,7 @@ import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/wi
 import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_responce.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_bookingresponce_model/item_infos.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 
 class FlightTicketCard extends StatelessWidget {
   const FlightTicketCard({
@@ -124,17 +125,10 @@ class FlightTicketCard extends StatelessWidget {
                                                 ?.name ??
                                             '',
                                         number: '',
-                                        date: DateFormating.getDifferenceOfDates(
-                                            (tripInfos?[tripIndex].sI?[0].dt ??
-                                                ''),
-                                            (tripInfos?[tripIndex]
-                                                    .sI?[(tripInfos[tripIndex]
-                                                                .sI
-                                                                ?.length ??
-                                                            1) -
-                                                        1]
-                                                    .at ??
-                                                '')),
+                                        date:
+                                            DateFormating.getDurationOfFlights(
+                                                si: tripInfos?[tripIndex].sI ??
+                                                    <SI>[]),
                                       ),
                                       CardSideItems(
                                         crossAxisAlignment:

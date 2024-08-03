@@ -40,25 +40,40 @@ class AirlinesBottomSheet extends StatelessWidget {
             kHeight40,
             Text('Airlines', style: textHeadStyle1),
             kHeight10,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Select All', style: textStyle1),
-                Checkbox(
-                  value: controller
-                          .sortingVariables[
-                              controller.selectedTripListIndex.value]![0]
-                          .length ==
-                      controller
-                          .sortingVariablesSelected[
-                              controller.selectedTripListIndex.value]![0]
-                          .length,
-                  onChanged: (value) {
-                    controller.selectAllAirline(value ?? false);
-                  },
-                  activeColor: kBluePrimary,
-                )
-              ],
+            GestureDetector(
+              onTap: () {
+                controller.selectAllAirline(controller
+                        .sortingVariables[
+                            controller.selectedTripListIndex.value]![0]
+                        .length !=
+                    controller
+                        .sortingVariablesSelected[
+                            controller.selectedTripListIndex.value]![0]
+                        .length);
+              },
+              child: Container(
+                color: kWhite,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Select All', style: textStyle1),
+                    Checkbox(
+                      value: controller
+                              .sortingVariables[
+                                  controller.selectedTripListIndex.value]![0]
+                              .length ==
+                          controller
+                              .sortingVariablesSelected[
+                                  controller.selectedTripListIndex.value]![0]
+                              .length,
+                      onChanged: (value) {
+                        controller.selectAllAirline(value ?? false);
+                      },
+                      activeColor: kBluePrimary,
+                    )
+                  ],
+                ),
+              ),
             ),
             const Divider(color: kGrey),
             Expanded(

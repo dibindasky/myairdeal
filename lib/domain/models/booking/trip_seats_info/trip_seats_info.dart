@@ -9,8 +9,9 @@ part 'trip_seats_info.g.dart';
 class TripSeatsInfo {
   SData? sData;
   List<SInfo>? sInfo;
+  String? nt;
 
-  TripSeatsInfo({this.sData, this.sInfo});
+  TripSeatsInfo({this.sData, this.sInfo, this.nt});
 
   factory TripSeatsInfo.fromJson(Map<String, dynamic> json) {
     return _$TripSeatsInfoFromJson(json);
@@ -21,10 +22,12 @@ class TripSeatsInfo {
   TripSeatsInfo copyWith({
     SData? sData,
     List<SInfo>? sInfo,
+    String? nt,
   }) {
     return TripSeatsInfo(
       sData: sData ?? this.sData,
       sInfo: sInfo ?? this.sInfo,
+      nt: nt ?? this.nt,
     );
   }
 }

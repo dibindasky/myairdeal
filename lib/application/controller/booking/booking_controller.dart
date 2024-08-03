@@ -235,6 +235,7 @@ class BookingController extends GetxController {
   // review price details before going to the booking section
   void reviewPriceDetailChecking(
       {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
+    print('price id for search ${reviewPriceDetailIdModel.priceIds}');
     endTimer();
     bool start = false;
     Get.toNamed(Routes.flightDetailFillling);

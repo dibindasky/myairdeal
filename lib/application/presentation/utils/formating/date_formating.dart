@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 
 class DateFormating {
 // will return date as String type
@@ -100,6 +101,41 @@ class DateFormating {
         '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
 
     return formattedTime;
+  }
+
+  static String getDurationOfFlights({required List<SI> si}) {
+    int minute = 0;
+    for (int i = 0; i < si.length; i++) {
+      minute += si[i].duration ?? 0;
+      if (i < (si.length - 1)) {
+        minute += getDifferenceInMinutes(si[i].at ?? '', si[i + 1].dt ?? '');
+      }
+    }
+    final duration = Duration(minutes: minute);
+    int days = duration.inDays;
+    int hours = duration.inHours % 24;
+    int minutes = duration.inMinutes % 60;
+
+    String formattedDifference = '';
+    if (days > 0) {
+      formattedDifference += '$days day${days > 1 ? 's' : ''} ';
+    }
+    if (hours > 0) {
+      formattedDifference += '${hours.toString().padLeft(2, '0')}hr ';
+    }
+    if (minutes > 0) {
+      formattedDifference += '${minutes.toString().padLeft(2, '0')}m';
+    }
+    return formattedDifference.trim();
+  }
+
+  static int getDifferenceInMinutes(
+      String dateTimeString1, String dateTimeString2) {
+    DateTime dateTime1 = DateTime.parse(dateTimeString1);
+    DateTime dateTime2 = DateTime.parse(dateTimeString2);
+
+    Duration difference = dateTime2.difference(dateTime1);
+    return difference.inMinutes;
   }
 
   static String getDifferenceOfDates(

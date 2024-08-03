@@ -7,7 +7,8 @@ class SharedPreferecesStorage {
   static const String isLogged = 'is_loggedIn';
   static const String isOnBoarVisted = 'is_onboar_visted';
   static const String isProfileCreated = 'is_profile_visited';
-  static const String phoneKey = 'phone_key';
+  static const String phoneKey = 'phone';
+  static const String imageSplash = 'slash_image';
 
   static Future<void> saveToken({required TokenModel tokenModel}) async {
     log('save token =>() ${tokenModel.token}');
@@ -68,8 +69,20 @@ class SharedPreferecesStorage {
     return phone;
   }
 
+  static Future<void> setSplash({required String image}) async {
+    log('set splash image =>()');
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(imageSplash, image);
+  }
+
+  static Future<String?> getSplash() async {
+    final prefs = await SharedPreferences.getInstance();
+    final image = prefs.getString(imageSplash);
+    return image;
+  }
+
   static Future<void> setProfile(bool profile) async {
-    log('set setProfile =>()');
+    log('set setProfile => ');
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(isProfileCreated, profile);
   }

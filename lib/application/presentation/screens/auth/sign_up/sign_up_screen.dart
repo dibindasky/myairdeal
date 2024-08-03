@@ -41,8 +41,9 @@ class ScreenSignUp extends StatelessWidget {
                   hintText: 'Mobile Number',
                   onInputChanged: (PhoneNumber number) {
                     controller.updateMaxLength(number.isoCode ?? 'IN');
-                    controller.countryCode?.value = number.isoCode ?? '';
-                    controller.dialCode?.value = number.dialCode ?? '';
+                    controller.countryCode?.value = number.isoCode ?? 'IN';
+                    controller.dialCode?.value = number.dialCode ?? '+91';
+                    controller.countryName?.value = 'India';
                   },
                   selectorConfig: const SelectorConfig(
                     trailingSpace: false,
@@ -96,7 +97,7 @@ class ScreenSignUp extends StatelessWidget {
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Dont\t have an account?  '),
+                          const Text('Don\'t have an account?  '),
                           GestureDetector(
                             onTap: () {
                               controller.changeLoginBool();
@@ -148,23 +149,8 @@ class ScreenSignUp extends StatelessWidget {
                   );
                 }),
                 kHeight20,
-                // const Center(child: Text('OR')),
-                // const Center(child: Text('Or Sign Up With')),
                 kHeight10,
                 kHeight10,
-                // const LoginGoogleOrFaceBook(),
-
-                // EventIconButton(
-                //   prefixIcon: const Icon(
-                //     Icons.person_2_outlined,
-                //     color: kWhite,
-                //     size: 20,
-                //   ),
-                //   text: 'Login as Guest',
-                //   onTap: () {
-                //     Get.offNamed(Routes.bottomBar);
-                //   },
-                // ),
                 kHeight10,
               ],
             ),

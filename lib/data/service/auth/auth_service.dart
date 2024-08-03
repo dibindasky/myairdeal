@@ -36,7 +36,7 @@ class AuthService extends AuthRepo {
   Future<Either<Failure, SuccessResponceModel>> sendSMS(
       {required LoginModel loginModel}) async {
     try {
-      log('OTP data ${loginModel.toJson()}');
+      log('OTP data ${loginModel.country?.toJson()}');
       final responce = await apiService.post(
         ApiEndPoints.sendOTP,
         data: loginModel.toJson(),

@@ -1,14 +1,57 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
+import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/count_down.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/pinput_feild.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 
-class ScreenOTP extends StatelessWidget {
+class ScreenOTP extends StatefulWidget {
   const ScreenOTP({super.key});
+
+  @override
+  State<ScreenOTP> createState() => _ScreenOTPState();
+}
+
+class _ScreenOTPState extends State<ScreenOTP> {
+  late Timer _timer;
+
+  bool _canResend = false;
+
+  Color resendButtonColor = Colors.grey;
+
+  @override
+  void initState() {
+    super.initState();
+    startCountdown();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  void startCountdown() {
+    _timer = Timer(const Duration(seconds: 30), () {
+      setState(() {
+        _canResend = true;
+        resendButtonColor = kBlack;
+      });
+    });
+  }
+
+  void _startResendCooldown() {
+    setState(() {
+      _canResend = false;
+      resendButtonColor = Colors.grey;
+    });
+    startCountdown();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +83,7 @@ class ScreenOTP extends StatelessWidget {
                 GetBuilder<AuthController>(builder: (controller) {
                   if (controller.isLoading.value) {
                     return const Center(
-                      child: CircularProgressIndicator(
-                        color: kBluePrimary,
-                      ),
-                    );
+                        child: CircularProgressIndicator(color: kBluePrimary));
                   }
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,6 +93,35 @@ class ScreenOTP extends StatelessWidget {
                       kHeight10,
                       const Center(child: PinEnterField()),
                       kHeight30,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("I didn't receive any OTP. ",
+                              style: textThinStyle1),
+                          TextButton(
+                            onPressed: _canResend
+                                ? () {
+                                    _startResendCooldown();
+                                    Get.find<AuthController>().sendSMS();
+                                  }
+                                : null,
+                            child: Text(
+                              'RESEND',
+                              style: textThinStyle1.copyWith(
+                                  color: resendButtonColor),
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (!_canResend)
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Please wait for '),
+                            CountdownTimer(duration: Duration(seconds: 60)),
+                            Text(' before resending OTP')
+                          ],
+                        ),
                       kHeight50,
                       EventIconButton(
                         suffixIcon: controller.otpNumber.text.length >=

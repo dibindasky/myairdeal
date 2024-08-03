@@ -22,7 +22,7 @@ import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 
 class AuthController extends GetxController {
   AuthRepo authRepo = AuthService();
-  RxBool isLoading = false.obs;
+  RxBool isLoading = true.obs;
   bool hasError = false;
   RxBool loginOrNot = false.obs;
 
@@ -94,22 +94,25 @@ class AuthController extends GetxController {
   }
 
   void getSplash() async {
-    isLoading.value = true;
-    hasError = false;
     final data = await authRepo.getSplash();
     data.fold(
-      (l) {
-        isLoading.value = false;
-        hasError = true;
-      },
-      (r) {
+      (l) => null,
+      (r) async {
         String image = r.base64String ?? '';
+        if (image == '') return;
         image = image.startsWith('data') ? image.substring(22) : image;
-        splashModelImage.value = image;
-        isLoading.value = false;
-        hasError = false;
+        await SharedPreferecesStorage.setSplash(image: image);
       },
     );
+  }
+
+  void getSplashImageFromStorage() async {
+    isLoading.value == true;
+    splashModelImage.value = await SharedPreferecesStorage.getSplash() ?? '';
+    isLoading.value == false;
+    Timer(const Duration(milliseconds: 1600), () {
+      whereToGo();
+    });
   }
 
   Future<void> whereToGo() async {
@@ -119,7 +122,7 @@ class AuthController extends GetxController {
     if (!onBoard) {
       Get.toNamed(Routes.onboard);
     } else if (!isLogin) {
-      Get.toNamed(Routes.signUp);
+      Get.toNamed(Routes.signIn);
     } else if (!profile) {
       Get.offAndToNamed(Routes.alMostDone);
     } else if (onBoard && isLogin) {
@@ -172,7 +175,6 @@ class AuthController extends GetxController {
     isLoading.value = true;
     hasError = false;
     update();
-    log(replaceWhiteSpace);
     final data = await authRepo.verifyOTP(
         otpVerifyModel: OtpVerifyModel(
       phone: replaceWhiteSpace,
@@ -184,7 +186,6 @@ class AuthController extends GetxController {
       update();
       Get.snackbar('Failed', 'OTP Verification Failed', backgroundColor: kRed);
     }, (r) async {
-      log('profile value ${r.profile}');
       loginOrNot.value = false;
       SharedPreferecesStorage.setProfile(r.profile ?? false);
       if (r.profile == null || r.profile == false) {
@@ -194,10 +195,8 @@ class AuthController extends GetxController {
       }
       SharedPreferecesStorage.saveToken(
           tokenModel: TokenModel(token: r.token ?? ''));
-
       isLoading.value = false;
       hasError = false;
-
       update();
       Get.snackbar('Success', 'OTP Verified Successfully',
           backgroundColor: kBluePrimary);
@@ -263,7 +262,6 @@ class AuthController extends GetxController {
         isLoading.value = false;
       },
       (r) {
-        log('${r.country?.toJson()}');
         updateEmailController.text = r.email ?? '';
         updateFirnameController.text = r.firstName ?? '';
         updateLastNameController.text = r.lastName ?? '';

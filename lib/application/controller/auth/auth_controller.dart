@@ -123,7 +123,7 @@ class AuthController extends GetxController {
     if (!onBoard) {
       Get.toNamed(Routes.onboard);
     } else if (!isLogin) {
-      Get.toNamed(Routes.signIn);
+      Get.toNamed(Routes.signUp);
     } else if (!profile) {
       Get.offAndToNamed(Routes.alMostDone);
     } else if (onBoard && isLogin) {

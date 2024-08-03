@@ -22,7 +22,8 @@ import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 
 class AuthController extends GetxController {
   AuthRepo authRepo = AuthService();
-  RxBool isLoading = true.obs;
+  RxBool isLoading = false.obs;
+  RxBool splashImageLoading = true.obs;
   bool hasError = false;
   RxBool loginOrNot = false.obs;
 
@@ -107,9 +108,9 @@ class AuthController extends GetxController {
   }
 
   void getSplashImageFromStorage() async {
-    isLoading.value == true;
+    splashImageLoading.value == true;
     splashModelImage.value = await SharedPreferecesStorage.getSplash() ?? '';
-    isLoading.value == false;
+    splashImageLoading.value == false;
     Timer(const Duration(milliseconds: 1600), () {
       whereToGo();
     });

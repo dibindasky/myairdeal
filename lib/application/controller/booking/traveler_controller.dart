@@ -328,9 +328,7 @@ class TravellerController extends GetxController {
   }
 
   // Get All passengers
-  void getAllPassengers(
-    String type,
-  ) async {
+  void getAllPassengers(String type, bool dobCheck) async {
     isLoading.value = true;
     final data = await _passengersRepo.getPassengers();
     allPassengers.value = [];
@@ -344,25 +342,35 @@ class TravellerController extends GetxController {
             Get.find<FlightSortController>().multiCityDepartureDate.first!;
 
         for (var passenger in r.passengers ?? <TravellerInfo>[]) {
-          final dob =
-              DateFormating.convertStringToDateTime(passenger.dob ?? '');
-          if (dob == null) continue;
+          if (dobCheck) {
+            final dob =
+                DateFormating.convertStringToDateTime(passenger.dob ?? '');
+            if (dob == null) continue;
 
-          final ageOnTravelDate = travelDate.difference(dob).inDays ~/ 365;
-          final fareType =
-              Get.find<FlightSortController>().passengerFareType.value;
+            final ageOnTravelDate = travelDate.difference(dob).inDays ~/ 365;
+            final fareType =
+                Get.find<FlightSortController>().passengerFareType.value;
 
-          if (type == 'ADULT' && passenger.ti != 'Master') {
-            if ((fareType == 2 && ageOnTravelDate >= 60) ||
-                (fareType != 2 && ageOnTravelDate >= 12)) {
-              temp.add(passenger);
+            if (type == 'ADULT' && passenger.ti != 'Master') {
+              if ((fareType == 2 && ageOnTravelDate >= 60) ||
+                  (fareType != 2 && ageOnTravelDate >= 12)) {
+                temp.add(passenger);
+              }
+            } else if (type == 'CHILD') {
+              if (ageOnTravelDate >= 2 && ageOnTravelDate < 12) {
+                temp.add(passenger);
+              }
+            } else if (type == 'INFANT') {
+              if (ageOnTravelDate < 2) {
+                temp.add(passenger);
+              }
             }
-          } else if (type == 'CHILD') {
-            if (ageOnTravelDate >= 2 && ageOnTravelDate < 12) {
+          } else {
+            if (type == 'ADULT' && passenger.ti != 'Master') {
               temp.add(passenger);
-            }
-          } else if (type == 'INFANT') {
-            if (ageOnTravelDate < 2) {
+            } else if (type == 'CHILD') {
+              temp.add(passenger);
+            } else if (type == 'INFANT') {
               temp.add(passenger);
             }
           }

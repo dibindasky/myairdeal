@@ -76,6 +76,11 @@ class ScreenSuccessPage extends StatelessWidget {
                                     kHeight50,
                                     const CircularProgressIndicator(
                                         color: kWhite),
+                                    kHeight15,
+                                    Text(
+                                        'please do not press back button or refresh',
+                                        style: textThinStyle1.copyWith(
+                                            color: kWhite))
                                   ],
                                 );
                               }
@@ -102,71 +107,78 @@ class ScreenSuccessPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Obx(() {
-                  if (controller.invoiceLoading.value) {
-                    return HorizontalShimmerSkeleton(
-                      itemCount: 1,
-                      scrollDirection: Axis.vertical,
-                      paddingHorizontal: 30.w,
-                      height: 300.h,
-                    );
-                  }
-                  return Column(
-                    children: [
-                      SizedBox(height: 150.h),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.h),
-                        child: FlightInvoiceCard(
-                          retrieveSingleBookingresponceModel: controller
-                              .retrieveSingleBookingresponceModel.value,
-                        ),
-                      ),
-                      kHeight20,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          EventButton(
-                            style: textStyle1.copyWith(
-                                fontSize: 13.sp, color: kWhite),
-                            text: 'Back To Home',
-                            onTap: () {
-                              controller.clearDataAfterBooking();
-                              Get.find<TravellerController>()
-                                  .clearDataAfterBooking();
-                              Get.find<FlightSortController>()
-                                  .clearDataAfterBooking();
-                              controller.getAllUpcomingBooking(true);
-                              Get.back();
-                            },
-                          ),
-                          EventButton(
-                            style: textStyle1.copyWith(
-                                fontSize: 13.sp, color: kWhite),
-                            text: 'Download Ticket',
-                            onTap: () {
-                              controller.clearDataAfterBooking();
-                              Get.find<TravellerController>()
-                                  .clearDataAfterBooking();
-                              Get.find<FlightSortController>()
-                                  .clearDataAfterBooking();
-                              controller.getAllUpcomingBooking(true);
-                              Get.back();
-                              Get.find<RaiceTicketController>().ivoiceDownLoad(
-                                  bookingID: controller
-                                          .retrieveSingleBookingresponceModel
-                                          .value
-                                          .retrieveSingleBookingresponceModel
-                                          ?.order
-                                          ?.bookingId ??
-                                      '');
-                            },
-                          ),
-                        ],
-                      ),
-                      kHeight50,
-                    ],
-                  );
-                }),
+                controller.bookingCompleteLoading.value
+                    ? kEmpty
+                    : Obx(() {
+                        if (controller.invoiceLoading.value) {
+                          return Column(
+                            children: [
+                              SizedBox(height: 150.h),
+                              HorizontalShimmerSkeleton(
+                                itemCount: 1,
+                                scrollDirection: Axis.vertical,
+                                paddingHorizontal: 30.w,
+                                height: 300.h,
+                              ),
+                            ],
+                          );
+                        }
+                        return Column(
+                          children: [
+                            SizedBox(height: 150.h),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.h),
+                              child: FlightInvoiceCard(
+                                retrieveSingleBookingresponceModel: controller
+                                    .retrieveSingleBookingresponceModel.value,
+                              ),
+                            ),
+                            kHeight20,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                EventButton(
+                                  style: textStyle1.copyWith(
+                                      fontSize: 13.sp, color: kWhite),
+                                  text: 'Back To Home',
+                                  onTap: () {
+                                    controller.clearDataAfterBooking();
+                                    Get.find<TravellerController>()
+                                        .clearDataAfterBooking();
+                                    Get.find<FlightSortController>()
+                                        .clearDataAfterBooking();
+                                    controller.getAllUpcomingBooking(true);
+                                    Get.back();
+                                  },
+                                ),
+                                EventButton(
+                                  style: textStyle1.copyWith(
+                                      fontSize: 13.sp, color: kWhite),
+                                  text: 'Download Ticket',
+                                  onTap: () {
+                                    controller.clearDataAfterBooking();
+                                    Get.find<TravellerController>()
+                                        .clearDataAfterBooking();
+                                    Get.find<FlightSortController>()
+                                        .clearDataAfterBooking();
+                                    controller.getAllUpcomingBooking(true);
+                                    Get.back();
+                                    Get.find<RaiceTicketController>().ivoiceDownLoad(
+                                        bookingID: controller
+                                                .retrieveSingleBookingresponceModel
+                                                .value
+                                                .retrieveSingleBookingresponceModel
+                                                ?.order
+                                                ?.bookingId ??
+                                            '');
+                                  },
+                                ),
+                              ],
+                            ),
+                            kHeight50,
+                          ],
+                        );
+                      }),
               ],
             ),
           ],

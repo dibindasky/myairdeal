@@ -112,6 +112,8 @@ String myOnbaordOne = 'asset/image/my_air_deal_one.png';
 String myOnboardTwo = 'asset/image/my_air_deal_two.png';
 String myOnbaordThree = 'asset/image/my_air_deal_three.png';
 
+const imageRazorpay ='asset/dev/razorpay.png';
+
 String getAirlineLogo(String code) {
   return ApiEndPoints.baseUrl +
       ApiEndPoints.airllineLogo.replaceFirst('{airlinecode}', code);

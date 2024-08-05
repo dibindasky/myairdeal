@@ -52,152 +52,232 @@ class PaymentTab extends StatelessWidget {
                           color: kBluePrimary,
                         ),
                       )
-                    : Align(
-                        child: EventButton(
-                            text: 'Confirm Booking',
-                            onTap: () {
-                              final bookingController =
-                                  Get.find<BookingController>();
-                              final travellerController =
-                                  Get.find<TravellerController>();
-                              List<TravellerInfo> travellerInfos = [];
-                              for (int i = 0;
-                                  i < travellerController.passengerLength.value;
-                                  i++) {
-                                travellerInfos.add(
-                                    travellerController.passengerDetails[i]!);
-                              }
-                              // bookingController.completeBooking();
-                              final bookTicketModel = BookTicketModel(
-                                searchQuery: bookingController
-                                    .reviewedDetail?.value.searchQuery,
-                                booking: Booking(
-                                    bookingId: bookingController
-                                        .reviewedDetail?.value.bookingId,
-                                    paymentInfos: [
-                                      PaymentInfo(
-                                          amount: (bookingController
-                                                      .reviewedDetail
-                                                      ?.value
-                                                      .totalPriceInfo
-                                                      ?.totalFareDetail
-                                                      ?.fC
-                                                      ?.tf ??
-                                                  0) +
-                                              travellerController
-                                                  .addOnsprice.value)
-                                    ],
-                                    gstInfo: travellerController.gstInfo.value
-                                        .validateAndCleanDetails(),
-                                    travellerInfo: travellerInfos,
-                                    deliveryInfo: DeliveryInfo(contacts: [
-                                      travellerController.phoneController.text
-                                    ], emails: [
-                                      travellerController.emailController.text
-                                    ])),
-                              );
+                    : Container(
+                        decoration: BoxDecoration(
+                          boxShadow: boxShadow3,
+                          color: kWhite,
+                            borderRadius: kRadius15,
+                            border: Border.all(color: kGreyDark, width: 0.5)),
+                        child: ListTile(
+                          trailing: const Icon(Icons.radio_button_checked,
+                              color: kBluePrimary),
+                          leading: const CircleAvatar(
+                            backgroundImage: AssetImage(imageRazorpay),
+                          ),
+                          title: Text(
+                            'Razorpay',
+                            style: textStyle1,
+                          ),
+                          subtitle: Text(
+                            'Tap to pay using razorpay',
+                            style: textThinStyle1.copyWith(color: kBluePrimary),
+                          ),
+                          onTap: () {
+                            final bookingController =
+                                Get.find<BookingController>();
+                            final travellerController =
+                                Get.find<TravellerController>();
+                            List<TravellerInfo> travellerInfos = [];
+                            for (int i = 0;
+                                i < travellerController.passengerLength.value;
+                                i++) {
+                              travellerInfos.add(
+                                  travellerController.passengerDetails[i]!);
+                            }
+                            // bookingController.completeBooking();
+                            final bookTicketModel = BookTicketModel(
+                              searchQuery: bookingController
+                                  .reviewedDetail?.value.searchQuery,
+                              booking: Booking(
+                                  bookingId: bookingController
+                                      .reviewedDetail?.value.bookingId,
+                                  paymentInfos: [
+                                    PaymentInfo(
+                                        amount: (bookingController
+                                                    .reviewedDetail
+                                                    ?.value
+                                                    .totalPriceInfo
+                                                    ?.totalFareDetail
+                                                    ?.fC
+                                                    ?.tf ??
+                                                0) +
+                                            travellerController
+                                                .addOnsprice.value)
+                                  ],
+                                  gstInfo: travellerController.gstInfo.value
+                                      .validateAndCleanDetails(),
+                                  travellerInfo: travellerInfos,
+                                  deliveryInfo: DeliveryInfo(contacts: [
+                                    travellerController.phoneController.text
+                                  ], emails: [
+                                    travellerController.emailController.text
+                                  ])),
+                            );
 
-                              final RazorpayGateway razorpayGateway =
-                                  RazorpayGateway(context, bookTicketModel);
-                              razorpayGateway.makePayment(
-                                  amount: (bookingController
-                                              .reviewedDetail
-                                              ?.value
-                                              .totalPriceInfo
-                                              ?.totalFareDetail
-                                              ?.fC
-                                              ?.tf ??
-                                          1)
-                                      .toDouble(),
-                                  description: 'payment to MyAirDeal',
-                                  email: 'testemail@gmail.com',
-                                  phone: '+91 9876543210');
-                            },
-                            color: kBlueDark));
+                            final RazorpayGateway razorpayGateway =
+                                RazorpayGateway(context, bookTicketModel);
+                            razorpayGateway.makePayment(
+                                amount: (bookingController
+                                            .reviewedDetail
+                                            ?.value
+                                            .totalPriceInfo
+                                            ?.totalFareDetail
+                                            ?.fC
+                                            ?.tf ??
+                                        1)
+                                    .toDouble(),
+                                description: 'payment to MyAirDeal',
+                                email: 'testemail@gmail.com',
+                                phone: '+91 9876543210');
+                          },
+                        ),
+                      );
+                // Align(
+                //     child: EventButton(
+                //         text: 'Confirm Booking',
+                //         onTap: () {
+                //           final bookingController =
+                //               Get.find<BookingController>();
+                //           final travellerController =
+                //               Get.find<TravellerController>();
+                //           List<TravellerInfo> travellerInfos = [];
+                //           for (int i = 0;
+                //               i < travellerController.passengerLength.value;
+                //               i++) {
+                //             travellerInfos.add(
+                //                 travellerController.passengerDetails[i]!);
+                //           }
+                //           // bookingController.completeBooking();
+                //           final bookTicketModel = BookTicketModel(
+                //             searchQuery: bookingController
+                //                 .reviewedDetail?.value.searchQuery,
+                //             booking: Booking(
+                //                 bookingId: bookingController
+                //                     .reviewedDetail?.value.bookingId,
+                //                 paymentInfos: [
+                //                   PaymentInfo(
+                //                       amount: (bookingController
+                //                                   .reviewedDetail
+                //                                   ?.value
+                //                                   .totalPriceInfo
+                //                                   ?.totalFareDetail
+                //                                   ?.fC
+                //                                   ?.tf ??
+                //                               0) +
+                //                           travellerController
+                //                               .addOnsprice.value)
+                //                 ],
+                //                 gstInfo: travellerController.gstInfo.value
+                //                     .validateAndCleanDetails(),
+                //                 travellerInfo: travellerInfos,
+                //                 deliveryInfo: DeliveryInfo(contacts: [
+                //                   travellerController.phoneController.text
+                //                 ], emails: [
+                //                   travellerController.emailController.text
+                //                 ])),
+                //           );
+
+                //           final RazorpayGateway razorpayGateway =
+                //               RazorpayGateway(context, bookTicketModel);
+                //           razorpayGateway.makePayment(
+                //               amount: (bookingController
+                //                           .reviewedDetail
+                //                           ?.value
+                //                           .totalPriceInfo
+                //                           ?.totalFareDetail
+                //                           ?.fC
+                //                           ?.tf ??
+                //                       1)
+                //                   .toDouble(),
+                //               description: 'payment to MyAirDeal',
+                //               email: 'testemail@gmail.com',
+                //               phone: '+91 9876543210');
+                //         },
+                //         color: kBlueDark));
               }),
-              kHeight20,
-              Text(
-                'Digital payment method(s)',
-                style: textHeadStyle1,
-              ),
-              kHeight10,
+              // kHeight20,
               // Text(
-              //   'Swipe left to set your default method',
-              //   style: textThinStyle1.copyWith(color: kGreyDark),
+              //   'Digital payment method(s)',
+              //   style: textHeadStyle1,
               // ),
-              //kHeight15,
-              Obx(
-                () => Column(
-                  children: [
-                    ...List.generate(
-                      paymentController.itemMap.length,
-                      (index) {
-                        return Column(
-                          children: [
-                            PaymentMethodSelection(
-                              onTap: () =>
-                                  paymentController.changePaymentMethod(index),
-                              image: paymentController.itemMap[index]['image']!,
-                              title: paymentController.itemMap[index]['title']!,
-                              subtitle: paymentController.itemMap[index]
-                                  ['subtitle']!,
-                              isSelected: index ==
-                                  paymentController
-                                      .selectedPayementmethod.value,
-                            ),
-                            index != paymentController.itemMap.length - 1
-                                ? const Divider()
-                                : kEmpty
-                          ],
-                        );
-                      },
-                    )
-                  ],
-                ),
-              ),
-              kHeight10,
-              Text('Add methods', style: textHeadStyle1),
-              AddMethodCard(
-                icon: Icons.credit_card,
-                title: 'Credit or debit card',
-                subtitle: 'Visa, Mastercard, AMEX and JCB',
-              ),
-              AddMethodCard(
-                icon: Icons.account_balance,
-                title: 'Transfer',
-                subtitle:
-                    'Transferring via ATM, Internet Banking & Mobile Banking',
-              ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     const Column(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         Text(
-              //           'Subtotal',
-              //           style: TextStyle(fontSize: 16),
-              //         ),
-              //         Text(
-              //           '₹3500',
-              //           style: TextStyle(
-              //               fontSize: 16, fontWeight: FontWeight.bold),
-              //         ),
-              //       ],
-              //     ),
-              //     kWidth20,
-              //     Expanded(
-              //       child: EventIconButton(
-              //         suffixIcon: Image.asset(tickIcon, height: 13.h),
-              //         text: 'Proceed The Payment',
-              //         onTap: () {
-              //           Get.toNamed(Routes.paymentSucess);
+              // kHeight10,
+              // // Text(
+              // //   'Swipe left to set your default method',
+              // //   style: textThinStyle1.copyWith(color: kGreyDark),
+              // // ),
+              // //kHeight15,
+              // Obx(
+              //   () => Column(
+              //     children: [
+              //       ...List.generate(
+              //         paymentController.itemMap.length,
+              //         (index) {
+              //           return Column(
+              //             children: [
+              //               PaymentMethodSelection(
+              //                 onTap: () =>
+              //                     paymentController.changePaymentMethod(index),
+              //                 image: paymentController.itemMap[index]['image']!,
+              //                 title: paymentController.itemMap[index]['title']!,
+              //                 subtitle: paymentController.itemMap[index]
+              //                     ['subtitle']!,
+              //                 isSelected: index ==
+              //                     paymentController
+              //                         .selectedPayementmethod.value,
+              //               ),
+              //               index != paymentController.itemMap.length - 1
+              //                   ? const Divider()
+              //                   : kEmpty
+              //             ],
+              //           );
               //         },
-              //       ),
-              //     ),
-              //   ],
+              //       )
+              //     ],
+              //   ),
               // ),
-              kHeight20,
+              // kHeight10,
+              // Text('Add methods', style: textHeadStyle1),
+              // AddMethodCard(
+              //   icon: Icons.credit_card,
+              //   title: 'Credit or debit card',
+              //   subtitle: 'Visa, Mastercard, AMEX and JCB',
+              // ),
+              // AddMethodCard(
+              //   icon: Icons.account_balance,
+              //   title: 'Transfer',
+              //   subtitle:
+              //       'Transferring via ATM, Internet Banking & Mobile Banking',
+              // ),
+              // // Row(
+              // //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // //   children: [
+              // //     const Column(
+              // //       crossAxisAlignment: CrossAxisAlignment.start,
+              // //       children: [
+              // //         Text(
+              // //           'Subtotal',
+              // //           style: TextStyle(fontSize: 16),
+              // //         ),
+              // //         Text(
+              // //           '₹3500',
+              // //           style: TextStyle(
+              // //               fontSize: 16, fontWeight: FontWeight.bold),
+              // //         ),
+              // //       ],
+              // //     ),
+              // //     kWidth20,
+              // //     Expanded(
+              // //       child: EventIconButton(
+              // //         suffixIcon: Image.asset(tickIcon, height: 13.h),
+              // //         text: 'Proceed The Payment',
+              // //         onTap: () {
+              // //           Get.toNamed(Routes.paymentSucess);
+              // //         },
+              // //       ),
+              // //     ),
+              // //   ],
+              // // ),
+              // kHeight20,
             ],
           ),
         ),

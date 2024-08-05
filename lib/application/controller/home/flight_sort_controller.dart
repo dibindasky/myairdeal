@@ -365,10 +365,22 @@ class FlightSortController extends GetxController {
       selectedFlights.value = [0, 0];
       selectedTicketPrices.value = [0, 0];
     } else if (tripType.value == 2) {
-      selectedFlights.value =
-          List.generate(airportSelected.length, (index) => 0);
-      selectedTicketPrices.value =
-          List.generate(airportSelected.length, (index) => 0);
+      if (airportSelected.length == 2 &&
+          airportSelected[0][1] == airportSelected[1][0] &&
+          airportSelected[0][0] == airportSelected[1][1]) {
+        tripType.value = 1;
+        airportSelected[1].value = [
+          airportSelected[0][1],
+          airportSelected[0][0]
+        ];
+        selectedFlights.value = [0, 0];
+        selectedTicketPrices.value = [0, 0];
+      } else {
+        selectedFlights.value =
+            List.generate(airportSelected.length, (index) => 0);
+        selectedTicketPrices.value =
+            List.generate(airportSelected.length, (index) => 0);
+      }
     }
     FlightSearchQuery searchModel = FlightSearchQuery(
       cabinClass: classType.value,
@@ -477,10 +489,10 @@ class FlightSortController extends GetxController {
               List.generate(searchListMain.length, (x) => 0);
           selectedTicketPrices.value =
               List.generate(searchListMain.length, (x) => 0);
-          searchListforSpecialReturn =
-              List.generate(2, (x) => <SearchAirlineInformation>[]);
-          specialReturnFlights = List.generate(
-              2, (x) => <String, List<SearchAirlineInformation>>{});
+          searchListforSpecialReturn = List.generate(
+              searchListMain.length, (x) => <SearchAirlineInformation>[]);
+          specialReturnFlights = List.generate(searchListMain.length,
+              (x) => <String, List<SearchAirlineInformation>>{});
 
           /// add all items to the [searchList] to show in ui
           for (int i = 0; i < searchListMain.length; i++) {
@@ -516,7 +528,10 @@ class FlightSortController extends GetxController {
                         .where(
                             (price) => price.fareIdentifier != 'SPECIAL_RETURN')
                         .toList());
-                searchListforSpecialReturn[i].add(temp);
+                if (temp.totalPriceList != null &&
+                    temp.totalPriceList!.isNotEmpty) {
+                  searchListforSpecialReturn[i].add(temp);
+                }
               }
               searchList.add(RxList.from(searchListforSpecialReturn[i]));
               searchListMain[i] = searchListforSpecialReturn[i];
@@ -626,8 +641,9 @@ class FlightSortController extends GetxController {
       sortingVariables[i]![1].sort();
       sortingVariables[i]![2].sort();
       sortingVariables[i]![3].sort();
-      sortingVariablesSelected[i]![2] =
-          [(sortingVariables[i]![2].last ?? 1)].obs;
+      sortingVariablesSelected[i]![2] = sortingVariables[i]![2].isEmpty
+          ? [1].obs
+          : [(sortingVariables[i]![2].last ?? 1)].obs;
     }
     durationSlider.value =
         ((sortingVariablesSelected[0]?[2].last) ?? 1.0) * 1.0;

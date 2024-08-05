@@ -13,6 +13,7 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/ssr_info.dart';
+import 'package:myairdeal/domain/models/booking/review_flight_detail_price/trip_info.dart';
 
 class BaggageAndMealsSelection extends StatelessWidget {
   const BaggageAndMealsSelection({super.key});
@@ -93,15 +94,15 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                   searchController.infantCount.value,
               (travellerIndex) => CustomExpansionTile(
                     whileTap: (open) {
-                      if (open &&
-                          ((travellerController.passengerLength.value -
-                                      searchController.infantCount.value) >
-                                  1 ||
-                              (bookingController.reviewedDetail?.value
-                                              .tripInfos ??
-                                          [])
-                                      .length >
-                                  1)) {
+                      int count = 0;
+                      for (var e in (bookingController
+                              .reviewedDetail?.value.tripInfos ??
+                          <TripInfo>[])) {
+                        count += (e.sI ?? []).length *
+                            travellerController
+                                .passengerLengthWithoutInfant.value;
+                      }
+                      if (open && count > 3) {
                         Timer(
                           const Duration(milliseconds: 300),
                           () {

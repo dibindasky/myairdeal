@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_widgets/saved_detailcard.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 

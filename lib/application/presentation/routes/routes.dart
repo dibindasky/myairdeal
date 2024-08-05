@@ -1,8 +1,7 @@
 class Routes {
   static const String initial = '/';
   static const String onboard = '/onboard';
-  static const String signUp = '/signUp';
-  static const String signIn = '/sign_in';
+  static const String signUpSignIn = '/signUp';
   static const String otp = '/otp';
   static const String goToHomePage = '/go_to-home_page';
   static const String alMostDone = '/al_most_done';

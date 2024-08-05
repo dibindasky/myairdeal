@@ -65,6 +65,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
     showEye = widget.obscureText;
   }
 
+  EdgeInsets calculateContentPadding() {
+    if (widget.maxLines != null && widget.maxLines! > 1) {
+      return EdgeInsets.symmetric(horizontal: 15, vertical: 10.w);
+    }
+    return const EdgeInsets.symmetric(horizontal: 15);
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -88,7 +95,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         filled: true,
         enabledBorder: widget.enabledBorder,
         counter: const SizedBox.shrink(),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+        contentPadding: calculateContentPadding(),
         suffixIcon: widget.obscureText
             ? IconButton(
                 onPressed: () {

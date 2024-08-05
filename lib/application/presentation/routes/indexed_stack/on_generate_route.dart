@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/account/account_screen.dart';
-import 'package:myairdeal/application/presentation/screens/account/edit_profile.dart';
+import 'package:myairdeal/application/presentation/screens/account/profile.dart';
 import 'package:myairdeal/application/presentation/screens/account/notification_setup.dart';
 import 'package:myairdeal/application/presentation/screens/account/secuurity_screen.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/bookings_screen.dart';
@@ -31,7 +31,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (ctx) => const ScreenAccountPage());
 
       case Routes.profile:
-        return MaterialPageRoute(builder: (ctx) => const ScreenProfile());
+        return MaterialPageRoute(builder: (ctx) => ScreenProfile());
       case Routes.security:
         return MaterialPageRoute(builder: (ctx) => const ScreenSecurity());
       case Routes.bookings:

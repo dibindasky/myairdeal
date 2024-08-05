@@ -9,6 +9,7 @@ import 'package:myairdeal/application/controller/booking/booking_controller.dart
 import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/data/features/url_launcher.dart';
 
 class YouCouldAlso extends StatelessWidget {
   YouCouldAlso({super.key});
@@ -29,7 +30,7 @@ class YouCouldAlso extends StatelessWidget {
         kHeight5,
         Row(
           children: List.generate(
-            4,
+            3,
             (index) {
               List<IconData> icons = [
                 Iconsax.personalcard4,
@@ -56,6 +57,10 @@ class YouCouldAlso extends StatelessWidget {
                                           const Duration(milliseconds: 300),
                                       curve: Curves.bounceIn),
                             );
+                          }
+                          if (text[index] == 'Support') {
+                            OpenLauncherFeature.launchPhone(
+                                phone: '7061409421');
                           }
                           raiceController.changeSelectedYouCouldAlsoTab(index);
                         },

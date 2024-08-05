@@ -124,7 +124,7 @@ class AuthController extends GetxController {
     if (!onBoard) {
       Get.toNamed(Routes.onboard);
     } else if (!isLogin) {
-      Get.toNamed(Routes.signUp);
+      Get.toNamed(Routes.signUpSignIn);
     } else if (!profile) {
       Get.offAndToNamed(Routes.alMostDone);
     } else if (onBoard && isLogin) {
@@ -321,7 +321,7 @@ class AuthController extends GetxController {
 
   void logOut() async {
     Get.snackbar('Success', 'Logout Successful', backgroundColor: kBluePrimary);
-    Get.offAllNamed(Routes.signUp);
+    Get.offAllNamed(Routes.signUpSignIn);
     otpNumber.clear();
     loginOrNot.value = false;
     loginNumber.clear();

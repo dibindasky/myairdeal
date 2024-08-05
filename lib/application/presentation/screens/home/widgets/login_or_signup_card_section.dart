@@ -48,7 +48,7 @@ class LogInOrSignUpCard extends StatelessWidget {
           EventButton(
             text: 'Sign Up',
             onTap: () {
-              Get.toNamed(Routes.signUp);
+              Get.toNamed(Routes.signUpSignIn);
             },
             width: double.infinity,
           )

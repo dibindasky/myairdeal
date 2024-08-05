@@ -14,7 +14,6 @@ class ScreenProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AuthController>();
-
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.getUserInfo(true);
     });

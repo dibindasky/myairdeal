@@ -137,7 +137,7 @@ class EmailBox extends StatelessWidget {
           ListTile(
             leading: CircleAvatar(
               backgroundColor: kGreen,
-              child: Text(email.isNotEmpty ? email.substring(0, 1) : 'M',
+              child: Text(email.isNotEmpty ? email[0].toUpperCase() : 'M',
                   style: textThinStyle1),
             ),
             title: Text('Sender', style: textStyle1),
@@ -176,12 +176,8 @@ class EmailBox extends StatelessWidget {
           EventIconButton(
             width: 400.w,
             textColr: kBlack,
-            text: 'Reply',
+            text: 'Send',
             color: knill,
-            prefixIcon: Icon(
-              Icons.reply_sharp,
-              color: kBlack.withOpacity(.6),
-            ),
             border: Border.all(
               color: kBlack.withOpacity(.3),
             ),

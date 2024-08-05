@@ -203,7 +203,24 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                                     '');
                                           },
                                           text: 'Ticket Download',
-                                        )
+                                        ),
+                                  bookingController.selectedBookingTab.value !=
+                                              2 &&
+                                          bookingController.invoiceLoading.value
+                                      ? kEmpty
+                                      : QuickLinksContainer(
+                                          onTap: () {
+                                            raiceController.shareTicket(
+                                                bookingID: bookingController
+                                                        .retrieveSingleBookingresponceModel
+                                                        .value
+                                                        .retrieveSingleBookingresponceModel
+                                                        ?.order
+                                                        ?.bookingId ??
+                                                    '');
+                                          },
+                                          text: 'Ticket Sharing',
+                                        ),
                                 ],
                               ),
                         kHeight10,

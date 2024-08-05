@@ -129,6 +129,7 @@ class _ScreenNotificationState extends State<ScreenNotification> {
                   child: ListView.builder(
                     controller: scrollController,
                     itemCount: length,
+                    physics: const AlwaysScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {

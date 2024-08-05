@@ -145,9 +145,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
             return 'Passport Number should not be Empty';
           } else if (value.length < 8) {
             return 'Passport Number should be at least 8 letters.';
-          } else if (!isValidIndianPassportNumber(value)) {
-            return 'The first character must be an uppercase alphabet. The next two characters should be numbers, with the first character ranging from 1 to 9 and the second character from 0 to 9.';
-          } else {
+          }
+          // else if (!isValidIndianPassportNumber(value)) {
+          //   return 'The first character must be an uppercase alphabet. The next two characters should be numbers, with the first character ranging from 1 to 9 and the second character from 0 to 9.';
+          // }
+          else {
             return null;
           }
         } else if (widget.validate == Validate.notNull &&

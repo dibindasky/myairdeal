@@ -30,15 +30,15 @@ class YouCouldAlso extends StatelessWidget {
         kHeight5,
         Row(
           children: List.generate(
-            3,
+            4,
             (index) {
               List<IconData> icons = [
                 Iconsax.personalcard4,
-                Icons.mail_outline_outlined,
-                Icons.call,
+                Icons.report_problem_outlined,
+                Icons.mark_email_unread_outlined,
                 Icons.currency_rupee
               ];
-              List<String> text = ['Contact us', 'Mails', 'Support', 'Refund'];
+              List<String> text = ['Contact us', 'Reports', 'Email', 'Support'];
               return Expanded(
                 child: Row(
                   children: [

@@ -9,6 +9,7 @@ import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 
 class InnerContents extends StatelessWidget {
   const InnerContents({super.key});
@@ -91,10 +92,8 @@ class InnerContents extends StatelessWidget {
                             airline: model?.sI?[0].fD?.aI?.name ?? '',
                             airlineCode: model?.sI?[0].fD?.aI?.code ?? '',
                             haveImage: false,
-                            travelMinutes: DateFormating.getDifferenceOfDates(
-                              model?.sI?[0].dt ?? '',
-                              model?.sI?[(model.sI?.length ?? 1) - 1].at ?? '',
-                            ),
+                            travelMinutes: DateFormating.getDurationOfFlights(
+                                si: model?.sI ?? <SI>[]),
                             stops: (model?.sI?.length ?? 1) - 1,
                           ),
                           Expanded(

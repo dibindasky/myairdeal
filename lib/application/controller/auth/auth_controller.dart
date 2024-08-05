@@ -9,6 +9,7 @@ import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/validators/validators.dart';
+import 'package:myairdeal/data/firebase_configuration/firebase_notification.dart';
 import 'package:myairdeal/data/secure_storage/secure_storage.dart';
 import 'package:myairdeal/data/service/auth/auth_service.dart';
 import 'package:myairdeal/domain/models/auth/login_model/country.dart';
@@ -23,7 +24,6 @@ import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 class AuthController extends GetxController {
   AuthRepo authRepo = AuthService();
   RxBool isLoading = false.obs;
-  RxBool splashImageLoading = true.obs;
   bool hasError = false;
   RxBool loginOrNot = false.obs;
 
@@ -63,6 +63,7 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getSplashImageFromStorage();
     otpNumber.addListener(_checkOTPNumberLength);
     loginNumber.addListener(_checkPhoneNumberLength);
   }
@@ -108,11 +109,11 @@ class AuthController extends GetxController {
   }
 
   void getSplashImageFromStorage() async {
-    splashImageLoading.value == true;
     splashModelImage.value = await SharedPreferecesStorage.getSplash() ?? '';
-    splashImageLoading.value == false;
     Timer(const Duration(milliseconds: 1600), () {
       whereToGo();
+      // check for any update in splash image, if any change the image
+      getSplash();
     });
   }
 
@@ -176,11 +177,10 @@ class AuthController extends GetxController {
     isLoading.value = true;
     hasError = false;
     update();
+    final token = await NotificationServices().getDeviceToken();
     final data = await authRepo.verifyOTP(
         otpVerifyModel: OtpVerifyModel(
-      phone: replaceWhiteSpace,
-      otp: otpNumber.text,
-    ));
+            phone: replaceWhiteSpace, otp: otpNumber.text, deviceToken: token));
     data.fold((l) {
       isLoading.value = false;
       hasError = true;
@@ -205,6 +205,7 @@ class AuthController extends GetxController {
       Timer(const Duration(milliseconds: 50), () {
         loginOrNot.value = true;
       });
+      SharedPreferecesStorage.saveNotificatonToken(token: token);
     });
   }
 

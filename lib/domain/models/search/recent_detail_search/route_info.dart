@@ -22,4 +22,5 @@ class RouteInfo {
   }
 
   Map<String, dynamic> toJson() => _$RouteInfoToJson(this);
+
 }

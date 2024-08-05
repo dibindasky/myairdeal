@@ -10,10 +10,12 @@ OtpVerifyModel _$OtpVerifyModelFromJson(Map<String, dynamic> json) =>
     OtpVerifyModel(
       otp: json['otp'] as String?,
       phone: json['phone'] as String?,
+      deviceToken: json['deviceToken'] as String?,
     );
 
 Map<String, dynamic> _$OtpVerifyModelToJson(OtpVerifyModel instance) =>
     <String, dynamic>{
       'otp': instance.otp,
+      'deviceToken': instance.deviceToken,
       'phone': instance.phone,
     };

@@ -8,7 +8,8 @@ class SharedPreferecesStorage {
   static const String isOnBoarVisted = 'is_onboar_visted';
   static const String isProfileCreated = 'is_profile_visited';
   static const String phoneKey = 'phone';
-  static const String imageSplash = 'slash_image';
+  static const String notificationTokenKey = 'notificationToken';
+  static const String imageSplash = 'splash_image';
 
   static Future<void> saveToken({required TokenModel tokenModel}) async {
     log('save token =>() ${tokenModel.token}');
@@ -21,6 +22,19 @@ class SharedPreferecesStorage {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString(accessKey);
     return TokenModel(token: accessToken ?? '');
+  }
+
+  static Future<void> saveNotificatonToken({required String token}) async {
+    log('save noti token =>() $token');
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(notificationTokenKey, token);
+  }
+
+  static Future<String> getNotificationToken() async {
+    log('get noti token =>()');
+    final prefs = await SharedPreferences.getInstance();
+    final notiToken = prefs.getString(notificationTokenKey);
+    return notiToken??'';
   }
 
   static Future<void> setLogin() async {

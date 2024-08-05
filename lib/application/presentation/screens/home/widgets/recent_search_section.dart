@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
+import 'package:myairdeal/domain/models/search/recent_detail_search/search_query.dart';
 import '../../../../controller/home/home_controller.dart';
 
 class RecentSearchSection extends StatelessWidget {
@@ -52,6 +54,9 @@ class RecentSearchSection extends StatelessWidget {
                       .recentSearches[index].searchQuery?.routeInfos;
                   return GestureDetector(
                     onTap: () {
+                      Get.find<FlightSortController>().addResentSearchToForm(
+                          homeController.recentSearches[index].searchQuery ??
+                              SearchQuery());
                       Timer(
                         const Duration(milliseconds: 400),
                         () => homeController.homeScrollController.animateTo(

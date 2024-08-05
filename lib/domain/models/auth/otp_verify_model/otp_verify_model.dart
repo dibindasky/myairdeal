@@ -6,8 +6,9 @@ part 'otp_verify_model.g.dart';
 class OtpVerifyModel {
   String? otp;
   String? phone;
+  String? deviceToken;
 
-  OtpVerifyModel({this.otp, this.phone});
+  OtpVerifyModel({this.otp, this.phone, this.deviceToken});
 
   factory OtpVerifyModel.fromJson(Map<String, dynamic> json) {
     return _$OtpVerifyModelFromJson(json);

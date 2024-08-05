@@ -20,20 +20,16 @@ class _ScreenSplashState extends State<ScreenSplash> {
   @override
   void initState() {
     super.initState();
-    notificationServices.requestNotificationPermission();
-    notificationServices.forgroundMessage();
-    notificationServices.firebaseInit(context);
-    notificationServices.setupInteractMessage(context);
-    notificationServices.isTokenRefresh();
+    // notificationServices.requestNotificationPermission();
+    // notificationServices.forgroundMessage();
+    // notificationServices.firebaseInit(context);
+    // notificationServices.setupInteractMessage(context);
+    // notificationServices.isTokenRefresh();
   }
 
   @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      authController.getSplashImageFromStorage();
-      authController.getSplash();
-    });
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -45,19 +41,16 @@ class _ScreenSplashState extends State<ScreenSplash> {
         ),
         child: Obx(
           () {
-            return authController.splashImageLoading.value
-                ? const Center(
-                    child: CircularProgressIndicator(color: kBlueLight))
-                : Center(
-                    child: AnimatedGrowShrinkContainer(
-                      child: Hero(
-                          tag: 'onbaordImage',
-                          child: authController.splashModelImage.value == ''
-                              ? Image.asset(myAirDealLogo)
-                              : Image.memory(base64.decode(
-                                  authController.splashModelImage.value))),
-                    ),
-                  );
+            return Center(
+              child: AnimatedGrowShrinkContainer(
+                child: Hero(
+                    tag: 'onbaordImage',
+                    child: authController.splashModelImage.value == ''
+                        ? Image.asset(myAirDealLogo)
+                        : Image.memory(base64
+                            .decode(authController.splashModelImage.value))),
+              ),
+            );
           },
         ),
       ),

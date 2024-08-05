@@ -20,11 +20,11 @@ class _ScreenSplashState extends State<ScreenSplash> {
   @override
   void initState() {
     super.initState();
-    // notificationServices.requestNotificationPermission();
-    // notificationServices.forgroundMessage();
-    // notificationServices.firebaseInit(context);
-    // notificationServices.setupInteractMessage(context);
-    // notificationServices.isTokenRefresh();
+    notificationServices.requestNotificationPermission();
+    notificationServices.forgroundMessage();
+    notificationServices.firebaseInit(context);
+    notificationServices.setupInteractMessage(context);
+    notificationServices.isTokenRefresh();
   }
 
   @override

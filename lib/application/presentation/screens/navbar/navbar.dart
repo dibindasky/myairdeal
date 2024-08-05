@@ -24,11 +24,11 @@ class ScreenNavbar extends StatelessWidget {
         onGenerateRoute: RouteGenerator().onGenerateRoute,
       ),
       const ScreenBookings(),
-      const ScreenExplore(),
+      // const ScreenExplore(),
       const ScreenTalkToUsPage(),
       const ScreenAccountPage()
     ];
-
+ 
     return Scaffold(
       body: Obx(() {
         return IndexedStack(
@@ -51,18 +51,18 @@ class ScreenNavbar extends StatelessWidget {
                   selectedIndex == 1 ? Icons.airplane_ticket : Iconsax.ticket),
               label: 'Bookings',
             ),
+            // CurvedNavigationBarItem(
+            //   child: Icon(
+            //       selectedIndex == 2 ? Icons.explore : Icons.explore_outlined),
+            //   label: 'Explore',
+            // ),
             CurvedNavigationBarItem(
               child: Icon(
-                  selectedIndex == 2 ? Icons.explore : Icons.explore_outlined),
-              label: 'Explore',
-            ),
-            CurvedNavigationBarItem(
-              child: Icon(
-                  selectedIndex == 3 ? Iconsax.messages5 : Iconsax.messages_1),
+                  selectedIndex == 2 ? Iconsax.messages5 : Iconsax.messages_1),
               label: 'Talk to us',
             ),
             CurvedNavigationBarItem(
-              child: Icon(selectedIndex == 4
+              child: Icon(selectedIndex == 3
                   ? Iconsax.profile_tick5
                   : Iconsax.profile_tick),
               label: 'Account',

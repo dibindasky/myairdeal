@@ -21,6 +21,7 @@ class ScreenBookings extends StatelessWidget {
   Future<void> onRefresh() async {
     Get.find<BookingController>().getAllCombleteBooking(true);
     Get.find<BookingController>().getAllUpcomingBooking(true);
+    Get.find<BookingController>().getAllCancelBooking();
     await Future.delayed(const Duration(milliseconds: 1000));
   }
 
@@ -31,6 +32,7 @@ class ScreenBookings extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.getAllCombleteBooking(false);
       controller.getAllUpcomingBooking(false);
+      controller.getAllCancelBooking();
     });
 
     return Scaffold(
@@ -91,8 +93,9 @@ class ScreenBookings extends StatelessWidget {
                                       itemCount: 4,
                                     );
                                   } else {
+                                    // for upcoming booking
                                     if (controller.selectedBookingTab.value ==
-                                        1) {
+                                        0) {
                                       if (controller
                                           .retrieveAllUpcomingBooking.isEmpty) {
                                         return SizedBox(
@@ -155,9 +158,10 @@ class ScreenBookings extends StatelessWidget {
                                           ),
                                         ),
                                       );
-                                    } else if (controller
+                                    } // canceled bookings
+                                    else if (controller
                                             .selectedBookingTab.value ==
-                                        2) {
+                                        1) {
                                       if (controller
                                           .retrieveAllCancelBooking.isEmpty) {
                                         return SizedBox(
@@ -210,9 +214,10 @@ class ScreenBookings extends StatelessWidget {
                                           ),
                                         ),
                                       );
-                                    } else if (controller
+                                    } // for completed bookings
+                                    else if (controller
                                             .selectedBookingTab.value ==
-                                        3) {
+                                        2) {
                                       if (controller.retrieveAllCompletedBooking
                                           .isEmpty) {
                                         return SizedBox(

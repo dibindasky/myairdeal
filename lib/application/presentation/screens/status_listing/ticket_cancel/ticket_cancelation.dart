@@ -243,13 +243,20 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                 validate: Validate.notNull,
                                 controller:
                                     cancellationController.cancellationRason,
-                                maxLines: 1,
+                                maxLines: 5,
+                                maxLength: 250,
                                 isBorder: true,
                                 borderRadius: 10,
                                 textCapitalization: TextCapitalization.words,
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: kRadius10,
-                                  borderSide: const BorderSide(width: .3),
+                                  borderSide: const BorderSide(
+                                      width: .3, color: kBluePrimary),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: kRadius10,
+                                  borderSide: const BorderSide(
+                                      width: 1.5, color: kBluePrimary),
                                 ),
                                 onTapOutside: () =>
                                     FocusScope.of(context).unfocus(),
@@ -264,8 +271,6 @@ class ScreenTicetCanceallation extends StatelessWidget {
                     kHeight10
                   ],
                 ),
-                kHeight10,
-                kHeight10,
                 Obx(() {
                   cancellationController.selectedTrips;
                   final bool enable = cancellationController.enableButton.value;
@@ -329,6 +334,24 @@ class ScreenTicetCanceallation extends StatelessWidget {
                       kWidth10,
                     ],
                   );
+                }),
+                kHeight10,
+                Obx(() {
+                  return bookingController.retrieveSingleBookingresponceModel
+                                  .value.amendment !=
+                              null &&
+                          bookingController.retrieveSingleBookingresponceModel
+                              .value.amendment!.isNotEmpty
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10.h),
+                          child: EventButton(
+                              style: textThinStyle1.copyWith(color: kWhite),
+                              hieght: 30.h,
+                              width: double.infinity,
+                              text: 'Check Amendment Details',
+                              onTap: () {}),
+                        )
+                      : kEmpty;
                 }),
                 kHeight15
               ],

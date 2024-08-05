@@ -21,18 +21,21 @@ class RecentSearchSection extends StatelessWidget {
     return Obx(
       () {
         if (homeController.recentLoading.value) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              kHeight10,
-              Text('Recent searches', style: textHeadStyle1),
-              kHeight5,
-              const Skeleton(
-                crossAxisCount: 2,
-                itemCount: 2,
-                childAspectRatio: 2 / 1.3,
-              ),
-            ],
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                kHeight10,
+                Text('Recent searches', style: textHeadStyle1),
+                kHeight5,
+                const Skeleton(
+                  crossAxisCount: 2,
+                  itemCount: 2,
+                  childAspectRatio: 2 / 1.3,
+                ),
+              ],
+            ),
           );
         } else if (homeController.recentSearches.isEmpty) {
           return kEmpty;
@@ -41,7 +44,10 @@ class RecentSearchSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             kHeight10,
-            Text('Recent searches', style: textHeadStyle1),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Text('Recent searches', style: textHeadStyle1),
+            ),
             kHeight5,
             SizedBox(
               height: 95.h,
@@ -54,19 +60,25 @@ class RecentSearchSection extends StatelessWidget {
                       .recentSearches[index].searchQuery?.routeInfos;
                   return GestureDetector(
                     onTap: () {
-                      Get.find<FlightSortController>().addResentSearchToForm(
-                          homeController.recentSearches[index].searchQuery ??
-                              SearchQuery());
                       Timer(
-                        const Duration(milliseconds: 400),
-                        () => homeController.homeScrollController.animateTo(
-                            homeController
-                                .homeScrollController.position.minScrollExtent,
-                            duration: const Duration(milliseconds: 200),
-                            curve: Curves.bounceIn),
+                        const Duration(milliseconds: 300),
+                        () {
+                          homeController.homeScrollController.animateTo(
+                              homeController.homeScrollController.position
+                                  .minScrollExtent,
+                              duration: const Duration(milliseconds: 200),
+                              curve: Curves.bounceIn);
+                          Get.find<FlightSortController>()
+                              .addResentSearchToForm(homeController
+                                      .recentSearches[index].searchQuery ??
+                                  SearchQuery());
+                        },
                       );
                     },
                     child: Container(
+                      margin: index == 0
+                          ? EdgeInsets.symmetric(horizontal: 16.w)
+                          : EdgeInsets.zero,
                       width: 280.w,
                       padding: EdgeInsets.symmetric(
                           horizontal: 10.w, vertical: 10.h),

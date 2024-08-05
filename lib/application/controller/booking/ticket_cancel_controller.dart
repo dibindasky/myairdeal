@@ -7,6 +7,7 @@ import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/data/service/ticket_cancel/ticket_cancel.dart';
+import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_charges_responce_model/amendment_charges_responce_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_request_model/amendment_details_request_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_responce_model/amendment_details_responce_model.dart';
@@ -110,6 +111,7 @@ class TicketCancellationController extends GetxController {
           allTrip = false;
         }
       }
+      // if all passengers in all trips are selected
       if (allTrip) {
         cancelSelectedItems.value = cancelRequestModel.copyWith(
           type: 'CANCELLATION',
@@ -119,6 +121,7 @@ class TicketCancellationController extends GetxController {
         return;
       }
     }
+    // add selected passengers to the trip model and made a list
     List<Trip> tripsWithTravellers = selectedTravellers.keys.map((trip) {
       List<Traveller>? travellers = selectedTravellers[trip]?.isNotEmpty == true
           ? selectedTravellers[trip]?.toList()
@@ -179,6 +182,7 @@ class TicketCancellationController extends GetxController {
       },
       (r) {
         cancellationRason.clear();
+        Get.back();
         Get.snackbar('Success', 'Trip Cancellation is in progress',
             snackPosition: SnackPosition.BOTTOM,
             forwardAnimationCurve: Curves.bounceIn,
@@ -187,6 +191,10 @@ class TicketCancellationController extends GetxController {
         hasError.value = false;
         isLoading.value = false;
         ticketCancelResponce.value = r;
+        Get.find<BookingController>().getSingleBooking(
+            retrieveSingleBookingRequestModel:
+                RetrieveSingleBookingRequestModel(
+                    bookingId: cancelSelectedItems.value.bookingId));
       },
     );
   }

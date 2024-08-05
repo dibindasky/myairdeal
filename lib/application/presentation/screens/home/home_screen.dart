@@ -32,7 +32,7 @@ class ScreenHomePage extends StatelessWidget {
               },
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              padding: EdgeInsets.symmetric(horizontal: 0),
               child: Column(
                 children: [
                   kHeight20,
@@ -56,7 +56,7 @@ class ScreenHomePage extends StatelessWidget {
                   kHeight10,
                   const BookingIssuesQuerySection(),
                   const RecentSearchSection(),
-                  const CurrentOffersSection(),
+                  // const CurrentOffersSection(),
                 ],
               ),
             ),

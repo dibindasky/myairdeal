@@ -234,7 +234,7 @@ class FlightSortController extends GetxController {
     childrenCount.value = int.parse(searchQuery.paxInfo?.child ?? '0');
     adultCount.value = int.parse(searchQuery.paxInfo?.adult ?? '0');
     classType.value = searchQuery.cabinClass ?? 'ECONOMY';
-    Timer(const Duration(milliseconds: 1), () {
+    Timer(const Duration(milliseconds: 50), () {
       clearingBool.value = false;
     });
   }

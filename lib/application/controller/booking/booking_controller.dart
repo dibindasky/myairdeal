@@ -42,7 +42,7 @@ class BookingController extends GetxController {
   Rx<ReviewFlightDetailPrice>? reviewedDetail;
 
   // Booking tab according to status 1- campleted, 2- Cancelled, 3- Upcoming
-  RxInt selectedBookingTab = 1.obs;
+  RxInt selectedBookingTab = 0.obs;
   RxBool bookingLoading = false.obs;
   RxBool invoiceLoading = false.obs;
   RxBool fareRuleLoading = false.obs;

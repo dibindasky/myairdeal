@@ -28,9 +28,9 @@ class BookingsTab extends StatelessWidget {
                         bottomLeft: Radius.circular(24)),
                     text: 'Upcoming',
                     onTap: () {
-                      controller.changeTab(1);
+                      controller.changeTab(0);
                     },
-                    selected: controller.selectedBookingTab.value == 1),
+                    selected: controller.selectedBookingTab.value == 0),
                 ColoredBox(
                   color: kBlack,
                   child: SizedBox(width: 2, height: 20.h),
@@ -39,9 +39,9 @@ class BookingsTab extends StatelessWidget {
                     borderRadius: const BorderRadius.only(),
                     text: 'Cancelled',
                     onTap: () {
-                      controller.changeTab(2);
+                      controller.changeTab(1);
                     },
-                    selected: controller.selectedBookingTab.value == 2),
+                    selected: controller.selectedBookingTab.value == 1),
                 ColoredBox(
                   color: kBlack,
                   child: SizedBox(width: 2, height: 20.h),
@@ -52,9 +52,9 @@ class BookingsTab extends StatelessWidget {
                         bottomRight: Radius.circular(24)),
                     text: 'Completed',
                     onTap: () {
-                      controller.changeTab(3);
+                      controller.changeTab(2);
                     },
-                    selected: controller.selectedBookingTab.value == 3),
+                    selected: controller.selectedBookingTab.value == 2),
               ],
             ),
           )

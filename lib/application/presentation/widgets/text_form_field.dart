@@ -28,6 +28,7 @@ class CustomTextField extends StatefulWidget {
     this.onChanged,
     this.keyboardType,
     this.maxLength,
+    this.focusedBorder,
   });
 
   final Widget? prefixIcon;
@@ -48,6 +49,7 @@ class CustomTextField extends StatefulWidget {
   final bool obscureText;
   final TextEditingController? password;
   final InputBorder? enabledBorder;
+  final InputBorder? focusedBorder;
   final double borderRadius;
   final Function(String value)? onChanged;
   final TextInputType? keyboardType;
@@ -94,6 +96,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         fillColor: widget.fillColor,
         filled: true,
         enabledBorder: widget.enabledBorder,
+        focusedBorder: widget.focusedBorder,
         counter: const SizedBox.shrink(),
         contentPadding: calculateContentPadding(),
         suffixIcon: widget.obscureText

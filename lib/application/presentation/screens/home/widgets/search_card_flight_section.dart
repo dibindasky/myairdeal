@@ -26,6 +26,7 @@ class FlightSearchCardHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
+      margin: EdgeInsets.symmetric(horizontal: 16.w),
       duration: const Duration(milliseconds: 300),
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
       decoration: BoxDecoration(

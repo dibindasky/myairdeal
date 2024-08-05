@@ -18,7 +18,7 @@ class OnBoardInitail extends StatelessWidget {
       thirdText: 'World..',
       skipOnTap: () {
         authController.skipOnBoard();
-        Get.offAllNamed(Routes.signUp);
+        Get.offAllNamed(Routes.signUpSignIn);
       },
       nextTap: () {
         Get.to(const OnBoardSecond());
@@ -40,7 +40,7 @@ class OnBoardSecond extends StatelessWidget {
       thirdText: 'for You..',
       skipOnTap: () {
         authController.skipOnBoard();
-        Get.offAllNamed(Routes.signUp);
+        Get.offAllNamed(Routes.signUpSignIn);
       },
       nextTap: () {
         Get.to(const OnbaordThird());
@@ -62,11 +62,11 @@ class OnbaordThird extends StatelessWidget {
       thirdText: 'in Easiest Way!',
       skipOnTap: () {
         authController.skipOnBoard();
-        Get.offAllNamed(Routes.signUp);
+        Get.offAllNamed(Routes.signUpSignIn);
       },
       nextTap: () {
         authController.skipOnBoard();
-        Get.offAllNamed(Routes.signUp);
+        Get.offAllNamed(Routes.signUpSignIn);
       },
     );
   }

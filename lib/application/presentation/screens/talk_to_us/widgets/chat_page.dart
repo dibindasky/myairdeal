@@ -1,55 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
-import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/chat_bubble.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/widgets/custom_appbar_shape.dart';
 
 class ScreenChatPage extends StatelessWidget {
   const ScreenChatPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final talkToUsController = Get.find<TalkToUsController>();
-    final raiceController = Get.find<RaiceTicketController>();
+    //final talkToUsController = Get.find<TalkToUsController>();
+    //final raiceController = Get.find<RaiceTicketController>();
     return Scaffold(
       body: Column(
         children: [
-          AppBarCustomShape(
-            bottomGap: kHeight10,
-            topGap: kHeight30,
-            backGroundImage: false,
-            child: Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    raiceController.changeSelectedYouCouldAlsoTab(-2);
-                    talkToUsController.changetab(1);
-                    Get.back();
-                  },
-                  icon: const Icon(Icons.arrow_back_ios, color: kWhite),
-                ),
-                Text(
-                  'Talk to us',
-                  style: textStyle1.copyWith(color: kWhite, fontSize: 16.sp),
-                ),
-                const Spacer(),
-                ClipRRect(
-                  borderRadius: kRadius50,
-                  child: const ColoredBox(
-                    color: kWhite,
-                    child: Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Icon(Icons.phone_outlined),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          const DetailAppBar(heading: 'Talk to us'),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0.w),

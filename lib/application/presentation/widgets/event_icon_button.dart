@@ -4,18 +4,18 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class EventIconButton extends StatelessWidget {
-  const EventIconButton({
-    super.key,
-    this.text,
-    required this.onTap,
-    this.width,
-    this.hieght,
-    this.textColr,
-    this.color,
-    this.borderRadius,
-    this.prefixIcon,
-    this.suffixIcon,
-  });
+  const EventIconButton(
+      {super.key,
+      this.text,
+      required this.onTap,
+      this.width,
+      this.hieght,
+      this.textColr,
+      this.color,
+      this.borderRadius,
+      this.prefixIcon,
+      this.suffixIcon,
+      this.border});
 
   final String? text;
   final VoidCallback onTap;
@@ -26,6 +26,7 @@ class EventIconButton extends StatelessWidget {
   final double? borderRadius;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final BoxBorder? border;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +36,12 @@ class EventIconButton extends StatelessWidget {
         width: width ?? 150.w,
         height: hieght ?? 35.h,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(borderRadius ?? 9),
-            ),
-            color: color ?? kBluePrimary),
+          border: border ?? Border.all(),
+          borderRadius: BorderRadius.all(
+            Radius.circular(borderRadius ?? 9),
+          ),
+          color: color ?? kBluePrimary,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

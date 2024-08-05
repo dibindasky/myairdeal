@@ -34,7 +34,7 @@ class SharedPreferecesStorage {
     log('get noti token =>()');
     final prefs = await SharedPreferences.getInstance();
     final notiToken = prefs.getString(notificationTokenKey);
-    return notiToken??'';
+    return notiToken ?? '';
   }
 
   static Future<void> setLogin() async {

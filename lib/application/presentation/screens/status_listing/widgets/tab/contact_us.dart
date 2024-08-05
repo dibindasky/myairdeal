@@ -26,18 +26,21 @@ class ContactUsFrom extends StatelessWidget {
         ...List.generate(
           3,
           (index) => Obx(
-            () => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CustomRadioButton(
-                width: kWidth20,
-                onChanged: () {
-                  ticketRaiceController.headingChange(
-                    ticketRaiceController.contactusRadioItems[index],
-                  );
-                },
-                selected: ticketRaiceController.contactusRadioItems[index] ==
-                    ticketRaiceController.selectedheding.value,
-                text: ticketRaiceController.contactusRadioItems[index],
+            () => ColoredBox(
+              color: klightWhite,
+              child: Padding(
+                padding: EdgeInsets.all(8.w),
+                child: CustomRadioButton(
+                  width: kWidth20,
+                  onChanged: () {
+                    ticketRaiceController.headingChange(
+                      ticketRaiceController.contactusRadioItems[index],
+                    );
+                  },
+                  selected: ticketRaiceController.contactusRadioItems[index] ==
+                      ticketRaiceController.selectedheding.value,
+                  text: ticketRaiceController.contactusRadioItems[index],
+                ),
               ),
             ),
           ),
@@ -62,7 +65,6 @@ class ContactUsFrom extends StatelessWidget {
             hintText: 'Description',
           ),
         ),
-        //const BookingFilePicker(),
         kHeight10,
         BookingProductdropoDownBuilder(),
         kHeight15,
@@ -76,8 +78,7 @@ class ContactUsFrom extends StatelessWidget {
                 bookingId: bookingId,
                 description: ticketRaiceController.descriptionController.text,
                 heading: ticketRaiceController.selectedheding.value,
-                product:
-                    ticketRaiceController.selectedProduct?.value ?? 'Flight',
+                product: ticketRaiceController.selectedProduct.value,
               );
               Get.find<RaiceTicketController>()
                   .createRaiceTicket(raiceTicket: raiceTicket);

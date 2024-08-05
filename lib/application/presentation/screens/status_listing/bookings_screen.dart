@@ -44,7 +44,7 @@ class ScreenBookings extends StatelessWidget {
                   actions: [
                     ElevatedButton(
                       onPressed: () {
-                        Get.toNamed(Routes.signUp);
+                        Get.toNamed(Routes.signUpSignIn);
                       },
                       style: ElevatedButton.styleFrom(
                           side: const BorderSide(color: kBlue),

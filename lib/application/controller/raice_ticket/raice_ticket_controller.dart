@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/data/features/pdf_generator.dart';
 import 'package:myairdeal/data/service/raice_ticket/raice_ticket_service.dart';
@@ -29,17 +28,17 @@ class RaiceTicketController extends GetxController {
     'Chatered Flights',
     'Helicopter'
   ];
-  RxString? selectedProduct;
+  RxString selectedProduct = 'Flights'.obs;
 
   // in except cancel tab Choosing for raice ticket, Connection, Refund and Mail
   RxInt selectedYouCouldAlsoTab = 6.obs;
 
   void changeSelectedYouCouldAlsoTab(int selectedNewTab) {
-    if (selectedNewTab == 2) {
-      Get.toNamed(Routes.chatPage);
-    } else if (selectedNewTab == 3) {
-      Get.toNamed(Routes.refundsPage);
-    }
+    // if (selectedNewTab == 2) {
+    //   Get.toNamed(Routes.chatPage);
+    // } else if (selectedNewTab == 3) {
+    //   Get.toNamed(Routes.refundsPage);
+    // }
     selectedYouCouldAlsoTab.value = selectedNewTab;
     update();
   }
@@ -51,7 +50,7 @@ class RaiceTicketController extends GetxController {
   ];
 
   void updateProduct(String newValue) {
-    selectedProduct?.value = newValue;
+    selectedProduct.value = newValue;
     update();
   }
 

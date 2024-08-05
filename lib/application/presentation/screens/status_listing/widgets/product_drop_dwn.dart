@@ -29,7 +29,7 @@ class BookingProductdropoDownBuilder extends StatelessWidget {
             return DropdownButton<String>(
               dropdownColor: kGreyLightBackground,
               isExpanded: true,
-              value: raiceTicketController.selectedProduct?.value,
+              value: raiceTicketController.selectedProduct.value,
               hint: const Text('Choose one'),
               items: raiceTicketController.dropDwnDatas.map((String value) {
                 return DropdownMenuItem<String>(
@@ -37,7 +37,7 @@ class BookingProductdropoDownBuilder extends StatelessWidget {
                   child: Text(value),
                 );
               }).toList(),
-              onChanged: (String? newValue) {
+              onChanged: (newValue) {
                 raiceTicketController.updateProduct(newValue ?? '');
               },
             );

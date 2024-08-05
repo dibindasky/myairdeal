@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/widgets/custom_appbar_shape.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 
 class ScreenTalkToUsPage extends StatelessWidget {
@@ -15,28 +14,7 @@ class ScreenTalkToUsPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          AppBarCustomShape(
-            bottomGap: kHeight20,
-            topGap: kHeight30,
-            backGroundImage: false,
-            child: Row(
-              children: [
-                Text('Talk to us',
-                    style: textStyle1.copyWith(color: kWhite, fontSize: 16.sp)),
-                const Spacer(),
-                ClipRRect(
-                  borderRadius: kRadius50,
-                  child: const ColoredBox(
-                    color: kWhite,
-                    child: Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Icon(Icons.phone_outlined),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
+          const DetailAppBar(heading: 'Talk to us'),
           const Spacer(),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),

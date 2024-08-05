@@ -46,7 +46,6 @@ class NotificationServices {
       }
 
       if (Platform.isAndroid) {
-        print("in platform checking..====");
         initLocalNotifications(context, message);
         showNotification(message);
       }

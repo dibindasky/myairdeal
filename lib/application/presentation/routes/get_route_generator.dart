@@ -1,6 +1,6 @@
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/presentation/screens/account/edit_profile.dart';
+import 'package:myairdeal/application/presentation/screens/account/profile.dart';
 import 'package:myairdeal/application/presentation/screens/account/notification_setup.dart';
 import 'package:myairdeal/application/presentation/screens/account/secuurity_screen.dart';
 import 'package:myairdeal/application/presentation/screens/account/widgets/edit_profile.dart';
@@ -55,7 +55,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       binding: AuthBinding(),
-      name: Routes.signUp,
+      name: Routes.signUpSignIn,
       page: () => const ScreenSignUp(),
     ),
     GetPage(
@@ -157,7 +157,7 @@ class GetXRouterConfig {
       page: () => const FareRulesScreen(),
     ),
     GetPage(
-      binding: TalkToUsBinding(),
+      bindings: [TalkToUsBinding(), RaiceTicketBinding()],
       name: Routes.chatTab,
       page: () => const ScreenTab(),
     ),

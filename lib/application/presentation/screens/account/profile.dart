@@ -8,26 +8,19 @@ import 'package:myairdeal/application/presentation/utils/animations/splash_anima
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
-class ScreenProfile extends StatefulWidget {
+class ScreenProfile extends StatelessWidget {
   const ScreenProfile({super.key});
 
   @override
-  State<ScreenProfile> createState() => _ScreenProfileState();
-}
+  Widget build(BuildContext context) {
+    final controller = Get.find<AuthController>();
 
-class _ScreenProfileState extends State<ScreenProfile> {
-  final controller = Get.find<AuthController>();
-
-  @override
-  void initState() {
-    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.getUserInfo(true);
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+    String? name = controller.firstName.text.isNotEmpty
+        ? controller.firstName.text.substring(0, 2)
+        : '';
     return Scaffold(
       body: ListView(
         padding: const EdgeInsets.all(0),
@@ -51,9 +44,6 @@ class _ScreenProfileState extends State<ScreenProfile> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: Obx(() {
-              String? name = controller.firstName.text.length == 2
-                  ? controller.firstName.text.substring(0, 2)
-                  : '';
               return Column(
                 children: [
                   AnimatedGrowShrinkContainer(

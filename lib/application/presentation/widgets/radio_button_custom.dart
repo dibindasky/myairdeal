@@ -11,6 +11,7 @@ class CustomRadioButton extends StatelessWidget {
       required this.onChanged,
       this.width,
       this.child,
+      this.containerColor,
       this.color = kBluePrimary});
   final SizedBox? width;
   final bool selected;
@@ -18,22 +19,26 @@ class CustomRadioButton extends StatelessWidget {
   final VoidCallback onChanged;
   final Widget? child;
   final Color color;
+  final Color? containerColor;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onChanged,
-      child: child ??
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              selected
-                  ? Icon(Icons.radio_button_checked, color: color)
-                  : const Icon(Icons.radio_button_unchecked),
-              width ?? kWidth5,
-              Text(text ?? ''),
-            ],
-          ),
+      child: ColoredBox(
+        color: containerColor ?? knill,
+        child: child ??
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                selected
+                    ? Icon(Icons.radio_button_checked, color: color)
+                    : const Icon(Icons.radio_button_unchecked),
+                width ?? kWidth5,
+                Text(text ?? ''),
+              ],
+            ),
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
 
 part 'to_city_or_airport.g.dart';
 
@@ -25,4 +26,15 @@ class ToCityOrAirport {
   }
 
   Map<String, dynamic> toJson() => _$ToCityOrAirportToJson(this);
+
+  CitySearchModel convertToCityOrAirportToCitySearchModel() {
+    return CitySearchModel(
+      code: code,
+      name: name,
+      citycode: cityCode,
+      city: city,
+      country: country,
+      countrycode: countryCode,
+    );
+  }
 }

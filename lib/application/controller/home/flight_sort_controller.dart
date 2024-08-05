@@ -18,6 +18,7 @@ import 'package:myairdeal/domain/models/search/flight_search_sort_model/route_in
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/search_modifiers.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/total_price_list.dart';
+import 'package:myairdeal/domain/models/search/recent_detail_search/search_query.dart';
 import 'package:myairdeal/domain/repository/service/flight_sort_repo.dart';
 import 'package:myairdeal/domain/repository/service/home_repo.dart';
 
@@ -197,6 +198,47 @@ class FlightSortController extends GetxController {
     update();
   }
 
+  // add recent search to the form for easy search
+  void addResentSearchToForm(SearchQuery searchQuery) {
+    clearingBool.value = true;
+    int searchLen = ((searchQuery.routeInfos?.length) ?? 0);
+    airportSelected = RxList.generate(
+      searchLen,
+      (index) => RxList.generate(2, (x) => CitySearchModel()),
+    );
+    multiCityDepartureDate = RxList.generate(2, (x) => DateTime.now());
+    for (int i = 0; i < ((searchQuery.routeInfos?.length) ?? 0); i++) {
+      airportSelected[i][0] = searchQuery.routeInfos![i].fromCityOrAirport!
+          .convertFromCityOrAirportToCitySearchModel();
+      airportSelected[i][1] = searchQuery.routeInfos![i].toCityOrAirport!
+          .convertToCityOrAirportToCitySearchModel();
+    }
+    if (searchLen == 1) {
+      tripType.value = 0;
+    } else if (searchQuery.routeInfos![0].fromCityOrAirport?.code ==
+            searchQuery.routeInfos![1].toCityOrAirport?.code &&
+        searchQuery.routeInfos![1].fromCityOrAirport?.code ==
+            searchQuery.routeInfos![0].toCityOrAirport?.code) {
+      tripType.value = 1;
+    } else if (searchLen > 1) {
+      tripType.value = 2;
+    }
+    if (searchQuery.searchModifiers?.pft == 'REGULAR') {
+      passengerFareType.value == 0;
+    } else if (searchQuery.searchModifiers?.pft == 'STUDENT') {
+      passengerFareType.value = 1;
+    } else if (searchQuery.searchModifiers?.pft == 'SENIOR_CITIZEN') {
+      passengerFareType.value = 2;
+    }
+    infantCount.value = int.parse(searchQuery.paxInfo?.infant ?? '0');
+    childrenCount.value = int.parse(searchQuery.paxInfo?.child ?? '0');
+    adultCount.value = int.parse(searchQuery.paxInfo?.adult ?? '0');
+    classType.value = searchQuery.cabinClass ?? 'ECONOMY';
+    Timer(const Duration(milliseconds: 1), () {
+      clearingBool.value = false;
+    });
+  }
+
   // end search timer
   void stopSearchTimer() {
     timer.value.cancel();
@@ -345,29 +387,26 @@ class FlightSortController extends GetxController {
             : tripType.value == 1
                 ? 2
                 : airportSelected.length,
-        (index) => RouteInfo(
-          fromCityOrAirport: CodeAirport(
-              code: airportSelected[index][0].code,
-              city: airportSelected[index][0].city,
-              cityCode: airportSelected[index][0].citycode,
-              country: airportSelected[index][0].country,
-              countryCode: airportSelected[index][0].countrycode,
-              name: airportSelected[index][0].name),
-          toCityOrAirport: CodeAirport(
-              code: airportSelected[index][1].code,
-              city: airportSelected[index][1].city,
-              cityCode: airportSelected[index][1].citycode,
-              country: airportSelected[index][1].country,
-              countryCode: airportSelected[index][1].countrycode,
-              name: airportSelected[index][1].name),
-          travelDate: DateFormating.getDateApi(
-            tripType.value == 2
-                ? multiCityDepartureDate[index]!
-                : tripType.value == 1
-                    ? returnDate.value
-                    : depatureDate.value,
-          ),
-        ),
+        (index) {
+          return RouteInfo(
+            fromCityOrAirport: CodeAirport(
+                code: airportSelected[index][0].code,
+                city: airportSelected[index][0].city,
+                cityCode: airportSelected[index][0].citycode,
+                country: airportSelected[index][0].country,
+                countryCode: airportSelected[index][0].countrycode,
+                name: airportSelected[index][0].name),
+            toCityOrAirport: CodeAirport(
+                code: airportSelected[index][1].code,
+                city: airportSelected[index][1].city,
+                cityCode: airportSelected[index][1].citycode,
+                country: airportSelected[index][1].country,
+                countryCode: airportSelected[index][1].countrycode,
+                name: airportSelected[index][1].name),
+            travelDate:
+                DateFormating.getDateApi(multiCityDepartureDate[index]!),
+          );
+        },
       ),
     );
     // api call for get all flights

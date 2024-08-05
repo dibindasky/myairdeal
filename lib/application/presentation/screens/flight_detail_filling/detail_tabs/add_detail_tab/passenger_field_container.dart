@@ -10,6 +10,7 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
+import 'package:myairdeal/application/presentation/utils/formating/text_input_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/custom_check_box.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
@@ -150,7 +151,19 @@ class _DetailContainerState extends State<DetailContainer> {
                           onTap: () {
                             Get.toNamed(Routes.savedPassengers, arguments: {
                               'index': widget.index,
-                              'type': widget.travellerType
+                              'type': widget.travellerType,
+                              'use_dob': (widget.pcs != null &&
+                                      widget.pcs!.dobe == true) ||
+                                  (widget.dob != null &&
+                                      ((widget.dob!.adobr == true &&
+                                              widget.travellerType ==
+                                                  'ADULT') ||
+                                          (widget.dob!.cdobr == true &&
+                                              widget.travellerType ==
+                                                  'CHILD') ||
+                                          (widget.dob!.idobr == true &&
+                                              widget.travellerType ==
+                                                  'INFANT')))
                             });
                           },
                           child: Container(
@@ -202,6 +215,7 @@ class _DetailContainerState extends State<DetailContainer> {
                   CustomTextField(
                     controller: firstNameController,
                     validate: Validate.notNull,
+                    inputFormatters: [AlphabeticInputFormatter()],
                     isBorder: true,
                     borderRadius: 14,
                     textCapitalization: TextCapitalization.words,
@@ -218,6 +232,7 @@ class _DetailContainerState extends State<DetailContainer> {
                     controller: lastNameController,
                     validate: Validate.notNull,
                     isBorder: true,
+                    inputFormatters: [AlphabeticInputFormatter()],
                     borderRadius: 14,
                     textCapitalization: TextCapitalization.words,
                     enabledBorder: OutlineInputBorder(

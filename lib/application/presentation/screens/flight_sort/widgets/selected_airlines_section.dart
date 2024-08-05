@@ -59,11 +59,12 @@ class SelectedAirlinesSections extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           NetworkImageWithLoading(
-                              imageUrl: getAirlineLogo(
-                                  flightModel?.sI?[0].fD?.aI?.code ?? ""),
-                              height: 15.h,
-                              width: 15.h,
-                              margin: const EdgeInsets.all(2),),
+                            imageUrl: getAirlineLogo(
+                                flightModel?.sI?[0].fD?.aI?.code ?? ""),
+                            height: 15.h,
+                            width: 15.h,
+                            margin: const EdgeInsets.all(2),
+                          ),
                           kWidth5,
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

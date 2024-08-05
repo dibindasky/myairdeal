@@ -76,97 +76,85 @@ class FlightTicketCard extends StatelessWidget {
                         children: List.generate(
                           (tripInfos?.length ?? 1),
                           (tripIndex) {
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      CardSideItems(
-                                        place: tripInfos?[tripIndex]
+                            return Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CardSideItems(
+                                    place:
+                                        tripInfos?[tripIndex].sI![0].da?.city ??
+                                            '',
+                                    airPort:
+                                        tripInfos?[tripIndex].sI![0].da?.name ??
+                                            '',
+                                    from: 'Departure',
+                                    time: DateFormating.formatDate(
+                                        allBookingResponce
+                                                ?.retrieveSingleBookingresponceModel
+                                                ?.itemInfos
+                                                ?.air
+                                                ?.tripInfos?[tripIndex]
                                                 .sI![0]
-                                                .da
-                                                ?.city ??
-                                            '',
-                                        airPort: tripInfos?[tripIndex]
-                                                .sI![0]
-                                                .da
-                                                ?.name ??
-                                            '',
-                                        from: 'Departure',
-                                        time: DateFormating.formatDate(
-                                            allBookingResponce
-                                                    ?.retrieveSingleBookingresponceModel
-                                                    ?.itemInfos
-                                                    ?.air
-                                                    ?.tripInfos?[tripIndex]
-                                                    .sI![0]
-                                                    .dt ??
-                                                ''),
-                                      ),
-                                      NormalCenterItems(
-                                        airlineCode:
-                                            (tripInfos?[tripIndex].sI?.length ??
-                                                        0) >
-                                                    1
-                                                ? null
-                                                : airlineCode,
-                                        stops:
-                                            (tripInfos?[tripIndex].sI?.length ??
-                                                    0) -
-                                                1,
-                                        haveImage: false,
-                                        airline: tripInfos?[tripIndex]
-                                                .sI?[0]
-                                                .fD
-                                                ?.aI
-                                                ?.name ??
-                                            '',
-                                        number: '',
-                                        date:
-                                            DateFormating.getDurationOfFlights(
-                                                si: tripInfos?[tripIndex].sI ??
-                                                    <SI>[]),
-                                      ),
-                                      CardSideItems(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        place: tripInfos?[tripIndex]
-                                                .sI?[(tripInfos[tripIndex]
-                                                            .sI
-                                                            ?.length ??
-                                                        1) -
-                                                    1]
-                                                .aa
-                                                ?.city ??
-                                            '',
-                                        airPort: tripInfos?[tripIndex]
-                                                .sI![(tripInfos[tripIndex]
-                                                            .sI
-                                                            ?.length ??
-                                                        1) -
-                                                    1]
-                                                .aa
-                                                ?.name ??
-                                            '',
-                                        from: 'Arrival',
-                                        time: DateFormating.formatDate(
-                                          (tripInfos?[tripIndex]
-                                                  .sI?[(tripInfos[tripIndex]
-                                                              .sI
-                                                              ?.length ??
-                                                          1) -
-                                                      1]
-                                                  .at ??
-                                              ''),
-                                        ),
-                                      ),
-                                    ],
+                                                .dt ??
+                                            ''),
                                   ),
-                                ),
-                              ],
+                                  NormalCenterItems(
+                                    airlineCode:
+                                        (tripInfos?[tripIndex].sI?.length ??
+                                                    0) >
+                                                1
+                                            ? null
+                                            : airlineCode,
+                                    stops: (tripInfos?[tripIndex].sI?.length ??
+                                            0) -
+                                        1,
+                                    haveImage: false,
+                                    airline: tripInfos?[tripIndex]
+                                            .sI?[0]
+                                            .fD
+                                            ?.aI
+                                            ?.name ??
+                                        '',
+                                    number: '',
+                                    date: DateFormating.getDurationOfFlights(
+                                        si: tripInfos?[tripIndex].sI ?? <SI>[]),
+                                  ),
+                                  CardSideItems(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    place: tripInfos?[tripIndex]
+                                            .sI?[(tripInfos[tripIndex]
+                                                        .sI
+                                                        ?.length ??
+                                                    1) -
+                                                1]
+                                            .aa
+                                            ?.city ??
+                                        '',
+                                    airPort: tripInfos?[tripIndex]
+                                            .sI![(tripInfos[tripIndex]
+                                                        .sI
+                                                        ?.length ??
+                                                    1) -
+                                                1]
+                                            .aa
+                                            ?.name ??
+                                        '',
+                                    from: 'Arrival',
+                                    time: DateFormating.formatDate(
+                                      (tripInfos?[tripIndex]
+                                              .sI?[(tripInfos[tripIndex]
+                                                          .sI
+                                                          ?.length ??
+                                                      1) -
+                                                  1]
+                                              .at ??
+                                          ''),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             );
                           },
                         ),
@@ -183,14 +171,18 @@ class FlightTicketCard extends StatelessWidget {
                 BottomMiniContainer(
                   flightTicketCardEnum: flightTicketCardEnum,
                   buttonOnTap: buttonOnTap,
-                  price: searchAirlineInformation != null
-                      ? searchAirlineInformation!
-                          .totalPriceList![0].fd!.adult!.fC!.tf!
+                  price: searchAirlineInformation != null &&
+                          searchAirlineInformation!.totalPriceList != null &&
+                          searchAirlineInformation!.totalPriceList!.isNotEmpty
+                      ? (searchAirlineInformation!
+                                  .totalPriceList?[0].fd?.adult?.fC?.tf ??
+                              0.0)
+                          .toDouble()
                       : itemInfos != null
-                          ? itemInfos!
-                                  .air?.totalPriceInfo?.totalFareDetail?.fC?.tf
-                                  ?.toDouble() ??
-                              0
+                          ? (itemInfos!.air?.totalPriceInfo?.totalFareDetail?.fC
+                                      ?.tf ??
+                                  0.0)
+                              .toDouble()
                           : 0,
                 ),
               ],

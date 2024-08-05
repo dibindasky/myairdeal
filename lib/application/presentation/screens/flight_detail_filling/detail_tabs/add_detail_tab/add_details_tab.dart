@@ -50,7 +50,9 @@ class _PassengerDetailsTabState extends State<PassengerDetailsTab> {
       }
       check++;
       return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          kWidth10,
           GestureDetector(
             onTap: () {
               travelController.changeAddDetailsSubStepMinus();
@@ -63,26 +65,26 @@ class _PassengerDetailsTabState extends State<PassengerDetailsTab> {
           Expanded(
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                        '${controller.selectedAddDetailsStep.value + 1}/${controller.totalSubStepLength} : Step ${controller.selectedAddDetailsStep.value + 1}'),
-                    InkWell(
-                      onTap: () {
-                        travelController.changeSelectedDetailStepArrow(
-                            !travelController.selectedDetailStepArrow.value);
-                      },
-                      child: Obx(
-                        () => Icon(
-                            travelController.selectedDetailStepArrow.value
-                                ? Icons.arrow_drop_up_outlined
-                                : Icons.arrow_drop_down),
-                      ),
-                    ),
-                  ],
-                ),
-                kHeight5,
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text(
+                //         '${controller.selectedAddDetailsStep.value + 1}/${controller.totalSubStepLength} : Step ${controller.selectedAddDetailsStep.value + 1}'),
+                //     InkWell(
+                //       onTap: () {
+                //         travelController.changeSelectedDetailStepArrow(
+                //             !travelController.selectedDetailStepArrow.value);
+                //       },
+                //       child: Obx(
+                //         () => Icon(
+                //             travelController.selectedDetailStepArrow.value
+                //                 ? Icons.arrow_drop_up_outlined
+                //                 : Icons.arrow_drop_down),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // kHeight5,
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   controller: scrollController,

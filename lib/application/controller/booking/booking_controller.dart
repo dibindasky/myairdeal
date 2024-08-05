@@ -175,6 +175,7 @@ class BookingController extends GetxController {
 
   // complete booking api calling
   void completeBooking(BookTicketModel bookTicketModel) async {
+    Get.toNamed(Routes.paymentSucess);
     bookingCompleteLoading.value = true;
     bookingCompleteSuccess = false.obs;
     bookingCompleteFailure = false.obs;
@@ -201,11 +202,12 @@ class BookingController extends GetxController {
       Get.find<FlightSortController>().clearDataAfterBooking();
     });
     bookingCompleteLoading.value = false;
-    if (Get.find<FlightSortController>().remainingTime.value != 0) {
-      Get.back(id: 1);
-    }
-    Get.until((route) => Get.currentRoute == Routes.bottomBar);
     if (bookingCompleteSuccess.value) {
+      invoiceLoading.value = true;
+      if (Get.find<FlightSortController>().remainingTime.value != 0) {
+        Get.back(id: 1);
+      }
+      Get.until((route) => Get.currentRoute == Routes.bottomBar);
       Get.toNamed(Routes.paymentSucess);
       Get.snackbar('Booking done successfully',
           'Your booking has been successfully placed',
@@ -213,7 +215,6 @@ class BookingController extends GetxController {
           backgroundColor: kGreen,
           colorText: kWhite);
       // timer to wait until the data has been saved in the server and calling for booked ticket
-      invoiceLoading.value = true;
       Timer(const Duration(seconds: 3), () {
         getSingleBooking(
             retrieveSingleBookingRequestModel:
@@ -221,6 +222,7 @@ class BookingController extends GetxController {
             callBookings: true);
       });
     } else {
+      Get.back();
       Get.snackbar(
         'Booking Failed',
         message,

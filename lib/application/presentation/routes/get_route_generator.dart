@@ -142,6 +142,7 @@ class GetXRouterConfig {
       bindings: [
         BookingBinding(),
         RaiceTicketBinding(),
+        TalkToUsBinding(),
         TicketCancellationBinding()
       ],
       name: Routes.invoice,

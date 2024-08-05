@@ -32,7 +32,7 @@ class ScreenHomePage extends StatelessWidget {
               },
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 0),
               child: Column(
                 children: [
                   kHeight20,

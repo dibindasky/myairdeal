@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/booking_qurreys_sections.dart';
-import 'package:myairdeal/application/presentation/screens/home/widgets/curent_offers_section.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/header_section.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/login_or_signup_card_section.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/recent_search_section.dart';
@@ -32,7 +30,7 @@ class ScreenHomePage extends StatelessWidget {
               },
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 0),
               child: Column(
                 children: [
                   kHeight20,

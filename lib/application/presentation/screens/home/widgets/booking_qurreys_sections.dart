@@ -30,13 +30,13 @@ class BookingIssuesQuerySection extends StatelessWidget {
       // 'Cancellation',
       // 'YTD 1'
       'Upcoming',
-      'Canceled',
+      'Cancelled',
       'Completed',
       'Support'
     ];
 
     return Padding(
-      padding:EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Row(
         children: List.generate(
           text.length,

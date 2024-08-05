@@ -313,10 +313,10 @@ class FlightSortController extends GetxController {
     for (int i = 0; i < airportSelected.length; i++) {
       // for validate one-way and round-trip city selection
       if (tripType.value != 2 && i == 0) {
-        if (((airportSelected[i][0].code == null &&
+        if ((airportSelected[i][0].code == null &&
                 airportSelected[i][0].city == null) ||
             (airportSelected[i][1].code == null &&
-                airportSelected[i][1].city == null))) {
+                airportSelected[i][1].city == null)) {
           searchValidated.value = false;
           return false;
         }

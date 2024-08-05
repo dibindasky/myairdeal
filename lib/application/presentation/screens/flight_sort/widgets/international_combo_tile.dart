@@ -82,6 +82,7 @@ class InternationalMutliComboTile extends StatelessWidget {
                                   ''),
                             ),
                             NormalCenterItems(
+                                haveImage: false,
                                 stops: controller
                                     .comboList[index][jIndex].sI!.length),
                             CardSideItems(

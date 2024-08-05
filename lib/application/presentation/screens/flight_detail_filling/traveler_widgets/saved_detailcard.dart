@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
@@ -26,118 +27,89 @@ class SavedDetailsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           kHeight10,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.turned_in_outlined, size: 17.w, color: kBlue),
-                  kWidth10,
-                  Text('Category', style: textThinStyle1),
-                ],
-              ),
-              Text('${passengers?.pt}', style: textThinStyle1),
-            ],
+          ItemField(
+            icon: Icons.category_rounded,
+            categery: 'Categery',
+            subtittle: passengers?.pt ?? '',
           ),
           kHeight5,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.person, size: 17.w, color: kBlue),
-                  kWidth10,
-                  Text('Name', style: textThinStyle1),
-                ],
-              ),
-              Text('${passengers?.ti} ${passengers?.fN} ${passengers?.lN}',
-                  style: textThinStyle1),
-            ],
+          ItemField(
+            icon: Icons.person,
+            categery: 'Name',
+            subtittle: '${passengers?.ti} ${passengers?.fN} ${passengers?.lN}',
           ),
           kHeight5,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.date_range, size: 17.w, color: kBlue),
-                  kWidth10,
-                  Text('DOB', style: textThinStyle1),
-                ],
-              ),
-              Text('${passengers?.dob}', style: textThinStyle1),
-            ],
+          ItemField(
+            icon: Icons.date_range,
+            categery: 'DOB',
+            subtittle: passengers?.dob ?? '',
           ),
           kHeight5,
           passengers?.pNum != null && passengers?.pNum != ''
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.panorama_photosphere_outlined,
-                            size: 17.w, color: kBlue),
-                        kWidth10,
-                        Text('Passport Number', style: textThinStyle1),
-                      ],
-                    ),
-                    Text('${passengers?.pNum}', style: textThinStyle1),
-                  ],
+              ? ItemField(
+                  icon: Iconsax.global_edit,
+                  categery: 'Passport Number',
+                  subtittle: passengers?.pNum ?? '',
                 )
               : kEmpty,
-          kHeight5,
+          passengers?.pNum != null && passengers?.pNum != ''
+              ? kHeight5
+              : kEmpty,
           passengers?.pid != null && passengers?.pid != ''
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.date_range_rounded,
-                            size: 17.w, color: kBlue),
-                        kWidth10,
-                        Text('Passport Issue Date', style: textThinStyle1),
-                      ],
-                    ),
-                    Text('${passengers?.pid}', style: textThinStyle1),
-                  ],
+              ? ItemField(
+                  icon: Icons.date_range_rounded,
+                  categery: 'Passport Issue Date',
+                  subtittle: passengers?.pid ?? '',
                 )
               : kEmpty,
-          kHeight5,
+          passengers?.pid != null && passengers?.pid != '' ? kHeight5 : kEmpty,
           passengers?.eD != null && passengers?.eD != ''
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.data_exploration_outlined,
-                            size: 17.w, color: kBlue),
-                        kWidth10,
-                        Text('Passport Expiry Date', style: textThinStyle1),
-                      ],
-                    ),
-                    Text('${passengers?.eD}', style: textThinStyle1),
-                  ],
+              ? ItemField(
+                  icon: Icons.data_exploration_outlined,
+                  categery: 'Passport Expiry Date',
+                  subtittle: passengers?.eD ?? '',
                 )
               : kEmpty,
-          kHeight5,
+          passengers?.eD != null && passengers?.eD != '' ? kHeight5 : kEmpty,
           passengers?.pN != null && passengers?.pN != ''
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.location_city, size: 17.w, color: kBlue),
-                        kWidth10,
-                        Text('Nationality', style: textThinStyle1),
-                      ],
-                    ),
-                    Text('${passengers?.pN}', style: textThinStyle1),
-                  ],
+              ? ItemField(
+                  icon: Icons.location_city,
+                  categery: 'Nationality',
+                  subtittle: passengers?.pN ?? '',
                 )
               : kEmpty,
-          kHeight10,
+          passengers?.pN != null && passengers?.pN != '' ? kHeight10 : kEmpty,
         ],
       ),
+    );
+  }
+}
+
+class ItemField extends StatelessWidget {
+  const ItemField({
+    super.key,
+    required this.icon,
+    required this.categery,
+    required this.subtittle,
+  });
+  final IconData icon;
+  final String categery;
+  final String subtittle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Icon(icon, size: 17.w, color: kBlue),
+            kWidth10,
+            Text(categery, style: textThinStyle1),
+          ],
+        ),
+        Text(subtittle, style: textThinStyle1),
+      ],
     );
   }
 }

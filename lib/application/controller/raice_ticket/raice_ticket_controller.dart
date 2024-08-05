@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/data/features/pdf_generator.dart';
+import 'package:myairdeal/data/features/share_ticket.dart';
 import 'package:myairdeal/data/service/raice_ticket/raice_ticket_service.dart';
 import 'package:myairdeal/domain/models/ticket_raice/get_all_tickets_model/tasks.dart';
 import 'package:myairdeal/domain/models/ticket_raice/raice_ticket/raice_ticket.dart';
@@ -13,6 +14,7 @@ class RaiceTicketController extends GetxController {
   final RaiceTicketRepo raiceTicketRepo = RaiceTicketService();
   RxBool isLoading = false.obs;
   RxBool invoiceDownLoadLoading = false.obs;
+  RxBool ticketLoading = false.obs;
   RxList<Tasks> allTickets = <Tasks>[].obs;
 
   // Validating for ticket raising
@@ -113,5 +115,19 @@ class RaiceTicketController extends GetxController {
         invoiceDownLoadLoading.value = false;
       },
     );
+  }
+
+  void shareTicket({required String bookingID}) async {
+    ticketLoading.value = true;
+    final data = await raiceTicketRepo.ivoiceDownLoad(bookingID: bookingID);
+    data.fold(
+      (l) => null,
+      (r) {
+        if (r.base64String != null) {
+          sharePdfFromBase64(r.base64String!, '');
+        }
+      },
+    );
+    ticketLoading.value = false;
   }
 }

@@ -118,12 +118,17 @@ class FlightTicketCard extends StatelessWidget {
                                                     0) -
                                                 1,
                                         haveImage: false,
-                                        airline: tripInfos?[tripIndex]
-                                                .sI?[0]
-                                                .fD
-                                                ?.aI
-                                                ?.name ??
-                                            '',
+                                        airline:
+                                            (tripInfos?[tripIndex].sI?.length ??
+                                                        0) >
+                                                    1
+                                                ? null
+                                                : tripInfos?[tripIndex]
+                                                        .sI?[0]
+                                                        .fD
+                                                        ?.aI
+                                                        ?.name ??
+                                                    '',
                                         number: '',
                                         date:
                                             DateFormating.getDurationOfFlights(

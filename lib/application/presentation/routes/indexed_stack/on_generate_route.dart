@@ -5,6 +5,7 @@ import 'package:myairdeal/application/presentation/screens/account/account_scree
 import 'package:myairdeal/application/presentation/screens/account/profile.dart';
 import 'package:myairdeal/application/presentation/screens/account/notification_setup.dart';
 import 'package:myairdeal/application/presentation/screens/account/secuurity_screen.dart';
+import 'package:myairdeal/application/presentation/screens/home/widgets/coming_soon.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/bookings_screen.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/invoice_detail.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';
@@ -15,12 +16,18 @@ import 'package:myairdeal/application/presentation/screens/home/home_screen.dart
 
 class RouteGenerator {
   Route onGenerateRoute(RouteSettings settings) {
+    //final arguments = settings.arguments;
     switch (settings.name) {
       case Routes.homePage:
         return MaterialPageRoute(builder: (ctx) => const ScreenHomePage());
       case Routes.searchSortFlight:
         return MaterialPageRoute(
             builder: (ctx) => const ScreenFlightTicketSort());
+      // case Routes.commingSoon:
+      //   return arguments is String
+      //       ? MaterialPageRoute(
+      //           builder: (ctx) => ScreenCommingSoon(image: arguments))
+      //       : _errorScreen();
       case Routes.flightDetailFillling:
         return MaterialPageRoute(builder: (ctx) => const ScreenFlightDetail());
       case Routes.reviewFlightDetail:
@@ -31,7 +38,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (ctx) => const ScreenAccountPage());
 
       case Routes.profile:
-        return MaterialPageRoute(builder: (ctx) => ScreenProfile());
+        return MaterialPageRoute(builder: (ctx) => const ScreenProfile());
       case Routes.security:
         return MaterialPageRoute(builder: (ctx) => const ScreenSecurity());
       case Routes.bookings:

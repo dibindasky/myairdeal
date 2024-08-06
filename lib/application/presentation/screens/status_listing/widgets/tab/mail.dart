@@ -31,9 +31,9 @@ class EmailListScreen extends StatelessWidget {
         padding: const EdgeInsets.all(0),
         physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
-        itemCount: controller.allTickets.length,
+        itemCount: controller.allTicketsLists.length,
         itemBuilder: (context, index) {
-          return EmailListItem(ticketData: controller.allTickets[index]);
+          return EmailListItem(ticketData: controller.allTicketsLists[index]);
         },
       ),
     );

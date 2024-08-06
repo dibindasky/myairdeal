@@ -13,6 +13,7 @@ class DetailAppBar extends StatelessWidget {
       this.backButton = true,
       this.actionButton,
       this.bottomgap,
+      this.backOntap,
       this.topGap,
       this.action,
       this.onActionButtonTap});
@@ -25,6 +26,7 @@ class DetailAppBar extends StatelessWidget {
   final Widget? bottomgap;
   final Widget? topGap;
   final Widget? action;
+  final VoidCallback? backOntap;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class DetailAppBar extends StatelessWidget {
             children: [
               backButton
                   ? IconButton(
-                      onPressed: () => Get.back(id: id),
+                      onPressed: () => backOntap ?? Get.back(id: id),
                       icon: const Icon(
                         Icons.arrow_back_ios,
                         color: kWhite,

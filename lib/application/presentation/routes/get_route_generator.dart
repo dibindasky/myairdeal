@@ -9,6 +9,7 @@ import 'package:myairdeal/application/presentation/screens/auth/sign_up/al_most_
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_screen.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/itenary_tab/fare_rule.dart';
+import 'package:myairdeal/application/presentation/screens/home/widgets/coming_soon.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/bookings_screen.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/invoice_detail.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/ticket_cancel/ticket_cancelation.dart';
@@ -161,6 +162,10 @@ class GetXRouterConfig {
       bindings: [TalkToUsBinding(), RaiceTicketBinding()],
       name: Routes.chatTab,
       page: () => const ScreenTab(),
+    ),
+    GetPage(
+      name: Routes.commingSoon,
+      page: () => const ScreenCommingSoon(),
     ),
     GetPage(
       binding: TalkToUsBinding(),

@@ -54,7 +54,6 @@ class ScreenHomePage extends StatelessWidget {
                   kHeight10,
                   const BookingIssuesQuerySection(),
                   const RecentSearchSection(),
-                  // const CurrentOffersSection(),
                 ],
               ),
             ),

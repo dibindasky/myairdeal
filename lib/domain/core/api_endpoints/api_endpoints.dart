@@ -32,6 +32,7 @@ class ApiEndPoints {
   static const String getSeatMap = '/booking/seat-map';
   static const String getNotification = '/user/notifications';
   static const String fareRule = '/booking/fare-rule';
+  static const String globalTicketCreation = '/ticket/create-ticket-global';
 
   // Change {airlinecode} for logo
   static const String airllineLogo = "/uploads/AirlinesLogo/{airlinecode}.png";

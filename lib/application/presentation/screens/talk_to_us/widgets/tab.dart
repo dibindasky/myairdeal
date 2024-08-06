@@ -5,10 +5,13 @@ import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
-import 'package:myairdeal/application/presentation/screens/status_listing/widgets/tab/contact_us.dart';
+import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/dropdown_bookingid.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
+import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
+import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 import 'package:myairdeal/data/features/url_launcher.dart';
 
@@ -42,7 +45,7 @@ class ScreenTab extends StatelessWidget {
                                   .userCreationResponceModel.value.email ??
                               '');
                     } else if (talkToUsController.selectedtab.value == 1) {
-                      return ContactUsFrom();
+                      return const RaiceTicket();
                     } else {
                       return kEmpty;
                     }
@@ -53,6 +56,80 @@ class ScreenTab extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class RaiceTicket extends StatelessWidget {
+  const RaiceTicket({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<TalkToUsController>();
+    return Column(
+      children: [
+        ...List.generate(
+          controller.globalTicketRaisingProducts.length,
+          (index) => Obx(
+            () => ColoredBox(
+              color: klightWhite,
+              child: Padding(
+                padding: EdgeInsets.all(8.w),
+                child: CustomRadioButton(
+                  width: kWidth20,
+                  onChanged: () {
+                    controller.typeChange(
+                        controller.globalTicketRaisingProducts[index]);
+                  },
+                  selected: controller.globalTicketRaisingProducts[index] ==
+                      controller.selectedTicketRaisingType.value,
+                  text: controller.globalTicketRaisingProducts[index],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Form(
+          key: controller.globalRaiceTicketFormKey,
+          child: Column(
+            children: [
+              kHeight15,
+              BookingIdDropDown(),
+              kHeight10,
+              CustomTextField(
+                controller: controller.descriptionController,
+                maxLines: 1,
+                borderRadius: 7,
+                textCapitalization: TextCapitalization.words,
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(width: .3),
+                ),
+                validate: Validate.notNullAndLength15,
+                onTapOutside: () => FocusScope.of(context).unfocus(),
+                fillColor: kGreyLightBackground,
+                hintText: 'Heading',
+              ),
+              CustomTextField(
+                controller: controller.descriptionController,
+                maxLines: 5,
+                borderRadius: 7,
+                textCapitalization: TextCapitalization.words,
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(width: .3),
+                ),
+                validate: Validate.notNullAndLength15,
+                onTapOutside: () => FocusScope.of(context).unfocus(),
+                fillColor: kGreyLightBackground,
+                hintText: 'Description',
+              ),
+            ],
+          ),
+        ),
+        EventButton(
+          text: 'Submit',
+          onTap: () {},
+        )
+      ],
     );
   }
 }
@@ -147,7 +224,7 @@ class EmailBox extends StatelessWidget {
           ),
           CustomTextField(
             hintText: 'Enter Your Subject',
-            controller: talkToUsController.subjectController,
+            controller: talkToUsController.headingController,
             isBorder: true,
             borderRadius: 10,
             textCapitalization: TextCapitalization.words,

@@ -31,4 +31,5 @@ class Routes {
   static const String updateProfile = '/update_profile';
   static const String viewAmendmetStatus = '/view_amendmet_status';
   static const String fareRule = '/fare_rule';
+  static const String commingSoon = '/comming_soon';
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/custom_appbar_shape.dart';
@@ -63,7 +64,13 @@ class HomeHeaderSection extends StatelessWidget {
               children: List.generate(
                 4,
                 (index) => GestureDetector(
-                  onTap: () => homeController.changeCategory(index),
+                  onTap: () {
+                    // homeController.changeCategory(index);
+                    if (homeTabTitle[index] != 'Flights') {
+                      Get.toNamed(Routes.commingSoon,
+                          arguments: {"image": homeTabImages[index]});
+                    }
+                  },
                   child:
                       GetBuilder<FlightSortController>(builder: (controller) {
                     return Column(

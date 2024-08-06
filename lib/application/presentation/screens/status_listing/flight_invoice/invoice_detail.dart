@@ -54,10 +54,10 @@ class ScreenInvoiceDetail extends StatelessWidget {
                       children: [
                         kHeight10,
                         Text(
-                          bookingController.selectedBookingTab.value == 1
+                          bookingController.selectedBookingTab.value == 0
                               ? 'Upcoming Ticket'
-                              : bookingController.selectedBookingTab.value == 2
-                                  ? 'Cancel Ticket'
+                              : bookingController.selectedBookingTab.value == 1
+                                  ? 'Cancelled Ticket'
                                   : 'Campleted Ticket',
                           style: textStyle1,
                         ),
@@ -140,20 +140,6 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                     },
                                     text: 'Raise a Ticket',
                                   ),
-                                  // QuickLinksContainer(
-                                  //   onTap: () {
-                                  //     raiceController
-                                  //         .changeSelectedYouCouldAlsoTab(3);
-                                  //   },
-                                  //   text: 'Check refunds & Refund status',
-                                  // ),
-                                  // QuickLinksContainer(
-                                  //   onTap: () {
-                                  //     raiceController
-                                  //         .changeSelectedYouCouldAlsoTab(2);
-                                  //   },
-                                  //   text: 'Call',
-                                  // ),
                                   bookingController.invoiceLoading.value
                                       ? kEmpty
                                       : QuickLinksContainer(

@@ -21,6 +21,10 @@ class NotificationController extends GetxController {
 
   void changeNotificationType(int value) {
     notificationIndex.value = value;
+    changeNotifcationDate();
+  }
+
+  void changeNotifcationDate() {
     if (notificationIndex.value == 0) {
       notificationList = (notification ?? <Notification>[]).obs;
       update();
@@ -45,17 +49,13 @@ class NotificationController extends GetxController {
     update();
     final data = await notificationService.getNotification();
     data.fold(
-      (l) {
-        notificationLoading.value = false;
-        update();
-      },
+      (l) => null,
       (r) {
         notification?.value = r.notification ?? <Notification>[];
-        notificationList?.value = r.notification ?? <Notification>[];
-        notificationLoading.value = false;
-        update();
+        changeNotifcationDate();
       },
     );
+    notificationLoading.value = false;
   }
 
   void getNotificationNext() async {
@@ -67,16 +67,13 @@ class NotificationController extends GetxController {
       pageSize: nextNotification += nextNotification,
     ));
     data.fold(
-      (l) {
-        notificationLoading.value = false;
-        update();
-      },
+      (l) => null,
       (r) {
         notification?.value = r.notification ?? <Notification>[];
-        notificationList?.value = r.notification ?? [];
-        notificationLoading.value = false;
+        changeNotifcationDate();
         update();
       },
     );
+    notificationLoading.value = false;
   }
 }

@@ -31,7 +31,8 @@ class BookingProductdropoDownBuilder extends StatelessWidget {
               isExpanded: true,
               value: raiceTicketController.selectedProduct.value,
               hint: const Text('Choose one'),
-              items: raiceTicketController.dropDwnDatas.map((String value) {
+              items: raiceTicketController.bookingProductdropDwnDatas
+                  .map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),

@@ -8,6 +8,7 @@ import 'package:myairdeal/domain/core/failure/failure.dart';
 import 'package:myairdeal/domain/models/booking/pdf_model/pdf_model.dart';
 import 'package:myairdeal/domain/models/success_responce_model/success_responce_model.dart';
 import 'package:myairdeal/domain/models/ticket_raice/get_all_tickets_model/get_all_tickets_model.dart';
+import 'package:myairdeal/domain/models/ticket_raice/global_ticket_raising_model/global_ticket_raising_model.dart';
 import 'package:myairdeal/domain/models/ticket_raice/raice_ticket/raice_ticket.dart';
 import 'package:myairdeal/domain/repository/service/raice_ticket_repo.dart';
 
@@ -63,6 +64,25 @@ class RaiceTicketService implements RaiceTicketRepo {
       return Left(Failure(message: errorMessage));
     } catch (e) {
       log('catch ivoiceDownLoad $e');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SuccessResponceModel>> globalTicketRaising(
+      {required GlobalTicketRaisingModel globalTicketRaisingModel}) async {
+    try {
+      final responce = await apiService.get(
+        ApiEndPoints.globalTicketCreation,
+        data: globalTicketRaisingModel.toJson(),
+      );
+      log('globalTicketRaising  >> : done');
+      return Right(SuccessResponceModel.fromJson(responce.data));
+    } on DioException catch (e) {
+      log('DioException globalTicketRaising $e');
+      return Left(Failure(message: errorMessage));
+    } catch (e) {
+      log('catch globalTicketRaising $e');
       return Left(Failure(message: e.toString()));
     }
   }

@@ -10,8 +10,6 @@ class ScreenChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final talkToUsController = Get.find<TalkToUsController>();
-    //final raiceController = Get.find<RaiceTicketController>();
     return Scaffold(
       body: Column(
         children: [

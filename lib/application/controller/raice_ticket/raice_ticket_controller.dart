@@ -15,32 +15,28 @@ class RaiceTicketController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool invoiceDownLoadLoading = false.obs;
   RxBool ticketLoading = false.obs;
-  RxList<Tasks> allTickets = <Tasks>[].obs;
+  RxList<Tasks> allTicketsLists = <Tasks>[].obs;
 
   // Validating for ticket raising
-  final GlobalKey<FormState> raiceTicketFormKey = GlobalKey<FormState>();
-  final descriptionController = TextEditingController();
+  GlobalKey<FormState> raiceTicketFormKey = GlobalKey<FormState>();
+  TextEditingController descriptionController = TextEditingController();
 
   // in combleted and upcoming tab ticket raising value
   RxString selectedheding = 'New Complaint'.obs;
 
-  List<String> dropDwnDatas = [
+  List<String> bookingProductdropDwnDatas = [
     'Flights',
     'Air ambulance',
     'Chatered Flights',
     'Helicopter'
   ];
+
   RxString selectedProduct = 'Flights'.obs;
 
   // in except cancel tab Choosing for raice ticket, Connection, Refund and Mail
   RxInt selectedYouCouldAlsoTab = 6.obs;
 
   void changeSelectedYouCouldAlsoTab(int selectedNewTab) {
-    // if (selectedNewTab == 2) {
-    //   Get.toNamed(Routes.chatPage);
-    // } else if (selectedNewTab == 3) {
-    //   Get.toNamed(Routes.refundsPage);
-    // }
     selectedYouCouldAlsoTab.value = selectedNewTab;
     update();
   }
@@ -94,7 +90,7 @@ class RaiceTicketController extends GetxController {
       },
       (r) {
         isLoading.value = false;
-        allTickets.value = r.data ?? [];
+        allTicketsLists.value = r.data ?? [];
       },
     );
   }

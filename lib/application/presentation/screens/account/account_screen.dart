@@ -56,7 +56,9 @@ class ScreenAccountPage extends StatelessWidget {
                     ),
                     SettingsTile(
                       title: 'Help & Support',
-                      onTap: () {},
+                      onTap: () {
+                        Get.find<NavBarController>().chageIndex(2);
+                      },
                     ),
                     Obx(() {
                       return controller.loginOrNot.value

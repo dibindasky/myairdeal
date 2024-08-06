@@ -85,7 +85,8 @@ class _ScreenNotificationState extends State<ScreenNotification> {
                                 ))),
                       ));
                 })),
-            Divider(endIndent: 20.w, indent: 20.w),
+            //  Divider(endIndent: 20.w, indent: 20.w),
+            kHeight10,
             Expanded(
               child: GetBuilder<NotificationController>(builder: (contxt) {
                 if (notificationController.notificationLoading.value) {
@@ -141,7 +142,7 @@ class _ScreenNotificationState extends State<ScreenNotification> {
                             Get.find<BookingController>().getSingleBooking(
                               retrieveSingleBookingRequestModel:
                                   RetrieveSingleBookingRequestModel(
-                                      bookingId: notification?.bookingID ?? ''),
+                                      bookingId: notification?.bookingID),
                             );
                             Get.toNamed(Routes.invoice);
                           }

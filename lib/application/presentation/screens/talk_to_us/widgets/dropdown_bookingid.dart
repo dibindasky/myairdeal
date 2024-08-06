@@ -2,18 +2,18 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
-class NationalityCodeDropDown extends StatelessWidget {
-  NationalityCodeDropDown({super.key});
+class BookingIdDropDown extends StatelessWidget {
+  BookingIdDropDown({super.key});
 
   TextEditingController codeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TravellerController>(builder: (controller) {
+    return GetBuilder<TalkToUsController>(builder: (controller) {
       return Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -32,12 +32,12 @@ class NationalityCodeDropDown extends StatelessWidget {
               width: 0,
             ),
             hint: Text(
-              'Country Code',
+              'Booking ID',
               style: textStyle1.copyWith(color: kBlack),
             ),
             isExpanded: true,
             items: [
-              for (var code in countryMaxLengths.keys)
+              for (var code in controller.bookingIdList)
                 DropdownMenuItem<String>(
                   value: code,
                   child: Text(
@@ -48,7 +48,7 @@ class NationalityCodeDropDown extends StatelessWidget {
                   ),
                 ),
             ],
-            value: controller.selectedCoutryCode.value,
+            value: controller.selectedBookingId.value,
             dropdownStyleData: DropdownStyleData(
               decoration: BoxDecoration(borderRadius: kRadius5, color: kWhite),
               offset: const Offset(0, -5),
@@ -59,7 +59,7 @@ class NationalityCodeDropDown extends StatelessWidget {
             ),
             dropdownSearchData: dropdownSearchData(controller: codeController),
             onChanged: (value) {
-              controller.changeCoutryCode(value ?? '');
+              controller.changeBookingId(value ?? '');
             },
             onMenuStateChange: (isOpen) {},
           ),

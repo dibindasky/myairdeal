@@ -3,6 +3,7 @@ import 'package:myairdeal/domain/core/failure/failure.dart';
 import 'package:myairdeal/domain/models/booking/pdf_model/pdf_model.dart';
 import 'package:myairdeal/domain/models/success_responce_model/success_responce_model.dart';
 import 'package:myairdeal/domain/models/ticket_raice/get_all_tickets_model/get_all_tickets_model.dart';
+import 'package:myairdeal/domain/models/ticket_raice/global_ticket_raising_model/global_ticket_raising_model.dart';
 import 'package:myairdeal/domain/models/ticket_raice/raice_ticket/raice_ticket.dart';
 
 abstract class RaiceTicketRepo {
@@ -13,4 +14,6 @@ abstract class RaiceTicketRepo {
     required String createdId,
   });
   Future<Either<Failure, PdfModel>> ivoiceDownLoad({required String bookingID});
+  Future<Either<Failure, SuccessResponceModel>> globalTicketRaising(
+      {required GlobalTicketRaisingModel globalTicketRaisingModel});
 }

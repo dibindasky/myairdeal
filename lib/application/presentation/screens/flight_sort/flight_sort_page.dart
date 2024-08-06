@@ -18,71 +18,79 @@ class ScreenFlightTicketSort extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
-    return Scaffold(
-      body: Obx(() {
-        if (controller.searchListLoading.value ||
-            (!controller.comboTrip.value && controller.searchList.isEmpty) ||
-            (controller.comboTrip.value && controller.comboList.isEmpty)) {
-          return Column(
-            children: [
-              const DetailAppBar(heading: 'Search', id: 1),
-              Expanded(
-                child: Center(
-                  child: controller.searchListLoading.value
-                      ? Skeleton(
-                          crossAxisCount: 1,
-                          itemCount: 10,
-                          height: 150.h,
-                          childAspectRatio: 1 / 0.45,
-                        )
-                      : const Text('No Flights Available'),
+    return WillPopScope(
+      onWillPop: () async {
+        print('back for search 1');
+        Get.back(id: 1);
+        print('back for search 2');
+        return true;
+      },
+      child: Scaffold(
+        body: Obx(() {
+          if (controller.searchListLoading.value ||
+              (!controller.comboTrip.value && controller.searchList.isEmpty) ||
+              (controller.comboTrip.value && controller.comboList.isEmpty)) {
+            return Column(
+              children: [
+                const DetailAppBar(heading: 'Search', id: 1),
+                Expanded(
+                  child: Center(
+                    child: controller.searchListLoading.value
+                        ? Skeleton(
+                            crossAxisCount: 1,
+                            itemCount: 10,
+                            height: 150.h,
+                            childAspectRatio: 1 / 0.45,
+                          )
+                        : const Text('No Flights Available'),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            );
+          }
+          return SingleChildScrollView(
+            controller: controller.flightSortScreenController,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: controller.comboTrip.value ? null : 220.h,
+                  child: Stack(
+                    children: [
+                      const SortScreenHeaderSection(),
+                      controller.comboTrip.value
+                          ? kEmpty
+                          : controller.tripType.value == 0
+                              ? const CalenderSectionSortHeader()
+                              : const SelectedAirlinesSections(),
+                    ],
+                  ),
+                ),
+                controller.sortingRebuild.value ? kHeight10 : kEmpty,
+                controller.sortingRebuild.value
+                    ? Skeleton(
+                        crossAxisCount: 4,
+                        itemCount: 4,
+                        height: 10.h,
+                        childAspectRatio: 1 / 0.45,
+                      )
+                    : const SortingChipsSection(),
+                controller.sortingRebuild.value ? kHeight10 : kEmpty,
+                controller.sortingRebuild.value
+                    ? Skeleton(
+                        crossAxisCount: 1,
+                        itemCount: 10,
+                        height: 150.h,
+                        childAspectRatio: 1 / 0.45,
+                      )
+                    : const TicketsListSorted(),
+                kHeight20
+              ],
+            ),
           );
-        }
-        return SingleChildScrollView(
-          controller: controller.flightSortScreenController,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: controller.comboTrip.value ? null : 220.h,
-                child: Stack(
-                  children: [
-                    const SortScreenHeaderSection(),
-                    controller.comboTrip.value
-                        ? kEmpty
-                        : controller.tripType.value == 0
-                            ? const CalenderSectionSortHeader()
-                            : const SelectedAirlinesSections(),
-                  ],
-                ),
-              ),
-              controller.sortingRebuild.value ? kHeight10 : kEmpty,
-              controller.sortingRebuild.value
-                  ? Skeleton(
-                      crossAxisCount: 4,
-                      itemCount: 4,
-                      height: 10.h,
-                      childAspectRatio: 1 / 0.45,
-                    )
-                  : const SortingChipsSection(),
-              controller.sortingRebuild.value ? kHeight10 : kEmpty,
-              controller.sortingRebuild.value
-                  ? Skeleton(
-                      crossAxisCount: 1,
-                      itemCount: 10,
-                      height: 150.h,
-                      childAspectRatio: 1 / 0.45,
-                    )
-                  : const TicketsListSorted(),
-              kHeight20
-            ],
-          ),
-        );
-      }),
-      floatingActionButton: const FloatingButtonSection(),
+        }),
+        floatingActionButton: const FloatingButtonSection(),
+      ),
     );
   }
 }

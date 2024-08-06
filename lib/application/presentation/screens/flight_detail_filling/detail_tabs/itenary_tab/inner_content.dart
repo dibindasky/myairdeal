@@ -188,9 +188,10 @@ class InnerContents extends StatelessWidget {
                                         children: [
                                           kHeight10,
                                           Text(
-                                            DateFormating.getDifferenceOfDates(
-                                                model?.sI?[stop].dt ?? '',
-                                                model?.sI?[stop].at ?? ''),
+                                            DateFormating
+                                                .convertMinutesToHoursMinutes(
+                                                    model?.sI?[stop].duration ??
+                                                        0),
                                             style: textThinStyle1.copyWith(
                                                 fontSize: 9.sp),
                                           ),

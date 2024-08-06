@@ -66,7 +66,7 @@ class FareSummary extends StatelessWidget {
                                 color: kBlack, fontSize: 9.sp),
                           ),
                           Text(
-                            '₹ ${controller.getPrice('ADULT')}',
+                            '₹ ${(controller.getPrice('ADULT')) * Get.find<FlightSortController>().adultCount.value}',
                             style: textThinStyle1.copyWith(
                               color: kBlack,
                               fontSize: 12.sp,
@@ -101,7 +101,7 @@ class FareSummary extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '₹ ${controller.getPrice('CHILD')}',
+                            '₹ ${controller.getPrice('CHILD') * Get.find<FlightSortController>().childrenCount.value}',
                             style: textThinStyle1.copyWith(
                               color: kBlack,
                               fontSize: 12.sp,
@@ -136,7 +136,7 @@ class FareSummary extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '₹ ${controller.getPrice('INFANT')}',
+                            '₹ ${controller.getPrice('INFANT') * Get.find<FlightSortController>().infantCount.value}',
                             style: textThinStyle1.copyWith(
                               color: kBlack,
                               fontSize: 12.sp,
@@ -216,54 +216,79 @@ class FareSummary extends StatelessWidget {
                       ],
                     ),
                     children: List.generate(
-                      controller.reviewedDetail?.value.totalPriceInfo
-                                  ?.totalFareDetail?.afC?.taf?.yq !=
-                              null
-                          ? 4
-                          : 3,
-                      (index) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                index == 0
-                                    ? 'Airline GST'
-                                    : index == 1
-                                        ? 'Other Taxes'
-                                        : index == 3
-                                            ? 'YQ'
-                                            : 'YR',
-                                style: textThinStyle1.copyWith(
-                                  color: kBlack,
-                                  fontSize: 12.sp,
+                      4,
+                      (index) => (index == 2 &&
+                                  controller
+                                          .reviewedDetail
+                                          ?.value
+                                          .totalPriceInfo
+                                          ?.totalFareDetail
+                                          ?.afC
+                                          ?.taf
+                                          ?.yr ==
+                                      null) ||
+                              (index == 3 &&
+                                  controller
+                                          .reviewedDetail
+                                          ?.value
+                                          .totalPriceInfo
+                                          ?.totalFareDetail
+                                          ?.afC
+                                          ?.taf
+                                          ?.yq ==
+                                      null)
+                          ? kEmpty
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      index == 0
+                                          ? 'Airline GST'
+                                          : index == 1
+                                              ? 'Other Taxes'
+                                              : index == 3
+                                                  ? 'YQ'
+                                                  : 'YR',
+                                      style: textThinStyle1.copyWith(
+                                        color: kBlack,
+                                        fontSize: 12.sp,
+                                      ),
+                                    ),
+                                    kHeight5,
+                                  ],
                                 ),
-                              ),
-                              kHeight5,
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                index == 0
-                                    ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst ?? '--'}'
-                                    : index == 1
-                                        ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot ?? '--'}'
-                                        :controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq!=null?
-                                         '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq ?? '--'}':
-                                         '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr ?? '--'}',
-                                style: textThinStyle1.copyWith(
-                                  color: kBlack,
-                                  fontSize: 12.sp,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      index == 0
+                                          ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst ?? '--'}'
+                                          : index == 1
+                                              ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot ?? '--'}'
+                                              : controller
+                                                          .reviewedDetail
+                                                          ?.value
+                                                          .totalPriceInfo
+                                                          ?.totalFareDetail
+                                                          ?.afC
+                                                          ?.taf
+                                                          ?.yq !=
+                                                      null
+                                                  ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq ?? '--'}'
+                                                  : '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr ?? '--'}',
+                                      style: textThinStyle1.copyWith(
+                                        color: kBlack,
+                                        fontSize: 12.sp,
+                                      ),
+                                    ),
+                                    kHeight5,
+                                  ],
                                 ),
-                              ),
-                              kHeight5,
-                            ],
-                          ),
-                        ],
-                      ),
+                              ],
+                            ),
                     ),
                   ),
             const DottedLines(height: 10),

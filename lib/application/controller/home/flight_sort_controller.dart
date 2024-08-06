@@ -1006,6 +1006,15 @@ class FlightSortController extends GetxController {
       multiCityCount.value = 2;
       multiCityDepartureDate.removeRange(2, multiCityDepartureDate.length);
       airportSelected.removeRange(2, airportSelected.length);
+    } else {
+      if (multiCityDepartureDate.length < 2) {
+        multiCityDepartureDate
+            .assignAll(List.generate(2, (x) => DateTime.now()));
+      }
+      if (airportSelected.length < 2) {
+        airportSelected
+            .add(<CitySearchModel>[CitySearchModel(), CitySearchModel()].obs);
+      }
     }
     validateSearchForm();
   }

@@ -116,14 +116,11 @@ class RaiceTicketController extends GetxController {
   void shareTicket({required String bookingID}) async {
     ticketLoading.value = true;
     final data = await raiceTicketRepo.ivoiceDownLoad(bookingID: bookingID);
-    data.fold(
-      (l) => null,
-      (r) {
-        if (r.base64String != null) {
-          sharePdfFromBase64(r.base64String!, '');
-        }
-      },
-    );
+    data.fold((l) => null, (r) {
+      if (r.base64String != null) {
+        sharePdfFromBase64(r.base64String!, '');
+      }
+    });
     ticketLoading.value = false;
   }
 }

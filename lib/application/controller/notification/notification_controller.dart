@@ -7,7 +7,7 @@ import 'package:myairdeal/domain/repository/service/notification_repo.dart';
 class NotificationController extends GetxController {
   NotificationRepo notificationService = NotificationService();
   List<String> notificationType = ['All', 'Unread', 'Read'];
-  int nextNotification = 0;
+  int nextNotification = 15;
   // responsible for changeing notification type
   RxInt notificationIndex = 0.obs;
   RxBool notificationLoading = false.obs;

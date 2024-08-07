@@ -138,9 +138,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
           return 'Password must contavin at least 8 characters';
         } else if (widget.validate == Validate.notNullAndLength15) {
           if (value == null || value == '') {
-            return 'Description should not be Empty';
+            return '${widget.hintText} should not be Empty';
           } else if (value.length < 15) {
-            return 'Description should be at least 15 letters.';
+            return '${widget.hintText} should be at least 15 letters.';
           } else {
             return null;
           }

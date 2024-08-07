@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -264,9 +264,15 @@ class AuthController extends GetxController {
         isLoading.value = false;
       },
       (r) {
+        final talkToUsController = Get.find<TalkToUsController>();
+        final fullName = '${r.firstName ?? ''} ${r.lastName ?? ''}';
         updateEmailController.text = r.email ?? '';
+
         updateFirnameController.text = r.firstName ?? '';
         updateLastNameController.text = r.lastName ?? '';
+        talkToUsController.enquiryEmailController.text = r.email ?? '';
+        talkToUsController.enquiryNameController.text = fullName;
+        talkToUsController.enquiryNumberController.text = r.phone ?? '';
         updatecountryCodeController.text = r.country?.countryCode ?? '';
         updatedailCodeController.text = r.country?.dialCode ?? '';
         updatecountryNameController.text = r.country?.countryName ?? '';

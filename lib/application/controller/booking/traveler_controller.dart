@@ -328,7 +328,7 @@ class TravellerController extends GetxController {
   }
 
   // Get All passengers
-  void getAllPassengers(String type, bool dobCheck) async {
+  void getAllPassengers(String type, bool dobCheck, bool pcs) async {
     isLoading.value = true;
     final data = await _passengersRepo.getPassengers();
     allPassengers.value = [];
@@ -341,8 +341,41 @@ class TravellerController extends GetxController {
         final travelDate =
             Get.find<FlightSortController>().multiCityDepartureDate.first!;
 
+        print('pcs => $pcs');
         for (var passenger in r.passengers ?? <TravellerInfo>[]) {
-          if (dobCheck) {
+          // if passport details are necessary then add passenger with passport dearils only
+          if (pcs) {
+            final dob =
+                DateFormating.convertStringToDateTime(passenger.dob ?? '');
+            if (dob == null) continue;
+
+            final ageOnTravelDate = travelDate.difference(dob).inDays ~/ 365;
+            final fareType =
+                Get.find<FlightSortController>().passengerFareType.value;
+
+            if (type == 'ADULT' &&
+                passenger.ti != 'Master' &&
+                passenger.pNum != null &&
+                passenger.pNum!.isNotEmpty) {
+              if ((fareType == 2 && ageOnTravelDate >= 60) ||
+                  (fareType != 2 && ageOnTravelDate >= 12)) {
+                temp.add(passenger);
+              }
+            } else if (type == 'CHILD' &&
+                passenger.pNum != null &&
+                passenger.pNum!.isNotEmpty) {
+              if (ageOnTravelDate >= 2 && ageOnTravelDate < 12) {
+                temp.add(passenger);
+              }
+            } else if (type == 'INFANT' &&
+                passenger.pNum != null &&
+                passenger.pNum!.isNotEmpty) {
+              if (ageOnTravelDate < 2) {
+                temp.add(passenger);
+              }
+            }
+          } // if dob is necessary then add passenger with dob only
+          else if (dobCheck) {
             final dob =
                 DateFormating.convertStringToDateTime(passenger.dob ?? '');
             if (dob == null) continue;
@@ -365,7 +398,8 @@ class TravellerController extends GetxController {
                 temp.add(passenger);
               }
             }
-          } else {
+          } // if dont need to check for dob and passport then check type and add detail
+          else {
             if (type == 'ADULT' && passenger.ti != 'Master') {
               temp.add(passenger);
             } else if (type == 'CHILD') {

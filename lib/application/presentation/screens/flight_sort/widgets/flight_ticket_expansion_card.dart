@@ -35,11 +35,14 @@ class TicketDetailExpansionChild extends StatelessWidget {
           kHeight10,
           Row(
             children: [
-              Text(
-                totalPriceList.fareIdentifier ?? '',
-                style: textStyle1.copyWith(fontWeight: FontWeight.w900),
+              Expanded(
+                child: Text(
+                  totalPriceList.fareIdentifier ?? '',
+                  style: textStyle1.copyWith(fontWeight: FontWeight.w900),
+                  // overflow: TextOverflow.ellipsis,
+                ),
               ),
-              const Spacer(),
+              kWidth5,
               Text(
                 '₹ ${totalPriceList.fd!.adult!.fC!.tf}',
                 style: textThinStyle1.copyWith(fontWeight: FontWeight.w900),

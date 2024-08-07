@@ -16,9 +16,10 @@ class ScreenSavedPassengers extends StatelessWidget {
     final travellerIndex = arguments['index'] as int;
     final travellerType = arguments['type'] as String;
     final useDob = arguments['use_dob'] as bool;
+    final pcs = arguments['pcs'] as bool;
     final travelerController = Get.find<TravellerController>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      travelerController.getAllPassengers(travellerType, useDob);
+      travelerController.getAllPassengers(travellerType, useDob, pcs);
     });
 
     return Scaffold(
@@ -45,7 +46,8 @@ class ScreenSavedPassengers extends StatelessWidget {
             return Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {
-                  travelerController.getAllPassengers(travellerType, useDob);
+                  travelerController.getAllPassengers(
+                      travellerType, useDob, pcs);
                 },
                 child: ListView.separated(
                   itemCount: travelerController.allPassengers.length,

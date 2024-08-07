@@ -168,6 +168,8 @@ class _DetailContainerState extends State<DetailContainer> {
                             Get.toNamed(Routes.savedPassengers, arguments: {
                               'index': widget.index,
                               'type': widget.travellerType,
+                              'pcs': (widget.pcs != null &&
+                                  widget.pcs!.dobe == true),
                               'use_dob': (widget.pcs != null &&
                                       widget.pcs!.dobe == true) ||
                                   (widget.dob != null &&
@@ -305,7 +307,7 @@ class _DetailContainerState extends State<DetailContainer> {
                                     horizontal: 10.w, vertical: 10.h),
                                 decoration: BoxDecoration(
                                     color: kWhite,
-                                    borderRadius: kRadius10,
+                                    borderRadius: kRadius15,
                                     border:
                                         Border.all(color: kGrey, width: 0.5)),
                                 child: Row(
@@ -327,30 +329,29 @@ class _DetailContainerState extends State<DetailContainer> {
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            widget.pcs!.pm == true
-                                ? Column(
-                                    children: [
-                                      Text('Passport Number',
-                                          style: textThinStyle1),
-                                      kHeight5,
-                                      CustomTextField(
-                                        controller: passportNumberController,
-                                        validate: Validate.passportNumber,
-                                        isBorder: true,
-                                        borderRadius: 14,
-                                        enabledBorder: OutlineInputBorder(
-                                            borderSide:
-                                                const BorderSide(width: .3),
-                                            borderRadius: kRadius15),
-                                        onTapOutside: () =>
-                                            FocusScope.of(context).unfocus(),
-                                        hintText: 'Enter Your Passport Number',
-                                        fillColor: kWhite,
-                                      ),
-                                      kHeight5,
-                                    ],
-                                  )
-                                : kEmpty,
+                            // widget.pcs!.pm == true ?
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Passport Number', style: textThinStyle1),
+                                kHeight5,
+                                CustomTextField(
+                                  controller: passportNumberController,
+                                  validate: Validate.passportNumber,
+                                  isBorder: true,
+                                  borderRadius: 14,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(width: .3),
+                                      borderRadius: kRadius15),
+                                  onTapOutside: () =>
+                                      FocusScope.of(context).unfocus(),
+                                  hintText: 'Enter Your Passport Number',
+                                  fillColor: kWhite,
+                                ),
+                                kHeight5,
+                              ],
+                            ),
+                            // : kEmpty,
                             widget.pcs!.pid == true
                                 ? Column(
                                     crossAxisAlignment:
@@ -385,7 +386,7 @@ class _DetailContainerState extends State<DetailContainer> {
                                               horizontal: 10.w, vertical: 10.h),
                                           decoration: BoxDecoration(
                                               color: kWhite,
-                                              borderRadius: kRadius10,
+                                              borderRadius: kRadius15,
                                               border: Border.all(
                                                   color: kGrey, width: 0.5)),
                                           child: Row(
@@ -442,7 +443,7 @@ class _DetailContainerState extends State<DetailContainer> {
                                               horizontal: 10.w, vertical: 10.h),
                                           decoration: BoxDecoration(
                                               color: kWhite,
-                                              borderRadius: kRadius10,
+                                              borderRadius: kRadius15,
                                               border: Border.all(
                                                   color: kGrey, width: 0.5)),
                                           child: Row(

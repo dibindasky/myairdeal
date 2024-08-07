@@ -9,7 +9,7 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 class NationalityCodeDropDown extends StatelessWidget {
   NationalityCodeDropDown({super.key});
 
-  TextEditingController codeController = TextEditingController();
+  final TextEditingController codeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +17,14 @@ class NationalityCodeDropDown extends StatelessWidget {
       return Container(
         width: double.infinity,
         decoration: BoxDecoration(
-            borderRadius: kRadius10,
+            borderRadius: kRadius15,
             border: Border.all(color: kBlack.withOpacity(.3))),
         child: DropdownButtonHideUnderline(
           child: DropdownButton2<String>(
             buttonStyleData: ButtonStyleData(
               decoration: BoxDecoration(
                 color: kWhite,
-                borderRadius: kRadius5,
+                borderRadius: kRadius15,
               ),
               elevation: 0,
               padding: EdgeInsets.symmetric(horizontal: 10.w),

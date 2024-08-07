@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/domain/models/booking_ids_model/booking_ids_model.dart';
 
 class BookingIdDropDown extends StatelessWidget {
   BookingIdDropDown({super.key});
@@ -33,22 +34,21 @@ class BookingIdDropDown extends StatelessWidget {
             ),
             hint: Text(
               'Booking ID',
-              style: textStyle1.copyWith(color: kBlack),
+              style: textThinStyle1.copyWith(color: kBlack),
             ),
             isExpanded: true,
-            items: [
-              for (var code in controller.bookingIdList)
-                DropdownMenuItem<String>(
-                  value: code,
-                  child: Text(
-                    code,
-                    style:
-                        textThinStyle1.copyWith(color: kBlack, fontSize: 12.sp),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+            items: controller.bookingIdList.map((BookingIdsModel code) {
+              return DropdownMenuItem<String>(
+                value: code.bookingId,
+                child: Text(
+                  code.bookingId ?? '',
+                  style:
+                      textThinStyle1.copyWith(color: kBlack, fontSize: 12.sp),
+                  overflow: TextOverflow.ellipsis,
                 ),
-            ],
-            value: controller.selectedBookingId.value,
+              );
+            }).toList(),
+            value: controller.selectedBookingId?.value,
             dropdownStyleData: DropdownStyleData(
               decoration: BoxDecoration(borderRadius: kRadius5, color: kWhite),
               offset: const Offset(0, -5),

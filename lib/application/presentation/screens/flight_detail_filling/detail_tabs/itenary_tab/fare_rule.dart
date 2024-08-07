@@ -26,7 +26,7 @@ class FareRulesScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         border: Border.all(color: kBlueThinLIght),
                         color: klightWhite,
-                        boxShadow: boxShadow1,
+                        boxShadow: boxShadow2,
                       ),
                       padding: EdgeInsets.all(8.w),
                       child: Text(controller.fareRuleKeysList.last,
@@ -38,138 +38,146 @@ class FareRulesScreen extends StatelessWidget {
                       style: textThinStyle1.copyWith(color: kRed),
                     ),
                     kHeight20,
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(bottom: 10.0),
-                      padding: EdgeInsets.all(10.w),
-                      decoration: BoxDecoration(
-                        color: kWhite,
-                        borderRadius: kRadius10,
-                        boxShadow: boxShadow1,
-                      ),
-                      child: Column(
-                          children: List.generate(
-                        controller.fareRuleSection.value.tfr?.cancellation
-                                ?.length ??
-                            0,
-                        (index) => buildFareRuleContainer(
-                            title:
-                                controller.fareRuleSection.value.tfr?.noShow !=
+                    controller.fareRuleSection.value.tfr?.noShow != null
+                        ? Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.only(bottom: 10.0),
+                            padding: EdgeInsets.all(10.w),
+                            decoration: BoxDecoration(
+                              color: kWhite,
+                              borderRadius: kRadius10,
+                              boxShadow: boxShadow2,
+                            ),
+                            child: Column(
+                                children: List.generate(
+                              controller.fareRuleSection.value.tfr?.cancellation
+                                      ?.length ??
+                                  0,
+                              (index) => buildFareRuleContainer(
+                                  title: controller.fareRuleSection.value.tfr
+                                              ?.noShow !=
+                                          null
+                                      ? 'NO SHOW'
+                                      : '',
+                                  policyInfo: 'Policy Info',
+                                  content: controller.fareRuleSection.value.tfr
+                                          ?.noShow?[index].policyInfo
+                                          ?.replaceAll('__nls__', '')
+                                          .toString() ??
+                                      "",
+                                  amountSecond: controller.fareRuleSection.value
+                                          .tfr?.noShow?[index].et ??
+                                      ""),
+                            )),
+                          )
+                        : kEmpty,
+                    kHeight5,
+                    controller.fareRuleSection.value.tfr?.datechange != null
+                        ? Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.only(bottom: 10.0),
+                            padding: EdgeInsets.all(10.w),
+                            decoration: BoxDecoration(
+                              color: kWhite,
+                              borderRadius: kRadius10,
+                              boxShadow: boxShadow2,
+                            ),
+                            child: Column(
+                                children: List.generate(
+                              controller.fareRuleSection.value.tfr?.cancellation
+                                      ?.length ??
+                                  0,
+                              (index) => buildFareRuleContainer(
+                                title: controller.fareRuleSection.value.tfr
+                                            ?.datechange !=
                                         null
-                                    ? 'NO SHOW'
+                                    ? 'DATE CHANGE'
                                     : '',
-                            content: 'Policy Info',
-                            subTiitle: controller.fareRuleSection.value.tfr
-                                    ?.noShow?[index].policyInfo
-                                    ?.replaceAll('__nls__', '')
-                                    .toString() ??
-                                "",
-                            amountSecond: controller.fareRuleSection.value.tfr
-                                    ?.noShow?[index].et ??
-                                ""),
-                      )),
-                    ),
+                                policyInfo: 'Policy Info',
+                                content: controller.fareRuleSection.value.tfr
+                                        ?.datechange?[index].policyInfo
+                                        ?.replaceAll('__nls__', '')
+                                        .toString() ??
+                                    "",
+                                amountSecond: controller.fareRuleSection.value
+                                        .tfr?.datechange?[index].et
+                                        .toString() ??
+                                    "",
+                              ),
+                            )),
+                          )
+                        : kEmpty,
                     kHeight5,
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(bottom: 10.0),
-                      padding: EdgeInsets.all(10.w),
-                      decoration: BoxDecoration(
-                        color: kWhite,
-                        borderRadius: kRadius10,
-                        boxShadow: boxShadow1,
-                      ),
-                      child: Column(
-                          children: List.generate(
-                        controller.fareRuleSection.value.tfr?.cancellation
-                                ?.length ??
-                            0,
-                        (index) => buildFareRuleContainer(
-                          title: controller
-                                      .fareRuleSection.value.tfr?.datechange !=
-                                  null
-                              ? 'DATE CHANGE'
-                              : '',
-                          content: 'Policy Info',
-                          subTiitle: controller.fareRuleSection.value.tfr
-                                  ?.datechange?[index].policyInfo
-                                  ?.replaceAll('__nls__', '')
-                                  .toString() ??
-                              "",
-                          amountSecond: controller.fareRuleSection.value.tfr
-                                  ?.datechange?[index].et
-                                  .toString() ??
-                              "",
-                        ),
-                      )),
-                    ),
+                    controller.fareRuleSection.value.tfr?.cancellation != null
+                        ? Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.only(bottom: 10.0),
+                            padding: EdgeInsets.all(10.w),
+                            decoration: BoxDecoration(
+                              color: kWhite,
+                              borderRadius: kRadius10,
+                              boxShadow: boxShadow2,
+                            ),
+                            child: Column(
+                                children: List.generate(
+                              controller.fareRuleSection.value.tfr?.cancellation
+                                      ?.length ??
+                                  0,
+                              (index) => buildFareRuleContainer(
+                                title: controller.fareRuleSection.value.tfr
+                                            ?.cancellation !=
+                                        null
+                                    ? 'CANCELLATION'
+                                    : '',
+                                policyInfo: 'Policy Info',
+                                content: controller.fareRuleSection.value.tfr
+                                        ?.cancellation?[index].policyInfo
+                                        ?.replaceAll('__nls__', '')
+                                        .toString() ??
+                                    "",
+                                amountSecond: controller.fareRuleSection.value
+                                    .tfr?.cancellation?[index].et
+                                    .toString(),
+                              ),
+                            )),
+                          )
+                        : kEmpty,
                     kHeight5,
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(bottom: 10.0),
-                      padding: EdgeInsets.all(10.w),
-                      decoration: BoxDecoration(
-                        color: kWhite,
-                        borderRadius: kRadius10,
-                        boxShadow: boxShadow1,
-                      ),
-                      child: Column(
-                          children: List.generate(
-                        controller.fareRuleSection.value.tfr?.cancellation
-                                ?.length ??
-                            0,
-                        (index) => buildFareRuleContainer(
-                          title: controller.fareRuleSection.value.tfr
-                                      ?.cancellation !=
-                                  null
-                              ? 'CANCELLATION'
-                              : '',
-                          content: 'Policy Info',
-                          subTiitle: controller.fareRuleSection.value.tfr
-                                  ?.cancellation?[index].policyInfo
-                                  ?.replaceAll('__nls__', '')
-                                  .toString() ??
-                              "",
-                          amountSecond: controller.fareRuleSection.value.tfr
-                              ?.cancellation?[index].et
-                              .toString(),
-                        ),
-                      )),
-                    ),
-                    kHeight5,
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(bottom: 10.0),
-                      padding: EdgeInsets.all(10.w),
-                      decoration: BoxDecoration(
-                        color: kWhite,
-                        borderRadius: kRadius10,
-                        boxShadow: boxShadow1,
-                      ),
-                      child: Column(
-                          children: List.generate(
-                        controller.fareRuleSection.value.tfr?.cancellation
-                                ?.length ??
-                            0,
-                        (index) => buildFareRuleContainer(
-                          title: controller.fareRuleSection.value.tfr
-                                      ?.seatChargeable !=
-                                  null
-                              ? 'SEAT CHARGEABLE'
-                              : '',
-                          content: 'Policy Info',
-                          subTiitle: controller.fareRuleSection.value.tfr
-                                  ?.seatChargeable?[index].policyInfo
-                                  .toString() ??
-                              "",
-                          amountSecond: controller.fareRuleSection.value.tfr
-                                  ?.seatChargeable?[index].et
-                                  ?.replaceAll('__nls__', '')
-                                  .toString() ??
-                              "",
-                        ),
-                      )),
-                    ),
+                    controller.fareRuleSection.value.tfr?.seatChargeable != null
+                        ? Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.only(bottom: 10.0),
+                            padding: EdgeInsets.all(10.w),
+                            decoration: BoxDecoration(
+                              color: kWhite,
+                              borderRadius: kRadius10,
+                              boxShadow: boxShadow1,
+                            ),
+                            child: Column(
+                                children: List.generate(
+                              controller.fareRuleSection.value.tfr?.cancellation
+                                      ?.length ??
+                                  0,
+                              (index) => buildFareRuleContainer(
+                                title: controller.fareRuleSection.value.tfr
+                                            ?.seatChargeable !=
+                                        null
+                                    ? 'SEAT CHARGEABLE'
+                                    : '',
+                                policyInfo: 'Policy Info',
+                                content: controller.fareRuleSection.value.tfr
+                                        ?.seatChargeable?[index].policyInfo
+                                        .toString() ??
+                                    "",
+                                amountSecond: controller.fareRuleSection.value
+                                        .tfr?.seatChargeable?[index].et
+                                        ?.replaceAll('__nls__', '')
+                                        .toString() ??
+                                    "",
+                              ),
+                            )),
+                          )
+                        : kEmpty,
                   ],
                 );
               }),
@@ -182,8 +190,8 @@ class FareRulesScreen extends StatelessWidget {
 
   Widget buildFareRuleContainer({
     String? title,
+    String? policyInfo,
     String? content,
-    String? subTiitle,
     String? amountSecond,
     String? contentTwo,
     String? contentThree,
@@ -193,22 +201,22 @@ class FareRulesScreen extends StatelessWidget {
       children: [
         title != null && title != '' ? Text(title, style: textStyle1) : kEmpty,
         title != null && title != '' ? kHeight5 : kEmpty,
-        (content != null && content != '') &&
-                subTiitle != null &&
-                subTiitle != ''
+        (policyInfo != null && policyInfo != '') &&
+                content != null &&
+                content != ''
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    content,
+                    policyInfo,
                     style: textThinStyle1.copyWith(
                         fontSize: 13.sp, fontWeight: FontWeight.w700),
                     maxLines: 4,
                   ),
                   kWidth20,
                   Expanded(
-                    child: Text(subTiitle, style: textThinStyle1, maxLines: 4),
+                    child: Text(content, style: textThinStyle1, maxLines: 4),
                   ),
                 ],
               )

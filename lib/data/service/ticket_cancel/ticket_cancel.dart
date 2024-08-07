@@ -44,17 +44,6 @@ class CancelService implements CancelRepo {
     required TicketCancelRequestModel ticketCancelRequestModel,
   }) async {
     try {
-      // String? trip = ticketCancelRequestModel.trips
-      //     ?.map((trip) => trip.toJson())
-      //     .join(', ');
-      // log(trip.toString());
-
-      // for (var elements in ticketCancelRequestModel.trips ?? <Trip>[]) {
-      //   for (var element in elements.travellers ?? <Traveller>[]) {
-      //     log('${element.toJson()}');
-      //   }
-      // }
-
       final responce = await apiService.post(
         ApiEndPoints.amendendMentCharges,
         data: ticketCancelRequestModel.toJson(),

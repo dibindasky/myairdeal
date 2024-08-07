@@ -26,7 +26,7 @@ import 'package:myairdeal/application/presentation/screens/search/airport_search
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/review_detail.dart';
 import 'package:myairdeal/application/presentation/screens/splash/splash_screen.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/chat_page.dart';
-import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/tab.dart';
+import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/tabs/tabs.dart';
 import 'package:myairdeal/domain/core/binding/auth_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/booking_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/explore_controller_binding.dart';
@@ -80,6 +80,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       bindings: [
+        TalkToUsBinding(),
         AuthBinding(),
         NavBarBinding(),
         FlightSortBinding(),

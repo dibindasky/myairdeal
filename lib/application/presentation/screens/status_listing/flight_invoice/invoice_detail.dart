@@ -11,7 +11,6 @@ import 'package:myairdeal/application/presentation/screens/status_listing/widget
 import 'package:myairdeal/application/presentation/screens/status_listing/widgets/quick_links.container.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/widgets/you_could_also.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
-import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/tab.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
@@ -233,13 +232,15 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                         .selectedYouCouldAlsoTab.value ==
                                     1) {
                                   return const EmailListScreen();
-                                } else if (raiceController
-                                        .selectedYouCouldAlsoTab.value ==
-                                    2) {
-                                  return const EmailBox(
-                                    email: '',
-                                  );
-                                } else {
+                                }
+                                // else if (raiceController
+                                //         .selectedYouCouldAlsoTab.value ==
+                                //     2) {
+                                //   return const EmailBox(
+                                //     email: '',
+                                //   );
+                                // }
+                                else {
                                   return kEmpty;
                                 }
                               }),

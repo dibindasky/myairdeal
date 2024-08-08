@@ -25,8 +25,8 @@ import 'package:myairdeal/application/presentation/screens/refunds/refund_screen
 import 'package:myairdeal/application/presentation/screens/search/airport_search.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/review_detail.dart';
 import 'package:myairdeal/application/presentation/screens/splash/splash_screen.dart';
-import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/chat_page.dart';
-import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/tabs/tabs.dart';
+import 'package:myairdeal/application/presentation/screens/talk_to_us/chat/chat_page.dart';
+import 'package:myairdeal/application/presentation/screens/talk_to_us/tabs/tabs.dart';
 import 'package:myairdeal/domain/core/binding/auth_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/booking_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/explore_controller_binding.dart';
@@ -165,6 +165,7 @@ class GetXRouterConfig {
       page: () => const ScreenTab(),
     ),
     GetPage(
+      binding: TalkToUsBinding(),
       name: Routes.commingSoon,
       page: () => const ScreenCommingSoon(),
     ),

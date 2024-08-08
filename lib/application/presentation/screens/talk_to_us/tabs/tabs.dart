@@ -5,9 +5,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
-import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/tabs/enquiry.dart';
-import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/tabs/raice_ticket.dart';
-import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/tabs/raice_tickets_builder.dart';
+import 'package:myairdeal/application/presentation/screens/talk_to_us/tabs/enquiry.dart';
+import 'package:myairdeal/application/presentation/screens/talk_to_us/tabs/raice_ticket.dart';
+import 'package:myairdeal/application/presentation/screens/talk_to_us/tabs/raice_tickets_builder.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/data/features/url_launcher.dart';
@@ -21,6 +21,7 @@ class ScreenTab extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Get.find<AuthController>().getUserInfo(true);
       talkToUsController.getAllBookingIds();
+      talkToUsController.getAllTickets();
     });
     return Scaffold(
       body: ListView(

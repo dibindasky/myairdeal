@@ -20,48 +20,48 @@ class BookingIdDropDown extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: kRadius10,
             border: Border.all(color: kBlack.withOpacity(.3))),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton2<String>(
-            buttonStyleData: ButtonStyleData(
-              decoration: BoxDecoration(
-                color: kWhite,
-                borderRadius: kRadius5,
-              ),
-              elevation: 0,
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
-              height: 40,
-              width: 0,
-            ),
-            hint: Text(
-              'Booking ID',
-              style: textThinStyle1.copyWith(color: kBlack),
-            ),
-            isExpanded: true,
-            items: controller.bookingIdList.map((BookingIdsModel code) {
-              return DropdownMenuItem<String>(
-                value: code.bookingId,
-                child: Text(
-                  code.bookingId ?? '',
-                  style:
-                      textThinStyle1.copyWith(color: kBlack, fontSize: 12.sp),
-                  overflow: TextOverflow.ellipsis,
+        child: Obx(
+          () => DropdownButtonHideUnderline(
+            child: DropdownButton2<String>(
+              buttonStyleData: ButtonStyleData(
+                decoration: BoxDecoration(
+                  color: kWhite,
+                  borderRadius: kRadius5,
                 ),
-              );
-            }).toList(),
-            value: controller.selectedBookingId?.value,
-            dropdownStyleData: DropdownStyleData(
-              decoration: BoxDecoration(borderRadius: kRadius5, color: kWhite),
-              offset: const Offset(0, -5),
-              maxHeight: 250,
+                elevation: 0,
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                height: 40,
+                width: 0,
+              ),
+              hint: Text('Booking ID',
+                  style: textThinStyle1.copyWith(color: kBlack)),
+              isExpanded: true,
+              items: controller.bookingIdList.map((BookingIdsModel code) {
+                return DropdownMenuItem<String>(
+                    value: code.bookingId,
+                    child: Text(
+                      code.bookingId ?? '',
+                      style: textThinStyle1.copyWith(
+                          color: kBlack, fontSize: 12.sp),
+                      overflow: TextOverflow.ellipsis,
+                    ));
+              }).toList(),
+              value: controller.selectedBookingId.value == ''
+                  ? null
+                  : controller.selectedBookingId.value,
+              dropdownStyleData: DropdownStyleData(
+                  decoration:
+                      BoxDecoration(borderRadius: kRadius5, color: kWhite),
+                  offset: const Offset(0, -5),
+                  maxHeight: 250),
+              menuItemStyleData: const MenuItemStyleData(height: 40),
+              dropdownSearchData:
+                  dropdownSearchData(controller: codeController),
+              onChanged: (value) {
+                controller.changeBookingId(value ?? '');
+              },
+              onMenuStateChange: (isOpen) {},
             ),
-            menuItemStyleData: const MenuItemStyleData(
-              height: 40,
-            ),
-            dropdownSearchData: dropdownSearchData(controller: codeController),
-            onChanged: (value) {
-              controller.changeBookingId(value ?? '');
-            },
-            onMenuStateChange: (isOpen) {},
           ),
         ),
       );

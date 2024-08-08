@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/validators/validators.dart';
 
@@ -29,6 +30,7 @@ class CustomTextField extends StatefulWidget {
     this.onChanged,
     this.keyboardType,
     this.maxLength,
+    this.lebelText,
     this.focusedBorder,
     this.inputFormatters = const <TextInputFormatter>[],
   });
@@ -56,6 +58,7 @@ class CustomTextField extends StatefulWidget {
   final Function(String value)? onChanged;
   final TextInputType? keyboardType;
   final List<TextInputFormatter> inputFormatters;
+  final String? lebelText;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -96,6 +99,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       textCapitalization: widget.textCapitalization ?? TextCapitalization.none,
       controller: widget.controller,
       decoration: InputDecoration(
+        labelStyle: textThinStyle1,
+        labelText: widget.lebelText,
         errorMaxLines: 5,
         fillColor: widget.fillColor,
         filled: true,

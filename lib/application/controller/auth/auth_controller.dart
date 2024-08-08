@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -267,12 +268,21 @@ class AuthController extends GetxController {
         final talkToUsController = Get.find<TalkToUsController>();
         final fullName = '${r.firstName ?? ''} ${r.lastName ?? ''}';
         updateEmailController.text = r.email ?? '';
-
         updateFirnameController.text = r.firstName ?? '';
         updateLastNameController.text = r.lastName ?? '';
+        // talkToUsController.enquiryEmailController.text.isEmpty
+        //     ? r.email ?? ''
+        //     : talkToUsController.enquiryEmailController.text;
+        // talkToUsController.enquiryNameController.text.isEmpty
+        //     ? fullName
+        //     : talkToUsController.enquiryNameController.text;
+        // talkToUsController.enquiryNumberController.text.isEmpty
+        //     ? r.phone ?? ''
+        //     : talkToUsController.enquiryNumberController.text;
         talkToUsController.enquiryEmailController.text = r.email ?? '';
         talkToUsController.enquiryNameController.text = fullName;
         talkToUsController.enquiryNumberController.text = r.phone ?? '';
+        //log('name ${talkToUsController.enquiryNameController.text}');
         updatecountryCodeController.text = r.country?.countryCode ?? '';
         updatedailCodeController.text = r.country?.dialCode ?? '';
         updatecountryNameController.text = r.country?.countryName ?? '';

@@ -1,9 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/data/service/raice_ticket/raice_ticket_service.dart';
 import 'package:myairdeal/domain/models/booking_ids_model/booking_ids_model.dart';
-import 'package:myairdeal/domain/models/page_query/page_query.dart';
 import 'package:myairdeal/domain/models/ticket_raice/enguiry_model/enguiry_model.dart';
 import 'package:myairdeal/domain/models/ticket_raice/get_all_global_tickets/get_all_global_tickets.dart';
 import 'package:myairdeal/domain/models/ticket_raice/global_ticket_raising_model/global_ticket_raising_model.dart';
@@ -13,7 +14,7 @@ class TalkToUsController extends GetxController {
   // flight service class responsible for api calls
   final RaiceTicketRepo raiceTicketRepo = RaiceTicketService();
 
-  RxInt raicetickets = 0.obs;
+  int raiceTickets = 0;
   RxBool isLoading = false.obs;
   RxInt selectedtab = 1.obs;
   GlobalKey<FormState> globalRaiceTicketFormKey = GlobalKey<FormState>();
@@ -31,19 +32,19 @@ class TalkToUsController extends GetxController {
   TextEditingController headingController = TextEditingController();
   TextEditingController ticketRisingdescriptionController =
       TextEditingController();
-  RxString selectedEnquiryType = 'Air Ambulance'.obs;
-  RxList enquiryTypeList = ["Air Ambulance", "Helicopter", "Private Jet"].obs;
+  RxString selectedEnquiryType = ''.obs;
+  RxList enquiryTypeList = ['Air Ambulance', "Helicopter", "Private Jet"].obs;
 
   //All global tickets
   RxList<GetAllGlobalTickets> globalTickets = <GetAllGlobalTickets>[].obs;
 
   RxList globalTicketRaisingProducts =
-      ['Booking', 'Technical', 'Others', 'Payment'].obs;
-  RxString selectedTicketRaisingType = 'Booking'.obs;
+      ['Payment', 'Booking', 'Technical', 'Others'].obs;
+  RxString selectedTicketRaisingType = 'Payment'.obs;
 
   // Booking ids
   RxList<BookingIdsModel> bookingIdList = <BookingIdsModel>[].obs;
-  RxString? selectedBookingId;
+  RxString selectedBookingId = ''.obs;
 
   changetab(int newTab) {
     selectedtab.value = newTab;
@@ -61,7 +62,8 @@ class TalkToUsController extends GetxController {
   }
 
   void changeBookingId(String bookingID) {
-    selectedBookingId?.value = bookingID;
+    selectedBookingId.value = bookingID;
+    log(selectedBookingId.value);
     update();
   }
 
@@ -73,7 +75,7 @@ class TalkToUsController extends GetxController {
             description: ticketRisingdescriptionController.text,
             type: selectedTicketRaisingType.value,
             bookingId: selectedTicketRaisingType.value == 'Booking'
-                ? selectedBookingId?.value
+                ? selectedBookingId.value
                 : null,
             product: 'Flight');
     final data = await raiceTicketRepo.globalTicketRaising(
@@ -100,8 +102,7 @@ class TalkToUsController extends GetxController {
   }
 
   void getAllTickets() async {
-    final data = await raiceTicketRepo.getGlobalTickets(
-        page: PageQuery(pageSize: raicetickets.value));
+    final data = await raiceTicketRepo.getGlobalTickets(page: raiceTickets);
     data.fold(
       (l) => null,
       (r) {
@@ -111,8 +112,7 @@ class TalkToUsController extends GetxController {
   }
 
   void getnextTickets() async {
-    final data = await raiceTicketRepo.getGlobalTickets(
-        page: PageQuery(pageSize: raicetickets.value += raicetickets.value));
+    final data = await raiceTicketRepo.getGlobalTickets(page: raiceTickets);
     data.fold(
       (l) => null,
       (r) {
@@ -122,14 +122,6 @@ class TalkToUsController extends GetxController {
   }
 
   void addEnquiry() async {
-    if (enquiryDescriptionController.text.isEmpty ||
-        selecedDailCode.value.isEmpty ||
-        enquiryEmailController.text.isEmpty ||
-        enquiryNumberController.text.isEmpty ||
-        selectedEnquiryType.value.isEmpty) {
-      Get.snackbar('Failed', 'Fill the Missing Feilds', backgroundColor: kRed);
-      return;
-    }
     isLoading.value = true;
     EnguiryModel enquiryModel = EnguiryModel(
       description: enquiryDescriptionController.text,
@@ -138,11 +130,12 @@ class TalkToUsController extends GetxController {
       phone: enquiryNumberController.text,
       type: selectedEnquiryType.value,
     );
+    log('${enquiryModel.toJson()}');
     final date = await raiceTicketRepo.addEnquiry(enquiryModel: enquiryModel);
     date.fold(
       (l) => null,
       (r) {
-        Get.snackbar('Success', 'Enquiry Created Successfully',
+        Get.snackbar('Success', r.message ?? 'Enquiry Created Successfully',
             backgroundColor: kBluePrimary);
         enquiryDescriptionController.clear();
       },

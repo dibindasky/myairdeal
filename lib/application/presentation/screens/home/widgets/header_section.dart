@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -25,6 +26,7 @@ class HomeHeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final talkUscontroller = Get.find<TalkToUsController>();
     final homeController = Get.find<FlightSortController>();
     return AppBarCustomShape(
       child: Column(
@@ -63,56 +65,70 @@ class HomeHeaderSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
                 4,
-                (index) => GestureDetector(
-                  onTap: () {
-                    // homeController.changeCategory(index);
-                    if (homeTabTitle[index] != 'Flights') {
-                      Get.toNamed(Routes.commingSoon,
-                          arguments: {"image": homeTabImages[index]});
-                    }
-                  },
-                  child:
-                      GetBuilder<FlightSortController>(builder: (controller) {
-                    return Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              boxShadow: boxShadow2, borderRadius: kRadius50),
-                          child: CircleAvatar(
-                            radius: 30.w,
-                            backgroundImage: AssetImage(homeTabImages[index]),
+                (index) {
+                  List<String> homeTabTitle = [
+                    'Flights',
+                    'Air \nAmbulance',
+                    'Helicopter',
+                    'Private Jet'
+                  ];
+                  return GestureDetector(
+                    onTap: () {
+                      if (homeTabTitle[index] != 'Flights') {
+                        Get.toNamed(Routes.commingSoon,
+                            arguments: {"image": homeTabImages[index]});
+                      }
+                      if (homeTabTitle[index] == 'Air \nAmbulance') {
+                        talkUscontroller.changeEnquiryType('Air Ambulance');
+                      } else if (homeTabTitle[index] == 'Private Jet') {
+                        talkUscontroller.changeEnquiryType('Private Jet');
+                      } else if (homeTabTitle[index] == 'Helicopter') {
+                        talkUscontroller.changeEnquiryType('Helicopter');
+                      }
+                    },
+                    child:
+                        GetBuilder<FlightSortController>(builder: (controller) {
+                      return Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                boxShadow: boxShadow2, borderRadius: kRadius50),
+                            child: CircleAvatar(
+                              radius: 30.w,
+                              backgroundImage: AssetImage(homeTabImages[index]),
+                            ),
                           ),
-                        ),
-                        kHeight5,
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                homeTabTitle[index],
-                                style: textThinStyle1.copyWith(
-                                  fontWeight:
-                                      index == 0 ? FontWeight.w500 : null,
+                          kHeight5,
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  homeTabTitle[index],
+                                  style: textThinStyle1.copyWith(
+                                    fontWeight:
+                                        index == 0 ? FontWeight.w500 : null,
+                                  ),
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
                                 ),
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        homeController.selectedCategoryType.value == index
-                            ? Container(
-                                width: 23.w,
-                                height: 4.h,
-                                decoration: BoxDecoration(
-                                    color: kBluePrimary,
-                                    borderRadius: kRadius10),
-                              )
-                            : kEmpty
-                      ],
-                    );
-                  }),
-                ),
+                          homeController.selectedCategoryType.value == index
+                              ? Container(
+                                  width: 23.w,
+                                  height: 4.h,
+                                  decoration: BoxDecoration(
+                                      color: kBluePrimary,
+                                      borderRadius: kRadius10),
+                                )
+                              : kEmpty
+                        ],
+                      );
+                    }),
+                  );
+                },
               ),
             ),
           ),

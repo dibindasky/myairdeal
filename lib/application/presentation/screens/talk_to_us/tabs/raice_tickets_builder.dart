@@ -20,7 +20,7 @@ class RaiceTicketsLists extends StatelessWidget {
           separatorBuilder: (index, dimensions) => kHeight5,
           padding: const EdgeInsets.all(0),
           shrinkWrap: true,
-          physics: const AlwaysScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           itemCount: controller.globalTickets.length,
           itemBuilder: (context, index) {
             final data = controller.globalTickets[index];

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
-import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/chat_bubble.dart';
+import 'package:myairdeal/application/presentation/screens/talk_to_us/chat/chat_bubble.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 

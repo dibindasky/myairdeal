@@ -6,6 +6,7 @@ import 'package:myairdeal/application/presentation/screens/talk_to_us/widgets/dr
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
+import 'package:myairdeal/application/presentation/utils/show_dailog/show_dailog.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
@@ -88,11 +89,16 @@ class RaiceTicket extends StatelessWidget {
           width: 400.w,
           text: 'Submit',
           onTap: () {
+            if (controller.selectedTicketRaisingType.value == 'Booking' &&
+                controller.selectedBookingId.value == '') {
+              showSnackbar(context, message: 'Please Select Booking ID');
+              return;
+            }
             if (controller.globalRaiceTicketFormKey.currentState!.validate()) {
               controller.globalTicketRaising();
             }
           },
-        )
+        ),
       ],
     );
   }

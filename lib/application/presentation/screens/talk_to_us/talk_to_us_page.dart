@@ -6,8 +6,33 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 
-class ScreenTalkToUsPage extends StatelessWidget {
+class ScreenTalkToUsPage extends StatefulWidget {
   const ScreenTalkToUsPage({super.key});
+
+  @override
+  State<ScreenTalkToUsPage> createState() => _ScreenTalkToUsPageState();
+}
+
+class _ScreenTalkToUsPageState extends State<ScreenTalkToUsPage> {
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   final talkToUsController = Get.find<TalkToUsController>();
+  //   final authController = Get.find<AuthController>();
+  //   authController.getUserInfo(true);
+  //   final name =
+  //       '${authController.userCreationResponceModel.value.firstName} ${authController.userCreationResponceModel.value.lastName}';
+  //   talkToUsController.enquiryEmailController.text.isEmpty
+  //       ? authController.userCreationResponceModel.value.email
+  //       : talkToUsController.enquiryEmailController.text;
+  //   talkToUsController.enquiryNameController.text.isEmpty
+  //       ? name
+  //       : talkToUsController.enquiryNameController.text;
+  //   talkToUsController.enquiryNumberController.text.isEmpty
+  //       ? authController.userCreationResponceModel.value.phone
+  //       : talkToUsController.enquiryNumberController.text;
+  // }
 
   @override
   Widget build(BuildContext context) {

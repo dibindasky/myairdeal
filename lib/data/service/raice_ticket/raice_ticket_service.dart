@@ -7,7 +7,6 @@ import 'package:myairdeal/domain/core/api_endpoints/api_endpoints.dart';
 import 'package:myairdeal/domain/core/failure/failure.dart';
 import 'package:myairdeal/domain/models/booking/pdf_model/pdf_model.dart';
 import 'package:myairdeal/domain/models/booking_ids_model/booking_ids_model.dart';
-import 'package:myairdeal/domain/models/page_query/page_query.dart';
 import 'package:myairdeal/domain/models/success_responce_model/success_responce_model.dart';
 import 'package:myairdeal/domain/models/ticket_raice/enguiry_model/enguiry_model.dart';
 import 'package:myairdeal/domain/models/ticket_raice/get_all_global_tickets/get_all_global_tickets.dart';
@@ -93,10 +92,10 @@ class RaiceTicketService implements RaiceTicketRepo {
 
   @override
   Future<Either<Failure, List<GetAllGlobalTickets>>> getGlobalTickets(
-      {required PageQuery page}) async {
+      {required int page}) async {
     try {
       final responce = await apiService.get(ApiEndPoints.getGlobalTickets,
-          queryParameters: page.toJson());
+          queryParameters: {'pageSize': page});
       log('getGlobalTickets  >> : done');
 
       return Right((responce.data as List<dynamic>?)
@@ -136,7 +135,7 @@ class RaiceTicketService implements RaiceTicketRepo {
   Future<Either<Failure, List<BookingIdsModel>>> getAllBookingIDs() async {
     try {
       final responce = await apiService.get(ApiEndPoints.getBookingId);
-      log('getAllBookingIDs  >> : done ${responce.data}');
+      log('getAllBookingIDs  >> : done');
       return Right((responce.data as List<dynamic>?)
               ?.map((e) => BookingIdsModel.fromJson(e as Map<String, dynamic>))
               .toList() ??

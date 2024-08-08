@@ -78,13 +78,6 @@ String copyIcon = 'asset/image/link-2.png';
 String mumbai = 'asset/image/mumbai.png';
 String bookingEmptyImage = 'asset/image/booking_empty.png';
 
-List<String> homeTabTitle = [
-  'Flights',
-  'Air \nAmbulance',
-  'Chatered \nFlights',
-  'Helicopter'
-];
-
 List<String> homeTabImages = [
   imageFlight,
   imageAirAmbulance,
@@ -112,7 +105,7 @@ String myOnbaordOne = 'asset/image/my_air_deal_one.png';
 String myOnboardTwo = 'asset/image/my_air_deal_two.png';
 String myOnbaordThree = 'asset/image/my_air_deal_three.png';
 
-const imageRazorpay ='asset/dev/razorpay.png';
+const imageRazorpay = 'asset/dev/razorpay.png';
 
 String getAirlineLogo(String code) {
   return ApiEndPoints.baseUrl +

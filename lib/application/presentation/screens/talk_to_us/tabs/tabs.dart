@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -23,12 +24,25 @@ class ScreenTab extends StatelessWidget {
       talkToUsController.getAllBookingIds();
       talkToUsController.getAllTickets();
     });
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ListView(
+        physics: const NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.all(0),
         children: [
-          const DetailAppBar(heading: 'Talk To US'),
-          kHeight30,
+          DetailAppBar(
+            action: GestureDetector(
+              onTap: () => OpenLauncherFeature.launchPhone(phone: '7061409421'),
+              child: CircleAvatar(
+                radius: 15.w,
+                child: const Icon(Icons.phone),
+              ),
+            ),
+            heading: 'Talk To US',
+            bottomgap: kHeight30,
+            topGap: kHeight20,
+          ),
+          SizedBox(height: height * .02),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: GetBuilder<TalkToUsController>(builder: (contro) {
@@ -39,19 +53,22 @@ class ScreenTab extends StatelessWidget {
               return Column(
                 children: [
                   const TabsContainerBuilder(),
-                  kHeight15,
-                  GetBuilder<TalkToUsController>(
-                    builder: (controller) {
-                      if (talkToUsController.selectedtab.value == 0) {
-                        return const EnquiryBox();
-                      } else if (talkToUsController.selectedtab.value == 1) {
-                        return const RaiceTicket();
-                      } else if (talkToUsController.selectedtab.value == 2) {
-                        return const RaiceTicketsLists();
-                      } else {
-                        return kEmpty;
-                      }
-                    },
+                  SizedBox(height: height * .02),
+                  SizedBox(
+                    height: height * .7,
+                    child: GetBuilder<TalkToUsController>(
+                      builder: (controller) {
+                        if (talkToUsController.selectedtab.value == 0) {
+                          return const EnquiryBox();
+                        } else if (talkToUsController.selectedtab.value == 1) {
+                          return const RaiceTicket();
+                        } else if (talkToUsController.selectedtab.value == 2) {
+                          return const RaiceTicketsLists();
+                        } else {
+                          return kEmpty;
+                        }
+                      },
+                    ),
                   ),
                 ],
               );
@@ -71,7 +88,7 @@ class TabsContainerBuilder extends StatelessWidget {
     final talkToUsController = Get.find<TalkToUsController>();
     return Row(
       children: List.generate(
-        4,
+        3,
         (index) {
           List<IconData> icons = [
             Icons.question_answer,
@@ -88,9 +105,9 @@ class TabsContainerBuilder extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       talkToUsController.changetab(index);
-                      if (text[index] == 'Support') {
-                        OpenLauncherFeature.launchPhone(phone: '7061409421');
-                      }
+                      // if (text[index] == 'Support') {
+                      //   OpenLauncherFeature.launchPhone(phone: '7061409421');
+                      // }
                     },
                     child: Obx(
                       () => Container(

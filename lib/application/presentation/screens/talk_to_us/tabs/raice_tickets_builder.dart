@@ -16,44 +16,54 @@ class RaiceTicketsLists extends StatelessWidget {
         if (controller.globalTickets.isEmpty) {
           return const Center(child: Text('No Raised Tickets'));
         }
-        return ListView.separated(
-          separatorBuilder: (index, dimensions) => kHeight5,
-          padding: const EdgeInsets.all(0),
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          itemCount: controller.globalTickets.length,
-          itemBuilder: (context, index) {
-            final data = controller.globalTickets[index];
-            return Container(
-              padding: EdgeInsets.all(12.w),
-              decoration: BoxDecoration(
-                  color: kGreyLight,
-                  border: Border.all(color: kBlack),
-                  borderRadius: kRadius10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(data.heading ?? ''),
-                      Text(data.type ?? 'type')
-                    ],
-                  ),
-                  kHeight5,
-                  Text(data.description ?? 'Des'),
-                  kHeight5,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(data.product ?? 'product'),
-                      Text(data.status ?? 'sta')
-                    ],
-                  ),
-                ],
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              ListView.separated(
+                separatorBuilder: (index, dimensions) => kHeight5,
+                padding: const EdgeInsets.all(0),
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemCount: controller.globalTickets.length,
+                itemBuilder: (context, index) {
+                  final data = controller.globalTickets[index];
+                  return Container(
+                    padding: EdgeInsets.all(12.w),
+                    decoration: BoxDecoration(
+                        color: kGreyLight,
+                        border: Border.all(color: kBlack),
+                        borderRadius: kRadius10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(data.heading ?? '',
+                                style: textStyle1.copyWith(
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.w700)),
+                            Text(data.type ?? 'type')
+                          ],
+                        ),
+                        kHeight5,
+                        Text(data.description ?? 'Des'),
+                        kHeight5,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(data.product ?? 'product'),
+                            Text(data.status ?? 'sta')
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-            );
-          },
+              kHeight10
+            ],
+          ),
         );
       },
     );

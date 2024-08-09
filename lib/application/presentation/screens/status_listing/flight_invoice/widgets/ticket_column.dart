@@ -10,11 +10,15 @@ class TicketColumn extends StatelessWidget {
   final String? subValue;
   final String? flightCode;
   final bool isBold;
+  final String? cabinBaggage;
+  final String? checkinBaggage;
   final CrossAxisAlignment? crossAxisAlignment;
   final TextStyle? valueStyle;
   final TextStyle? lebelStyle;
   final TextStyle? subValueStyle;
   final TextStyle? exitStyle;
+  final TextStyle? cabinBaggageStyle;
+  final TextStyle? checkinBaggageStyle;
   final String? exit;
   final String? airlineCode;
 
@@ -26,6 +30,10 @@ class TicketColumn extends StatelessWidget {
     this.exit,
     super.key,
     this.flightCode,
+    this.cabinBaggage,
+    this.checkinBaggage,
+    this.checkinBaggageStyle,
+    this.cabinBaggageStyle,
     this.exitStyle,
     this.subValueStyle,
     this.valueStyle,
@@ -92,7 +100,24 @@ class TicketColumn extends StatelessWidget {
                     textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
                 overflow: TextOverflow.ellipsis,
               )
-            : kEmpty
+            : kEmpty,
+        flightCode != null ? kHeight5 : kEmpty,
+        cabinBaggage != null
+            ? Text(
+                cabinBaggage!,
+                style: cabinBaggageStyle ??
+                    textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
+              )
+            : kEmpty,
+        cabinBaggage != null ? kHeight5 : kEmpty,
+        checkinBaggage != null
+            ? Text(
+                checkinBaggage!,
+                style: checkinBaggageStyle ??
+                    textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
+              )
+            : kEmpty,
+        checkinBaggage != null ? kHeight5 : kEmpty,
       ],
     );
   }

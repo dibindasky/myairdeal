@@ -422,29 +422,23 @@ class FlightInvoiceCard extends StatelessWidget {
                 ],
               ),
               kWidth10,
-              Row(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.bf.toString() ?? 0.toString()}',
-                        style: textStyle1.copyWith(
-                            color: kBlack,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      kHeight5,
-                      Text(
-                        '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0.toString()}',
-                        style: textStyle1.copyWith(
-                            color: kBlack,
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w800),
-                      )
-                    ],
+                  Text(
+                    '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.bf.toString() ?? 0.toString()}',
+                    style: textStyle1.copyWith(
+                        color: kBlack,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  kHeight5,
+                  Text(
+                    '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0.toString()}',
+                    style: textStyle1.copyWith(
+                        color: kBlack,
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w800),
                   )
                 ],
               ),

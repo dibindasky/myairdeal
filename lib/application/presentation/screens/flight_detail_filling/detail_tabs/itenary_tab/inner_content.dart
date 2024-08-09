@@ -33,6 +33,12 @@ class InnerContents extends StatelessWidget {
                     (index) {
                   final model =
                       controller.reviewedDetail?.value.tripInfos?[index];
+                  List<SsrInfo?>? seats = travellerController
+                      .selectedSeats['${model?.sI?[index].id}'];
+                  final code = seats
+                      ?.map((e) =>
+                          e?.code != '' && e?.code != null ? e?.code : 'N/S')
+                      .toList();
                   return Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: CustomExpansionTile(
@@ -111,13 +117,14 @@ class InnerContents extends StatelessWidget {
                                                 ''),
                                         valueStyle: textThinStyle1.copyWith(
                                             overflow: TextOverflow.visible),
-                                        subValue:
-                                            model?.sI?[(model.sI?.length ?? 1) - 1].aa?.terminal ??
-                                                '',
+                                        subValue: model?.sI?[(model.sI?.length ?? 1) - 1].aa?.terminal ??
+                                            '',
                                         exit: controller.reviewedDetail?.value
                                                 .searchQuery?.cabinClass ??
                                             '',
-                                        flightCode: '--',
+                                        flightCode: code != null && code.isNotEmpty
+                                            ? code.toString()
+                                            : 'N/A',
                                         cabinBaggage: model?.totalPriceList?[0]
                                             .fd?.adult?.bI?.iB,
                                         checkinBaggage: model
@@ -137,8 +144,8 @@ class InnerContents extends StatelessWidget {
                             0,
                         (stop) {
                           List<SsrInfo?>? seats = travellerController
-                              .selectedSeats['${model?.sI?[index].id}'];
-                          final code = seats?.map((e) => e?.code);
+                              .selectedSeats['${model?.sI?[stop].id}'];
+                          final code = seats?.map((e) => e?.code).toList();
                           return Column(
                             children: [
                               Container(
@@ -259,8 +266,7 @@ class InnerContents extends StatelessWidget {
                                                 CrossAxisAlignment.end,
                                             label: 'Arrival',
                                             value: DateFormating.formatDate(
-                                              model?.sI?[stop].at ?? '',
-                                            ),
+                                                model?.sI?[stop].at ?? ''),
                                             valueStyle: textThinStyle1,
                                             subValue:
                                                 model?.sI?[stop].aa?.terminal ??
@@ -271,7 +277,10 @@ class InnerContents extends StatelessWidget {
                                                     .searchQuery
                                                     ?.cabinClass ??
                                                 '',
-                                            flightCode: code.toString(),
+                                            flightCode:
+                                                code != null && code.isNotEmpty
+                                                    ? code[index]
+                                                    : 'N/A',
                                             cabinBaggage: model
                                                 ?.totalPriceList?[0]
                                                 .fd

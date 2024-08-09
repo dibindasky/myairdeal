@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
@@ -9,6 +10,7 @@ import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/ssr_info.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 
 class InnerContents extends StatelessWidget {
@@ -17,32 +19,14 @@ class InnerContents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<BookingController>();
+    final travellerController = Get.find<TravellerController>();
+
     return Obx(() {
       return Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // kHeight10,
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Image.asset(
-              //       controller.reviewPriceLoading.value
-              //           ? flightDetailIcon
-              //           : flightDetailIcon,
-              //       height: 20.h,
-              //     ),
-              //     kWidth5,
-              //     Text(
-              //         controller.reviewedDetail?.value.tripInfos?[0].sI?[0].fD
-              //                 ?.aI?.name ??
-              //             '',
-              //         style: textHeadStyle1),
-              //   ],
-              // ),
-              // kHeight10,
-              // const DottedLines(height: 10),
               Column(
                 children: List.generate(
                     controller.reviewedDetail?.value.tripInfos?.length ?? 0,
@@ -84,6 +68,8 @@ class InnerContents extends StatelessWidget {
                                             model?.sI?[0].da?.terminal ?? '',
                                         exit: 'Cabin Class',
                                         flightCode: 'Seat No',
+                                        cabinBaggage: 'Checkin Baggage',
+                                        checkinBaggage: 'Cabin Baggage',
                                       ),
                               ],
                             ),
@@ -120,24 +106,26 @@ class InnerContents extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.end,
                                         label: 'Arrival',
-                                        value: DateFormating.formatDate(model
-                                                ?.sI?[
-                                                    (model.sI?.length ?? 1) - 1]
-                                                .at ??
-                                            ''),
+                                        value: DateFormating.formatDate(
+                                            model?.sI?[(model.sI?.length ?? 1) - 1].at ??
+                                                ''),
                                         valueStyle: textThinStyle1.copyWith(
                                             overflow: TextOverflow.visible),
-                                        subValue: model
-                                                ?.sI?[
-                                                    (model.sI?.length ?? 1) - 1]
-                                                .aa
-                                                ?.terminal ??
-                                            '',
+                                        subValue:
+                                            model?.sI?[(model.sI?.length ?? 1) - 1].aa?.terminal ??
+                                                '',
                                         exit: controller.reviewedDetail?.value
                                                 .searchQuery?.cabinClass ??
                                             '',
                                         flightCode: '--',
-                                      ),
+                                        cabinBaggage: model?.totalPriceList?[0]
+                                            .fd?.adult?.bI?.iB,
+                                        checkinBaggage: model
+                                            ?.totalPriceList?[0]
+                                            .fd
+                                            ?.adult
+                                            ?.bI
+                                            ?.cB),
                               ],
                             ),
                           ),
@@ -147,142 +135,167 @@ class InnerContents extends StatelessWidget {
                         controller.reviewedDetail?.value.tripInfos?[index].sI
                                 ?.length ??
                             0,
-                        (stop) => Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(vertical: 3.h),
-                              decoration: BoxDecoration(
-                                  color: klightWhite, borderRadius: kRadius10),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10.w, vertical: 7.h),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            TicketColumn(
-                                              label:
-                                                  '${model?.sI?[stop].da?.city ?? ''}, ${model?.sI?[stop].da?.country ?? ''}',
-                                              value:
-                                                  model?.sI?[stop].da?.code ??
-                                                      '',
-                                              subValue:
-                                                  model?.sI?[stop].da?.name ??
-                                                      '',
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      kWidth5,
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          kHeight10,
-                                          Text(
-                                            DateFormating
-                                                .convertMinutesToHoursMinutes(
-                                                    model?.sI?[stop].duration ??
-                                                        0),
-                                            style: textThinStyle1.copyWith(
-                                                fontSize: 9.sp),
-                                          ),
-                                          kWidth5,
-                                          Row(
+                        (stop) {
+                          List<SsrInfo?>? seats = travellerController
+                              .selectedSeats['${model?.sI?[index].id}'];
+                          final code = seats?.map((e) => e?.code);
+                          return Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 3.h),
+                                decoration: BoxDecoration(
+                                    color: klightWhite,
+                                    borderRadius: kRadius10),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10.w, vertical: 7.h),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              const CircleAvatar(
-                                                radius: 3,
-                                                backgroundColor: kGrey,
-                                              ),
-                                              ...List.generate(
-                                                10,
-                                                (index) => Text(
-                                                  '-',
-                                                  style: TextStyle(
-                                                      fontSize: 8.sp,
-                                                      fontWeight:
-                                                          FontWeight.w800,
-                                                      color: kBlack),
-                                                ),
-                                              ),
-                                              const CircleAvatar(
-                                                radius: 3,
-                                                backgroundColor: kGrey,
+                                              TicketColumn(
+                                                label:
+                                                    '${model?.sI?[stop].da?.city ?? ''}, ${model?.sI?[stop].da?.country ?? ''}',
+                                                value:
+                                                    model?.sI?[stop].da?.code ??
+                                                        '',
+                                                subValue:
+                                                    model?.sI?[stop].da?.name ??
+                                                        '',
                                               ),
                                             ],
                                           ),
-                                          Text(
-                                            '${model?.sI?[stop].fD?.aI?.code ?? ''} - ${model?.sI?[stop].fD?.fN ?? ''}',
-                                            style: textStyle1.copyWith(
-                                                fontSize: 10.sp),
+                                        ),
+                                        kWidth5,
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            kHeight10,
+                                            Text(
+                                              DateFormating
+                                                  .convertMinutesToHoursMinutes(
+                                                      model?.sI?[stop]
+                                                              .duration ??
+                                                          0),
+                                              style: textThinStyle1.copyWith(
+                                                  fontSize: 9.sp),
+                                            ),
+                                            kWidth5,
+                                            Row(
+                                              children: [
+                                                const CircleAvatar(
+                                                  radius: 3,
+                                                  backgroundColor: kGrey,
+                                                ),
+                                                ...List.generate(
+                                                  10,
+                                                  (index) => Text(
+                                                    '-',
+                                                    style: TextStyle(
+                                                        fontSize: 8.sp,
+                                                        fontWeight:
+                                                            FontWeight.w800,
+                                                        color: kBlack),
+                                                  ),
+                                                ),
+                                                const CircleAvatar(
+                                                  radius: 3,
+                                                  backgroundColor: kGrey,
+                                                ),
+                                              ],
+                                            ),
+                                            Text(
+                                              '${model?.sI?[stop].fD?.aI?.code ?? ''} - ${model?.sI?[stop].fD?.fN ?? ''}',
+                                              style: textStyle1.copyWith(
+                                                  fontSize: 10.sp),
+                                            ),
+                                          ],
+                                        ),
+                                        kWidth5,
+                                        Expanded(
+                                          child: TicketColumn(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            label:
+                                                '${model?.sI?[stop].aa?.city ?? ''}, ${model?.sI?[stop].aa?.country ?? ''}',
+                                            value:
+                                                model?.sI?[stop].aa?.code ?? '',
+                                            subValue:
+                                                model?.sI?[stop].aa?.name ?? '',
                                           ),
-                                        ],
-                                      ),
-                                      kWidth5,
-                                      Expanded(
-                                        child: TicketColumn(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          label:
-                                              '${model?.sI?[stop].aa?.city ?? ''}, ${model?.sI?[stop].aa?.country ?? ''}',
-                                          value:
-                                              model?.sI?[stop].aa?.code ?? '',
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TicketColumn(
+                                          label: 'Departure',
+                                          value: DateFormating.formatDate(
+                                              model?.sI?[stop].dt ?? ''),
+                                          valueStyle: textThinStyle1,
                                           subValue:
-                                              model?.sI?[stop].aa?.name ?? '',
+                                              model?.sI?[stop].da?.terminal ??
+                                                  '',
+                                          exit: 'Cabin Class',
+                                          flightCode: 'Seat No',
+                                          cabinBaggage: 'Checkin Baggage',
+                                          checkinBaggage: 'Cabin Baggage',
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      TicketColumn(
-                                        label: 'Departure',
-                                        value: DateFormating.formatDate(
-                                            model?.sI?[stop].dt ?? ''),
-                                        valueStyle: textThinStyle1,
-                                        subValue:
-                                            model?.sI?[stop].da?.terminal ?? '',
-                                        exit: 'Cabin Class',
-                                        flightCode: 'Seat No',
-                                      ),
-                                      TicketColumn(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        label: 'Arrival',
-                                        value: DateFormating.formatDate(
-                                          model?.sI?[stop].at ?? '',
-                                        ),
-                                        valueStyle: textThinStyle1,
-                                        subValue:
-                                            model?.sI?[stop].aa?.terminal ?? '',
-                                        exit: controller.reviewedDetail?.value
-                                                .searchQuery?.cabinClass ??
-                                            '',
-                                        flightCode: '--',
-                                      ),
-                                    ],
-                                  )
-                                ],
+                                        TicketColumn(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            label: 'Arrival',
+                                            value: DateFormating.formatDate(
+                                              model?.sI?[stop].at ?? '',
+                                            ),
+                                            valueStyle: textThinStyle1,
+                                            subValue:
+                                                model?.sI?[stop].aa?.terminal ??
+                                                    '',
+                                            exit: controller
+                                                    .reviewedDetail
+                                                    ?.value
+                                                    .searchQuery
+                                                    ?.cabinClass ??
+                                                '',
+                                            flightCode: code.toString(),
+                                            cabinBaggage: model
+                                                ?.totalPriceList?[0]
+                                                .fd
+                                                ?.adult
+                                                ?.bI
+                                                ?.iB,
+                                            checkinBaggage: model
+                                                ?.totalPriceList?[0]
+                                                .fd
+                                                ?.adult
+                                                ?.bI
+                                                ?.cB),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                            (model?.sI?.length ?? 1) - 1 == stop
-                                ? kEmpty
-                                : Text(
-                                    '---- Layover Time - ${DateFormating.getDifferenceOfDates(model?.sI?[stop].at ?? '', model?.sI?[stop + 1].dt ?? '')} ----')
-                          ],
-                        ),
+                              (model?.sI?.length ?? 1) - 1 == stop
+                                  ? kEmpty
+                                  : Text(
+                                      '---- Layover Time - ${DateFormating.getDifferenceOfDates(model?.sI?[stop].at ?? '', model?.sI?[stop + 1].dt ?? '')} ----')
+                            ],
+                          );
+                        },
                       ),
                     ),
                   );

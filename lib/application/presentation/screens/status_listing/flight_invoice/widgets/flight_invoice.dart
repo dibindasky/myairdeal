@@ -397,8 +397,6 @@ class FlightInvoiceCard extends StatelessWidget {
             ),
           ),
           kHeight10,
-          const Text('Baggage and Meals'),
-          kHeight10,
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -411,23 +409,45 @@ class FlightInvoiceCard extends StatelessWidget {
                     style: textStyle1.copyWith(
                         color: kBlack,
                         fontSize: 12.sp,
-                        fontWeight: FontWeight.w800),
+                        fontWeight: FontWeight.w600),
                   ),
+                  kHeight5,
                   Text(
-                    '(Including Taxes)',
+                    'Including Taxes',
                     style: textThinStyle1.copyWith(
-                        color: kGreyDark, fontSize: 10.sp),
+                        color: kBlack,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w800),
                   )
                 ],
               ),
               kWidth10,
-              Text(
-                '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.tf.toString() ?? 0.toString()}',
-                style: textStyle1.copyWith(
-                    color: kBlack,
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w800),
-              )
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.bf.toString() ?? 0.toString()}',
+                        style: textStyle1.copyWith(
+                            color: kBlack,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      kHeight5,
+                      Text(
+                        '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0.toString()}',
+                        style: textStyle1.copyWith(
+                            color: kBlack,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w800),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ],
           ),
         ],

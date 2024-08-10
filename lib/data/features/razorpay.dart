@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
+import 'package:myairdeal/domain/models/booking/book_ticket_model/payment.dart';
 import 'package:myairdeal/secret/secret_keys.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -65,7 +66,11 @@ class RazorpayGateway {
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     debugPrint('=========Payment successful: $response');
     debugPrint('=========Payment successful: ${response.paymentId}');
-    Get.find<BookingController>().completeBooking(bookTicketModel);
+    Get.find<BookingController>().completeBooking(bookTicketModel.copyWith(
+        payment: Payment(
+            razorpayOrderId: response.orderId,
+            razorpayPaymentId: response.paymentId,
+            razorpaySignature: response.signature)));
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {

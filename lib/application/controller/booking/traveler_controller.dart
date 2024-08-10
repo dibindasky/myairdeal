@@ -82,8 +82,9 @@ class TravellerController extends GetxController {
   // gst deatils of booking
   Rx<GstInfo> gstInfo = GstInfo().obs;
 
-  // total number of passengers
+  /// total number of passengers
   RxInt passengerLength = 1.obs;
+  /// total number of passengers with out infant count
   RxInt passengerLengthWithoutInfant = 1.obs;
 
   /// addons prices to be add to total
@@ -98,6 +99,7 @@ class TravellerController extends GetxController {
     update();
   }
 
+  /// clear the meals info from the given index
   void clearMealInfo(SsrInfo ssrInfo, int index) {
     TravellerInfo traveller = passengerDetails[index]!;
     traveller.ssrMealInfos ??= <SsrInfo>[];
@@ -198,7 +200,7 @@ class TravellerController extends GetxController {
     }
   }
 
-  // add passengers details to server
+  /// add passengers details to server
   void savePassengerDetails(TravellerInfo travellerInfo) async {
     await _passengersRepo.addPassengers(travellerInfo: travellerInfo);
   }
@@ -212,7 +214,7 @@ class TravellerController extends GetxController {
     }
   }
 
-  // update the passenger count from other controller for checking
+  /// update the passenger count from other controller for checking
   void updatePassengersNumber(int number, int passengerLengthWithoutInfant) {
     passengerLength.value = number;
     selectedMainTab.value = 0;

@@ -66,8 +66,14 @@ class ScreenFlightTicketSort extends StatelessWidget {
                     ],
                   ),
                 ),
-                controller.sortingRebuild.value ? kHeight10 : kEmpty,
-                controller.sortingRebuild.value
+                (controller.sortingRebuild.value &&
+                        controller.sortingLoadingIndex.value ==
+                            controller.selectedTripListIndex.value)
+                    ? kHeight10
+                    : kEmpty,
+                (controller.sortingRebuild.value &&
+                        controller.sortingLoadingIndex.value ==
+                            controller.selectedTripListIndex.value)
                     ? Skeleton(
                         crossAxisCount: 4,
                         itemCount: 4,

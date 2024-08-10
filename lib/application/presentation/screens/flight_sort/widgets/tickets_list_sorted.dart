@@ -26,6 +26,7 @@ class TicketsListSorted extends StatelessWidget {
         ));
       }
       return ListView.separated(
+        key: Key(controller.selectedTripListIndex.value.toString()),
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         padding: EdgeInsets.only(left: 11.w, right: 11.w, bottom: 25.h),

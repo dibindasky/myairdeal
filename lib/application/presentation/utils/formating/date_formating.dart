@@ -129,6 +129,17 @@ class DateFormating {
     return formattedDifference.trim();
   }
 
+  static int getDurationOfFlightsInMinutes({required List<SI> si}) {
+    int minute = 0;
+    for (int i = 0; i < si.length; i++) {
+      minute += si[i].duration ?? 0;
+      if (i < (si.length - 1)) {
+        minute += getDifferenceInMinutes(si[i].at ?? '', si[i + 1].dt ?? '');
+      }
+    }
+    return minute;
+  }
+
   static int getDifferenceInMinutes(
       String dateTimeString1, String dateTimeString2) {
     DateTime dateTime1 = DateTime.parse(dateTimeString1);

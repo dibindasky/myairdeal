@@ -11,6 +11,9 @@ BookTicketModel _$BookTicketModelFromJson(Map<String, dynamic> json) =>
       booking: json['booking'] == null
           ? null
           : Booking.fromJson(json['booking'] as Map<String, dynamic>),
+      payment: json['payment'] == null
+          ? null
+          : Payment.fromJson(json['payment'] as Map<String, dynamic>),
       searchQuery: json['searchQuery'] == null
           ? null
           : FlightSearchQuery.fromJson(
@@ -19,6 +22,7 @@ BookTicketModel _$BookTicketModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$BookTicketModelToJson(BookTicketModel instance) =>
     <String, dynamic>{
+      'payment': instance.payment,
       'booking': instance.booking,
       'searchQuery': instance.searchQuery,
     };

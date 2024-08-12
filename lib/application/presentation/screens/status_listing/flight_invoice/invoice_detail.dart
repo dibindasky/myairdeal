@@ -219,7 +219,7 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                 if (raiceController
                                         .selectedYouCouldAlsoTab.value ==
                                     0) {
-                                  return ContactUsFrom(
+                                  return RaiceTickets(
                                     bookingId: bookingController
                                             .retrieveSingleBookingresponceModel
                                             .value
@@ -232,15 +232,7 @@ class ScreenInvoiceDetail extends StatelessWidget {
                                         .selectedYouCouldAlsoTab.value ==
                                     1) {
                                   return const EmailListScreen();
-                                }
-                                // else if (raiceController
-                                //         .selectedYouCouldAlsoTab.value ==
-                                //     2) {
-                                //   return const EmailBox(
-                                //     email: '',
-                                //   );
-                                // }
-                                else {
+                                } else {
                                   return kEmpty;
                                 }
                               }),

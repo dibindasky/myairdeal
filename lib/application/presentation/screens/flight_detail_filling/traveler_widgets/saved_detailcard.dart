@@ -39,12 +39,14 @@ class SavedDetailsCard extends StatelessWidget {
             subtittle: '${passengers?.ti} ${passengers?.fN} ${passengers?.lN}',
           ),
           kHeight5,
-          ItemField(
-            icon: Icons.date_range,
-            categery: 'DOB',
-            subtittle: passengers?.dob ?? '',
-          ),
-          kHeight5,
+          passengers?.dob != null
+              ? ItemField(
+                  icon: Icons.date_range,
+                  categery: 'DOB',
+                  subtittle: passengers?.dob ?? '',
+                )
+              : kEmpty,
+          passengers?.dob != null ? kHeight5 : kEmpty,
           passengers?.pNum != null && passengers?.pNum != ''
               ? ItemField(
                   icon: Iconsax.global_edit,

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
+import 'package:myairdeal/application/presentation/utils/formating/text_input_formating.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/ticket_column.dart';
@@ -228,11 +229,11 @@ class FlightInvoiceCard extends StatelessWidget {
                                     TicketColumn(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
-                                      subValue:
+                                      subValue: capitalizeFirstLetter(
                                           retrieveSingleBookingresponceModel
                                                   ?.flightSearchQuery
                                                   ?.cabinClass ??
-                                              '--',
+                                              '--'),
                                       exit: '--',
                                     ),
                                   ],
@@ -292,7 +293,7 @@ class FlightInvoiceCard extends StatelessWidget {
                                     label: 'Cabin Class',
                                     lebelStyle: textThinStyle1.copyWith(
                                         fontSize: 10.sp, color: kGreyDark),
-                                    value: 'Seat No',
+                                    //  value: 'Seat No',
                                     valueStyle: textThinStyle1.copyWith(
                                         color: kGreyDark, fontSize: 10.sp),
                                   )
@@ -376,12 +377,14 @@ class FlightInvoiceCard extends StatelessWidget {
                             (tripInfos?[tripIndex].sI?.length ?? 1) == 1
                                 ? TicketColumn(
                                     crossAxisAlignment: CrossAxisAlignment.end,
-                                    label: retrieveSingleBookingresponceModel
-                                            ?.flightSearchQuery?.cabinClass ??
-                                        '--',
+                                    label: capitalizeFirstLetter(
+                                        retrieveSingleBookingresponceModel
+                                                ?.flightSearchQuery
+                                                ?.cabinClass ??
+                                            '--'),
                                     lebelStyle: textThinStyle1.copyWith(
                                         fontSize: 10.sp, color: kGreyDark),
-                                    value: '--',
+                                    // value: '--',
                                     valueStyle: textThinStyle1.copyWith(
                                         color: kGreyDark, fontSize: 10.sp),
                                   )
@@ -426,7 +429,7 @@ class FlightInvoiceCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.bf.toString() ?? 0.toString()}',
+                    '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.bf?.toDouble() ?? 0.toDouble()}',
                     style: textStyle1.copyWith(
                         color: kBlack,
                         fontSize: 12.sp,
@@ -434,7 +437,7 @@ class FlightInvoiceCard extends StatelessWidget {
                   ),
                   kHeight5,
                   Text(
-                    '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0.toString()}',
+                    '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.tf?.toDouble() ?? 0.toDouble()}',
                     style: textStyle1.copyWith(
                         color: kBlack,
                         fontSize: 13.sp,

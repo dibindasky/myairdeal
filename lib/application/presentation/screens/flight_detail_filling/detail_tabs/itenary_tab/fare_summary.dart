@@ -158,7 +158,7 @@ class FareSummary extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '₹ ${travellerController.addOnsprice.value}',
+                  '₹ ${travellerController.addOnsprice.value.toDouble()}',
                   style: textThinStyle1.copyWith(
                     color: kBlack,
                     fontSize: 12.sp,
@@ -202,7 +202,7 @@ class FareSummary extends StatelessWidget {
                                       : Icons.arrow_drop_up,
                                 ),
                                 Text(
-                                  '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.taf ?? '--'}',
+                                  '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.taf?.toDouble() ?? '--'}',
                                   style: textThinStyle1.copyWith(
                                     color: kBlack,
                                     fontSize: 12.sp,
@@ -265,9 +265,9 @@ class FareSummary extends StatelessWidget {
                                   children: [
                                     Text(
                                       index == 0
-                                          ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst ?? '--'}'
+                                          ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst?.toDouble() ?? '--'}'
                                           : index == 1
-                                              ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot ?? '--'}'
+                                              ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot?.toDouble() ?? '--'}'
                                               : controller
                                                           .reviewedDetail
                                                           ?.value
@@ -275,10 +275,11 @@ class FareSummary extends StatelessWidget {
                                                           ?.totalFareDetail
                                                           ?.afC
                                                           ?.taf
-                                                          ?.yq !=
+                                                          ?.yq
+                                                          ?.toDouble() !=
                                                       null
-                                                  ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq ?? '--'}'
-                                                  : '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr ?? '--'}',
+                                                  ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq?.toDouble() ?? '--'}'
+                                                  : '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr?.toDouble() ?? '--'}',
                                       style: textThinStyle1.copyWith(
                                         color: kBlack,
                                         fontSize: 12.sp,
@@ -302,7 +303,7 @@ class FareSummary extends StatelessWidget {
                       fontSize: 14.sp, fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0 + travellerController.addOnsprice.value}',
+                  '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf?.toDouble() ?? 0 + travellerController.addOnsprice.value.toDouble()}',
                   style: textThinStyle1.copyWith(
                       fontSize: 14.sp, fontWeight: FontWeight.w700),
                 ),

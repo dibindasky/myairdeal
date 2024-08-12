@@ -84,6 +84,9 @@ class InnerContents extends StatelessWidget {
                             airline: model?.sI?[0].fD?.aI?.name ?? '',
                             airlineCode: model?.sI?[0].fD?.aI?.code ?? '',
                             haveImage: false,
+                            number: (model?.sI?.length ?? 0) > 1
+                                ? ''
+                                : '${model?.sI?[0].fD?.aI?.code ?? ''}- ${model?.sI?[0].fD?.fN ?? ''}',
                             travelMinutes: DateFormating.getDurationOfFlights(
                                 si: model?.sI ?? <SI>[]),
                             stops: (model?.sI?.length ?? 1) - 1,

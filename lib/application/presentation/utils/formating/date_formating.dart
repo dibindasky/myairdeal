@@ -14,6 +14,12 @@ class DateFormating {
     return DateFormat('yyyy-MM-dd').format(dateTime);
   }
 
+  // 22/07/7332
+  static String getDateByDayMonthYear(DateTime? dateTime) {
+    if (dateTime == null) return '';
+    return DateFormat('dd-MM-yyyy').format(dateTime);
+  }
+
 // will return week day
   static String getWeekDay(int day) {
     switch (day) {

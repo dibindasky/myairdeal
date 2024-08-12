@@ -1,8 +1,13 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/data/features/pdf_generator.dart';
 import 'package:myairdeal/data/features/share_ticket.dart';
+import 'package:myairdeal/data/features/url_launcher.dart';
 import 'package:myairdeal/data/service/raice_ticket/raice_ticket_service.dart';
 import 'package:myairdeal/domain/models/ticket_raice/get_all_tickets_model/tasks.dart';
 import 'package:myairdeal/domain/models/ticket_raice/raice_ticket/raice_ticket.dart';
@@ -33,11 +38,26 @@ class RaiceTicketController extends GetxController {
 
   RxString selectedProduct = 'Flights'.obs;
 
+  RxList<String> youCouldAlsoTexts = ['Contact us', 'Reports', 'Support'].obs;
+
   // in except cancel tab Choosing for raice ticket, Connection, Refund and Mail
   RxInt selectedYouCouldAlsoTab = 6.obs;
 
   void changeSelectedYouCouldAlsoTab(int selectedNewTab) {
     selectedYouCouldAlsoTab.value = selectedNewTab;
+    if (selectedYouCouldAlsoTab.value == 0) {
+      final bookingController = Get.find<BookingController>();
+      Timer(
+        const Duration(milliseconds: 300),
+        () => bookingController.scrollController.animateTo(
+            bookingController.scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.bounceIn),
+      );
+    }
+    if (selectedYouCouldAlsoTab.value == 2) {
+      OpenLauncherFeature.launchPhone(phone: '7061409421');
+    }
     update();
   }
 
@@ -89,6 +109,7 @@ class RaiceTicketController extends GetxController {
         isLoading.value = false;
       },
       (r) {
+        log('length ${r.data?.length}');
         isLoading.value = false;
         allTicketsLists.value = r.data ?? [];
       },
@@ -118,7 +139,7 @@ class RaiceTicketController extends GetxController {
     final data = await raiceTicketRepo.ivoiceDownLoad(bookingID: bookingID);
     data.fold((l) => null, (r) {
       if (r.base64String != null) {
-        sharePdfFromBase64(r.base64String!, '');
+        sharePdf(r.base64String!, bookingID);
       }
     });
     ticketLoading.value = false;

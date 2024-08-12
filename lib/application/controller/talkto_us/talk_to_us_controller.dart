@@ -29,7 +29,7 @@ class TalkToUsController extends GetxController {
   RxString selecedDailCode = '+91'.obs;
 
   // Global Ticket raising Controllers
-  TextEditingController headingController = TextEditingController();
+  TextEditingController ticketRisingHeadingController = TextEditingController();
   TextEditingController ticketRisingdescriptionController =
       TextEditingController();
   RxString selectedEnquiryType = ''.obs;
@@ -71,7 +71,7 @@ class TalkToUsController extends GetxController {
     isLoading.value = true;
     GlobalTicketRaisingModel globalTicketRaisingModel =
         GlobalTicketRaisingModel(
-            heading: headingController.text,
+            heading: ticketRisingHeadingController.text,
             description: ticketRisingdescriptionController.text,
             type: selectedTicketRaisingType.value,
             bookingId: selectedTicketRaisingType.value == 'Booking'
@@ -83,7 +83,7 @@ class TalkToUsController extends GetxController {
     data.fold((l) => null, (r) {
       Get.snackbar('Success', 'Successfully Created Ticket',
           backgroundColor: kBluePrimary);
-      headingController.clear();
+      ticketRisingHeadingController.clear();
       ticketRisingdescriptionController.clear();
       getAllTickets();
     });

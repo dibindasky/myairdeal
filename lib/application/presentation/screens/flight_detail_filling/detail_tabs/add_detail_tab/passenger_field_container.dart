@@ -76,7 +76,7 @@ class _DetailContainerState extends State<DetailContainer> {
       lastDate: DateTime.now(),
     );
     if (selectedDate != null) {
-      pIDController.text = DateFormating.getDateApi(selectedDate);
+      pIDController.text = DateFormating.getDateByDayMonthYear(selectedDate);
       setState(() {
         selectedIssueDate = selectedDate;
         setExpiryDate();
@@ -90,7 +90,6 @@ class _DetailContainerState extends State<DetailContainer> {
         (widget.travellerType == 'CHILD' || widget.travellerType == 'INFANT')
             ? 5
             : 10;
-
     // Calculate the expiry date
     final DateTime calculatedExpiryDate =
         selectedIssueDate.add(Duration(days: 365 * additionalYears));
@@ -100,7 +99,8 @@ class _DetailContainerState extends State<DetailContainer> {
 
     if (lastTravelDateString.isEmpty) {
       // Handle the case where last travel date is empty
-      expiryDController.text = DateFormating.getDateApi(calculatedExpiryDate);
+      expiryDController.text =
+          DateFormating.getDateByDayMonthYear(calculatedExpiryDate);
       return;
     }
 
@@ -109,7 +109,8 @@ class _DetailContainerState extends State<DetailContainer> {
       lastTravelDate = DateTime.parse(lastTravelDateString);
     } catch (e) {
       // Handle parsing error
-      expiryDController.text = DateFormating.getDateApi(calculatedExpiryDate);
+      expiryDController.text =
+          DateFormating.getDateByDayMonthYear(calculatedExpiryDate);
       return;
     }
 
@@ -128,7 +129,8 @@ class _DetailContainerState extends State<DetailContainer> {
   }
 
   String selectLastTravelDate() {
-    return lastTraveldate;
+    return bookigController.reviewedDetail?.value.tripInfos?.last.sI?.last.at ??
+        '';
   }
 
   @override
@@ -362,23 +364,6 @@ class _DetailContainerState extends State<DetailContainer> {
                                       kHeight5,
                                       GestureDetector(
                                         onTap: () async {
-                                          // final date = DateTime.now();
-                                          // final selectedDate =
-                                          //     await showDatePicker(
-                                          //   context: context,
-                                          //   firstDate: date.subtract(
-                                          //       const Duration(
-                                          //           days: 365 * 150)),
-                                          //   lastDate: date.subtract(
-                                          //       const Duration(days: 365 * 0)),
-                                          // );
-                                          // pIDController.text =
-                                          //     DateFormating.getDateApi(
-                                          //         selectedDate);
-                                          // setState(() {
-                                          //   selectedIssueDate =
-                                          //       selectedDate ?? DateTime.now();
-                                          // });
                                           selectIssueDate(context);
                                         },
                                         child: Container(
@@ -414,29 +399,31 @@ class _DetailContainerState extends State<DetailContainer> {
                                       kHeight5,
                                       GestureDetector(
                                         onTap: () async {
-                                          // final date = selectedIssueDate;
-                                          // final selectedDate =
-                                          //     await showDatePicker(
-                                          //   context: context,
-                                          //   initialDate: selectedIssueDate.add(
-                                          //     widget.travellerType == 'CHILD' ||
-                                          //             widget.travellerType ==
-                                          //                 'INFANT'
-                                          //         ? const Duration(
-                                          //             days: 365 * 5)
-                                          //         : const Duration(
-                                          //             days: 365 * 10),
-                                          //   ),
-                                          //   firstDate: date,
-                                          //   lastDate: date.add(const Duration(
-                                          //       days: 365 * 150)),
-                                          // );
-                                          // if (selectedDate != null) {
-                                          //   expiryDController.text =
-                                          //       DateFormating.getDateApi(
-                                          //           selectedDate);
-                                          //   setState(() {});
-                                          // }
+                                          final date = selectedIssueDate;
+                                          final selectedDate =
+                                              await showDatePicker(
+                                            context: context,
+                                            initialDate: selectedIssueDate.add(
+                                              widget.travellerType == 'CHILD' ||
+                                                      widget.travellerType ==
+                                                          'INFANT'
+                                                  ? const Duration(
+                                                      days: 365 * 5)
+                                                  : const Duration(
+                                                      days: 365 * 10),
+                                            ),
+                                            firstDate: date,
+                                            lastDate: date.add(const Duration(
+                                                days: 365 * 150)),
+                                          );
+                                          if (selectedDate != null) {
+                                            expiryDController.text =
+                                                DateFormating
+                                                    .getDateByDayMonthYear(
+                                                        selectedDate);
+
+                                            setState(() {});
+                                          }
                                         },
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
@@ -509,13 +496,15 @@ class _DetailContainerState extends State<DetailContainer> {
                                   pt: widget.travellerType,
                                   eD: expiryDController.text == ''
                                       ? null
-                                      : expiryDController.text,
+                                      : DateFormating.getDateApi(DateTime.parse(
+                                          expiryDController.text)),
                                   pNum: passportNumberController.text == ''
                                       ? null
                                       : passportNumberController.text,
                                   pid: pIDController.text == ''
                                       ? null
-                                      : pIDController.text,
+                                      : DateFormating.getDateApi(
+                                          DateTime.parse(pIDController.text)),
                                   pN: travelController
                                               .selectedCoutryCode.value ==
                                           ''

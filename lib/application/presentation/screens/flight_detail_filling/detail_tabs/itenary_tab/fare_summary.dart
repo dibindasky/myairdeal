@@ -292,6 +292,27 @@ class FareSummary extends StatelessWidget {
                             ),
                     ),
                   ),
+            paymentPage
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Convenience fee',
+                        style: textThinStyle1.copyWith(
+                          color: kBlack,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                      Text(
+                        '₹ ${controller.markupPrice.value}',
+                        style: textThinStyle1.copyWith(
+                          color: kBlack,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                    ],
+                  )
+                : kEmpty,
             const DottedLines(height: 10),
             kHeight15,
             Row(

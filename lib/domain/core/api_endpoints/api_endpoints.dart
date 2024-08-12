@@ -1,7 +1,7 @@
 class ApiEndPoints {
-  // static const String baseUrl = 'https://b7fzq0cn-5001.inc1.devtunnels.ms';
+  static const String baseUrl = 'https://b7fzq0cn-5001.inc1.devtunnels.ms/';
   // static const String baseUrl = 'https://myairdeal-backend.onrender.com';
-  static const String baseUrl = 'https://api.myairdeal.com';
+  // static const String baseUrl = 'https://api.myairdeal.com';
 
   static const String getSplash = '/splash/get';
   static const String sendOTP = '/user/send-sms';
@@ -36,6 +36,7 @@ class ApiEndPoints {
   static const String getGlobalTickets = '/ticket/view-all-tickets-user';
   static const String addEnquiry = '/enquiry/create-registeredUser';
   static const String getBookingId = '/user/retrieve-user-bookings-id';
+  static const String getMarkup = '/markup/get-user-mark-up';
 
   // Change {airlinecode} for logo
   static const String airllineLogo = "/uploads/AirlinesLogo/{airlinecode}.png";

@@ -30,6 +30,7 @@ class RazorpayGateway {
   }) async {
     var options = {
       'key': keyId,
+      // 'order_id':'',
       'amount': amount * 100, // Amount in paise
       'name': 'Bechdu',
       'description': description,
@@ -64,8 +65,10 @@ class RazorpayGateway {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    debugPrint('=========Payment successful: $response');
+    debugPrint('=========Payment successful: ${response.data}');
     debugPrint('=========Payment successful: ${response.paymentId}');
+    debugPrint('=========Payment successful: ${response.orderId}');
+    debugPrint('=========Payment successful: ${response.signature}');
     Get.find<BookingController>().completeBooking(bookTicketModel.copyWith(
         payment: Payment(
             razorpayOrderId: response.orderId,

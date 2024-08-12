@@ -8,6 +8,7 @@ import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking
 import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
 import 'package:myairdeal/domain/models/booking/booking_response_model/booking_response_model.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_booking.dart';
+import 'package:myairdeal/domain/models/booking/mark_up/markup_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
@@ -31,8 +32,14 @@ class BookingService implements BookingRepo {
       return Right(BookingResponseModel.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException bookTicket $e');
-      return Left(Failure(
-          message: e.response?.data?['errors'][0]['message'] ?? errorMessage));
+      if (e.response?.data?['errors'] != null) {
+        return Left(Failure(
+            message:
+                e.response?.data?['errors'][0]['message'] ?? errorMessage));
+      } else {
+        return Left(
+            Failure(message: e.response?.data?['error'] ?? errorMessage));
+      }
     } catch (e) {
       log('catch bookTicket');
       return Left(Failure(message: e.toString()));
@@ -206,6 +213,21 @@ class BookingService implements BookingRepo {
       return Left(Failure(message: e.message ?? errorMessage));
     } catch (e) {
       log('catch getFareRule');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, MarkupModel>> getMarkup() async {
+    try {
+      final responce = await apiService.get(ApiEndPoints.getMarkup);
+      log('getMarkup done');
+      return Right(MarkupModel.fromJson(responce.data));
+    } on DioException catch (e) {
+      log('DioException getMarkup');
+      return Left(Failure(message: e.message ?? errorMessage));
+    } catch (e) {
+      log('catch getMarkup');
       return Left(Failure(message: e.toString()));
     }
   }

@@ -12,6 +12,7 @@ import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking
 import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_booking.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/traveller_info.dart';
+import 'package:myairdeal/domain/models/booking/mark_up/markup_model.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/trip_info.dart';
@@ -47,7 +48,7 @@ class BookingController extends GetxController {
   RxBool invoiceLoading = false.obs;
   RxBool fareRuleLoading = false.obs;
 
-  // timer for booking
+  /// timer for booking
   Rx<Timer> timer = Timer(const Duration(seconds: 1), () {}).obs;
   // remaining time
   RxInt remainingTime = 900.obs;
@@ -56,6 +57,13 @@ class BookingController extends GetxController {
   RxBool bookingCompleteLoading = false.obs;
   RxBool bookingCompleteSuccess = false.obs;
   RxBool bookingCompleteFailure = false.obs;
+
+  /// markup details
+  Rx<MarkupModel>? markupModel;
+  RxBool markupLoading = false.obs;
+
+  /// mark up price
+  RxDouble markupPrice = 0.0.obs;
 
   // Retrive single booking model
   Rx<GetSingleBooking> retrieveSingleBookingresponceModel =
@@ -73,10 +81,10 @@ class BookingController extends GetxController {
   Rx<TicketCancelRequestModel> ticketCancelRequestModel =
       TicketCancelRequestModel().obs;
 
-  //Selected travelers List
+  /// Selected travelers List
   RxList<TravellerInfo> selectedTravelers = <TravellerInfo>[].obs;
 
-  // FareRule Information
+  /// FareRule Information
   Rx<FareRuleResponce> fareRule = FareRuleResponce().obs;
   Rx<FareRuleSection> fareRuleSection = FareRuleSection().obs;
 
@@ -173,6 +181,48 @@ class BookingController extends GetxController {
     remainingTime.value = 0;
   }
 
+  // getMarkup price
+  void getMarkup() async {
+    markupPrice.value = 0.0;
+    markupLoading.value = true;
+    final result = await bookingRepo.getMarkup();
+    result.fold((l) {
+      markupModel = null;
+      markupLoading.value = false;
+    }, (r) {
+      print(r.toJson());
+      markupModel = r.obs;
+      markupPrice.value = calculateMarkupPrice();
+      markupLoading.value = false;
+    });
+  }
+
+  /// calculte markup price
+  double calculateMarkupPrice() {
+    if (markupModel != null) {
+      if (markupModel!.value.flatPrice ?? false) {
+        return markupModel!.value.value!.toDouble();
+      } else if (markupModel!.value.percentage ?? false) {
+        if (markupModel!.value.baseFare ?? false) {
+          return ((reviewedDetail
+                          ?.value.totalPriceInfo?.totalFareDetail?.fC?.bf ??
+                      0) *
+                  (markupModel!.value.value ?? 0) /
+                  100)
+              .toDouble();
+        } else if (markupModel!.value.totalFare ?? false) {
+          return ((reviewedDetail
+                          ?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ??
+                      0) *
+                  (markupModel!.value.value ?? 0) /
+                  100)
+              .toDouble();
+        }
+      }
+    }
+    return 0.0;
+  }
+
   // complete booking api calling
   void completeBooking(BookTicketModel bookTicketModel) async {
     Get.toNamed(Routes.paymentSucess);
@@ -181,7 +231,12 @@ class BookingController extends GetxController {
     bookingCompleteFailure = false.obs;
     String message = '';
     String bookingId = '';
-    endTimer();
+    bookTicketModel = bookTicketModel.copyWith(
+        payment: bookTicketModel.payment?.copyWith(
+      markUp: markupModel?.value,
+      baseFare: reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.bf
+          ?.toDouble(),
+    ));
     print('book ticket model ');
     print(bookTicketModel.toString());
     final result =
@@ -200,6 +255,7 @@ class BookingController extends GetxController {
         message = r.errors?[0].message ?? errorMessage;
       }
       Get.find<FlightSortController>().clearDataAfterBooking();
+      endTimer();
     });
     bookingCompleteLoading.value = false;
     if (bookingCompleteSuccess.value) {

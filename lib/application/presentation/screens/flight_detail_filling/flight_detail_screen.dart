@@ -28,6 +28,10 @@ class ScreenFlightDetail extends StatelessWidget {
               () => DetailAppBar(
                 heading: travelController
                     .detailList[travelController.selectedMainTab.value],
+                backOntap: () {
+                  print('back button tap payment page');
+                  travelController.backButtonPaymetPage();
+                },
                 action: bookingController.bookingLoading.value
                     ? kEmpty
                     : Text(

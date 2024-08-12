@@ -8,6 +8,7 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/screens/payment/widgets/add_method_card.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/data/features/razorpay.dart';
@@ -22,266 +23,145 @@ class PaymentTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paymentController = Get.find<PaymentController>();
-    return Column(
-      //padding: const EdgeInsets.all(0),
-      children: [
-        // const DetailAppBar(heading: 'Payment'),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 13.w),
+    final bookingController = Get.find<BookingController>();
+    return Obx(() {
+      if (bookingController.markupLoading.value) {
+        return Padding(
+          padding: const EdgeInsets.all(15),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              kHeight10,
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: kRadius15,
-                    boxShadow: boxShadow2,
-                    color: kWhite),
-                child: Column(
-                  children: [kHeight10, const FareSummary(paymentPage: true)],
-                ),
+              const Skeleton(
+                crossAxisCount: 1,
+                itemCount: 1,
+                childAspectRatio: 1 / 0.5,
               ),
-              kHeight20,
-              Obx(() {
-                return Get.find<BookingController>()
-                        .bookingCompleteLoading
-                        .value
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                          color: kBluePrimary,
-                        ),
-                      )
-                    : Container(
-                        decoration: BoxDecoration(
-                          boxShadow: boxShadow3,
-                          color: kWhite,
-                            borderRadius: kRadius15,
-                            border: Border.all(color: kGreyDark, width: 0.5)),
-                        child: ListTile(
-                          trailing: const Icon(Icons.radio_button_checked,
-                              color: kBluePrimary),
-                          leading: const CircleAvatar(
-                            backgroundImage: AssetImage(imageRazorpay),
-                          ),
-                          title: Text(
-                            'Razorpay',
-                            style: textStyle1,
-                          ),
-                          subtitle: Text(
-                            'Tap to pay using razorpay',
-                            style: textThinStyle1.copyWith(color: kBluePrimary),
-                          ),
-                          onTap: () {
-                            final bookingController =
-                                Get.find<BookingController>();
-                            final travellerController =
-                                Get.find<TravellerController>();
-                            List<TravellerInfo> travellerInfos = [];
-                            for (int i = 0;
-                                i < travellerController.passengerLength.value;
-                                i++) {
-                              travellerInfos.add(
-                                  travellerController.passengerDetails[i]!);
-                            }
-                            // bookingController.completeBooking();
-                            final bookTicketModel = BookTicketModel(
-                              searchQuery: bookingController
-                                  .reviewedDetail?.value.searchQuery,
-                              booking: Booking(
-                                  bookingId: bookingController
-                                      .reviewedDetail?.value.bookingId,
-                                  paymentInfos: [
-                                    PaymentInfo(
-                                        amount: (bookingController
-                                                    .reviewedDetail
-                                                    ?.value
-                                                    .totalPriceInfo
-                                                    ?.totalFareDetail
-                                                    ?.fC
-                                                    ?.tf ??
-                                                0) +
-                                            travellerController
-                                                .addOnsprice.value)
-                                  ],
-                                  gstInfo: travellerController.gstInfo.value
-                                      .validateAndCleanDetails(),
-                                  travellerInfo: travellerInfos,
-                                  deliveryInfo: DeliveryInfo(contacts: [
-                                    travellerController.phoneController.text
-                                  ], emails: [
-                                    travellerController.emailController.text
-                                  ])),
-                            );
-
-                            final RazorpayGateway razorpayGateway =
-                                RazorpayGateway(context, bookTicketModel);
-                            razorpayGateway.makePayment(
-                                amount: (bookingController
-                                            .reviewedDetail
-                                            ?.value
-                                            .totalPriceInfo
-                                            ?.totalFareDetail
-                                            ?.fC
-                                            ?.tf ??
-                                        1)
-                                    .toDouble(),
-                                description: 'payment to MyAirDeal',
-                                email: 'testemail@gmail.com',
-                                phone: '+91 9876543210');
-                          },
-                        ),
-                      );
-                // Align(
-                //     child: EventButton(
-                //         text: 'Confirm Booking',
-                //         onTap: () {
-                //           final bookingController =
-                //               Get.find<BookingController>();
-                //           final travellerController =
-                //               Get.find<TravellerController>();
-                //           List<TravellerInfo> travellerInfos = [];
-                //           for (int i = 0;
-                //               i < travellerController.passengerLength.value;
-                //               i++) {
-                //             travellerInfos.add(
-                //                 travellerController.passengerDetails[i]!);
-                //           }
-                //           // bookingController.completeBooking();
-                //           final bookTicketModel = BookTicketModel(
-                //             searchQuery: bookingController
-                //                 .reviewedDetail?.value.searchQuery,
-                //             booking: Booking(
-                //                 bookingId: bookingController
-                //                     .reviewedDetail?.value.bookingId,
-                //                 paymentInfos: [
-                //                   PaymentInfo(
-                //                       amount: (bookingController
-                //                                   .reviewedDetail
-                //                                   ?.value
-                //                                   .totalPriceInfo
-                //                                   ?.totalFareDetail
-                //                                   ?.fC
-                //                                   ?.tf ??
-                //                               0) +
-                //                           travellerController
-                //                               .addOnsprice.value)
-                //                 ],
-                //                 gstInfo: travellerController.gstInfo.value
-                //                     .validateAndCleanDetails(),
-                //                 travellerInfo: travellerInfos,
-                //                 deliveryInfo: DeliveryInfo(contacts: [
-                //                   travellerController.phoneController.text
-                //                 ], emails: [
-                //                   travellerController.emailController.text
-                //                 ])),
-                //           );
-
-                //           final RazorpayGateway razorpayGateway =
-                //               RazorpayGateway(context, bookTicketModel);
-                //           razorpayGateway.makePayment(
-                //               amount: (bookingController
-                //                           .reviewedDetail
-                //                           ?.value
-                //                           .totalPriceInfo
-                //                           ?.totalFareDetail
-                //                           ?.fC
-                //                           ?.tf ??
-                //                       1)
-                //                   .toDouble(),
-                //               description: 'payment to MyAirDeal',
-                //               email: 'testemail@gmail.com',
-                //               phone: '+91 9876543210');
-                //         },
-                //         color: kBlueDark));
-              }),
-              // kHeight20,
-              // Text(
-              //   'Digital payment method(s)',
-              //   style: textHeadStyle1,
-              // ),
-              // kHeight10,
-              // // Text(
-              // //   'Swipe left to set your default method',
-              // //   style: textThinStyle1.copyWith(color: kGreyDark),
-              // // ),
-              // //kHeight15,
-              // Obx(
-              //   () => Column(
-              //     children: [
-              //       ...List.generate(
-              //         paymentController.itemMap.length,
-              //         (index) {
-              //           return Column(
-              //             children: [
-              //               PaymentMethodSelection(
-              //                 onTap: () =>
-              //                     paymentController.changePaymentMethod(index),
-              //                 image: paymentController.itemMap[index]['image']!,
-              //                 title: paymentController.itemMap[index]['title']!,
-              //                 subtitle: paymentController.itemMap[index]
-              //                     ['subtitle']!,
-              //                 isSelected: index ==
-              //                     paymentController
-              //                         .selectedPayementmethod.value,
-              //               ),
-              //               index != paymentController.itemMap.length - 1
-              //                   ? const Divider()
-              //                   : kEmpty
-              //             ],
-              //           );
-              //         },
-              //       )
-              //     ],
-              //   ),
-              // ),
-              // kHeight10,
-              // Text('Add methods', style: textHeadStyle1),
-              // AddMethodCard(
-              //   icon: Icons.credit_card,
-              //   title: 'Credit or debit card',
-              //   subtitle: 'Visa, Mastercard, AMEX and JCB',
-              // ),
-              // AddMethodCard(
-              //   icon: Icons.account_balance,
-              //   title: 'Transfer',
-              //   subtitle:
-              //       'Transferring via ATM, Internet Banking & Mobile Banking',
-              // ),
-              // // Row(
-              // //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              // //   children: [
-              // //     const Column(
-              // //       crossAxisAlignment: CrossAxisAlignment.start,
-              // //       children: [
-              // //         Text(
-              // //           'Subtotal',
-              // //           style: TextStyle(fontSize: 16),
-              // //         ),
-              // //         Text(
-              // //           '₹3500',
-              // //           style: TextStyle(
-              // //               fontSize: 16, fontWeight: FontWeight.bold),
-              // //         ),
-              // //       ],
-              // //     ),
-              // //     kWidth20,
-              // //     Expanded(
-              // //       child: EventIconButton(
-              // //         suffixIcon: Image.asset(tickIcon, height: 13.h),
-              // //         text: 'Proceed The Payment',
-              // //         onTap: () {
-              // //           Get.toNamed(Routes.paymentSucess);
-              // //         },
-              // //       ),
-              // //     ),
-              // //   ],
-              // // ),
-              // kHeight20,
+              kHeight10,
+              const Skeleton(
+                crossAxisCount: 1,
+                itemCount: 3,
+                childAspectRatio: 1 / 0.25,
+              )
             ],
           ),
-        ),
-      ],
-    );
+        );
+      }
+      return Column(
+        //padding: const EdgeInsets.all(0),
+        children: [
+          // const DetailAppBar(heading: 'Payment'),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 13.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                kHeight10,
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: kRadius15,
+                      boxShadow: boxShadow2,
+                      color: kWhite),
+                  child: Column(
+                    children: [kHeight10, const FareSummary(paymentPage: true)],
+                  ),
+                ),
+                kHeight20,
+                Obx(() {
+                  return Get.find<BookingController>()
+                          .bookingCompleteLoading
+                          .value
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: kBluePrimary,
+                          ),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                              boxShadow: boxShadow3,
+                              color: kWhite,
+                              borderRadius: kRadius15,
+                              border: Border.all(color: kGreyDark, width: 0.5)),
+                          child: ListTile(
+                            trailing: const Icon(Icons.radio_button_checked,
+                                color: kBluePrimary),
+                            leading: const CircleAvatar(
+                              backgroundImage: AssetImage(imageRazorpay),
+                            ),
+                            title: Text(
+                              'Razorpay',
+                              style: textStyle1,
+                            ),
+                            subtitle: Text(
+                              'Tap to pay using razorpay',
+                              style:
+                                  textThinStyle1.copyWith(color: kBluePrimary),
+                            ),
+                            onTap: () {
+                              final bookingController =
+                                  Get.find<BookingController>();
+                              final travellerController =
+                                  Get.find<TravellerController>();
+                              List<TravellerInfo> travellerInfos = [];
+                              for (int i = 0;
+                                  i < travellerController.passengerLength.value;
+                                  i++) {
+                                travellerInfos.add(
+                                    travellerController.passengerDetails[i]!);
+                              }
+                              // bookingController.completeBooking();
+                              final bookTicketModel = BookTicketModel(
+                                searchQuery: bookingController
+                                    .reviewedDetail?.value.searchQuery,
+                                booking: Booking(
+                                    bookingId: bookingController
+                                        .reviewedDetail?.value.bookingId,
+                                    paymentInfos: [
+                                      PaymentInfo(
+                                          amount: (bookingController
+                                                      .reviewedDetail
+                                                      ?.value
+                                                      .totalPriceInfo
+                                                      ?.totalFareDetail
+                                                      ?.fC
+                                                      ?.tf ??
+                                                  0) +
+                                              travellerController
+                                                  .addOnsprice.value)
+                                    ],
+                                    gstInfo: travellerController.gstInfo.value
+                                        .validateAndCleanDetails(),
+                                    travellerInfo: travellerInfos,
+                                    deliveryInfo: DeliveryInfo(contacts: [
+                                      travellerController.phoneController.text
+                                    ], emails: [
+                                      travellerController.emailController.text
+                                    ])),
+                              );
+
+                              final RazorpayGateway razorpayGateway =
+                                  RazorpayGateway(context, bookTicketModel);
+                              razorpayGateway.makePayment(
+                                  amount: ((bookingController
+                                                  .reviewedDetail
+                                                  ?.value
+                                                  .totalPriceInfo
+                                                  ?.totalFareDetail
+                                                  ?.fC
+                                                  ?.tf ??
+                                              0) +
+                                          (bookingController.markupPrice.value))
+                                      .toDouble(),
+                                  description: 'payment to MyAirDeal',
+                                  email: 'testemail@gmail.com',
+                                  phone: '+91 9876543210');
+                            },
+                          ),
+                        );
+                }),
+              ],
+            ),
+          ),
+        ],
+      );
+    });
   }
 }

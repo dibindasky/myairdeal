@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
@@ -84,6 +85,7 @@ class TravellerController extends GetxController {
 
   /// total number of passengers
   RxInt passengerLength = 1.obs;
+
   /// total number of passengers with out infant count
   RxInt passengerLengthWithoutInfant = 1.obs;
 
@@ -192,6 +194,26 @@ class TravellerController extends GetxController {
     }
   }
 
+  // back button detail filling page
+  void backButtonPaymetPage() {
+    // if tab is on first index go back to the prvious route
+    if (selectedMainTab.value == 0) {
+      Get.back();
+    } // if main tab is on the passenger detail section then check for inner tab
+    else if (selectedMainTab.value == 1) {
+      // if inner tab is on the first tab then go back to the previous main tab
+      if (selectedAddDetailsStep.value == 0) {
+        selectedMainTab.value = 0;
+      } // if inner tab is not on the first one, change to previous
+      else {
+        selectedAddDetailsStep.value = selectedAddDetailsStep.value - 1;
+      }
+    } // if main tab is not on the first one then go the previous tab
+    else {
+      selectedMainTab.value == selectedMainTab.value - 1;
+    }
+  }
+
   /// add passenger details to the list to submit while booking
   void addPassengerDetail(int index, TravellerInfo travellerInfo, bool save) {
     passengerDetails[index] = travellerInfo;
@@ -211,6 +233,11 @@ class TravellerController extends GetxController {
     // call seats while coming to the passenger details filling screen
     if (index == 1) {
       getSeatsAvailable(bookingId: bookingId ?? '');
+    }
+    // call for markup price while going to payment section
+    if(index == 3){
+      print('get markup call');
+      Get.find<BookingController>().getMarkup();
     }
   }
 

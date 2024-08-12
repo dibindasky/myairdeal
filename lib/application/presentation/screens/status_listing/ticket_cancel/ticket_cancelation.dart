@@ -15,6 +15,7 @@ import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom
 import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
+import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_request_model/amendment_details_request_model.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/ticket_cancel_request_model/trip.dart';
 
 class ScreenTicetCanceallation extends StatelessWidget {
@@ -209,28 +210,11 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                                     ),
                                                   ],
                                                 ),
-                                                // Icon(Icons.arrow_drop_down)
                                               ],
                                             ),
                                           ),
                                         ),
                                       ),
-                                      // Positioned(
-                                      //   right: 0,
-                                      //   child: GestureDetector(onTap: () {
-                                      //     controller.selectTrip(trip: trip);
-                                      //   }, child: Obx(() {
-                                      //     return CircleAvatar(
-                                      //         radius: 10.w,
-                                      //         child: controller.selectedTrips.contains(trip)
-                                      //             ? Icon(
-                                      //                 Icons.check,
-                                      //                 size: 16.w,
-                                      //                 color: kRed,
-                                      //               )
-                                      //             : kEmpty);
-                                      //   })),
-                                      // ),
                                     ],
                                   ),
                                 );
@@ -349,7 +333,24 @@ class ScreenTicetCanceallation extends StatelessWidget {
                               hieght: 30.h,
                               width: double.infinity,
                               text: 'Check Amendment Details',
-                              onTap: () {}),
+                              onTap: () {
+                                cancellationController.viewAmendmentDetail(
+                                    amendmentDetailRequestModel: List.generate(
+                                  bookingController
+                                          .retrieveSingleBookingresponceModel
+                                          .value
+                                          .amendment
+                                          ?.length ??
+                                      0,
+                                  (index) => AmendmentDetailsRequestModel(
+                                    amendmentId: bookingController
+                                        .retrieveSingleBookingresponceModel
+                                        .value
+                                        .amendment?[index]
+                                        .id,
+                                  ),
+                                ));
+                              }),
                         )
                       : kEmpty;
                 }),

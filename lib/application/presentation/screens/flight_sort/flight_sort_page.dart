@@ -9,7 +9,9 @@ import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/h
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/selected_airlines_section.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/sorting_section.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/tickets_list_sorted.dart';
+import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/application/presentation/utils/loading/loading.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
 
 class ScreenFlightTicketSort extends StatelessWidget {
@@ -26,6 +28,7 @@ class ScreenFlightTicketSort extends StatelessWidget {
         return true;
       },
       child: Scaffold(
+        backgroundColor: kWhite,
         body: Obx(() {
           if (controller.searchListLoading.value ||
               (!controller.comboTrip.value && controller.searchList.isEmpty) ||
@@ -36,12 +39,15 @@ class ScreenFlightTicketSort extends StatelessWidget {
                 Expanded(
                   child: Center(
                     child: controller.searchListLoading.value
-                        ? Skeleton(
-                            crossAxisCount: 1,
-                            itemCount: 10,
-                            height: 150.h,
-                            childAspectRatio: 1 / 0.45,
-                          )
+                        ?
+                        //Lottie.asset('asset/lottie/plane.json')
+                        // Skeleton(
+                        //     crossAxisCount: 1,
+                        //     itemCount: 10,
+                        //     height: 150.h,
+                        //     childAspectRatio: 1 / 0.45,
+                        //   )
+                        const ComplexLoader()
                         : const Text('No Flights Available'),
                   ),
                 ),
@@ -78,8 +84,7 @@ class ScreenFlightTicketSort extends StatelessWidget {
                         crossAxisCount: 4,
                         itemCount: 4,
                         height: 10.h,
-                        childAspectRatio: 1 / 0.45,
-                      )
+                        childAspectRatio: 1 / 0.45)
                     : const SortingChipsSection(),
                 controller.sortingRebuild.value ? kHeight10 : kEmpty,
                 controller.sortingRebuild.value
@@ -87,8 +92,7 @@ class ScreenFlightTicketSort extends StatelessWidget {
                         crossAxisCount: 1,
                         itemCount: 10,
                         height: 150.h,
-                        childAspectRatio: 1 / 0.45,
-                      )
+                        childAspectRatio: 1 / 0.45)
                     : const TicketsListSorted(),
                 kHeight20
               ],

@@ -62,6 +62,7 @@ dependencies:
   dropdown_button2: ^2.3.9
   url_launcher: ^6.2.4
   share_plus: ^7.2.2
+  lottie: ^3.1.2
 
   # Push notification
   firebase_core: ^2.27.0
@@ -100,6 +101,8 @@ flutter:
     - asset/icon/
     - asset/image/
     - asset/dev/
+    - asset/lottie/air_lotite.json
+    - asset/lottie/plane.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

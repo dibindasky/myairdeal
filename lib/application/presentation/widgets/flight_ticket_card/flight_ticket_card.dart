@@ -30,6 +30,7 @@ class FlightTicketCard extends StatelessWidget {
     this.searchAirlineInformation,
     this.allBookingResponce,
     this.airlineCode,
+    this.share,
   });
 
   final VoidCallback? buttonOnTap;
@@ -45,11 +46,13 @@ class FlightTicketCard extends StatelessWidget {
   final String? bookingId;
   final AllBookingResponce? allBookingResponce;
   final String? airlineCode;
+  final Function()? share;
 
   @override
   Widget build(BuildContext context) {
     final tripInfos = allBookingResponce
         ?.retrieveSingleBookingresponceModel?.itemInfos?.air?.tripInfos;
+
     return Stack(
       children: [
         GestureDetector(
@@ -111,12 +114,17 @@ class FlightTicketCard extends StatelessWidget {
                                             0) -
                                         1,
                                     haveImage: false,
-                                    airline: tripInfos?[tripIndex]
-                                            .sI?[0]
-                                            .fD
-                                            ?.aI
-                                            ?.name ??
-                                        '',
+                                    airline:
+                                        (tripInfos?[tripIndex].sI?.length ??
+                                                    0) >
+                                                1
+                                            ? null
+                                            : tripInfos?[tripIndex]
+                                                    .sI?[0]
+                                                    .fD
+                                                    ?.aI
+                                                    ?.name ??
+                                                '',
                                     number: '',
                                     date: DateFormating.getDurationOfFlights(
                                         si: tripInfos?[tripIndex].sI ?? <SI>[]),
@@ -169,6 +177,7 @@ class FlightTicketCard extends StatelessWidget {
                       ),
                 const DottedLines(),
                 BottomMiniContainer(
+                  share: share,
                   flightTicketCardEnum: flightTicketCardEnum,
                   buttonOnTap: buttonOnTap,
                   price: searchAirlineInformation != null &&

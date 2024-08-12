@@ -12,8 +12,8 @@ import 'package:myairdeal/application/presentation/widgets/radio_button_custom.d
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 import 'package:myairdeal/domain/models/ticket_raice/raice_ticket/raice_ticket.dart';
 
-class ContactUsFrom extends StatelessWidget {
-  ContactUsFrom({super.key, this.bookingId});
+class RaiceTickets extends StatelessWidget {
+  RaiceTickets({super.key, this.bookingId});
   final String? bookingId;
 
   final ticketRaiceController = Get.find<RaiceTicketController>();

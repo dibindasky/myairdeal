@@ -191,6 +191,7 @@ class TicketCancellationController extends GetxController {
         hasError.value = false;
         isLoading.value = false;
         ticketCancelResponce.value = r;
+
         Get.find<BookingController>().getSingleBooking(
             retrieveSingleBookingRequestModel:
                 RetrieveSingleBookingRequestModel(

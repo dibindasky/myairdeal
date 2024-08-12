@@ -12,11 +12,13 @@ class BottomMiniContainer extends StatelessWidget {
     required this.flightTicketCardEnum,
     this.price = 0,
     this.buttonOnTap,
+    this.share,
   });
 
   final FlightTicketCardEnum flightTicketCardEnum;
   final double price;
   final VoidCallback? buttonOnTap;
+  final Function()? share;
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +183,7 @@ class BottomMiniContainer extends StatelessWidget {
                                       size: 17.w,
                                       color: kWhite,
                                     ),
-                                    onTap: () {},
+                                    onTap: share ?? () {},
                                   )
                                 : kEmpty,
                             kWidth10,

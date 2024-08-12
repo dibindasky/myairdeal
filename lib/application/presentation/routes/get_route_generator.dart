@@ -80,6 +80,7 @@ class GetXRouterConfig {
     ),
     GetPage(
       bindings: [
+        RaiceTicketBinding(),
         TalkToUsBinding(),
         AuthBinding(),
         NavBarBinding(),

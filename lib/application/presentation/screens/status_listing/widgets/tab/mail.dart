@@ -13,10 +13,10 @@ class EmailListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<RaiceTicketController>();
+    final raiceTiceketController = Get.find<RaiceTicketController>();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        controller.getAllRaisedTickets(
+        raiceTiceketController.getAllRaisedTickets(
             createdId: Get.find<BookingController>()
                     .retrieveSingleBookingresponceModel
                     .value
@@ -27,15 +27,21 @@ class EmailListScreen extends StatelessWidget {
       },
     );
     return Obx(
-      () => ListView.builder(
-        padding: const EdgeInsets.all(0),
-        physics: const BouncingScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: controller.allTicketsLists.length,
-        itemBuilder: (context, index) {
-          return EmailListItem(ticketData: controller.allTicketsLists[index]);
-        },
-      ),
+      () {
+        if (raiceTiceketController.allTicketsLists.isEmpty) {
+          return const Center(child: Text('No Raised Tickets'));
+        }
+        return ListView.builder(
+          padding: const EdgeInsets.all(0),
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: raiceTiceketController.allTicketsLists.length,
+          itemBuilder: (context, index) {
+            return EmailListItem(
+                ticketData: raiceTiceketController.allTicketsLists[index]);
+          },
+        );
+      },
     );
   }
 }

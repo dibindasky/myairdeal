@@ -323,11 +323,27 @@ class FareSummary extends StatelessWidget {
                   style: textThinStyle1.copyWith(
                       fontSize: 14.sp, fontWeight: FontWeight.w700),
                 ),
-                Text(
-                  '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf?.toDouble() ?? 0 + travellerController.addOnsprice.value.toDouble()}',
-                  style: textThinStyle1.copyWith(
-                      fontSize: 14.sp, fontWeight: FontWeight.w700),
-                ),
+                paymentPage
+                    ? Obx(() {
+                        print(
+                            'convience free = > ${controller.markupPrice.value}');
+                        print(
+                            'addons free = > ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf}');
+                        print(
+                            'add on free = > ${travellerController.addOnsprice.value}');
+                        print(
+                            'total fee => ${(controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0 + travellerController.addOnsprice.value + controller.markupPrice.value).toDouble()}');
+                        return Text(
+                          '₹ ${(controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : (controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0).toDouble() + travellerController.addOnsprice.value + controller.markupPrice.value)}',
+                          style: textThinStyle1.copyWith(
+                              fontSize: 14.sp, fontWeight: FontWeight.w700),
+                        );
+                      })
+                    : Text(
+                        '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf?.toDouble() ?? 0 + travellerController.addOnsprice.value.toDouble()}',
+                        style: textThinStyle1.copyWith(
+                            fontSize: 14.sp, fontWeight: FontWeight.w700),
+                      ),
               ],
             ),
             paymentPage

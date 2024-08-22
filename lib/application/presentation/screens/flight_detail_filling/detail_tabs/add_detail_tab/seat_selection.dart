@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/bottom_button..dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/bottom_button.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
@@ -246,6 +247,7 @@ class FlightsListForSeatSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     final travellerController = Get.find<TravellerController>();
     final bookingController = Get.find<BookingController>();
+    final themeController = Get.find<ThemeController>();
     return Obx(() {
       return travellerController.seatIsLoading.value
           ? HorizontalShimmerSkeleton(
@@ -275,8 +277,13 @@ class FlightsListForSeatSelection extends StatelessWidget {
                         margin: EdgeInsets.symmetric(horizontal: 6.w),
                         decoration: BoxDecoration(
                             borderRadius: kRadius10,
+                            border: Border.all(
+                                color: selected
+                                    ? themeController.primaryColor
+                                    : themeController.secondaryColor),
                             color: selected
-                                ? kBluePrimary.withOpacity(0.6)
+                                ? themeController.secondaryColor
+                                    .withOpacity(0.6)
                                 : kRed.withOpacity(0.3),
                             boxShadow: selected ? boxShadow2 : boxShadow3),
                         child: Padding(

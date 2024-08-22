@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
@@ -14,6 +15,7 @@ class PersonClassBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+    final themeController = Get.find<ThemeController>();
     return Stack(
       children: [
         SingleChildScrollView(
@@ -99,7 +101,7 @@ class PersonClassBottomSheet extends StatelessWidget {
                                     borderRadius: kRadius5,
                                     color: controller.classType.value ==
                                             controller.classTypes[index]
-                                        ? kBluePrimary
+                                        ? themeController.secondaryColor
                                         : kWhite,
                                     boxShadow: boxShadow2),
                                 padding: EdgeInsets.all(10.w),

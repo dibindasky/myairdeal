@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
@@ -15,13 +16,14 @@ class FloatingButtonSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+    final themeController = Get.find<ThemeController>();
     return Obx(() {
       return controller.comboTrip.value ||
               controller.tripType.value == 0 ||
               controller.searchListLoading.value
           ? kEmpty
           : FloatingActionButton.extended(
-              backgroundColor: kBlueDark,
+              backgroundColor: themeController.primaryColor,
               splashColor: kBluePrimary,
               onPressed: () {
                 Get.find<TravellerController>().updatePassengersNumber(

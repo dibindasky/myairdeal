@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/itenary_tab/fare_summary.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/itenary_tab/inner_content.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -16,6 +17,7 @@ class ReveiewTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<TravellerController>();
     final bookingController = Get.find<BookingController>();
+    final themeController = Get.find<ThemeController>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -54,9 +56,10 @@ class ReveiewTab extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                             vertical: 10.w, horizontal: 10.h),
                         decoration: BoxDecoration(
-                          border: Border.all(color: kBlue),
+                          border:
+                              Border.all(color: themeController.primaryColor),
                           borderRadius: kRadius10,
-                          color: kBlueLightShade,
+                          color: themeController.secondaryLightColor,
                         ),
                         width: double.infinity,
                         child: Column(

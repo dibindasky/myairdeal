@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/bottom_button..dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/bottom_button.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
@@ -68,6 +69,7 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
     final searchController = Get.find<FlightSortController>();
     final travellerController = Get.find<TravellerController>();
     final bookingController = Get.find<BookingController>();
+    final themeController = Get.find<ThemeController>();
     return Column(
       children: [
         kHeight10,
@@ -80,10 +82,12 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
               children: [
                 Text(
                     '${bookingController.reviewedDetail?.value.tripInfos?[tripIndex].sI?[siIndex].da?.city ?? ''} to ${bookingController.reviewedDetail?.value.tripInfos?[tripIndex].sI?[siIndex].aa?.city ?? ''}',
-                    style: textThinStyle1.copyWith(color: kBlueDark)),
+                    style: textThinStyle1.copyWith(
+                        color: themeController.primaryColor)),
                 Text(
                     'on ${DateFormating.formatDate(bookingController.reviewedDetail?.value.tripInfos?[tripIndex].sI?[siIndex].dt ?? '')}',
-                    style: textThinStyle1.copyWith(color: kBlueDark))
+                    style: textThinStyle1.copyWith(
+                        color: themeController.primaryColor))
               ],
             ),
           ],
@@ -126,7 +130,7 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: kRadius10,
-                        border: Border.all(color: kBlue),
+                        border: Border.all(color: themeController.primaryColor),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(17.0),
@@ -146,9 +150,11 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         decoration: BoxDecoration(
-                          border: Border.all(color: kBlue),
+                          border:
+                              Border.all(color: themeController.primaryColor),
                           borderRadius: kRadius10,
-                          color: kBlueLightShade,
+                          color:
+                              themeController.secondaryLightColor,
                         ),
                         child: Column(
                           children: [
@@ -162,7 +168,10 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                   child: Container(
                                     padding: EdgeInsets.only(left: 10.w),
                                     decoration: BoxDecoration(
-                                        boxShadow: boxShadow4,
+                                        // boxShadow: boxShadow4,
+                                        border: Border.all(
+                                            color:
+                                                themeController.primaryColor),
                                         color: kWhite,
                                         borderRadius: kRadius15),
                                     child: (bookingController
@@ -245,8 +254,11 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                   child: Container(
                                     padding: EdgeInsets.only(left: 10.w),
                                     decoration: BoxDecoration(
-                                        boxShadow: boxShadow4,
+                                        // boxShadow: boxShadow4,
                                         color: kWhite,
+                                        border: Border.all(
+                                            color:
+                                                themeController.primaryColor),
                                         borderRadius: kRadius15),
                                     child: (bookingController
                                                     .reviewedDetail

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -49,6 +51,7 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return SizedBox(
       width: double.infinity,
       // height: 500.h,
@@ -115,8 +118,8 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
             },
             calendarStyle: CalendarStyle(
               // Customize here
-              todayDecoration: const BoxDecoration(
-                color: kBluePrimary,
+              todayDecoration: BoxDecoration(
+                color: themeController.secondaryColor,
                 shape: BoxShape.circle,
               ),
               selectedDecoration: const BoxDecoration(
@@ -126,11 +129,13 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
               weekendTextStyle: const TextStyle().copyWith(color: kRed),
               holidayTextStyle: const TextStyle().copyWith(color: kBluePrimary),
             ),
-            headerStyle: const HeaderStyle(
+            headerStyle: HeaderStyle(
               titleCentered: true,
               formatButtonVisible: false,
-              leftChevronIcon: Icon(Icons.chevron_left, color: Colors.blue),
-              rightChevronIcon: Icon(Icons.chevron_right, color: Colors.blue),
+              leftChevronIcon: Icon(Icons.chevron_left,
+                  color: themeController.secondaryColor),
+              rightChevronIcon: Icon(Icons.chevron_right,
+                  color: themeController.secondaryColor),
             ),
           ),
         ],

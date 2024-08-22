@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -28,6 +29,7 @@ class HomeHeaderSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final talkUscontroller = Get.find<TalkToUsController>();
     final homeController = Get.find<FlightSortController>();
+    final themeController = Get.find<ThemeController>();
     return AppBarCustomShape(
       child: Column(
         children: [
@@ -120,7 +122,7 @@ class HomeHeaderSection extends StatelessWidget {
                                   width: 23.w,
                                   height: 4.h,
                                   decoration: BoxDecoration(
-                                      color: kBluePrimary,
+                                      color: themeController.secondaryColor,
                                       borderRadius: kRadius10),
                                 )
                               : kEmpty

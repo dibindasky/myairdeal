@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -12,17 +14,18 @@ class CustomRadioButton extends StatelessWidget {
       this.width,
       this.child,
       this.containerColor,
-      this.color = kBluePrimary});
+      this.color});
   final SizedBox? width;
   final bool selected;
   final String? text;
   final VoidCallback onChanged;
   final Widget? child;
-  final Color color;
+  final Color? color;
   final Color? containerColor;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<ThemeController>();
     return GestureDetector(
       onTap: onChanged,
       child: ColoredBox(
@@ -32,7 +35,7 @@ class CustomRadioButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 selected
-                    ? Icon(Icons.radio_button_checked, color: color)
+                    ? Icon(Icons.radio_button_checked, color: color?? controller.secondaryColor)
                     : const Icon(Icons.radio_button_unchecked),
                 width ?? kWidth5,
                 Text(text ?? ''),

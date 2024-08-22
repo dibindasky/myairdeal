@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
@@ -17,6 +18,7 @@ class EnquiryBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final talkToUsController = Get.find<TalkToUsController>();
+    final themeController = Get.find<ThemeController>();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         final authController = Get.find<AuthController>();
@@ -134,10 +136,10 @@ class EnquiryBox extends StatelessWidget {
         ),
         kHeight10,
         CustomTextField(
-          hintText: 'Description',
+          hintText: 'Enquiry ...',
           isBorder: true,
           borderRadius: 7,
-          maxLines: 6,
+          maxLines: 5,
           validate: Validate.notNullAndLength15,
           controller: talkToUsController.enquiryDescriptionController,
           textCapitalization: TextCapitalization.words,
@@ -157,7 +159,6 @@ class EnquiryBox extends StatelessWidget {
           return EventButton(
             width: 400.w,
             text: 'Send',
-            color: kBluePrimary,
             onTap: () {
               if (controller.enquiryDescriptionController.text.isEmpty ||
                   controller.selecedDailCode.value.isEmpty ||
@@ -172,6 +173,7 @@ class EnquiryBox extends StatelessWidget {
             },
           );
         }),
+        kHeight30,
       ],
     );
   }

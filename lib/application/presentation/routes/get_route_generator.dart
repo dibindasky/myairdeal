@@ -37,16 +37,15 @@ import 'package:myairdeal/domain/core/binding/notification_binding.dart';
 import 'package:myairdeal/domain/core/binding/payment_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/raice_ticket_binding.dart';
 import 'package:myairdeal/domain/core/binding/talk_to_us_controller_binding.dart';
+import 'package:myairdeal/domain/core/binding/theme_controller_binding.dart';
 import 'package:myairdeal/domain/core/binding/ticket_cancellation_binding.dart';
 import 'package:myairdeal/domain/core/binding/traveller_controller_binding.dart';
 
 class GetXRouterConfig {
   static final List<GetPage> routes = [
     GetPage(
-      // bindings: [TravellerBinding(),BookingBinding(),SeatBinding(),FlightSortBinding()],
-      binding: AuthBinding(),
+      bindings: [AuthBinding(), ThemeBinding()],
       name: Routes.initial,
-      // page: () => const ScreenFlightDetail(),
       page: () => const ScreenSplash(),
     ),
     GetPage(

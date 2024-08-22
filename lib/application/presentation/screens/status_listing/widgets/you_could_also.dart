@@ -4,6 +4,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -14,6 +15,7 @@ class YouCouldAlso extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -54,7 +56,7 @@ class YouCouldAlso extends StatelessWidget {
                                                 .value !=
                                             2
                                     ? kWhite
-                                    : kBlueLightShade,
+                                    : themeController.secondaryLightColor,
                                 border: Border.all(
                                     color: kBluePrimary.withOpacity(0.3)),
                                 borderRadius: kRadius10),

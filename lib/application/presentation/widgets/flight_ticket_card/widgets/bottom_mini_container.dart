@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
@@ -22,6 +24,7 @@ class BottomMiniContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         bottomLeft: Radius.circular(10),
@@ -30,7 +33,7 @@ class BottomMiniContainer extends StatelessWidget {
       child: ColoredBox(
         color: (flightTicketCardEnum == FlightTicketCardEnum.cancelled)
             ? kRedLight
-            : kBluePrimary,
+            : themeController.primaryColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: flightTicketCardEnum == FlightTicketCardEnum.cancelled
@@ -177,11 +180,14 @@ class BottomMiniContainer extends StatelessWidget {
                                     borderRadius: 60,
                                     hieght: 25.h,
                                     width: 30.w,
-                                    color: kIndigo,
+                                    color: themeController.secondaryColor,
                                     prefixIcon: Icon(
                                       Icons.share,
                                       size: 17.w,
-                                      color: kWhite,
+                                      color: themeController.theme.value ==
+                                              AppTheme.blue
+                                          ? kWhite
+                                          : themeController.primaryColor,
                                     ),
                                     onTap: share ?? () {},
                                   )

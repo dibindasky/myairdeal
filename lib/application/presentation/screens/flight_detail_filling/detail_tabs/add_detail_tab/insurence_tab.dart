@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/bottom_button..dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/bottom_button.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
@@ -32,6 +33,7 @@ class _InsurenceTabState extends State<InsurenceTab> {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return Form(
       key: controller.formKey,
       child: Column(
@@ -40,7 +42,7 @@ class _InsurenceTabState extends State<InsurenceTab> {
           kHeight10,
           Container(
             decoration: BoxDecoration(
-              color: kBlueLightShade,
+              color: themeController.secondaryLightColor,
               boxShadow: boxShadow1,
               borderRadius: kRadius15,
             ),
@@ -88,7 +90,7 @@ class _InsurenceTabState extends State<InsurenceTab> {
           // gst details
           Container(
             decoration: BoxDecoration(
-              color: kBlueLightShade,
+              color: themeController.secondaryLightColor,
               boxShadow: boxShadow1,
               borderRadius: kRadius15,
             ),

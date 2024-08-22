@@ -49,7 +49,7 @@ class CurrentOffersSection extends StatelessWidget {
                           width: 50.w,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage(imageGlobalMap),
+                              image: AssetImage(imageGlobalMapGray),
                             ),
                           ),
                         ),

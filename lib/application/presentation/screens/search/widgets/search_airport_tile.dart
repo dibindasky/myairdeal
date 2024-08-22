@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/controller/home/home_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
@@ -18,6 +19,7 @@ class SearchAirportTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
     final homeController = Get.find<HomeController>();
+    final themeController = Get.find<ThemeController>();
     return GestureDetector(
       onTap: () {
         controller.setAirportSelection(citySearchModel: airportModel);
@@ -29,11 +31,11 @@ class SearchAirportTile extends StatelessWidget {
         child: Row(
           children: [
             history
-                ? const Icon(Icons.history, color: kBluePrimary)
+                ? Icon(Icons.history, color: themeController.primaryColor)
                 : Container(
                     padding: EdgeInsets.all(2.w),
                     decoration: BoxDecoration(
-                        color: kBlueLight, borderRadius: kRadius5),
+                        color: themeController.secondaryColor.withOpacity(0.8), borderRadius: kRadius5),
                     child: Text(airportModel.code ?? 'DEL')),
             kWidth10,
             Expanded(

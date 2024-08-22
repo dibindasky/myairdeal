@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/clippers/appbar_clippers.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
 class AppBarCustomShape extends StatelessWidget {
@@ -21,17 +22,21 @@ class AppBarCustomShape extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<ThemeController>();
     return ClipPath(
       clipper: AppbarClipper1(),
       child: Container(
-        color: kBlueDark,
+        color: controller.theme.value == AppTheme.blue
+            ? controller.secondaryColor
+            : controller.primaryColor,
         child: ClipPath(
           clipper: AppbarClipper2(),
           child: Container(
             decoration: BoxDecoration(
-              color: kIndigo,
+              color: controller.primaryColor,
               image: backGroundImage
-                  ? DecorationImage(image: AssetImage(image ?? imageGlobalMap))
+                  ? DecorationImage(
+                      image: AssetImage(image ?? controller.mapImage))
                   : null,
             ),
             child: Padding(

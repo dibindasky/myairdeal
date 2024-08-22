@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
@@ -20,6 +21,7 @@ class InnerContents extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<BookingController>();
     final travellerController = Get.find<TravellerController>();
+    final themeController = Get.find<ThemeController>();
 
     return Obx(() {
       return Stack(
@@ -56,6 +58,7 @@ class InnerContents extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TicketColumn(
+                                  valueStyle: textHeadStyle1,
                                   label:
                                       '${model?.sI?[0].da?.city ?? ''}, ${model?.sI?[0].da?.country ?? ''}',
                                   value: model?.sI?[0].da?.code ?? '',
@@ -97,6 +100,7 @@ class InnerContents extends StatelessWidget {
                               children: [
                                 TicketColumn(
                                   crossAxisAlignment: CrossAxisAlignment.end,
+                                  valueStyle: textHeadStyle1,
                                   label:
                                       '${model?.sI?[(model.sI?.length ?? 1) - 1].aa?.city ?? ''}, ${model?.sI?[(model.sI?.length ?? 1) - 1].aa?.country ?? ''}',
                                   value: model?.sI?[(model.sI?.length ?? 1) - 1]
@@ -321,9 +325,9 @@ class InnerContents extends StatelessWidget {
             left: 0,
             bottom: 4,
             child: Container(
-              decoration: const BoxDecoration(
-                color: kBlueDark,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: themeController.primaryColor,
+                borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(10),
                     bottomRight: Radius.circular(10)),
               ),
@@ -335,9 +339,9 @@ class InnerContents extends StatelessWidget {
             right: 0,
             bottom: 4,
             child: Container(
-              decoration: const BoxDecoration(
-                color: kBlueDark,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: themeController.primaryColor,
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10),
                   bottomLeft: Radius.circular(10),
                 ),

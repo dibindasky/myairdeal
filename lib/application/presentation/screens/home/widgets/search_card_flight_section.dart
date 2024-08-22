@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/bottom_calender_date_picker.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/choose_person_class_bottom_Sheet.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/place_selection.dart';
@@ -25,6 +26,7 @@ class FlightSearchCardHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return AnimatedContainer(
       margin: EdgeInsets.symmetric(horizontal: 16.w),
       duration: const Duration(milliseconds: 300),
@@ -92,8 +94,8 @@ class FlightSearchCardHome extends StatelessWidget {
                       texthead: index == 0 ? 'Departure Date' : 'Return Date',
                       spacer: kWidth10,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      first: const Icon(Icons.calendar_month_rounded,
-                          color: kBluePrimary),
+                      first: Icon(Icons.calendar_month_rounded,
+                          color: themeController.secondaryColor),
                       second: Obx(() {
                         return Text(DateFormating.getDate(index == 0
                             ? controller.depatureDate.value
@@ -108,8 +110,8 @@ class FlightSearchCardHome extends StatelessWidget {
               Obx(() {
                 return TextIconButtonOutlinedCustom(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    first:
-                        const Icon(Iconsax.personalcard, color: kBluePrimary),
+                    first: Icon(Iconsax.personalcard,
+                        color: themeController.secondaryColor),
                     second: Row(
                       children: [
                         Text(
@@ -146,8 +148,7 @@ class FlightSearchCardHome extends StatelessWidget {
                                   index + 1,
                               onChanged: (value) {
                                 controller.changePassengerFareType(index + 1);
-                              },
-                              activeColor: kBluePrimary),
+                              }),
                           Text(controller.passengerFareTypes[index + 1])
                         ]),
                   ),
@@ -180,8 +181,11 @@ class FlightSearchCardHome extends StatelessWidget {
               kHeight5,
               Obx(() {
                 return EventButton(
-                    color:
-                        controller.searchValidated.value ? kBluePrimary : kGrey,
+                    color: controller.searchValidated.value
+                        ? ((themeController.theme.value == AppTheme.blue)
+                            ? themeController.secondaryColor
+                            : themeController.primaryColor)
+                        : kGrey,
                     text: 'Search Flights',
                     onTap: () {
                       if (controller.searchValidated.value) {

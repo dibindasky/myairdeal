@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/home_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/screens/search/widgets/search_airport_tile.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -26,7 +27,7 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       focusNode.requestFocus();
     });
-
+    final themeController = Get.find<ThemeController>();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -137,7 +138,8 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
                               // kHeight10,
                               Text(
                                 'Popular cities',
-                                style: textStyle1.copyWith(color: kBluePrimary),
+                                style: textStyle1.copyWith(
+                                    color: themeController.secondaryColor),
                               ),
                               kHeight10,
                               ListView.builder(
@@ -190,7 +192,7 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
                                   Text(
                                     'Recent searches',
                                     style: textStyle1.copyWith(
-                                        color: kBluePrimary),
+                                        color: themeController.secondaryColor),
                                   ),
                                   kHeight10,
                                   ListView.builder(
@@ -218,7 +220,8 @@ class _ScreenAirportSearchState extends State<ScreenAirportSearch> {
                                   : Text(
                                       'Popular cities',
                                       style: textStyle1.copyWith(
-                                          color: kBluePrimary),
+                                          color:
+                                              themeController.secondaryColor),
                                     ),
                               kHeight10,
                               homeController.popularCitys.isEmpty

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/bottom_sheet/airlines_sheet.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/bottom_sheet/duration_sheet.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/bottom_sheet/flight_times_sheet.dart';
@@ -225,6 +226,7 @@ class SortingChipSortPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -232,13 +234,14 @@ class SortingChipSortPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 4.w),
         decoration: BoxDecoration(
             boxShadow: boxShadow3,
-            border: Border.all(color: kBluePrimary),
+            border: Border.all(color: themeController.primaryColor),
             borderRadius: kRadius50,
-            color: selected ? kBluePrimary : kWhite),
+            color: selected ? themeController.primaryColor : kWhite),
         child: Text(
           text,
           style: textThinStyle1.copyWith(
-              color: selected ? kWhite : kBluePrimary, fontSize: 10.sp),
+              color: selected ? kWhite : themeController.primaryColor,
+              fontSize: 10.sp),
         ),
       ),
     );

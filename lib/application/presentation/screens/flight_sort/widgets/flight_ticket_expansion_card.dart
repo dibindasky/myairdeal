@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
@@ -20,6 +22,7 @@ class TicketDetailExpansionChild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -27,7 +30,11 @@ class TicketDetailExpansionChild extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
         width: double.infinity,
         decoration: BoxDecoration(
-            color: isSelected ? kBlueLightShade : kWhite,
+            color: isSelected
+                ? themeController.theme.value == AppTheme.blue
+                    ? kBlueLightShade
+                    : themeController.secondaryColor
+                : kWhite,
             borderRadius: kRadius15,
             border: isSelected ? Border.all(color: kBlueDark) : null,
             boxShadow: boxShadow2),
@@ -50,7 +57,7 @@ class TicketDetailExpansionChild extends StatelessWidget {
               kWidth10,
               onTap != null
                   ? CustomRadioButton(
-                      color: kBlueDark,
+                      color: themeController.primaryColor,
                       selected: isSelected,
                       onChanged: () {
                         onTap!();
@@ -61,11 +68,16 @@ class TicketDetailExpansionChild extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                             horizontal: 15.w, vertical: 5.h),
                         decoration: BoxDecoration(
-                            borderRadius: kRadius50, color: kBlueDark),
+                            borderRadius: kRadius50,
+                            color: themeController.secondaryColor),
                         child: Text(
                           'Book Now',
                           style: textThinStyle1.copyWith(
-                              fontWeight: FontWeight.w900, color: kWhite),
+                              fontWeight: FontWeight.w900,
+                              color:
+                                  themeController.theme.value == AppTheme.blue
+                                      ? kWhite
+                                      : themeController.primaryColor),
                         ),
                       ),
                     )
@@ -115,13 +127,18 @@ class TicketDetailTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return Row(
       children: [
         Expanded(flex: 2, child: Text(first, style: textThinStyle1)),
         Expanded(
           flex: 3,
           child: Text(second,
-              style: textThinStyle1.copyWith(fontSize: 9.sp, color: kGreyDark)),
+              style: textThinStyle1.copyWith(
+                  fontSize: 9.sp,
+                  color: themeController.theme.value == AppTheme.blue
+                      ? kGreyDark
+                      : themeController.primaryColor)),
         ),
       ],
     );

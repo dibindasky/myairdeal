@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/ticket_cancel_controller.dart';
 import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/widgets/tab/contact_us.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/widgets/tab/mail.dart';
@@ -25,6 +26,7 @@ class ScreenInvoiceDetail extends StatelessWidget {
     final bookingController = Get.find<BookingController>();
     final raiceController = Get.find<RaiceTicketController>();
     final cancellationController = Get.find<TicketCancellationController>();
+    final themeController = Get.find<ThemeController>();
     return Scaffold(
       body: Obx(
         () => ListView(
@@ -38,10 +40,10 @@ class ScreenInvoiceDetail extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: 200.h),
-                      const AlertDialog(
+                       AlertDialog(
                           content: Center(
                         child: CircularProgressIndicator(
-                          color: kBluePrimary,
+                          color: themeController.primaryColor,
                         ),
                       ))
                     ],

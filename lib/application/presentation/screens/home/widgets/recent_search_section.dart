@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/ticket_column.dart';
@@ -16,6 +17,7 @@ class RecentSearchSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
+    final themeController = Get.find<ThemeController>();
     WidgetsBinding.instance
         .addPostFrameCallback((_) => homeController.fetchRecentSearches());
     return Obx(
@@ -52,6 +54,7 @@ class RecentSearchSection extends StatelessWidget {
             SizedBox(
               height: 95.h,
               child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 separatorBuilder: (context, index) => kWidth10,
                 itemCount: homeController.recentSearches.length,
@@ -83,7 +86,7 @@ class RecentSearchSection extends StatelessWidget {
                       padding: EdgeInsets.symmetric(
                           horizontal: 10.w, vertical: 10.h),
                       decoration: BoxDecoration(
-                        color: kBluePrimary,
+                        color: themeController.primaryColor,
                         borderRadius: kRadius10,
                       ),
                       child: Column(
@@ -103,8 +106,15 @@ class RecentSearchSection extends StatelessWidget {
                                   subValue:
                                       routeInfo?[0].fromCityOrAirport?.name ??
                                           '',
-                                  subValueStyle:
-                                      textThinStyle1.copyWith(color: kBlack),
+                                  subValueStyle: textThinStyle1.copyWith(
+                                      color: kWhite,
+                                      overflow: TextOverflow.ellipsis),
+                                  valueStyle: textThinStyle1.copyWith(
+                                      color: kWhite,
+                                      overflow: TextOverflow.ellipsis),
+                                  lebelStyle: textThinStyle1.copyWith(
+                                      color: kWhite,
+                                      overflow: TextOverflow.ellipsis),
                                 ),
                               ),
                               kWidth20,
@@ -121,8 +131,15 @@ class RecentSearchSection extends StatelessWidget {
                                           '',
                                   subValue:
                                       routeInfo?[0].toCityOrAirport?.name ?? '',
-                                  subValueStyle:
-                                      textThinStyle1.copyWith(color: kBlack),
+                                  subValueStyle: textThinStyle1.copyWith(
+                                      color: kWhite,
+                                      overflow: TextOverflow.ellipsis),
+                                  valueStyle: textThinStyle1.copyWith(
+                                      color: kWhite,
+                                      overflow: TextOverflow.ellipsis),
+                                  lebelStyle: textThinStyle1.copyWith(
+                                      color: kWhite,
+                                      overflow: TextOverflow.ellipsis),
                                 ),
                               ),
                             ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -33,6 +35,7 @@ class EventButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -43,7 +46,10 @@ class EventButton extends StatelessWidget {
             borderRadius: BorderRadius.all(
               Radius.circular(borderRadius ?? 9),
             ),
-            color: color ?? kBluePrimary),
+            color: color ??
+                ((themeController.theme.value == AppTheme.blue)
+                    ? themeController.secondaryColor
+                    : themeController.primaryColor)),
         child: Center(
           child: Text(
             text,

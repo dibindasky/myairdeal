@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -28,6 +30,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return Container(
       decoration: !widget.isBorder
           ? null
@@ -35,7 +38,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
               color: widget.expansionColor != null && isExpanded
                   ? widget.expansionColor
                   : null,
-              border: Border.all(color: kBluePrimary),
+              border: Border.all(color: themeController.secondaryColor),
               borderRadius: kRadius15),
       child: Column(
         children: [

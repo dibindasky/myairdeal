@@ -40,14 +40,14 @@ class ScreenFlightTicketSort extends StatelessWidget {
                   child: Center(
                     child: controller.searchListLoading.value
                         ?
-                        //Lottie.asset('asset/lottie/plane.json')
-                        // Skeleton(
-                        //     crossAxisCount: 1,
-                        //     itemCount: 10,
-                        //     height: 150.h,
-                        //     childAspectRatio: 1 / 0.45,
-                        //   )
-                        const ComplexLoader()
+                        // Lottie.asset('asset/lottie/plane.json')
+                        Skeleton(
+                            crossAxisCount: 1,
+                            itemCount: 10,
+                            height: 150.h,
+                            childAspectRatio: 1 / 0.45,
+                          )
+                        // const ComplexLoader()
                         : const Text('No Flights Available'),
                   ),
                 ),

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/notification/notification_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -34,6 +35,7 @@ class _ScreenNotificationState extends State<ScreenNotification> {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         notificationController.getNotification();
@@ -53,7 +55,7 @@ class _ScreenNotificationState extends State<ScreenNotification> {
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Obx(() {
                   return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: List.generate(
                         notificationController.notificationType.length,
                         (index) => GestureDetector(
@@ -71,7 +73,7 @@ class _ScreenNotificationState extends State<ScreenNotification> {
                                     color: notificationController
                                                 .notificationIndex.value ==
                                             index
-                                        ? kBlueDark
+                                        ? themeController.primaryColor
                                         : kWhite),
                                 child: Text(
                                   notificationController
@@ -155,7 +157,7 @@ class _ScreenNotificationState extends State<ScreenNotification> {
                               horizontal: 10.w, vertical: 10.h),
                           decoration: BoxDecoration(
                               color: notification?.status == false
-                                  ? kBlueLightShade
+                                  ? themeController.secondaryLightColor
                                   : kWhite,
                               borderRadius: kRadius10),
                           child: Row(

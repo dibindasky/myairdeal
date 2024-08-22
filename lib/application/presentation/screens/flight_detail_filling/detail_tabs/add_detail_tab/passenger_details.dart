@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/passenger_field_container.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/bottom_button..dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/bottom_button.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -17,6 +18,7 @@ class PassengerDetailsContainer extends StatelessWidget {
     final searchController = Get.find<FlightSortController>();
     final bookingController = Get.find<BookingController>();
     final controller = Get.find<TravellerController>();
+    final themeController = Get.find<ThemeController>();
     return Obx(() {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +66,7 @@ class PassengerDetailsContainer extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: kRadius10,
-                  border: Border.all(color: kBlue),
+                  border: Border.all(color: themeController.primaryColor),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(17.0),
@@ -96,7 +98,8 @@ class PassengerDetailsContainer extends StatelessWidget {
                       kWidth10,
                       Obx(
                         () => controller.passengerDetails[index] == null
-                            ? const Icon(Icons.add_chart_sharp)
+                            ? Icon(Icons.add_chart_sharp,
+                                color: themeController.secondaryColor)
                             : const CircleAvatar(
                                 radius: 15,
                                 backgroundColor: kGreen,

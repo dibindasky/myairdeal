@@ -20,6 +20,7 @@ class ScreenHomePage extends StatelessWidget {
     final controller = Get.find<FlightSortController>();
     return Scaffold(
       body: SingleChildScrollView(
+        // physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
         controller: Get.find<HomeController>().homeScrollController,
         child: Column(
           children: [

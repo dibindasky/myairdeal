@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -14,6 +15,7 @@ class BookingIssuesQuerySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     List<IconData> icons = [
       // Iconsax.repeat,
       // Iconsax.global,
@@ -58,9 +60,11 @@ class BookingIssuesQuerySection extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
                       decoration: BoxDecoration(
-                          color: kBlueLightShade,
-                          border:
-                              Border.all(color: kBluePrimary.withOpacity(0.3)),
+                          color:
+                              themeController.secondaryLightColor,
+                          border: Border.all(
+                              color: themeController.secondaryColor
+                                  .withOpacity(0.3)),
                           borderRadius: kRadius10),
                       child: Column(
                         children: [

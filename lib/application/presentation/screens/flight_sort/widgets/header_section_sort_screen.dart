@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/search_card_flight_section.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -15,6 +16,7 @@ class SortScreenHeaderSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+        final themeController = Get.find<ThemeController>();
     return SizedBox(
       height: controller.comboTrip.value ? null : 220.h,
       child: AppBarCustomShape(
@@ -88,18 +90,6 @@ class SortScreenHeaderSection extends StatelessWidget {
                                   color: kWhite,
                                 ),
                               ),
-                              // Text(
-                              //   controller
-                              //           .airportSelected[controller
-                              //               .selectedTripListIndex.value][0]
-                              //           .country ??
-                              //       '',
-                              //   style: textThinStyle1.copyWith(color: kWhite),
-                              // ),
-                              // Text(
-                              //   'Airport',
-                              //   style: textThinStyle1.copyWith(color: kWhite),
-                              // ),
                             ],
                           ),
                         ),
@@ -109,26 +99,6 @@ class SortScreenHeaderSection extends StatelessWidget {
                             RotatedBox(
                                 quarterTurns: 1,
                                 child: Icon(Icons.flight_sharp, color: kWhite)),
-                            // Container(
-                            //   height: 50.h,
-                            //   width: 50.w,
-                            //   decoration: BoxDecoration(
-                            //       image: DecorationImage(
-                            //           image: AssetImage(imageFlightTrip))),
-                            // ),
-                            // Text(
-                            //   controller
-                            //           .sortingVariables[controller
-                            //               .selectedTripListIndex.value]![2]
-                            //           .isEmpty
-                            //       ? ''
-                            //       : DateFormating.convertMinutesToHoursMinutes(
-                            //           controller
-                            //               .sortingVariables[controller
-                            //                   .selectedTripListIndex.value]![2]
-                            //               .first),
-                            //   style: textThinStyle1.copyWith(color: kWhite),
-                            // )
                           ],
                         ),
                         kWidth5,
@@ -159,19 +129,6 @@ class SortScreenHeaderSection extends StatelessWidget {
                                     color: kWhite,
                                     overflow: TextOverflow.ellipsis),
                               ),
-                              // Text(
-                              //   controller
-                              //           .airportSelected[controller
-                              //               .selectedTripListIndex.value][1]
-                              //           .country ??
-                              //       '',
-                              //   textAlign: TextAlign.end,
-                              //   style: textThinStyle1.copyWith(color: kWhite),
-                              // ),
-                              // Text(
-                              //   'Airport',
-                              //   style: textThinStyle1.copyWith(color: kWhite),
-                              // ),
                             ],
                           ),
                         )

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -32,6 +33,7 @@ class _PassengerDetailsTabState extends State<PassengerDetailsTab> {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     final travelController = Get.find<TravellerController>();
     return GetBuilder<TravellerController>(builder: (controller) {
       if (check != 0) {
@@ -57,9 +59,9 @@ class _PassengerDetailsTabState extends State<PassengerDetailsTab> {
             onTap: () {
               travelController.changeAddDetailsSubStepMinus();
             },
-            child: const Icon(
+            child: Icon(
               Icons.arrow_back_ios,
-              color: kBlue,
+              color: themeController.primaryColor,
             ),
           ),
           Expanded(
@@ -107,7 +109,7 @@ class _PassengerDetailsTabState extends State<PassengerDetailsTab> {
                             color:
                                 travelController.selectedAddDetailsStep.value >=
                                         index
-                                    ? kBlueDark
+                                    ? themeController.secondaryColor
                                     : kGrey,
                           ),
                         ),

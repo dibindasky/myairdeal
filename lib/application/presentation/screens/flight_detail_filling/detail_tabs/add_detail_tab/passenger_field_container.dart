@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/widgets/nationality_drop_down.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -135,6 +136,7 @@ class _DetailContainerState extends State<DetailContainer> {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return SingleChildScrollView(
       child: Stack(
         children: [
@@ -190,7 +192,7 @@ class _DetailContainerState extends State<DetailContainer> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 10.w, vertical: 2.w),
                             decoration: BoxDecoration(
-                                border: Border.all(color: kBlue),
+                                border: Border.all(color: themeController.primaryColor),
                                 borderRadius: kRadius10),
                             child: Text(
                               'Select From history',

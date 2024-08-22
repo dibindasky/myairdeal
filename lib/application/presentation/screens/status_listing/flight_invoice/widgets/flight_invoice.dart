@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
@@ -17,6 +19,7 @@ class FlightInvoiceCard extends StatelessWidget {
   final GetSingleBooking? retrieveSingleBookingresponceModel;
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     final travelersData = retrieveSingleBookingresponceModel
         ?.retrieveSingleBookingresponceModel?.itemInfos?.air?.travellerInfos;
     final tripInfos = retrieveSingleBookingresponceModel
@@ -25,7 +28,7 @@ class FlightInvoiceCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFDCF3FF),
+        color: themeController.secondaryLightColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: boxShadow2,
         border: Border.all(

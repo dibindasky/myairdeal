@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/animations/splash_animation.dart';
@@ -14,6 +15,7 @@ class ScreenProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AuthController>();
+    final themeController = Get.find<ThemeController>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.getUserInfo(true);
     });
@@ -50,22 +52,22 @@ class ScreenProfile extends StatelessWidget {
                     begin: .85,
                     end: 0.9,
                     child: CircleAvatar(
-                      backgroundColor: kBlueLight,
+                      backgroundColor: themeController.secondaryColor,
                       radius: 58,
                       child: CircleAvatar(
-                        backgroundColor: kBluePrimary,
+                        backgroundColor: themeController.secondaryLightColor,
                         radius: 50,
                         child: name == ''
-                            ? const Icon(
+                            ? Icon(
                                 size: 50,
                                 Icons.person,
-                                color: kBlueLight,
+                                color: themeController.secondaryColor,
                               )
                             : Text(
                                 name.toUpperCase(),
                                 style: textThinStyle1.copyWith(
                                   fontSize: 30.sp,
-                                  color: kWhite,
+                                  color: themeController.secondaryColor,
                                 ),
                               ),
                       ),
@@ -144,6 +146,7 @@ class ProfileField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
@@ -159,6 +162,7 @@ class ProfileField extends StatelessWidget {
               children: [
                 kWidth10,
                 Image.asset(
+                  color: themeController.secondaryColor,
                   iconImage,
                   height: 18.h,
                   fit: BoxFit.cover,

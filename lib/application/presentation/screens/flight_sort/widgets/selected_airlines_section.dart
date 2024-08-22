@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
@@ -15,6 +16,7 @@ class SelectedAirlinesSections extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+    final themeController = Get.find<ThemeController>();
     return Obx(() {
       return Positioned(
         // top: 140.h,
@@ -43,7 +45,7 @@ class SelectedAirlinesSections extends StatelessWidget {
                       decoration: BoxDecoration(
                           // boxShadow: boxShadow2 ,
                           color: index == controller.selectedTripListIndex.value
-                              ? kBlueLightShade
+                              ? themeController.secondaryLightColor
                               : kGreyLightBackground,
                           border: Border.all(color: kBlack),
                           borderRadius: kRadius10),

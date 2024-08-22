@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
@@ -23,6 +24,7 @@ class FareSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<BookingController>();
     final travellerController = Get.find<TravellerController>();
+    final themeController = Get.find<ThemeController>();
     return Obx(() {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -385,7 +387,11 @@ class FareSummary extends StatelessWidget {
                                   TextSpan(
                                     text: 'Fare rules',
                                     style: textStyle1.copyWith(
-                                        color: kBlue, fontSize: 12.sp),
+                                        color: themeController.theme.value ==
+                                                AppTheme.blue
+                                            ? kBlue
+                                            : themeController.secondaryColor,
+                                        fontSize: 12.sp),
                                   ),
                                   TextSpan(
                                     text: ').',

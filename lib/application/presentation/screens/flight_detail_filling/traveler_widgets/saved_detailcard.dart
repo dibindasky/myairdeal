@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
@@ -12,16 +14,17 @@ class SavedDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15.w),
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 15.w),
       decoration: BoxDecoration(
         border: Border.all(
-          color: kIndigo,
+          color: themeController.primaryColor,
         ),
         borderRadius: kRadius10,
-        color: kBlueThinLIght,
+        color: themeController.secondaryLightColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,12 +103,13 @@ class ItemField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
-            Icon(icon, size: 17.w, color: kBlue),
+            Icon(icon, size: 17.w, color: themeController.primaryColor),
             kWidth10,
             Text(categery, style: textThinStyle1),
           ],

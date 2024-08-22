@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/controller/home/home_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/bottom_calender_date_picker.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -17,6 +18,7 @@ class OneWayAndRoundTrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+    final themeController = Get.find<ThemeController>();
     return Obx(
       () => Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -30,8 +32,8 @@ class OneWayAndRoundTrip extends StatelessWidget {
               borderColor: controller.airportSelected[0][0].city == null
                   ? kRed.withOpacity(.6)
                   : kGrey,
-              first:
-                  const Icon(Icons.flight_takeoff_rounded, color: kBluePrimary),
+              first: Icon(Icons.flight_takeoff_rounded,
+                  color: themeController.secondaryColor),
               spacer: kWidth10,
               second: Expanded(
                 child: Text(controller.airportSelected[0][0].city ?? 'From',
@@ -46,8 +48,8 @@ class OneWayAndRoundTrip extends StatelessWidget {
               // change from and to
               controller.swapFromAndTo();
             },
-            child:
-                const Icon(Icons.compare_arrows_outlined, color: kBluePrimary),
+            child: Icon(Icons.compare_arrows_outlined,
+                color: themeController.secondaryColor),
           ),
           kWidth5,
           Expanded(
@@ -59,9 +61,9 @@ class OneWayAndRoundTrip extends StatelessWidget {
                 controller.changeSelectedAirport(from: false, index: 0);
                 Get.find<HomeController>().changeSearch();
               },
-              first: const Icon(
+              first: Icon(
                 Icons.flight_land_rounded,
-                color: kBluePrimary,
+                color: themeController.secondaryColor,
               ),
               spacer: kWidth10,
               second: Expanded(
@@ -83,6 +85,7 @@ class MultiCitySelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+    final themeController = Get.find<ThemeController>();
     return Obx(() {
       return Column(children: [
         ...List.generate(
@@ -105,8 +108,8 @@ class MultiCitySelection extends StatelessWidget {
                             : kGrey,
                     mainAxisAlignment: MainAxisAlignment.center,
                     first: kEmpty,
-                    topRight: const Icon(Icons.arrow_right_alt_rounded,
-                        color: kBluePrimary),
+                    topRight:  Icon(Icons.arrow_right_alt_rounded,
+                        color: themeController.primaryColor),
                     second: Expanded(
                       child: Text(
                           controller.airportSelected[index][0].city ?? 'From',

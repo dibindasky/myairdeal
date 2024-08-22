@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/flight_ticket_expansion_card.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
@@ -21,27 +22,31 @@ class DomesticTripsAndOneWayInternationalTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+    final themeController = Get.find<ThemeController>();
     return CustomExpansionTile(
       whileTap: (open) {
         if (open) {
-         Timer(const Duration(milliseconds: 300), () {
-            double position =
-              controller.flightSortScreenController.position.pixels;
-          controller.flightSortScreenController.animateTo(
-              position + 100,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeIn);
-         },);
+          Timer(
+            const Duration(milliseconds: 300),
+            () {
+              double position =
+                  controller.flightSortScreenController.position.pixels;
+              controller.flightSortScreenController.animateTo(position + 100,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeIn);
+            },
+          );
         }
       },
       child: Obx(() {
         return FlightTicketCard(
+          borderColor: themeController.secondaryColor,
           flightTicketCardEnum: FlightTicketCardEnum.homeSort,
           color: controller.tripType.value != 0 &&
                   controller.selectedFlights[
                           controller.selectedTripListIndex.value] ==
                       index
-              ? kBlueLightShade
+              ? themeController.secondaryColor.withOpacity(0.2)
               : kWhite,
           searchAirlineInformation: controller
               .searchList[controller.selectedTripListIndex.value][index],

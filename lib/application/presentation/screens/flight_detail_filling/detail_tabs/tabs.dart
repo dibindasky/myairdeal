@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
@@ -70,18 +71,22 @@ class Step extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return Column(
       children: [
         Icon(
           Icons.radio_button_checked,
           size: 24.w,
-          color: isComplete || isActive ? kBluePrimary : kGreyDark,
+          color:
+              isComplete || isActive ? themeController.secondaryColor : kGreyDark,
         ),
         kHeight5,
         Text(
           label,
           style: textStyle1.copyWith(
-            color: isComplete || isActive ? kBluePrimary : kGreyDark,
+            color: isComplete || isActive
+                ? themeController.primaryColor
+                : kGreyDark,
           ),
         ),
       ],
@@ -96,11 +101,12 @@ class StepConnector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return Container(
       margin: EdgeInsets.only(top: 10.w),
       width: 50.0.w,
       height: 3.0.h,
-      color: isComplete ? kBluePrimary : kGrey,
+      color: isComplete ? themeController.secondaryColor : kGrey,
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
@@ -15,6 +16,7 @@ class CalenderSectionSortHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+    final themeController = Get.find<ThemeController>();
     return Positioned(
       // top: 140.h,
       bottom: 0,
@@ -39,7 +41,7 @@ class CalenderSectionSortHeader extends StatelessWidget {
                 duration: const Duration(milliseconds: 300),
                 decoration: BoxDecoration(
                   borderRadius: kRadius15,
-                  color: isSelected ? kBluePrimary : kGrey,
+                  color: isSelected ? themeController.secondaryColor : kGrey,
                 ),
                 padding: const EdgeInsets.all(5),
                 margin: EdgeInsets.symmetric(
@@ -55,17 +57,26 @@ class CalenderSectionSortHeader extends StatelessWidget {
                         // '₹ 3100',
                         DateFormating.getMonthAbbreviation(date.month),
                         style: textThinStyle1.copyWith(
-                            color: isSelected ? kWhite : kBlack),
+                            color: isSelected &&
+                                    themeController.theme.value == AppTheme.blue
+                                ? kWhite
+                                : kBlack),
                       ),
                       Text(
                         date.day.toString(),
                         style: textHeadStyle1.copyWith(
-                            color: isSelected ? kWhite : kBlack),
+                            color: isSelected &&
+                                    themeController.theme.value == AppTheme.blue
+                                ? kWhite
+                                : kBlack),
                       ),
                       Text(
                         DateFormating.getWeekDay(date.weekday),
                         style: textThinStyle1.copyWith(
-                            color: isSelected ? kWhite : kBlack),
+                            color: isSelected &&
+                                    themeController.theme.value == AppTheme.blue
+                                ? kWhite
+                                : kBlack),
                       ),
                     ],
                   ),

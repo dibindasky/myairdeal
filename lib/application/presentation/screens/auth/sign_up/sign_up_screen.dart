@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
@@ -12,6 +13,7 @@ class ScreenSignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     FocusScopeNode focusScopeNode = FocusScope.of(context);
     final controller = Get.find<AuthController>();
     return GestureDetector(
@@ -98,9 +100,9 @@ class ScreenSignUp extends StatelessWidget {
                               child: Text(
                                 'Login',
                                 style: textThinStyle1.copyWith(
-                                    color: kBlue,
+                                    color: themeController.secondaryColor,
                                     decoration: TextDecoration.underline,
-                                    decorationColor: kBlue),
+                                    decorationColor: themeController.secondaryColor),
                               ),
                             )
                           ],
@@ -117,9 +119,9 @@ class ScreenSignUp extends StatelessWidget {
                               child: Text(
                                 'Sign Up',
                                 style: textThinStyle1.copyWith(
-                                    color: kBlue,
+                                    color: themeController.secondaryColor,
                                     decoration: TextDecoration.underline,
-                                    decorationColor: kBlue),
+                                    decorationColor: themeController.secondaryColor),
                               ),
                             )
                           ],
@@ -145,7 +147,7 @@ class ScreenSignUp extends StatelessWidget {
                                         : null,
                                 color: controller.loginNumber.text.length >=
                                         controller.maxLength.value + 1
-                                    ? kBluePrimary
+                                    ? themeController.primaryColor
                                     : kbuttonGrey,
                                 text: 'Send OTP',
                                 onTap: () {

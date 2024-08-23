@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/count_down.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/pinput_feild.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -56,6 +57,7 @@ class _ScreenOTPState extends State<ScreenOTP> {
   @override
   Widget build(BuildContext context) {
     final loginController = Get.find<AuthController>();
+    final themeController = Get.find<ThemeController>();
     return Scaffold(
       backgroundColor: kWhite,
       body: SafeArea(
@@ -136,7 +138,7 @@ class _ScreenOTPState extends State<ScreenOTP> {
                             : null,
                         color: controller.otpNumber.text.length >=
                                 controller.maxOTPLength.value
-                            ? kBluePrimary
+                            ? themeController.primaryColor
                             : kbuttonGrey,
                         width: 400.w,
                         text: 'Verify',

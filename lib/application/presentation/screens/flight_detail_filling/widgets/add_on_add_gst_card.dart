@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/widgets/read_more_text.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -11,7 +9,6 @@ class AddOnesContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final flightController = Get.find<FlightSortController>();
     return Column(
       children: [
         kHeight20,
@@ -32,18 +29,6 @@ class AddOnesContainer extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Obx(
-                    //   () => Checkbox(
-                    //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    //     visualDensity:
-                    //         const VisualDensity(horizontal: -4, vertical: -4),
-                    //     activeColor: kBluePrimary,
-                    //     value: flightController.addOnsChecked.value,
-                    //     onChanged: (value) {
-                    //       flightController.changeAdds(value ?? false);
-                    //     },
-                    //   ),
-                    // ),
                     kWidth5,
                     const CircleAvatar(
                       backgroundImage:

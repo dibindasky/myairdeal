@@ -13,6 +13,7 @@ import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom
 import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/ticket_column.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/widgets/normal_center_items.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_booking.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 
 class FlightInvoiceCard extends StatelessWidget {
   const FlightInvoiceCard({super.key, this.retrieveSingleBookingresponceModel});
@@ -286,8 +287,7 @@ class FlightInvoiceCard extends StatelessWidget {
                               exit: tripInfos?[tripIndex].sI?[0].da?.terminal ??
                                   '',
                               flightCode: DateFormating.formatDateMonthYear(
-                                (tripInfos?[tripIndex].sI?[0].dt ?? ''),
-                              ),
+                                  (tripInfos?[tripIndex].sI?[0].dt ?? '')),
                             ),
                             (tripInfos?[tripIndex].sI?.length ?? 0) == 1
                                 ? TicketColumn(
@@ -320,14 +320,8 @@ class FlightInvoiceCard extends StatelessWidget {
                             ? null
                             : tripInfos?[tripIndex].sI?[0].fD?.aI?.code ?? '',
                         stops: (tripInfos?[tripIndex].sI?.length ?? 0) - 1,
-                        date: DateFormating.getDifferenceOfDates(
-                            (tripInfos?[tripIndex].sI?[0].dt ?? ''),
-                            (tripInfos?[tripIndex]
-                                    .sI?[
-                                        (tripInfos[tripIndex].sI?.length ?? 1) -
-                                            1]
-                                    .at ??
-                                '')),
+                        date: DateFormating.getDurationOfFlights(
+                            si: tripInfos?[tripIndex].sI ?? <SI>[]),
                         number: '',
                         haveImage: false,
                       ),

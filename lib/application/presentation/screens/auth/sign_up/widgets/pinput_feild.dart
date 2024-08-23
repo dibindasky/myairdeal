@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:pinput/pinput.dart';
@@ -11,6 +12,7 @@ class PinEnterField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
+    final themeController = Get.find<ThemeController>();
     return Pinput(
       animationCurve: Curves.bounceIn,
       onChanged: (value) {},
@@ -21,8 +23,8 @@ class PinEnterField extends StatelessWidget {
         width: 55,
         height: 55,
         decoration: BoxDecoration(
-          color: kBlueLightShade,
-          border: Border.all(color: kBlueLight, width: 2),
+          color: themeController.secondaryLightColor,
+          border: Border.all(color: themeController.secondaryColor, width: 2),
           borderRadius: kRadius5,
         ),
       ),
@@ -31,7 +33,7 @@ class PinEnterField extends StatelessWidget {
       focusedPinTheme: PinTheme(
         width: 55,
         height: 55,
-        textStyle: textStyle1,
+        textStyle: textHeadStyle1,
         decoration: BoxDecoration(
           border: Border.all(color: kBlue),
           borderRadius: kRadius5,
@@ -40,7 +42,7 @@ class PinEnterField extends StatelessWidget {
       defaultPinTheme: PinTheme(
         width: 55,
         height: 55,
-        textStyle: textStyle1,
+        textStyle: textHeadStyle1,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(

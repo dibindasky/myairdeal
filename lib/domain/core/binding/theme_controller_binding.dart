@@ -4,6 +4,6 @@ import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 class ThemeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ThemeController>(() => ThemeController());
+    Get.put<ThemeController>(ThemeController(), permanent: true);
   }
 }

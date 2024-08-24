@@ -256,10 +256,10 @@ class ReveiewTab extends StatelessWidget {
                                                                   FontWeight
                                                                       .w700)),
                                                   kWidth10,
-                                                  Icon(
-                                                      Icons
-                                                          .arrow_forward_ios_outlined,
-                                                      size: 13.w),
+                                                  Text('To',
+                                                      style: textThinStyle1
+                                                          .copyWith(
+                                                              fontSize: 11.sp)),
                                                   kWidth10,
                                                   Text(
                                                       bookingController
@@ -311,7 +311,7 @@ class ReveiewTab extends StatelessWidget {
                                                   const Text(':  '),
                                                   Expanded(
                                                       child: Text(
-                                                          "${controller.passengerDetails[travelrIndex]?.ssrBaggageInfos?[baggageIndex].desc}'}")),
+                                                          "${controller.passengerDetails[travelrIndex]?.ssrBaggageInfos?[baggageIndex].desc}")),
                                                 ],
                                               )
                                             : kEmpty,

@@ -8,7 +8,7 @@ part of 'trip_info.dart';
 
 TripInfo _$TripInfoFromJson(Map<String, dynamic> json) => TripInfo(
       sI: (json['sI'] as List<dynamic>?)
-          ?.map((e) => Si.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => SI.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

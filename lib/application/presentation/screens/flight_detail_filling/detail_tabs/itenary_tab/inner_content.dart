@@ -35,12 +35,14 @@ class InnerContents extends StatelessWidget {
                     (index) {
                   final model =
                       controller.reviewedDetail?.value.tripInfos?[index];
+                  // This is for seat showing based on the flight id need to take all seats its a list
                   List<SsrInfo?>? seats =
                       travellerController.selectedSeats[model?.sI?[0].id ?? ''];
                   final code = seats
                       ?.map((e) =>
                           e?.code != '' && e?.code != null ? e?.code : 'N/S')
                       .toList();
+
                   return Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: CustomExpansionTile(

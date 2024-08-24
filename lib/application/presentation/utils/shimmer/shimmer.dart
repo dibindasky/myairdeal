@@ -9,6 +9,7 @@ class Skeleton extends StatelessWidget {
     required this.crossAxisCount,
     required this.itemCount,
     this.height,
+    this.padding,
     this.childAspectRatio = 1,
   }) : super(key: key);
 
@@ -16,13 +17,14 @@ class Skeleton extends StatelessWidget {
   final int itemCount;
   final double? height;
   final double childAspectRatio;
+  final double? padding;
 
   @override
   Widget build(BuildContext context) {
     final double totalHeight =
         ((itemCount / crossAxisCount).ceil() * (height ?? 10 + 10)) + 10;
     return Padding(
-      padding: const EdgeInsets.all(0.0),
+      padding: EdgeInsets.all(padding ?? 0),
       child: GridView.builder(
         padding: const EdgeInsets.all(0),
         physics: const NeverScrollableScrollPhysics(),

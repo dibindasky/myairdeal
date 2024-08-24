@@ -12,9 +12,11 @@ import 'package:myairdeal/domain/repository/service/notification_repo.dart';
 class NotificationService extends NotificationRepo {
   ApiService apiService = ApiService();
   @override
-  Future<Either<Failure, NotificationModel>> getNotification() async {
+  Future<Either<Failure, NotificationModel>> getNotification(
+      {required PageQuery pageQuery}) async {
     try {
-      final responce = await apiService.get(ApiEndPoints.getNotification);
+      final responce = await apiService.get(ApiEndPoints.getNotification,
+          queryParameters: pageQuery.toJson());
       return Right(NotificationModel.fromJson(responce.data));
     } on DioException catch (e) {
       log('DioException getNotification $e');

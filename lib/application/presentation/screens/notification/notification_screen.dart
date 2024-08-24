@@ -10,7 +10,9 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/utils/refresh_indicator/refresh_custom.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ScreenNotification extends StatefulWidget {
   const ScreenNotification({super.key});
@@ -37,7 +39,7 @@ class _ScreenNotificationState extends State<ScreenNotification> {
   Widget build(BuildContext context) {
     final themeController = Get.find<ThemeController>();
     WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
+      (_) {
         notificationController.getNotification();
       },
     );
@@ -122,7 +124,7 @@ class _ScreenNotificationState extends State<ScreenNotification> {
                     },
                   );
                 }
-                int length = notificationController.notificationLoading.value
+                int length = notificationController.notificationNext.value
                     ? (notificationController.notificationList?.length ?? 0) + 1
                     : notificationController.notificationList?.length ?? 0;
                 return RefreshIndicator(
@@ -138,13 +140,24 @@ class _ScreenNotificationState extends State<ScreenNotification> {
                     itemBuilder: (context, index) {
                       final notification =
                           notificationController.notificationList?[index];
+                      if (notification == null) {
+                        return Shimmer.fromColors(
+                          baseColor: const Color.fromARGB(255, 156, 151, 151),
+                          highlightColor: Colors.grey[100]!,
+                          child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: kWhite, borderRadius: kRadius10),
+                          ),
+                        );
+                      }
                       return GestureDetector(
                         onTap: () {
-                          if (notification?.bookingID != null) {
+                          if (notification.bookingID != null) {
                             Get.find<BookingController>().getSingleBooking(
                               retrieveSingleBookingRequestModel:
                                   RetrieveSingleBookingRequestModel(
-                                      bookingId: notification?.bookingID),
+                                      bookingId: notification.bookingID),
                             );
                             Get.toNamed(Routes.invoice);
                           }
@@ -156,7 +169,7 @@ class _ScreenNotificationState extends State<ScreenNotification> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 10.w, vertical: 10.h),
                           decoration: BoxDecoration(
-                              color: notification?.status == false
+                              color: notification.status == false
                                   ? themeController.secondaryLightColor
                                   : kWhite,
                               borderRadius: kRadius10),
@@ -171,17 +184,17 @@ class _ScreenNotificationState extends State<ScreenNotification> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(notification?.title ?? '',
+                                        Text(notification.title ?? '',
                                             style: textStyle1.copyWith(
                                                 fontSize: 15.sp)),
                                         Text(
                                             DateFormating.getDate(
-                                                notification?.createdAt),
+                                                notification.createdAt),
                                             style: textThinStyle1.copyWith(
                                                 color: kGreyDark))
                                       ],
                                     ),
-                                    Text(notification?.body ?? '',
+                                    Text(notification.body ?? '',
                                         style: textThinStyle1.copyWith(
                                             color: kGreyDark, fontSize: 13.sp))
                                   ],

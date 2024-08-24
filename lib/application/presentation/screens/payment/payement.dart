@@ -148,6 +148,8 @@ class PaymentTab extends StatelessWidget {
                                                   ?.fC
                                                   ?.tf ??
                                               0) +
+                                          travellerController
+                                              .addOnsprice.value +
                                           (bookingController.markupPrice.value))
                                       .toDouble(),
                                   description: 'payment to MyAirDeal',

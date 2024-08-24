@@ -10,7 +10,6 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/data/service/booking/booking_service.dart';
 import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_responce.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
-import 'package:myairdeal/domain/models/booking/book_ticket_model/payment_info.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_booking.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/traveller_info.dart';
 import 'package:myairdeal/domain/models/booking/mark_up/markup_model.dart';
@@ -85,7 +84,7 @@ class BookingController extends GetxController {
   /// Selected travelers List
   RxList<TravellerInfo> selectedTravelers = <TravellerInfo>[].obs;
 
-  /// FareRule Information
+  // FareRule Information
   Rx<FareRuleResponce> fareRule = FareRuleResponce().obs;
   Rx<FareRuleSection> fareRuleSection = FareRuleSection().obs;
 
@@ -234,11 +233,10 @@ class BookingController extends GetxController {
     String bookingId = '';
     bookTicketModel = bookTicketModel.copyWith(
         payment: bookTicketModel.payment?.copyWith(
-          markUp: markupModel?.value,
-          baseFare: reviewedDetail
-              ?.value.totalPriceInfo?.totalFareDetail?.fC?.bf
-              ?.toDouble(),
-        ));
+      markUp: markupModel?.value,
+      baseFare: reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.bf
+          ?.toDouble(),
+    ));
     print('book ticket model ');
     print(bookTicketModel.toString());
     final result =

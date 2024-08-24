@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:myairdeal/data/service/notification/notification_service.dart';
 import 'package:myairdeal/domain/models/notification_model/notification.dart';
@@ -11,7 +13,7 @@ class NotificationController extends GetxController {
   // responsible for changeing notification type
   RxInt notificationIndex = 0.obs;
   RxBool notificationLoading = false.obs;
-  RxBool notificstionNext = false.obs;
+  RxBool notificationNext = false.obs;
 
   // For Notification Listing
   RxList<Notification>? notification = <Notification>[].obs;
@@ -47,33 +49,34 @@ class NotificationController extends GetxController {
   void getNotification() async {
     notificationLoading.value = true;
     update();
-    final data = await notificationService.getNotification();
+    final data = await notificationService.getNotification(
+        pageQuery: PageQuery(pageSize: 17));
     data.fold(
       (l) => null,
       (r) {
         notification?.value = r.notification ?? <Notification>[];
         changeNotifcationDate();
+        log('Notification length ${notification?.length}');
       },
     );
     notificationLoading.value = false;
   }
 
   void getNotificationNext() async {
-    notificationLoading.value = true;
+    notificationNext.value = true;
     nextNotification++;
     update();
     final data = await notificationService.getNotificationNext(
-        pageQuery: PageQuery(
-      pageSize: nextNotification += nextNotification,
-    ));
+        pageQuery: PageQuery(pageSize: nextNotification += nextNotification));
     data.fold(
       (l) => null,
       (r) {
         notification?.value = r.notification ?? <Notification>[];
+        log('length ${r.notification?.length}');
         changeNotifcationDate();
         update();
       },
     );
-    notificationLoading.value = false;
+    notificationNext.value = false;
   }
 }

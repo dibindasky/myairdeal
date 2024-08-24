@@ -77,7 +77,7 @@ class _DetailContainerState extends State<DetailContainer> {
       lastDate: DateTime.now(),
     );
     if (selectedDate != null) {
-      pIDController.text = DateFormating.getDateByDayMonthYear(selectedDate);
+      pIDController.text = DateFormating.getDateApi(selectedDate);
       setState(() {
         selectedIssueDate = selectedDate;
         setExpiryDate();
@@ -192,7 +192,8 @@ class _DetailContainerState extends State<DetailContainer> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 10.w, vertical: 2.w),
                             decoration: BoxDecoration(
-                                border: Border.all(color: themeController.primaryColor),
+                                border: Border.all(
+                                    color: themeController.primaryColor),
                                 borderRadius: kRadius10),
                             child: Text(
                               'Select From history',

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,15 +8,14 @@ import 'package:myairdeal/application/controller/booking/ticket_cancel_controlle
 import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/flight_invoice.dart';
+import 'package:myairdeal/application/presentation/screens/status_listing/widgets/quick_links.container.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/widgets/tab/contact_us.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/widgets/tab/mail.dart';
-import 'package:myairdeal/application/presentation/screens/status_listing/widgets/quick_links.container.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/widgets/you_could_also.dart';
-import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
-import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/flight_invoice.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_request_model/amendment_details_request_model.dart';
 
 class ScreenInvoiceDetail extends StatelessWidget {
@@ -40,7 +40,7 @@ class ScreenInvoiceDetail extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: 200.h),
-                       AlertDialog(
+                      AlertDialog(
                           content: Center(
                         child: CircularProgressIndicator(
                           color: themeController.primaryColor,

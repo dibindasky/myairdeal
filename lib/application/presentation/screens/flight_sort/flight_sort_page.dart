@@ -11,7 +11,6 @@ import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/s
 import 'package:myairdeal/application/presentation/screens/flight_sort/widgets/tickets_list_sorted.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/utils/loading/loading.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
 
 class ScreenFlightTicketSort extends StatelessWidget {
@@ -40,8 +39,9 @@ class ScreenFlightTicketSort extends StatelessWidget {
                   child: Center(
                     child: controller.searchListLoading.value
                         ?
-                        // Lottie.asset('asset/lottie/plane.json')
+                        // Lottie.asset('asset/lottie/plane.json')̦̦
                         Skeleton(
+                            padding: 10.w,
                             crossAxisCount: 1,
                             itemCount: 10,
                             height: 150.h,
@@ -81,6 +81,7 @@ class ScreenFlightTicketSort extends StatelessWidget {
                         controller.sortingLoadingIndex.value ==
                             controller.selectedTripListIndex.value)
                     ? Skeleton(
+                        padding: 10.w,
                         crossAxisCount: 4,
                         itemCount: 4,
                         height: 10.h,
@@ -89,6 +90,7 @@ class ScreenFlightTicketSort extends StatelessWidget {
                 controller.sortingRebuild.value ? kHeight10 : kEmpty,
                 controller.sortingRebuild.value
                     ? Skeleton(
+                        padding: 10.w,
                         crossAxisCount: 1,
                         itemCount: 10,
                         height: 150.h,

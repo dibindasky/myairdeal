@@ -1,12 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
-
-import 'si.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 
 part 'trip_info.g.dart';
 
 @JsonSerializable()
 class TripInfo {
-  List<Si>? sI;
+  List<SI>? sI;
 
   TripInfo({this.sI});
 

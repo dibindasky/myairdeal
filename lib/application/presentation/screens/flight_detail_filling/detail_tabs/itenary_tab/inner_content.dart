@@ -35,12 +35,14 @@ class InnerContents extends StatelessWidget {
                     (index) {
                   final model =
                       controller.reviewedDetail?.value.tripInfos?[index];
-                  List<SsrInfo?>? seats = travellerController
-                      .selectedSeats['${model?.sI?[index].id}'];
+                  // This is for seat showing based on the flight id need to take all seats its a list
+                  List<SsrInfo?>? seats =
+                      travellerController.selectedSeats['${model?.sI?[0].id}'];
                   final code = seats
                       ?.map((e) =>
                           e?.code != '' && e?.code != null ? e?.code : 'N/S')
                       .toList();
+
                   return Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: CustomExpansionTile(
@@ -124,22 +126,19 @@ class InnerContents extends StatelessWidget {
                                                 ''),
                                         valueStyle: textThinStyle1.copyWith(
                                             overflow: TextOverflow.visible),
-                                        subValue: model?.sI?[(model.sI?.length ?? 1) - 1].aa?.terminal ??
-                                            '',
+                                        subValue:
+                                            model?.sI?[(model.sI?.length ?? 1) - 1].aa?.terminal ??
+                                                '',
                                         exit: controller.reviewedDetail?.value
                                                 .searchQuery?.cabinClass ??
                                             '',
                                         flightCode: code != null && code.isNotEmpty
-                                            ? code.toString()
+                                            ? code.toString().substring(
+                                                1, code.toString().length - 1)
                                             : 'N/A',
                                         cabinBaggage: model?.totalPriceList?[0]
                                             .fd?.adult?.bI?.iB,
-                                        checkinBaggage: model
-                                            ?.totalPriceList?[0]
-                                            .fd
-                                            ?.adult
-                                            ?.bI
-                                            ?.cB),
+                                        checkinBaggage: model?.totalPriceList?[0].fd?.adult?.bI?.cB),
                               ],
                             ),
                           ),
@@ -284,10 +283,10 @@ class InnerContents extends StatelessWidget {
                                                     .searchQuery
                                                     ?.cabinClass ??
                                                 '',
-                                            flightCode:
-                                                code != null && code.isNotEmpty
-                                                    ? code[index]
-                                                    : 'N/A',
+                                            flightCode: code != null && code.isNotEmpty
+                                                ? code.toString().substring(1,
+                                                    code.toString().length - 1)
+                                                : 'N/A',
                                             cabinBaggage: model
                                                 ?.totalPriceList?[0]
                                                 .fd

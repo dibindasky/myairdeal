@@ -4,7 +4,8 @@ import 'package:myairdeal/domain/models/notification_model/notification_model.da
 import 'package:myairdeal/domain/models/page_query/page_query.dart';
 
 abstract class NotificationRepo {
-  Future<Either<Failure, NotificationModel>> getNotification();
+  Future<Either<Failure, NotificationModel>> getNotification(
+      {required PageQuery pageQuery});
   Future<Either<Failure, NotificationModel>> getNotificationNext(
       {required PageQuery pageQuery});
 }

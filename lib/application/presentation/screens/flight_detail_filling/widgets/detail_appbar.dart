@@ -41,7 +41,8 @@ class DetailAppBar extends StatelessWidget {
             children: [
               backButton
                   ? IconButton(
-                      onPressed: () => backOntap ?? Get.back(id: id),
+                      onPressed: () =>
+                          backOntap != null ? backOntap!() : Get.back(id: id),
                       icon: const Icon(
                         Icons.arrow_back_ios,
                         color: kWhite,

@@ -28,7 +28,7 @@ class AppBarCustomShape extends StatelessWidget {
       child: Container(
         color: controller.theme.value == AppTheme.blue
             ? controller.secondaryColor
-            : controller.primaryColor,
+            : controller.secondaryDarkColor,
         child: ClipPath(
           clipper: AppbarClipper2(),
           child: Container(

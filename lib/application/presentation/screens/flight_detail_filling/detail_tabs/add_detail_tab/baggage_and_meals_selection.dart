@@ -76,7 +76,7 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
         kHeight10,
         Row(
           children: [
-            NetworkImageWithLoading(
+            NetworkImageWithLoading(height: 20.h,width: 20.h,
                 imageUrl: getAirlineLogo(bookingController.reviewedDetail?.value
                         .tripInfos?[tripIndex].sI?[siIndex].fD?.aI?.code ??
                     '')),

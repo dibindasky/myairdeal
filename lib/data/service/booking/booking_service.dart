@@ -58,7 +58,9 @@ class BookingService implements BookingRepo {
     } on DioException catch (e) {
       log('DioException reviewPriceDetails $e');
       return Left(Failure(
-          message: e.response?.data?['errors'][0]['message'] ?? errorMessage));
+          message: e.response?.data?['errors'][0]['message'] != null
+              ? 'Request flight is not longer available.Please try different flight'
+              : errorMessage));
     } catch (e) {
       log('catch reviewPriceDetails');
       return Left(Failure(message: e.toString()));

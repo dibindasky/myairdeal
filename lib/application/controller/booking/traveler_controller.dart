@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/data/service/booking/booking_service.dart';
@@ -31,23 +32,24 @@ class TravellerController extends GetxController {
   String travelerTab = 'Add Details';
   List<String> detailList = [' Itinerary', 'Add Details', 'Review', 'Payments'];
 
-  // Selected coutry code in passenger selection dailog
+  /// Selected coutry code in passenger selection dailog
   RxString selectedCoutryCode = 'IN'.obs;
 
-  // list responsible for showing passenger history
+  /// list responsible for showing passenger history
   RxList<TravellerInfo> allPassengers = <TravellerInfo>[].obs;
   RxBool isLoading = false.obs;
   RxBool hasError = false.obs;
   RxBool seatIsLoading = false.obs;
 
-  // trip flight seats list key-> flight id , value-> seat infos
+  /// trip flight seats list key-> flight id , value-> seat infos
   Map<String, TripSeatsInfo> seatsAvilable = <String, TripSeatsInfo>{}.obs;
   RxInt row = 0.obs;
   RxInt col = 0.obs;
-  // seat list to show ui
+
+  /// seat list to show ui
   RxList<List<SInfo>> seatList = <List<SInfo>>[].obs;
 
-  // sub steps in add details section
+  /// sub steps in add details section
   List<String> addDetailsSubList = [
     'Passenger details',
     'Select seat',
@@ -71,13 +73,16 @@ class TravellerController extends GetxController {
   RxInt selectedAddDetailsStep = 0.obs;
   int totalSubStepLength = 4;
 
-  // selectedSeats
+  /// selectedSeats
   Map<String, RxList<SsrInfo?>> selectedSeats = {};
-  // selected flight id
+
+  /// selected flight id
   RxString selectedSeatFlightKey = ''.obs;
 
+  /// key list of flights to handle seat maping
   RxList<String> keysList = <String>[].obs;
-  // loader to handle seat building
+
+  /// loader to handle seat building
   RxBool seatLoader = false.obs;
 
   // gst deatils of booking
@@ -125,20 +130,9 @@ class TravellerController extends GetxController {
         break;
       }
     }
-    traveller.ssrMealInfos!.add(ssrInfo);
+    traveller.ssrMealInfos!.add(ssrInfo.copyWith(amount: ssrInfo.amount ?? 0));
     passengerDetails[index] = traveller;
-    print('ssr info => ${ssrInfo.toString()}');
-    for (var traveller in passengerDetails) {
-      for (var element in traveller?.ssrMealInfos ?? <SsrInfo>[]) {
-        print(element.toString());
-      }
-      print('seat');
-      for (var element in traveller?.ssrSeatInfos ?? <SsrInfo>[]) {
-        print(element.toString());
-      }
-    }
     addOnsprice.value += ssrInfo.amount ?? 0;
-    print('add on price => ${addOnsprice.value}');
   }
 
   /// add Baggage information to the passenger to the traveller in the given index
@@ -152,7 +146,8 @@ class TravellerController extends GetxController {
         break;
       }
     }
-    traveller.ssrBaggageInfos!.add(ssrInfo);
+    traveller.ssrBaggageInfos!
+        .add(ssrInfo.copyWith(amount: ssrInfo.amount ?? 0));
     passengerDetails[index] = traveller;
     print('ssr info => ${ssrInfo.toString()}');
     for (var traveller in passengerDetails) {
@@ -194,24 +189,32 @@ class TravellerController extends GetxController {
     }
   }
 
-  // back button detail filling page
+  /// back button detail filling page
   void backButtonPaymetPage() {
     // if tab is on first index go back to the prvious route
     if (selectedMainTab.value == 0) {
+      print('back from payment => 1');
+      Get.find<HomeController>()
+          .changeNavigationChecker(NavigationChecker.search);
       Get.back();
     } // if main tab is on the passenger detail section then check for inner tab
     else if (selectedMainTab.value == 1) {
+      print('back from payment => 2');
       // if inner tab is on the first tab then go back to the previous main tab
       if (selectedAddDetailsStep.value == 0) {
+        print('back from payment => 3');
         selectedMainTab.value = 0;
       } // if inner tab is not on the first one, change to previous
       else {
+        print('back from payment => 4');
         selectedAddDetailsStep.value = selectedAddDetailsStep.value - 1;
       }
     } // if main tab is not on the first one then go the previous tab
     else {
-      selectedMainTab.value == selectedMainTab.value - 1;
+      print('back from payment => 5');
+      selectedMainTab.value = selectedMainTab.value - 1;
     }
+    update();
   }
 
   /// add passenger details to the list to submit while booking
@@ -235,7 +238,7 @@ class TravellerController extends GetxController {
       getSeatsAvailable(bookingId: bookingId ?? '');
     }
     // call for markup price while going to payment section
-    if(index == 3){
+    if (index == 3) {
       print('get markup call');
       Get.find<BookingController>().getMarkup();
     }

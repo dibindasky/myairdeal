@@ -29,7 +29,9 @@ class OneWayAndRoundTrip extends StatelessWidget {
                 controller.changeSelectedAirport(from: true, index: 0);
                 Get.find<HomeController>().changeSearch();
               },
-              borderColor: controller.airportSelected[0][0].city == null
+              borderColor: controller.airportSelected[0][0].city == null ||
+                      (controller.airportSelected[0][0].code ==
+                          controller.airportSelected[0][1].code)
                   ? kRed.withOpacity(.6)
                   : kGrey,
               first: Icon(Icons.flight_takeoff_rounded,
@@ -54,7 +56,9 @@ class OneWayAndRoundTrip extends StatelessWidget {
           kWidth5,
           Expanded(
             child: TextIconButtonOutlinedCustom(
-              borderColor: controller.airportSelected[0][1].city == null
+              borderColor: controller.airportSelected[0][1].city == null ||
+                      (controller.airportSelected[0][0].code ==
+                          controller.airportSelected[0][1].code)
                   ? kRed.withOpacity(.6)
                   : kGrey,
               onTap: () {
@@ -103,12 +107,14 @@ class MultiCitySelection extends StatelessWidget {
                       Get.find<HomeController>().changeSearch();
                     },
                     borderColor:
-                        controller.airportSelected[index][0].city == null
+                        controller.airportSelected[index][0].city == null ||
+                                (controller.airportSelected[index][0].code ==
+                                    controller.airportSelected[index][1].code)
                             ? kRed.withOpacity(.6)
                             : kGrey,
                     mainAxisAlignment: MainAxisAlignment.center,
                     first: kEmpty,
-                    topRight:  Icon(Icons.arrow_right_alt_rounded,
+                    topRight: Icon(Icons.arrow_right_alt_rounded,
                         color: themeController.primaryColor),
                     second: Expanded(
                       child: Text(
@@ -145,7 +151,9 @@ class MultiCitySelection extends StatelessWidget {
                 Expanded(
                   child: TextIconButtonOutlinedCustom(
                     borderColor:
-                        controller.multiCityDepartureDate[index] == null
+                        controller.multiCityDepartureDate[index] == null ||
+                                (controller.airportSelected[index][0].code ==
+                                    controller.airportSelected[index][1].code)
                             ? kRed.withOpacity(.6)
                             : kGrey,
                     topRight: index == 0 || index == 1

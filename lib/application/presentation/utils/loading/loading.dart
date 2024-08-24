@@ -1,28 +1,18 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'dart:math';
+
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 
-class ComplexLoader extends StatefulWidget {
-  final double size;
-  final Color color1;
-  final Color color2;
-  final Color color3;
-  final Color color4;
-
-  const ComplexLoader({
-    Key? key,
-    this.size = 100,
-    this.color1 = kBlueDark,
-    this.color2 = kBlueLight,
-    this.color3 = kBlueDark,
-    this.color4 = kBlueLight,
-  }) : super(key: key);
+class PlaneLoader extends StatefulWidget {
+  const PlaneLoader({super.key});
 
   @override
-  _ComplexLoaderState createState() => _ComplexLoaderState();
+  _PlaneLoaderState createState() => _PlaneLoaderState();
 }
 
-class _ComplexLoaderState extends State<ComplexLoader>
+class _PlaneLoaderState extends State<PlaneLoader>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -30,8 +20,8 @@ class _ComplexLoaderState extends State<ComplexLoader>
   void initState() {
     super.initState();
     _controller = AnimationController(
+      duration: const Duration(seconds: 4),
       vsync: this,
-      duration: const Duration(seconds: 2),
     )..repeat();
   }
 
@@ -43,72 +33,74 @@ class _ComplexLoaderState extends State<ComplexLoader>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return CustomPaint(
-          size: Size(widget.size, widget.size),
-          painter: LoaderPainter(
-            progress: _controller.value,
-            color1: widget.color1,
-            color2: widget.color2,
-            color3: widget.color3,
-            color4: widget.color4,
-          ),
-        );
-      },
+    return Center(
+      child: SizedBox(
+        width: 120,
+        height: 120,
+        child: Stack(
+          children: List.generate(20, (index) {
+            final angle = (index * (2 * pi)) / 20;
+            return AnimatedBuilder(
+              animation: _controller,
+              builder: (_, __) {
+                final double planePosition = _controller.value *
+                    2 *
+                    pi; // Plane's position in the circle
+                final bool isPlanePosition =
+                    (angle - planePosition).abs() < 0.1;
+                return Transform.translate(
+                  offset: Offset(
+                    50 * cos(angle),
+                    50 * sin(angle),
+                  ),
+                  child: Transform.scale(
+                    scale: isPlanePosition ? 1.5 : 0.5,
+                    child: isPlanePosition
+                        ? Icon(
+                            Icons.airplanemode_active,
+                            color: kGoldPrimary,
+                            size: 30,
+                          )
+                        : Dot(
+                            delay: index,
+                            controller: _controller,
+                          ),
+                  ),
+                );
+              },
+            );
+          }),
+        ),
+      ),
     );
   }
 }
 
-class LoaderPainter extends CustomPainter {
-  final double progress;
-  final Color color1;
-  final Color color2;
-  final Color color3;
-  final Color color4;
+class Dot extends StatelessWidget {
+  final int delay;
+  final AnimationController controller;
 
-  LoaderPainter({
-    required this.progress,
-    required this.color1,
-    required this.color2,
-    required this.color3,
-    required this.color4,
-  });
+  const Dot({super.key, required this.delay, required this.controller});
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 3, size.height / 3);
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..strokeWidth = 8;
-
-    void drawArc(
-        double radius, Color color, double startAngle, double sweepAngle) {
-      paint.color = color;
-      canvas.drawArc(
-        Rect.fromCircle(center: center, radius: radius),
-        startAngle,
-        sweepAngle,
-        false,
-        paint,
-      );
-    }
-
-    // Outer ring
-    drawArc(105, color1, progress * 2 * pi, pi / 2);
-
-    // Inner ring
-    drawArc(35, color2, -progress * 2 * pi, pi / 2);
-
-    // Left middle ring
-    drawArc(70, color3, progress * 2 * pi - pi / 2, pi / 2);
-
-    // Right middle ring
-    drawArc(70, color4, -progress * 2 * pi + pi, pi / 2);
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+      scale: Tween<double>(begin: 0.5, end: 1.2).animate(CurvedAnimation(
+        parent: controller,
+        curve: Interval(
+          delay / 20,
+          1.0,
+          curve: Curves.easeInOut,
+        ),
+      )),
+      child: Container(
+        width: 10,
+        height: 10,
+        decoration: BoxDecoration(
+          color: kGoldPrimary,
+          shape: BoxShape.circle,
+        ),
+      ),
+    );
   }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }

@@ -1,7 +1,9 @@
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/add_detail_tab/detail_tab_selection.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/itenary_tab/itinerary_tab.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/review/review.dart';
@@ -12,8 +14,33 @@ import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 
-class ScreenFlightDetail extends StatelessWidget {
+class ScreenFlightDetail extends StatefulWidget {
   const ScreenFlightDetail({super.key});
+
+  @override
+  State<ScreenFlightDetail> createState() => _ScreenFlightDetailState();
+}
+
+class _ScreenFlightDetailState extends State<ScreenFlightDetail> {
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(myInterceptor);
+    Get.find<HomeController>()
+        .changeNavigationChecker(NavigationChecker.itinary);
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    // Custom back button logic here
+    Get.find<TravellerController>().backButtonPaymetPage();
+    return false; // Prevent the default back button action
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +55,8 @@ class ScreenFlightDetail extends StatelessWidget {
               () => DetailAppBar(
                 heading: travelController
                     .detailList[travelController.selectedMainTab.value],
+                backButton: true,
                 backOntap: () {
-                  print('back button tap payment page');
                   travelController.backButtonPaymetPage();
                 },
                 action: bookingController.bookingLoading.value

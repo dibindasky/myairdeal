@@ -1,9 +1,12 @@
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
 import 'package:myairdeal/application/presentation/routes/indexed_stack/on_generate_route.dart';
+import 'package:myairdeal/application/presentation/routes/route_service/route_service.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/account/account_screen.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/bookings_screen.dart';
@@ -11,8 +14,51 @@ import 'package:myairdeal/application/presentation/screens/talk_to_us/talk_to_us
 import 'package:myairdeal/application/presentation/widgets/custom_bottom_bar/custom_bottom_bar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 
-class ScreenNavbar extends StatelessWidget {
+class ScreenNavbar extends StatefulWidget {
   const ScreenNavbar({super.key});
+
+  @override
+  State<ScreenNavbar> createState() => _ScreenNavbarState();
+}
+
+class _ScreenNavbarState extends State<ScreenNavbar> {
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    if (ModalRoute.of(context)?.isCurrent != true) {
+      return false; // Not the active route, don't handle the back button
+    }
+    if (Get.find<HomeController>().navigationCheck == NavigationChecker.home) {
+      // Custom back button logic here
+      print('custom back button => $stopDefaultButtonEvent');
+      if (Get.find<NavBarController>().bottomIndex.value != 0) {
+        print('custom back button => first');
+        Get.find<NavBarController>().chageIndex(0);
+        return true;
+      } else {
+        print('custom back button => second');
+        print('indexed stack => ${isNotLastRouteInNestedStack(1)}');
+        if (isNotLastRouteInNestedStack(1)) {
+          Get.back(id: 1);
+          return true;
+        }
+      }
+      print('custom back button => third');
+      Get.back();
+      return false;
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,71 +73,54 @@ class ScreenNavbar extends StatelessWidget {
       const ScreenAccountPage()
     ];
 
-    return WillPopScope(
-      onWillPop: () async {
-        if (Get.find<NavBarController>().bottomIndex.value != 0) {
-          Get.find<NavBarController>().chageIndex(0);
-          return false;
-        } else {
-          // print('indexed stack => ${isNotLastRouteInNestedStack(1)}');
-          // if (isNotLastRouteInNestedStack(1)) {
-          //   Get.back(id: 1);
-          //   return false;
-          // }
-        }
-        return false;
-      },
-      child: Scaffold(
-        body: Obx(() {
-          return IndexedStack(
-            index: Get.find<NavBarController>().bottomIndex.value,
-            children: tabItems,
-          );
-        }),
-        bottomNavigationBar: Obx(() {
-          final selectedIndex = Get.find<NavBarController>().bottomIndex.value;
-          return CurvedNavigationBar(
-            index: selectedIndex,
-            backgroundColor: kGreyLightBackground,
-            items: [
-              CurvedNavigationBarItem(
-                child: Icon(selectedIndex == 0 ? Iconsax.home1 : Iconsax.home),
-                label: 'Home',
-              ),
-              CurvedNavigationBarItem(
-                child: Icon(selectedIndex == 1
-                    ? Icons.airplane_ticket
-                    : Iconsax.ticket),
-                label: 'Bookings',
-              ),
-              // CurvedNavigationBarItem(
-              //   child: Icon(
-              //       selectedIndex == 2 ? Icons.explore : Icons.explore_outlined),
-              //   label: 'Explore',
-              // ),
-              CurvedNavigationBarItem(
-                child: Icon(selectedIndex == 2
-                    ? Iconsax.messages5
-                    : Iconsax.messages_1),
-                label: 'Talk to us',
-              ),
-              CurvedNavigationBarItem(
-                child: Icon(selectedIndex == 3
-                    ? Iconsax.profile_tick5
-                    : Iconsax.profile_tick),
-                label: 'Account',
-              ),
-            ],
-            onTap: (index) {
-              if (index == 1) {
-                Get.find<BookingController>().getAllUpcomingBooking(true);
-                Get.find<BookingController>().getAllCombleteBooking(true);
-              }
-              Get.find<NavBarController>().chageIndex(index);
-            },
-          );
-        }),
-      ),
+    return Scaffold(
+      body: Obx(() {
+        return IndexedStack(
+          index: Get.find<NavBarController>().bottomIndex.value,
+          children: tabItems,
+        );
+      }),
+      bottomNavigationBar: Obx(() {
+        final selectedIndex = Get.find<NavBarController>().bottomIndex.value;
+        return CurvedNavigationBar(
+          index: selectedIndex,
+          backgroundColor: kGreyLightBackground,
+          items: [
+            CurvedNavigationBarItem(
+              child: Icon(selectedIndex == 0 ? Iconsax.home1 : Iconsax.home),
+              label: 'Home',
+            ),
+            CurvedNavigationBarItem(
+              child: Icon(
+                  selectedIndex == 1 ? Icons.airplane_ticket : Iconsax.ticket),
+              label: 'Bookings',
+            ),
+            // CurvedNavigationBarItem(
+            //   child: Icon(
+            //       selectedIndex == 2 ? Icons.explore : Icons.explore_outlined),
+            //   label: 'Explore',
+            // ),
+            CurvedNavigationBarItem(
+              child: Icon(
+                  selectedIndex == 2 ? Iconsax.messages5 : Iconsax.messages_1),
+              label: 'Talk to us',
+            ),
+            CurvedNavigationBarItem(
+              child: Icon(selectedIndex == 3
+                  ? Iconsax.profile_tick5
+                  : Iconsax.profile_tick),
+              label: 'Account',
+            ),
+          ],
+          onTap: (index) {
+            if (index == 1) {
+              Get.find<BookingController>().getAllUpcomingBooking(true);
+              Get.find<BookingController>().getAllCombleteBooking(true);
+            }
+            Get.find<NavBarController>().chageIndex(index);
+          },
+        );
+      }),
     );
   }
 }

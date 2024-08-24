@@ -185,11 +185,12 @@ class FlightInvoiceCard extends StatelessWidget {
                                 airlineCode:
                                     tripInfos?[tripIndex].sI?[0].fD?.aI?.code ??
                                         '',
-                                flightCode: DateFormating.getDifferenceOfDates(
-                                    tripInfos?[tripIndex].sI?[stopIndex].dt ??
-                                        '',
-                                    tripInfos?[tripIndex].sI?[stopIndex].at ??
-                                        ''),
+                                flightCode:
+                                    DateFormating.convertMinutesToHoursMinutes(
+                                        tripInfos?[tripIndex]
+                                                .sI?[stopIndex]
+                                                .duration ??
+                                            0),
                                 valueStyle: textThinStyle1.copyWith(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w600),

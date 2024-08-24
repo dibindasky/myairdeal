@@ -7,12 +7,18 @@ import 'package:myairdeal/domain/models/search/city_search_model/city_search_mod
 import 'package:myairdeal/domain/models/search/recent_detail_search/recent_detail_search_item.dart';
 import 'package:myairdeal/domain/repository/service/home_repo.dart';
 
+enum NavigationChecker { home, search, itinary , airport}
+
 class HomeController extends GetxController {
   final HomeRepo homeService = HomeService();
 
   RxBool isLoading = false.obs;
   RxBool recentLoading = false.obs;
   RxBool search = false.obs;
+
+  /// enum used to check the current route place
+  Rx<NavigationChecker> navigationChecker = NavigationChecker.home.obs;
+  NavigationChecker get navigationCheck => navigationChecker.value;
 
   RxList<RecentDetailSearchItem> recentSearches =
       <RecentDetailSearchItem>[].obs;
@@ -32,6 +38,11 @@ class HomeController extends GetxController {
     fetchRecentSearches();
     fetchAirportRecentSearches();
     fetchAirportSearchWithCountryCode();
+  }
+
+  /// change navigation
+  void changeNavigationChecker(NavigationChecker checker) {
+    navigationChecker.value = checker;
   }
 
   // Recent Searches

@@ -254,8 +254,10 @@ class ReveiewTab extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-                '₹ ${Get.find<BookingController>().reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? ''}'),
+            Obx(() {
+              return Text(
+                  '₹ ${(Get.find<BookingController>().reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0) + (controller.addOnsprice.value)}');
+            }),
             EventButton(
                 width: 200.w,
                 text: 'Confirm Details',

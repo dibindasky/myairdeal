@@ -21,7 +21,7 @@ class RaiceTicketsLists extends StatelessWidget {
             children: [
               ListView.separated(
                 separatorBuilder: (index, dimensions) => kHeight5,
-                padding: const EdgeInsets.all(0),
+                padding: EdgeInsets.only(bottom: 10.w),
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
                 itemCount: controller.globalTickets.length,
@@ -39,11 +39,10 @@ class RaiceTicketsLists extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(data.heading ?? '',
+                            Text(data.type ?? '',
                                 style: textStyle1.copyWith(
                                     fontSize: 13.sp,
                                     fontWeight: FontWeight.w700)),
-                            Text(data.type ?? 'type')
                           ],
                         ),
                         kHeight5,
@@ -51,10 +50,7 @@ class RaiceTicketsLists extends StatelessWidget {
                         kHeight5,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(data.product ?? 'product'),
-                            Text(data.status ?? 'sta')
-                          ],
+                          children: [Text(data.status ?? 'sta')],
                         ),
                       ],
                     ),

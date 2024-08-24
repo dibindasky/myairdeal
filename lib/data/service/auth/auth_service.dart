@@ -12,6 +12,7 @@ import 'package:myairdeal/domain/models/auth/user_creation_model/user_creation_m
 import 'package:myairdeal/domain/models/auth/user_creation_responce_model/user_creation_responce_model.dart';
 import 'package:myairdeal/domain/models/splash_model/splash_model.dart';
 import 'package:myairdeal/domain/models/success_responce_model/success_responce_model.dart';
+import 'package:myairdeal/domain/models/token/token_model.dart';
 import 'package:myairdeal/domain/repository/service/auth_repo.dart';
 
 class AuthService extends AuthRepo {
@@ -124,6 +125,23 @@ class AuthService extends AuthRepo {
       return Left(Failure(message: e.message ?? errorMessage));
     } catch (e) {
       log('catch updateUser $e');
+      return Left(Failure(message: errorMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SuccessResponceModel>> clearToken(
+      {required TokenModel tokenModel}) async {
+    try {
+      await apiService.delete(ApiEndPoints.deleteToken,
+          data: tokenModel.toJson());
+      log('Success clearToken');
+      return Right(SuccessResponceModel());
+    } on DioException catch (e) {
+      log('DioException clearToken $e');
+      return Left(Failure(message: e.message ?? errorMessage));
+    } catch (e) {
+      log('catch clearToken $e');
       return Left(Failure(message: errorMessage));
     }
   }

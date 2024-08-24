@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/data/service/raice_ticket/raice_ticket_service.dart';
 import 'package:myairdeal/domain/models/booking_ids_model/booking_ids_model.dart';
@@ -16,7 +18,7 @@ class TalkToUsController extends GetxController {
 
   int raiceTickets = 0;
   RxBool isLoading = false.obs;
-  RxInt selectedtab = 1.obs;
+  RxInt selectedGlobalTalkToUsTab = 1.obs;
   GlobalKey<FormState> globalRaiceTicketFormKey = GlobalKey<FormState>();
 
   // Enquiry Con trollers
@@ -32,7 +34,7 @@ class TalkToUsController extends GetxController {
   TextEditingController ticketRisingHeadingController = TextEditingController();
   TextEditingController ticketRisingdescriptionController =
       TextEditingController();
-  RxString selectedEnquiryType = ''.obs;
+  RxString? selectedEnquiryType;
   RxList enquiryTypeList = ['Air Ambulance', "Helicopter", "Private Jet"].obs;
 
   //All global tickets
@@ -46,13 +48,13 @@ class TalkToUsController extends GetxController {
   RxList<BookingIdsModel> bookingIdList = <BookingIdsModel>[].obs;
   RxString selectedBookingId = ''.obs;
 
-  changetab(int newTab) {
-    selectedtab.value = newTab;
+  changeGlobalTalkToUsTab(int newTab) {
+    selectedGlobalTalkToUsTab.value = newTab;
     update();
   }
 
   void changeEnquiryType(String type) {
-    selectedEnquiryType.value = type;
+    selectedEnquiryType = type.obs;
     update();
   }
 
@@ -121,16 +123,15 @@ class TalkToUsController extends GetxController {
     );
   }
 
-  void addEnquiry() async {
+  void addEnquiry({bool fromHome = true}) async {
     isLoading.value = true;
     EnguiryModel enquiryModel = EnguiryModel(
       description: enquiryDescriptionController.text,
       dialCode: selecedDailCode.value,
       email: enquiryEmailController.text,
       phone: enquiryNumberController.text,
-      type: selectedEnquiryType.value,
+      type: selectedEnquiryType?.value,
     );
-    log('${enquiryModel.toJson()}');
     final date = await raiceTicketRepo.addEnquiry(enquiryModel: enquiryModel);
     date.fold(
       (l) => null,
@@ -138,6 +139,17 @@ class TalkToUsController extends GetxController {
         Get.snackbar('Success', r.message ?? 'Enquiry Created Successfully',
             backgroundColor: kBluePrimary);
         enquiryDescriptionController.clear();
+        getAllTickets();
+        if (fromHome) {
+          // Get.toNamed(Routes.bottomBar);
+          // Get.find<NavBarController>().chageIndex(2);
+
+          Get.toNamed(Routes.chatTab);
+        } else {
+          // changeGlobalTalkToUsTab(2);
+          selectedGlobalTalkToUsTab.value = 2;
+          update();
+        }
       },
     );
     isLoading.value = false;

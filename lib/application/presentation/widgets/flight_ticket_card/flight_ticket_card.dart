@@ -177,6 +177,7 @@ class FlightTicketCard extends StatelessWidget {
                       ),
                 const DottedLines(),
                 BottomMiniContainer(
+                  bookingId: bookingId,
                   share: share,
                   flightTicketCardEnum: flightTicketCardEnum,
                   buttonOnTap: buttonOnTap,

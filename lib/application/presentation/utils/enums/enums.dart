@@ -13,7 +13,7 @@ enum Validate {
   ifValidnumber,
   ifValidWebsite,
   ifValidEmail,
-  notNullAndLength15,
+  notNullAndLength10,
   passportNumber,
 }
 

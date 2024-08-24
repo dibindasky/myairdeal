@@ -298,12 +298,8 @@ class AuthController extends GetxController {
     if (updateEmailController.text.isEmpty ||
         updateFirnameController.text.isEmpty ||
         updateLastNameController.text.isEmpty) {
-      Get.snackbar(
-        'Failed',
-        'Fill all feilds',
-        backgroundColor: kRed,
-        duration: const Duration(seconds: 3),
-      );
+      Get.snackbar('Failed', 'Fill all Feilds',
+          backgroundColor: kRed, duration: const Duration(seconds: 3));
       return;
     }
     isLoading.value = true;
@@ -315,12 +311,8 @@ class AuthController extends GetxController {
         Get.offNamed(Routes.profile);
       },
       (r) {
-        Get.snackbar(
-          'Success!',
-          'Your profile has been updated successfully.',
-          backgroundColor: kWhite,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        Get.snackbar('Success!', 'Your profile has been updated successfully.',
+            backgroundColor: kWhite, snackPosition: SnackPosition.BOTTOM);
         isLoading.value = false;
         getUserInfo(true);
         Get.until((route) => Get.currentRoute == Routes.profile);
@@ -335,7 +327,12 @@ class AuthController extends GetxController {
   }
 
   void logOut() async {
-    Get.snackbar('Success', 'Logout Successful', backgroundColor: kBluePrimary);
+    isLoading.value = true;
+    final token = await SharedPreferecesStorage.getNotificationToken();
+    await authRepo.clearToken(tokenModel: TokenModel(token: token));
+    Get.snackbar('Success!', 'Logout Successfull',
+        backgroundColor: kBluePrimary);
+    isLoading.value = false;
     Get.offAllNamed(Routes.signUpSignIn);
     otpNumber.clear();
     loginOrNot.value = false;

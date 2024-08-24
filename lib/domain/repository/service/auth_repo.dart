@@ -8,6 +8,7 @@ import 'package:myairdeal/domain/models/auth/user_creation_model/user_creation_m
 import 'package:myairdeal/domain/models/auth/user_creation_responce_model/user_creation_responce_model.dart';
 import 'package:myairdeal/domain/models/splash_model/splash_model.dart';
 import 'package:myairdeal/domain/models/success_responce_model/success_responce_model.dart';
+import 'package:myairdeal/domain/models/token/token_model.dart';
 
 abstract class AuthRepo {
   Future<Either<Failure, SplashModel>> getSplash();
@@ -26,4 +27,6 @@ abstract class AuthRepo {
   Future<Either<Failure, UserCreationResponceModel>> getUser();
   Future<Either<Failure, SuccessResponceModel>> updateUser(
       {required ProfileUpdateModel profileUpdateModel});
+  Future<Either<Failure, SuccessResponceModel>> clearToken(
+      {required TokenModel tokenModel});
 }

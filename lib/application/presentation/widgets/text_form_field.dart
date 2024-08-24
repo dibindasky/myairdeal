@@ -141,11 +141,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
           return 'Please enter a valid email address';
         } else if (widget.validate == Validate.password && value!.length < 8) {
           return 'Password must contavin at least 8 characters';
-        } else if (widget.validate == Validate.notNullAndLength15) {
+        } else if (widget.validate == Validate.notNullAndLength10) {
           if (value == null || value == '') {
             return '${widget.hintText} should not be Empty';
-          } else if (value.length < 15) {
-            return '${widget.hintText} should be at least 15 letters.';
+          } else if (value.length < 10) {
+            return '${widget.hintText} should be at least 10 letters.';
           } else {
             return null;
           }

@@ -32,10 +32,11 @@ class ApiEndPoints {
   static const String getNotification = '/user/notifications';
   static const String fareRule = '/booking/fare-rule';
   static const String globalTicketCreation = '/ticket/create-ticket-global';
-  static const String getGlobalTickets = '/ticket/view-all-tickets-user';
+  static const String getGlobalTickets = '/enquiry/get-tickets';
   static const String addEnquiry = '/enquiry/create-registeredUser';
   static const String getBookingId = '/user/retrieve-user-bookings-id';
   static const String getMarkup = '/markup/get-user-mark-up';
+  static const String deleteToken = '/user/logout';
 
   // Change {airlinecode} for logo
   static const String airllineLogo = "/uploads/AirlinesLogo/{airlinecode}.png";

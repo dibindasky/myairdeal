@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/tabs/enquiry.dart';
 import 'package:myairdeal/application/presentation/screens/talk_to_us/tabs/raice_ticket.dart';
@@ -26,12 +27,12 @@ class ScreenTab extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: ListView(
-        // physics: const NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.all(0),
         children: [
           DetailAppBar(
             action: GestureDetector(
-              onTap: () => OpenLauncherFeature.launchPhone(phone: '7061409421'),
+              onTap: () =>
+                  OpenLauncherFeature.launchPhone(phone: '+91 7061409421'),
               child: CircleAvatar(
                 radius: 15.w,
                 child: const Icon(Icons.phone),
@@ -57,11 +58,17 @@ class ScreenTab extends StatelessWidget {
                     height: height * .7,
                     child: GetBuilder<TalkToUsController>(
                       builder: (controller) {
-                        if (talkToUsController.selectedtab.value == 0) {
+                        if (talkToUsController
+                                .selectedGlobalTalkToUsTab.value ==
+                            0) {
                           return const EnquiryBox();
-                        } else if (talkToUsController.selectedtab.value == 1) {
+                        } else if (talkToUsController
+                                .selectedGlobalTalkToUsTab.value ==
+                            1) {
                           return const RaiceTicket();
-                        } else if (talkToUsController.selectedtab.value == 2) {
+                        } else if (talkToUsController
+                                .selectedGlobalTalkToUsTab.value ==
+                            2) {
                           return const RaiceTicketsLists();
                         } else {
                           return kEmpty;
@@ -85,6 +92,7 @@ class TabsContainerBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final talkToUsController = Get.find<TalkToUsController>();
+    final themeController = Get.find<ThemeController>();
     return Row(
       children: List.generate(
         3,
@@ -103,7 +111,7 @@ class TabsContainerBuilder extends StatelessWidget {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      talkToUsController.changetab(index);
+                      talkToUsController.changeGlobalTalkToUsTab(index);
                       // if (text[index] == 'Support') {
                       //   OpenLauncherFeature.launchPhone(phone: '7061409421');
                       // }
@@ -113,10 +121,13 @@ class TabsContainerBuilder extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                             vertical: 5.h, horizontal: 5.w),
                         decoration: BoxDecoration(
-                            color: index == talkToUsController.selectedtab.value
+                            color: index ==
+                                    talkToUsController
+                                        .selectedGlobalTalkToUsTab.value
                                 ? kWhite
-                                : kBlueLightShade,
-                            border: Border.all(color: kBluePrimary),
+                                : themeController.secondaryLightColor,
+                            border: Border.all(
+                                color: themeController.secondaryLightColor),
                             borderRadius: kRadius10),
                         child: Column(
                           children: [

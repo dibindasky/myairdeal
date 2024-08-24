@@ -26,7 +26,7 @@ class ApiService {
       } else {
         _dio.options.headers['content-Type'] = 'application/json';
       }
-      log('api uri ==>get  ${_dio.options.baseUrl + url + queryParameters.toString()}');
+      log('api uri ==>get  ${_dio.options.baseUrl + url}');
       log('token ==>  ${_dio.options.headers['authorization']}');
       final response = await _dio.get(url,
           data: data,

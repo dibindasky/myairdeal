@@ -69,7 +69,7 @@ class RaiceTicket extends StatelessWidget {
                   kHeight10,
                   CustomTextField(
                     controller: controller.ticketRisingdescriptionController,
-                    validate: Validate.notNullAndLength15,
+                    validate: Validate.notNullAndLength10,
                     isBorder: true,
                     maxLines: 6,
                     borderRadius: 9,

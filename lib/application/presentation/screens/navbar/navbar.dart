@@ -69,7 +69,6 @@ class _ScreenNavbarState extends State<ScreenNavbar> {
         onGenerateRoute: RouteGenerator().onGenerateRoute,
       ),
       const ScreenBookings(),
-      // const ScreenExplore(),
       const ScreenTalkToUsPage(),
       const ScreenAccountPage()
     ];

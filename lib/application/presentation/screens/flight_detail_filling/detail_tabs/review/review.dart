@@ -64,128 +64,64 @@ class ReveiewTab extends StatelessWidget {
                         width: double.infinity,
                         child: Column(
                           children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      controller.passengerDetails[travelrIndex]
-                                                      ?.fN !=
-                                                  null &&
-                                              controller
-                                                      .passengerDetails[
-                                                          travelrIndex]
-                                                      ?.lN !=
-                                                  null &&
-                                              controller
-                                                      .passengerDetails[
-                                                          travelrIndex]
-                                                      ?.pt !=
-                                                  null
-                                          ? const Text('Name  ')
-                                          : kEmpty,
-                                      controller.passengerDetails[travelrIndex]
-                                                  ?.dob !=
-                                              null
-                                          ? const Text('DOB  ')
-                                          : kEmpty,
-                                      controller.passengerDetails[travelrIndex]
-                                                  ?.pNum !=
-                                              null
-                                          ? const Text('Passport Number  ')
-                                          : kEmpty,
-                                      controller.passengerDetails[travelrIndex]
-                                                  ?.pid !=
-                                              null
-                                          ? const Text('Passport Issue Date  ')
-                                          : kEmpty,
-                                      controller.passengerDetails[travelrIndex]
-                                                  ?.eD !=
-                                              null
-                                          ? const Text('Passport Expiry Date  ')
-                                          : kEmpty,
-                                      controller.passengerDetails[travelrIndex]
-                                                  ?.pN !=
-                                              null
-                                          ? const Text('Nationality  ',
-                                              overflow: TextOverflow.ellipsis)
-                                          : kEmpty
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      controller.passengerDetails[travelrIndex]
-                                                      ?.fN !=
-                                                  null &&
-                                              controller
-                                                      .passengerDetails[
-                                                          travelrIndex]
-                                                      ?.lN !=
-                                                  null &&
-                                              controller
-                                                      .passengerDetails[
-                                                          travelrIndex]
-                                                      ?.pt !=
-                                                  null
-                                          ? Text(
-                                              '${controller.passengerDetails[travelrIndex]?.fN ?? ''} ${controller.passengerDetails[travelrIndex]?.lN ?? ''} (${controller.passengerDetails[travelrIndex]?.pt?.substring(0, 1) ?? ''})')
-                                          : kEmpty,
-                                      controller.passengerDetails[travelrIndex]
-                                                  ?.dob !=
-                                              null
-                                          ? Text(controller
-                                                  .passengerDetails[
-                                                      travelrIndex]
-                                                  ?.dob ??
-                                              '')
-                                          : kEmpty,
-                                      controller.passengerDetails[travelrIndex]
-                                                  ?.pNum !=
-                                              null
-                                          ? Text(controller
-                                                  .passengerDetails[
-                                                      travelrIndex]
-                                                  ?.pNum ??
-                                              '')
-                                          : kEmpty,
-                                      controller.passengerDetails[travelrIndex]
-                                                  ?.pid !=
-                                              null
-                                          ? Text(controller
-                                                  .passengerDetails[
-                                                      travelrIndex]
-                                                  ?.pid ??
-                                              '')
-                                          : kEmpty,
-                                      controller.passengerDetails[travelrIndex]
-                                                  ?.eD !=
-                                              null
-                                          ? Text(controller
-                                                  .passengerDetails[
-                                                      travelrIndex]
-                                                  ?.eD ??
-                                              '')
-                                          : kEmpty,
-                                      controller.passengerDetails[travelrIndex]
-                                                  ?.pN !=
-                                              null
-                                          ? Text(controller
-                                                  .passengerDetails[
-                                                      travelrIndex]
-                                                  ?.pN ??
-                                              '')
-                                          : kEmpty
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                            controller.passengerDetails[travelrIndex]?.fN !=
+                                        null &&
+                                    controller.passengerDetails[travelrIndex]
+                                            ?.lN !=
+                                        null &&
+                                    controller.passengerDetails[travelrIndex]
+                                            ?.pt !=
+                                        null
+                                ? rowData(
+                                    heading: 'Name',
+                                    tittle:
+                                        '${controller.passengerDetails[travelrIndex]?.fN ?? ''} ${controller.passengerDetails[travelrIndex]?.lN ?? ''} (${controller.passengerDetails[travelrIndex]?.pt?.substring(0, 1) ?? ''})')
+                                : kEmpty,
+                            controller.passengerDetails[travelrIndex]?.dob !=
+                                    null
+                                ? rowData(
+                                    heading: 'DOB',
+                                    tittle: controller
+                                            .passengerDetails[travelrIndex]
+                                            ?.dob ??
+                                        '')
+                                : kEmpty,
+                            controller.passengerDetails[travelrIndex]?.pNum !=
+                                    null
+                                ? rowData(
+                                    heading: 'Passport Number',
+                                    tittle: controller
+                                            .passengerDetails[travelrIndex]
+                                            ?.pNum ??
+                                        '')
+                                : kEmpty,
+                            controller.passengerDetails[travelrIndex]?.pid !=
+                                    null
+                                ? rowData(
+                                    heading: 'Passport Issue Date',
+                                    tittle: controller
+                                            .passengerDetails[travelrIndex]
+                                            ?.pid ??
+                                        '')
+                                : kEmpty,
+                            controller.passengerDetails[travelrIndex]?.eD !=
+                                    null
+                                ? rowData(
+                                    heading: 'Passport Expiry Date',
+                                    tittle: controller
+                                            .passengerDetails[travelrIndex]
+                                            ?.eD ??
+                                        '')
+                                : kEmpty,
+                            controller.passengerDetails[travelrIndex]?.pN !=
+                                    null
+                                ? rowData(
+                                    heading: 'Nationality',
+                                    tittle: controller
+                                            .passengerDetails[travelrIndex]
+                                            ?.pN ??
+                                        '')
+                                : kEmpty,
                             ...List.generate(
                               bookingController.reviewedDetail?.value.tripInfos
                                       ?.length ??
@@ -279,41 +215,23 @@ class ReveiewTab extends StatelessWidget {
                                                 ],
                                               ),
                                         seatIndex != null && seatIndex != -1
-                                            ? Row(
-                                                children: [
-                                                  const Expanded(
-                                                      child: Text('Seat NO')),
-                                                  const Text(':  '),
-                                                  Expanded(
-                                                      child: Text(
-                                                          '${controller.passengerDetails[travelrIndex]?.ssrSeatInfos?[seatIndex].code}')),
-                                                ],
-                                              )
+                                            ? rowData(
+                                                heading: 'Seat NO',
+                                                tittle:
+                                                    '${controller.passengerDetails[travelrIndex]?.ssrSeatInfos?[seatIndex].code}')
                                             : kEmpty,
                                         mealIndex != null && mealIndex != -1
-                                            ? Row(
-                                                children: [
-                                                  const Expanded(
-                                                      child: Text('Meals')),
-                                                  const Text(':  '),
-                                                  Expanded(
-                                                      child: Text(
-                                                          '${controller.passengerDetails[travelrIndex]?.ssrMealInfos?[mealIndex].desc}')),
-                                                ],
-                                              )
+                                            ? rowData(
+                                                heading: 'Meals',
+                                                tittle:
+                                                    '${controller.passengerDetails[travelrIndex]?.ssrMealInfos?[mealIndex].desc}')
                                             : kEmpty,
                                         baggageIndex != null &&
                                                 baggageIndex != -1
-                                            ? Row(
-                                                children: [
-                                                  const Expanded(
-                                                      child: Text('Baggage')),
-                                                  const Text(':  '),
-                                                  Expanded(
-                                                      child: Text(
-                                                          "${controller.passengerDetails[travelrIndex]?.ssrBaggageInfos?[baggageIndex].desc}")),
-                                                ],
-                                              )
+                                            ? rowData(
+                                                heading: 'Baggage',
+                                                tittle:
+                                                    "${controller.passengerDetails[travelrIndex]?.ssrBaggageInfos?[baggageIndex].desc}")
                                             : kEmpty,
                                         kHeight5,
                                       ],
@@ -349,6 +267,17 @@ class ReveiewTab extends StatelessWidget {
           ],
         ),
         kHeight15
+      ],
+    );
+  }
+
+  Row rowData({required String heading, required String tittle}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(child: Text(heading)),
+        const Text(':  '),
+        Expanded(child: Text(tittle)),
       ],
     );
   }

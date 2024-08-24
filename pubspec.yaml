@@ -101,6 +101,7 @@ flutter:
     - asset/icon/
     - asset/image/
     - asset/dev/
+    - asset/onbaord/
     - asset/lottie/air_lotite.json
     - asset/lottie/plane.json
 

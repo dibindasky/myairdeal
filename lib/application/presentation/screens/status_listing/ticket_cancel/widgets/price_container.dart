@@ -240,7 +240,7 @@ class _PriceContainerState extends State<PriceContainer> {
                     bookingController.retrieveSingleBookingresponceModel.value
                         .retrieveSingleBookingresponceModel?.order?.bookingId;
                 cancelController.cancelSelectedItems.value.remarks =
-                    cancelController.cancellationRason.text;
+                    cancelController.cancellationReason.text;
                 cancelController.cancelSelectedItems.value.type =
                     'CANCELLATION';
                 cancelController.ticketCancel();

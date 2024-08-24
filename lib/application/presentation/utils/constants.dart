@@ -101,10 +101,15 @@ Color findInvoiceColor(FlightTicketInvoiceEnum flightTicketInvoiceEnum) {
   }
 }
 
-//  On Boarding screeen
+//  On Boarding screeen BLUE
 String myOnbaordOne = 'asset/image/my_air_deal_one.png';
 String myOnboardTwo = 'asset/image/my_air_deal_two.png';
 String myOnbaordThree = 'asset/image/my_air_deal_three.png';
+
+// On Boarding screeen GOLDEN
+String myOnbaordGoldenOne = 'asset/onbaord/onboardGoldenForst.png';
+String myOnboardGoldenTwo = 'asset/onbaord/onboardGoldenSecond.png';
+String myOnbaordGoldenThree = 'asset/onbaord/onboardGoldenThird.png';
 
 const imageRazorpay = 'asset/dev/razorpay.png';
 
@@ -112,6 +117,8 @@ String getAirlineLogo(String code) {
   return ApiEndPoints.baseUrl +
       ApiEndPoints.airllineLogo.replaceFirst('{airlinecode}', code);
 }
+
+String nodata = 'asset/image/nodataImage.png';
 
 // NetWork image
 String dummyPersonimage =

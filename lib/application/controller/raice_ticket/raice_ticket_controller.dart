@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/data/features/pdf_generator.dart';
 import 'package:myairdeal/data/features/share_ticket.dart';
 import 'package:myairdeal/data/features/url_launcher.dart';
@@ -93,7 +91,7 @@ class RaiceTicketController extends GetxController {
       (r) {
         isLoading.value = false;
         Get.snackbar('Sucess', 'Ticket Raicing Sucess',
-            backgroundColor: kBluePrimary);
+            backgroundColor: Get.find<ThemeController>().secondaryColor);
         selectedYouCouldAlsoTab.value = 1;
         descriptionController.clear();
       },
@@ -109,7 +107,6 @@ class RaiceTicketController extends GetxController {
         isLoading.value = false;
       },
       (r) {
-        log('length ${r.data?.length}');
         isLoading.value = false;
         allTicketsLists.value = r.data ?? [];
       },

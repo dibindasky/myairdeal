@@ -12,6 +12,7 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
+import 'package:myairdeal/application/presentation/utils/refresh_indicator/refresh_custom.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
@@ -123,12 +124,14 @@ class ScreenBookings extends StatelessWidget {
                                         if (controller
                                             .retrieveAllUpcomingBooking
                                             .isEmpty) {
-                                          return SizedBox(
-                                            height: 250.h,
-                                            child: const Center(
-                                              child:
-                                                  Text('No Upcoming Tickets'),
-                                            ),
+                                          return ErrorRefreshIndicator(
+                                            errorMessage:
+                                                'No Upcoming Bookings',
+                                            image: nodata,
+                                            shrinkWrap: true,
+                                            onRefresh: () {
+                                              onRefresh();
+                                            },
                                           );
                                         }
                                         return ListView.separated(
@@ -200,11 +203,15 @@ class ScreenBookings extends StatelessWidget {
                                           1) {
                                         if (controller
                                             .retrieveAllCancelBooking.isEmpty) {
-                                          return SizedBox(
-                                              height: 250.h,
-                                              child: const Center(
-                                                  child: Text(
-                                                      'No Cancelled Tickets')));
+                                          return ErrorRefreshIndicator(
+                                            image: nodata,
+                                            errorMessage:
+                                                'No Cancelled Bookings',
+                                            shrinkWrap: true,
+                                            onRefresh: () {
+                                              onRefresh();
+                                            },
+                                          );
                                         }
                                         return ListView.separated(
                                           physics:
@@ -261,11 +268,15 @@ class ScreenBookings extends StatelessWidget {
                                         if (controller
                                             .retrieveAllCompletedBooking
                                             .isEmpty) {
-                                          return SizedBox(
-                                              height: 250.h,
-                                              child: const Center(
-                                                  child: Text(
-                                                      'No Completed Booking')));
+                                          return ErrorRefreshIndicator(
+                                            image: nodata,
+                                            errorMessage:
+                                                'No Completed Bookings',
+                                            shrinkWrap: true,
+                                            onRefresh: () {
+                                              onRefresh();
+                                            },
+                                          );
                                         }
                                         return ListView.separated(
                                           physics:

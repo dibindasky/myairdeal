@@ -2,9 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/data/service/raice_ticket/raice_ticket_service.dart';
 import 'package:myairdeal/domain/models/booking_ids_model/booking_ids_model.dart';
 import 'package:myairdeal/domain/models/ticket_raice/enguiry_model/enguiry_model.dart';
@@ -84,7 +83,7 @@ class TalkToUsController extends GetxController {
         globalTicketRaisingModel: globalTicketRaisingModel);
     data.fold((l) => null, (r) {
       Get.snackbar('Success', 'Successfully Created Ticket',
-          backgroundColor: kBluePrimary);
+          backgroundColor: Get.find<ThemeController>().secondaryColor);
       ticketRisingHeadingController.clear();
       ticketRisingdescriptionController.clear();
       getAllTickets();
@@ -126,27 +125,22 @@ class TalkToUsController extends GetxController {
   void addEnquiry({bool fromHome = true}) async {
     isLoading.value = true;
     EnguiryModel enquiryModel = EnguiryModel(
-      description: enquiryDescriptionController.text,
-      dialCode: selecedDailCode.value,
-      email: enquiryEmailController.text,
-      phone: enquiryNumberController.text,
-      type: selectedEnquiryType?.value,
-    );
+        description: enquiryDescriptionController.text,
+        dialCode: selecedDailCode.value,
+        email: enquiryEmailController.text,
+        phone: enquiryNumberController.text,
+        type: selectedEnquiryType?.value);
     final date = await raiceTicketRepo.addEnquiry(enquiryModel: enquiryModel);
     date.fold(
       (l) => null,
       (r) {
         Get.snackbar('Success', r.message ?? 'Enquiry Created Successfully',
-            backgroundColor: kBluePrimary);
+            backgroundColor: Get.find<ThemeController>().secondaryColor);
         enquiryDescriptionController.clear();
         getAllTickets();
         if (fromHome) {
-          // Get.toNamed(Routes.bottomBar);
-          // Get.find<NavBarController>().chageIndex(2);
-
           Get.toNamed(Routes.chatTab);
         } else {
-          // changeGlobalTalkToUsTab(2);
           selectedGlobalTalkToUsTab.value = 2;
           update();
         }

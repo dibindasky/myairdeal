@@ -30,7 +30,6 @@ Color kbuttonGrey = const Color(0xFF808080);
 const Color kOrangeLight = Color(0xFFFD8C08);
 
 // gold theme colors
-
 Color kGoldPrimary = const Color.fromARGB(255, 215, 181, 109);
 Color kGoldLightPrimary = const Color.fromARGB(255, 248, 226, 179);
 Color kDardGold = const Color.fromARGB(255, 131, 103, 44);

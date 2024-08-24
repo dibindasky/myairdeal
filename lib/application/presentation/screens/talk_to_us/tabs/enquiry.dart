@@ -13,8 +13,8 @@ import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 
 class EnquiryBox extends StatelessWidget {
-  const EnquiryBox({super.key});
-
+  const EnquiryBox({super.key, this.fromHome});
+  final bool? fromHome;
   @override
   Widget build(BuildContext context) {
     final talkToUsController = Get.find<TalkToUsController>();
@@ -45,7 +45,7 @@ class EnquiryBox extends StatelessWidget {
           controller: talkToUsController.enquiryEmailController,
           isBorder: true,
           borderRadius: 7,
-          textCapitalization: TextCapitalization.words,
+          textCapitalization: TextCapitalization.sentences,
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(width: .3),
             borderRadius: kRadius10,
@@ -59,7 +59,7 @@ class EnquiryBox extends StatelessWidget {
           controller: talkToUsController.enquiryNameController,
           isBorder: true,
           borderRadius: 7,
-          textCapitalization: TextCapitalization.words,
+          textCapitalization: TextCapitalization.sentences,
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(width: .3),
             borderRadius: kRadius10,
@@ -116,10 +116,9 @@ class EnquiryBox extends StatelessWidget {
           ),
           child: Obx(
             () => DropdownButton<String>(
+              dropdownColor: themeController.secondaryLightColor,
               isExpanded: true,
-              value: talkToUsController.selectedEnquiryType.value == ''
-                  ? null
-                  : talkToUsController.selectedEnquiryType.value,
+              value: talkToUsController.selectedEnquiryType?.value,
               hint: const Text('Select an option'),
               items: talkToUsController.enquiryTypeList
                   .map<DropdownMenuItem<String>>((value) {
@@ -140,9 +139,9 @@ class EnquiryBox extends StatelessWidget {
           isBorder: true,
           borderRadius: 7,
           maxLines: 5,
-          validate: Validate.notNullAndLength15,
+          validate: Validate.notNullAndLength10,
           controller: talkToUsController.enquiryDescriptionController,
-          textCapitalization: TextCapitalization.words,
+          textCapitalization: TextCapitalization.sentences,
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(width: .3),
             borderRadius: kRadius10,
@@ -164,12 +163,12 @@ class EnquiryBox extends StatelessWidget {
                   controller.selecedDailCode.value.isEmpty ||
                   controller.enquiryEmailController.text.isEmpty ||
                   controller.enquiryNumberController.text.isEmpty ||
-                  controller.selectedEnquiryType.value.isEmpty) {
+                  controller.selectedEnquiryType == null) {
                 showSnackbar(context,
                     message: 'Fill the Missing Feilds', backgroundColor: kRed);
                 return;
               }
-              talkToUsController.addEnquiry();
+              talkToUsController.addEnquiry(fromHome: fromHome ?? false);
             },
           );
         }),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -165,7 +166,7 @@ class AuthController extends GetxController {
       isLoading.value = false;
       hasError = false;
       Get.snackbar('Success', 'OTP Sent Successfully',
-          backgroundColor: kBluePrimary);
+          backgroundColor: Get.find<ThemeController>().secondaryColor);
       Get.toNamed(Routes.otp);
       update();
     });
@@ -200,7 +201,7 @@ class AuthController extends GetxController {
       hasError = false;
       update();
       Get.snackbar('Success', 'OTP Verified Successfully',
-          backgroundColor: kBluePrimary);
+          backgroundColor: Get.find<ThemeController>().secondaryColor);
       SharedPreferecesStorage.setLogin();
       Timer(const Duration(milliseconds: 50), () {
         loginOrNot.value = true;
@@ -298,12 +299,8 @@ class AuthController extends GetxController {
     if (updateEmailController.text.isEmpty ||
         updateFirnameController.text.isEmpty ||
         updateLastNameController.text.isEmpty) {
-      Get.snackbar(
-        'Failed',
-        'Fill all feilds',
-        backgroundColor: kRed,
-        duration: const Duration(seconds: 3),
-      );
+      Get.snackbar('Failed', 'Fill all Feilds',
+          backgroundColor: kRed, duration: const Duration(seconds: 3));
       return;
     }
     isLoading.value = true;
@@ -315,12 +312,8 @@ class AuthController extends GetxController {
         Get.offNamed(Routes.profile);
       },
       (r) {
-        Get.snackbar(
-          'Success!',
-          'Your profile has been updated successfully.',
-          backgroundColor: kWhite,
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        Get.snackbar('Success!', 'Your profile has been updated successfully.',
+            backgroundColor: kWhite, snackPosition: SnackPosition.BOTTOM);
         isLoading.value = false;
         getUserInfo(true);
         Get.until((route) => Get.currentRoute == Routes.profile);
@@ -335,7 +328,12 @@ class AuthController extends GetxController {
   }
 
   void logOut() async {
-    Get.snackbar('Success', 'Logout Successful', backgroundColor: kBluePrimary);
+    isLoading.value = true;
+    final token = await SharedPreferecesStorage.getNotificationToken();
+    await authRepo.clearToken(tokenModel: TokenModel(token: token));
+    Get.snackbar('Success!', 'You\'ve Successfully Signed Out!',
+        backgroundColor: Get.find<ThemeController>().secondaryColor);
+    isLoading.value = false;
     Get.offAllNamed(Routes.signUpSignIn);
     otpNumber.clear();
     loginOrNot.value = false;

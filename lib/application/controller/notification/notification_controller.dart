@@ -9,7 +9,7 @@ import 'package:myairdeal/domain/repository/service/notification_repo.dart';
 class NotificationController extends GetxController {
   NotificationRepo notificationService = NotificationService();
   List<String> notificationType = ['All', 'Unread', 'Read'];
-  int nextNotification = 15;
+  int nextNotification = 1;
   // responsible for changeing notification type
   RxInt notificationIndex = 0.obs;
   RxBool notificationLoading = false.obs;
@@ -50,13 +50,12 @@ class NotificationController extends GetxController {
     notificationLoading.value = true;
     update();
     final data = await notificationService.getNotification(
-        pageQuery: PageQuery(pageSize: 17));
+        pageQuery: PageQuery(pageSize: 15));
     data.fold(
       (l) => null,
       (r) {
         notification?.value = r.notification ?? <Notification>[];
         changeNotifcationDate();
-        log('Notification length ${notification?.length}');
       },
     );
     notificationLoading.value = false;
@@ -64,14 +63,14 @@ class NotificationController extends GetxController {
 
   void getNotificationNext() async {
     notificationNext.value = true;
-    nextNotification++;
+    //nextNotification++;
     update();
     final data = await notificationService.getNotificationNext(
-        pageQuery: PageQuery(pageSize: nextNotification += nextNotification));
+        pageQuery: PageQuery(pageSize: nextNotification += 10));
     data.fold(
       (l) => null,
       (r) {
-        notification?.value = r.notification ?? <Notification>[];
+        notification?.value = [...r.notification ?? <Notification>[]];
         log('length ${r.notification?.length}');
         changeNotifcationDate();
         update();

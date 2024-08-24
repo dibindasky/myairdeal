@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -22,7 +23,7 @@ class TicketCancellationController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool hasError = false.obs;
   RxString tripJackErrorMessage = ''.obs;
-  TextEditingController cancellationRason = TextEditingController();
+  TextEditingController cancellationReason = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   // button enable or disable for cancel
@@ -115,7 +116,7 @@ class TicketCancellationController extends GetxController {
       if (allTrip) {
         cancelSelectedItems.value = cancelRequestModel.copyWith(
           type: 'CANCELLATION',
-          remarks: cancellationRason.text,
+          remarks: cancellationReason.text,
           trips: null,
         );
         return;
@@ -130,7 +131,7 @@ class TicketCancellationController extends GetxController {
     }).toList();
     cancelSelectedItems.value = cancelRequestModel.copyWith(
       type: 'CANCELLATION',
-      remarks: cancellationRason.text,
+      remarks: cancellationReason.text,
       trips: tripsWithTravellers.isEmpty ? null : tripsWithTravellers,
     );
   }
@@ -181,12 +182,12 @@ class TicketCancellationController extends GetxController {
             colorText: kWhite);
       },
       (r) {
-        cancellationRason.clear();
+        cancellationReason.clear();
         Get.back();
         Get.snackbar('Success', 'Trip Cancellation is in progress',
             snackPosition: SnackPosition.BOTTOM,
             forwardAnimationCurve: Curves.bounceIn,
-            backgroundColor: kBluePrimary,
+            backgroundColor: Get.find<ThemeController>().secondaryColor,
             colorText: kWhite);
         hasError.value = false;
         isLoading.value = false;

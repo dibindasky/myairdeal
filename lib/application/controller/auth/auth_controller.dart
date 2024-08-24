@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -165,7 +166,7 @@ class AuthController extends GetxController {
       isLoading.value = false;
       hasError = false;
       Get.snackbar('Success', 'OTP Sent Successfully',
-          backgroundColor: kBluePrimary);
+          backgroundColor: Get.find<ThemeController>().secondaryColor);
       Get.toNamed(Routes.otp);
       update();
     });
@@ -200,7 +201,7 @@ class AuthController extends GetxController {
       hasError = false;
       update();
       Get.snackbar('Success', 'OTP Verified Successfully',
-          backgroundColor: kBluePrimary);
+          backgroundColor: Get.find<ThemeController>().secondaryColor);
       SharedPreferecesStorage.setLogin();
       Timer(const Duration(milliseconds: 50), () {
         loginOrNot.value = true;
@@ -330,8 +331,8 @@ class AuthController extends GetxController {
     isLoading.value = true;
     final token = await SharedPreferecesStorage.getNotificationToken();
     await authRepo.clearToken(tokenModel: TokenModel(token: token));
-    Get.snackbar('Success!', 'Logout Successfull',
-        backgroundColor: kBluePrimary);
+    Get.snackbar('Success!', 'You\'ve Successfully Signed Out!',
+        backgroundColor: Get.find<ThemeController>().secondaryColor);
     isLoading.value = false;
     Get.offAllNamed(Routes.signUpSignIn);
     otpNumber.clear();

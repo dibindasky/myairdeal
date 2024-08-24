@@ -12,7 +12,7 @@ class OnBoardInitail extends StatelessWidget {
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
     return ScreenOnBoard(
-      image: myOnbaordOne,
+      image: myOnbaordGoldenOne,
       text: 'Discover The',
       secText: 'Magnificent',
       thirdText: 'World..',
@@ -34,7 +34,7 @@ class OnBoardSecond extends StatelessWidget {
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
     return ScreenOnBoard(
-      image: myOnboardTwo,
+      image: myOnboardGoldenTwo,
       text: 'Get the Best',
       secText: 'Flight Tickets',
       thirdText: 'for You..',
@@ -56,7 +56,7 @@ class OnbaordThird extends StatelessWidget {
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
     return ScreenOnBoard(
-      image: myOnbaordThree,
+      image: myOnbaordGoldenThree,
       text: 'Book',
       secText: 'Appointment',
       thirdText: 'in Easiest Way!',

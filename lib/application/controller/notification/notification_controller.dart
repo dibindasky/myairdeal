@@ -50,7 +50,7 @@ class NotificationController extends GetxController {
     notificationLoading.value = true;
     update();
     final data = await notificationService.getNotification(
-        pageQuery: PageQuery(pageSize: 17));
+        pageQuery: PageQuery(pageSize: 15));
     data.fold(
       (l) => null,
       (r) {
@@ -63,10 +63,10 @@ class NotificationController extends GetxController {
 
   void getNotificationNext() async {
     notificationNext.value = true;
-    nextNotification++;
+    //nextNotification++;
     update();
     final data = await notificationService.getNotificationNext(
-        pageQuery: PageQuery(pageSize: nextNotification += 1));
+        pageQuery: PageQuery(pageSize: nextNotification += 10));
     data.fold(
       (l) => null,
       (r) {

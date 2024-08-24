@@ -226,7 +226,7 @@ class ScreenTicetCanceallation extends StatelessWidget {
                               child: CustomTextField(
                                 validate: Validate.notNull,
                                 controller:
-                                    cancellationController.cancellationRason,
+                                    cancellationController.cancellationReason,
                                 maxLines: 5,
                                 maxLength: 250,
                                 isBorder: true,
@@ -307,7 +307,7 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                   cancellationController
                                           .cancelSelectedItems.value.remarks =
                                       cancellationController
-                                          .cancellationRason.text;
+                                          .cancellationReason.text;
                                   cancellationController.cancelSelectedItems
                                       .value.type = 'CANCELLATION';
                                   cancellationController.ticketCancel();

@@ -114,7 +114,8 @@ class DateFormating {
     for (int i = 0; i < si.length; i++) {
       minute += si[i].duration ?? 0;
       if (i < (si.length - 1)) {
-        minute += getDifferenceInMinutes(si[i].at ?? '', si[i + 1].dt ?? '');
+        minute += si[i].cT ?? 0;
+        // minute += getDifferenceInMinutes(si[i].at ?? '', si[i + 1].dt ?? '');
       }
     }
     final duration = Duration(minutes: minute);
@@ -260,5 +261,18 @@ class DateFormating {
     return dateTime.isAfter(startTime) && dateTime.isBefore(endTime) ||
         dateTime.isAtSameMomentAs(startTime) ||
         dateTime.isAtSameMomentAs(endTime);
+  }
+
+  // check wether the given dob pass 18 or not
+  static bool isAdult(String birthDateString) {
+    DateTime birthDate = DateTime.parse(birthDateString);
+    DateTime currentDate = DateTime.now();
+    int age = currentDate.year - birthDate.year;
+    if (currentDate.month < birthDate.month ||
+        (currentDate.month == birthDate.month &&
+            currentDate.day < birthDate.day)) {
+      age--;
+    }
+    return age >= 18;
   }
 }

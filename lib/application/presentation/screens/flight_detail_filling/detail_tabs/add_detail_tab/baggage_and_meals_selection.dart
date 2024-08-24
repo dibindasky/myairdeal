@@ -12,6 +12,7 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
+import 'package:myairdeal/application/presentation/utils/shimmer/network_image_loader.dart';
 import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/ssr_info.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/trip_info.dart';
@@ -75,7 +76,10 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
         kHeight10,
         Row(
           children: [
-            Image.asset(flightDetailIcon, height: 20.h),
+            NetworkImageWithLoading(
+                imageUrl: getAirlineLogo(bookingController.reviewedDetail?.value
+                        .tripInfos?[tripIndex].sI?[siIndex].fD?.aI?.code ??
+                    '')),
             kWidth10,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,8 +157,7 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                           border:
                               Border.all(color: themeController.primaryColor),
                           borderRadius: kRadius10,
-                          color:
-                              themeController.secondaryLightColor,
+                          color: themeController.secondaryLightColor,
                         ),
                         child: Column(
                           children: [

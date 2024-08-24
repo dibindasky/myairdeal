@@ -37,7 +37,7 @@ class InnerContents extends StatelessWidget {
                       controller.reviewedDetail?.value.tripInfos?[index];
                   // This is for seat showing based on the flight id need to take all seats its a list
                   List<SsrInfo?>? seats =
-                      travellerController.selectedSeats['${model?.sI?[0].id}'];
+                      travellerController.selectedSeats[model?.sI?[0].id ?? ''];
                   final code = seats
                       ?.map((e) =>
                           e?.code != '' && e?.code != null ? e?.code : 'N/S')

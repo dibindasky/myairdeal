@@ -4,6 +4,7 @@ const Color knill = Colors.transparent;
 const Color kBlack = Colors.black;
 const Color kWhite = Colors.white;
 const Color kRed = Colors.red;
+const Color kDarkRed = Color.fromARGB(255, 190, 14, 1);
 const Color kBlue = Color.fromARGB(255, 0, 100, 210);
 Color kYellow = Colors.yellow;
 Color kPurple = Colors.purple;
@@ -32,5 +33,5 @@ const Color kOrangeLight = Color(0xFFFD8C08);
 
 Color kGoldPrimary = const Color.fromARGB(255, 215, 181, 109);
 Color kGoldLightPrimary = const Color.fromARGB(255, 248, 226, 179);
+Color kDardGold = const Color.fromARGB(255, 131, 103, 44);
 Color kDarkIndigo = const Color.fromARGB(255, 27, 29, 41);
-Color kDardGold = Color.fromARGB(255, 160, 110, 1);

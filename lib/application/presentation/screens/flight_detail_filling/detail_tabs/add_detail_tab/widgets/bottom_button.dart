@@ -17,19 +17,22 @@ class BottomButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     Text(
-        //       'Add ons total',
-        //       style: textThinStyle1.copyWith(fontSize: 10.sp),
-        //     ),
-        //     const Text(
-        //       '₹ ',
-        //       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-        //     ),
-        //   ],
-        // ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Add ons total',
+              style: textThinStyle1.copyWith(fontSize: 10.sp),
+            ),
+            Obx(() {
+              return Text(
+                '₹ ${controller.addOnsprice.value}',
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              );
+            }),
+          ],
+        ),
         kWidth20,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/screens/home/widgets/search_card_flight_section.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -16,7 +17,6 @@ class SortScreenHeaderSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
-        final themeController = Get.find<ThemeController>();
     return SizedBox(
       height: controller.comboTrip.value ? null : 220.h,
       child: AppBarCustomShape(
@@ -30,6 +30,8 @@ class SortScreenHeaderSection extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       controller.stopSearchTimer();
+                      Get.find<HomeController>()
+                          .changeNavigationChecker(NavigationChecker.home);
                       Get.back(id: 1);
                     },
                     child: const Icon(Icons.arrow_back_ios, color: kWhite),

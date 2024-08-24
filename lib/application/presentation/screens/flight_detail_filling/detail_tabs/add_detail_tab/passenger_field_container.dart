@@ -53,6 +53,8 @@ class _DetailContainerState extends State<DetailContainer> {
   String lastTraveldate = '';
   bool showPassportDetails = false;
   bool isAdult = true;
+  bool showError = false;
+  bool showPassportExpiryError = false;
 
   @override
   void initState() {
@@ -65,6 +67,9 @@ class _DetailContainerState extends State<DetailContainer> {
       expiryDController.text = model.eD ?? '';
       pIDController.text = model.pid ?? '';
       travelController.selectedCoutryCode.value = model.pN ?? '';
+      if (widget.pcs != null) {
+        showPassportDetails = true;
+      }
     }
     super.initState();
   }
@@ -74,7 +79,9 @@ class _DetailContainerState extends State<DetailContainer> {
   Future<void> selectIssueDate(BuildContext context) async {
     final DateTime? selectedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: pIDController.text == ''
+          ? null
+          : DateFormating.convertStringToDateTime(pIDController.text),
       firstDate: DateTime.now().subtract(const Duration(days: 365 * 10)),
       lastDate: DateTime.now(),
     );
@@ -88,49 +95,36 @@ class _DetailContainerState extends State<DetailContainer> {
   }
 
   void setExpiryDate() {
-    // Determine the additional years based on traveller type
-    final int additionalYears = isAdult ? 5 : 10;
+    expiryDController.text = '';
     // Calculate the expiry date
-    final DateTime calculatedExpiryDate =
-        selectedIssueDate.add(Duration(days: 365 * additionalYears));
-
+    final DateTime calculatedExpiryDate = DateTime(
+            selectedIssueDate.year + (isAdult ? 10 : 5),
+            selectedIssueDate.month,
+            selectedIssueDate.day)
+        .subtract(const Duration(days: 1));
     // Retrieve and parse the last travel date
-    final String lastTravelDateString = selectLastTravelDate();
-
-    if (lastTravelDateString.isEmpty) {
-      // Handle the case where last travel date is empty
-      expiryDController.text =
-          DateFormating.getDateByDayMonthYear(calculatedExpiryDate);
-      return;
-    }
-
+    final String lastTravelDateString =
+        bookigController.reviewedDetail?.value.tripInfos?.last.sI?.last.at ??
+            '';
+    if (lastTravelDateString.isEmpty) return;
     DateTime lastTravelDate;
     try {
       lastTravelDate = DateTime.parse(lastTravelDateString);
     } catch (e) {
-      // Handle parsing error
-      expiryDController.text =
-          DateFormating.getDateByDayMonthYear(calculatedExpiryDate);
       return;
     }
-
-    // Calculate the minimum expiry date (6 months after the last travel date)
-    final DateTime minExpiryDate =
-        lastTravelDate.add(const Duration(days: 365 ~/ 2));
-
-    // Determine the final expiry date
-    final DateTime finalExpiryDate =
-        calculatedExpiryDate.isBefore(minExpiryDate)
-            ? minExpiryDate
-            : calculatedExpiryDate;
-
-    // Update the expiry date controller with the final expiry date
-    expiryDController.text = DateFormating.getDateApi(finalExpiryDate);
-  }
-
-  String selectLastTravelDate() {
-    return bookigController.reviewedDetail?.value.tripInfos?.last.sI?.last.at ??
-        '';
+    // Calculate the minimum expiry date (30 days after the last travel date)
+    final DateTime minExpiryDate = lastTravelDate.add(const Duration(days: 30));
+    if (calculatedExpiryDate.isAfter(minExpiryDate)) {
+      expiryDController.text = DateFormating.getDateApi(calculatedExpiryDate);
+      setState(() {
+        showPassportExpiryError = false;
+      });
+    } else {
+      setState(() {
+        showPassportExpiryError = true;
+      });
+    }
   }
 
   @override
@@ -287,11 +281,16 @@ class _DetailContainerState extends State<DetailContainer> {
                             kHeight5,
                             GestureDetector(
                               onTap: () async {
+                                FocusScope.of(context).unfocus();
                                 final date = Get.find<FlightSortController>()
                                     .multiCityDepartureDate
                                     .first!;
                                 final selectedDate = await showDatePicker(
                                   context: context,
+                                  initialDate: dateOfBirthController.text == ''
+                                      ? null
+                                      : DateFormating.convertStringToDateTime(
+                                          dateOfBirthController.text),
                                   firstDate: date
                                       .subtract(widget.travellerType == 'ADULT'
                                           ? const Duration(days: 365 * 150)
@@ -407,6 +406,8 @@ class _DetailContainerState extends State<DetailContainer> {
                                           ),
                                         ),
                                       ),
+                                      showEmptyError(showError &&
+                                          pIDController.text == ''),
                                       kHeight5,
                                     ],
                                   )
@@ -421,25 +422,46 @@ class _DetailContainerState extends State<DetailContainer> {
                                       kHeight5,
                                       GestureDetector(
                                         onTap: () async {
-                                          final date = selectedIssueDate;
+                                          final date = bookigController
+                                                      .reviewedDetail
+                                                      ?.value
+                                                      .tripInfos
+                                                      ?.last
+                                                      .sI
+                                                      ?.last
+                                                      .at ==
+                                                  null
+                                              ? DateFormating
+                                                  .convertStringToDateTime(
+                                                      pIDController.text)
+                                              : DateTime.parse(bookigController
+                                                      .reviewedDetail
+                                                      ?.value
+                                                      .tripInfos
+                                                      ?.last
+                                                      .sI
+                                                      ?.last
+                                                      .at ??
+                                                  pIDController.text);
                                           final selectedDate =
                                               await showDatePicker(
                                             context: context,
-                                            initialDate: selectedIssueDate.add(
-                                              !isAdult
-                                                  ? const Duration(
-                                                      days: 365 * 5)
-                                                  : const Duration(
-                                                      days: 365 * 10),
-                                            ),
-                                            firstDate: date,
-                                            lastDate: selectedIssueDate.add(
-                                              !isAdult
-                                                  ? const Duration(
-                                                      days: 365 * 5)
-                                                  : const Duration(
-                                                      days: 365 * 10),
-                                            ),
+                                            initialDate: expiryDController
+                                                        .text ==
+                                                    ''
+                                                ? null
+                                                : DateFormating
+                                                    .convertStringToDateTime(
+                                                        expiryDController.text),
+                                            firstDate: date == null
+                                                ? DateTime.now()
+                                                : date.add(
+                                                    const Duration(days: 30)),
+                                            lastDate: DateTime(
+                                                selectedIssueDate.year +
+                                                    (isAdult ? 10 : 5),
+                                                selectedIssueDate.month,
+                                                selectedIssueDate.day),
                                           );
                                           if (selectedDate != null) {
                                             expiryDController.text =
@@ -469,6 +491,13 @@ class _DetailContainerState extends State<DetailContainer> {
                                           ),
                                         ),
                                       ),
+                                      showEmptyError(
+                                          showPassportExpiryError ||
+                                              (showError &&
+                                                  expiryDController.text == ''),
+                                          showPassportExpiryError
+                                              ? 'Passport should not expire within a months from travel date. '
+                                              : null),
                                       kHeight5,
                                     ],
                                   )
@@ -504,8 +533,23 @@ class _DetailContainerState extends State<DetailContainer> {
                         kWidth20,
                         GestureDetector(
                           onTap: () {
+                            if (!formKey.currentState!.validate()) {
+                              return;
+                            } else if (widget.pcs != null &&
+                                (((widget.pcs?.pid ?? false) &&
+                                        pIDController.text == '') ||
+                                    (widget.pcs?.pped ?? false) &&
+                                        expiryDController.text == '')) {
+                              setState(() {
+                                showError = true;
+                              });
+                              return;
+                            }
                             // add passenger details
-                            if (formKey.currentState!.validate()) {
+                            else {
+                              setState(() {
+                                showError = false;
+                              });
                               travelController.addPassengerDetail(
                                 widget.index,
                                 TravellerInfo(
@@ -602,6 +646,16 @@ class _DetailContainerState extends State<DetailContainer> {
           ),
         ],
       ),
+    );
+  }
+
+  AnimatedContainer showEmptyError(bool showError, [String? error]) {
+    return AnimatedContainer(
+      height: !showError ? 0 : null,
+      alignment: Alignment.centerLeft,
+      duration: const Duration(milliseconds: 300),
+      child: Text(error ?? 'This field cannot be empty',
+          style: textThinStyle1.copyWith(color: kDarkRed, fontSize: 12.sp)),
     );
   }
 }

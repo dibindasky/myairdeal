@@ -9,7 +9,7 @@ class SsrInfo {
   String? desc;
   int? amount;
 
-  SsrInfo({this.key, this.code, this.desc, this.amount});
+  SsrInfo({this.key, this.code, this.desc, this.amount = 0});
 
   factory SsrInfo.fromJson(Map<String, dynamic> json) =>
       _$SsrInfoFromJson(json);

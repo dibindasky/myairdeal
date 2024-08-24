@@ -25,7 +25,7 @@ class ThemeController extends GetxController {
     }
   }
 
-  /// primary color
+  /// secondary color
   Color get secondaryColor {
     switch (theme.value) {
       case AppTheme.blue:
@@ -37,7 +37,19 @@ class ThemeController extends GetxController {
     }
   }
 
-  /// primary color
+  /// secondary color
+  Color get secondaryDarkColor {
+    switch (theme.value) {
+      case AppTheme.blue:
+        return kBlueDark;
+      case AppTheme.gold:
+        return kDardGold;
+      default:
+        return kDardGold;
+    }
+  }
+
+  /// secondary light color
   Color get secondaryLightColor {
     switch (theme.value) {
       case AppTheme.blue:

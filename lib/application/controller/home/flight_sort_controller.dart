@@ -334,6 +334,11 @@ class FlightSortController extends GetxController {
         searchValidated.value = false;
         return false;
       }
+      // if same city added for departure and arrival return error
+      if (airportSelected[i][0].code == airportSelected[i][1].code) {
+        searchValidated.value = false;
+        return false;
+      }
     }
     searchValidated.value = true;
     return true;

@@ -28,7 +28,7 @@ class FlightSearchCardHome extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeController = Get.find<ThemeController>();
     return AnimatedContainer(
-      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      margin:fromEdit?null: EdgeInsets.symmetric(horizontal: 16.w),
       duration: const Duration(milliseconds: 300),
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
       decoration: BoxDecoration(
@@ -38,24 +38,26 @@ class FlightSearchCardHome extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
-              FittedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(
-                    3,
-                    (index) => Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.h),
-                      child: CustomRadioButton(
-                        selected: index == controller.tripType.value,
-                        onChanged: () {
-                          controller.changeTripType(index);
-                        },
-                        text: controller.tripTypes[index],
+              fromEdit
+                  ? kEmpty
+                  : FittedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: List.generate(
+                          3,
+                          (index) => Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5.h),
+                            child: CustomRadioButton(
+                              selected: index == controller.tripType.value,
+                              onChanged: () {
+                                controller.changeTripType(index);
+                              },
+                              text: controller.tripTypes[index],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
               kHeight10,
               controller.tripType.value == 2
                   ? // multi city

@@ -51,6 +51,8 @@ class _DetailContainerState extends State<DetailContainer> {
   final travelController = Get.find<TravellerController>();
   final bookigController = Get.find<BookingController>();
   String lastTraveldate = '';
+  bool showPassportDetails = false;
+  bool isAdult = true;
 
   @override
   void initState() {
@@ -73,11 +75,11 @@ class _DetailContainerState extends State<DetailContainer> {
     final DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now().subtract(const Duration(days: 365 * 150)),
+      firstDate: DateTime.now().subtract(const Duration(days: 365 * 10)),
       lastDate: DateTime.now(),
     );
     if (selectedDate != null) {
-      pIDController.text = DateFormating.getDateByDayMonthYear(selectedDate);
+      pIDController.text = DateFormating.getDateApi(selectedDate);
       setState(() {
         selectedIssueDate = selectedDate;
         setExpiryDate();
@@ -87,10 +89,7 @@ class _DetailContainerState extends State<DetailContainer> {
 
   void setExpiryDate() {
     // Determine the additional years based on traveller type
-    final int additionalYears =
-        (widget.travellerType == 'CHILD' || widget.travellerType == 'INFANT')
-            ? 5
-            : 10;
+    final int additionalYears = isAdult ? 5 : 10;
     // Calculate the expiry date
     final DateTime calculatedExpiryDate =
         selectedIssueDate.add(Duration(days: 365 * additionalYears));
@@ -146,7 +145,7 @@ class _DetailContainerState extends State<DetailContainer> {
             decoration: BoxDecoration(
               border: Border.all(color: kBlue),
               borderRadius: kRadius10,
-              color: kBlueLightShade,
+              color: themeController.secondaryLightColor,
             ),
             child: Form(
               key: formKey,
@@ -192,7 +191,8 @@ class _DetailContainerState extends State<DetailContainer> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 10.w, vertical: 2.w),
                             decoration: BoxDecoration(
-                                border: Border.all(color: themeController.primaryColor),
+                                border: Border.all(
+                                    color: themeController.primaryColor),
                                 borderRadius: kRadius10),
                             child: Text(
                               'Select From history',
@@ -241,6 +241,10 @@ class _DetailContainerState extends State<DetailContainer> {
                     isBorder: true,
                     borderRadius: 14,
                     textCapitalization: TextCapitalization.words,
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1.5, color: themeController.primaryColor),
+                        borderRadius: kRadius15),
                     enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(width: .3),
                         borderRadius: kRadius15),
@@ -256,6 +260,10 @@ class _DetailContainerState extends State<DetailContainer> {
                     isBorder: true,
                     inputFormatters: [AlphabeticInputFormatter()],
                     borderRadius: 14,
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1.5, color: themeController.primaryColor),
+                        borderRadius: kRadius15),
                     textCapitalization: TextCapitalization.words,
                     enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(width: .3),
@@ -304,6 +312,9 @@ class _DetailContainerState extends State<DetailContainer> {
                                 );
                                 dateOfBirthController.text =
                                     DateFormating.getDateApi(selectedDate);
+                                showPassportDetails = true;
+                                isAdult = DateFormating.isAdult(
+                                    dateOfBirthController.text);
                                 setState(() {});
                               },
                               child: Container(
@@ -329,7 +340,7 @@ class _DetailContainerState extends State<DetailContainer> {
                           ],
                         )
                       : kEmpty,
-                  widget.pcs != null
+                  widget.pcs != null && showPassportDetails
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -342,14 +353,23 @@ class _DetailContainerState extends State<DetailContainer> {
                                 CustomTextField(
                                   controller: passportNumberController,
                                   validate: Validate.passportNumber,
+                                  textCapitalization:
+                                      TextCapitalization.characters,
                                   isBorder: true,
                                   borderRadius: 14,
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1.5,
+                                          color: themeController.primaryColor),
+                                      borderRadius: kRadius15),
                                   enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(width: .3),
+                                      borderSide: BorderSide(
+                                          width: .3,
+                                          color: themeController.primaryColor),
                                       borderRadius: kRadius15),
                                   onTapOutside: () =>
                                       FocusScope.of(context).unfocus(),
-                                  hintText: 'Enter Your Passport Number',
+                                  hintText: 'Passport Number',
                                   fillColor: kWhite,
                                 ),
                                 kHeight5,
@@ -406,17 +426,20 @@ class _DetailContainerState extends State<DetailContainer> {
                                               await showDatePicker(
                                             context: context,
                                             initialDate: selectedIssueDate.add(
-                                              widget.travellerType == 'CHILD' ||
-                                                      widget.travellerType ==
-                                                          'INFANT'
+                                              !isAdult
                                                   ? const Duration(
                                                       days: 365 * 5)
                                                   : const Duration(
                                                       days: 365 * 10),
                                             ),
                                             firstDate: date,
-                                            lastDate: date.add(const Duration(
-                                                days: 365 * 150)),
+                                            lastDate: selectedIssueDate.add(
+                                              !isAdult
+                                                  ? const Duration(
+                                                      days: 365 * 5)
+                                                  : const Duration(
+                                                      days: 365 * 10),
+                                            ),
                                           );
                                           if (selectedDate != null) {
                                             expiryDController.text =
@@ -475,7 +498,7 @@ class _DetailContainerState extends State<DetailContainer> {
                               savePassenger = value ?? false;
                             });
                           },
-                          activeColor: kBluePrimary,
+                          activeColor: themeController.primaryColor,
                         ),
                         const Text('Save Details'),
                         kWidth20,
@@ -528,14 +551,14 @@ class _DetailContainerState extends State<DetailContainer> {
                                   color: travelController
                                               .passengerDetails[widget.index] !=
                                           null
-                                      ? kBluePrimary
+                                      ? themeController.primaryColor
                                       : kWhite,
                                   border: Border.all(
                                       color: travelController.passengerDetails[
                                                   widget.index] !=
                                               null
                                           ? kWhite
-                                          : kBluePrimary),
+                                          : themeController.primaryColor),
                                   borderRadius: kRadius10),
                               child: Text(
                                 travelController
@@ -548,7 +571,7 @@ class _DetailContainerState extends State<DetailContainer> {
                                                 widget.index] !=
                                             null
                                         ? kWhite
-                                        : kBluePrimary),
+                                        : themeController.primaryColor),
                               ),
                             );
                           }),
@@ -572,8 +595,8 @@ class _DetailContainerState extends State<DetailContainer> {
                 decoration: BoxDecoration(
                     borderRadius: kRadius50,
                     color: kWhite,
-                    boxShadow: boxShadow2Blue),
-                child: const Icon(Icons.close, color: kBluePrimary),
+                    boxShadow: boxShadow2),
+                child: Icon(Icons.close, color: themeController.primaryColor),
               ),
             ),
           ),

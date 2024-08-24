@@ -156,6 +156,10 @@ class ScreenBookings extends StatelessWidget {
                                               Get.toNamed(Routes.invoice);
                                             },
                                             child: FlightTicketCard(
+                                              bookingId: controller
+                                                  .retrieveAllUpcomingBooking[
+                                                      index]
+                                                  .bookingId,
                                               share: () =>
                                                   raiceController.shareTicket(
                                                       bookingID: controller
@@ -178,10 +182,6 @@ class ScreenBookings extends StatelessWidget {
                                               allBookingResponce: controller
                                                       .retrieveAllUpcomingBooking[
                                                   index],
-                                              bookingId: controller
-                                                  .retrieveAllUpcomingBooking[
-                                                      index]
-                                                  .bookingId,
                                               itemInfos: controller
                                                   .retrieveAllUpcomingBooking[
                                                       index]

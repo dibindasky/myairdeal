@@ -80,7 +80,7 @@ class RaiceTicketController extends GetxController {
   void createRaiceTicket({required RaiceTicket raiceTicket}) async {
     if (descriptionController.text.isEmpty) {
       return;
-    } else if (descriptionController.length < 15) {
+    } else if (descriptionController.length < 10) {
       return;
     }
     isLoading.value = true;
@@ -95,7 +95,7 @@ class RaiceTicketController extends GetxController {
         Get.snackbar('Sucess', 'Ticket Raicing Sucess',
             backgroundColor: kBluePrimary);
         selectedYouCouldAlsoTab.value = 1;
-        // getAllRaisedTickets();
+        descriptionController.clear();
       },
     );
   }

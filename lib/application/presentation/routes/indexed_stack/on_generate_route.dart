@@ -5,7 +5,6 @@ import 'package:myairdeal/application/presentation/screens/account/account_scree
 import 'package:myairdeal/application/presentation/screens/account/profile.dart';
 import 'package:myairdeal/application/presentation/screens/account/notification_setup.dart';
 import 'package:myairdeal/application/presentation/screens/account/secuurity_screen.dart';
-import 'package:myairdeal/application/presentation/screens/home/widgets/coming_soon.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/bookings_screen.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/invoice_detail.dart';
 import 'package:myairdeal/application/presentation/screens/explore/explore_screen.dart';

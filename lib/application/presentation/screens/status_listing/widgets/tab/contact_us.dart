@@ -59,7 +59,7 @@ class RaiceTickets extends StatelessWidget {
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(width: .3),
             ),
-            validate: Validate.notNullAndLength15,
+            validate: Validate.notNullAndLength10,
             onTapOutside: () => FocusScope.of(context).unfocus(),
             fillColor: kGreyLightBackground,
             hintText: 'Description',

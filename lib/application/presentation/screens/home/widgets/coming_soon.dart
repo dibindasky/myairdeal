@@ -13,7 +13,6 @@ class ScreenCommingSoon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<TalkToUsController>();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         Get.find<AuthController>().getUserInfo(true);
@@ -25,11 +24,15 @@ class ScreenCommingSoon extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Obx(() =>
-                DetailAppBar(heading: controller.selectedEnquiryType.value)),
+            GetBuilder<TalkToUsController>(
+              builder: (controller) {
+                return DetailAppBar(
+                    heading: controller.selectedEnquiryType?.value);
+              },
+            ),
             Center(child: Image.asset(image)),
             kHeight15,
-            Text('Comming soon', style: textHeadStyle1),
+            Text('Coming soon', style: textHeadStyle1),
             GetBuilder<AuthController>(builder: (contro) {
               if (contro.isLoading.value) {
                 return SizedBox(
@@ -39,7 +42,8 @@ class ScreenCommingSoon extends StatelessWidget {
                 );
               }
               return Padding(
-                  padding: EdgeInsets.all(10.w), child: const EnquiryBox());
+                  padding: EdgeInsets.all(10.w),
+                  child: const EnquiryBox(fromHome: true));
             }),
             kHeight20,
           ],

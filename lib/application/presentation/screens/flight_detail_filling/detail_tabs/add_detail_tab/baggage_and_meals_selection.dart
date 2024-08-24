@@ -140,11 +140,15 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                         padding: const EdgeInsets.all(17.0),
                         child: Row(
                           children: [
-                            Text(travellerController
-                                    .passengerDetails[travellerIndex]
-                                    ?.getName() ??
-                                ''),
-                            const Spacer(),
+                            Expanded(
+                              child: Text(
+                                  travellerController
+                                          .passengerDetails[travellerIndex]
+                                          ?.getName() ??
+                                      '',
+                                  overflow: TextOverflow.ellipsis),
+                            ),
+                            //const Spacer(),
                             const Icon(Icons.arrow_drop_down_rounded)
                           ],
                         ),
@@ -257,7 +261,6 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                   child: Container(
                                     padding: EdgeInsets.only(left: 10.w),
                                     decoration: BoxDecoration(
-                                        // boxShadow: boxShadow4,
                                         color: kWhite,
                                         border: Border.all(
                                             color:
@@ -401,7 +404,7 @@ class _DropDownSsrInfoState extends State<DropDownSsrInfo> {
       isDense: false,
       isExpanded: true,
       value: value,
-      dropdownColor: kBlueThinLIght,
+      dropdownColor: Get.find<ThemeController>().secondaryLightColor,
       hint: Text(widget.hintText),
       items: widget.ssrList.map((SsrInfo? value) {
         return DropdownMenuItem<SsrInfo?>(

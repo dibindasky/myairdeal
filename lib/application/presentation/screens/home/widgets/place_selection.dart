@@ -142,7 +142,9 @@ class MultiCitySelection extends StatelessWidget {
                     ),
                     texthead: 'To',
                     borderColor:
-                        controller.airportSelected[index][1].city == null
+                        controller.airportSelected[index][1].city == null ||
+                                (controller.airportSelected[index][0].code ==
+                                    controller.airportSelected[index][1].code)
                             ? kRed.withOpacity(.6)
                             : kGrey,
                   ),

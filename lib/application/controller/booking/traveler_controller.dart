@@ -112,11 +112,12 @@ class TravellerController extends GetxController {
     traveller.ssrMealInfos ??= <SsrInfo>[];
     for (int i = 0; i < traveller.ssrMealInfos!.length; i++) {
       if (traveller.ssrMealInfos![i].key == ssrInfo.key) {
-        addOnsprice.value -= ssrInfo.amount ?? 0;
+        // addOnsprice.value -= ssrInfo.amount ?? 0;
         traveller.ssrMealInfos!.removeAt(i);
         break;
       }
     }
+    calcualteAddonPrice();
   }
 
   /// add meals information to the passenger to the traveller in the given index
@@ -125,14 +126,15 @@ class TravellerController extends GetxController {
     traveller.ssrMealInfos ??= <SsrInfo>[];
     for (int i = 0; i < traveller.ssrMealInfos!.length; i++) {
       if (traveller.ssrMealInfos![i].key == ssrInfo.key) {
-        addOnsprice.value -= ssrInfo.amount ?? 0;
+        // addOnsprice.value -= ssrInfo.amount ?? 0;
         traveller.ssrMealInfos!.removeAt(i);
         break;
       }
     }
     traveller.ssrMealInfos!.add(ssrInfo.copyWith(amount: ssrInfo.amount ?? 0));
     passengerDetails[index] = traveller;
-    addOnsprice.value += ssrInfo.amount ?? 0;
+    // addOnsprice.value += ssrInfo.amount ?? 0;
+    calcualteAddonPrice();
   }
 
   /// add Baggage information to the passenger to the traveller in the given index
@@ -141,7 +143,7 @@ class TravellerController extends GetxController {
     traveller.ssrBaggageInfos ??= <SsrInfo>[];
     for (int i = 0; i < traveller.ssrBaggageInfos!.length; i++) {
       if (traveller.ssrBaggageInfos![i].key == ssrInfo.key) {
-        addOnsprice.value -= ssrInfo.amount ?? 0;
+        // addOnsprice.value -= ssrInfo.amount ?? 0;
         traveller.ssrBaggageInfos!.removeAt(i);
         break;
       }
@@ -155,7 +157,8 @@ class TravellerController extends GetxController {
         print(element.toString());
       }
     }
-    addOnsprice.value += ssrInfo.amount ?? 0;
+    // addOnsprice.value += ssrInfo.amount ?? 0;
+    calcualteAddonPrice();
     print('add on price => ${addOnsprice.value}');
   }
 
@@ -164,11 +167,12 @@ class TravellerController extends GetxController {
     traveller.ssrBaggageInfos ??= <SsrInfo>[];
     for (int i = 0; i < traveller.ssrBaggageInfos!.length; i++) {
       if (traveller.ssrBaggageInfos![i].key == ssrInfo.key) {
-        addOnsprice.value -= ssrInfo.amount ?? 0;
+        // addOnsprice.value -= ssrInfo.amount ?? 0;
         traveller.ssrBaggageInfos!.removeAt(i);
         break;
       }
     }
+    calcualteAddonPrice();
   }
 
   /// add seat information to the passenger to the traveller in the given index
@@ -187,42 +191,78 @@ class TravellerController extends GetxController {
         print(element.toString());
       }
     }
+    calcualteAddonPrice();
+  }
+
+  /// get addonPrice
+  double calcualteAddonPrice() {
+    double addOn = 0.0;
+    for (var traveller in passengerDetails) {
+      for (var seat in traveller?.ssrSeatInfos ?? <SsrInfo>[]) {
+        addOn += seat.amount ?? 0;
+      }
+      for (var baggage in traveller?.ssrBaggageInfos ?? <SsrInfo>[]) {
+        addOn += baggage.amount ?? 0;
+      }
+      for (var meal in traveller?.ssrMealInfos ?? <SsrInfo>[]) {
+        addOn += meal.amount ?? 0;
+      }
+    }
+    addOnsprice.value = addOn;
+    return addOn;
   }
 
   /// back button detail filling page
-  void backButtonPaymetPage() {
+  bool backButtonPaymetPage([bool back = false]) {
     // if tab is on first index go back to the prvious route
     if (selectedMainTab.value == 0) {
-      print('back from payment => 1');
       Get.find<HomeController>()
           .changeNavigationChecker(NavigationChecker.search);
-      Get.back();
+      if (back) {
+        Get.back();
+      }
+      return true;
     } // if main tab is on the passenger detail section then check for inner tab
     else if (selectedMainTab.value == 1) {
-      print('back from payment => 2');
       // if inner tab is on the first tab then go back to the previous main tab
       if (selectedAddDetailsStep.value == 0) {
-        print('back from payment => 3');
         selectedMainTab.value = 0;
+        update();
+        return false;
       } // if inner tab is not on the first one, change to previous
       else {
-        print('back from payment => 4');
         selectedAddDetailsStep.value = selectedAddDetailsStep.value - 1;
+        update();
+        return false;
       }
     } // if main tab is not on the first one then go the previous tab
     else {
-      print('back from payment => 5');
       selectedMainTab.value = selectedMainTab.value - 1;
+      update();
+      return false;
     }
-    update();
   }
 
   /// add passenger details to the list to submit while booking
   void addPassengerDetail(int index, TravellerInfo travellerInfo, bool save) {
-    passengerDetails[index] = travellerInfo;
+    if (passengerDetails[index] == null) {
+      passengerDetails[index] = travellerInfo;
+    } else {
+      passengerDetails[index] = passengerDetails[index]!.copyWith(
+        dob: travellerInfo.dob,
+        eD: travellerInfo.eD,
+        fN: travellerInfo.fN,
+        lN: travellerInfo.lN,
+        pNum: travellerInfo.pNum,
+        pid: travellerInfo.pid,
+        pt: travellerInfo.pt,
+        ti: travellerInfo.ti,
+      );
+    }
     if (save) {
       savePassengerDetails(travellerInfo);
     }
+    calcualteAddonPrice();
   }
 
   /// add passengers details to server
@@ -230,13 +270,12 @@ class TravellerController extends GetxController {
     await _passengersRepo.addPassengers(travellerInfo: travellerInfo);
   }
 
-  changeDetailEnterTab(int index, {String? bookingId}) {
+  /// itenary section main tab changing
+  changeDetailEnterTab(
+    int index,
+  ) {
     selectedMainTab.value = index;
     update();
-    // call seats while coming to the passenger details filling screen
-    if (index == 1) {
-      getSeatsAvailable(bookingId: bookingId ?? '');
-    }
     // call for markup price while going to payment section
     if (index == 3) {
       print('get markup call');
@@ -255,8 +294,8 @@ class TravellerController extends GetxController {
     update();
   }
 
+  /// itinary passenger details section tab change
   changeAddDetailsSubStep(int index) {
-    // if (index == 1 || index == 2) return;
     selectedAddDetailsStep.value = index;
     update();
   }
@@ -281,8 +320,6 @@ class TravellerController extends GetxController {
           return;
         }
       }
-      // remove later after adding seat,meal,baggage
-      // changeDetailEnterTab(3);
       selectedAddDetailsStep.value += 1;
       update();
       return;
@@ -291,25 +328,6 @@ class TravellerController extends GetxController {
     } else if (selectedAddDetailsStep.value == 2) {
       selectedAddDetailsStep.value += 1;
       update();
-      // // clear baggage and meals from passenger details
-      // for (var passenger in passengerDetails) {
-      //   if (passenger?.ssrBaggageInfos != null) {
-      //     for (var element in passenger!.ssrBaggageInfos!) {
-      //       addOnsprice.value -= element.amount ?? 0;
-      //     }
-      //   }
-      //   if (passenger?.ssrMealInfos != null) {
-      //     for (var element in passenger!.ssrMealInfos!) {
-      //       addOnsprice.value -= element.amount ?? 0;
-      //     }
-      //   }
-      //   passenger?.ssrBaggageInfos = null;
-      //   passenger?.ssrMealInfos = null;
-      // }
-      // // add baggage and meals to model
-      // for (var passenger in passengerDetails) {
-
-      // }
     } else if (selectedAddDetailsStep.value < totalSubStepLength - 1) {
       selectedAddDetailsStep.value += 1;
       update();
@@ -345,7 +363,7 @@ class TravellerController extends GetxController {
     update();
   }
 
-  // add gst details to the variable
+  /// add gst details to the variable
   void addGstDetails() {
     gstInfo.value = gstInfo.value.copyWith(
         address:
@@ -359,7 +377,7 @@ class TravellerController extends GetxController {
             : gstAddressController.text);
   }
 
-  // Get All passengers
+  /// Get All passengers
   void getAllPassengers(String type, bool dobCheck, bool pcs) async {
     isLoading.value = true;
     final data = await _passengersRepo.getPassengers();
@@ -448,7 +466,7 @@ class TravellerController extends GetxController {
     );
   }
 
-  // select seats for each flights
+  /// select seats for each flights
   void selectSeat({required int passengerIndex, required SInfo seat}) {
     print(seat.toJson());
     if (selectedSeats[selectedSeatFlightKey.value]!.any((element) =>
@@ -479,13 +497,13 @@ class TravellerController extends GetxController {
     }
   }
 
-  // change selected flight using flight id for seat selection
+  /// change selected flight using flight id for seat selection
   void chnageSelectedFlightUsingId(String id) {
     selectedSeatFlightKey.value = id;
     buildSeatUI();
   }
 
-  // change selected flight to next for seat selection
+  /// change selected flight to next for seat selection
   void chnageSelectedFlightToNext() {
     if (keysList.isEmpty) {
       selectedAddDetailsStep.value += 1;
@@ -532,7 +550,7 @@ class TravellerController extends GetxController {
     }
   }
 
-  // build the seats in the ui using the selected flight
+  /// build the seats in the ui using the selected flight
   void buildSeatUI() {
     seatLoader.value = true;
     row.value = seatsAvilable[selectedSeatFlightKey.value]?.sData?.row ?? 0;
@@ -573,13 +591,6 @@ class TravellerController extends GetxController {
             r.tripSeatMap?.tripSeats?[element] ?? <String, dynamic>{});
       }
       if (seatsAvilable.isNotEmpty) {
-        // row.value = seatsAvilable[keysList.first]?.sData?.row ?? 0;
-        // col.value = seatsAvilable[keysList.first]?.sData?.column ?? 0;
-        // seatList = RxList.generate(row.value,
-        //     (i) => List.generate(col.value, (j) => SInfo(freeSpace: true)));
-        // for (SInfo s in seatsAvilable[keysList.first]?.sInfo ?? <SInfo>[]) {
-        //   seatList[s.seatPosition!.row! - 1][s.seatPosition!.column! - 1] = s;
-        // }
         selectedSeatFlightKey.value = keysList.first;
         buildSeatUI();
       }

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
+import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
@@ -237,6 +239,7 @@ class FlightSortController extends GetxController {
     Timer(const Duration(milliseconds: 50), () {
       clearingBool.value = false;
     });
+    validateSearchForm();
   }
 
   // end search timer
@@ -253,7 +256,8 @@ class FlightSortController extends GetxController {
       if (remainingTime.value == (0)) {
         print('timer canceled time ends');
         Get.back(id: 1);
-        if (Get.currentRoute == Routes.bottomBar) {
+        if (Get.currentRoute == Routes.bottomBar &&
+            Get.find<NavBarController>().bottomIndex.value == 0) {
           Get.dialog(
             AlertDialog(
               backgroundColor: kRedLight,
@@ -298,6 +302,7 @@ class FlightSortController extends GetxController {
     multiCityDepartureDate = <DateTime?>[DateTime.now(), DateTime.now()].obs;
     validateSearchForm();
     update();
+    stopSearchTimer();
     clearingBool.value = true;
     Timer(const Duration(seconds: 1), () {
       clearingBool.value = false;

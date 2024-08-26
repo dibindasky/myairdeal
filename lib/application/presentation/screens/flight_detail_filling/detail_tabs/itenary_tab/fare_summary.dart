@@ -217,83 +217,24 @@ class FareSummary extends StatelessWidget {
                         ),
                       ],
                     ),
-                    children: List.generate(
-                      4,
-                      (index) => (index == 2 &&
-                                  controller
-                                          .reviewedDetail
-                                          ?.value
-                                          .totalPriceInfo
-                                          ?.totalFareDetail
-                                          ?.afC
-                                          ?.taf
-                                          ?.yr ==
-                                      null) ||
-                              (index == 3 &&
-                                  controller
-                                          .reviewedDetail
-                                          ?.value
-                                          .totalPriceInfo
-                                          ?.totalFareDetail
-                                          ?.afC
-                                          ?.taf
-                                          ?.yq ==
-                                      null)
-                          ? kEmpty
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      index == 0
-                                          ? 'Airline GST'
-                                          : index == 1
-                                              ? 'Other Taxes'
-                                              : index == 3
-                                                  ? 'YQ'
-                                                  : 'YR',
-                                      style: textThinStyle1.copyWith(
-                                        color: kBlack,
-                                        fontSize: 12.sp,
-                                      ),
-                                    ),
-                                    kHeight5,
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      index == 0
-                                          ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst?.toDouble() ?? '--'}'
-                                          : index == 1
-                                              ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot?.toDouble() ?? '--'}'
-                                              : controller
-                                                          .reviewedDetail
-                                                          ?.value
-                                                          .totalPriceInfo
-                                                          ?.totalFareDetail
-                                                          ?.afC
-                                                          ?.taf
-                                                          ?.yq
-                                                          ?.toDouble() !=
-                                                      null
-                                                  ? '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq?.toDouble() ?? '--'}'
-                                                  : '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr?.toDouble() ?? '--'}',
-                                      style: textThinStyle1.copyWith(
-                                        color: kBlack,
-                                        fontSize: 12.sp,
-                                      ),
-                                    ),
-                                    kHeight5,
-                                  ],
-                                ),
-                              ],
-                            ),
-                    ),
-                  ),
+                    children: [
+                        TaxAndFeeHelper(
+                            title: 'Airline GST',
+                            value:
+                                '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst?.toDouble() ?? '--'}'),
+                        TaxAndFeeHelper(
+                            title: 'Other Taxes',
+                            value:
+                                '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot?.toDouble() ?? '--'}'),
+                        TaxAndFeeHelper(
+                            title: 'YR',
+                            value:
+                                '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr?.toDouble() ?? '--'}'),
+                        TaxAndFeeHelper(
+                            title: 'YQ',
+                            value:
+                                '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq?.toDouble() ?? '--'}'),
+                      ]),
             paymentPage
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -327,25 +268,19 @@ class FareSummary extends StatelessWidget {
                 ),
                 paymentPage
                     ? Obx(() {
-                        print(
-                            'convience free = > ${controller.markupPrice.value}');
-                        print(
-                            'addons free = > ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf}');
-                        print(
-                            'add on free = > ${travellerController.addOnsprice.value}');
-                        print(
-                            'total fee => ${(controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0 + travellerController.addOnsprice.value + controller.markupPrice.value).toDouble()}');
                         return Text(
-                          '₹ ${(controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : (controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0).toDouble() + travellerController.addOnsprice.value + controller.markupPrice.value)}',
+                          '₹ ${(controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : (((controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0).toDouble()) + (travellerController.addOnsprice.value.toDouble()) + (controller.markupPrice.value.toDouble())))}',
                           style: textThinStyle1.copyWith(
                               fontSize: 14.sp, fontWeight: FontWeight.w700),
                         );
                       })
-                    : Text(
-                        '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf?.toDouble() ?? 0 + travellerController.addOnsprice.value.toDouble()}',
-                        style: textThinStyle1.copyWith(
-                            fontSize: 14.sp, fontWeight: FontWeight.w700),
-                      ),
+                    : Obx(() {
+                        return Text(
+                          '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : ((controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf?.toDouble() ?? 0) + (travellerController.addOnsprice.value.toDouble()))}',
+                          style: textThinStyle1.copyWith(
+                              fontSize: 14.sp, fontWeight: FontWeight.w700),
+                        );
+                      }),
               ],
             ),
             paymentPage
@@ -419,9 +354,11 @@ class FareSummary extends StatelessWidget {
                                         : 'Continue',
                                 onTap: () {
                                   Get.find<TravellerController>()
-                                      .changeDetailEnterTab(1,
-                                          bookingId: controller
-                                              .reviewedDetail?.value.bookingId);
+                                      .changeDetailEnterTab(
+                                    1,
+                                    // bookingId: controller
+                                    //     .reviewedDetail?.value.bookingId
+                                  );
                                 },
                               ),
                             ),
@@ -432,5 +369,53 @@ class FareSummary extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class TaxAndFeeHelper extends StatelessWidget {
+  const TaxAndFeeHelper({
+    super.key,
+    required this.title,
+    required this.value,
+  });
+
+  final String title;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return value == '--'
+        ? kEmpty
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: textThinStyle1.copyWith(
+                      color: kBlack,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                  kHeight5,
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    value,
+                    style: textThinStyle1.copyWith(
+                      color: kBlack,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                  kHeight5,
+                ],
+              ),
+            ],
+          );
   }
 }

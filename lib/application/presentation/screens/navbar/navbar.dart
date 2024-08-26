@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
 import 'package:myairdeal/application/presentation/routes/indexed_stack/on_generate_route.dart';
@@ -35,27 +37,32 @@ class _ScreenNavbarState extends State<ScreenNavbar> {
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    if (ModalRoute.of(context)?.isCurrent != true) {
-      return false; // Not the active route, don't handle the back button
-    }
     if (Get.find<HomeController>().navigationCheck == NavigationChecker.home) {
-      // Custom back button logic here
-      print('custom back button => $stopDefaultButtonEvent');
       if (Get.find<NavBarController>().bottomIndex.value != 0) {
-        print('custom back button => first');
         Get.find<NavBarController>().chageIndex(0);
         return true;
       } else {
-        print('custom back button => second');
-        print('indexed stack => ${isNotLastRouteInNestedStack(1)}');
         if (isNotLastRouteInNestedStack(1)) {
           Get.back(id: 1);
           return true;
         }
       }
-      print('custom back button => third');
-      Get.back();
+      // Get.back();
       return false;
+    } else if (Get.find<HomeController>().navigationCheck ==
+        NavigationChecker.search) {
+      Get.find<FlightSortController>().stopSearchTimer();
+      Get.back(id: 1);
+      Get.find<HomeController>()
+          .changeNavigationChecker(NavigationChecker.home);
+    } else if (Get.find<HomeController>().navigationCheck ==
+        NavigationChecker.itinary) {
+      final goback = Get.find<TravellerController>().backButtonPaymetPage();
+      if (goback) {
+        Get.find<HomeController>()
+            .changeNavigationChecker(NavigationChecker.search);
+        return false;
+      }
     }
     return true;
   }

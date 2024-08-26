@@ -1,4 +1,3 @@
-import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
@@ -25,22 +24,22 @@ class _ScreenFlightDetailState extends State<ScreenFlightDetail> {
   @override
   void initState() {
     super.initState();
-    BackButtonInterceptor.add(myInterceptor);
+    // BackButtonInterceptor.add(myInterceptor);
     Get.find<HomeController>()
         .changeNavigationChecker(NavigationChecker.itinary);
   }
 
-  @override
-  void dispose() {
-    BackButtonInterceptor.remove(myInterceptor);
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   BackButtonInterceptor.remove(myInterceptor);
+  //   super.dispose();
+  // }
 
-  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    // Custom back button logic here
-    Get.find<TravellerController>().backButtonPaymetPage();
-    return false; // Prevent the default back button action
-  }
+  // bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+  //   // Custom back button logic here
+  //   Get.find<TravellerController>().backButtonPaymetPage();
+  //   return false; // Prevent the default back button action
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,7 @@ class _ScreenFlightDetailState extends State<ScreenFlightDetail> {
                     .detailList[travelController.selectedMainTab.value],
                 backButton: true,
                 backOntap: () {
-                  travelController.backButtonPaymetPage();
+                  travelController.backButtonPaymetPage(true);
                 },
                 action: bookingController.bookingLoading.value
                     ? kEmpty

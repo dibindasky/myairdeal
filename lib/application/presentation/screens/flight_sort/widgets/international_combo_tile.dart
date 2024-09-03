@@ -77,14 +77,19 @@ class InternationalMutliComboTile extends StatelessWidget {
                                       .sI![0].da?.name ??
                                   '',
                               from: 'Departure',
-                              time: DateFormating.formatTime(controller
+                              date: DateFormating.formatDateMonthYear(controller
                                       .comboList[index][jIndex].sI![0].dt ??
                                   ''),
                             ),
                             NormalCenterItems(
                                 haveImage: false,
+                                airlineCodes: controller
+                                    .comboList[index][jIndex].sI!
+                                    .map((e) => e.fD?.aI?.code ?? '')
+                                    .toList(),
                                 stops: controller
-                                    .comboList[index][jIndex].sI!.length),
+                                        .comboList[index][jIndex].sI!.length -
+                                    1),
                             CardSideItems(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               place: controller
@@ -104,7 +109,7 @@ class InternationalMutliComboTile extends StatelessWidget {
                                       ?.name ??
                                   '',
                               from: 'Arrival',
-                              time: DateFormating.formatTime(controller
+                              date: DateFormating.formatDateMonthYear(controller
                                       .comboList[index][jIndex]
                                       .sI![controller.comboList[index][jIndex]
                                               .sI!.length -

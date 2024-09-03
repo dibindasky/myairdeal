@@ -187,7 +187,7 @@ class SelectSeatContainer extends StatelessWidget {
                                                                               height: 5.h,
                                                                               decoration: BoxDecoration(
                                                                                 color: themeController.primaryColor,
-                                                                                borderRadius: BorderRadius.only(
+                                                                                borderRadius: const BorderRadius.only(
                                                                                   topLeft: Radius.circular(4),
                                                                                   topRight: Radius.circular(4),
                                                                                 ),
@@ -409,7 +409,7 @@ class SeatDemoViewer extends StatelessWidget {
                 height: 12.h,
                 decoration: BoxDecoration(
                   color: themeController.primaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(2)),
+                  borderRadius: const BorderRadius.all(Radius.circular(2)),
                 ),
               ),
               kWidth5,

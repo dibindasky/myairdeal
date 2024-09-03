@@ -199,19 +199,21 @@ class BottomMiniContainer extends StatelessWidget {
                                     onTap: share ?? () {},
                                   ),
                                   kWidth10,
-                                  EventButton(
-                                    fontSize: 10.sp,
-                                    width: 80.w,
-                                    hieght: 25.h,
-                                    borderRadius: 29,
-                                    color: kIndigo,
-                                    text: 'Download',
-                                    onTap: () {
-                                      Get.find<RaiceTicketController>()
-                                          .ivoiceDownLoad(
-                                              bookingID: bookingId ?? '');
-                                    },
-                                  )
+                                  Obx(() {
+                                    return EventButton(
+                                      fontSize: 10.sp,
+                                      width: 80.w,
+                                      hieght: 25.h,
+                                      borderRadius: 29,
+                                      color: themeController.secondaryColor,
+                                      text: 'Download',
+                                      onTap: () {
+                                        Get.find<RaiceTicketController>()
+                                            .ivoiceDownLoad(
+                                                bookingID: bookingId ?? '');
+                                      },
+                                    );
+                                  })
                                 ],
                               )
                             : kEmpty,

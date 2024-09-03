@@ -5,17 +5,17 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/network_image_loader.dart';
 
 class NormalCenterItems extends StatelessWidget {
-  const NormalCenterItems({
-    super.key,
-    this.haveImage = true,
-    this.airline,
-    this.flightId,
-    this.date,
-    this.number,
-    this.travelMinutes = '',
-    this.airlineCode,
-    this.stops = 1,
-  });
+  const NormalCenterItems(
+      {super.key,
+      this.haveImage = true,
+      this.airline,
+      this.flightId,
+      this.date,
+      this.number,
+      this.travelMinutes = '',
+      this.airlineCode,
+      this.stops = 1,
+      this.airlineCodes = const []});
 
   final bool haveImage;
   final String? airline;
@@ -25,18 +25,29 @@ class NormalCenterItems extends StatelessWidget {
   final String? flightId;
   final String? number;
   final String? airlineCode;
+  final List<String> airlineCodes;
 
   @override
   Widget build(BuildContext context) {
+    final images = {...airlineCodes}.toList();
     return Column(
       children: [
         kHeight5,
-        airlineCode != null
-            ? NetworkImageWithLoading(
-                imageUrl: getAirlineLogo(airlineCode!), height: 20)
-            : haveImage
-                ? Image.asset(flightDetailIcon, height: 20.h)
-                : kEmpty,
+        airlineCodes.isNotEmpty
+            ? Row(
+              mainAxisSize: MainAxisSize.min,
+                children: List.generate(
+                    images.length,
+                    (index) => NetworkImageWithLoading(
+                        imageUrl: getAirlineLogo(images[index]), height: 17)),
+              )
+            : 
+            airlineCode != null
+                ? NetworkImageWithLoading(
+                    imageUrl: getAirlineLogo(airlineCode!), height: 20)
+                : haveImage
+                    ? Image.asset(flightDetailIcon, height: 20.h)
+                    : kEmpty,
         kHeight5,
         Text(
           '${airline ?? ''}${flightId ?? ''}',

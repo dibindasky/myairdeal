@@ -127,7 +127,7 @@ class ReveiewTab extends StatelessWidget {
                                       ?.length ??
                                   0,
                               (tripIndex) => Column(
-                                children: List.generate(
+                                children: [kHeight5,...List.generate(
                                   bookingController.reviewedDetail?.value
                                           .tripInfos?[tripIndex].sI?.length ??
                                       0,
@@ -238,6 +238,7 @@ class ReveiewTab extends StatelessWidget {
                                     );
                                   },
                                 ),
+                          ]
                               ),
                             )
                           ],

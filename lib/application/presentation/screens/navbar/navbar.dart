@@ -37,7 +37,9 @@ class _ScreenNavbarState extends State<ScreenNavbar> {
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    // if current page is home page
     if (Get.find<HomeController>().navigationCheck == NavigationChecker.home) {
+      // check for bottom bar index
       if (Get.find<NavBarController>().bottomIndex.value != 0) {
         Get.find<NavBarController>().chageIndex(0);
         return true;
@@ -49,13 +51,17 @@ class _ScreenNavbarState extends State<ScreenNavbar> {
       }
       // Get.back();
       return false;
-    } else if (Get.find<HomeController>().navigationCheck ==
+    }
+    // when the call come from search page
+     else if (Get.find<HomeController>().navigationCheck ==
         NavigationChecker.search) {
       Get.find<FlightSortController>().stopSearchTimer();
       Get.back(id: 1);
       Get.find<HomeController>()
           .changeNavigationChecker(NavigationChecker.home);
-    } else if (Get.find<HomeController>().navigationCheck ==
+    } 
+    // if call is from itinary booking section
+    else if (Get.find<HomeController>().navigationCheck ==
         NavigationChecker.itinary) {
       final goback = Get.find<TravellerController>().backButtonPaymetPage();
       if (goback) {

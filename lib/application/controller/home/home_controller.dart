@@ -7,7 +7,7 @@ import 'package:myairdeal/domain/models/search/city_search_model/city_search_mod
 import 'package:myairdeal/domain/models/search/recent_detail_search/recent_detail_search_item.dart';
 import 'package:myairdeal/domain/repository/service/home_repo.dart';
 
-enum NavigationChecker { home, search, itinary , airport}
+enum NavigationChecker { home, search, itinary , ticket, airport}
 
 class HomeController extends GetxController {
   final HomeRepo homeService = HomeService();

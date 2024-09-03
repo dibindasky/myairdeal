@@ -10,7 +10,8 @@ class CardSideItems extends StatelessWidget {
     required this.place,
     required this.airPort,
     required this.from,
-    required this.time,
+    this.time,
+    this.date,
     this.cabinClass,
     this.crossAxisAlignment = CrossAxisAlignment.start,
   });
@@ -18,7 +19,8 @@ class CardSideItems extends StatelessWidget {
   final String place;
   final String airPort;
   final String from;
-  final String time;
+  final String? time;
+  final String? date;
   final CrossAxisAlignment crossAxisAlignment;
   final String? cabinClass;
 
@@ -54,15 +56,27 @@ class CardSideItems extends StatelessWidget {
             ),
           ),
           kHeight5,
-          Text(
-            time,
-            style: textThinStyle1.copyWith(
-              color: kBlack,
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w800,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
+          date == null
+              ? kEmpty
+              : Text(
+                  date ?? '',
+                  style: textThinStyle1.copyWith(
+                    color: kBlack,
+                    fontSize: 9.sp,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+          time == null
+              ? kEmpty
+              : Text(
+                  time ?? '',
+                  style: textThinStyle1.copyWith(
+                    color: kBlack,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w800,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
           cabinClass != null
               ? Text(
                   cabinClass!,

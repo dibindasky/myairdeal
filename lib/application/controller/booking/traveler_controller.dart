@@ -517,14 +517,14 @@ class TravellerController extends GetxController {
       selectedAddDetailsStep.value += 1;
       update();
       // clear seatinfo from passenger details
-      for (var passenger in passengerDetails) {
-        if (passenger?.ssrBaggageInfos != null) {
-          for (var element in passenger!.ssrBaggageInfos!) {
-            addOnsprice.value -= element.amount ?? 0;
-          }
-        }
-        passenger?.ssrSeatInfos = null;
-      }
+      // for (var passenger in passengerDetails) {
+      //   if (passenger?.ssrBaggageInfos != null) {
+      //     for (var element in passenger!.ssrBaggageInfos!) {
+      //       addOnsprice.value -= element.amount ?? 0;
+      //     }
+      //   }
+      //   passenger?.ssrSeatInfos = null;
+      // }
       // add selected seats to passengers
       print('seat added to passenger');
       for (int i = 0; i < passengerLengthWithoutInfant.value; i++) {

@@ -189,7 +189,7 @@ class MultiCitySelection extends StatelessWidget {
                     ),
                     mainAxisAlignment: MainAxisAlignment.center,
                     first: kEmpty,
-                    spacer: kWidth10,
+                    spacer: kWidth5,
                     second: Expanded(
                       child: Text(
                           DateFormating.getDate(

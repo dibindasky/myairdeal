@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
 import 'package:myairdeal/application/presentation/utils/animations/splash_animation.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -12,8 +13,26 @@ import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shim
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/flight_invoice.dart';
 
-class ScreenSuccessPage extends StatelessWidget {
+class ScreenSuccessPage extends StatefulWidget {
   const ScreenSuccessPage({super.key});
+
+  @override
+  State<ScreenSuccessPage> createState() => _ScreenSuccessPageState();
+}
+
+class _ScreenSuccessPageState extends State<ScreenSuccessPage> {
+  @override
+  void initState() {
+    Get.find<HomeController>()
+        .changeNavigationChecker(NavigationChecker.bookingSuccess);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    Get.find<HomeController>().changeNavigationChecker(NavigationChecker.home);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,13 +161,7 @@ class ScreenSuccessPage extends StatelessWidget {
                                       fontSize: 13.sp, color: kWhite),
                                   text: 'Back To Home',
                                   onTap: () {
-                                    controller.clearDataAfterBooking();
-                                    Get.find<TravellerController>()
-                                        .clearDataAfterBooking();
-                                    Get.find<FlightSortController>()
-                                        .clearDataAfterBooking();
-                                    controller.getAllUpcomingBooking(true);
-                                    Get.back();
+                                    backToHome(controller);
                                   },
                                 ),
                                 EventButton(
@@ -156,13 +169,7 @@ class ScreenSuccessPage extends StatelessWidget {
                                       fontSize: 13.sp, color: kWhite),
                                   text: 'Download Ticket',
                                   onTap: () {
-                                    controller.clearDataAfterBooking();
-                                    Get.find<TravellerController>()
-                                        .clearDataAfterBooking();
-                                    Get.find<FlightSortController>()
-                                        .clearDataAfterBooking();
-                                    controller.getAllUpcomingBooking(true);
-                                    Get.back();
+                                    backToHome(controller);
                                     Get.find<RaiceTicketController>().ivoiceDownLoad(
                                         bookingID: controller
                                                 .retrieveSingleBookingresponceModel
@@ -185,5 +192,14 @@ class ScreenSuccessPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void backToHome(BookingController controller) {
+    controller.clearDataAfterBooking();
+    Get.find<TravellerController>().clearDataAfterBooking();
+    Get.find<FlightSortController>().clearDataAfterBooking();
+    controller.getAllUpcomingBooking(true);
+    Get.back();
+    Get.find<HomeController>().changeNavigationChecker(NavigationChecker.home);
   }
 }

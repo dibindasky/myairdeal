@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
@@ -12,6 +13,7 @@ class StopsSortBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+    final themeController = Get.find<ThemeController>();
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -103,15 +105,18 @@ class StopsSortBottomSheet extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    EventButton(
-                      isBorder: true,
-                      text: 'Reset',
-                      onTap: () {
-                        controller.resetStops();
-                      },
-                      color: kWhite,
-                      borderColor: kBlack,
-                      textColr: kBluePrimary,
+                    Obx( () {
+                        return EventButton(
+                          isBorder: true,
+                          text: 'Reset',
+                          onTap: () {
+                            controller.resetStops();
+                          },
+                          color: kWhite,
+                          borderColor: kBlack,
+                          textColr: themeController.primaryColor,
+                        );
+                      }
                     ),
                     kWidth10,
                     EventButton(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
@@ -14,6 +15,7 @@ class FlightTimesBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+    final themeController = Get.find<ThemeController>();
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -48,7 +50,8 @@ class FlightTimesBottomSheet extends StatelessWidget {
                     kHeight10,
                     Text(
                         'Departs From ${controller.airportSelected[controller.selectedTripListIndex.value][0].city ?? ''}',
-                        style: textStyle1.copyWith(color: kBluePrimary)),
+                        style: textStyle1.copyWith(
+                            color: themeController.secondaryColor)),
                     kHeight5,
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
@@ -83,7 +86,7 @@ class FlightTimesBottomSheet extends StatelessWidget {
                                   controller.selectDepartureTime(
                                       controller.departureTimes[index]);
                                 },
-                                activeColor: kBluePrimary,
+                                activeColor: themeController.primaryColor,
                               );
                             })
                           ],
@@ -93,7 +96,8 @@ class FlightTimesBottomSheet extends StatelessWidget {
                     kHeight5,
                     Text(
                         'Arrives to ${controller.airportSelected[controller.selectedTripListIndex.value][1].city ?? ''}',
-                        style: textStyle1.copyWith(color: kBluePrimary)),
+                        style: textStyle1.copyWith(
+                            color: themeController.secondaryColor)),
                     kHeight5,
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
@@ -128,7 +132,7 @@ class FlightTimesBottomSheet extends StatelessWidget {
                                   controller.selectArrivalTime(
                                       controller.arrivesTimes[index]);
                                 },
-                                activeColor: kBluePrimary,
+                                activeColor: themeController.primaryColor,
                               );
                             })
                           ],

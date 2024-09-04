@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/debouncer/debouncer.dart';
@@ -22,6 +23,7 @@ class _PriceSortBottomSheetState extends State<PriceSortBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+    final themeController = Get.find<ThemeController>();
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -65,7 +67,7 @@ class _PriceSortBottomSheetState extends State<PriceSortBottomSheet> {
                     value: true,
                     groupValue: true,
                     onChanged: (value) {},
-                    activeColor: kBluePrimary)
+                    activeColor: themeController.primaryColor)
               ],
             ),
             kHeight5,
@@ -93,7 +95,7 @@ class _PriceSortBottomSheetState extends State<PriceSortBottomSheet> {
                   controller.sortPrice(value);
                   // });
                 },
-                activeColor: kBluePrimary,
+                activeColor: themeController.primaryColor,
                 inactiveColor: kGreyLight),
             kHeight5,
             Row(
@@ -113,7 +115,7 @@ class _PriceSortBottomSheetState extends State<PriceSortBottomSheet> {
                     },
                     color: kWhite,
                     borderColor: kBlack,
-                    textColr: kBluePrimary),
+                    textColr: themeController.primaryColor),
                 kWidth10,
                 EventButton(
                     text: 'Done',

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/ticket_cancel_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
@@ -18,8 +19,26 @@ import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
 import 'package:myairdeal/domain/models/booking/ticket_cancel/amendment_details_request_model/amendment_details_request_model.dart';
 
-class ScreenInvoiceDetail extends StatelessWidget {
+class ScreenInvoiceDetail extends StatefulWidget {
   const ScreenInvoiceDetail({super.key});
+
+  @override
+  State<ScreenInvoiceDetail> createState() => _ScreenInvoiceDetailState();
+}
+
+class _ScreenInvoiceDetailState extends State<ScreenInvoiceDetail> {
+  @override
+  void initState() {
+    Get.find<HomeController>()
+        .changeNavigationChecker(NavigationChecker.ticket);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    Get.find<HomeController>().changeNavigationChecker(NavigationChecker.home);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

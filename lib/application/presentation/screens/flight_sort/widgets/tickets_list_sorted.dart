@@ -25,7 +25,7 @@ class TicketsListSorted extends StatelessWidget {
           ],
         ));
       }
-      return ListView.separated(
+      return ListView.separated( 
         key: Key(controller.selectedTripListIndex.value.toString()),
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,

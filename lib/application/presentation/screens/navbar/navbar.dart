@@ -53,13 +53,13 @@ class _ScreenNavbarState extends State<ScreenNavbar> {
       return false;
     }
     // when the call come from search page
-     else if (Get.find<HomeController>().navigationCheck ==
+    else if (Get.find<HomeController>().navigationCheck ==
         NavigationChecker.search) {
       Get.find<FlightSortController>().stopSearchTimer();
       Get.back(id: 1);
       Get.find<HomeController>()
           .changeNavigationChecker(NavigationChecker.home);
-    } 
+    }
     // if call is from itinary booking section
     else if (Get.find<HomeController>().navigationCheck ==
         NavigationChecker.itinary) {
@@ -69,6 +69,20 @@ class _ScreenNavbarState extends State<ScreenNavbar> {
             .changeNavigationChecker(NavigationChecker.search);
         return false;
       }
+    } // if call come from ticket invoice page
+    else if (Get.find<HomeController>().navigationCheck ==
+        NavigationChecker.ticket) {
+      Get.back();
+    } // if call from booking success page
+    else if (Get.find<HomeController>().navigationCheck ==
+        NavigationChecker.bookingSuccess) {
+      Get.find<BookingController>().clearDataAfterBooking();
+      Get.find<TravellerController>().clearDataAfterBooking();
+      Get.find<FlightSortController>().clearDataAfterBooking();
+      Get.find<BookingController>().getAllUpcomingBooking(true);
+      Get.back();
+      Get.find<HomeController>()
+          .changeNavigationChecker(NavigationChecker.home);
     }
     return true;
   }

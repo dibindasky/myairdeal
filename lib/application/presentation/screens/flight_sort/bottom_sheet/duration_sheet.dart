@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/debouncer/debouncer.dart';
@@ -23,6 +24,7 @@ class _DurationBottomSheetState extends State<DurationBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<FlightSortController>();
+    final themeController = Get.find<ThemeController>();
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -66,7 +68,7 @@ class _DurationBottomSheetState extends State<DurationBottomSheet> {
                     value: true,
                     groupValue: true,
                     onChanged: (value) {},
-                    activeColor: kBluePrimary)
+                    activeColor: themeController.primaryColor)
               ],
             ),
             kHeight5,
@@ -95,7 +97,7 @@ class _DurationBottomSheetState extends State<DurationBottomSheet> {
                   controller.changeDurationSlider(value);
                   // });
                 },
-                activeColor: kBluePrimary,
+                activeColor: themeController.primaryColor,
                 inactiveColor: kGreyLight),
             kHeight5,
             Row(
@@ -116,7 +118,7 @@ class _DurationBottomSheetState extends State<DurationBottomSheet> {
                     },
                     color: kWhite,
                     borderColor: kBlack,
-                    textColr: kBluePrimary),
+                    textColr: themeController.primaryColor),
                 kWidth10,
                 EventButton(
                     text: 'Done',

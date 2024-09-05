@@ -256,6 +256,27 @@ class FareSummary extends StatelessWidget {
                     ],
                   )
                 : kEmpty,
+            paymentPage
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Promo Price',
+                        style: textThinStyle1.copyWith(
+                          color: kBlack,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                      Text(
+                        '- ₹ ${controller.promoResponse.value.value ?? 0}',
+                        style: textThinStyle1.copyWith(
+                          color: kBlack,
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                    ],
+                  )
+                : kEmpty,
             const DottedLines(height: 10),
             kHeight15,
             Row(
@@ -268,10 +289,28 @@ class FareSummary extends StatelessWidget {
                 ),
                 paymentPage
                     ? Obx(() {
-                        return Text(
-                          '₹ ${(controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : (((controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0).toDouble()) + (travellerController.addOnsprice.value.toDouble()) + (controller.markupPrice.value.toDouble())))}',
-                          style: textThinStyle1.copyWith(
-                              fontSize: 14.sp, fontWeight: FontWeight.w700),
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            controller.promoResponse.value.value == null
+                                ? kEmpty
+                                : Text(
+                                    '₹ ${(controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : (((controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0).toDouble()) + (travellerController.addOnsprice.value.toDouble()) + (controller.markupPrice.value.toDouble())))}',
+                                    style: textThinStyle1.copyWith(
+                                        decoration: TextDecoration.lineThrough,
+                                        decorationThickness: 2.5,
+                                        decorationColor: kGreyDark,
+                                        color: kGreyDark,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                            Text(
+                              '₹ ${(controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : (((controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0).toDouble()) + (travellerController.addOnsprice.value.toDouble()) + (controller.markupPrice.value.toDouble()) - (controller.promoResponse.value.value ?? 0)))}',
+                              style: textThinStyle1.copyWith(
+                                  fontSize: 14.sp, fontWeight: FontWeight.w700),
+                            ),
+                          ],
                         );
                       })
                     : Obx(() {

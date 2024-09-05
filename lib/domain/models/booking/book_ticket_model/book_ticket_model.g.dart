@@ -25,4 +25,11 @@ Map<String, dynamic> _$BookTicketModelToJson(BookTicketModel instance) =>
       'payment': instance.payment,
       'booking': instance.booking,
       'searchQuery': instance.searchQuery,
+      'promo': instance.promo,
+    };
+
+Map<String, dynamic> _$BookTicketModelToJsonHold(BookTicketModel instance) =>
+    <String, dynamic>{
+      'booking': instance.booking,
+      'searchQuery': instance.searchQuery,
     };

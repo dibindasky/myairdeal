@@ -63,7 +63,7 @@ class NotificationController extends GetxController {
 
   void getNotificationNext() async {
     notificationNext.value = true;
-    //nextNotification++;
+
     update();
     final data = await notificationService.getNotificationNext(
         pageQuery: PageQuery(pageSize: nextNotification += 10));

@@ -218,29 +218,30 @@ class FareSummary extends StatelessWidget {
                       ],
                     ),
                     children: [
-                        TaxAndFeeHelper(
-                            title: 'Airline GST',
-                            value:
-                                '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst?.toDouble() ?? '--'}'),
-                        TaxAndFeeHelper(
-                            title: 'Other Taxes',
-                            value:
-                                '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot?.toDouble() ?? '--'}'),
-                        TaxAndFeeHelper(
-                            title: 'YR',
-                            value:
-                                '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr?.toDouble() ?? '--'}'),
-                        TaxAndFeeHelper(
-                            title: 'YQ',
-                            value:
-                                '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq?.toDouble() ?? '--'}'),
-                      ]),
+                      TaxAndFeeHelper(
+                          title: 'Airline GST',
+                          value:
+                              '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst?.toDouble() ?? '--'}'),
+                      TaxAndFeeHelper(
+                          title: 'Other Taxes',
+                          value:
+                              '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot?.toDouble() ?? '--'}'),
+                      TaxAndFeeHelper(
+                          title: 'YR',
+                          value:
+                              '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr?.toDouble() ?? '--'}'),
+                      TaxAndFeeHelper(
+                          title: 'YQ',
+                          value:
+                              '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq?.toDouble() ?? '--'}'),
+                    ],
+                  ),
             paymentPage
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Convenience fee',
+                        'Convenience Fee',
                         style: textThinStyle1.copyWith(
                           color: kBlack,
                           fontSize: 12.sp,
@@ -416,10 +417,12 @@ class TaxAndFeeHelper extends StatelessWidget {
     super.key,
     required this.title,
     required this.value,
+    this.style,
   });
 
   final String title;
   final String value;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -433,10 +436,11 @@ class TaxAndFeeHelper extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: textThinStyle1.copyWith(
-                      color: kBlack,
-                      fontSize: 12.sp,
-                    ),
+                    style: style ??
+                        textThinStyle1.copyWith(
+                          color: kBlack,
+                          fontSize: 12.sp,
+                        ),
                   ),
                   kHeight5,
                 ],
@@ -446,10 +450,11 @@ class TaxAndFeeHelper extends StatelessWidget {
                 children: [
                   Text(
                     value,
-                    style: textThinStyle1.copyWith(
-                      color: kBlack,
-                      fontSize: 12.sp,
-                    ),
+                    style: style ??
+                        textThinStyle1.copyWith(
+                          color: kBlack,
+                          fontSize: 12.sp,
+                        ),
                   ),
                   kHeight5,
                 ],

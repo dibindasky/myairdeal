@@ -22,11 +22,11 @@ class ScreenNotification extends StatefulWidget {
 
 class _ScreenNotificationState extends State<ScreenNotification> {
   final ScrollController scrollController = ScrollController();
-  final notificationController = Get.find<NotificationController>();
 
   @override
   void initState() {
     scrollController.addListener(() {
+      final notificationController = Get.find<NotificationController>();
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         notificationController.getNotificationNext();
@@ -38,6 +38,7 @@ class _ScreenNotificationState extends State<ScreenNotification> {
   @override
   Widget build(BuildContext context) {
     final themeController = Get.find<ThemeController>();
+    final notificationController = Get.find<NotificationController>();
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         notificationController.getNotification();
@@ -92,122 +93,148 @@ class _ScreenNotificationState extends State<ScreenNotification> {
             //  Divider(endIndent: 20.w, indent: 20.w),
             kHeight10,
             Expanded(
-              child: GetBuilder<NotificationController>(builder: (contxt) {
-                if (notificationController.notificationLoading.value) {
-                  return const Center(
-                      child: CircularProgressIndicator(color: kBluePrimary));
-                }
-                if (notificationController.notificationList == null) {
-                  return SizedBox(
-                    height: 250.h,
-                    child: Center(
-                      child: Text(notificationController
+              child: GestureDetector(
+                onHorizontalDragEnd: (details) {
+                  if (details.primaryVelocity! > 0) {
+                    // Swiped right
+                    if (notificationController.notificationIndex.value == 2) {
+                      notificationController.changeNotificationType(1);
+                    } else if (notificationController.notificationIndex.value ==
+                        1) {
+                      notificationController.changeNotificationType(0);
+                    }
+                  } else if (details.primaryVelocity! < 0) {
+                    // Swiped left
+                    if (notificationController.notificationIndex.value == 0) {
+                      notificationController.changeNotificationType(1);
+                    } else if (notificationController.notificationIndex.value ==
+                        1) {
+                      notificationController.changeNotificationType(2);
+                    }
+                  }
+                },
+                child: GetBuilder<NotificationController>(builder: (contxt) {
+                  if (notificationController.notificationLoading.value) {
+                    return const Center(
+                        child: CircularProgressIndicator(color: kBluePrimary));
+                  }
+                  if (notificationController.notificationList == null) {
+                    return SizedBox(
+                      height: 250.h,
+                      child: Center(
+                        child: Text(
+                            notificationController.notificationIndex.value == 0
+                                ? 'No Notifications'
+                                : notificationController
+                                            .notificationIndex.value ==
+                                        1
+                                    ? 'No Unread Notifications'
+                                    : 'No Read Notifications'),
+                      ),
+                    );
+                  } else if (notificationController.notificationList!.isEmpty) {
+                    return ErrorRefreshIndicator(
+                      image: nodata,
+                      errorMessage: notificationController
                                   .notificationIndex.value ==
                               0
                           ? 'No Notifications'
                           : notificationController.notificationIndex.value == 1
                               ? 'No Unread Notifications'
-                              : 'No Read Notifications'),
-                    ),
-                  );
-                } else if (notificationController.notificationList!.isEmpty) {
-                  return ErrorRefreshIndicator(
-                    errorMessage: notificationController
-                                .notificationIndex.value ==
-                            0
-                        ? 'No Notifications'
-                        : notificationController.notificationIndex.value == 1
-                            ? 'No Unread Notifications'
-                            : 'No Read Notifications',
-                    onRefresh: () {
+                              : 'No Read Notifications',
+                      onRefresh: () {
+                        notificationController.getNotification();
+                      },
+                    );
+                  }
+                  int length = notificationController.notificationNext.value
+                      ? (notificationController.notificationList?.length ?? 0) +
+                          1
+                      : notificationController.notificationList?.length ?? 0;
+                  return RefreshIndicator(
+                    onRefresh: () async {
                       notificationController.getNotification();
                     },
-                  );
-                }
-                int length = notificationController.notificationNext.value
-                    ? (notificationController.notificationList?.length ?? 0) + 1
-                    : notificationController.notificationList?.length ?? 0;
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    notificationController.getNotification();
-                  },
-                  child: ListView.builder(
-                    controller: scrollController,
-                    itemCount: length,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      if (index == length - 1) {
-                        return Shimmer.fromColors(
-                          baseColor: const Color.fromARGB(255, 156, 151, 151),
-                          highlightColor: Colors.grey[100]!,
+                    child: ListView.builder(
+                      controller: scrollController,
+                      itemCount: length,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        if (index == length - 1) {
+                          return Shimmer.fromColors(
+                            baseColor: const Color.fromARGB(255, 156, 151, 151),
+                            highlightColor: Colors.grey[100]!,
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: kWhite, borderRadius: kRadius10),
+                            ),
+                          );
+                        }
+                        final notification =
+                            notificationController.notificationList?[index];
+                        return GestureDetector(
+                          onTap: () {
+                            if (notification?.bookingID != null) {
+                              Get.find<BookingController>().getSingleBooking(
+                                retrieveSingleBookingRequestModel:
+                                    RetrieveSingleBookingRequestModel(
+                                        bookingId: notification?.bookingID),
+                              );
+                              Get.toNamed(Routes.invoice);
+                            }
+                          },
                           child: Container(
                             width: double.infinity,
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 3.h),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10.w, vertical: 10.h),
                             decoration: BoxDecoration(
-                                color: kWhite, borderRadius: kRadius10),
+                                color: notification?.status == false
+                                    ? themeController.secondaryLightColor
+                                    : kWhite,
+                                borderRadius: kRadius10),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(notification?.title ?? '',
+                                              style: textStyle1.copyWith(
+                                                  fontSize: 15.sp)),
+                                          Text(
+                                              DateFormating.getDate(
+                                                  notification?.createdAt),
+                                              style: textThinStyle1.copyWith(
+                                                  color: kGreyDark))
+                                        ],
+                                      ),
+                                      Text(notification?.body ?? '',
+                                          style: textThinStyle1.copyWith(
+                                              color: kGreyDark,
+                                              fontSize: 13.sp))
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         );
-                      }
-                      final notification =
-                          notificationController.notificationList?[index];
-                      return GestureDetector(
-                        onTap: () {
-                          if (notification?.bookingID != null) {
-                            Get.find<BookingController>().getSingleBooking(
-                              retrieveSingleBookingRequestModel:
-                                  RetrieveSingleBookingRequestModel(
-                                      bookingId: notification?.bookingID),
-                            );
-                            Get.toNamed(Routes.invoice);
-                          }
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 10.w, vertical: 3.h),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10.w, vertical: 10.h),
-                          decoration: BoxDecoration(
-                              color: notification?.status == false
-                                  ? themeController.secondaryLightColor
-                                  : kWhite,
-                              borderRadius: kRadius10),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(notification?.title ?? '',
-                                            style: textStyle1.copyWith(
-                                                fontSize: 15.sp)),
-                                        Text(
-                                            DateFormating.getDate(
-                                                notification?.createdAt),
-                                            style: textThinStyle1.copyWith(
-                                                color: kGreyDark))
-                                      ],
-                                    ),
-                                    Text(notification?.body ?? '',
-                                        style: textThinStyle1.copyWith(
-                                            color: kGreyDark, fontSize: 13.sp))
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              }),
+                      },
+                    ),
+                  );
+                }),
+              ),
             )
           ],
         );

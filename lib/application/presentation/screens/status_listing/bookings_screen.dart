@@ -30,12 +30,12 @@ class ScreenBookings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
-    final controller = Get.find<BookingController>();
+    final bookkingController = Get.find<BookingController>();
     final raiceController = Get.find<RaiceTicketController>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      controller.getAllCombleteBooking(false);
-      controller.getAllUpcomingBooking(false);
-      controller.getAllCancelBooking();
+      bookkingController.getAllCombleteBooking(false);
+      bookkingController.getAllUpcomingBooking(false);
+      bookkingController.getAllCancelBooking();
     });
 
     return Scaffold(
@@ -63,7 +63,7 @@ class ScreenBookings extends StatelessWidget {
                     ),
                   ],
                 )
-              : controller.bookingLoading.value
+              : bookkingController.bookingLoading.value
                   ? Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12.h),
                       child: const HorizontalShimmerSkeleton(
@@ -71,9 +71,10 @@ class ScreenBookings extends StatelessWidget {
                         itemCount: 4,
                       ),
                     )
-                  : controller.retrieveAllCompletedBooking.isEmpty &&
-                          controller.retrieveAllUpcomingBooking.isEmpty &&
-                          controller.retrieveAllCancelBooking.isEmpty
+                  : bookkingController.retrieveAllCompletedBooking.isEmpty &&
+                          bookkingController
+                              .retrieveAllUpcomingBooking.isEmpty &&
+                          bookkingController.retrieveAllCancelBooking.isEmpty
                       ? const EmptyBookingScreen()
                       : ListView(
                           padding: const EdgeInsets.all(0),
@@ -89,23 +90,25 @@ class ScreenBookings extends StatelessWidget {
                               onHorizontalDragEnd: (DragEndDetails details) {
                                 if (details.primaryVelocity! > 0) {
                                   // Swiped right
-                                  if (controller.selectedBookingTab.value ==
+                                  if (bookkingController
+                                          .selectedBookingTab.value ==
                                       2) {
-                                    controller.changeTab(1);
-                                  } else if (controller
+                                    bookkingController.changeTab(1);
+                                  } else if (bookkingController
                                           .selectedBookingTab.value ==
                                       1) {
-                                    controller.changeTab(0);
+                                    bookkingController.changeTab(0);
                                   }
                                 } else if (details.primaryVelocity! < 0) {
                                   // Swiped left
-                                  if (controller.selectedBookingTab.value ==
+                                  if (bookkingController
+                                          .selectedBookingTab.value ==
                                       0) {
-                                    controller.changeTab(1);
-                                  } else if (controller
+                                    bookkingController.changeTab(1);
+                                  } else if (bookkingController
                                           .selectedBookingTab.value ==
                                       1) {
-                                    controller.changeTab(2);
+                                    bookkingController.changeTab(2);
                                   }
                                 }
                               },

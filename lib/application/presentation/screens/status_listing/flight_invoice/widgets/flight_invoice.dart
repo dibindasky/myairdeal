@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/itenary_tab/fare_summary.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
@@ -25,7 +26,6 @@ class FlightInvoiceCard extends StatelessWidget {
         ?.retrieveSingleBookingresponceModel?.itemInfos?.air?.travellerInfos;
     final tripInfos = retrieveSingleBookingresponceModel
         ?.retrieveSingleBookingresponceModel?.itemInfos?.air?.tripInfos;
-
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -398,53 +398,22 @@ class FlightInvoiceCard extends StatelessWidget {
             ),
           ),
           kHeight10,
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Ticket Price',
-                    style: textStyle1.copyWith(
-                        color: kBlack,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  kHeight5,
-                  Text(
-                    'Including Taxes',
-                    style: textThinStyle1.copyWith(
-                        color: kBlack,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w800),
-                  )
-                ],
-              ),
-              kWidth10,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.bf?.toDouble() ?? 0.toDouble()}',
-                    style: textStyle1.copyWith(
-                        color: kBlack,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  kHeight5,
-                  Text(
-                    '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.tf?.toDouble() ?? 0.toDouble()}',
-                    style: textStyle1.copyWith(
-                        color: kBlack,
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w800),
-                  )
-                ],
-              ),
-            ],
-          ),
+          TaxAndFeeHelper(
+              title: 'Ticket Price',
+              value:
+                  '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.bf?.toDouble() ?? '--'}'),
+          TaxAndFeeHelper(
+              title: 'Tax',
+              value:
+                  '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.taf?.toDouble() ?? '--'}'),
+          TaxAndFeeHelper(
+              title: 'Convenience Fee',
+              value:
+                  '₹ ${retrieveSingleBookingresponceModel?.completeBookingData?.markUp?.value?.toDouble() ?? '--'}'),
+          TaxAndFeeHelper(
+              title: 'Tatal Amount',
+              value:
+                  '₹ ${retrieveSingleBookingresponceModel?.completeBookingData?.payment?.amount?.toDouble() ?? '--'}'),
         ],
       ),
     );

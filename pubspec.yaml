@@ -68,6 +68,8 @@ dependencies:
   firebase_core: ^2.27.0
   firebase_messaging: ^14.7.19
   flutter_local_notifications: ^17.0.0
+
+  # Back 
   back_button_interceptor: ^7.0.3
 
 dev_dependencies:

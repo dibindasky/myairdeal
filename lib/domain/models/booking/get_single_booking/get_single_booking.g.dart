@@ -8,6 +8,10 @@ part of 'get_single_booking.dart';
 
 GetSingleBooking _$GetSingleBookingFromJson(Map<String, dynamic> json) =>
     GetSingleBooking(
+      completeBookingData: json['completeBookingData'] == null
+          ? null
+          : CompleteBookingData.fromJson(
+              json['completeBookingData'] as Map<String, dynamic>),
       flightSearchQuery: json['searchQuery'] == null
           ? null
           : FlightSearchQuery.fromJson(
@@ -23,6 +27,7 @@ GetSingleBooking _$GetSingleBookingFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$GetSingleBookingToJson(GetSingleBooking instance) =>
     <String, dynamic>{
+      'completeBookingData': instance.completeBookingData,
       'searchQuery': instance.flightSearchQuery,
       'data': instance.retrieveSingleBookingresponceModel,
       'amendment': instance.amendment,

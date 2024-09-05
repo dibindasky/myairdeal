@@ -11,29 +11,33 @@ class BookTicketModel {
   Booking? booking;
   FlightSearchQuery? searchQuery;
   Payment? payment;
+  String? promo;
 
-  BookTicketModel({this.booking, this.searchQuery, this.payment});
+  BookTicketModel({this.booking, this.searchQuery, this.payment, this.promo});
 
   factory BookTicketModel.fromJson(Map<String, dynamic> json) {
     return _$BookTicketModelFromJson(json);
   }
 
   Map<String, dynamic> toJson() => _$BookTicketModelToJson(this);
+  Map<String, dynamic> toJsonHold() => _$BookTicketModelToJsonHold(this);
 
   BookTicketModel copyWith({
     Booking? booking,
     Payment? payment,
     FlightSearchQuery? searchQuery,
+    String? promo,
   }) {
     return BookTicketModel(
       payment: payment ?? this.payment,
       booking: booking ?? this.booking,
       searchQuery: searchQuery ?? this.searchQuery,
+      promo: promo ?? this.promo,
     );
   }
 
   @override
   String toString() {
-    return 'BookTicketModel{booking: ${booking.toString()}, searchQuery: $searchQuery}';
+    return 'BookTicketModel{booking: ${booking.toString()}, searchQuery: $searchQuery, promo: $promo}';
   }
 }

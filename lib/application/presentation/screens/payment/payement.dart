@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/itenary_tab/fare_summary.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/promo_code_container.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
-import 'package:myairdeal/data/features/razorpay.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/booking.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/delivery_info.dart';
@@ -51,6 +51,8 @@ class PaymentTab extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 kHeight10,
+                const PromoCodeContainer(),
+                kHeight10,
                 Container(
                   decoration: BoxDecoration(
                       borderRadius: kRadius15,
@@ -63,8 +65,9 @@ class PaymentTab extends StatelessWidget {
                 kHeight20,
                 Obx(() {
                   return Get.find<BookingController>()
-                          .bookingCompleteLoading
-                          .value
+                              .bookingCompleteLoading
+                              .value ||
+                          Get.find<BookingController>().bookingHoldLoading.value
                       ? const Center(
                           child: CircularProgressIndicator(
                             color: kBluePrimary,
@@ -132,25 +135,11 @@ class PaymentTab extends StatelessWidget {
                                       travellerController.emailController.text
                                     ])),
                               );
-
-                              final RazorpayGateway razorpayGateway =
-                                  RazorpayGateway(context, bookTicketModel);
-                              razorpayGateway.makePayment(
-                                  amount: ((bookingController
-                                                  .reviewedDetail
-                                                  ?.value
-                                                  .totalPriceInfo
-                                                  ?.totalFareDetail
-                                                  ?.fC
-                                                  ?.tf ??
-                                              0) +
-                                          travellerController
-                                              .addOnsprice.value +
-                                          (bookingController.markupPrice.value))
-                                      .toDouble(),
-                                  description: 'payment to MyAirDeal',
-                                  email: 'testemail@gmail.com',
-                                  phone: '+91 9876543210');
+                              bookingController.holdBookingOrMakePayment(
+                                  context,
+                                  addOnPrice:
+                                      travellerController.addOnsprice.value,
+                                  bookTicketModel: bookTicketModel);
                             },
                           ),
                         );

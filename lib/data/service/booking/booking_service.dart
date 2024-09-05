@@ -9,12 +9,14 @@ import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_mo
 import 'package:myairdeal/domain/models/booking/booking_response_model/booking_response_model.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_booking.dart';
 import 'package:myairdeal/domain/models/booking/mark_up/markup_model.dart';
+import 'package:myairdeal/domain/models/booking/promo/promo.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
 import 'package:myairdeal/domain/models/booking/review_price_detail_id_model/review_price_detail_id_model.dart';
 import 'package:myairdeal/domain/models/booking/seat_selection_response/seat_selection_response.dart';
 import 'package:myairdeal/domain/models/fare_rule/fare_rule_request/fare_rule_request.dart';
 import 'package:myairdeal/domain/models/fare_rule/fare_rule_responce/fare_rule_responce.dart';
+import 'package:myairdeal/domain/models/success_responce_model/success_responce_model.dart';
 import 'package:myairdeal/domain/repository/service/booking_rep.dart';
 
 class BookingService implements BookingRepo {
@@ -25,8 +27,11 @@ class BookingService implements BookingRepo {
       {required BookTicketModel bookTicketModel}) async {
     try {
       log(bookTicketModel.booking!.toJson().toString());
-      final responce = await apiService.post(ApiEndPoints.completeBooking,
-          data: bookTicketModel.toJson(), addHeader: true);
+      final responce = await apiService.post(
+          ApiEndPoints.completeBooking
+              .replaceFirst('{id}', bookTicketModel.booking?.bookingId ?? ''),
+          data: bookTicketModel.toJson(),
+          addHeader: true);
       log('bookTicket done');
       log('${responce.data}');
       return Right(BookingResponseModel.fromJson(responce.data));
@@ -42,6 +47,33 @@ class BookingService implements BookingRepo {
       }
     } catch (e) {
       log('catch bookTicket');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SuccessResponceModel>> holdTicket(
+      {required BookTicketModel bookTicketModel}) async {
+    try {
+      log(bookTicketModel.booking!.toJson().toString());
+      final responce = await apiService.post(ApiEndPoints.holdBooking,
+          data: bookTicketModel.toJsonHold(), addHeader: true);
+      log('holdTicket done');
+      log('${responce.data}');
+      return Right(
+          SuccessResponceModel(message: 'Booking has been moved to hold'));
+    } on DioException catch (e) {
+      log('DioException holdTicket $e');
+      if (e.response?.data?['errors'] != null) {
+        return Left(Failure(
+            message:
+                e.response?.data?['errors'][0]['message'] ?? errorMessage));
+      } else {
+        return Left(
+            Failure(message: e.response?.data?['error'] ?? errorMessage));
+      }
+    } catch (e) {
+      log('catch holdTicket');
       return Left(Failure(message: e.toString()));
     }
   }
@@ -148,7 +180,7 @@ class BookingService implements BookingRepo {
               .toList() ??
           []);
     } on DioException catch (e) {
-      log('DioException retrieveCombletedBooking ');
+      log('DioException retrieveCombletedBooking ${e.message}');
       return Left(Failure(message: errorMessage));
     } catch (e) {
       log('catch retrieveCombletedBooking');
@@ -231,6 +263,29 @@ class BookingService implements BookingRepo {
     } catch (e) {
       log('catch getMarkup');
       return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PromoResponse>> checkPromo(
+      {required String promo}) async {
+    try {
+      final responce = await apiService
+          .post(ApiEndPoints.checkPromo, data: {"enteredCode": promo});
+      log('checkPromo done');
+      return Right(PromoResponse.fromJson(responce.data));
+    } on DioException catch (e) {
+      log('DioException checkPromo');
+      try {
+        return Left(Failure(
+            message: (e.response?.data as Map<String, dynamic>)['error'] ??
+                errorMessage));
+      } catch (e) {
+        return Left(Failure(message: 'something went wrong'));
+      }
+    } catch (e) {
+      log('catch checkPromo');
+      return Left(Failure(message: 'something went wrong'));
     }
   }
 }

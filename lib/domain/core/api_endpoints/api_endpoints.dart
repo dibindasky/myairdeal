@@ -1,6 +1,6 @@
 class ApiEndPoints {
-  //static const String baseUrl = 'https://b7fzq0cn-5001.inc1.devtunnels.ms';
-  static const String baseUrl = 'https://api.myairdeal.com';
+  static const String baseUrl = 'https://b7fzq0cn-5001.inc1.devtunnels.ms';
+  // static const String baseUrl = 'https://api.myairdeal.com';
 
   static const String getSplash = '/splash/get';
   static const String sendOTP = '/user/send-sms';
@@ -19,7 +19,8 @@ class ApiEndPoints {
   static const String recentSearch = '/search/searchQueryHistory';
   static const String airportSearch = '/search/user-get-all-airports?search=';
   static const String reviewPriceDetails = '/booking/review-price';
-  static const String completeBooking = '/booking/complete';
+  static const String completeBooking = '/booking/hold-to-success/{id}';
+  static const String holdBooking = '/booking/complete-hold';
   static const String airportRecentSearch = '/search/airportSearchHistory';
   static const String airportSearchWithCountryCode =
       '/search/airport-country-code?countrycode=';
@@ -36,6 +37,7 @@ class ApiEndPoints {
   static const String addEnquiry = '/enquiry/create-registeredUser';
   static const String getBookingId = '/user/retrieve-user-bookings-id';
   static const String getMarkup = '/markup/get-user-mark-up';
+  static const String checkPromo = '/promo/check';
   static const String deleteToken = '/user/logout';
 
   // Change {airlinecode} for logo

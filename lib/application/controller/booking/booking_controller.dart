@@ -7,12 +7,14 @@ import 'package:myairdeal/application/controller/home/flight_sort_controller.dar
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/data/features/razorpay.dart';
 import 'package:myairdeal/data/service/booking/booking_service.dart';
 import 'package:myairdeal/domain/models/booking/all_booking_responce/all_booking_responce.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_model.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_booking.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/traveller_info.dart';
 import 'package:myairdeal/domain/models/booking/mark_up/markup_model.dart';
+import 'package:myairdeal/domain/models/booking/promo/promo.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/trip_info.dart';
@@ -33,8 +35,14 @@ class BookingController extends GetxController {
   //Controller for page comes bottom
   final ScrollController scrollController = ScrollController();
 
-  // loading for review pice for booking
+  /// loading for review pice for booking
   RxBool reviewPriceLoading = false.obs;
+
+  /// value to check wether booking is alredy in hold or not
+  RxBool bookingOnHold = false.obs;
+
+  /// booking hold loading
+  RxBool bookingHoldLoading = false.obs;
 
   String travelerTab = 'Add Details';
   List<String> detailList = [' Itinerary', 'Add Details', 'Review', 'Payments'];
@@ -60,12 +68,26 @@ class BookingController extends GetxController {
 
   /// markup details
   Rx<MarkupModel>? markupModel;
+
+  /// markup price get loading
   RxBool markupLoading = false.obs;
 
   /// mark up price
   RxDouble markupPrice = 0.0.obs;
 
-  // Retrive single booking model
+  /// promo error code
+  RxString promoErrorCode = ''.obs;
+
+  /// promo checking loader
+  RxBool promoLoading = false.obs;
+
+  /// promo controller
+  final TextEditingController promoController = TextEditingController();
+
+  /// promo response
+  Rx<PromoResponse> promoResponse = PromoResponse().obs;
+
+  /// Retrive single booking model
   Rx<GetSingleBooking> retrieveSingleBookingresponceModel =
       GetSingleBooking().obs;
 
@@ -77,7 +99,7 @@ class BookingController extends GetxController {
   RxList<AllBookingResponce> retrieveAllCompletedBooking =
       <AllBookingResponce>[].obs;
 
-  // Ticket cancel request model
+  /// Ticket cancel request model
   Rx<TicketCancelRequestModel> ticketCancelRequestModel =
       TicketCancelRequestModel().obs;
 
@@ -88,7 +110,7 @@ class BookingController extends GetxController {
   Rx<FareRuleResponce> fareRule = FareRuleResponce().obs;
   Rx<FareRuleSection> fareRuleSection = FareRuleSection().obs;
 
-  // fare rule keys list
+  /// fare rule keys list
   RxList<String> fareRuleKeysList = <String>[].obs;
 
   /// Fare rule based on the key means [fareRuleKeysList]
@@ -129,7 +151,7 @@ class BookingController extends GetxController {
     fareRuleLoading.value = false;
   }
 
-  // Arrow Change In itinrery screen for tax and Taes
+  /// Arrow Change In itinrery screen for tax and Taes
   RxBool selectedArrowItinerary = false.obs;
   void changeArrowItinerary() {
     selectedArrowItinerary.value = !selectedArrowItinerary.value;
@@ -137,7 +159,7 @@ class BookingController extends GetxController {
   }
 
   /// uncoment [startTimer] after complete meals,seat and baggage
-  // start timer for booking section
+  /// start timer for booking section
   void startTimer() {
     timer.value.cancel();
     final DateTime currentTime = DateTime.now();
@@ -175,13 +197,13 @@ class BookingController extends GetxController {
     retrieveAllCancelBooking.clear();
   }
 
-  // end timer
+  /// end timer
   void endTimer() {
     timer.value.cancel();
     remainingTime.value = 0;
   }
 
-  // getMarkup price
+  /// getMarkup price
   void getMarkup() async {
     markupPrice.value = 0.0;
     markupLoading.value = true;
@@ -223,7 +245,28 @@ class BookingController extends GetxController {
     return 0.0;
   }
 
-  // complete booking api calling
+  /// check promo is valid or not
+  void checkPromo(String promo) async {
+    promoErrorCode.value = '';
+    promoLoading.value = true;
+    promoResponse.value = PromoResponse();
+    if (promo == '') {
+      promoErrorCode.value = 'Enter promo code';
+      promoLoading.value = false;
+      return;
+    }
+    final result = await bookingRepo.checkPromo(promo: promo);
+    result.fold((l) {
+      promoErrorCode.value = l.message ?? 'something went wrong';
+      promoLoading.value = false;
+    }, (r) {
+      promoErrorCode.value = '';
+      promoResponse.value = r;
+      promoLoading.value = false;
+    });
+  }
+
+  /// complete booking api calling
   void completeBooking(BookTicketModel bookTicketModel) async {
     Get.toNamed(Routes.paymentSucess);
     bookingCompleteLoading.value = true;
@@ -232,11 +275,13 @@ class BookingController extends GetxController {
     String message = '';
     String bookingId = '';
     bookTicketModel = bookTicketModel.copyWith(
+        promo: promoResponse.value.value == null ? '' : promoController.text,
         payment: bookTicketModel.payment?.copyWith(
-      markUp: markupModel?.value,
-      baseFare: reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.bf
-          ?.toDouble(),
-    ));
+          markUp: markupModel?.value,
+          baseFare: reviewedDetail
+              ?.value.totalPriceInfo?.totalFareDetail?.fC?.bf
+              ?.toDouble(),
+        ));
     print('book ticket model ');
     print(bookTicketModel.toString());
     final result =
@@ -290,7 +335,54 @@ class BookingController extends GetxController {
     }
   }
 
-  // review price details before going to the booking section
+  /// hold booking
+  void holdBookingOrMakePayment(
+    BuildContext context, {
+    required BookTicketModel bookTicketModel,
+    required double addOnPrice,
+  }) async {
+    bool holdError = false;
+    if (!bookingOnHold.value) {
+      bookingHoldLoading.value = true;
+      final result =
+          await bookingRepo.holdTicket(bookTicketModel: bookTicketModel);
+      result.fold((l) {
+        bookingHoldLoading.value = false;
+        holdError = true;
+        Get.snackbar(
+          'Booking Failed',
+          l.message ?? 'Failed to Proceed For Payment',
+          snackPosition: SnackPosition.TOP,
+          forwardAnimationCurve: Curves.bounceIn,
+          backgroundColor: kRed,
+          colorText: kWhite,
+        );
+      }, (r) {
+        endTimer();
+        bookingOnHold.value = true;
+      });
+    }
+    if (holdError) {
+      return;
+    }
+    final RazorpayGateway razorpayGateway =
+        // ignore: use_build_context_synchronously
+        RazorpayGateway(context, bookTicketModel);
+    razorpayGateway.makePayment(
+        amount:
+            ((reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ??
+                        0) +
+                    addOnPrice +
+                    (markupPrice.value) -
+                    (promoResponse.value.value ?? 0))
+                .toDouble(),
+        description: 'payment to MyAirDeal',
+        email: 'testemail@gmail.com',
+        phone: '+91 9876543210');
+    bookingHoldLoading.value = false;
+  }
+
+  /// review price details before going to the booking section
   void reviewPriceDetailChecking(
       {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
     print('price id for search ${reviewPriceDetailIdModel.priceIds}');
@@ -320,7 +412,7 @@ class BookingController extends GetxController {
     }
   }
 
-  // get the total price by calculating the price seperate for all types
+  /// get the total price by calculating the price seperate for all types
   double getPrice(String type) {
     double price = 0.0;
     for (var element in reviewedDetail!.value.tripInfos!) {
@@ -335,7 +427,7 @@ class BookingController extends GetxController {
     return price;
   }
 
-  // get Segment info using flight id
+  /// get Segment info using flight id
   SI? getSegmentInfoUsingId(String id) {
     for (var trip in reviewedDetail?.value.tripInfos ?? <TripInfo>[]) {
       for (var si in trip.sI ?? <SI>[]) {
@@ -347,13 +439,15 @@ class BookingController extends GetxController {
     return null;
   }
 
-  // clear all the data after booking to not affect the next booking
+  /// clear all the data after booking to not affect the next booking
   void clearDataAfterBooking() {
     travelerTab = 'Add Details';
     remainingTime = 0.obs;
+    promoResponse.value = PromoResponse();
+    promoController.text = '';
   }
 
-  // Get Single Booking
+  /// Get Single Booking
   void getSingleBooking(
       {required RetrieveSingleBookingRequestModel
           retrieveSingleBookingRequestModel,

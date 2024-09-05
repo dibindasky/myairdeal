@@ -19,10 +19,12 @@ import 'package:myairdeal/domain/models/search/flight_search_sort_model/pax_info
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/route_info.dart';
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/search_modifiers.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/total_price_list.dart';
 import 'package:myairdeal/domain/models/search/recent_detail_search/search_query.dart';
 import 'package:myairdeal/domain/repository/service/flight_sort_repo.dart';
 import 'package:myairdeal/domain/repository/service/home_repo.dart';
+import 'package:pinput/pinput.dart';
 
 class FlightSortController extends GetxController {
   // Change category [flights, air ambulance, chatered flight, helicopter]
@@ -630,44 +632,39 @@ class FlightSortController extends GetxController {
     // for international multicity round trips
     if (comboTrip.value) {
       // loop for all trips
-      for (int i = 0; i < comboListMain.length; i++) {
-        sortingVariables[i] = List.generate(6, (index) => [].obs);
-        sortingVariablesSelected[i] = List.generate(6, (index) => [].obs);
-        // loop for iterate in the single list items
-        for (var item in comboListMain[i]) {
-          // finding available airlines and add it for sorting
-          if (item.sI?[0].fD?.aI?.name != null &&
-              item.sI![0].fD!.aI!.name != '' &&
-              !sortingVariables[i]![0].contains(item.sI![0].fD!.aI!.name!)) {
-            sortingVariables[i]![0].add(item.sI![0].fD!.aI!.name!);
-          }
-          // avaliable stops in the given list
-          if (!sortingVariables[i]![1].contains(item.sI!.length - 1)) {
-            sortingVariables[i]![1].add(item.sI!.length - 1);
-          }
-          // duration of flights form the given list
-          if (item.sI!.length > 1) {
-            int minutes =
-                DateFormating.getDurationOfFlightsInMinutes(si: item.sI ?? []);
-            if (!sortingVariables[i]![2].contains(minutes.toDouble())) {
-              sortingVariables[i]![2].add(minutes.toDouble());
-            }
-          }
-          // available price range from the given list
-          for (var e in item.totalPriceList ?? <TotalPriceList>[]) {
-            if (!sortingVariables[i]![3].contains(e.fd?.adult?.fC?.tf ?? 0)) {
-              sortingVariables[i]![3].add(e.fd?.adult?.fC?.tf ?? 0);
-            }
-          }
-        }
-        // sort price,duration,stops
-        sortingVariables[i]![1].sort();
-        sortingVariables[i]![2].sort();
-        sortingVariables[i]![3].sort();
-        sortingVariablesSelected[i]![2] = sortingVariables[i]![2].isEmpty
-            ? [1].obs
-            : [(sortingVariables[i]![2].last ?? 1)].obs;
-      }
+      sortingVariables[0] = List.generate(6, (index) => [].obs);
+      sortingVariablesSelected[0] = List.generate(6, (index) => [].obs);
+      // for (int i = 0; i < comboListMain.length; i++) {
+      //   // loop for iterate in the single list items
+      //   bool same = false;
+      //   for (var item in comboListMain[i]) {
+      //     // finding available airlines and add it for sorting
+      //     for (int j = 0; j < (item.sI?.length ?? 0); j++) {
+      //       if (item.sI?[j].fD?.aI?.name != null &&
+      //           item.sI![j].fD!.aI!.name != '' &&
+      //           !sortingVariables[i]![0].contains(item.sI![j].fD!.aI!.name!)) {
+      //         break;
+      //       }
+      //     }
+      //     // avaliable stops in the given list
+      //     if (!sortingVariables[i]![1].contains(item.sI!.length - 1)) {
+      //       sortingVariables[i]![1].add(item.sI!.length - 1);
+      //     }
+      //     // available price range from the given list
+      //     for (var e in item.totalPriceList ?? <TotalPriceList>[]) {
+      //       if (!sortingVariables[i]![3].contains(e.fd?.adult?.fC?.tf ?? 0)) {
+      //         sortingVariables[i]![3].add(e.fd?.adult?.fC?.tf ?? 0);
+      //       }
+      //     }
+      //   }
+      //   // sort price,duration,stops
+      //   sortingVariables[i]![1].sort();
+      //   sortingVariables[i]![2].sort();
+      //   sortingVariables[i]![3].sort();
+      //   sortingVariablesSelected[i]![2] = sortingVariables[i]![2].isEmpty
+      //       ? [1].obs
+      //       : [(sortingVariables[i]![2].last ?? 1)].obs;
+      // }
     } // for domestic trips and international one way
     else {
       // loop for all trips

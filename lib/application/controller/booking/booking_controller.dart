@@ -273,7 +273,6 @@ class BookingController extends GetxController {
     bookingCompleteSuccess = false.obs;
     bookingCompleteFailure = false.obs;
     String message = '';
-    String bookingId = '';
     bookTicketModel = bookTicketModel.copyWith(
         promo: promoResponse.value.value == null ? '' : promoController.text,
         payment: bookTicketModel.payment?.copyWith(
@@ -293,8 +292,7 @@ class BookingController extends GetxController {
       message = l.message ?? errorMessage;
     }, (r) {
       bookingCompleteSuccess.value = true;
-      bookingId = r.bookingId ?? '';
-      print('success');
+      print('success => ${r.bookingId}');
       if (r.errors != null && r.errors!.isNotEmpty) {
         print(r.errors?[0].message ?? errorMessage);
         message = r.errors?[0].message ?? errorMessage;
@@ -316,10 +314,11 @@ class BookingController extends GetxController {
           backgroundColor: kGreen,
           colorText: kWhite);
       // timer to wait until the data has been saved in the server and calling for booked ticket
-      Timer(const Duration(seconds: 3), () {
+      Timer(const Duration(seconds: 5), () {
         getSingleBooking(
             retrieveSingleBookingRequestModel:
-                RetrieveSingleBookingRequestModel(bookingId: bookingId),
+                RetrieveSingleBookingRequestModel(
+                    bookingId: bookTicketModel.booking!.bookingId ?? ''),
             callBookings: true);
       });
     } else {

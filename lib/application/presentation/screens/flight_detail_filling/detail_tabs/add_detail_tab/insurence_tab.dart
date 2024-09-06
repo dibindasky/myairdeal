@@ -8,6 +8,7 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
+import 'package:myairdeal/application/presentation/widgets/expansion_tile_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
 
 class InsurenceTab extends StatefulWidget {
@@ -95,12 +96,18 @@ class _InsurenceTabState extends State<InsurenceTab> {
               borderRadius: kRadius15,
             ),
             padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 10.w),
-            child: Column(
+            child: CustomExpansionTile(isBorder: false,
+              child: Align(
+                  child: Row(crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text('Add GST Number for Business Travel (Optional)',
+                            style: textStyle1),
+                      ),
+                          Icon(Icons.arrow_drop_down)
+                    ],
+                  )),
               children: [
-                Align(
-                    child: Text('GST Number for Business Travel (Optional)',
-                        style: textStyle1)),
-                kHeight10,
                 CustomTextField(
                   controller: controller.gstNumberController,
                   keyboardType: TextInputType.text,

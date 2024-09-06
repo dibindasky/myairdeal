@@ -138,26 +138,47 @@ class SortingChipsSection extends StatelessWidget {
                                             const DurationBottomSheet(),
                                       );
                                     }),
-                            SortingChipSortPage(
-                                text: 'Flight Timing',
-                                selected: ((controller.sortingVariablesSelected[
-                                                controller.selectedTripListIndex
-                                                    .value]?[4] ??
-                                            [])
-                                        .isNotEmpty ||
-                                    (controller.sortingVariablesSelected[
-                                                controller.selectedTripListIndex
-                                                    .value]?[5] ??
-                                            [])
-                                        .isNotEmpty),
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    backgroundColor: knill,
-                                    context: context,
-                                    builder: (context) =>
-                                        const FlightTimesBottomSheet(),
-                                  );
-                                }),
+                            controller.comboTrip.value
+                                ? kEmpty
+                                : SortingChipSortPage(
+                                    text: 'Flight Timing',
+                                    selected: ((controller
+                                                        .sortingVariablesSelected[
+                                                    controller
+                                                        .selectedTripListIndex
+                                                        .value]?[4] ??
+                                                [])
+                                            .isNotEmpty ||
+                                        (controller.sortingVariablesSelected[
+                                                    controller
+                                                        .selectedTripListIndex
+                                                        .value]?[5] ??
+                                                [])
+                                            .isNotEmpty),
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        backgroundColor: knill,
+                                        context: context,
+                                        builder: (context) =>
+                                            const FlightTimesBottomSheet(),
+                                      );
+                                    }),
+                            controller.comboTrip.value
+                                ? SortingChipSortPage(
+                                    text: 'Price Low to High',
+                                    selected: controller.lowToHigh.value,
+                                    onTap: () {
+                                      controller.sortPriceCall(true);
+                                    })
+                                : kEmpty,
+                            controller.comboTrip.value
+                                ? SortingChipSortPage(
+                                    text: 'Price High to Low',
+                                    selected: controller.highToLow.value,
+                                    onTap: () {
+                                      controller.sortPriceCall(false);
+                                    })
+                                : kEmpty,
                             // SortingChipSortPage(
                             //     text: 'Clear Filter',
                             //     selected: false,

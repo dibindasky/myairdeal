@@ -47,7 +47,7 @@ class FlightTimesBottomSheet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    kHeight10,
+                    kHeight10, 
                     Text(
                         'Departs From ${controller.airportSelected[controller.selectedTripListIndex.value][0].city ?? ''}',
                         style: textStyle1.copyWith(

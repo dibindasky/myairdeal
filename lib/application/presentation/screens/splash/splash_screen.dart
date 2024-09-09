@@ -51,8 +51,10 @@ class _ScreenSplashState extends State<ScreenSplash> {
                   tag: 'onbaordImage',
                   child: authController.splashModelImage.value == ''
                       ? Image.asset(myAirDealLogo)
-                        : Image.memory(base64
-                            .decode(authController.splashModelImage.value))),
+                      : Image.memory(
+                          base64.decode(authController.splashModelImage.value),
+                        ),
+                ),
               ),
             );
           },

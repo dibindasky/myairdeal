@@ -79,23 +79,9 @@ class _DurationBottomSheetState extends State<DurationBottomSheet> {
                         .last ??
                     1.0,
                 min: 0,
-                // min: double.parse((controller
-                //             .sortingVariables[
-                //                 controller.selectedTripListIndex.value]![2]
-                //             .first ??
-                //         0.1)
-                //     .toString()),
                 value: controller.durationSlider.value,
-                // value: double.parse((controller
-                //             .sortingVariablesSelected[
-                //                 controller.selectedTripListIndex.value]![2]
-                //             .first ??
-                //         0.1)
-                //     .toString()),
                 onChanged: (value) {
-                  // debouncer.run(() {
                   controller.changeDurationSlider(value);
-                  // });
                 },
                 activeColor: themeController.primaryColor,
                 inactiveColor: kGreyLight),

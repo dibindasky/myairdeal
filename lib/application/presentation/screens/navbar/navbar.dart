@@ -83,6 +83,19 @@ class _ScreenNavbarState extends State<ScreenNavbar> {
       Get.back();
       Get.find<HomeController>()
           .changeNavigationChecker(NavigationChecker.home);
+    }// while the user at profile screen
+    else if (Get.find<HomeController>().navigationCheck ==
+        NavigationChecker.profile) {
+      Get.back();
+      Get.find<HomeController>()
+          .changeNavigationChecker(NavigationChecker.home);
+    }
+    // while user at logout pop up
+    else if (Get.find<HomeController>().navigationCheck ==
+        NavigationChecker.logoutPopUp) {
+      Get.back();
+      Get.find<HomeController>()
+          .changeNavigationChecker(NavigationChecker.home);
     }
     return true;
   }

@@ -48,6 +48,15 @@ class PromoCodeContainer extends StatelessWidget {
                   return Expanded(
                     child: CupertinoTextField(
                       onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                      suffix: controller.promoResponse.value.value != null
+                          ? GestureDetector(
+                              onTap: () {
+                                controller.clearPromo();
+                              },
+                              child: const Icon(Icons.clear,color: kRed))
+                          : kEmpty,
+                      onChanged: (_) =>
+                          controller.promoApplyButton.value = true,
                       controller: controller.promoController,
                       decoration: BoxDecoration(
                         color: Get.find<ThemeController>().secondaryLightColor,
@@ -70,11 +79,15 @@ class PromoCodeContainer extends StatelessWidget {
                       : EventButton(
                           hieght: 31.h,
                           width: 70.w,
-                          text: 'Apply',
+                          text: controller.promoApplyButton.value
+                              ? 'Apply'
+                              : 'Applied',
                           fontSize: 12.sp,
                           onTap: () {
-                            controller
-                                .checkPromo(controller.promoController.text);
+                            if (controller.promoApplyButton.value) {
+                              controller
+                                  .checkPromo(controller.promoController.text);
+                            }
                           },
                         );
                 })

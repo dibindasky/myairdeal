@@ -36,7 +36,7 @@ class SearchAirportTile extends StatelessWidget {
                     padding: EdgeInsets.all(2.w),
                     decoration: BoxDecoration(
                         color: themeController.secondaryColor.withOpacity(0.8), borderRadius: kRadius5),
-                    child: Text(airportModel.code ?? 'DEL')),
+                    child: Text(airportModel.code ?? '')),
             kWidth10,
             Expanded(
               child: Column(

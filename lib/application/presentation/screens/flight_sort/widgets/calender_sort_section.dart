@@ -29,7 +29,8 @@ class CalenderSectionSortHeader extends StatelessWidget {
               hPadding: 5,
             ),
             firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(const Duration(days: 31)),
+            lastDate:
+                controller.depatureDate.value.add(const Duration(days: 60)),
             focusDate: controller.depatureDate.value,
             showTimelineHeader: false,
             itemBuilder: (context, date, isSelected, onTap) => GestureDetector(

@@ -58,8 +58,7 @@ class _ScreenFlightTicketSortState extends State<ScreenFlightTicketSort> {
       backgroundColor: kWhite,
       body: Obx(() {
         if (controller.searchListLoading.value ||
-            (!controller.comboTrip.value && controller.searchList.isEmpty) ||
-            (controller.comboTrip.value && controller.comboList.isEmpty)) {
+            (!controller.comboTrip.value && controller.searchList.isEmpty)) {
           return Column(
             children: [
               DetailAppBar(

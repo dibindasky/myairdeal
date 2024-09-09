@@ -37,66 +37,72 @@ class _ScreenNavbarState extends State<ScreenNavbar> {
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    // if current page is home page
-    if (Get.find<HomeController>().navigationCheck == NavigationChecker.home) {
-      // check for bottom bar index
-      if (Get.find<NavBarController>().bottomIndex.value != 0) {
-        Get.find<NavBarController>().chageIndex(0);
-        return true;
-      } else {
-        if (isNotLastRouteInNestedStack(1)) {
-          Get.back(id: 1);
+    switch (Get.find<HomeController>().navigationCheck) {
+      case NavigationChecker.home:
+        // if current page is home page
+        if (Get.find<NavBarController>().bottomIndex.value != 0) {
+          Get.find<NavBarController>().chageIndex(0);
           return true;
+        } else {
+          if (isNotLastRouteInNestedStack(1)) {
+            Get.back(id: 1);
+            return true;
+          }
         }
-      }
-      // Get.back();
-      return false;
-    }
-    // when the call come from search page
-    else if (Get.find<HomeController>().navigationCheck ==
-        NavigationChecker.search) {
-      Get.find<FlightSortController>().stopSearchTimer();
-      Get.back(id: 1);
-      Get.find<HomeController>()
-          .changeNavigationChecker(NavigationChecker.home);
-    }
-    // if call is from itinary booking section
-    else if (Get.find<HomeController>().navigationCheck ==
-        NavigationChecker.itinary) {
-      final goback = Get.find<TravellerController>().backButtonPaymetPage();
-      if (goback) {
-        Get.find<HomeController>()
-            .changeNavigationChecker(NavigationChecker.search);
         return false;
-      }
-    } // if call come from ticket invoice page
-    else if (Get.find<HomeController>().navigationCheck ==
-        NavigationChecker.ticket) {
-      Get.back();
-    } // if call from booking success page
-    else if (Get.find<HomeController>().navigationCheck ==
-        NavigationChecker.bookingSuccess) {
-      Get.find<BookingController>().clearDataAfterBooking();
-      Get.find<TravellerController>().clearDataAfterBooking();
-      Get.find<FlightSortController>().clearDataAfterBooking();
-      Get.find<BookingController>().getAllUpcomingBooking(true);
-      Get.back();
-      Get.find<HomeController>()
-          .changeNavigationChecker(NavigationChecker.home);
-    }// while the user at profile screen
-    else if (Get.find<HomeController>().navigationCheck ==
-        NavigationChecker.profile) {
-      Get.back();
-      Get.find<HomeController>()
-          .changeNavigationChecker(NavigationChecker.home);
+
+      case NavigationChecker.search:
+        // when the call comes from the search page
+        Get.find<FlightSortController>().stopSearchTimer();
+        Get.back(id: 1);
+        Get.find<HomeController>()
+            .changeNavigationChecker(NavigationChecker.home);
+        break;
+
+      case NavigationChecker.itinary:
+        // if the call is from the itinerary booking section
+        final goback = Get.find<TravellerController>().backButtonPaymetPage();
+        if (goback) {
+          Get.find<HomeController>()
+              .changeNavigationChecker(NavigationChecker.search);
+          return false;
+        }
+        break;
+
+      case NavigationChecker.ticket:
+        // if the call comes from the ticket invoice page
+        Get.back();
+        break;
+
+      case NavigationChecker.bookingSuccess:
+        // if the call comes from the booking success page
+        Get.find<BookingController>().clearDataAfterBooking();
+        Get.find<TravellerController>().clearDataAfterBooking();
+        Get.find<FlightSortController>().clearDataAfterBooking();
+        Get.find<BookingController>().getAllUpcomingBooking(true);
+        Get.back();
+        Get.find<HomeController>()
+            .changeNavigationChecker(NavigationChecker.home);
+        break;
+
+      case NavigationChecker.profile:
+        // while the user is at the profile screen
+        Get.back();
+        Get.find<HomeController>()
+            .changeNavigationChecker(NavigationChecker.home);
+        break;
+
+      case NavigationChecker.logoutPopUp:
+        // while the user is at the logout pop-up
+        Get.back();
+        Get.find<HomeController>()
+            .changeNavigationChecker(NavigationChecker.home);
+        break;
+
+      default:
+        return true;
     }
-    // while user at logout pop up
-    else if (Get.find<HomeController>().navigationCheck ==
-        NavigationChecker.logoutPopUp) {
-      Get.back();
-      Get.find<HomeController>()
-          .changeNavigationChecker(NavigationChecker.home);
-    }
+
     return true;
   }
 

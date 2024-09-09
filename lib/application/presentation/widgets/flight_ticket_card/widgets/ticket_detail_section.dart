@@ -138,10 +138,10 @@ class TicketDetailsSection extends StatelessWidget {
                         )
                       : const CardSideItems(
                           crossAxisAlignment: CrossAxisAlignment.end,
-                          place: 'TTT',
-                          airPort: 'Airport',
+                          place: '',
+                          airPort: '',
                           from: 'Arrival',
-                          time: '07:00 PM',
+                          time: '',
                         ),
             ],
           ),

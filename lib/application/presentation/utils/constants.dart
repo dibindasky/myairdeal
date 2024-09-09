@@ -7,6 +7,10 @@ import 'package:myairdeal/domain/core/api_endpoints/api_endpoints.dart';
 const errorMessage = 'something went wrong, please try again';
 
 const poppins = 'Poppins';
+
+const privacyPolicy='https://www.myairdeal.com/privacy-policy';
+const termsAndConditons='https://www.myairdeal.com/terms-and-conditions';
+
 const kEmpty = SizedBox();
 
 final kHeight5 = SizedBox(height: 5.h);

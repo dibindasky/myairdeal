@@ -9,7 +9,9 @@ part 'traveller_info.g.dart';
 
 @JsonSerializable()
 class TravellerInfo {
-  //SsrMealInfos? ssrMealInfos;
+  Map<String,dynamic>? ssrMealInfos;
+  Map<String,dynamic>? ssrSeatInfos;
+  Map<String,dynamic>? ssrBaggageInfos;
   PnrDetails? pnrDetails;
   TicketNumberDetails? ticketNumberDetails;
   CheckinStatusMap? checkinStatusMap;
@@ -19,7 +21,9 @@ class TravellerInfo {
   String? lN;
 
   TravellerInfo({
-    // this.ssrMealInfos,
+    this.ssrMealInfos,
+    this.ssrBaggageInfos,
+    this.ssrSeatInfos,
     this.pnrDetails,
     this.ticketNumberDetails,
     this.checkinStatusMap,

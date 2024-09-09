@@ -418,11 +418,13 @@ class TaxAndFeeHelper extends StatelessWidget {
     required this.title,
     required this.value,
     this.style,
+    this.bold = false,
   });
 
   final String title;
   final String value;
   final TextStyle? style;
+  final bool bold;
 
   @override
   Widget build(BuildContext context) {
@@ -452,6 +454,7 @@ class TaxAndFeeHelper extends StatelessWidget {
                     value,
                     style: style ??
                         textThinStyle1.copyWith(
+                          fontWeight: bold ? FontWeight.bold : null,
                           color: kBlack,
                           fontSize: 12.sp,
                         ),

@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myairdeal/domain/models/booking/promo/promo.dart';
 
 import 'combletion_data/data.dart';
 import 'combletion_data/mark_up.dart';
@@ -23,6 +24,7 @@ class CompleteBookingData {
   @JsonKey(name: '__v')
   int? v;
   Data? data;
+  Promo? promo;
 
   CompleteBookingData({
     this.payment,
@@ -37,6 +39,7 @@ class CompleteBookingData {
     this.updatedAt,
     this.v,
     this.data,
+    this.promo,
   });
 
   factory CompleteBookingData.fromJson(Map<String, dynamic> json) {

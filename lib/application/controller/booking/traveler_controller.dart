@@ -227,6 +227,24 @@ class TravellerController extends GetxController {
     return addOn;
   }
 
+  /// calculate add on by passing traveller
+  double calcualteAddonPriceByPassingTraveller(List<TravellerInfo>? list) {
+    double addOn = 0.0;
+    for (var traveller in (list ?? <TravellerInfo>[])) {
+      for (var seat in traveller.ssrSeatInfos ?? <SsrInfo>[]) {
+        addOn += seat.amount ?? 0;
+      }
+      for (var baggage in traveller.ssrBaggageInfos ?? <SsrInfo>[]) {
+        addOn += baggage.amount ?? 0;
+      }
+      for (var meal in traveller.ssrMealInfos ?? <SsrInfo>[]) {
+        addOn += meal.amount ?? 0;
+      }
+    }
+    addOnsprice.value = addOn;
+    return addOn;
+  }
+
   /// back button detail filling page
   bool backButtonPaymetPage([bool back = false]) {
     // if tab is on first index go back to the prvious route

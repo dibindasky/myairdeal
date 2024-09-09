@@ -292,27 +292,28 @@ class FlightSortController extends GetxController {
 
   /// clear all the information after booking not to affect the next booking
   void clearDataAfterBooking() {
+    clearingBool.value = true;
     comboList.clear();
     comboListMain.clear();
     searchList.clear();
     searchListMain.clear();
     selectedTripListIndex.value = 0;
-    airportSelected = <RxList<CitySearchModel>>[
+    airportSelected.value = <RxList<CitySearchModel>>[
       RxList.generate(2, (index) => CitySearchModel()),
-      RxList.generate(2, (index) => CitySearchModel())
-    ].obs;
+      RxList.generate(2, (index) => CitySearchModel()),
+    ];
     sortingVariables.clear();
     sortAirlinesSelected.clear();
     adultCount.value = 1;
     infantCount.value = 0;
     childrenCount.value = 0;
+    tripType.value = 0;
     depatureDate.value = DateTime.now();
     returnDate.value = DateTime.now();
     multiCityDepartureDate = <DateTime?>[DateTime.now(), DateTime.now()].obs;
     validateSearchForm();
     update();
     stopSearchTimer();
-    clearingBool.value = true;
     Timer(const Duration(seconds: 1), () {
       clearingBool.value = false;
     });
@@ -332,6 +333,7 @@ class FlightSortController extends GetxController {
             (airportSelected[i][1].code == null &&
                 airportSelected[i][1].city == null)) {
           searchValidated.value = false;
+          print('1');
           return false;
         }
       } // for multicity validation
@@ -341,20 +343,24 @@ class FlightSortController extends GetxController {
               (airportSelected[i][1].code == null &&
                   airportSelected[i][1].city == null))) {
         searchValidated.value = false;
+        print('2');
         return false;
       }
       // for date validation for multicity, one way and round trip allwase auto filled
       if (tripType.value == 2 && multiCityDepartureDate[i] == null) {
         searchValidated.value = false;
+        print('3');
         return false;
       }
       // if same city added for departure and arrival return error
       if (airportSelected[i][0].code == airportSelected[i][1].code) {
         searchValidated.value = false;
+        print('4');
         return false;
       }
     }
     searchValidated.value = true;
+    print('5');
     return true;
   }
 
@@ -924,6 +930,8 @@ class FlightSortController extends GetxController {
     // if selected index not passed then take selected trip list index to process
     int index = selectedIndex ?? selectedTripListIndex.value;
     print('SORTING...');
+    sortingRebuild.value = true;
+    sortingLoadingIndex.value = index;
     // sorting for combo trip list
     if (comboTrip.value) {
       print('comboListMain => ${comboListMain.length}');
@@ -979,8 +987,6 @@ class FlightSortController extends GetxController {
     }
     // sorting for domestic and one way international trip
     else {
-      sortingLoadingIndex.value = index;
-      sortingRebuild.value = true;
       List<SearchAirlineInformation> sort = [];
       // sort for airline, dont sort if it is a special retun
       if (selectedSpecialReturnAirline.value == '') {

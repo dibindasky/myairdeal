@@ -119,14 +119,10 @@ class DateFormating {
       }
     }
     final duration = Duration(minutes: minute);
-    int days = duration.inDays;
-    int hours = duration.inHours % 24;
+    int hours = duration.inHours;
     int minutes = duration.inMinutes % 60;
 
     String formattedDifference = '';
-    if (days > 0) {
-      formattedDifference += '$days day${days > 1 ? 's' : ''} ';
-    }
     if (hours > 0) {
       formattedDifference += '${hours.toString().padLeft(2, '0')}hr ';
     }

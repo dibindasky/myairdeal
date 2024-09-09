@@ -149,22 +149,50 @@ class FareSummary extends StatelessWidget {
                       ),
                     ],
                   ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            CustomExpansionTile(
+              expand: controller.selectedArrowItinerarySSR.value,
+              isBorder: false,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Seat, Meals & Baggage',
+                    style: textThinStyle1.copyWith(
+                      color: kBlack,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                  const Spacer(),
+                  Icon(
+                    !controller.selectedArrowItinerarySSR.value
+                        ? Icons.arrow_drop_down_sharp
+                        : Icons.arrow_drop_up,
+                  ),
+                  Text(
+                    '₹ ${travellerController.addOnsprice.value.toDouble()}',
+                    style: textThinStyle1.copyWith(
+                      color: kBlack,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                ],
+              ),
+              whileTap: (value) {
+                controller.changeArrowItinerarySSR(value);
+              },
               children: [
-                Text(
-                  'Seat, Meals & Baggage',
-                  style: textThinStyle1.copyWith(
-                    color: kBlack,
-                    fontSize: 12.sp,
-                  ),
+                TaxAndFeeHelper(
+                  title: 'Seat',
+                  value: '₹ ${travellerController.calcualteAddonSeatPrice()}',
                 ),
-                Text(
-                  '₹ ${travellerController.addOnsprice.value.toDouble()}',
-                  style: textThinStyle1.copyWith(
-                    color: kBlack,
-                    fontSize: 12.sp,
-                  ),
+                TaxAndFeeHelper(
+                  title: 'Meal',
+                  value: '₹ ${travellerController.calcualteAddonMealPrice()}',
+                ),
+                TaxAndFeeHelper(
+                  title: 'Baggage',
+                  value:
+                      '₹ ${travellerController.calcualteAddonBAggagePrice()}',
                 ),
               ],
             ),
@@ -173,10 +201,11 @@ class FareSummary extends StatelessWidget {
                     null
                 ? kEmpty
                 : CustomExpansionTile(
-                    whileTap: (isTap) {
-                      controller.changeArrowItinerary();
+                    whileTap: (value) {
+                      controller.changeArrowItinerary(value);
                     },
                     isBorder: false,
+                    expand: controller.selectedArrowItinerary.value,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

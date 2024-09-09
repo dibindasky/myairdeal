@@ -209,6 +209,39 @@ class TravellerController extends GetxController {
     calcualteAddonPrice();
   }
 
+  /// to get seat total price
+  double calcualteAddonSeatPrice() {
+    double addOn = 0.0;
+    for (var traveller in passengerDetails) {
+      for (var seat in traveller?.ssrSeatInfos ?? <SsrInfo>[]) {
+        addOn += seat.amount ?? 0;
+      }
+    }
+    return addOn;
+  }
+
+  /// to get Meal total price
+  double calcualteAddonMealPrice() {
+    double addOn = 0.0;
+    for (var traveller in passengerDetails) {
+      for (var seat in traveller?.ssrMealInfos ?? <SsrInfo>[]) {
+        addOn += seat.amount ?? 0;
+      }
+    }
+    return addOn;
+  }
+
+  /// to get BAggage total price
+  double calcualteAddonBAggagePrice() {
+    double addOn = 0.0;
+    for (var traveller in passengerDetails) {
+      for (var seat in traveller?.ssrBaggageInfos ?? <SsrInfo>[]) {
+        addOn += seat.amount ?? 0;
+      }
+    }
+    return addOn;
+  }
+
   /// get addonPrice
   double calcualteAddonPrice() {
     double addOn = 0.0;

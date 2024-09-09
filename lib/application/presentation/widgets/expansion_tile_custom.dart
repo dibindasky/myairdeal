@@ -13,10 +13,12 @@ class CustomExpansionTile extends StatefulWidget {
       this.isExpandable = true,
       this.children,
       this.expansionColor,
+      this.expand = false,
       required this.child});
   final List<Widget>? children;
   final Widget child;
   final bool isExpandable;
+  final bool expand;
   final bool isBorder;
   final Color? expansionColor;
   final Function(bool)? whileTap;
@@ -27,6 +29,12 @@ class CustomExpansionTile extends StatefulWidget {
 
 class _CustomExpansionTileState extends State<CustomExpansionTile> {
   bool isExpanded = false;
+  
+  @override
+  initState() {
+    isExpanded = widget.expand;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

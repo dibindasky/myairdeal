@@ -242,9 +242,11 @@ class FlightInvoiceCard extends StatelessWidget {
                                                   ?.cabinClass ??
                                               '--'),
                                       exit: travellerInfos
-                                          ?.map((e) => (e.ssrSeatInfos?[
-                                                  '${tripInfos?[tripIndex].sI?[stopIndex].da?.code ?? ''}-${tripInfos?[tripIndex].sI?[stopIndex].aa?.code ?? ''}'] ??
-                                              {})['code'])
+                                          ?.map((e) =>
+                                              (e.ssrSeatInfos?[
+                                                      '${tripInfos?[tripIndex].sI?[stopIndex].da?.code ?? ''}-${tripInfos?[tripIndex].sI?[stopIndex].aa?.code ?? ''}'] ??
+                                                  {})['code'] ??
+                                              '')
                                           .toList()
                                           .toString()
                                           .replaceAll('[', '')
@@ -394,9 +396,11 @@ class FlightInvoiceCard extends StatelessWidget {
                                     lebelStyle: textThinStyle1.copyWith(
                                         fontSize: 10.sp, color: kGreyDark),
                                     value: (travellerInfos
-                                            ?.map((e) => e.ssrSeatInfos?[
-                                                    '${tripInfos?[tripIndex].sI?[0].da?.code ?? ''}-${tripInfos?[tripIndex].sI?[0].aa?.code ?? ''}']
-                                                ['code'])
+                                            ?.map((e) =>
+                                                (e.ssrSeatInfos?[
+                                                        '${tripInfos?[tripIndex].sI?[0].da?.code ?? ''}-${tripInfos?[tripIndex].sI?[0].aa?.code ?? ''}'] ??
+                                                    {})['code'] ??
+                                                '')
                                             .toList()
                                             .toString()
                                             .replaceAll('[', '')

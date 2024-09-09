@@ -160,8 +160,15 @@ class BookingController extends GetxController {
 
   /// Arrow Change In itinrery screen for tax and Taes
   RxBool selectedArrowItinerary = false.obs;
-  void changeArrowItinerary() {
-    selectedArrowItinerary.value = !selectedArrowItinerary.value;
+  void changeArrowItinerary(bool value) {
+    selectedArrowItinerary.value = value;
+    update();
+  }
+
+  /// Arrow Change In itinrery screen for SSRINFO
+  RxBool selectedArrowItinerarySSR = false.obs;
+  void changeArrowItinerarySSR(bool value) {
+    selectedArrowItinerarySSR.value = value;
     update();
   }
 

@@ -14,7 +14,7 @@ import 'package:myairdeal/domain/models/booking/book_ticket_model/book_ticket_mo
 import 'package:myairdeal/domain/models/booking/get_single_booking/get_single_booking.dart';
 import 'package:myairdeal/domain/models/booking/get_single_booking/traveller_info.dart';
 import 'package:myairdeal/domain/models/booking/mark_up/markup_model.dart';
-import 'package:myairdeal/domain/models/booking/promo/promo.dart';
+import 'package:myairdeal/domain/models/booking/promo/promo_response.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/review_flight_detail_price.dart';
 import 'package:myairdeal/domain/models/booking/review_flight_detail_price/trip_info.dart';

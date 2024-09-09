@@ -32,6 +32,9 @@ CompleteBookingData _$CompleteBookingDataFromJson(Map<String, dynamic> json) =>
       data: json['data'] == null
           ? null
           : Data.fromJson(json['data'] as Map<String, dynamic>),
+      promo: json['promo'] == null
+          ? null
+          : Promo.fromJson(json['promo'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CompleteBookingDataToJson(
@@ -49,4 +52,5 @@ Map<String, dynamic> _$CompleteBookingDataToJson(
       'updatedAt': instance.updatedAt?.toIso8601String(),
       '__v': instance.v,
       'data': instance.data,
+      'promo': instance.promo,
     };

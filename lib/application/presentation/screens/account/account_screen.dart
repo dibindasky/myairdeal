@@ -55,16 +55,14 @@ class ScreenAccountPage extends StatelessWidget {
                     SettingsTile(
                       title: 'Privacy Policies',
                       onTap: () {
-                        OpenLauncherFeature.launchWebPage(
-                            url: 'https://www.myairdeal.com/privacy-policy');
+                        OpenLauncherFeature.launchWebPage(url: privacyPolicy);
                       },
                     ),
                     SettingsTile(
                       title: 'Terms and Conditions',
                       onTap: () {
                         OpenLauncherFeature.launchWebPage(
-                            url:
-                                'https://www.myairdeal.com/terms-and-conditions');
+                            url: termsAndConditons);
                       },
                     ),
                     SettingsTile(

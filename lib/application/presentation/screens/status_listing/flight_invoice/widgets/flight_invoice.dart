@@ -26,6 +26,8 @@ class FlightInvoiceCard extends StatelessWidget {
         ?.retrieveSingleBookingresponceModel?.itemInfos?.air?.travellerInfos;
     final tripInfos = retrieveSingleBookingresponceModel
         ?.retrieveSingleBookingresponceModel?.itemInfos?.air?.tripInfos;
+    final travellerInfos = retrieveSingleBookingresponceModel
+        ?.retrieveSingleBookingresponceModel?.itemInfos?.air?.travellerInfos;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -239,7 +241,16 @@ class FlightInvoiceCard extends StatelessWidget {
                                                   ?.flightSearchQuery
                                                   ?.cabinClass ??
                                               '--'),
-                                      exit: '--',
+                                      exit: travellerInfos
+                                          ?.map((e) => (e.ssrSeatInfos?[
+                                                  '${tripInfos?[tripIndex].sI?[stopIndex].da?.code ?? ''}-${tripInfos?[tripIndex].sI?[stopIndex].aa?.code ?? ''}'] ??
+                                              {})['code'])
+                                          .toList()
+                                          .toString()
+                                          .replaceAll('[', '')
+                                          .replaceAll(']', '')
+                                          .replaceAll('null', '-')
+                                          .replaceAll(',,', ','),
                                     ),
                                   ],
                                 ),
@@ -297,7 +308,7 @@ class FlightInvoiceCard extends StatelessWidget {
                                     label: 'Cabin Class',
                                     lebelStyle: textThinStyle1.copyWith(
                                         fontSize: 10.sp, color: kGreyDark),
-                                    //  value: 'Seat No',
+                                    value: 'Seat No',
                                     valueStyle: textThinStyle1.copyWith(
                                         color: kGreyDark, fontSize: 10.sp),
                                   )
@@ -382,7 +393,17 @@ class FlightInvoiceCard extends StatelessWidget {
                                             '--'),
                                     lebelStyle: textThinStyle1.copyWith(
                                         fontSize: 10.sp, color: kGreyDark),
-                                    // value: '--',
+                                    value: (travellerInfos
+                                            ?.map((e) => e.ssrSeatInfos?[
+                                                    '${tripInfos?[tripIndex].sI?[0].da?.code ?? ''}-${tripInfos?[tripIndex].sI?[0].aa?.code ?? ''}']
+                                                ['code'])
+                                            .toList()
+                                            .toString()
+                                            .replaceAll('[', '')
+                                            .replaceAll(']', '')
+                                            .replaceAll('null', '-')
+                                            .replaceAll(',,', ',')) ??
+                                        '--',
                                     valueStyle: textThinStyle1.copyWith(
                                         color: kGreyDark, fontSize: 10.sp),
                                   )
@@ -403,14 +424,55 @@ class FlightInvoiceCard extends StatelessWidget {
               value:
                   '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.bf?.toDouble() ?? '--'}'),
           TaxAndFeeHelper(
-              title: 'Tax',
+              title: 'Taxs and Fees',
               value:
                   '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.taf?.toDouble() ?? '--'}'),
+          Builder(builder: (context) {
+            final addOns = (retrieveSingleBookingresponceModel
+                        ?.completeBookingData?.payment?.amount
+                        ?.toDouble() ??
+                    0) -
+                ((retrieveSingleBookingresponceModel
+                            ?.retrieveSingleBookingresponceModel
+                            ?.itemInfos
+                            ?.air
+                            ?.totalPriceInfo
+                            ?.totalFareDetail
+                            ?.fC
+                            ?.bf
+                            ?.toDouble() ??
+                        0) +
+                    ((retrieveSingleBookingresponceModel
+                            ?.retrieveSingleBookingresponceModel
+                            ?.itemInfos
+                            ?.air
+                            ?.totalPriceInfo
+                            ?.totalFareDetail
+                            ?.fC
+                            ?.taf
+                            ?.toDouble() ??
+                        0)) +
+                    (retrieveSingleBookingresponceModel
+                            ?.completeBookingData?.markUp?.value
+                            ?.toDouble() ??
+                        0) -
+                    (retrieveSingleBookingresponceModel
+                            ?.completeBookingData?.promo?.value
+                            ?.toDouble() ??
+                        0));
+            return TaxAndFeeHelper(
+                title: 'Seat, Meals & Baggage', value: '₹ $addOns');
+          }),
           TaxAndFeeHelper(
-              title: 'Convenience Fee',
+              title: 'Convenience Fees',
               value:
                   '₹ ${retrieveSingleBookingresponceModel?.completeBookingData?.markUp?.value?.toDouble() ?? '--'}'),
           TaxAndFeeHelper(
+              title: 'Promo Discount',
+              value:
+                  '₹ ${retrieveSingleBookingresponceModel?.completeBookingData?.promo?.value?.toDouble() ?? '--'}'),
+          TaxAndFeeHelper(
+              bold: true,
               title: 'Tatal Amount',
               value:
                   '₹ ${retrieveSingleBookingresponceModel?.completeBookingData?.payment?.amount?.toDouble() ?? '--'}'),

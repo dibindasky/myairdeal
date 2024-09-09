@@ -103,7 +103,7 @@ class AuthController extends GetxController {
       (r) async {
         String image = r.base64String ?? '';
         if (image == '') return;
-        image = image.startsWith('data') ? image.substring(22) : image;
+        image = image.startsWith('data') ? removeBase64Prefix(image) : image;
         await SharedPreferecesStorage.setSplash(image: image);
       },
     );

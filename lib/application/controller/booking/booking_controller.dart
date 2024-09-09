@@ -61,9 +61,13 @@ class BookingController extends GetxController {
   // remaining time
   RxInt remainingTime = 900.obs;
 
-  // booking completion loading
+  /// booking completion loading
   RxBool bookingCompleteLoading = false.obs;
+
+  /// booking success
   RxBool bookingCompleteSuccess = false.obs;
+
+  /// booking failure
   RxBool bookingCompleteFailure = false.obs;
 
   /// markup details
@@ -86,6 +90,9 @@ class BookingController extends GetxController {
 
   /// promo response
   Rx<PromoResponse> promoResponse = PromoResponse().obs;
+
+  /// promo button content changer
+  RxBool promoApplyButton = true.obs;
 
   /// Retrive single booking model
   Rx<GetSingleBooking> retrieveSingleBookingresponceModel =
@@ -247,6 +254,7 @@ class BookingController extends GetxController {
 
   /// check promo is valid or not
   void checkPromo(String promo) async {
+    promoApplyButton.value = true;
     promoErrorCode.value = '';
     promoLoading.value = true;
     promoResponse.value = PromoResponse();
@@ -263,7 +271,15 @@ class BookingController extends GetxController {
       promoErrorCode.value = '';
       promoResponse.value = r;
       promoLoading.value = false;
+      promoApplyButton.value = false;
     });
+  }
+
+  /// remove promo code value
+  void clearPromo() {
+    promoResponse.value = PromoResponse();
+    promoApplyButton.value = true;
+    promoController.text = '';
   }
 
   /// complete booking api calling
@@ -321,6 +337,7 @@ class BookingController extends GetxController {
                     bookingId: bookTicketModel.booking!.bookingId ?? ''),
             callBookings: true);
       });
+      bookingOnHold.value = false;
     } else {
       Get.back();
       Get.snackbar(
@@ -386,6 +403,7 @@ class BookingController extends GetxController {
       {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
     print('price id for search ${reviewPriceDetailIdModel.priceIds}');
     endTimer();
+    Get.find<TravellerController>().clearTaravellerDetails();
     bool start = false;
     Get.toNamed(Routes.flightDetailFillling);
     reviewedDetail = null;
@@ -444,6 +462,7 @@ class BookingController extends GetxController {
     remainingTime = 0.obs;
     promoResponse.value = PromoResponse();
     promoController.text = '';
+    bookingOnHold.value = false;
   }
 
   /// Get Single Booking

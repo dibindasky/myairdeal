@@ -76,7 +76,9 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
         kHeight10,
         Row(
           children: [
-            NetworkImageWithLoading(height: 20.h,width: 20.h,
+            NetworkImageWithLoading(
+                height: 20.h,
+                width: 20.h,
                 imageUrl: getAirlineLogo(bookingController.reviewedDetail?.value
                         .tripInfos?[tripIndex].sI?[siIndex].fD?.aI?.code ??
                     '')),
@@ -198,7 +200,14 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                         : DropDownSsrInfo(
                                             clearSelection: (ssrInfo) {
                                               travellerController.clearMealInfo(
-                                                  ssrInfo ?? SsrInfo(),
+                                                  (ssrInfo ?? SsrInfo()).copyWith(
+                                                          key: bookingController
+                                                              .reviewedDetail
+                                                              ?.value
+                                                              .tripInfos?[
+                                                                  tripIndex]
+                                                              .sI?[siIndex]
+                                                              .id),
                                                   travellerIndex);
                                             },
                                             value: (travellerController.passengerDetails[travellerIndex]?.ssrMealInfos ?? <SsrInfo>[]).any((meal) =>
@@ -283,10 +292,17 @@ class SelectionTileMealsAndBaggage extends StatelessWidget {
                                           )
                                         : DropDownSsrInfo(
                                             clearSelection: (ssrInfo) {
-                                              travellerController
-                                                  .clearBaggagesInfo(
-                                                      ssrInfo ?? SsrInfo(),
-                                                      travellerIndex);
+                                              travellerController.clearBaggagesInfo(
+                                                  (ssrInfo ?? SsrInfo())
+                                                      .copyWith(
+                                                          key: bookingController
+                                                              .reviewedDetail
+                                                              ?.value
+                                                              .tripInfos?[
+                                                                  tripIndex]
+                                                              .sI?[siIndex]
+                                                              .id),
+                                                  travellerIndex);
                                             },
                                             value: (travellerController.passengerDetails[travellerIndex]?.ssrBaggageInfos ?? <SsrInfo>[]).any((baggage) =>
                                                     baggage.key ==

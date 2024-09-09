@@ -121,6 +121,21 @@ String getAirlineLogo(String code) {
 
 String nodata = 'asset/image/nodataImage.png';
 
+String removeBase64Prefix(String base64String) {
+  const List<String> prefixes = [
+    'data:image/jpeg;base64,',
+    'data:image/png;base64,',
+    'data:image/gif;base64,',
+    'data:image/jpg;base64,',
+  ];
+  for (String prefix in prefixes) {
+    if (base64String.startsWith(prefix)) {
+      return base64String.replaceFirst(prefix, '');
+    }
+  }
+  return base64String;
+}
+
 // NetWork image
 String dummyPersonimage =
     'https://www.google.com/imgres?q=person%20image&imgurl=https%3A%2F%2Fengineering.unl.edu%2Fimages%2Fstaff%2FKayla-Person.jpg&imgrefurl=https%3A%2F%2Fengineering.unl.edu%2Fkayla-person%2F&docid=ap6GPr-70tOAyM&tbnid=r4kykPUijMfl_M&vet=12ahUKEwiil4-b2LeGAxX43TgGHQWLAfUQM3oECDQQAA..i&w=600&h=800&hcb=2&ved=2ahUKEwiil4-b2LeGAxX43TgGHQWLAfUQM3oECDQQAA';

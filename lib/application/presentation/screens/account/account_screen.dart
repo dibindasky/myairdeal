@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/account/widgets/settings_tile.dart';
@@ -10,6 +11,7 @@ import 'package:myairdeal/application/presentation/screens/flight_detail_filling
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/confirm_dailogue/confirm_dailogue.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
+import 'package:myairdeal/data/features/url_launcher.dart';
 
 class ScreenAccountPage extends StatelessWidget {
   const ScreenAccountPage({super.key});
@@ -51,8 +53,19 @@ class ScreenAccountPage extends StatelessWidget {
                   title: 'Preferences',
                   tiles: [
                     SettingsTile(
-                      title: 'Legal and Policies',
-                      onTap: () {},
+                      title: 'Privacy Policies',
+                      onTap: () {
+                        OpenLauncherFeature.launchWebPage(
+                            url: 'https://www.myairdeal.com/privacy-policy');
+                      },
+                    ),
+                    SettingsTile(
+                      title: 'Terms and Conditions',
+                      onTap: () {
+                        OpenLauncherFeature.launchWebPage(
+                            url:
+                                'https://www.myairdeal.com/terms-and-conditions');
+                      },
                     ),
                     SettingsTile(
                       title: 'Help & Support',
@@ -66,16 +79,27 @@ class ScreenAccountPage extends StatelessWidget {
                               title: 'Log-Out',
                               color: kRed,
                               onTap: () {
+                                Get.find<HomeController>()
+                                    .changeNavigationChecker(
+                                        NavigationChecker.logoutPopUp);
                                 showConfirmationDialog(
                                   context: context,
                                   heading:
                                       'Are you sure do you want to Log-Out from MY AIRDEAL',
                                   onPressed: () {
+                                    Get.find<HomeController>()
+                                        .changeNavigationChecker(
+                                            NavigationChecker.home);
                                     Get.find<NavBarController>()
                                         .bottomIndex
                                         .value = 0;
                                     controller.logOut();
                                     Get.find<BookingController>().clear();
+                                  },
+                                  onCancelTap: () {
+                                    Get.find<HomeController>()
+                                        .changeNavigationChecker(
+                                            NavigationChecker.home);
                                   },
                                 );
                               },

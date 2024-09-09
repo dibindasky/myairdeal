@@ -57,7 +57,7 @@ class TravellerController extends GetxController {
     'Travel Insurance'
   ];
 
-  /// controller and key for traveller contact detail
+  // controller and key for traveller contact detail
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController gstEmailController = TextEditingController();
@@ -101,6 +101,14 @@ class TravellerController extends GetxController {
   RxList<TravellerInfo?> passengerDetails =
       List<TravellerInfo?>.filled(20, null, growable: true).obs;
 
+  /// clear traveller details
+  void clearTaravellerDetails() {
+    print('-----------------------------------call in clear traveller details');
+    addOnsprice.value = 0;
+    passengerDetails.value =
+        List<TravellerInfo?>.filled(20, null, growable: true);
+  }
+
   void changeCoutryCode(String code) {
     selectedCoutryCode.value = code;
     update();
@@ -117,6 +125,7 @@ class TravellerController extends GetxController {
         break;
       }
     }
+    passengerDetails[index] = traveller;
     calcualteAddonPrice();
   }
 
@@ -162,16 +171,22 @@ class TravellerController extends GetxController {
     print('add on price => ${addOnsprice.value}');
   }
 
+  /// clear baggage infos from particular traveller
   void clearBaggagesInfo(SsrInfo ssrInfo, int index) {
+    print('clear Baggage info');
     TravellerInfo traveller = passengerDetails[index]!;
     traveller.ssrBaggageInfos ??= <SsrInfo>[];
     for (int i = 0; i < traveller.ssrBaggageInfos!.length; i++) {
+      print('keys => ${traveller.ssrBaggageInfos![i].key} == ${ssrInfo.key}');
       if (traveller.ssrBaggageInfos![i].key == ssrInfo.key) {
         // addOnsprice.value -= ssrInfo.amount ?? 0;
+        print('before remove =>  ${traveller.ssrBaggageInfos}');
         traveller.ssrBaggageInfos!.removeAt(i);
+        print('after remove =>  ${traveller.ssrBaggageInfos}');
         break;
       }
     }
+    passengerDetails[index] = traveller;
     calcualteAddonPrice();
   }
 
@@ -271,7 +286,7 @@ class TravellerController extends GetxController {
   }
 
   /// itenary section main tab changing
-  changeDetailEnterTab(
+  void changeDetailEnterTab(
     int index,
   ) {
     selectedMainTab.value = index;

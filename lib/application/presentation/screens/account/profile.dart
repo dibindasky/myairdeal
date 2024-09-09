@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
@@ -9,8 +10,26 @@ import 'package:myairdeal/application/presentation/utils/animations/splash_anima
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 
-class ScreenProfile extends StatelessWidget {
+class ScreenProfile extends StatefulWidget {
   const ScreenProfile({super.key});
+
+  @override
+  State<ScreenProfile> createState() => _ScreenProfileState();
+}
+
+class _ScreenProfileState extends State<ScreenProfile> {
+  @override
+  void initState() {
+    Get.find<HomeController>()
+        .changeNavigationChecker(NavigationChecker.profile);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    Get.find<HomeController>().changeNavigationChecker(NavigationChecker.home);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

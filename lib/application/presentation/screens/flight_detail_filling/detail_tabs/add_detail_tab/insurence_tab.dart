@@ -96,17 +96,19 @@ class _InsurenceTabState extends State<InsurenceTab> {
               borderRadius: kRadius15,
             ),
             padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 10.w),
-            child: CustomExpansionTile(isBorder: false,
+            child: CustomExpansionTile(
+              isBorder: false,
               child: Align(
-                  child: Row(crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text('Add GST Number for Business Travel (Optional)',
-                            style: textStyle1),
-                      ),
-                          Icon(Icons.arrow_drop_down)
-                    ],
-                  )),
+                  child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text('Add GST Number for Business Travel (Optional)',
+                        style: textStyle1),
+                  ),
+                  const Icon(Icons.arrow_drop_down)
+                ],
+              )),
               children: [
                 CustomTextField(
                   controller: controller.gstNumberController,

@@ -13,6 +13,8 @@ class TravellerInfo {
   String? pNum;
   String? eD;
   String? pid;
+  @JsonKey(name: '_id')
+  String? id;
   String? pN;
   @JsonKey(name: 'ssrMealInfos')
   List<SsrInfo>? ssrMealInfos;
@@ -23,6 +25,7 @@ class TravellerInfo {
 
   TravellerInfo({
     this.ti,
+    this.id,
     this.fN,
     this.lN,
     this.pt,
@@ -47,6 +50,7 @@ class TravellerInfo {
     String? fN,
     String? lN,
     String? pt,
+    String? id,
     String? dob,
     String? pNum,
     String? eD,
@@ -56,6 +60,7 @@ class TravellerInfo {
     List<SsrInfo>? ssrBaggageInfos,
   }) {
     return TravellerInfo(
+      id: id ?? this.id,
       ti: ti ?? this.ti,
       fN: fN ?? this.fN,
       lN: lN ?? this.lN,

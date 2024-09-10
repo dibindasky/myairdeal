@@ -48,6 +48,12 @@ class ScreenAccountPage extends StatelessWidget {
                         : kEmpty;
                   },
                 ),
+                SettingsTile(
+                  title: 'Saved Passengers',
+                  onTap: () {
+                    Get.toNamed(Routes.travelerDetails);
+                  },
+                ),
                 kHeight20,
                 SettingsSection(
                   title: 'Preferences',

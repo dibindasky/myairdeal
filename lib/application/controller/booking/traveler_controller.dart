@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
@@ -21,13 +20,13 @@ import 'package:myairdeal/domain/repository/service/passengers_repo.dart';
 class TravellerController extends GetxController {
   final PassengersRepo _passengersRepo = PassengersService();
   final BookingRepo bookingRepo = BookingService();
-
+  final PassengersRepo passengersRepo = PassengersService();
   final ScrollController travellerScreenScrollController = ScrollController();
 
   /// Gender type [genderType] 0- Mr, 1- Mrs, 2- Ms
   RxInt genderType = 0.obs;
-  RxList genderList = ['Mr', 'Mrs', 'Ms'].obs;
-  RxList genderListchild = ['Ms', 'Master'].obs;
+  RxList<String> genderList = ['Mr', 'Mrs', 'Ms'].obs;
+  RxList<String> genderListchild = ['Ms', 'Master'].obs;
   RxInt selectedSavedDetailData = 0.obs;
   String travelerTab = 'Add Details';
   List<String> detailList = [' Itinerary', 'Add Details', 'Review', 'Payments'];
@@ -37,7 +36,9 @@ class TravellerController extends GetxController {
 
   /// list responsible for showing passenger history
   RxList<TravellerInfo> allPassengers = <TravellerInfo>[].obs;
+  RxList<TravellerInfo> allPassengersBasedOnType = <TravellerInfo>[].obs;
   RxBool isLoading = false.obs;
+  RxBool updateLoading = false.obs;
   RxBool hasError = false.obs;
   RxBool seatIsLoading = false.obs;
 
@@ -65,6 +66,7 @@ class TravellerController extends GetxController {
   TextEditingController gstNumberController = TextEditingController();
   TextEditingController gstCompanyNameController = TextEditingController();
   TextEditingController gstAddressController = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
 
   /// Add details Screen
@@ -406,13 +408,17 @@ class TravellerController extends GetxController {
     selectedAddDetailsStep = 0.obs;
     passengerDetails =
         List<TravellerInfo?>.filled(20, null, growable: true).obs;
-    phoneController.text = '';
-    emailController.text = '';
-    gstEmailController.text = '';
-    gstPhoneController.text = '';
-    gstNumberController.text = '';
-    gstCompanyNameController.text = '';
-    gstAddressController.text = '';
+    clearTextFields();
+  }
+
+  clearTextFields() {
+    phoneController.clear();
+    emailController.clear();
+    gstEmailController.clear();
+    gstPhoneController.clear();
+    gstNumberController.clear();
+    gstCompanyNameController.clear();
+    gstAddressController.clear();
   }
 
   changeSelectedDetailStepArrow(bool newValue) {
@@ -443,11 +449,53 @@ class TravellerController extends GetxController {
             : gstAddressController.text);
   }
 
-  /// Get All passengers
-  void getAllPassengers(String type, bool dobCheck, bool pcs) async {
+  // Get All Passengers
+  void getAllPAssengers() async {
     isLoading.value = true;
     final data = await _passengersRepo.getPassengers();
-    allPassengers.value = [];
+    data.fold(
+      (l) => null,
+      (r) {
+        allPassengers.value = r.passengers ?? [];
+      },
+    );
+    isLoading.value = false;
+  }
+
+  void updatePassenger({required TravellerInfo traveller}) async {
+    updateLoading.value = true;
+    final data =
+        await passengersRepo.updatePassengers(travellerInfo: traveller);
+    data.fold(
+      (l) => null,
+      (r) {
+        getAllPAssengers();
+        Get.back();
+        Get.snackbar('Success', 'Passenger details updated Successfully');
+      },
+    );
+    updateLoading.value = false;
+  }
+
+  void deletePAssenger({required String travellerID}) async {
+    isLoading.value = true;
+    final data =
+        await passengersRepo.deletePassengers(travellerID: travellerID);
+    data.fold(
+      (l) => null,
+      (r) {
+        getAllPAssengers();
+        Get.snackbar('Success', 'Passenger Deleted Successfully');
+      },
+    );
+    isLoading.value = false;
+  }
+
+  /// Get All passengers based on type DOB and PSC
+  void getAllPassengersBasedOnType(String type, bool dobCheck, bool pcs) async {
+    isLoading.value = true;
+    final data = await _passengersRepo.getPassengers();
+    allPassengersBasedOnType.value = [];
     data.fold(
       (l) {
         isLoading.value = false;
@@ -525,7 +573,7 @@ class TravellerController extends GetxController {
             }
           }
         }
-        allPassengers.value = temp;
+        allPassengersBasedOnType.value = temp;
         update();
         isLoading.value = false;
       },

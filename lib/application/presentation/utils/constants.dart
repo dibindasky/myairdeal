@@ -8,8 +8,8 @@ const errorMessage = 'something went wrong, please try again';
 
 const poppins = 'Poppins';
 
-const privacyPolicy='https://www.myairdeal.com/privacy-policy';
-const termsAndConditons='https://www.myairdeal.com/terms-and-conditions';
+const privacyPolicy = 'https://www.myairdeal.com/privacy-policy';
+const termsAndConditons = 'https://www.myairdeal.com/terms-and-conditions';
 
 const kEmpty = SizedBox();
 
@@ -62,7 +62,6 @@ List<BoxShadow> boxShadow2Blue = const [
 
 // Asset
 String myAirDealLogo = 'asset/logo/myairdeal_gold_logo.jpg';
-// String myAirDealLogo = 'asset/image/myair_deal_logo.png';
 String splashImage = 'asset/image/myair_deal_logo.png';
 String onBoardImage = 'asset/image/onbaord_image_one.png';
 String imageGlobalMapGray = 'asset/image/Global Map.png';

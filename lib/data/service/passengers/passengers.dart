@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:myairdeal/data/service/api_service.dart';
@@ -43,6 +42,46 @@ class PassengersService implements PassengersRepo {
       return Left(Failure(message: errorMessage));
     } catch (e) {
       log('catch getPassengers $e');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SuccessResponceModel>> deletePassengers(
+      {required String travellerID}) async {
+    try {
+      await apiService.put(
+          addHeader: true,
+          ApiEndPoints.deleteTraveller,
+          queryParameters: {'passengerId': travellerID});
+      log('deletePassengers done ');
+      return Right(SuccessResponceModel());
+    } on DioException catch (e) {
+      log('DioException deletePassengers $e');
+      return Left(Failure(message: errorMessage));
+    } catch (e) {
+      log('catch deletePassengers $e');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, SuccessResponceModel>> updatePassengers({
+    required TravellerInfo travellerInfo,
+  }) async {
+    try {
+      await apiService.put(
+          addHeader: true,
+          ApiEndPoints.deleteTraveller,
+          data: travellerInfo.toJson(),
+          queryParameters: {'passengerId': travellerInfo.id});
+      log('updatePassengers done ');
+      return Right(SuccessResponceModel());
+    } on DioException catch (e) {
+      log('DioException updatePassengers $e');
+      return Left(Failure(message: errorMessage));
+    } catch (e) {
+      log('catch updatePassengers $e');
       return Left(Failure(message: e.toString()));
     }
   }

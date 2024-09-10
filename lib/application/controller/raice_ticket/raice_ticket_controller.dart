@@ -43,7 +43,7 @@ class RaiceTicketController extends GetxController {
 
   void changeSelectedYouCouldAlsoTab(int selectedNewTab) {
     selectedYouCouldAlsoTab.value = selectedNewTab;
-    if (selectedYouCouldAlsoTab.value == 0) {
+    if (selectedYouCouldAlsoTab.value != 2) {
       final bookingController = Get.find<BookingController>();
       Timer(
         const Duration(milliseconds: 300),
@@ -75,13 +75,14 @@ class RaiceTicketController extends GetxController {
     update();
   }
 
-  void createRaiceTicket({required RaiceTicket raiceTicket}) async {
-    if (descriptionController.text.isEmpty) {
-      return;
-    } else if (descriptionController.length < 10) {
-      return;
-    }
+  void createRaiceTicket({required String bookingId}) async {
     isLoading.value = true;
+    RaiceTicket raiceTicket = RaiceTicket(
+      bookingId: bookingId,
+      description: descriptionController.text,
+      heading: selectedheding.value,
+      product: selectedProduct.value,
+    );
     final data =
         await raiceTicketRepo.createRaiceTicket(raiceTicket: raiceTicket);
     data.fold(
@@ -93,6 +94,7 @@ class RaiceTicketController extends GetxController {
         Get.snackbar('Sucess', 'Ticket Raicing Sucess',
             backgroundColor: Get.find<ThemeController>().secondaryColor);
         selectedYouCouldAlsoTab.value = 1;
+        update();
         descriptionController.clear();
       },
     );

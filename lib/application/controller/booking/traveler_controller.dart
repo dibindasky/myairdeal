@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
@@ -457,15 +458,19 @@ class TravellerController extends GetxController {
       (l) => null,
       (r) {
         allPassengers.value = r.passengers ?? [];
+        for (var element in allPassengers) {
+          log('id ${element.id}');
+        }
       },
     );
     isLoading.value = false;
   }
 
-  void updatePassenger({required TravellerInfo traveller}) async {
+  void updatePassenger(
+      {required TravellerInfo traveller, required String travellerID}) async {
     updateLoading.value = true;
-    final data =
-        await passengersRepo.updatePassengers(travellerInfo: traveller);
+    final data = await passengersRepo.updatePassengers(
+        travellerInfo: traveller, travellerID: travellerID);
     data.fold(
       (l) => null,
       (r) {
@@ -477,7 +482,7 @@ class TravellerController extends GetxController {
     updateLoading.value = false;
   }
 
-  void deletePAssenger({required String travellerID}) async {
+  void deletePassenger({required String travellerID}) async {
     isLoading.value = true;
     final data =
         await passengersRepo.deletePassengers(travellerID: travellerID);
@@ -485,7 +490,8 @@ class TravellerController extends GetxController {
       (l) => null,
       (r) {
         getAllPAssengers();
-        Get.snackbar('Success', 'Passenger Deleted Successfully');
+        Get.snackbar('Success', 'Passenger Deleted Successfully',
+            backgroundColor: kGoldLightPrimary);
       },
     );
     isLoading.value = false;

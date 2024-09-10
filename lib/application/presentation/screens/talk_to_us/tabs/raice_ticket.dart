@@ -58,7 +58,7 @@ class RaiceTicket extends StatelessWidget {
                     validate: Validate.notNull,
                     isBorder: true,
                     borderRadius: 9,
-                    textCapitalization: TextCapitalization.words,
+                    textCapitalization: TextCapitalization.sentences,
                     enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(width: .3),
                         borderRadius: kRadius15),
@@ -73,7 +73,7 @@ class RaiceTicket extends StatelessWidget {
                     isBorder: true,
                     maxLines: 6,
                     borderRadius: 9,
-                    textCapitalization: TextCapitalization.words,
+                    textCapitalization: TextCapitalization.sentences,
                     enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(width: .3),
                         borderRadius: kRadius15),

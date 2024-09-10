@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -55,11 +56,11 @@ class RaiceTickets extends StatelessWidget {
             maxLines: 1,
             isBorder: true,
             borderRadius: 7,
-            textCapitalization: TextCapitalization.words,
+            textCapitalization: TextCapitalization.sentences,
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(width: .3),
             ),
-            validate: Validate.notNullAndLength10,
+            validate: Validate.notNull,
             onTapOutside: () => FocusScope.of(context).unfocus(),
             fillColor: kGreyLightBackground,
             hintText: 'Description',
@@ -68,22 +69,20 @@ class RaiceTickets extends StatelessWidget {
         kHeight10,
         BookingProductdropoDownBuilder(),
         kHeight15,
-        EventButton(
-          width: 400.w,
-          text: 'Submit',
-          onTap: () {
-            if (ticketRaiceController.raiceTicketFormKey.currentState!
-                .validate()) {
-              RaiceTicket raiceTicket = RaiceTicket(
-                bookingId: bookingId,
-                description: ticketRaiceController.descriptionController.text,
-                heading: ticketRaiceController.selectedheding.value,
-                product: ticketRaiceController.selectedProduct.value,
-              );
-              Get.find<RaiceTicketController>()
-                  .createRaiceTicket(raiceTicket: raiceTicket);
-            }
-          },
+        Obx(
+          () => ticketRaiceController.isLoading.value
+              ? CircularProgressIndicator(color: kGoldLightPrimary)
+              : EventButton(
+                  width: 400.w,
+                  text: 'Submit',
+                  onTap: () {
+                    if (ticketRaiceController.raiceTicketFormKey.currentState!
+                        .validate()) {
+                      Get.find<RaiceTicketController>()
+                          .createRaiceTicket(bookingId: bookingId ?? '');
+                    }
+                  },
+                ),
         ),
         kHeight20
       ],

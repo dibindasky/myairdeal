@@ -106,7 +106,6 @@ class TravellerController extends GetxController {
 
   /// clear traveller details
   void clearTaravellerDetails() {
-    print('-----------------------------------call in clear traveller details');
     addOnsprice.value = 0;
     passengerDetails.value =
         List<TravellerInfo?>.filled(20, null, growable: true);
@@ -163,29 +162,16 @@ class TravellerController extends GetxController {
     traveller.ssrBaggageInfos!
         .add(ssrInfo.copyWith(amount: ssrInfo.amount ?? 0));
     passengerDetails[index] = traveller;
-    print('ssr info => ${ssrInfo.toString()}');
-    for (var traveller in passengerDetails) {
-      for (var element in traveller?.ssrBaggageInfos ?? <SsrInfo>[]) {
-        print(element.toString());
-      }
-    }
-    // addOnsprice.value += ssrInfo.amount ?? 0;
     calcualteAddonPrice();
-    print('add on price => ${addOnsprice.value}');
   }
 
   /// clear baggage infos from particular traveller
   void clearBaggagesInfo(SsrInfo ssrInfo, int index) {
-    print('clear Baggage info');
     TravellerInfo traveller = passengerDetails[index]!;
     traveller.ssrBaggageInfos ??= <SsrInfo>[];
     for (int i = 0; i < traveller.ssrBaggageInfos!.length; i++) {
-      print('keys => ${traveller.ssrBaggageInfos![i].key} == ${ssrInfo.key}');
       if (traveller.ssrBaggageInfos![i].key == ssrInfo.key) {
-        // addOnsprice.value -= ssrInfo.amount ?? 0;
-        print('before remove =>  ${traveller.ssrBaggageInfos}');
         traveller.ssrBaggageInfos!.removeAt(i);
-        print('after remove =>  ${traveller.ssrBaggageInfos}');
         break;
       }
     }
@@ -204,11 +190,6 @@ class TravellerController extends GetxController {
       }
     }
     traveller.ssrSeatInfos!.add(ssrInfo);
-    for (var traveller in passengerDetails) {
-      for (var element in traveller?.ssrSeatInfos ?? <SsrInfo>[]) {
-        print(element.toString());
-      }
-    }
     calcualteAddonPrice();
   }
 
@@ -347,7 +328,6 @@ class TravellerController extends GetxController {
     update();
     // call for markup price while going to payment section
     if (index == 3) {
-      print('get markup call');
       Get.find<BookingController>().getMarkup();
     }
   }
@@ -511,7 +491,6 @@ class TravellerController extends GetxController {
         final travelDate =
             Get.find<FlightSortController>().multiCityDepartureDate.first!;
 
-        print('pcs => $pcs');
         for (var passenger in r.passengers ?? <TravellerInfo>[]) {
           // if passport details are necessary then add passenger with passport dearils only
           if (pcs) {
@@ -588,17 +567,14 @@ class TravellerController extends GetxController {
 
   /// select seats for each flights
   void selectSeat({required int passengerIndex, required SInfo seat}) {
-    print(seat.toJson());
     if (selectedSeats[selectedSeatFlightKey.value]!.any((element) =>
         element?.code == seat.code &&
         element?.key == selectedSeatFlightKey.value)) {
-      print('seat alredy there reomve it form list');
       final index = selectedSeats[selectedSeatFlightKey.value]!
           .lastIndexWhere((element) => element?.code == seat.code);
       selectedSeats[selectedSeatFlightKey.value]![index] = null;
       addOnsprice.value -= seat.amount ?? 0;
     } else if (selectedSeats[selectedSeatFlightKey.value]!.contains(null)) {
-      print('add to list');
       final index = selectedSeats[selectedSeatFlightKey.value]!
           .lastIndexWhere((element) => element == null
               // element?.code == seat.code &&
@@ -609,12 +585,7 @@ class TravellerController extends GetxController {
           code: seat.code,
           amount: seat.amount);
       addOnsprice.value += seat.amount ?? 0;
-    } else {
-      print('no conditions satisfys');
-    }
-    for (var e in selectedSeats[selectedSeatFlightKey.value] ?? <SsrInfo?>[]) {
-      print(e?.code);
-    }
+    } 
   }
 
   /// change selected flight using flight id for seat selection
@@ -636,17 +607,6 @@ class TravellerController extends GetxController {
     if (index == keysList.length - 1 || index == -1) {
       selectedAddDetailsStep.value += 1;
       update();
-      // clear seatinfo from passenger details
-      // for (var passenger in passengerDetails) {
-      //   if (passenger?.ssrBaggageInfos != null) {
-      //     for (var element in passenger!.ssrBaggageInfos!) {
-      //       addOnsprice.value -= element.amount ?? 0;
-      //     }
-      //   }
-      //   passenger?.ssrSeatInfos = null;
-      // }
-      // add selected seats to passengers
-      print('seat added to passenger');
       for (int i = 0; i < passengerLengthWithoutInfant.value; i++) {
         for (var key in keysList) {
           if (selectedSeats[key] != null && selectedSeats[key]!.length > i) {
@@ -659,9 +619,6 @@ class TravellerController extends GetxController {
               ];
             }
           }
-        }
-        for (var e in passengerDetails[i]?.ssrSeatInfos ?? <SsrInfo>[]) {
-          print(e.toJson());
         }
       }
     } else {
@@ -705,7 +662,6 @@ class TravellerController extends GetxController {
         bookingId: RetrieveSingleBookingRequestModel(bookingId: bookingId));
     result.fold((l) => null, (r) {
       keysList.value = r.tripSeatMap?.tripSeats?.keys.toList() ?? <String>[];
-      print('number of keys => ${keysList.length}');
       for (var element in keysList) {
         seatsAvilable[element] = TripSeatsInfo.fromJson(
             r.tripSeatMap?.tripSeats?[element] ?? <String, dynamic>{});

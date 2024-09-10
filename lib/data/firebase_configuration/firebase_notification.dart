@@ -82,7 +82,9 @@ class NotificationServices {
 
   // function to show visible notification when app is active
   Future<void> showNotification(RemoteMessage message) async {
-    print("in show notification start..====");
+    if (kDebugMode) {
+      print("in show notification start..====");
+    }
     AndroidNotificationChannel channel = AndroidNotificationChannel(
       message.notification!.android!.channelId.toString(),
       message.notification!.android!.channelId.toString(),
@@ -113,7 +115,9 @@ class NotificationServices {
         android: androidNotificationDetails, iOS: darwinNotificationDetails);
 
     Future.delayed(Duration.zero, () {
-      print("in delay show.====");
+      if (kDebugMode) {
+        print("in delay show.====");
+      }
       _flutterLocalNotificationsPlugin.show(
         0,
         message.notification!.title.toString(),
@@ -141,12 +145,13 @@ class NotificationServices {
   //handle tap on notification when app is in background or terminated
   Future<void> setupInteractMessage(BuildContext context) async {
     // when app is terminated
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
-
-    if (initialMessage != null) {
-      handleMessage(context, initialMessage);
-    }
+    await FirebaseMessaging.instance.getInitialMessage().then(
+      (initialMessage) {
+        if (initialMessage != null) {
+          handleMessage(context, initialMessage);
+        }
+      },
+    );
 
     //when app ins background
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
@@ -155,7 +160,9 @@ class NotificationServices {
   }
 
   void handleMessage(BuildContext context, RemoteMessage message) {
-    print('handle ===== notification message');
+    if (kDebugMode) {
+      print('handle ===== notification message');
+    }
     // if(message.data['type'] =='msj'){
     //   Navigator.push(context,
     //       MaterialPageRoute(builder: (context) => MessageScreen(

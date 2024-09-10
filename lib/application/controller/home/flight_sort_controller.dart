@@ -263,9 +263,7 @@ class FlightSortController extends GetxController {
     timer.value.cancel();
     remainingTime.value = (15 * 60);
     timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
-      // print('search timer => ${remainingTime.value}');
       if (remainingTime.value == (0)) {
-        print('timer canceled time ends');
         Get.back(id: 1);
         if (Get.currentRoute == Routes.bottomBar &&
             Get.find<NavBarController>().bottomIndex.value == 0) {
@@ -788,7 +786,6 @@ class FlightSortController extends GetxController {
             0.0;
       }
     }
-    print('total price => $price');
     totalTicketPrice.value = price;
   }
 
@@ -819,18 +816,15 @@ class FlightSortController extends GetxController {
     selectedFlights[selectedTripListIndex.value] = index;
     selectedTicketPrices[selectedTripListIndex.value] = i;
     if (roundTrip.value && selectedSpecialReturnAirline.value != '') {
-      print('call function for special return sorting');
       sortAirlineListForSpecialReturnList(
           searchList[selectedTripListIndex.value][index].totalPriceList![i]);
     }
-    print('call function for get toal price from selected trips');
     getTotalFare();
   }
 
   /// sort the airline list to get all matching special returns
   void sortAirlineListForSpecialReturnList(TotalPriceList priceList) {
     if (selectedTripListIndex.value == 0) {
-      print('sort msri for index 1');
       // find the maching airlines and add it to the search list for sorting
       searchListMain[1] = sortSriMsri(priceList, 1);
       sortAirlineList(selectedIndex: 1);
@@ -858,12 +852,10 @@ class FlightSortController extends GetxController {
             priceList.msri!.contains(price.sri)) {
           totalPriceListTemp.add(price);
         }
-        print('totalPriceListTemp length => ${totalPriceListTemp.length}');
       }
       if (totalPriceListTemp.isNotEmpty) {
         temp.add(trip.copyWith(totalPriceList: totalPriceListTemp));
       }
-      print('temp list lenght => ${temp.length}');
     }
     return temp;
   }
@@ -922,13 +914,10 @@ class FlightSortController extends GetxController {
   void sortAirlineList({int? selectedIndex}) {
     // if selected index not passed then take selected trip list index to process
     int index = selectedIndex ?? selectedTripListIndex.value;
-    print('SORTING...');
     sortingRebuild.value = true;
     sortingLoadingIndex.value = index;
     // sorting for combo trip list
     if (comboTrip.value) {
-      print('comboListMain => ${comboListMain.length}');
-      print('comboList => ${comboList.length}');
       List<List<SearchAirlineInformation>> sort = [];
       // sort for airlines
       if (sortingVariablesSelected[index]![0].isEmpty ||
@@ -947,7 +936,6 @@ class FlightSortController extends GetxController {
           }
         }
       }
-      print('sort length after airline =>> ${sort.length}');
 
       // sort for stops
       if ((sortingVariablesSelected[index]![1].isNotEmpty)) {
@@ -959,7 +947,6 @@ class FlightSortController extends GetxController {
           }
         }
       }
-      print('sort length after stop =>> ${sort.length}');
 
       // sort for price
       if (sortingVariablesSelected[index]![3].isNotEmpty) {
@@ -970,7 +957,6 @@ class FlightSortController extends GetxController {
           }
         }
       }
-      print('sort length after price =>> ${sort.length}');
       comboList.value = sort;
       if (lowToHigh.value) {
         sortPriceCombo(true);
@@ -1097,7 +1083,6 @@ class FlightSortController extends GetxController {
                         ?.length ??
                     1) -
                 1;
-        print('set ticket price form $ticketprice');
         selectedTicketPrices[selectedTripListIndex.value] =
             ticketprice < 0 ? 0 : ticketprice;
       }
@@ -1114,9 +1099,7 @@ class FlightSortController extends GetxController {
   void nextOrContinue() {
     if (selectedTripListIndex.value < searchList.length - 1) {
       changeSelectedTripIndex(selectedTripListIndex.value + 1);
-    } else {
-      print("continue");
-    }
+    } 
   }
 
   /// swap the data between from and to in search field
@@ -1337,7 +1320,6 @@ class FlightSortController extends GetxController {
           <dynamic>[value.obs].obs;
       durationSlider.value = value;
     }
-    print(sortingVariablesSelected[selectedTripListIndex.value]![2]);
     sortAirlineList();
   }
 

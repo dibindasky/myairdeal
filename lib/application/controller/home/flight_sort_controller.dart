@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -320,7 +321,9 @@ class FlightSortController extends GetxController {
   }
 
   void updateSearchToRecent(FlightSearchSortModel flightSearchSortModel) {
-    homeService.addRecentSearch(flightSearchSortModel: flightSearchSortModel);
+    if (Get.find<AuthController>().loginOrNot.value) {
+      homeService.addRecentSearch(flightSearchSortModel: flightSearchSortModel);
+    }
   }
 
   /// validate form for search flight

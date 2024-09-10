@@ -25,31 +25,9 @@ class _ScreenFlightTicketSortState extends State<ScreenFlightTicketSort> {
   @override
   void initState() {
     super.initState();
-    // BackButtonInterceptor.add(myInterceptor);
     Get.find<HomeController>()
         .changeNavigationChecker(NavigationChecker.search);
   }
-
-  // @override
-  // void dispose() {
-  //   BackButtonInterceptor.remove(myInterceptor);
-  //   super.dispose();
-  // }
-
-  // bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-  //   print('serch back button =>');
-  //   if (ModalRoute.of(context)?.isCurrent != true ||
-  //       Get.find<HomeController>().navigationCheck ==
-  //           NavigationChecker.itinary) {
-  //   print('serch back button => 1');
-  //     return false; // Not the active route, don't handle the back button
-  //   }
-  //   // Custom back button logic here
-  //   print('serch back button => 2');
-  //   Get.back(id: 1);
-  //   Get.find<HomeController>().changeNavigationChecker(NavigationChecker.home);
-  //   return true; // Prevent the default back button action
-  // }
 
   @override
   Widget build(BuildContext context) {

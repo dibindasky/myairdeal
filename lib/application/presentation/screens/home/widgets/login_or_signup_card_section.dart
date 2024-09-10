@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 
@@ -49,7 +48,7 @@ class LogInOrSignUpCard extends StatelessWidget {
             ],
           ),
           EventButton(
-            text: 'Sign Up',
+            text: 'Log in / Sign up',
             onTap: () {
               Get.toNamed(Routes.signUpSignIn);
             },

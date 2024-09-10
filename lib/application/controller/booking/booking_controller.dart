@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
@@ -409,6 +410,11 @@ class BookingController extends GetxController {
   void reviewPriceDetailChecking(
       {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
     print('price id for search ${reviewPriceDetailIdModel.priceIds}');
+    if (!Get.find<AuthController>().loginOrNot.value) {
+      Get.find<AuthController>().changeBookingLogin(true);
+      Get.toNamed(Routes.signUpSignIn);
+      return;
+    }
     endTimer();
     Get.find<TravellerController>().clearTaravellerDetails();
     bool start = false;

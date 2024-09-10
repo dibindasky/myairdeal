@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/count_down.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/widgets/pinput_feild.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -81,6 +82,13 @@ class _ScreenOTPState extends State<ScreenOTP> {
                 Text(
                   'Enter the verification code we just send to your number +91 ${loginController.loginNumber.text}.',
                   style: textThinStyle1.copyWith(color: kGrey),
+                ),
+                GestureDetector(
+                  onTap: () => Get.offNamed(Routes.signUpSignIn),
+                  child: Text(
+                    'Change Number',
+                    style: textThinStyle1.copyWith(color: kBlue),
+                  ),
                 ),
                 kHeight20,
                 GetBuilder<AuthController>(builder: (controller) {

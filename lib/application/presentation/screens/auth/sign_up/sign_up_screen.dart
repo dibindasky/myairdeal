@@ -3,19 +3,33 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/widgets/event_icon_button.dart';
 
-class ScreenSignUp extends StatelessWidget {
+class ScreenSignUp extends StatefulWidget {
   const ScreenSignUp({super.key});
+
+  @override
+  State<ScreenSignUp> createState() => _ScreenSignUpState();
+}
+
+class _ScreenSignUpState extends State<ScreenSignUp> {
+  @override
+  void initState() {
+    Get.find<HomeController>()
+        .changeNavigationChecker(NavigationChecker.loginSignup);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final themeController = Get.find<ThemeController>();
     FocusScopeNode focusScopeNode = FocusScope.of(context);
     final controller = Get.find<AuthController>();
+
     return GestureDetector(
       onTap: () {
         if (!focusScopeNode.hasPrimaryFocus) {
@@ -33,7 +47,15 @@ class ScreenSignUp extends StatelessWidget {
                     kHeight50,
                     kHeight20,
                     Image.asset(myAirDealLogo, height: 150.w),
-                    kHeight50,
+                    kHeight30,
+                    Obx(() {
+                      return Get.find<AuthController>().logFromBooking.value
+                          ? Text('Login Before Making A Booking',
+                              style: textStyle1.copyWith(
+                                  fontSize: 12.sp, fontWeight: FontWeight.w700))
+                          : kEmpty;
+                    }),
+                    kHeight20,
                     Text(controller.changeLogin.value ? 'Sign Up' : 'Login',
                         style: textHeadStyle1.copyWith(
                           fontSize: 25.sp,
@@ -119,7 +141,7 @@ class ScreenSignUp extends StatelessWidget {
                                 },
                                 child: Text(
                                   'Sign Up',
-                                  style: textThinStyle1.copyWith(
+                                  style: textStyle1.copyWith(
                                       color: themeController.secondaryColor,
                                       decoration: TextDecoration.underline,
                                       decorationColor:

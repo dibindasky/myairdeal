@@ -95,6 +95,7 @@ class ScreenAccountCreationForm extends StatelessWidget {
                       CustomTextField(
                         controller: authController.email,
                         isBorder: true,
+                        keyboardType: TextInputType.emailAddress,
                         borderRadius: 14,
                         enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(width: .3),

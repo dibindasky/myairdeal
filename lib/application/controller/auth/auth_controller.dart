@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
@@ -27,6 +28,7 @@ class AuthController extends GetxController {
   RxBool isLoading = false.obs;
   bool hasError = false;
   RxBool loginOrNot = false.obs;
+  RxBool logFromBooking = false.obs;
   RxBool isGuest = true.obs;
 
   TextEditingController loginNumber = TextEditingController();
@@ -61,6 +63,11 @@ class AuthController extends GetxController {
   RxBool changeLogin = false.obs;
   void changeLoginBool() async {
     changeLogin.value = !changeLogin.value;
+  }
+
+  /// change while coming to login from booking
+  void changeBookingLogin(bool value) async {
+    logFromBooking.value = value;
   }
 
   @override
@@ -140,7 +147,11 @@ class AuthController extends GetxController {
 
   Future<void> guestLogin() async {
     await SharedPreferecesStorage.setGuestLogin(true);
-    Get.offAndToNamed(Routes.bottomBar);
+    if (logFromBooking.value) {
+      Get.back();
+    } else {
+      Get.offAndToNamed(Routes.bottomBar);
+    }
   }
 
   Future<void> logOrNot() async {
@@ -202,9 +213,17 @@ class AuthController extends GetxController {
       loginOrNot.value = false;
       SharedPreferecesStorage.setProfile(r.profile ?? false);
       if (r.profile == null || r.profile == false) {
-        Get.offAllNamed(Routes.alMostDone);
+        Get.offNamed(Routes.alMostDone);
       } else {
-        Get.offAllNamed(Routes.bottomBar);
+        if (logFromBooking.value) {
+          Get.back();
+          Get.back();
+          Get.find<HomeController>()
+              .changeNavigationChecker(NavigationChecker.search);
+        } else {
+          Get.offAllNamed(Routes.bottomBar);
+        }
+        changeBookingLogin(false);
       }
       SharedPreferecesStorage.saveToken(
           tokenModel: TokenModel(token: r.token ?? ''));
@@ -257,10 +276,17 @@ class AuthController extends GetxController {
         email.clear();
         isLoading.value = false;
         Get.snackbar('Success', 'Account created successfully',
-            backgroundColor: kBluePrimary);
+            backgroundColor: kGoldPrimary);
         getUserInfo(true);
         await SharedPreferecesStorage.setProfile(true);
-        Get.offAllNamed(Routes.bottomBar);
+        if (logFromBooking.value) {
+          Get.back();
+          Get.find<HomeController>()
+              .changeNavigationChecker(NavigationChecker.search);
+        } else {
+          Get.offAllNamed(Routes.bottomBar);
+        }
+        changeBookingLogin(false);
         update();
       },
     );
@@ -342,7 +368,7 @@ class AuthController extends GetxController {
   void logOut() async {
     isLoading.value = true;
     final token = await SharedPreferecesStorage.getNotificationToken();
-    await authRepo.clearToken(tokenModel: TokenModel(token: token));
+    authRepo.clearToken(tokenModel: TokenModel(token: token));
     Get.snackbar('Success!', 'You\'ve Successfully Signed Out!',
         backgroundColor: Get.find<ThemeController>().secondaryColor);
     isLoading.value = false;

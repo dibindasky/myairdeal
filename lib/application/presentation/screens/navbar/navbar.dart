@@ -99,6 +99,13 @@ class _ScreenNavbarState extends State<ScreenNavbar> {
             .changeNavigationChecker(NavigationChecker.home);
         break;
 
+      case NavigationChecker.loginSignup:
+        // while the user is at the logout pop-up
+        // Get.back();
+        Get.find<HomeController>()
+            .changeNavigationChecker(NavigationChecker.search);
+        break;
+
       default:
         return true;
     }

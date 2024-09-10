@@ -40,6 +40,8 @@ class ApiEndPoints {
   static const String getMarkup = '/markup/get-user-mark-up';
   static const String checkPromo = '/promo/check';
   static const String deleteToken = '/user/logout';
+  static const String deleteTraveller = '/user/remove-passenger';
+  static const String updateTraveller = '/user/edit-passenger';
 
   // Change {airlinecode} for logo
   static const String airllineLogo = "/uploads/AirlinesLogo/{airlinecode}.png";

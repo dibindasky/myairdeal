@@ -4,6 +4,7 @@ import 'package:myairdeal/application/presentation/screens/account/profile.dart'
 import 'package:myairdeal/application/presentation/screens/account/notification_setup.dart';
 import 'package:myairdeal/application/presentation/screens/account/secuurity_screen.dart';
 import 'package:myairdeal/application/presentation/screens/account/widgets/edit_profile.dart';
+import 'package:myairdeal/application/presentation/screens/account/widgets/traveller_details.dart';
 import 'package:myairdeal/application/presentation/screens/auth/goto_home_screen.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/al_most_done.dart';
 import 'package:myairdeal/application/presentation/screens/auth/sign_up/otp_screen.dart';
@@ -105,6 +106,14 @@ class GetXRouterConfig {
     GetPage(
       name: Routes.viewAmendmetStatus,
       page: () => const ScreenViewAmendMentStatus(),
+    ),
+    GetPage(
+      name: Routes.travelerDetails,
+      page: () => const TravellerDetails(),
+    ),
+    GetPage(
+      name: Routes.addUpdateTravellerDetails,
+      page: () => const AddOrUpdatePassenger(),
     ),
     GetPage(
       bindings: [

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/traveller_info.dart';
 
@@ -30,19 +29,30 @@ class SavedDetailsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           kHeight10,
-          ItemField(
-            icon: Icons.category_rounded,
-            categery: 'Categery',
-            subtittle: passengers?.pt ?? '',
-          ),
-          kHeight5,
-          ItemField(
-            icon: Icons.person,
-            categery: 'Name',
-            subtittle: '${passengers?.ti} ${passengers?.fN} ${passengers?.lN}',
-          ),
-          kHeight5,
-          passengers?.dob != null
+          passengers?.pt != null && passengers?.pt != ''
+              ? ItemField(
+                  icon: Icons.category_rounded,
+                  categery: 'Categery',
+                  subtittle: passengers?.pt ?? '',
+                )
+              : kEmpty,
+          passengers?.pt != null ? kHeight5 : kEmpty,
+          (passengers?.ti != null && passengers?.ti != '') ||
+                  (passengers?.fN != null && passengers?.fN != '') ||
+                  (passengers?.lN != null && passengers?.lN != '')
+              ? ItemField(
+                  icon: Icons.person,
+                  categery: 'Name',
+                  subtittle:
+                      '${passengers?.ti} ${passengers?.fN} ${passengers?.lN}',
+                )
+              : kEmpty,
+          passengers?.ti != null ||
+                  passengers?.fN != null ||
+                  passengers?.lN != null
+              ? kHeight5
+              : kEmpty,
+          passengers?.dob != null && passengers?.dob != ''
               ? ItemField(
                   icon: Icons.date_range,
                   categery: 'DOB',
@@ -83,7 +93,7 @@ class SavedDetailsCard extends StatelessWidget {
                   subtittle: passengers?.pN ?? '',
                 )
               : kEmpty,
-          passengers?.pN != null && passengers?.pN != '' ? kHeight10 : kEmpty,
+          passengers?.pN != null && passengers?.pN != '' ? kHeight5 : kEmpty,
         ],
       ),
     );

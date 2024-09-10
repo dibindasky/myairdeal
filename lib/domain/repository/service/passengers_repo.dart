@@ -8,4 +8,8 @@ abstract class PassengersRepo {
   Future<Either<Failure, GetAllPassengers>> getPassengers();
   Future<Either<Failure, SuccessResponceModel>> addPassengers(
       {required TravellerInfo travellerInfo});
+  Future<Either<Failure, SuccessResponceModel>> updatePassengers(
+      {required TravellerInfo travellerInfo});
+  Future<Either<Failure, SuccessResponceModel>> deletePassengers(
+      {required String travellerID});
 }

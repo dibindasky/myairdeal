@@ -19,7 +19,8 @@ class ScreenSavedPassengers extends StatelessWidget {
     final pcs = arguments['pcs'] as bool;
     final travelerController = Get.find<TravellerController>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      travelerController.getAllPassengers(travellerType, useDob, pcs);
+      travelerController.getAllPassengersBasedOnType(
+          travellerType, useDob, pcs);
     });
 
     return Scaffold(
@@ -35,7 +36,7 @@ class ScreenSavedPassengers extends StatelessWidget {
               );
             }
             // Check if passengers list is empty
-            if (travelerController.allPassengers.isEmpty) {
+            if (travelerController.allPassengersBasedOnType.isEmpty) {
               return SizedBox(
                   height: 400.h,
                   child: const Center(
@@ -46,23 +47,26 @@ class ScreenSavedPassengers extends StatelessWidget {
             return Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {
-                  travelerController.getAllPassengers(
+                  travelerController.getAllPassengersBasedOnType(
                       travellerType, useDob, pcs);
                 },
                 child: ListView.separated(
-                  itemCount: travelerController.allPassengers.length,
+                  itemCount: travelerController.allPassengersBasedOnType.length,
                   physics: const BouncingScrollPhysics(),
                   separatorBuilder: (context, index) => kHeight10,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {
-                        travelerController.addPassengerDetail(travellerIndex,
-                            travelerController.allPassengers[index], false);
+                        travelerController.addPassengerDetail(
+                            travellerIndex,
+                            travelerController.allPassengersBasedOnType[index],
+                            false);
                         Get.back();
                         Get.back();
                       },
                       child: SavedDetailsCard(
-                          passengers: travelerController.allPassengers[index]),
+                          passengers: travelerController
+                              .allPassengersBasedOnType[index]),
                     );
                   },
                 ),

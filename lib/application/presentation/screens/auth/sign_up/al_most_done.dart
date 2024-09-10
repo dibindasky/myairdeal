@@ -45,30 +45,6 @@ class ScreenAccountCreationForm extends StatelessWidget {
                         style: textThinStyle1.copyWith(color: kGrey),
                       ),
                       kHeight20,
-                      // Container(
-                      //   padding: const EdgeInsets.all(10),
-                      //   decoration: BoxDecoration(
-                      //     border: Border.all(color: kBlue),
-                      //     borderRadius: kRadius10,
-                      //     color: kWhite,
-                      //   ),
-                      //   child: Obx(
-                      //     () => Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //       children: List.generate(
-                      //         3,
-                      //         (index) => CustomRadioButton(
-                      //           selected:
-                      //               index == authController.genderType.value,
-                      //           onChanged: () {
-                      //             authController.changeGenderType(index);
-                      //           },
-                      //           text: authController.genderList[index],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       kHeight10,
                       Text(
                         'First Name',

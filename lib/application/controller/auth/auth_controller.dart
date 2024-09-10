@@ -46,6 +46,7 @@ class AuthController extends GetxController {
   final RxString? countryName = ''.obs;
   RxInt genderType = 0.obs;
   RxList genderList = ['Mr', 'Mrs', 'Ms'].obs;
+
   RxInt maxLength = 10.obs;
   RxInt maxOTPLength = 4.obs;
 

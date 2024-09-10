@@ -8,6 +8,7 @@ part of 'traveller_info.dart';
 
 TravellerInfo _$TravellerInfoFromJson(Map<String, dynamic> json) =>
     TravellerInfo(
+      id: json['_id'] as String,
       ti: json['ti'] as String?,
       fN: json['fN'] as String?,
       lN: json['lN'] as String?,
@@ -30,6 +31,7 @@ TravellerInfo _$TravellerInfoFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TravellerInfoToJson(TravellerInfo instance) =>
     <String, dynamic>{
+      '_id': instance.id,
       'pNat': instance.pN,
       'ti': instance.ti,
       'fN': instance.fN,

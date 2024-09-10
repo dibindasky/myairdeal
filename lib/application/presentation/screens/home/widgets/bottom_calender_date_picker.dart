@@ -72,7 +72,7 @@ class _DatePickingBottomSheetState extends State<DatePickingBottomSheet> {
           TableCalendar(
             firstDay: widget.initialDate ?? DateTime.now(),
             lastDay: widget.lastDate ??
-                DateTime.now().add(const Duration(days: 31 * 6)),
+                DateTime.now().add(const Duration(days: 31 * 12)),
             focusedDay: _focusedDay,
             calendarFormat: _calendarFormat,
             calendarBuilders: CalendarBuilders(

@@ -6,6 +6,10 @@ part 'fc.g.dart';
 class Fc {
   @JsonKey(name: 'TAF')
   int? taf;
+  @JsonKey(name: 'AFS')
+  int? afs;
+  @JsonKey(name: 'AAR')
+  int? aar;
   @JsonKey(name: 'SSRP')
   int? ssrp;
   @JsonKey(name: 'BF')
@@ -15,7 +19,7 @@ class Fc {
   @JsonKey(name: 'NF')
   int? nf;
 
-  Fc({this.taf, this.ssrp, this.bf, this.tf, this.nf});
+  Fc({this.taf, this.ssrp, this.bf, this.tf, this.nf, this.aar, this.afs});
 
   factory Fc.fromJson(Map<String, dynamic> json) => _$FcFromJson(json);
 

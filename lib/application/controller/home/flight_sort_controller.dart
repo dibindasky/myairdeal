@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/auth/auth_controller.dart';
+import 'package:myairdeal/application/controller/home/home_controller.dart';
 import 'package:myairdeal/application/controller/navbar/navbar_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -320,9 +321,11 @@ class FlightSortController extends GetxController {
     });
   }
 
-  void updateSearchToRecent(FlightSearchSortModel flightSearchSortModel) {
+  void updateSearchToRecent(FlightSearchSortModel flightSearchSortModel) async {
     if (Get.find<AuthController>().loginOrNot.value) {
-      homeService.addRecentSearch(flightSearchSortModel: flightSearchSortModel);
+      await homeService.addRecentSearch(
+          flightSearchSortModel: flightSearchSortModel);
+      Get.find<HomeController>().fetchRecentSearches();
     }
   }
 
@@ -336,7 +339,6 @@ class FlightSortController extends GetxController {
             (airportSelected[i][1].code == null &&
                 airportSelected[i][1].city == null)) {
           searchValidated.value = false;
-          print('1');
           return false;
         }
       } // for multicity validation
@@ -346,24 +348,20 @@ class FlightSortController extends GetxController {
               (airportSelected[i][1].code == null &&
                   airportSelected[i][1].city == null))) {
         searchValidated.value = false;
-        print('2');
         return false;
       }
       // for date validation for multicity, one way and round trip allwase auto filled
       if (tripType.value == 2 && multiCityDepartureDate[i] == null) {
         searchValidated.value = false;
-        print('3');
         return false;
       }
       // if same city added for departure and arrival return error
       if (airportSelected[i][0].code == airportSelected[i][1].code) {
         searchValidated.value = false;
-        print('4');
         return false;
       }
     }
     searchValidated.value = true;
-    print('5');
     return true;
   }
 
@@ -635,8 +633,6 @@ class FlightSortController extends GetxController {
       // comboList.add(tempList);
     }
     comboList.assignAll(comboListMain);
-    print('got data=> comboListMain =>> ${comboListMain.length}');
-    print('got data=> comboList =>> ${comboList.length}');
   }
 
   /// get the variables for sorting like {duration,ailines,times,stops}
@@ -691,10 +687,6 @@ class FlightSortController extends GetxController {
       // add price list
       sortingVariables[0]![3] = sortingVariables[0]![3].toSet().toList().obs;
       sortingVariables[0]![3].sort();
-      print('sorting variables');
-      print(sortingVariables[0]![0]);
-      print(sortingVariables[0]![1]);
-      print(sortingVariables[0]![3]);
     } // for domestic trips and international one way
     else {
       // loop for all trips
@@ -794,8 +786,6 @@ class FlightSortController extends GetxController {
                 ?.fC
                 ?.tf ??
             0.0;
-        print(
-            'price => ${item[selectedFlights[i]].totalPriceList?[selectedTicketPrices[i]].fd?.adult?.fC?.tf ?? 0.0}');
       }
     }
     print('total price => $price');

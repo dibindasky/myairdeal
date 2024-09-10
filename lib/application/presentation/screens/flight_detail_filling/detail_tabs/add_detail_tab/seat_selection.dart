@@ -262,6 +262,7 @@ class FlightsListForSeatSelection extends StatelessWidget {
             )
           : Wrap(
               crossAxisAlignment: WrapCrossAlignment.center,
+              runSpacing: 5.h,
               children: [
                 ...List.generate(
                   travellerController.keysList.length,

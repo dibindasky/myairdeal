@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/itenary_tab/fare_summary.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
@@ -423,63 +424,98 @@ class FlightInvoiceCard extends StatelessWidget {
             ),
           ),
           kHeight10,
-          TaxAndFeeHelper(
-              title: 'Ticket Price',
-              value:
-                  '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.bf?.toDouble() ?? '--'}'),
-          TaxAndFeeHelper(
-              title: 'Taxs and Fees',
-              value:
-                  '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.taf?.toDouble() ?? '--'}'),
-          Builder(builder: (context) {
-            final addOns = (retrieveSingleBookingresponceModel
-                        ?.completeBookingData?.payment?.amount
-                        ?.toDouble() ??
-                    0) -
-                ((retrieveSingleBookingresponceModel
-                            ?.retrieveSingleBookingresponceModel
-                            ?.itemInfos
-                            ?.air
-                            ?.totalPriceInfo
-                            ?.totalFareDetail
-                            ?.fC
-                            ?.bf
-                            ?.toDouble() ??
-                        0) +
-                    ((retrieveSingleBookingresponceModel
-                            ?.retrieveSingleBookingresponceModel
-                            ?.itemInfos
-                            ?.air
-                            ?.totalPriceInfo
-                            ?.totalFareDetail
-                            ?.fC
-                            ?.taf
-                            ?.toDouble() ??
-                        0)) +
-                    (retrieveSingleBookingresponceModel
-                            ?.completeBookingData?.markUp?.value
-                            ?.toDouble() ??
-                        0) -
-                    (retrieveSingleBookingresponceModel
-                            ?.completeBookingData?.promo?.value
-                            ?.toDouble() ??
-                        0));
-            return TaxAndFeeHelper(
-                title: 'Seat, Meals & Baggage', value: '₹ $addOns');
-          }),
-          TaxAndFeeHelper(
-              title: 'Convenience Fees',
-              value:
-                  '₹ ${retrieveSingleBookingresponceModel?.completeBookingData?.markUp?.value?.toDouble() ?? '--'}'),
-          TaxAndFeeHelper(
-              title: 'Promo Discount',
-              value:
-                  '₹ ${retrieveSingleBookingresponceModel?.completeBookingData?.promo?.value?.toDouble() ?? '--'}'),
-          TaxAndFeeHelper(
-              bold: true,
-              title: 'Tatal Amount',
-              value:
-                  '₹ ${retrieveSingleBookingresponceModel?.completeBookingData?.payment?.amount?.toDouble() ?? '--'}'),
+          retrieveSingleBookingresponceModel
+                      ?.retrieveSingleBookingresponceModel?.order?.status ==
+                  'CANCELLED'
+              ? Column(
+                  children: [
+                    TaxAndFeeHelper(
+                        title: 'Amendment Charges',
+                        value:
+                            '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.afs?.toDouble() ?? '--'}'),
+                    TaxAndFeeHelper(
+                        title: 'Refundable Amount',
+                        value:
+                            '₹ ${(retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.aar?.toDouble() ?? 0) - (retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.afs?.toDouble() ?? 0)}'),
+                    TaxAndFeeHelper(
+                        title: 'Convenience Fee',
+                        value:
+                            '₹ ${((retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.aar?.toDouble() ?? 0) + (retrieveSingleBookingresponceModel?.completeBookingData?.promo?.value ?? 0) - (retrieveSingleBookingresponceModel?.completeBookingData?.payment?.amount ?? 0)).abs()}'),
+                    TaxAndFeeHelper(
+                        title: 'Promo Discount',
+                        value:
+                            '₹ ${retrieveSingleBookingresponceModel?.completeBookingData?.promo?.value?.toDouble() ?? '--'}'),
+                    TaxAndFeeHelper(
+                        bold: true,
+                        title: 'Total',
+                        value:
+                            '₹ ${retrieveSingleBookingresponceModel?.completeBookingData?.payment?.amount?.toDouble() ?? '--'}'),
+                  ],
+                )
+              : Column(
+                  children: [
+                    TaxAndFeeHelper(
+                        title: 'Ticket Price',
+                        value:
+                            '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.bf?.toDouble() ?? '--'}'),
+                    TaxAndFeeHelper(
+                        title: 'Taxs and Fees',
+                        value:
+                            '₹ ${retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.taf?.toDouble() ?? '--'}'),
+                    Builder(builder: (context) {
+                      // final addOns = (retrieveSingleBookingresponceModel
+                      //             ?.completeBookingData?.payment?.amount
+                      //             ?.toDouble() ??
+                      //         0) -
+                      //     ((retrieveSingleBookingresponceModel
+                      //                 ?.retrieveSingleBookingresponceModel
+                      //                 ?.itemInfos
+                      //                 ?.air
+                      //                 ?.totalPriceInfo
+                      //                 ?.totalFareDetail
+                      //                 ?.fC
+                      //                 ?.bf
+                      //                 ?.toDouble() ??
+                      //             0) +
+                      //         ((retrieveSingleBookingresponceModel
+                      //                 ?.retrieveSingleBookingresponceModel
+                      //                 ?.itemInfos
+                      //                 ?.air
+                      //                 ?.totalPriceInfo
+                      //                 ?.totalFareDetail
+                      //                 ?.fC
+                      //                 ?.taf
+                      //                 ?.toDouble() ??
+                      //             0)) +
+                      //         (retrieveSingleBookingresponceModel
+                      //                 ?.completeBookingData?.markUp?.value
+                      //                 ?.toDouble() ??
+                      //             0) -
+                      //         (retrieveSingleBookingresponceModel
+                      //                 ?.completeBookingData?.promo?.value
+                      //                 ?.toDouble() ??
+                      //             0));
+
+                      return TaxAndFeeHelper(
+                          title: 'Seat, Meals & Baggage',
+                          value:
+                              '₹ ${Get.find<BookingController>().sumSSRAmounts(retrieveSingleBookingresponceModel)}');
+                    }),
+                    TaxAndFeeHelper(
+                        title: 'Convenience Fees',
+                        value:
+                            '₹ ${(retrieveSingleBookingresponceModel?.completeBookingData?.payment?.amount ?? 0) - (retrieveSingleBookingresponceModel?.retrieveSingleBookingresponceModel?.itemInfos?.air?.totalPriceInfo?.totalFareDetail?.fC?.tf?.toDouble() ?? 0) + (retrieveSingleBookingresponceModel?.completeBookingData?.promo?.value?.toDouble() ?? 0)}'),
+                    TaxAndFeeHelper(
+                        title: 'Promo Discount',
+                        value:
+                            '₹ ${retrieveSingleBookingresponceModel?.completeBookingData?.promo?.value?.toDouble() ?? '--'}'),
+                    TaxAndFeeHelper(
+                        bold: true,
+                        title: 'Tatal Amount',
+                        value:
+                            '₹ ${retrieveSingleBookingresponceModel?.completeBookingData?.payment?.amount?.toDouble() ?? '--'}'),
+                  ],
+                ),
         ],
       ),
     );

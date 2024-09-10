@@ -8,7 +8,7 @@ part of 'traveller_info.dart';
 
 TravellerInfo _$TravellerInfoFromJson(Map<String, dynamic> json) =>
     TravellerInfo(
-      id: json['_id'] as String,
+      id: json['_id'] as String?,
       ti: json['ti'] as String?,
       fN: json['fN'] as String?,
       lN: json['lN'] as String?,

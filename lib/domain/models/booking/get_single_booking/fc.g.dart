@@ -11,6 +11,8 @@ Fc _$FcFromJson(Map<String, dynamic> json) => Fc(
       ssrp: json['SSRP'] as int?,
       bf: json['BF'] as int?,
       tf: json['TF'] as int?,
+      aar: json['AAR'] as int?,
+      afs: json['AFS'] as int?,
       nf: json['NF'] as int?,
     );
 
@@ -20,4 +22,6 @@ Map<String, dynamic> _$FcToJson(Fc instance) => <String, dynamic>{
       'BF': instance.bf,
       'TF': instance.tf,
       'NF': instance.nf,
+      'AAR': instance.aar,
+      'AFS': instance.afs,
     };

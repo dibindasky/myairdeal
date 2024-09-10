@@ -195,11 +195,11 @@ class _ScreenSuccessPageState extends State<ScreenSuccessPage> {
   }
 
   void backToHome(BookingController controller) {
+    Get.back();
     controller.clearDataAfterBooking();
     Get.find<TravellerController>().clearDataAfterBooking();
     Get.find<FlightSortController>().clearDataAfterBooking();
     controller.getAllUpcomingBooking(true);
-    Get.back();
     Get.find<HomeController>().changeNavigationChecker(NavigationChecker.home);
   }
 }

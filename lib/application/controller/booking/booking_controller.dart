@@ -549,4 +549,45 @@ class BookingController extends GetxController {
     selectedBookingTab.value = index;
     update();
   }
+
+  /// to get the sum of all ssr details
+  double sumSSRAmounts(GetSingleBooking? singleBooking) {
+    if (singleBooking == null) {
+      return 0.0;
+    }
+    try {
+      double totalAmount = 0.0;
+
+      // Extract the list of travellerInfos
+      final travellerInfos = singleBooking.retrieveSingleBookingresponceModel
+              ?.itemInfos?.air?.travellerInfos ??
+          [];
+      // singleBooking.toJson()['data']['itemInfos']['AIR']['travellerInfos'];
+
+      // Iterate through each travellerInfo
+      for (var traveller in travellerInfos) {
+        // Extract SSR info maps
+        Map<String, dynamic> ssrSeatInfos = traveller.ssrSeatInfos ?? {};
+        Map<String, dynamic> ssrMealInfos = traveller.ssrMealInfos ?? {};
+        Map<String, dynamic> ssrBaggageInfos = traveller.ssrBaggageInfos ?? {};
+
+        // Add up the amounts from each SSR info
+        ssrSeatInfos.forEach((key, value) {
+          totalAmount += (value['amount'] ?? 0).toDouble();
+        });
+
+        ssrMealInfos.forEach((key, value) {
+          totalAmount += (value['amount'] ?? 0).toDouble();
+        });
+
+        ssrBaggageInfos.forEach((key, value) {
+          totalAmount += (value['amount'] ?? 0).toDouble();
+        });
+      }
+
+      return totalAmount;
+    } catch (e) {
+      return 0.0;
+    }
+  }
 }

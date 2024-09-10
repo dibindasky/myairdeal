@@ -7,7 +7,16 @@ import 'package:myairdeal/domain/models/search/city_search_model/city_search_mod
 import 'package:myairdeal/domain/models/search/recent_detail_search/recent_detail_search_item.dart';
 import 'package:myairdeal/domain/repository/service/home_repo.dart';
 
-enum NavigationChecker { home, search, itinary , ticket, bookingSuccess, profile, logoutPopUp, loginSignup}
+enum NavigationChecker {
+  home,
+  search,
+  itinary,
+  ticket,
+  bookingSuccess,
+  profile,
+  logoutPopUp,
+  loginSignup
+}
 
 class HomeController extends GetxController {
   final HomeRepo homeService = HomeService();
@@ -55,7 +64,20 @@ class HomeController extends GetxController {
         recentLoading.value = false;
       },
       (recentDetailSearch) {
-        recentSearches.value = recentDetailSearch.data ?? [];
+        // remove the data without
+        final listRecent =
+            (recentDetailSearch.data ?? <RecentDetailSearchItem>[]);
+        listRecent.removeWhere((element) =>
+            element.searchQuery?.routeInfos?.first.fromCityOrAirport
+                    ?.cityCode ==
+                null ||
+            element.searchQuery?.routeInfos?.first.fromCityOrAirport?.name ==
+                null ||
+            element.searchQuery?.routeInfos?.first.toCityOrAirport?.cityCode ==
+                null ||
+            element.searchQuery?.routeInfos?.first.toCityOrAirport?.name ==
+                null);
+        recentSearches.value = listRecent;
         recentLoading.value = false;
       },
     );

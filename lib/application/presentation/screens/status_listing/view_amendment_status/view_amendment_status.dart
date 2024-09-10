@@ -95,7 +95,7 @@ class ScreenViewAmendMentStatus extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const Text('Remarks'),
-                                Text(amendmentInfo?.remarks ?? ''),
+                                Text('${amendmentInfo?.remarks}', maxLines: 3),
                               ],
                             ),
                           ],
@@ -156,7 +156,9 @@ class ScreenViewAmendMentStatus extends StatelessWidget {
                                     child: TicketColumn(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
-                                      label: 'des',
+                                      label: amendmentInfo
+                                              ?.trips?[tripIndex].dest ??
+                                          'TO',
                                       lebelStyle: textThinStyle1,
                                       valueStyle: textThinStyle1,
                                       subValueStyle: textThinStyle1,

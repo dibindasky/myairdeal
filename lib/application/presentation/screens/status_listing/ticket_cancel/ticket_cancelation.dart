@@ -231,7 +231,7 @@ class ScreenTicetCanceallation extends StatelessWidget {
                                 maxLength: 250,
                                 isBorder: true,
                                 borderRadius: 10,
-                                textCapitalization: TextCapitalization.words,
+                                textCapitalization: TextCapitalization.sentences,
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: kRadius10,
                                   borderSide: const BorderSide(

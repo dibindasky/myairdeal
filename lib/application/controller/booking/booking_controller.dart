@@ -227,7 +227,6 @@ class BookingController extends GetxController {
       markupModel = null;
       markupLoading.value = false;
     }, (r) {
-      print(r.toJson());
       markupModel = r.obs;
       markupPrice.value = calculateMarkupPrice().round().toDouble();
       markupLoading.value = false;
@@ -305,20 +304,14 @@ class BookingController extends GetxController {
               ?.value.totalPriceInfo?.totalFareDetail?.fC?.bf
               ?.toDouble(),
         ));
-    print('book ticket model ');
-    print(bookTicketModel.toString());
     final result =
         await bookingRepo.bookTicket(bookTicketModel: bookTicketModel);
     result.fold((l) {
       bookingCompleteFailure.value = true;
-      print('failure');
-      print(l.message);
       message = l.message ?? errorMessage;
     }, (r) {
       bookingCompleteSuccess.value = true;
-      print('success => ${r.bookingId}');
       if (r.errors != null && r.errors!.isNotEmpty) {
-        print(r.errors?[0].message ?? errorMessage);
         message = r.errors?[0].message ?? errorMessage;
       }
       Get.find<FlightSortController>().clearDataAfterBooking();
@@ -409,7 +402,6 @@ class BookingController extends GetxController {
   /// review price details before going to the booking section
   void reviewPriceDetailChecking(
       {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
-    print('price id for search ${reviewPriceDetailIdModel.priceIds}');
     if (!Get.find<AuthController>().loginOrNot.value) {
       Get.find<AuthController>().changeBookingLogin(true);
       Get.toNamed(Routes.signUpSignIn);

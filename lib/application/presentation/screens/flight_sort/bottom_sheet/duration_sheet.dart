@@ -93,12 +93,6 @@ class _DurationBottomSheetState extends State<DurationBottomSheet> {
                     isBorder: true,
                     text: 'Reset',
                     onTap: () {
-                      print((controller
-                                  .sortingVariables[controller
-                                      .selectedTripListIndex.value]![2]
-                                  .last ??
-                              1)
-                          .runtimeType);
                       controller.changeDurationSlider(1.0, true);
                       Navigator.of(context).pop();
                     },

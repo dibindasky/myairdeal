@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
@@ -29,21 +30,17 @@ Future<void> pdfGenerator(String base64String) async {
     if (dir != null) {
       String savePath =
           '${dir.path}/file.pdf'; // Simplify the savePath generation
-      print('Saving PDF to: $savePath');
 
       var bytes = base64.decode(base64String.replaceAll(
           "\n", '')); // Use base64.decode instead of base64Decode
 
       final file = File(savePath);
       await file.writeAsBytes(bytes);
-      print('PDF Path: ${file.path}');
       await OpenFile.open(file.path);
-    } else {
-      print("No permission to read and write.");
-    }
+    } 
   } on PlatformException catch (e) {
-    print('Platform Exception: ${e.message}');
+    log('Platform Exception: ${e.message}');
   } catch (e) {
-    print('Error generating PDF: $e');
+    log('Error generating PDF: $e');
   }
 }

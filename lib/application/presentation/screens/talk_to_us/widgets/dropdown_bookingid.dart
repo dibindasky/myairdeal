@@ -10,7 +10,7 @@ import 'package:myairdeal/domain/models/booking_ids_model/booking_ids_model.dart
 class BookingIdDropDown extends StatelessWidget {
   BookingIdDropDown({super.key});
 
-  TextEditingController codeController = TextEditingController();
+  final TextEditingController codeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

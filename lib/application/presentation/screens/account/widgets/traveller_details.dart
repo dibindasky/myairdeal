@@ -308,7 +308,6 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
                           );
                           dateOfBirthController.text =
                               DateFormating.getDateApi(selectedDate);
-
                           setState(() {});
                         },
                         child: Container(

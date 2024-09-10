@@ -102,7 +102,12 @@ class ScreenAccountPage extends StatelessWidget {
                                 );
                               },
                             )
-                          : kEmpty;
+                          : SettingsTile(
+                              title: 'Log In / Sign Up',
+                              onTap: () {
+                                Get.offAndToNamed(Routes.signUpSignIn);
+                              },
+                            );
                     })
                   ],
                 ),

@@ -132,6 +132,26 @@ class RaiceTicketService implements RaiceTicketRepo {
   }
 
   @override
+  Future<Either<Failure, SuccessResponceModel>> addEnquiryUnRegistered(
+      {required EnguiryModel enquiryModel}) async {
+    try {
+      final responce = await apiService.post(
+        ApiEndPoints.addEnquiryUnRegisteredUser,
+        data: enquiryModel.toJson(),
+        addHeader: false
+      );
+      log('addEnquiry  >> : done');
+      return Right(SuccessResponceModel.fromJson(responce.data));
+    } on DioException catch (e) {
+      log('DioException addEnquiry $e');
+      return Left(Failure(message: errorMessage));
+    } catch (e) {
+      log('catch addEnquiry $e');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, List<BookingIdsModel>>> getAllBookingIDs() async {
     try {
       final responce = await apiService.get(ApiEndPoints.getBookingId);

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/data/service/raice_ticket/raice_ticket_service.dart';
@@ -130,22 +131,39 @@ class TalkToUsController extends GetxController {
         email: enquiryEmailController.text,
         phone: enquiryNumberController.text,
         type: selectedEnquiryType?.value);
-    final date = await raiceTicketRepo.addEnquiry(enquiryModel: enquiryModel);
-    date.fold(
-      (l) => null,
-      (r) {
-        Get.snackbar('Success', r.message ?? 'Enquiry Created Successfully',
-            backgroundColor: Get.find<ThemeController>().secondaryColor);
-        enquiryDescriptionController.clear();
-        getAllTickets();
-        if (fromHome) {
-          Get.toNamed(Routes.chatTab);
-        } else {
-          selectedGlobalTalkToUsTab.value = 2;
-          update();
-        }
-      },
-    );
+    if (Get.find<AuthController>().loginOrNot.value) {
+      final date = await raiceTicketRepo.addEnquiry(enquiryModel: enquiryModel);
+      date.fold(
+        (l) => null,
+        (r) {
+          Get.snackbar('Success', r.message ?? 'Enquiry Created Successfully',
+              backgroundColor: Get.find<ThemeController>().secondaryColor);
+          enquiryDescriptionController.clear();
+          getAllTickets();
+          if (fromHome) {
+            Get.toNamed(Routes.chatTab);
+          } else {
+            selectedGlobalTalkToUsTab.value = 2;
+            update();
+          }
+        },
+      );
+    } else {
+      final date = await raiceTicketRepo.addEnquiryUnRegistered(
+          enquiryModel: enquiryModel);
+      date.fold(
+        (l) => null,
+        (r) {
+          Get.back();
+          Get.snackbar('Success', r.message ?? 'Enquiry Created Successfully',
+              backgroundColor: Get.find<ThemeController>().secondaryColor);
+          enquiryDescriptionController.clear();
+          enquiryDescriptionController.text = '';
+          enquiryEmailController.text = '';
+          enquiryNumberController.text = '';
+        },
+      );
+    }
     isLoading.value = false;
   }
 }

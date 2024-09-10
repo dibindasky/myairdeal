@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,11 +8,11 @@ import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/widgets/empty_booking.dart';
 import 'package:myairdeal/application/presentation/screens/status_listing/widgets/tab.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
-import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/refresh_indicator/refresh_custom.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/horizontal_shimmer.dart';
+import 'package:myairdeal/application/presentation/widgets/empty_log/empty_login_widget.dart';
 import 'package:myairdeal/application/presentation/widgets/flight_ticket_card/flight_ticket_card.dart';
 import 'package:myairdeal/domain/models/booking/retrieve_single_booking_request_model/retrieve_single_booking_request_model.dart';
 
@@ -43,26 +42,7 @@ class ScreenBookings extends StatelessWidget {
         () => RefreshIndicator(
           onRefresh: onRefresh,
           child: authController.loginOrNot.value == false
-              ? AlertDialog(
-                  content:
-                      const Text('You can\'t see your status without Login'),
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Get.toNamed(Routes.signUpSignIn);
-                      },
-                      style: ElevatedButton.styleFrom(
-                          side: const BorderSide(color: kBlue),
-                          backgroundColor: kBlueThinLIght,
-                          foregroundColor: kWhite),
-                      child: Text(
-                        'Login',
-                        style:
-                            textStyle1.copyWith(color: kBlue, fontSize: 12.sp),
-                      ),
-                    ),
-                  ],
-                )
+              ? const AskToLogin(title: 'Booking',)
               : bookkingController.bookingLoading.value
                   ? Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12.h),

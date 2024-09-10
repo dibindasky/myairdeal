@@ -52,9 +52,19 @@ class ScreenHomePage extends StatelessWidget {
                     }
                     return kEmpty;
                   }),
+                  GetBuilder<AuthController>(builder: (controller) {
+                    if (controller.loginOrNot.value) {
+                      return const BookingIssuesQuerySection();
+                    }
+                    return kEmpty;
+                  }),
                   kHeight10,
-                  const BookingIssuesQuerySection(),
-                  const RecentSearchSection(),
+                  GetBuilder<AuthController>(builder: (controller) {
+                    if (controller.loginOrNot.value) {
+                      return const RecentSearchSection();
+                    }
+                    return kEmpty;
+                  }),
                 ],
               ),
             ),

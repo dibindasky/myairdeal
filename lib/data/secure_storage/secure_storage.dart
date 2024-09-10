@@ -5,6 +5,7 @@ import 'package:myairdeal/domain/models/token/token_model.dart';
 class SharedPreferecesStorage {
   static const String accessKey = 'access_key';
   static const String isLogged = 'is_loggedIn';
+  static const String isGuest = 'is_Guest';
   static const String isOnBoarVisted = 'is_onboar_visted';
   static const String isProfileCreated = 'is_profile_visited';
   static const String phoneKey = 'phone';
@@ -107,5 +108,19 @@ class SharedPreferecesStorage {
     final setOnboard = prefs.getBool(isProfileCreated) ?? false;
     log('get setProfile =>() $setOnboard');
     return setOnboard;
+  }
+
+  static Future<bool> getGuestLogin() async {
+    log('get setProfile =>()');
+    final prefs = await SharedPreferences.getInstance();
+    final setOnboard = prefs.getBool(isGuest) ?? true;
+    log('get setProfile =>() $setOnboard');
+    return setOnboard;
+  }
+
+  static Future<void> setGuestLogin(bool login) async {
+    log('set setProfile => ');
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(isGuest, login);
   }
 }

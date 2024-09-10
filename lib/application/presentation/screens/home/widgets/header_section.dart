@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/controller/talkto_us/talk_to_us_controller.dart';
 import 'package:myairdeal/application/controller/theme/theme_controller.dart';
@@ -44,17 +45,21 @@ class HomeHeaderSection extends StatelessWidget {
               Text(heading, style: textHeadStyle1.copyWith(color: kWhite)),
               const Spacer(),
               icon
-                  ? GestureDetector(
-                      onTap: onTap,
-                      child: CircleAvatar(
-                        radius: 15.w,
-                        backgroundColor: kWhite,
-                        child: Icon(
-                          Icons.notifications_none,
-                          size: 20.w,
-                        ),
-                      ),
-                    )
+                  ? Obx(() {
+                      return Get.find<AuthController>().isGuest.value
+                          ? kEmpty
+                          : GestureDetector(
+                              onTap: onTap,
+                              child: CircleAvatar(
+                                radius: 15.w,
+                                backgroundColor: kWhite,
+                                child: Icon(
+                                  Icons.notifications_none,
+                                  size: 20.w,
+                                ),
+                              ),
+                            );
+                    })
                   : kHeight5
             ],
           ),

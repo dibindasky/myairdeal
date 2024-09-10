@@ -47,6 +47,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
           () {
             return Center(
               child: AnimatedGrowShrinkContainer(
+                end: 0.5,
                 child: Hero(
                   tag: 'onbaordImage',
                   child: authController.splashModelImage.value == ''

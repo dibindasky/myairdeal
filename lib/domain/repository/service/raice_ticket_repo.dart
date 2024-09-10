@@ -23,5 +23,7 @@ abstract class RaiceTicketRepo {
       {required int page});
   Future<Either<Failure, SuccessResponceModel>> addEnquiry(
       {required EnguiryModel enquiryModel});
+  Future<Either<Failure, SuccessResponceModel>> addEnquiryUnRegistered(
+      {required EnguiryModel enquiryModel});
   Future<Either<Failure, List<BookingIdsModel>>> getAllBookingIDs();
 }

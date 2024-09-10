@@ -27,6 +27,7 @@ class AuthController extends GetxController {
   RxBool isLoading = false.obs;
   bool hasError = false;
   RxBool loginOrNot = false.obs;
+  RxBool isGuest = true.obs;
 
   TextEditingController loginNumber = TextEditingController();
   TextEditingController otpNumber = TextEditingController();
@@ -122,8 +123,11 @@ class AuthController extends GetxController {
     final isLogin = await SharedPreferecesStorage.getLogin();
     final onBoard = await SharedPreferecesStorage.getOnBoard();
     final profile = await SharedPreferecesStorage.getProfile();
+    final isGuest = await SharedPreferecesStorage.getGuestLogin();
     if (!onBoard) {
       Get.toNamed(Routes.onboard);
+    } else if (isGuest) {
+      Get.offAndToNamed(Routes.bottomBar);
     } else if (!isLogin) {
       Get.toNamed(Routes.signUpSignIn);
     } else if (!profile) {
@@ -133,7 +137,13 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<void> guestLogin() async {
+    await SharedPreferecesStorage.setGuestLogin(true);
+    Get.offAndToNamed(Routes.bottomBar);
+  }
+
   Future<void> logOrNot() async {
+    isGuest.value = await SharedPreferecesStorage.getGuestLogin();
     loginOrNot.value = await SharedPreferecesStorage.getLogin();
     update();
   }
@@ -203,6 +213,7 @@ class AuthController extends GetxController {
       Get.snackbar('Success', 'OTP Verified Successfully',
           backgroundColor: Get.find<ThemeController>().secondaryColor);
       SharedPreferecesStorage.setLogin();
+      SharedPreferecesStorage.setGuestLogin(false);
       Timer(const Duration(milliseconds: 50), () {
         loginOrNot.value = true;
       });
@@ -255,7 +266,7 @@ class AuthController extends GetxController {
   }
 
   void getUserInfo(bool isLoad) async {
-    if (!isLoad) return;
+    if (!isLoad || !loginOrNot.value) return;
     isLoading.value = true;
     update();
     final data = await authRepo.getUser();

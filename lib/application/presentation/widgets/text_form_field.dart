@@ -23,6 +23,7 @@ class CustomTextField extends StatefulWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.prefix,
+    this.validator,
     this.clr,
     this.enabledBorder,
     this.password,
@@ -36,6 +37,7 @@ class CustomTextField extends StatefulWidget {
   });
 
   final Widget? prefixIcon;
+  final String? Function(String?)? validator;
   final Widget? suffixIcon;
   final Widget? prefix;
   final Color? clr;
@@ -131,91 +133,94 @@ class _CustomTextFieldState extends State<CustomTextField> {
               )
             : null,
       ),
-      validator: (value) {
-        if (Validate.none == widget.validate) {
-          return null;
-        } else if (widget.validate == Validate.phone &&
-            !isValidPhoneNumber(value!)) {
-          return 'Please enter a valid phone number';
-        } else if (widget.validate == Validate.email && !isValidEmail(value!)) {
-          return 'Please enter a valid email address';
-        } else if (widget.validate == Validate.password && value!.length < 8) {
-          return 'Password must contavin at least 8 characters';
-        } else if (widget.validate == Validate.notNullAndLength10) {
-          if (value == null || value == '') {
-            return '${widget.hintText} should not be Empty';
-          } else if (value.length < 10) {
-            return '${widget.hintText} should be at least 10 letters.';
-          } else {
+      validator: widget.validator ??
+          (value) {
+            if (Validate.none == widget.validate) {
+              return null;
+            } else if (widget.validate == Validate.phone &&
+                !isValidPhoneNumber(value!)) {
+              return 'Please enter a valid phone number';
+            } else if (widget.validate == Validate.email &&
+                !isValidEmail(value!)) {
+              return 'Please enter a valid email address';
+            } else if (widget.validate == Validate.password &&
+                value!.length < 8) {
+              return 'Password must contavin at least 8 characters';
+            } else if (widget.validate == Validate.notNullAndLength10) {
+              if (value == null || value == '') {
+                return '${widget.hintText} should not be Empty';
+              } else if (value.length < 10) {
+                return '${widget.hintText} should be at least 10 letters.';
+              } else {
+                return null;
+              }
+            } else if (widget.validate == Validate.passportNumber) {
+              if (value == null || value == '') {
+                return 'Passport Number should not be Empty';
+              } else if (value.length < 8) {
+                return 'Passport Number should be at least 8 letters.';
+              }
+              // else if (!isValidIndianPassportNumber(value)) {
+              //   return 'The first character must be an uppercase alphabet. The next two characters should be numbers, with the first character ranging from 1 to 9 and the second character from 0 to 9.';
+              // }
+              else {
+                return null;
+              }
+            } else if (widget.validate == Validate.notNull &&
+                (value == null || value == '')) {
+              return 'This Field cannot be Empty';
+            } else if (widget.validate == Validate.password) {
+              if (!hasLowerCase(value!)) {
+                return 'Password must contains lowerCase letters';
+              } else if (!hasCapsLetter(value)) {
+                return 'Password must contains UpperCase letters';
+              } else if (!hasNumbers(value)) {
+                return 'Password must contains numbers';
+              } else if (!hasSpecialChar(value)) {
+                return 'Password must contains special characters';
+              } else if (value.length < 8) {
+                return 'Password must contains 8 characters';
+              } else {
+                return null;
+              }
+            } else if (Validate.phone == widget.validate) {
+              if (!RegExp(r'^[0-9]+$').hasMatch(value!)) {
+                return 'Enter valid phone number (numeric characters only)';
+              } else if (value.length != 10) {
+                return 'Phone number should have exactly 10 digits';
+              } else {
+                return null;
+              }
+            } else if (Validate.rePassword == widget.validate &&
+                widget.password!.text.trim() != value) {
+              return 'Password must be same';
+            } else if (Validate.noneOrGst == widget.validate) {
+              if (value == '') {
+                return null;
+              } else if (!isValidGst(value!)) {
+                return 'Enter valid gst number';
+              }
+            } else if (Validate.noneOrNotNull == widget.validate) {
+              if (value == '') {
+                return null;
+              } else if (value!.length < 3) {
+                return 'Enter valid ${widget.hintText}';
+              }
+            } else if (Validate.noneOrEmail == widget.validate) {
+              if (value == '') {
+                return null;
+              } else if (!isValidEmail(value!)) {
+                return 'Enter valid email';
+              }
+            } else if (Validate.noneOrPhone == widget.validate) {
+              if (value == '') {
+                return null;
+              } else if (!isValidPhoneNumber(value!)) {
+                return 'Enter valid phone';
+              }
+            }
             return null;
-          }
-        } else if (widget.validate == Validate.passportNumber) {
-          if (value == null || value == '') {
-            return 'Passport Number should not be Empty';
-          } else if (value.length < 8) {
-            return 'Passport Number should be at least 8 letters.';
-          }
-          // else if (!isValidIndianPassportNumber(value)) {
-          //   return 'The first character must be an uppercase alphabet. The next two characters should be numbers, with the first character ranging from 1 to 9 and the second character from 0 to 9.';
-          // }
-          else {
-            return null;
-          }
-        } else if (widget.validate == Validate.notNull &&
-            (value == null || value == '')) {
-          return 'This Field cannot be Empty';
-        } else if (widget.validate == Validate.password) {
-          if (!hasLowerCase(value!)) {
-            return 'Password must contains lowerCase letters';
-          } else if (!hasCapsLetter(value)) {
-            return 'Password must contains UpperCase letters';
-          } else if (!hasNumbers(value)) {
-            return 'Password must contains numbers';
-          } else if (!hasSpecialChar(value)) {
-            return 'Password must contains special characters';
-          } else if (value.length < 8) {
-            return 'Password must contains 8 characters';
-          } else {
-            return null;
-          }
-        } else if (Validate.phone == widget.validate) {
-          if (!RegExp(r'^[0-9]+$').hasMatch(value!)) {
-            return 'Enter valid phone number (numeric characters only)';
-          } else if (value.length != 10) {
-            return 'Phone number should have exactly 10 digits';
-          } else {
-            return null;
-          }
-        } else if (Validate.rePassword == widget.validate &&
-            widget.password!.text.trim() != value) {
-          return 'Password must be same';
-        } else if (Validate.noneOrGst == widget.validate) {
-          if (value == '') {
-            return null;
-          } else if (!isValidGst(value!)) {
-            return 'Enter valid gst number';
-          }
-        } else if (Validate.noneOrNotNull == widget.validate) {
-          if (value == '') {
-            return null;
-          } else if (value!.length < 3) {
-            return 'Enter valid ${widget.hintText}';
-          }
-        } else if (Validate.noneOrEmail == widget.validate) {
-          if (value == '') {
-            return null;
-          } else if (!isValidEmail(value!)) {
-            return 'Enter valid email';
-          }
-        } else if (Validate.noneOrPhone == widget.validate) {
-          if (value == '') {
-            return null;
-          } else if (!isValidPhoneNumber(value!)) {
-            return 'Enter valid phone';
-          }
-        }
-        return null;
-      },
+          },
     );
   }
 }

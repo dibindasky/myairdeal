@@ -9,7 +9,7 @@ abstract class PassengersRepo {
   Future<Either<Failure, SuccessResponceModel>> addPassengers(
       {required TravellerInfo travellerInfo});
   Future<Either<Failure, SuccessResponceModel>> updatePassengers(
-      {required TravellerInfo travellerInfo});
+      {required TravellerInfo travellerInfo, required String travellerID});
   Future<Either<Failure, SuccessResponceModel>> deletePassengers(
       {required String travellerID});
 }

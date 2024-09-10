@@ -66,15 +66,15 @@ class PassengersService implements PassengersRepo {
   }
 
   @override
-  Future<Either<Failure, SuccessResponceModel>> updatePassengers({
-    required TravellerInfo travellerInfo,
-  }) async {
+  Future<Either<Failure, SuccessResponceModel>> updatePassengers(
+      {required TravellerInfo travellerInfo,
+      required String travellerID}) async {
     try {
       await apiService.put(
           addHeader: true,
-          ApiEndPoints.deleteTraveller,
+          ApiEndPoints.updateTraveller,
           data: travellerInfo.toJson(),
-          queryParameters: {'passengerId': travellerInfo.id});
+          queryParameters: {'passengerId': travellerID});
       log('updatePassengers done ');
       return Right(SuccessResponceModel());
     } on DioException catch (e) {

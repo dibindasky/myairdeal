@@ -215,6 +215,7 @@ class _ScreenInvoiceDetailState extends State<ScreenInvoiceDetail> {
                                           bookingController.invoiceLoading.value
                                       ? kEmpty
                                       : QuickLinksContainer(
+                                          data: 'share',
                                           onTap: () {
                                             raiceController.shareTicket(
                                                 bookingID: bookingController

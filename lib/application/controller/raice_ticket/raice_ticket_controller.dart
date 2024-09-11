@@ -36,7 +36,7 @@ class RaiceTicketController extends GetxController {
 
   RxString selectedProduct = 'Flights'.obs;
 
-  RxList<String> youCouldAlsoTexts = ['Contact us', 'Reports', 'Support'].obs;
+  RxList<String> youCouldAlsoTexts = ['Raice Ticket', 'Tickets', 'Support'].obs;
 
   // in except cancel tab Choosing for raice ticket, Connection, Refund and Mail
   RxInt selectedYouCouldAlsoTab = 6.obs;

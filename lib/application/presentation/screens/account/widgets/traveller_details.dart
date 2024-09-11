@@ -64,10 +64,30 @@ class TravellerDetails extends StatelessWidget {
                           travelerController.allPassengers[index].toString()),
                       direction: DismissDirection.startToEnd,
                       onDismissed: (direction) {
+                        final dismissedPassenger =
+                            travelerController.allPassengers[index];
+
+                        // Remove the passenger temporarily
                         travelerController.deletePassenger(
-                            travellerID:
-                                travelerController.allPassengers[index].id ??
-                                    '');
+                            travellerID: dismissedPassenger.id ?? '');
+
+                        // Show a SnackBar with an Undo option
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: kDardGold,
+                            content: const Text('Passenger dismissed'),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {
+                                // Revert the dismissal
+                                travelerController.addPassengerDetail(
+                                    index, dismissedPassenger, true);
+                              },
+                            ),
+                            duration: const Duration(
+                                seconds: 2), // 2-second delay for undo
+                          ),
+                        );
                       },
                       background: const Icon(Icons.delete, color: kRed),
                       child: GestureDetector(

@@ -51,6 +51,8 @@ class ScreenAccountPage extends StatelessWidget {
                 SettingsTile(
                   title: 'Saved Passengers',
                   onTap: () {
+                    Get.find<HomeController>().changeNavigationChecker(
+                        NavigationChecker.savedPassengers);
                     Get.toNamed(Routes.travelerDetails);
                   },
                 ),

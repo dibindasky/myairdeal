@@ -105,7 +105,11 @@ class _ScreenNavbarState extends State<ScreenNavbar> {
         Get.find<HomeController>()
             .changeNavigationChecker(NavigationChecker.search);
         break;
-
+      case NavigationChecker.savedPassengers:
+        Get.find<HomeController>()
+            .changeNavigationChecker(NavigationChecker.home);
+        Get.back();
+        break;
       default:
         return true;
     }

@@ -11,7 +11,6 @@ import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
-import 'package:myairdeal/domain/models/ticket_raice/raice_ticket/raice_ticket.dart';
 
 class RaiceTickets extends StatelessWidget {
   RaiceTickets({super.key, this.bookingId});

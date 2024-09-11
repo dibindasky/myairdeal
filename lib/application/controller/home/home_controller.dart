@@ -15,7 +15,8 @@ enum NavigationChecker {
   bookingSuccess,
   profile,
   logoutPopUp,
-  loginSignup
+  loginSignup,
+  savedPassengers
 }
 
 class HomeController extends GetxController {
@@ -60,7 +61,6 @@ class HomeController extends GetxController {
     final result = await homeService.getRecentSearches();
     result.fold(
       (failure) {
-        log(failure.message.toString());
         recentLoading.value = false;
       },
       (recentDetailSearch) {

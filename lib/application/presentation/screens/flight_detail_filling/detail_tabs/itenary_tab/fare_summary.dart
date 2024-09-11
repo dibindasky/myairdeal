@@ -448,12 +448,14 @@ class TaxAndFeeHelper extends StatelessWidget {
     required this.value,
     this.style,
     this.bold = false,
+    this.isGap = true,
   });
 
   final String title;
   final String value;
   final TextStyle? style;
   final bool bold;
+  final bool isGap;
 
   @override
   Widget build(BuildContext context) {
@@ -469,11 +471,11 @@ class TaxAndFeeHelper extends StatelessWidget {
                     title,
                     style: style ??
                         textThinStyle1.copyWith(
-                          color: kBlack,
-                          fontSize: 12.sp,
-                        ),
+                            color: kBlack,
+                            fontSize: 12.sp,
+                            overflow: TextOverflow.ellipsis),
                   ),
-                  kHeight5,
+                  isGap ? kHeight5 : kEmpty,
                 ],
               ),
               Column(
@@ -486,9 +488,11 @@ class TaxAndFeeHelper extends StatelessWidget {
                           fontWeight: bold ? FontWeight.bold : null,
                           color: kBlack,
                           fontSize: 12.sp,
+                          overflow: TextOverflow.ellipsis,
                         ),
+                    maxLines: 2,
                   ),
-                  kHeight5,
+                  isGap ? kHeight5 : kEmpty,
                 ],
               ),
             ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_widgets/saved_detailcard.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
@@ -22,6 +23,14 @@ class TravellerDetails extends StatelessWidget {
       body: Column(
         children: [
           DetailAppBar(
+              action: CircleAvatar(
+                  backgroundColor:
+                      Get.find<ThemeController>().secondaryLightColor,
+                  child: IconButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.addUpdateTravellerDetails);
+                      },
+                      icon: const Icon(Icons.add))),
               heading: 'Saved Passengers',
               backButton: true,
               backOntap: () {

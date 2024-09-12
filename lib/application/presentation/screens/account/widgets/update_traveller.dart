@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,7 +14,6 @@ import 'package:myairdeal/application/presentation/utils/enums/enums.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/utils/formating/text_input_formating.dart';
 import 'package:myairdeal/application/presentation/utils/show_dailog/show_dailog.dart';
-import 'package:myairdeal/application/presentation/utils/validators/validators.dart';
 import 'package:myairdeal/application/presentation/widgets/event_button.dart';
 import 'package:myairdeal/application/presentation/widgets/radio_button_custom.dart';
 import 'package:myairdeal/application/presentation/widgets/text_form_field.dart';
@@ -35,6 +34,8 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
   TextEditingController expiryDController = TextEditingController();
   TextEditingController pIDController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  String? dropdownValue;
+  final ScrollController scrollController = ScrollController();
 
   TravellerInfo? passengers;
   @override
@@ -120,12 +121,16 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
   Widget build(BuildContext context) {
     final travelerController = Get.find<TravellerController>();
     final themeController = Get.find<ThemeController>();
+    final totalGenders = [...travelerController.genderList, 'Master'];
     return Scaffold(
       body: SingleChildScrollView(
+        controller: scrollController,
         child: Column(
           children: [
             DetailAppBar(
-              heading: 'Update Passenger',
+              heading: passengers?.id == null
+                  ? 'Add passegnger'
+                  : 'Update Passenger',
               backButton: true,
               backOntap: () {
                 Get.back();
@@ -151,22 +156,31 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
                         color: kWhite,
                       ),
                       child: Obx(
-                        () => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: List.generate(
-                            passengers?.pt == 'ADULT' ? 3 : 2,
-                            (index) => CustomRadioButton(
-                              selected:
-                                  index == travelerController.genderType.value,
-                              onChanged: () {
-                                travelerController.changeGenderType(index);
-                              },
-                              text: passengers?.pt == 'ADULT'
-                                  ? travelerController.genderList[index]
-                                  : travelerController.genderListchild[index],
+                        () {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(
+                              passengers?.id == null
+                                  ? totalGenders.length
+                                  : passengers?.pt == 'ADULT'
+                                      ? 3
+                                      : 2,
+                              (index) => CustomRadioButton(
+                                selected: index ==
+                                    travelerController.genderType.value,
+                                onChanged: () {
+                                  travelerController.changeGenderType(index);
+                                },
+                                text: passengers?.id == null
+                                    ? totalGenders[index]
+                                    : passengers?.pt == 'ADULT'
+                                        ? travelerController.genderList[index]
+                                        : travelerController
+                                            .genderListchild[index],
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
                     ),
                     kHeight15,
@@ -210,6 +224,47 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
                       hintText: 'Enter Your Last Name',
                       fillColor: kWhite,
                     ),
+                    (passengers?.id == null)
+                        ? Text('Choose Categery', style: textThinStyle1)
+                        : kEmpty,
+                    (passengers?.id != null) ? kEmpty : kHeight5,
+                    (passengers?.id != null)
+                        ? kEmpty
+                        : Container(
+                            padding: EdgeInsets.only(left: 10.h),
+                            height: 40,
+                            decoration: BoxDecoration(
+                                color: kWhite,
+                                borderRadius: kRadius15,
+                                border:
+                                    Border.all(color: kBlack.withOpacity(.3))),
+                            child: DropdownButton<String>(
+                              hint: Text('Select Categery',
+                                  style: textStyle1.copyWith(fontSize: 13.sp)),
+                              dropdownColor: kWhite,
+                              borderRadius: kRadius10,
+                              isExpanded: true,
+                              underline: const SizedBox.shrink(),
+                              value: dropdownValue,
+                              style: textStyle1.copyWith(color: kBlack),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownValue = newValue!;
+                                });
+                              },
+                              items: <String>[
+                                'Adult',
+                                'Children',
+                                'Infant'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                    kHeight10,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -226,16 +281,17 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
                                     : DateFormating.convertStringToDateTime(
                                         dateOfBirthController.text);
 
-                            // Define age limits for ADULT and child
-                            const adultAge = 18;
-                            const childAge = 12;
+                            const adultAge = 150;
+                            const childAge = 18;
 
-                            // Set the starting date based on passenger type (adult or child)
-                            final DateTime firstDate = passengers?.pt == 'ADULT'
-                                ? DateTime.now().subtract(const Duration(
-                                    days: 365 * adultAge)) // 18 years back
-                                : DateTime.now().subtract(const Duration(
-                                    days: 365 * childAge)); // 12 years back
+                            final DateTime firstDate = passengers?.id == null
+                                ? DateTime.now().subtract(
+                                    const Duration(days: 365 * adultAge))
+                                : passengers?.pt == 'ADULT'
+                                    ? DateTime.now().subtract(const Duration(
+                                        days: 365 * adultAge)) // 150 years back
+                                    : DateTime.now().subtract(
+                                        const Duration(days: 365 * childAge));
 
                             // Set last date as current date
                             final DateTime lastDate = DateTime.now();
@@ -243,11 +299,9 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
                             // Show the date picker
                             final DateTime? selectedDate = await showDatePicker(
                               context: context,
-                              initialDate: currentDate ??
-                                  lastDate, // Default to current date if no selection
-                              firstDate:
-                                  firstDate, // Start at either 18 or 12 years ago
-                              lastDate: lastDate, // Limit to today's date
+                              initialDate: currentDate ?? lastDate,
+                              firstDate: firstDate,
+                              lastDate: lastDate,
                             );
 
                             // If a date is selected, update the text in the controller
@@ -285,16 +339,16 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
                         Text('Passport Number', style: textThinStyle1),
                         kHeight5,
                         CustomTextField(
-                          validator: (value) {
-                            if (value != null && value.isNotEmpty) {
-                              if (!isValidIndianPassportNumber(value)) {
-                                return 'Passport number is not valid';
-                              }
-                            }
-                            return null;
-                          },
+                          // validator: (value) {
+                          //   if (value != null && value.isNotEmpty) {
+                          //     if (!isValidIndianPassportNumber(value)) {
+                          //       return 'Passport number is not valid';
+                          //     }
+                          //   }
+                          //   return null;
+                          // },
                           controller: passportNumberController,
-                          validate: Validate.passportNumber,
+                          // validate: Validate.passportNumber,
                           textCapitalization: TextCapitalization.characters,
                           isBorder: true,
                           borderRadius: 14,
@@ -423,52 +477,117 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
                     Center(
                       child: Obx(() => !travelerController.updateLoading.value
                           ? EventButton(
-                              text: 'Update',
+                              text: passengers?.id == null
+                                  ? 'Add passenger'
+                                  : 'Update Passenger',
                               onTap: () {
+                                if (travelerController.genderType.value == -1) {
+                                  showSnackbar(context,
+                                      message: 'Choose Titile');
+                                  Timer(
+                                    const Duration(milliseconds: 300),
+                                    () => scrollController.animateTo(
+                                        scrollController
+                                            .position.minScrollExtent,
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        curve: Curves.bounceIn),
+                                  );
+                                  return;
+                                }
+                                if (passengers?.id == null &&
+                                    dropdownValue == null) {
+                                  showSnackbar(context,
+                                      message: 'Choose Categery');
+                                  return;
+                                }
+
                                 if (dateOfBirthController.text.isEmpty) {
                                   showSnackbar(context,
                                       message: 'Please Fill Date of Birth');
                                   return;
                                 }
                                 if (formKey.currentState!.validate()) {
-                                  travelerController.updatePassenger(
-                                      travellerID: passengers?.id ?? '',
-                                      traveller: TravellerInfo(
-                                        dob: dateOfBirthController.text == ''
-                                            ? null
-                                            : dateOfBirthController.text,
-                                        fN: firstNameController.text,
-                                        lN: lastNameController.text,
-                                        ti: passengers?.pt == 'ADULT'
-                                            ? travelerController.genderList[
-                                                travelerController
-                                                    .genderType.value]
-                                            : travelerController
-                                                    .genderListchild[
-                                                travelerController
-                                                    .genderType.value],
-                                        pt: passengers?.pt,
-                                        eD: expiryDController.text == ''
-                                            ? null
-                                            : DateFormating.getDateApi(
-                                                DateTime.parse(
-                                                    expiryDController.text)),
-                                        pNum:
-                                            passportNumberController.text == ''
+                                  passengers?.id != null
+                                      ? travelerController.updatePassenger(
+                                          travellerID: passengers?.id ?? '',
+                                          traveller: TravellerInfo(
+                                            dob: dateOfBirthController.text ==
+                                                    ''
+                                                ? null
+                                                : dateOfBirthController.text,
+                                            fN: firstNameController.text,
+                                            lN: lastNameController.text,
+                                            ti: passengers?.pt == 'ADULT'
+                                                ? travelerController.genderList[
+                                                    travelerController
+                                                        .genderType.value]
+                                                : travelerController
+                                                        .genderListchild[
+                                                    travelerController
+                                                        .genderType.value],
+                                            pt: passengers?.pt,
+                                            eD: expiryDController.text == ''
+                                                ? null
+                                                : DateFormating.getDateApi(
+                                                    DateTime.parse(
+                                                        expiryDController
+                                                            .text)),
+                                            pNum: passportNumberController
+                                                        .text ==
+                                                    ''
                                                 ? null
                                                 : passportNumberController.text,
-                                        pid: pIDController.text == ''
-                                            ? null
-                                            : DateFormating.getDateApi(
-                                                DateTime.parse(
-                                                    pIDController.text)),
-                                        pN: travelerController
-                                                    .selectedCoutryCode.value ==
-                                                ''
-                                            ? null
-                                            : travelerController
-                                                .selectedCoutryCode.value,
-                                      ));
+                                            pid: pIDController.text == ''
+                                                ? null
+                                                : DateFormating.getDateApi(
+                                                    DateTime.parse(
+                                                        pIDController.text)),
+                                            pN: travelerController
+                                                        .selectedCoutryCode
+                                                        .value ==
+                                                    ''
+                                                ? null
+                                                : travelerController
+                                                    .selectedCoutryCode.value,
+                                          ))
+                                      : travelerController.savePassengerDetails(
+                                          TravellerInfo(
+                                            dob: dateOfBirthController.text ==
+                                                    ''
+                                                ? null
+                                                : dateOfBirthController.text,
+                                            fN: firstNameController.text,
+                                            lN: lastNameController.text,
+                                            ti: totalGenders[travelerController
+                                                .genderType.value],
+                                            pt: dropdownValue,
+                                            eD: expiryDController.text == ''
+                                                ? null
+                                                : DateFormating.getDateApi(
+                                                    DateTime.parse(
+                                                        expiryDController
+                                                            .text)),
+                                            pNum: passportNumberController
+                                                        .text ==
+                                                    ''
+                                                ? null
+                                                : passportNumberController.text,
+                                            pid: pIDController.text == ''
+                                                ? null
+                                                : DateFormating.getDateApi(
+                                                    DateTime.parse(
+                                                        pIDController.text)),
+                                            pN: travelerController
+                                                        .selectedCoutryCode
+                                                        .value ==
+                                                    ''
+                                                ? null
+                                                : travelerController
+                                                    .selectedCoutryCode.value,
+                                          ),
+                                          context: context,
+                                          fromAccount: true);
                                 }
                               })
                           : CircularProgressIndicator(

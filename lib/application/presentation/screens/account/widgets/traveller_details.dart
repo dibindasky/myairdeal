@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/traveler_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/traveler_widgets/saved_detailcard.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
@@ -22,6 +23,14 @@ class TravellerDetails extends StatelessWidget {
       body: Column(
         children: [
           DetailAppBar(
+              action: CircleAvatar(
+                  backgroundColor:
+                      Get.find<ThemeController>().secondaryLightColor,
+                  child: IconButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.addUpdateTravellerDetails);
+                      },
+                      icon: const Icon(Icons.add))),
               heading: 'Saved Passengers',
               backButton: true,
               backOntap: () {
@@ -64,10 +73,30 @@ class TravellerDetails extends StatelessWidget {
                           travelerController.allPassengers[index].toString()),
                       direction: DismissDirection.startToEnd,
                       onDismissed: (direction) {
+                        final dismissedPassenger =
+                            travelerController.allPassengers[index];
+
+                        // Remove the passenger temporarily
                         travelerController.deletePassenger(
-                            travellerID:
-                                travelerController.allPassengers[index].id ??
-                                    '');
+                            travellerID: dismissedPassenger.id ?? '');
+
+                        // Show a SnackBar with an Undo option
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: kDardGold,
+                            content: const Text('Passenger dismissed'),
+                            action: SnackBarAction(
+                              label: 'Undo',
+                              onPressed: () {
+                                // Revert the dismissal
+                                travelerController.addPassengerDetail(
+                                    index, dismissedPassenger, true);
+                              },
+                            ),
+                            duration: const Duration(
+                                seconds: 2), // 2-second delay for undo
+                          ),
+                        );
                       },
                       background: const Icon(Icons.delete, color: kRed),
                       child: GestureDetector(

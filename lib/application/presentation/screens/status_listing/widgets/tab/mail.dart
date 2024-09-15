@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/raice_ticket/raice_ticket_controller.dart';
+import 'package:myairdeal/application/controller/theme/theme_controller.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
@@ -14,6 +15,7 @@ class EmailListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final raiceTiceketController = Get.find<RaiceTicketController>();
+    final themecontroller = Get.find<ThemeController>();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         raiceTiceketController.getAllRaisedTickets(
@@ -28,6 +30,11 @@ class EmailListScreen extends StatelessWidget {
     );
     return Obx(
       () {
+        if (raiceTiceketController.isLoading.value) {
+          return Center(
+              child: CircularProgressIndicator(
+                  color: themecontroller.secondaryLightColor));
+        }
         if (raiceTiceketController.allTicketsLists.isEmpty) {
           return const Center(child: Text('No Raised Tickets'));
         }

@@ -58,12 +58,7 @@ class TicketDetailsSection extends StatelessWidget {
                             itemInfos!.air?.tripInfos?[0].sI?[0].dt ?? '',
                           ),
                         )
-                      : const CardSideItems(
-                          place: 'TTT',
-                          airPort: 'Airport',
-                          from: 'Departure',
-                          time: '07:00 AM',
-                        ),
+                      : kEmpty,
               searchAirlineInformation != null
                   ? NormalCenterItems(
                       airlineCode: airlineCode,
@@ -72,8 +67,7 @@ class TicketDetailsSection extends StatelessWidget {
                       airline: searchAirlineInformation!.sI![0].fD!.aI!.name,
                       stops: searchAirlineInformation!.sI!.length - 1,
                     )
-                  : flightTicketCardEnum == FlightTicketCardEnum.complete ||
-                          flightTicketCardEnum == FlightTicketCardEnum.cancelled
+                  : flightTicketCardEnum == FlightTicketCardEnum.complete
                       ? BookingCombletedCancelledTabcenterItems(
                           price: itemInfos?.air?.totalPriceInfo?.totalFareDetail
                                   ?.fC?.tf ??
@@ -136,13 +130,7 @@ class TicketDetailsSection extends StatelessWidget {
                           time: DateFormating.formatDate(
                               itemInfos!.air?.tripInfos?[0].sI?[0].at ?? ''),
                         )
-                      : const CardSideItems(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          place: '',
-                          airPort: '',
-                          from: 'Arrival',
-                          time: '',
-                        ),
+                      : kEmpty,
             ],
           ),
         ),

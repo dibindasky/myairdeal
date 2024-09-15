@@ -98,120 +98,146 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                             width: 1.0,
                           ),
                         ),
-                        hintText: 'Enter Mobile Number',
                       ),
-                      maxLength: controller.maxLength.value + 1,
-                      onSaved: (PhoneNumber number) {},
+                      hintText: 'Enter Mobile Number',
                     ),
-                    kHeight10,
-                    Text(
-                      'You will receive a verification code on this number.',
-                      style: textThinStyle1.copyWith(color: kbuttonGrey),
-                    ),
-                    kHeight50,
-                    controller.changeLogin.value
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('Already have an account?  '),
-                              GestureDetector(
-                                onTap: () {
-                                  controller.changeLoginBool();
-                                  focusScopeNode.unfocus();
-                                },
-                                child: Text(
-                                  'Login',
-                                  style: textThinStyle1.copyWith(
-                                      color: themeController.secondaryColor,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor:
-                                          themeController.secondaryColor),
-                                ),
+                    maxLength: controller.maxLength.value + 1,
+                    onSaved: (PhoneNumber number) {},
+                  ),
+                  kHeight10,
+                  Text(
+                    'You will receive a verification code on this number.',
+                    style: textThinStyle1.copyWith(color: kbuttonGrey),
+                  ),
+                  kHeight50,
+                  controller.changeLogin.value
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('Already have an account?  '),
+                            GestureDetector(
+                              onTap: () {
+                                controller.changeLoginBool();
+                                focusScopeNode.unfocus();
+                              },
+                              child: Text(
+                                'Login',
+                                style: textThinStyle1.copyWith(
+                                    color: themeController.secondaryColor,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor:
+                                        themeController.secondaryColor),
+                              ),
+                            )
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text('Don\'t have an account?  '),
+                            GestureDetector(
+                              onTap: () {
+                                controller.changeLoginBool();
+                                focusScopeNode.unfocus();
+                              },
+                              child: Text(
+                                'Sign Up',
+                                style: textStyle1.copyWith(
+                                    color: themeController.secondaryColor,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor:
+                                        themeController.secondaryColor),
+                              ),
+                            )
+                          ],
+                        ),
+                  kHeight50,
+                  GetBuilder<AuthController>(builder: (cont) {
+                    return Column(
+                      children: [
+                        controller.isLoading.value
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                    color: kBluePrimary),
                               )
-                            ],
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text('Don\'t have an account?  '),
-                              GestureDetector(
+                            : EventIconButton(
+                                width: 400.w,
+                                suffixIcon:
+                                    controller.loginNumber.text.length >=
+                                            controller.maxLength.value + 1
+                                        ? Image.asset(
+                                            tickIcon,
+                                            height: 13.h,
+                                          )
+                                        : null,
+                                color: controller.loginNumber.text.length >=
+                                        controller.maxLength.value + 1
+                                    ? themeController.primaryColor
+                                    : kbuttonGrey,
+                                text: 'Send OTP',
                                 onTap: () {
-                                  controller.changeLoginBool();
-                                  focusScopeNode.unfocus();
+                                  if (controller.loginNumber.text.length >=
+                                      controller.maxLength.value + 1) {
+                                    controller.sendSMS();
+                                  } else {
+                                    Get.snackbar(
+                                      'Failed',
+                                      'Mobile Number is not valid',
+                                      backgroundColor: kRed,
+                                    );
+                                  }
                                 },
-                                child: Text(
-                                  'Sign Up',
-                                  style: textStyle1.copyWith(
-                                      color: themeController.secondaryColor,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor:
-                                          themeController.secondaryColor),
-                                ),
-                              )
-                            ],
+                              ),
+                      ],
+                    );
+                  }),
+                  kHeight20,
+                  kHeight10,
+                  kHeight10,
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: GestureDetector(
+                      onTap: () => controller.guestLogin(),
+                      child: Obx(
+                        () => Container(
+                          width: 70.w,
+                          height: 50.w,
+                          decoration: BoxDecoration(
+                              borderRadius: kRadius10,
+                              color: themeController.primaryColor),
+                          child: Center(
+                            child: Text(
+                              'Skip > >',
+                              style: textThinStyle1.copyWith(
+                                  color: Get.find<ThemeController>()
+                                      .secondaryColor),
+                            ),
                           ),
-                    kHeight50,
-                    GetBuilder<AuthController>(builder: (cont) {
-                      return Column(
-                        children: [
-                          controller.isLoading.value
-                              ? const Center(
-                                  child: CircularProgressIndicator(
-                                      color: kBluePrimary),
-                                )
-                              : EventIconButton(
-                                  width: 400.w,
-                                  suffixIcon:
-                                      controller.loginNumber.text.length >=
-                                              controller.maxLength.value + 1
-                                          ? Image.asset(
-                                              tickIcon,
-                                              height: 13.h,
-                                            )
-                                          : null,
-                                  color: controller.loginNumber.text.length >=
-                                          controller.maxLength.value + 1
-                                      ? themeController.primaryColor
-                                      : kbuttonGrey,
-                                  text: 'Send OTP',
-                                  onTap: () {
-                                    if (controller.loginNumber.text.length >=
-                                        controller.maxLength.value + 1) {
-                                      controller.sendSMS();
-                                    } else {
-                                      Get.snackbar(
-                                        'Failed',
-                                        'Mobile Number is not valid',
-                                        backgroundColor: kRed,
-                                      );
-                                    }
-                                  },
-                                ),
-                        ],
-                      );
-                    }),
-                    kHeight20,
-                    kHeight10,
-                    kHeight10,
-                    kHeight10,
-                  ],
-                ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  kHeight20
+                ],
               ),
             ),
           ),
-          floatingActionButton: Obx(() {
-            return FloatingActionButton.extended(
-              onPressed: () {
-                controller.guestLogin();
-              },
-              backgroundColor: Get.find<ThemeController>().primaryColor,
-              label: Text(
-                'Skip > >',
-                style: textThinStyle1.copyWith(
-                    color: Get.find<ThemeController>().secondaryColor),
-              ),
-            );
-          })),
+
+          //   Obx(() {
+          //   return FloatingActionButton.extended(
+          //     onPressed: () {
+          //       controller.guestLogin();
+          //     },
+          //     backgroundColor: Get.find<ThemeController>().primaryColor,
+          //     label: Text(
+          //       'Skip > >',
+          //       style: textThinStyle1.copyWith(
+          //           color: Get.find<ThemeController>().secondaryColor),
+          //     ),
+          //   );
+          // })
+        ),
+      ),
     );
   }
 }

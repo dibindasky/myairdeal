@@ -3,12 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/booking/ticket_cancel_controller.dart';
-import 'package:myairdeal/application/presentation/screens/status_listing/flight_invoice/widgets/ticket_column.dart';
+import 'package:myairdeal/application/presentation/screens/flight_detail_filling/detail_tabs/itenary_tab/fare_summary.dart';
 import 'package:myairdeal/application/presentation/screens/flight_detail_filling/widgets/detail_appbar.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
-import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/application/presentation/utils/shimmer/shimmer.dart';
+import 'package:myairdeal/application/presentation/widgets/dotted_line.dart';
 
 class ScreenViewAmendMentStatus extends StatelessWidget {
   const ScreenViewAmendMentStatus({super.key});
@@ -23,7 +23,7 @@ class ScreenViewAmendMentStatus extends StatelessWidget {
         child: Obx(
           () => Column(
             children: [
-              const DetailAppBar(heading: 'Check amendment status'),
+              const DetailAppBar(heading: 'Check Amendment Status'),
               ...List.generate(
                 bookingController.retrieveSingleBookingresponceModel.value
                         .amendment?.length ??
@@ -33,8 +33,9 @@ class ScreenViewAmendMentStatus extends StatelessWidget {
                       amendMentIndex >=
                           cancelController.amendmentDetails.length) {
                     return const Skeleton(
+                        padding: 12,
                         crossAxisCount: 1,
-                        itemCount: 1,
+                        itemCount: 3,
                         childAspectRatio: 1 / .4);
                   }
                   if (cancelController.amendmentDetails[amendMentIndex] ==
@@ -44,6 +45,7 @@ class ScreenViewAmendMentStatus extends StatelessWidget {
                   final amendmentInfo =
                       cancelController.amendmentDetails[amendMentIndex];
                   return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         padding: EdgeInsets.symmetric(
@@ -61,52 +63,39 @@ class ScreenViewAmendMentStatus extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Booking ID'),
-                                Text(amendmentInfo?.bookingId ?? 'ID'),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Amendment Id'),
-                                Text(amendmentInfo?.amendmentId ?? 'ID'),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Amendment Status'),
-                                Text(amendmentInfo?.amendmentStatus ??
+                            TaxAndFeeHelper(
+                                title: 'Booking ID  ',
+                                value: amendmentInfo?.bookingId ?? 'ID'),
+                            TaxAndFeeHelper(
+                                title: 'Amendment ID  ',
+                                value: amendmentInfo?.amendmentId ?? 'ID'),
+                            TaxAndFeeHelper(
+                                title: 'Amendment Status  ',
+                                value: amendmentInfo?.amendmentStatus ??
                                     'Processing'),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Refundable Amount'),
-                                Text(
-                                    '${amendmentInfo?.refundableAmount ?? '000'}'),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Remarks'),
-                                Text('${amendmentInfo?.remarks}', maxLines: 3),
-                              ],
-                            ),
+                            TaxAndFeeHelper(
+                                title: 'Refundable Amount  ',
+                                value:
+                                    '₹ ${amendmentInfo?.refundableAmount?.toDouble() ?? '00.0'}'),
+                            TaxAndFeeHelper(
+                                title: 'Remarks  ',
+                                value: '${amendmentInfo?.remarks}'),
                           ],
                         ),
                       ),
                       (amendmentInfo?.trips?.length ?? 0) == 0
                           ? Text('Wait some moments Your request is validating',
-                              maxLines: 2, style: textThinStyle1)
-                          : Text('Amendment applicable Trips and Passengers',
-                              maxLines: 2, style: textThinStyle1),
-                      kHeight5,
+                              maxLines: 2,
+                              style: textThinStyle1,
+                              textAlign: TextAlign.center)
+                          : Text(
+                              'Amendment applicable Trips and Passengers',
+                              maxLines: 2,
+                              style: textThinStyle1,
+                              textAlign: TextAlign.center,
+                            ),
+                      kHeight10,
+                      const Text('Trip details:'),
                       ...List.generate(
                         amendmentInfo?.trips?.length ?? 0,
                         (tripIndex) => Container(
@@ -123,62 +112,48 @@ class ScreenViewAmendMentStatus extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: TicketColumn(
-                                      label: amendmentInfo
-                                              ?.trips?[tripIndex].src ??
-                                          'from',
-                                      value: DateFormating.formatDate(
-                                          amendmentInfo?.trips?[tripIndex]
-                                                  .departureDate ??
-                                              ''),
-                                      lebelStyle: textThinStyle1,
-                                      valueStyle: textThinStyle1,
-                                      subValueStyle: textThinStyle1,
-                                      exitStyle: textThinStyle1,
-                                      subValue: 'Airline Number',
-                                      exit: 'Flight number',
-                                      isBold: true,
-                                    ),
-                                  ),
-                                  RotatedBox(
-                                      quarterTurns: 1,
-                                      child: Icon(
-                                        Icons.flight,
-                                        color: kBlueDark,
-                                        size: 16.w,
-                                      )),
-                                  Expanded(
-                                    child: TicketColumn(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      label: amendmentInfo
-                                              ?.trips?[tripIndex].dest ??
-                                          'TO',
-                                      lebelStyle: textThinStyle1,
-                                      valueStyle: textThinStyle1,
-                                      subValueStyle: textThinStyle1,
-                                      exitStyle: textThinStyle1,
-                                      value: '',
-                                      subValue: "--",
-                                      exit: '--',
-                                      isBold: true,
-                                    ),
-                                  ),
-                                ],
+                              kHeight5,
+                              TaxAndFeeHelper(
+                                isGap: false,
+                                title: 'Departure',
+                                value: 'Arrival',
+                                style: textStyle1.copyWith(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700),
                               ),
-                              Text('Travellers',
-                                  style:
-                                      textHeadStyle1.copyWith(fontSize: 14.sp)),
+                              TaxAndFeeHelper(
+                                isGap: false,
+                                title:
+                                    amendmentInfo?.trips?[tripIndex].src ?? '',
+                                value:
+                                    amendmentInfo?.trips?[tripIndex].dest ?? '',
+                              ),
+                              TaxAndFeeHelper(
+                                isGap: false,
+                                title: 'Flight number',
+                                value: amendmentInfo?.trips?[tripIndex]
+                                        .flightNumbers?.first ??
+                                    '',
+                              ),
+                              TaxAndFeeHelper(
+                                isGap: false,
+                                title: 'Airlines',
+                                value: amendmentInfo
+                                        ?.trips?[tripIndex].airlines?.first ??
+                                    '',
+                              ),
+                              const DottedLines(height: 10),
+                              kHeight5,
+                              Text('Passengers:',
+                                  style: textThinStyle1.copyWith(
+                                      color: kBlack,
+                                      fontSize: 13.sp,
+                                      overflow: TextOverflow.ellipsis)),
                               kHeight5,
                               ...List.generate(
                                 amendmentInfo?.trips?[tripIndex].travellers
                                         ?.length ??
-                                    2,
+                                    0,
                                 (travellerIndex) => Container(
                                   decoration: BoxDecoration(
                                     color: klightWhite,
@@ -229,7 +204,7 @@ class ScreenViewAmendMentStatus extends StatelessWidget {
                                         children: [
                                           const Text('Amendment Charge'),
                                           Text(
-                                              '${amendmentInfo?.trips?[tripIndex].travellers?[travellerIndex].amendmentCharges ?? '000'}',
+                                              '₹ ${amendmentInfo?.trips?[tripIndex].travellers?[travellerIndex].amendmentCharges?.toDouble() ?? '00.0'}',
                                               style: textThinStyle1),
                                         ],
                                       ),
@@ -239,7 +214,7 @@ class ScreenViewAmendMentStatus extends StatelessWidget {
                                         children: [
                                           const Text('Refundable amount'),
                                           Text(
-                                              "${amendmentInfo?.trips?[tripIndex].travellers?[travellerIndex].refundableamount ?? '000'}"),
+                                              "₹ ${amendmentInfo?.trips?[tripIndex].travellers?[travellerIndex].refundableamount?.toDouble() ?? '000.0'}"),
                                         ],
                                       ),
                                       Row(
@@ -248,7 +223,7 @@ class ScreenViewAmendMentStatus extends StatelessWidget {
                                         children: [
                                           const Text('Total Fare'),
                                           Text(
-                                              '${amendmentInfo?.trips?[tripIndex].travellers?[travellerIndex].totalFare ?? '000'}'),
+                                              '₹ ${amendmentInfo?.trips?[tripIndex].travellers?[travellerIndex].totalFare?.toDouble() ?? '000.0'}'),
                                         ],
                                       ),
                                     ],

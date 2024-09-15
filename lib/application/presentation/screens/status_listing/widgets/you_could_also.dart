@@ -31,7 +31,7 @@ class YouCouldAlso extends StatelessWidget {
             (index) {
               List<IconData> icons = [
                 Iconsax.personalcard4,
-                Icons.report_problem_outlined,
+                Icons.airplane_ticket,
                 Icons.call
               ];
               return Expanded(
@@ -60,31 +60,20 @@ class YouCouldAlso extends StatelessWidget {
                                 border: Border.all(
                                     color: kBluePrimary.withOpacity(0.3)),
                                 borderRadius: kRadius10),
-                            child: raiceController.youCouldAlsoTexts[index] ==
-                                        'Reports' &&
-                                    raiceController.isLoading.value
-                                ? SizedBox(
-                                    width: 50.h,
-                                    height: 50.h,
-                                    child: const Center(
-                                      child: CircularProgressIndicator(
-                                          color: kBlueLight),
-                                    ))
-                                : Column(
-                                    children: [
-                                      kHeight5,
-                                      Icon(icons[index], color: kIndigo),
-                                      kHeight5,
-                                      FittedBox(
-                                        child: Text(
-                                            raiceController
-                                                .youCouldAlsoTexts[index],
-                                            style: textThinStyle1.copyWith(
-                                                color: kIndigo)),
-                                      ),
-                                      kHeight5
-                                    ],
-                                  ),
+                            child: Column(
+                              children: [
+                                kHeight5,
+                                Icon(icons[index], color: kIndigo),
+                                kHeight5,
+                                FittedBox(
+                                  child: Text(
+                                      raiceController.youCouldAlsoTexts[index],
+                                      style: textThinStyle1.copyWith(
+                                          color: kIndigo)),
+                                ),
+                                kHeight5
+                              ],
+                            ),
                           ),
                         ),
                       ),

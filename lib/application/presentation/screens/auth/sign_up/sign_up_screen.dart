@@ -50,7 +50,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                     kHeight30,
                     Obx(() {
                       return Get.find<AuthController>().logFromBooking.value
-                          ? Text('Login Before Making A Booking',
+                          ? Text('${controller.changeLogin.value ? 'Sign Up' :'Login'} Before Making A Booking',
                               style: textStyle1.copyWith(
                                   fontSize: 12.sp, fontWeight: FontWeight.w700))
                           : kEmpty;

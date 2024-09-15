@@ -31,10 +31,8 @@ class NationalityCodeDropDown extends StatelessWidget {
               height: 40,
               width: 0,
             ),
-            hint: Text(
-              'Country Code',
-              style: textStyle1.copyWith(color: kBlack),
-            ),
+            hint:
+                Text('Country Code', style: textStyle1.copyWith(color: kBlack)),
             isExpanded: true,
             items: [
               for (var code in countryMaxLengths.keys)

@@ -39,6 +39,7 @@ class TravellerController extends GetxController {
   RxList<TravellerInfo> allPassengers = <TravellerInfo>[].obs;
   RxList<TravellerInfo> allPassengersBasedOnType = <TravellerInfo>[].obs;
   RxBool isLoading = false.obs;
+  // passenger update loading
   RxBool updateLoading = false.obs;
   RxBool hasError = false.obs;
   RxBool seatIsLoading = false.obs;
@@ -316,8 +317,15 @@ class TravellerController extends GetxController {
   }
 
   /// add passengers details to server
-  void savePassengerDetails(TravellerInfo travellerInfo) async {
+  void savePassengerDetails(TravellerInfo travellerInfo,
+      {bool fromAccount = false, BuildContext? context}) async {
+    updateLoading.value = true;
     await _passengersRepo.addPassengers(travellerInfo: travellerInfo);
+    updateLoading.value = false;
+    if (fromAccount) {
+      Navigator.pop(context!);
+      getAllPAssengers();
+    }
   }
 
   /// itenary section main tab changing
@@ -585,7 +593,7 @@ class TravellerController extends GetxController {
           code: seat.code,
           amount: seat.amount);
       addOnsprice.value += seat.amount ?? 0;
-    } 
+    }
   }
 
   /// change selected flight using flight id for seat selection

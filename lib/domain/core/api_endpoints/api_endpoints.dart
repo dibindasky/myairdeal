@@ -1,7 +1,9 @@
 class ApiEndPoints {
-  static const String baseUrl = 'https://backend.myairdeal.com';
+  /// url to use in every request
+  static String baseUrl = 'https://backend.myairdeal.com';
   // static const String baseUrl = 'https://b7fzq0cn-5001.inc1.devtunnels.ms';
-  // static const String baseUrl = 'https://api.myairdeal.com';
+  static const String testBaseUrl = 'https://api.myairdeal.com';
+  static const String liveBaseUrl = 'https://backend.myairdeal.com';
 
   static const String getSplash = '/splash/get';
   static const String sendOTP = '/user/send-sms';
@@ -47,4 +49,10 @@ class ApiEndPoints {
 
   // Change {airlinecode} for logo
   static const String airllineLogo = "/uploads/AirlinesLogo/{airlinecode}.png";
+
+  static void changeBaseURL(String url) {
+    print('url changing => $url');
+    baseUrl = url;
+    print('base url after changing => $baseUrl');
+  }
 }

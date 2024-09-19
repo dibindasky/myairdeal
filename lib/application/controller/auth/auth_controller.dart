@@ -14,6 +14,7 @@ import 'package:myairdeal/application/presentation/utils/validators/validators.d
 import 'package:myairdeal/data/firebase_configuration/firebase_notification.dart';
 import 'package:myairdeal/data/secure_storage/secure_storage.dart';
 import 'package:myairdeal/data/service/auth/auth_service.dart';
+import 'package:myairdeal/domain/core/api_endpoints/api_endpoints.dart';
 import 'package:myairdeal/domain/models/auth/login_model/country.dart';
 import 'package:myairdeal/domain/models/auth/login_model/login_model.dart';
 import 'package:myairdeal/domain/models/auth/otp_verify_model/otp_verify_model.dart';
@@ -30,6 +31,10 @@ class AuthController extends GetxController {
   RxBool loginOrNot = false.obs;
   RxBool logFromBooking = false.obs;
   RxBool isGuest = true.obs;
+
+  /// variable to change the url according to the login number
+  /// if number is[99999 99999] then show the test api and dummy payment
+  RxBool isTestNumber = false.obs;
 
   TextEditingController loginNumber = TextEditingController();
   TextEditingController otpNumber = TextEditingController();
@@ -132,6 +137,11 @@ class AuthController extends GetxController {
     final onBoard = await SharedPreferecesStorage.getOnBoard();
     final profile = await SharedPreferecesStorage.getProfile();
     final isGuest = await SharedPreferecesStorage.getGuestLogin();
+    final isTest = await SharedPreferecesStorage.getIsTestUser();
+    isTestNumber.value = isTest;
+    if (isTest) {
+      ApiEndPoints.changeBaseURL(ApiEndPoints.testBaseUrl);
+    }
     if (!onBoard) {
       Get.toNamed(Routes.onboard);
     } else if (isGuest) {
@@ -166,6 +176,15 @@ class AuthController extends GetxController {
     isLoading.value = true;
     hasError = false;
     update();
+    if (replaceWhiteSpace == '') {
+      ApiEndPoints.changeBaseURL(ApiEndPoints.testBaseUrl);
+      SharedPreferecesStorage.setisTestUser(true);
+      isTestNumber.value = true;
+    } else {
+      ApiEndPoints.changeBaseURL(ApiEndPoints.liveBaseUrl);
+      SharedPreferecesStorage.setisTestUser(false);
+      isTestNumber.value = false;
+    }
     final data = await authRepo.sendSMS(
       loginModel: LoginModel(
         mobileNumber: replaceWhiteSpace,
@@ -379,5 +398,7 @@ class AuthController extends GetxController {
     update();
     await SharedPreferecesStorage.clearLogin();
     await SharedPreferecesStorage.setOnBoard();
+    SharedPreferecesStorage.setisTestUser(false);
+    isTestNumber.value = false;
   }
 }

@@ -27,9 +27,10 @@ class RazorpayGateway {
     required String description,
     required String email,
     required String phone,
+    required bool live,
   }) async {
     var options = {
-      'key': keyId,
+      'key': live ? liveKeyId : testKeyId,
       // 'order_id':'',
       'amount': amount * 100, // Amount in paise
       'name': 'Bechdu',

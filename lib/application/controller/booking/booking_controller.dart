@@ -386,6 +386,7 @@ class BookingController extends GetxController {
         // ignore: use_build_context_synchronously
         RazorpayGateway(context, bookTicketModel);
     razorpayGateway.makePayment(
+      live: !Get.find<AuthController>().isTestNumber.value,
         amount:
             ((reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ??
                         0) +

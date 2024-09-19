@@ -6,6 +6,7 @@ class SharedPreferecesStorage {
   static const String accessKey = 'access_key';
   static const String isLogged = 'is_loggedIn';
   static const String isGuest = 'is_Guest';
+  static const String isTest = 'is_test_user';
   static const String isOnBoarVisted = 'is_onboar_visted';
   static const String isProfileCreated = 'is_profile_visited';
   static const String phoneKey = 'phone';
@@ -122,5 +123,19 @@ class SharedPreferecesStorage {
     log('set setProfile => ');
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(isGuest, login);
+  }
+
+  static Future<bool> getIsTestUser() async {
+    log('get IsTestUser =>()');
+    final prefs = await SharedPreferences.getInstance();
+    final isTestUser = prefs.getBool(isTest) ?? false;
+    log('get test user =>() $isTestUser');
+    return isTestUser;
+  }
+
+  static Future<void> setisTestUser(bool login) async {
+    log('set IsTestUser => ');
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(isTest, login);
   }
 }

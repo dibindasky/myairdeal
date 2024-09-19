@@ -5,13 +5,13 @@ part 'fc.g.dart';
 @JsonSerializable()
 class Fc {
   @JsonKey(name: 'NF')
-  int? nf;
+  num? nf;
   @JsonKey(name: 'BF')
-  int? bf;
+  num? bf;
   @JsonKey(name: 'TAF')
-  int? taf;
+  num? taf;
   @JsonKey(name: 'TF')
-  int? tf;
+  num? tf;
 
   Fc({this.nf, this.bf, this.taf, this.tf});
 
@@ -20,10 +20,10 @@ class Fc {
   Map<String, dynamic> toJson() => _$FcToJson(this);
 
   Fc copyWith({
-    int? nf,
-    int? bf,
-    int? taf,
-    int? tf,
+    num? nf,
+    num? bf,
+    num? taf,
+    num? tf,
   }) {
     return Fc(
       nf: nf ?? this.nf,

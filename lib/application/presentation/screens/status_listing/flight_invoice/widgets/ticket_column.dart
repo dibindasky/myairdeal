@@ -57,6 +57,9 @@ class TicketColumn extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                       overflow: TextOverflow.ellipsis,
                     ),
+                textAlign: crossAxisAlignment == CrossAxisAlignment.end
+                    ? TextAlign.end
+                    : null,
               )
             : airlineCode != null
                 ? NetworkImageWithLoading(
@@ -72,6 +75,9 @@ class TicketColumn extends StatelessWidget {
                       fontSize: 16,
                     ),
                 overflow: TextOverflow.ellipsis,
+                textAlign: crossAxisAlignment == CrossAxisAlignment.end
+                    ? TextAlign.end
+                    : null,
               )
             : kEmpty,
         kHeight5,
@@ -81,6 +87,9 @@ class TicketColumn extends StatelessWidget {
                 style: subValueStyle ??
                     textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
                 overflow: TextOverflow.ellipsis,
+                textAlign: crossAxisAlignment == CrossAxisAlignment.end
+                    ? TextAlign.end
+                    : null,
               )
             : kEmpty,
         kHeight5,
@@ -90,6 +99,9 @@ class TicketColumn extends StatelessWidget {
                 style: exitStyle ??
                     textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
                 overflow: TextOverflow.ellipsis,
+                textAlign: crossAxisAlignment == CrossAxisAlignment.end
+                    ? TextAlign.end
+                    : null,
               )
             : kEmpty,
         kHeight5,
@@ -99,6 +111,9 @@ class TicketColumn extends StatelessWidget {
                 style: exitStyle ??
                     textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
                 overflow: TextOverflow.ellipsis,
+                textAlign: crossAxisAlignment == CrossAxisAlignment.end
+                    ? TextAlign.end
+                    : null,
               )
             : kEmpty,
         flightCode != null ? kHeight5 : kEmpty,
@@ -107,6 +122,9 @@ class TicketColumn extends StatelessWidget {
                 cabinBaggage!,
                 style: cabinBaggageStyle ??
                     textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
+                textAlign: crossAxisAlignment == CrossAxisAlignment.end
+                    ? TextAlign.end
+                    : null,
               )
             : kEmpty,
         cabinBaggage != null ? kHeight5 : kEmpty,
@@ -115,6 +133,9 @@ class TicketColumn extends StatelessWidget {
                 checkinBaggage!,
                 style: checkinBaggageStyle ??
                     textThinStyle1.copyWith(color: kGreyDark, fontSize: 10.sp),
+                textAlign: crossAxisAlignment == CrossAxisAlignment.end
+                    ? TextAlign.end
+                    : null,
               )
             : kEmpty,
         checkinBaggage != null ? kHeight5 : kEmpty,

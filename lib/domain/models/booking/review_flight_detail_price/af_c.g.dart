@@ -10,6 +10,7 @@ AfC _$AfCFromJson(Map<String, dynamic> json) => AfC(
       taf: json['TAF'] == null
           ? null
           : Taf.fromJson(json['TAF'] as Map<String, dynamic>),
+      tafMAP: json['TAF'] as Map<String, dynamic>?,
     );
 
 Map<String, dynamic> _$AfCToJson(AfC instance) => <String, dynamic>{

@@ -8,8 +8,10 @@ part 'af_c.g.dart';
 class AfC {
   @JsonKey(name: 'TAF')
   Taf? taf;
+  @JsonKey(name: 'TAF')
+  Map<String, dynamic>? tafMAP;
 
-  AfC({this.taf});
+  AfC({this.taf, this.tafMAP});
 
   factory AfC.fromJson(Map<String, dynamic> json) => _$AfCFromJson(json);
 
@@ -17,9 +19,11 @@ class AfC {
 
   AfC copyWith({
     Taf? taf,
+    Map<String, dynamic>? tafMAP,
   }) {
     return AfC(
       taf: taf ?? this.taf,
+      tafMAP: tafMAP ?? this.tafMAP,
     );
   }
 }

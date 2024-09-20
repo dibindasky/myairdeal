@@ -254,51 +254,55 @@ class InnerContents extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        TicketColumn(
-                                          label: 'Departure',
-                                          value: DateFormating.formatDate(
-                                              model?.sI?[stop].dt ?? ''),
-                                          valueStyle: textThinStyle1,
-                                          subValue:
-                                              model?.sI?[stop].da?.terminal ??
-                                                  '',
-                                          exit: 'Cabin Class',
-                                          flightCode: 'Seat No',
-                                          cabinBaggage: 'Checkin Baggage',
-                                          checkinBaggage: 'Cabin Baggage',
-                                        ),
-                                        TicketColumn(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            label: 'Arrival',
+                                        Expanded(
+                                          child: TicketColumn(
+                                            label: 'Departure',
                                             value: DateFormating.formatDate(
-                                                model?.sI?[stop].at ?? ''),
+                                                model?.sI?[stop].dt ?? ''),
                                             valueStyle: textThinStyle1,
                                             subValue:
-                                                model?.sI?[stop].aa?.terminal ??
+                                                model?.sI?[stop].da?.terminal ??
                                                     '',
-                                            exit: controller
-                                                    .reviewedDetail
-                                                    ?.value
-                                                    .searchQuery
-                                                    ?.cabinClass ??
-                                                '',
-                                            flightCode: code != null && code.isNotEmpty
-                                                ? code.toString().substring(1,
-                                                    code.toString().length - 1)
-                                                : 'N/A',
-                                            cabinBaggage: model
-                                                ?.totalPriceList?[0]
-                                                .fd
-                                                ?.adult
-                                                ?.bI
-                                                ?.iB,
-                                            checkinBaggage: model
-                                                ?.totalPriceList?[0]
-                                                .fd
-                                                ?.adult
-                                                ?.bI
-                                                ?.cB),
+                                            exit: 'Cabin Class',
+                                            flightCode: 'Seat No',
+                                            cabinBaggage: 'Checkin Baggage',
+                                            checkinBaggage: 'Cabin Baggage',
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: TicketColumn(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              label: 'Arrival',
+                                              value: DateFormating.formatDate(
+                                                  model?.sI?[stop].at ?? ''),
+                                              valueStyle: textThinStyle1,
+                                              subValue:
+                                                  model?.sI?[stop].aa?.terminal ??
+                                                      '',
+                                              exit: controller
+                                                      .reviewedDetail
+                                                      ?.value
+                                                      .searchQuery
+                                                      ?.cabinClass ??
+                                                  '',
+                                              flightCode: code != null && code.isNotEmpty
+                                                  ? code.toString().substring(1,
+                                                      code.toString().length - 1)
+                                                  : 'N/A',
+                                              cabinBaggage: model
+                                                  ?.totalPriceList?[0]
+                                                  .fd
+                                                  ?.adult
+                                                  ?.bI
+                                                  ?.iB,
+                                              checkinBaggage: model
+                                                  ?.totalPriceList?[0]
+                                                  .fd
+                                                  ?.adult
+                                                  ?.bI
+                                                  ?.cB),
+                                        ),
                                       ],
                                     )
                                   ],

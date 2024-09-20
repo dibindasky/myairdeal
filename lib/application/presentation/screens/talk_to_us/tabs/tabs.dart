@@ -32,7 +32,7 @@ class ScreenTab extends StatelessWidget {
           DetailAppBar(
             action: GestureDetector(
               onTap: () =>
-                  OpenLauncherFeature.launchPhone(phone: '+91 7061409421'),
+                  OpenLauncherFeature.launchPhone(phone: supportContactNumber),
               child: CircleAvatar(
                 radius: 15.w,
                 child: const Icon(Icons.phone),

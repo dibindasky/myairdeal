@@ -8,6 +8,8 @@ const errorMessage = 'something went wrong, please try again';
 
 const poppins = 'Poppins';
 
+const supportContactNumber = '+91 8926338182';
+
 const privacyPolicy = 'https://www.myairdeal.com/privacy-policy';
 const termsAndConditons = 'https://www.myairdeal.com/terms-and-conditions';
 

@@ -339,16 +339,7 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
                         Text('Passport Number', style: textThinStyle1),
                         kHeight5,
                         CustomTextField(
-                          // validator: (value) {
-                          //   if (value != null && value.isNotEmpty) {
-                          //     if (!isValidIndianPassportNumber(value)) {
-                          //       return 'Passport number is not valid';
-                          //     }
-                          //   }
-                          //   return null;
-                          // },
                           controller: passportNumberController,
-                          // validate: Validate.passportNumber,
                           textCapitalization: TextCapitalization.characters,
                           isBorder: true,
                           borderRadius: 14,
@@ -431,7 +422,7 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
                             );
                             if (selectedDate != null) {
                               expiryDController.text =
-                                  DateFormating.getDateByDayMonthYear(
+                                  DateFormating.getDateApi(
                                       selectedDate);
 
                               setState(() {});
@@ -482,7 +473,7 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
                                   : 'Update Passenger',
                               onTap: () {
                                 if (travelerController.genderType.value == -1) {
-                                  showSnackbar(context,
+                                  showSnackbar(context,backgroundColor: kDardGold,
                                       message: 'Choose Titile');
                                   Timer(
                                     const Duration(milliseconds: 300),
@@ -497,13 +488,13 @@ class _AddOrUpdatePassengerState extends State<AddOrUpdatePassenger> {
                                 }
                                 if (passengers?.id == null &&
                                     dropdownValue == null) {
-                                  showSnackbar(context,
+                                  showSnackbar(context,backgroundColor: kDardGold,
                                       message: 'Choose Categery');
                                   return;
                                 }
 
                                 if (dateOfBirthController.text.isEmpty) {
-                                  showSnackbar(context,
+                                  showSnackbar(context,backgroundColor: kDardGold,
                                       message: 'Please Fill Date of Birth');
                                   return;
                                 }

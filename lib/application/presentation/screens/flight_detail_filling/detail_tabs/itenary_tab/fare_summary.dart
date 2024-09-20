@@ -246,24 +246,52 @@ class FareSummary extends StatelessWidget {
                         ),
                       ],
                     ),
-                    children: [
-                      TaxAndFeeHelper(
-                          title: 'Airline GST',
-                          value:
-                              '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst?.toDouble() ?? '--'}'),
-                      TaxAndFeeHelper(
-                          title: 'Other Taxes',
-                          value:
-                              '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot?.toDouble() ?? '--'}'),
-                      TaxAndFeeHelper(
-                          title: 'YR',
-                          value:
-                              '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr?.toDouble() ?? '--'}'),
-                      TaxAndFeeHelper(
-                          title: 'YQ',
-                          value:
-                              '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq?.toDouble() ?? '--'}'),
-                    ],
+                    children: List.generate(
+                      controller.reviewedDetail?.value.totalPriceInfo
+                              ?.totalFareDetail?.afC?.tafMAP?.keys.length ??
+                          0,
+                      (tafIndex) {
+                        final key = controller
+                                .reviewedDetail
+                                ?.value
+                                .totalPriceInfo
+                                ?.totalFareDetail
+                                ?.afC
+                                ?.tafMAP
+                                ?.keys
+                                .toList()[tafIndex] ??
+                            '';
+                        final value = controller
+                                .reviewedDetail
+                                ?.value
+                                .totalPriceInfo
+                                ?.totalFareDetail
+                                ?.afC
+                                ?.tafMAP?[key] ??
+                            0;
+                        return TaxAndFeeHelper(
+                            title: key,
+                            value: value == null ? '0.0' : value.toString());
+                      },
+                    ),
+                    // children: [
+                    //   TaxAndFeeHelper(
+                    //       title: 'Airline GST',
+                    //       value:
+                    //           '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.agst?.toDouble() ?? '--'}'),
+                    //   TaxAndFeeHelper(
+                    //       title: 'Other Taxes',
+                    //       value:
+                    //           '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.ot?.toDouble() ?? '--'}'),
+                    //   TaxAndFeeHelper(
+                    //       title: 'YR',
+                    //       value:
+                    //           '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yr?.toDouble() ?? '--'}'),
+                    //   TaxAndFeeHelper(
+                    //       title: 'YQ',
+                    //       value:
+                    //           '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq?.toDouble() ?? '--'}'),
+                    // ],
                   ),
             paymentPage
                 ? Row(

@@ -786,7 +786,7 @@ class FlightSortController extends GetxController {
             0.0;
       }
     }
-    totalTicketPrice.value = price;
+    totalTicketPrice.value = price.floorToDouble();
   }
 
   /// change the special retrun selection

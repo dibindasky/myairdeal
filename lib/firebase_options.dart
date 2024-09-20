@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBTJLrBnThWsqMoNPF7Ku_IHar3ucCIJpI',
-    appId: '1:891202200982:android:87cee5e4ff7e091ea8e9b7',
+    appId: '1:891202200982:android:a3b799b8363964aca8e9b7',
     messagingSenderId: '891202200982',
     projectId: 'myairdeal-d764e',
     storageBucket: 'myairdeal-d764e.appspot.com',
@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAPrIRticLONJUeYPfwNM9gaAlfkGwnR30',
-    appId: '1:891202200982:ios:25249b3765be1c65a8e9b7',
+    appId: '1:891202200982:ios:04dc4264380a87bba8e9b7',
     messagingSenderId: '891202200982',
     projectId: 'myairdeal-d764e',
     storageBucket: 'myairdeal-d764e.appspot.com',
-    iosBundleId: 'com.myairdealapp.mobile',
+    iosBundleId: 'com.myairdealsapp.mobile',
   );
+
 }

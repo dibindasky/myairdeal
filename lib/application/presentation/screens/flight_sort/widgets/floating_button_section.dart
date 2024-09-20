@@ -29,8 +29,9 @@ class FloatingButtonSection extends StatelessWidget {
                 Get.find<TravellerController>().updatePassengersNumber(
                     controller.adultCount.value +
                         controller.childrenCount.value +
-                        controller.infantCount.value,controller.adultCount.value +
-                      controller.childrenCount.value);
+                        controller.infantCount.value,
+                    controller.adultCount.value +
+                        controller.childrenCount.value);
                 if (controller.selectedTripListIndex.value ==
                     controller.searchList.length - 1) {
                   List<String> ids = [];

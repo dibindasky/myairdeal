@@ -407,12 +407,15 @@ class FlightSortController extends GetxController {
       }
     }
     FlightSearchQuery searchModel = FlightSearchQuery(
+      // cabin class type
       cabinClass: classType.value,
+      // pax info count
       paxInfo: PaxInfo(
         adult: adultCount.value.toString(),
         child: childrenCount.value.toString(),
         infant: infantCount.value.toString(),
       ),
+      // search modifiers route and types
       searchModifiers: SearchModifiers(
           isConnectingFlight: true,
           isDirectFlight: true,
@@ -448,7 +451,6 @@ class FlightSortController extends GetxController {
     // api call for get all flights
     final result = await flightService.getAllFlight(
         flightSearchSortModel: FlightSearchSortModel(searchQuery: searchModel));
-
     result.fold((l) {
       searchListLoading.value = false;
       Get.back(id: 1);

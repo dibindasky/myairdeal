@@ -372,8 +372,19 @@ class FareSummary extends StatelessWidget {
                         );
                       })
                     : Obx(() {
+                        final addOnPrice =
+                            travellerController.addOnsprice.value.toDouble();
+                        final data = controller.reviewedDetail?.value
+                                    .totalPriceInfo?.totalFareDetail?.fC?.tf ==
+                                null
+                            ? ''
+                            : ((controller.reviewedDetail?.value.totalPriceInfo
+                                        ?.totalFareDetail?.fC?.tf
+                                        ?.toDouble() ??
+                                    0) +
+                                addOnPrice);
                         return Text(
-                          '₹ ${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf == null ? '' : ((controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf?.toDouble() ?? 0) + (travellerController.addOnsprice.value.toDouble()))}',
+                          '₹ $data',
                           style: textThinStyle1.copyWith(
                               fontSize: 14.sp, fontWeight: FontWeight.w700),
                         );

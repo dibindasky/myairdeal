@@ -82,19 +82,20 @@ class BookingService implements BookingRepo {
   Future<Either<Failure, ReviewFlightDetailPrice>> reviewPriceDetails(
       {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
     try {
+      log('reviewPriceDetails start');
       final responce = await apiService.post(ApiEndPoints.reviewPriceDetails,
           data: reviewPriceDetailIdModel.toJson(), addHeader: true);
       log('reviewPriceDetails done');
       log('${responce.data}');
       return Right(ReviewFlightDetailPrice.fromJson(responce.data));
     } on DioException catch (e) {
-      log('DioException reviewPriceDetails $e');
+      log('DioException reviewPriceDetails $e.toString()');
       return Left(Failure(
           message: e.response?.data?['errors'][0]['message'] != null
               ? 'Request flight is not longer available.Please try different flight'
               : errorMessage));
     } catch (e) {
-      log('catch reviewPriceDetails');
+      log('catch reviewPriceDetails ===>>>> $e');
       return Left(Failure(message: e.toString()));
     }
   }

@@ -7,7 +7,7 @@ part of 'fare_rule_info.dart';
 // **************************************************************************
 
 FareRuleInfo _$FareRuleInfoFromJson(Map<String, dynamic> json) => FareRuleInfo(
-      amount: json['amount'] as int?,
+      amount: json['amount'] as num?,
       policyInfo: json['policyInfo'] as String?,
       fcs: json['fcs'] == null
           ? null

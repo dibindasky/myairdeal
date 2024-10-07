@@ -129,6 +129,9 @@ class FlightSortController extends GetxController {
   /// bool responsible for halnle ui for combo(international multicity and round trip)
   RxBool comboTrip = false.obs;
 
+  /// bool responsible for halnle ui for one way trip
+  RxBool oneWayTrip = false.obs;
+
   /// bool responsible for handle the round trip identification, used to handle special return
   RxBool roundTrip = false.obs;
 
@@ -379,6 +382,7 @@ class FlightSortController extends GetxController {
     }
     comboTrip.value = false;
     roundTrip.value = false;
+    oneWayTrip.value = true;
     searchListLoading.value = true;
     selectedTripListIndex.value = 0;
     durationSlider.value = 1;
@@ -388,7 +392,9 @@ class FlightSortController extends GetxController {
       airportSelected[1].value = [airportSelected[0][1], airportSelected[0][0]];
       selectedFlights.value = [0, 0];
       selectedTicketPrices.value = [0, 0];
+      oneWayTrip.value = false;
     } else if (tripType.value == 2) {
+      oneWayTrip.value = false;
       if (airportSelected.length == 2 &&
           airportSelected[0][1] == airportSelected[1][0] &&
           airportSelected[0][0] == airportSelected[1][1]) {
@@ -609,8 +615,8 @@ class FlightSortController extends GetxController {
   /// for international multi city and round trip need a seperate list from [searchListMain] first index
   /// sort and add the airlines list to [comboListMain] and [comboList] for sort and ui
   void getComboList() {
-    comboList.clear();
-    comboListMain.clear();
+    comboList.value = [];
+    comboListMain.value = [];
     for (var trip in searchListMain[0]) {
       int j = 0, k = 0;
       List<SearchAirlineInformation> tempList = [];
@@ -619,7 +625,7 @@ class FlightSortController extends GetxController {
             (trip.sI!.length - 1 == i || trip.sI![i + 1].sN == 0)) {
           tempList.add(SearchAirlineInformation(
               sI: trip.sI!.sublist(k, i + 1),
-              totalPriceList: trip.totalPriceList));
+              totalPriceList: j != 0 ? null : trip.totalPriceList));
           j++;
           k = i + 1;
         }
@@ -1101,7 +1107,7 @@ class FlightSortController extends GetxController {
   void nextOrContinue() {
     if (selectedTripListIndex.value < searchList.length - 1) {
       changeSelectedTripIndex(selectedTripListIndex.value + 1);
-    } 
+    }
   }
 
   /// swap the data between from and to in search field

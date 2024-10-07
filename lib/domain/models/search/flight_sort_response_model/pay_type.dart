@@ -10,9 +10,9 @@ part 'pay_type.g.dart';
 class PayType {
   Fc? fC;
   AfC? afC;
-  int? sR;
+  num? sR;
   Bi? bI;
-  int? rT;
+  num? rT;
   String? cc;
   String? cB;
   String? fB;
@@ -38,9 +38,9 @@ class PayType {
   PayType copyWith({
     Fc? fC,
     AfC? afC,
-    int? sR,
+    num? sR,
     Bi? bI,
-    int? rT,
+    num? rT,
     String? cc,
     String? cB,
     String? fB,

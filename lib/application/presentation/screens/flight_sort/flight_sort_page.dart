@@ -79,7 +79,7 @@ class _ScreenFlightTicketSortState extends State<ScreenFlightTicketSort> {
                     const SortScreenHeaderSection(),
                     controller.comboTrip.value
                         ? kEmpty
-                        : controller.tripType.value == 0
+                        : controller.oneWayTrip.value
                             ? const CalenderSectionSortHeader()
                             : const SelectedAirlinesSections(),
                   ],

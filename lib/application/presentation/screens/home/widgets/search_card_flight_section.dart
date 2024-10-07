@@ -38,9 +38,10 @@ class FlightSearchCardHome extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             children: [
-              fromEdit
-                  ? kEmpty
-                  : FittedBox(
+              // fromEdit
+              //     ? kEmpty
+              //     : 
+                  FittedBox(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: List.generate(

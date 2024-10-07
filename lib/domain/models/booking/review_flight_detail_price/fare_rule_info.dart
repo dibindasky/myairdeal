@@ -6,7 +6,7 @@ part 'fare_rule_info.g.dart';
 
 @JsonSerializable()
 class FareRuleInfo {
-  int? amount;
+  num? amount;
   String? policyInfo;
   Fcs? fcs;
   String? st;
@@ -21,7 +21,7 @@ class FareRuleInfo {
   Map<String, dynamic> toJson() => _$FareRuleInfoToJson(this);
 
   FareRuleInfo copyWith({
-    int? amount,
+    num? amount,
     String? policyInfo,
     Fcs? fcs,
     String? st,

@@ -5,13 +5,13 @@ part 'taf.g.dart';
 @JsonSerializable()
 class Taf {
   @JsonKey(name: 'AGST')
-  int? agst;
+  num? agst;
   @JsonKey(name: 'YR')
-  int? yr;
+  num? yr;
   @JsonKey(name: 'YQ')
-  int? yq;
+  num? yq;
   @JsonKey(name: 'OT')
-  int? ot;
+  num? ot;
 
   Taf({this.agst, this.yr, this.ot, this.yq});
 
@@ -20,10 +20,10 @@ class Taf {
   Map<String, dynamic> toJson() => _$TafToJson(this);
 
   Taf copyWith({
-    int? agst,
-    int? yr,
-    int? ot,
-    int? yq,
+    num? agst,
+    num? yr,
+    num? ot,
+    num? yq,
   }) {
     return Taf(
       agst: agst ?? this.agst,

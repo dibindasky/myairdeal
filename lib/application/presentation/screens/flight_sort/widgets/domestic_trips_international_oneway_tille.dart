@@ -42,7 +42,7 @@ class DomesticTripsAndOneWayInternationalTile extends StatelessWidget {
         return FlightTicketCard(
           borderColor: themeController.secondaryColor,
           flightTicketCardEnum: FlightTicketCardEnum.homeSort,
-          color: controller.tripType.value != 0 &&
+          color: !controller.oneWayTrip.value &&
                   controller.selectedFlights[
                           controller.selectedTripListIndex.value] ==
                       index
@@ -63,7 +63,7 @@ class DomesticTripsAndOneWayInternationalTile extends StatelessWidget {
             .totalPriceList!.length,
         (i) => Obx(() {
           return TicketDetailExpansionChild(
-            isSelected: controller.tripType.value != 0 &&
+            isSelected: !controller.oneWayTrip.value &&
                 controller.selectedFlights[
                         controller.selectedTripListIndex.value] ==
                     index &&

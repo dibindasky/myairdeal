@@ -7,8 +7,8 @@ part of 'fcs.dart';
 // **************************************************************************
 
 Fcs _$FcsFromJson(Map<String, dynamic> json) => Fcs(
-      arft: json['ARFT'] as int?,
-      arf: json['ARF'] as int?,
+      arft: json['ARFT'] as num?,
+      arf: json['ARF'] as num?,
     );
 
 Map<String, dynamic> _$FcsToJson(Fcs instance) => <String, dynamic>{

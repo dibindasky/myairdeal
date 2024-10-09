@@ -64,6 +64,14 @@ class AuthController extends GetxController {
   // Splash model
   RxString splashModelImage = ''.obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    getSplashImageFromStorage();
+    otpNumber.addListener(_checkOTPNumberLength);
+    loginNumber.addListener(_checkPhoneNumberLength);
+  }
+
   // Change login section to sign up
   RxBool changeLogin = false.obs;
   void changeLoginBool() async {
@@ -73,14 +81,6 @@ class AuthController extends GetxController {
   /// change while coming to login from booking
   void changeBookingLogin(bool value) async {
     logFromBooking.value = value;
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    getSplashImageFromStorage();
-    otpNumber.addListener(_checkOTPNumberLength);
-    loginNumber.addListener(_checkPhoneNumberLength);
   }
 
   @override
@@ -238,7 +238,7 @@ class AuthController extends GetxController {
           Get.back();
           Get.back();
           Get.find<HomeController>()
-              .changeNavigationChecker(NavigationChecker.search);
+              .changeNavigationChecker(NavigationChecker.itinary);
         } else {
           Get.offAllNamed(Routes.bottomBar);
         }

@@ -68,11 +68,11 @@ String splashImage = 'asset/image/myair_deal_logo.png';
 String onBoardImage = 'asset/image/onbaord_image_one.png';
 String imageGlobalMapGray = 'asset/image/Global Map.png';
 String imageGlobalMapGold = 'asset/image/Global Map1.png';
-String imageFlight = 'asset/image/Ellipse 4.png';
+String imageFlight = 'asset/image/aeroplane.png';
 String imageSecureLogin = 'asset/image/secureLogin.png';
 String imageFlightTrip = 'asset/image/airplane1.png';
-String imageAirAmbulance = 'asset/image/air_Ambulance.png';
-String imageChatteredFlight = 'asset/image/chattered_flight.png';
+String imageAirAmbulance = 'asset/image/air ambulanc.png';
+String imageChatteredFlight = 'asset/image/private jet.png';
 String imageHelicopter = 'asset/image/helicopter.png';
 String imageChatPerson = 'asset/image/chat_person.png';
 String faceBookIcon = 'asset/image/Facebook.png';
@@ -88,8 +88,8 @@ String bookingEmptyImage = 'asset/image/booking_empty.png';
 List<String> homeTabImages = [
   imageFlight,
   imageAirAmbulance,
+  imageHelicopter,
   imageChatteredFlight,
-  imageHelicopter
 ];
 
 Color findInvoiceColor(FlightTicketInvoiceEnum flightTicketInvoiceEnum) {

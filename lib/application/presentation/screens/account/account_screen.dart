@@ -48,14 +48,18 @@ class ScreenAccountPage extends StatelessWidget {
                         : kEmpty;
                   },
                 ),
-                SettingsTile(
-                  title: 'Saved Passengers',
-                  onTap: () {
-                    Get.find<HomeController>().changeNavigationChecker(
-                        NavigationChecker.savedPassengers);
-                    Get.toNamed(Routes.travelerDetails);
-                  },
-                ),
+                Obx(() {
+                  return controller.loginOrNot.value
+                      ? SettingsTile(
+                          title: 'Saved Passengers',
+                          onTap: () {
+                            Get.find<HomeController>().changeNavigationChecker(
+                                NavigationChecker.savedPassengers);
+                            Get.toNamed(Routes.travelerDetails);
+                          },
+                        )
+                      : kEmpty;
+                }),
                 kHeight20,
                 SettingsSection(
                   title: 'Preferences',

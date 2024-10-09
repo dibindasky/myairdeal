@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myairdeal/application/controller/auth/auth_controller.dart';
 import 'package:myairdeal/application/controller/booking/booking_controller.dart';
 import 'package:myairdeal/application/controller/home/flight_sort_controller.dart';
 import 'package:myairdeal/application/controller/home/home_controller.dart';
+import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
 import 'package:myairdeal/data/service/booking/booking_service.dart';
@@ -332,6 +334,11 @@ class TravellerController extends GetxController {
   void changeDetailEnterTab(
     int index,
   ) {
+    if (!Get.find<AuthController>().loginOrNot.value) {
+      Get.find<AuthController>().changeBookingLogin(true);
+      Get.toNamed(Routes.signUpSignIn);
+      return;
+    }
     selectedMainTab.value = index;
     update();
     // call for markup price while going to payment section
@@ -647,6 +654,8 @@ class TravellerController extends GetxController {
       if (s.seatPosition?.row == null || s.seatPosition?.column == null) {
         continue;
       }
+      print('seat info ------------------------------------');
+      print(s.toJson());
       seatList[s.seatPosition!.row! - 1][s.seatPosition!.column! - 1] = s;
     }
     if (selectedSeats[selectedSeatFlightKey.value] == null) {

@@ -26,6 +26,10 @@ class FareSummary extends StatelessWidget {
     final travellerController = Get.find<TravellerController>();
     final themeController = Get.find<ThemeController>();
     return Obx(() {
+      final convinenceFeePerPeson = (controller.markupPrice.value == 0)
+          ? (0.0)
+          : (controller.markupPrice.value /
+              Get.find<FlightSortController>().getTotalPassengerCount());
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w),
         child: Column(
@@ -68,7 +72,7 @@ class FareSummary extends StatelessWidget {
                                 color: kBlack, fontSize: 9.sp),
                           ),
                           Text(
-                            '₹ ${(controller.getPrice('ADULT')) * Get.find<FlightSortController>().adultCount.value}',
+                            '₹ ${((controller.getPrice('ADULT')) * Get.find<FlightSortController>().adultCount.value) + (convinenceFeePerPeson * Get.find<FlightSortController>().adultCount.value).roundToDouble()}',
                             style: textThinStyle1.copyWith(
                               color: kBlack,
                               fontSize: 12.sp,
@@ -103,7 +107,7 @@ class FareSummary extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '₹ ${controller.getPrice('CHILD') * Get.find<FlightSortController>().childrenCount.value}',
+                            '₹ ${controller.getPrice('CHILD') * Get.find<FlightSortController>().childrenCount.value + (convinenceFeePerPeson * Get.find<FlightSortController>().childrenCount.value).roundToDouble()}',
                             style: textThinStyle1.copyWith(
                               color: kBlack,
                               fontSize: 12.sp,
@@ -138,7 +142,8 @@ class FareSummary extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '₹ ${controller.getPrice('INFANT') * Get.find<FlightSortController>().infantCount.value}',
+                            /// in only payment page chnage the base fare to add
+                            '₹ ${controller.getPrice('INFANT') * Get.find<FlightSortController>().infantCount.value + (convinenceFeePerPeson * Get.find<FlightSortController>().infantCount.value).roundToDouble()}',
                             style: textThinStyle1.copyWith(
                               color: kBlack,
                               fontSize: 12.sp,
@@ -293,27 +298,27 @@ class FareSummary extends StatelessWidget {
                     //           '${controller.reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.afC?.taf?.yq?.toDouble() ?? '--'}'),
                     // ],
                   ),
-            paymentPage
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Convenience Fee',
-                        style: textThinStyle1.copyWith(
-                          color: kBlack,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                      Text(
-                        '₹ ${controller.markupPrice.value}',
-                        style: textThinStyle1.copyWith(
-                          color: kBlack,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                    ],
-                  )
-                : kEmpty,
+            // paymentPage
+            //     ? Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Text(
+            //             'Convenience Fee',
+            //             style: textThinStyle1.copyWith(
+            //               color: kBlack,
+            //               fontSize: 12.sp,
+            //             ),
+            //           ),
+            //           Text(
+            //             '₹ ${controller.markupPrice.value}',
+            //             style: textThinStyle1.copyWith(
+            //               color: kBlack,
+            //               fontSize: 12.sp,
+            //             ),
+            //           ),
+            //         ],
+            //       )
+            //     : kEmpty,
             paymentPage
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -382,6 +387,7 @@ class FareSummary extends StatelessWidget {
                                         ?.totalFareDetail?.fC?.tf
                                         ?.toDouble() ??
                                     0) +
+                                controller.markupPrice.value.toDouble() +
                                 addOnPrice);
                         return Text(
                           '₹ $data',

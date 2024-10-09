@@ -42,7 +42,7 @@ class BottomButton extends StatelessWidget {
               style: textThinStyle1.copyWith(fontSize: 10.sp),
             ),
             Text(
-              '₹ ${bookingController.reviewedDetail!.value.totalPriceInfo!.totalFareDetail!.fC!.tf ?? ''}',
+              '₹ ${(bookingController.reviewedDetail!.value.totalPriceInfo!.totalFareDetail!.fC!.tf ?? 0) + bookingController.markupPrice.value.toDouble()}',
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ],

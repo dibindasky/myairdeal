@@ -386,7 +386,7 @@ class BookingController extends GetxController {
         // ignore: use_build_context_synchronously
         RazorpayGateway(context, bookTicketModel);
     razorpayGateway.makePayment(
-      live: !Get.find<AuthController>().isTestNumber.value,
+        live: !Get.find<AuthController>().isTestNumber.value,
         amount:
             ((reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ??
                         0) +
@@ -403,12 +403,13 @@ class BookingController extends GetxController {
   /// review price details before going to the booking section
   void reviewPriceDetailChecking(
       {required ReviewPriceDetailIdModel reviewPriceDetailIdModel}) async {
-    if (!Get.find<AuthController>().loginOrNot.value) {
-      Get.find<AuthController>().changeBookingLogin(true);
-      Get.toNamed(Routes.signUpSignIn);
-      return;
-    }
+    // if (!Get.find<AuthController>().loginOrNot.value) {
+    //   Get.find<AuthController>().changeBookingLogin(true);
+    //   Get.toNamed(Routes.signUpSignIn);
+    //   return;
+    // }
     endTimer();
+    markupPrice.value = 0.0;
     Get.find<TravellerController>().clearTaravellerDetails();
     bool start = false;
     Get.toNamed(Routes.flightDetailFillling);

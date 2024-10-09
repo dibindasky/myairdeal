@@ -257,7 +257,7 @@ class ReveiewTab extends StatelessWidget {
           children: [
             Obx(() {
               return Text(
-                  '₹ ${(Get.find<BookingController>().reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0) + (controller.addOnsprice.value)}');
+                  '₹ ${(Get.find<BookingController>().reviewedDetail?.value.totalPriceInfo?.totalFareDetail?.fC?.tf ?? 0) + (controller.addOnsprice.value) + (Get.find<BookingController>().markupPrice.value.toDouble())}');
             }),
             EventButton(
                 width: 200.w,

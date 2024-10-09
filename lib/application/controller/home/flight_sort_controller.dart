@@ -1418,4 +1418,9 @@ class FlightSortController extends GetxController {
     }
     sortAirlineList();
   }
+
+  /// will return the total count of passengers
+  int getTotalPassengerCount() {
+    return infantCount.value + childrenCount.value + adultCount.value;
+  }
 }

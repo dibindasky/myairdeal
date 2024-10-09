@@ -8,7 +8,7 @@ part of 'notification_model.dart';
 
 NotificationModel _$NotificationModelFromJson(Map<String, dynamic> json) =>
     NotificationModel(
-      totalRows: json['totalRows'] as int?,
+      totalRows: (json['totalRows'] as num?)?.toInt(),
       notification: (json['data'] as List<dynamic>?)
           ?.map((e) => Notification.fromJson(e as Map<String, dynamic>))
           .toList(),

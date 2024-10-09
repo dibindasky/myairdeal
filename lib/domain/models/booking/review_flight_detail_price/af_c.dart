@@ -1,21 +1,26 @@
-import 'package:json_annotation/json_annotation.dart';
-
 import 'taf.dart';
 
-part 'af_c.g.dart';
-
-@JsonSerializable()
 class AfC {
-  @JsonKey(name: 'TAF')
   Taf? taf;
-  @JsonKey(name: 'TAF')
   Map<String, dynamic>? tafMAP;
 
   AfC({this.taf, this.tafMAP});
 
-  factory AfC.fromJson(Map<String, dynamic> json) => _$AfCFromJson(json);
+  factory AfC.fromJson(Map<String, dynamic> json) {
+    return AfC(
+      taf: json['TAF'] != null ? Taf.fromJson(json['TAF']) : null,
+      tafMAP: json['TAF'] is Map<String, dynamic>
+          ? Map<String, dynamic>.from(json['TAF'])
+          : null,
+    );
+  }
 
-  Map<String, dynamic> toJson() => _$AfCToJson(this);
+  Map<String, dynamic> toJson() {
+    return {
+      'TAF': taf?.toJson(),
+      // 'TAF': tafMAP,
+    };
+  }
 
   AfC copyWith({
     Taf? taf,

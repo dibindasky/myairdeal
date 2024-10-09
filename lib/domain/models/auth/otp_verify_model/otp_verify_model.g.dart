@@ -16,6 +16,6 @@ OtpVerifyModel _$OtpVerifyModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$OtpVerifyModelToJson(OtpVerifyModel instance) =>
     <String, dynamic>{
       'otp': instance.otp,
-      'deviceToken': instance.deviceToken,
       'phone': instance.phone,
+      'deviceToken': instance.deviceToken,
     };

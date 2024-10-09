@@ -8,9 +8,9 @@ part of 'traveller_info.dart';
 
 TravellerInfo _$TravellerInfoFromJson(Map<String, dynamic> json) =>
     TravellerInfo(
-      // ssrMealInfos: json['ssrMealInfos'] == null
-      //     ? null
-      //     : SsrMealInfos.fromJson(json['ssrMealInfos'] as Map<String, dynamic>),
+      ssrMealInfos: json['ssrMealInfos'] as Map<String, dynamic>?,
+      ssrBaggageInfos: json['ssrBaggageInfos'] as Map<String, dynamic>?,
+      ssrSeatInfos: json['ssrSeatInfos'] as Map<String, dynamic>?,
       pnrDetails: json['pnrDetails'] == null
           ? null
           : PnrDetails.fromJson(json['pnrDetails'] as Map<String, dynamic>),
@@ -22,9 +22,6 @@ TravellerInfo _$TravellerInfoFromJson(Map<String, dynamic> json) =>
           ? null
           : CheckinStatusMap.fromJson(
               json['checkinStatusMap'] as Map<String, dynamic>),
-      ssrBaggageInfos: json['ssrBaggageInfos'] as Map<String, dynamic>?,
-      ssrMealInfos: json['ssrMealInfos'] as Map<String, dynamic>?,
-      ssrSeatInfos: json['ssrSeatInfos'] as Map<String, dynamic>?,
       ti: json['ti'] as String?,
       pt: json['pt'] as String?,
       fN: json['fN'] as String?,
@@ -33,7 +30,9 @@ TravellerInfo _$TravellerInfoFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$TravellerInfoToJson(TravellerInfo instance) =>
     <String, dynamic>{
-      //'ssrMealInfos': instance.ssrMealInfos,
+      'ssrMealInfos': instance.ssrMealInfos,
+      'ssrSeatInfos': instance.ssrSeatInfos,
+      'ssrBaggageInfos': instance.ssrBaggageInfos,
       'pnrDetails': instance.pnrDetails,
       'ticketNumberDetails': instance.ticketNumberDetails,
       'checkinStatusMap': instance.checkinStatusMap,

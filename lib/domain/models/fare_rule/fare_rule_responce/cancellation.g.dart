@@ -7,7 +7,7 @@ part of 'cancellation.dart';
 // **************************************************************************
 
 Cancellation _$CancellationFromJson(Map<String, dynamic> json) => Cancellation(
-      amount: json['amount'] as int?,
+      amount: (json['amount'] as num?)?.toInt(),
       policyInfo: json['policyInfo'] as String?,
       fcs: json['fcs'] == null
           ? null

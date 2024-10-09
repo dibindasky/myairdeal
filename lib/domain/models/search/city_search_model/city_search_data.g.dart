@@ -15,5 +15,5 @@ CitySearchData _$CitySearchDataFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CitySearchDataToJson(CitySearchData instance) =>
     <String, dynamic>{
-      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'data': instance.data,
     };

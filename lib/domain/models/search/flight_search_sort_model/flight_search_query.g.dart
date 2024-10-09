@@ -9,16 +9,16 @@ part of 'flight_search_query.dart';
 FlightSearchQuery _$FlightSearchQueryFromJson(Map<String, dynamic> json) =>
     FlightSearchQuery(
       cabinClass: json['cabinClass'] as String?,
-      // paxInfo: json['paxInfo'] == null
-      //     ? null
-      //     : PaxInfo.fromJson(json['paxInfo'] as Map<String, dynamic>),
-      // routeInfos: (json['routeInfos'] as List<dynamic>?)
-      //     ?.map((e) => RouteInfo.fromJson(e as Map<String, dynamic>))
-      //     .toList(),
-      // searchModifiers: json['searchModifiers'] == null
-      //     ? null
-      //     : SearchModifiers.fromJson(
-      //         json['searchModifiers'] as Map<String, dynamic>),
+      paxInfo: json['paxInfo'] == null
+          ? null
+          : PaxInfo.fromJson(json['paxInfo'] as Map<String, dynamic>),
+      routeInfos: (json['routeInfos'] as List<dynamic>?)
+          ?.map((e) => RouteInfo.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      searchModifiers: json['searchModifiers'] == null
+          ? null
+          : SearchModifiers.fromJson(
+              json['searchModifiers'] as Map<String, dynamic>),
       isDomestic: json['isDomestic'] as bool?,
       searchType: json['searchType'] as String?,
       requestId: json['requestId'] as String?,
@@ -30,7 +30,7 @@ Map<String, dynamic> _$FlightSearchQueryToJson(FlightSearchQuery instance) =>
       'paxInfo': instance.paxInfo,
       'routeInfos': instance.routeInfos,
       'searchModifiers': instance.searchModifiers,
+      'searchType': instance.searchType,
       'isDomestic': instance.isDomestic,
       'requestId': instance.requestId,
-      'searchType': instance.searchType,
     };

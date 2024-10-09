@@ -7,9 +7,9 @@ part of 'child.dart';
 // **************************************************************************
 
 Child _$ChildFromJson(Map<String, dynamic> json) => Child(
-      amendmentCharges: json['amendmentCharges'] as int?,
-      refundAmount: json['refundAmount'] as int?,
-      totalFare: json['totalFare'] as int?,
+      amendmentCharges: (json['amendmentCharges'] as num?)?.toInt(),
+      refundAmount: (json['refundAmount'] as num?)?.toInt(),
+      totalFare: (json['totalFare'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ChildToJson(Child instance) => <String, dynamic>{

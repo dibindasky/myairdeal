@@ -19,7 +19,7 @@ RouteInfo _$RouteInfoFromJson(Map<String, dynamic> json) => RouteInfo(
     );
 
 Map<String, dynamic> _$RouteInfoToJson(RouteInfo instance) => <String, dynamic>{
-      'fromCityOrAirport': instance.fromCityOrAirport?.toJson(),
-      'toCityOrAirport': instance.toCityOrAirport?.toJson(),
+      'fromCityOrAirport': instance.fromCityOrAirport,
+      'toCityOrAirport': instance.toCityOrAirport,
       'travelDate': instance.travelDate,
     };

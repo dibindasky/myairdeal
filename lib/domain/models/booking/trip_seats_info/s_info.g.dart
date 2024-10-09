@@ -14,9 +14,9 @@ SInfo _$SInfoFromJson(Map<String, dynamic> json) => SInfo(
       isBooked: json['isBooked'] as bool?,
       isLegroom: json['isLegroom'] as bool?,
       isAisle: json['isAisle'] as bool?,
-      freeSpace: json['freeSpace'] as bool?,
       code: json['code'] as String?,
-      amount: json['amount'] as int?,
+      amount: (json['amount'] as num?)?.toInt(),
+      freeSpace: json['freeSpace'] as bool?,
     );
 
 Map<String, dynamic> _$SInfoToJson(SInfo instance) => <String, dynamic>{

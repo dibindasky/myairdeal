@@ -47,5 +47,5 @@ Map<String, dynamic> _$SIToJson(SI instance) => <String, dynamic>{
       'iand': instance.iand,
       'isRs': instance.isRs,
       'sN': instance.sN,
-      'ssrInfo':instance.ssrInfo,
+      'ssrInfo': instance.ssrInfo,
     };

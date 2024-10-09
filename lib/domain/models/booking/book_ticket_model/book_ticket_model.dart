@@ -20,7 +20,11 @@ class BookTicketModel {
   }
 
   Map<String, dynamic> toJson() => _$BookTicketModelToJson(this);
-  Map<String, dynamic> toJsonHold() => _$BookTicketModelToJsonHold(this);
+  
+  Map<String, dynamic> toJsonHold() => {
+        'booking': booking?.toJson(),
+        'searchQuery': searchQuery?.toJson(),
+      };
 
   BookTicketModel copyWith({
     Booking? booking,

@@ -18,8 +18,8 @@ Conditions _$ConditionsFromJson(Map<String, dynamic> json) => Conditions(
           : Dc.fromJson(json['dc'] as Map<String, dynamic>),
       ipa: json['ipa'] as bool?,
       isBa: json['isBA'] as bool?,
-      st: json['st'] as int?,
-      sct: json['sct'] == null ? null : json['sct'] as String,
+      st: (json['st'] as num?)?.toInt(),
+      sct: json['sct'] as String?,
       gst: json['gst'] == null
           ? null
           : Gst.fromJson(json['gst'] as Map<String, dynamic>),

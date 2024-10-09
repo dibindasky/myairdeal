@@ -8,13 +8,13 @@ part of 'trip_seats_info.dart';
 
 TripSeatsInfo _$TripSeatsInfoFromJson(Map<String, dynamic> json) =>
     TripSeatsInfo(
-      nt: json['nt'] as String?,
       sData: json['sData'] == null
           ? null
           : SData.fromJson(json['sData'] as Map<String, dynamic>),
       sInfo: (json['sInfo'] as List<dynamic>?)
           ?.map((e) => SInfo.fromJson(e as Map<String, dynamic>))
           .toList(),
+      nt: json['nt'] as String?,
     );
 
 Map<String, dynamic> _$TripSeatsInfoToJson(TripSeatsInfo instance) =>

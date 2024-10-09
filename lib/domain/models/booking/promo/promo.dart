@@ -12,6 +12,7 @@ class Promo {
   final List<String>? userIds;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  @JsonKey(name: '__v')
   final int? v;
 
   Promo({

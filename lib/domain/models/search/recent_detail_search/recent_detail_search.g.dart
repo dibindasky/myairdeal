@@ -9,7 +9,8 @@ part of 'recent_detail_search.dart';
 RecentDetailSearch _$RecentDetailSearchFromJson(Map<String, dynamic> json) =>
     RecentDetailSearch(
       data: (json['data'] as List<dynamic>?)
-          ?.map((e) => RecentDetailSearchItem.fromJson(e as Map<String, dynamic>))
+          ?.map(
+              (e) => RecentDetailSearchItem.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

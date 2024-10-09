@@ -9,9 +9,9 @@ part of 'traveller.dart';
 Traveller _$TravellerFromJson(Map<String, dynamic> json) => Traveller(
       fn: json['fn'] as String?,
       ln: json['ln'] as String?,
-      amendmentCharges: json['amendmentCharges'] as int?,
-      refundableamount: json['refundableamount'] as int?,
-      totalFare: json['totalFare'] as int?,
+      amendmentCharges: (json['amendmentCharges'] as num?)?.toInt(),
+      refundableamount: (json['refundableamount'] as num?)?.toInt(),
+      totalFare: (json['totalFare'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$TravellerToJson(Traveller instance) => <String, dynamic>{

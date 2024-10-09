@@ -7,9 +7,9 @@ part of 'pax_info.dart';
 // **************************************************************************
 
 PaxInfo _$PaxInfoFromJson(Map<String, dynamic> json) => PaxInfo(
-      adult: json['ADULT'] as int?,
-      child: json['CHILD'] as int?,
-      infant: json['INFANT'] as int?,
+      adult: (json['ADULT'] as num?)?.toInt(),
+      child: (json['CHILD'] as num?)?.toInt(),
+      infant: (json['INFANT'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$PaxInfoToJson(PaxInfo instance) => <String, dynamic>{

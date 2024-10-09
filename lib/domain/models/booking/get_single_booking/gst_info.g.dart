@@ -14,7 +14,7 @@ GstInfo _$GstInfoFromJson(Map<String, dynamic> json) => GstInfo(
       registeredName: json['registeredName'] as String?,
       bookingId: json['bookingId'] as String?,
       bookingUserId: json['bookingUserId'] as String?,
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$GstInfoToJson(GstInfo instance) => <String, dynamic>{

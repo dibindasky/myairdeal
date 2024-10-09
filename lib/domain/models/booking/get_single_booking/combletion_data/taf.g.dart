@@ -7,7 +7,7 @@ part of 'taf.dart';
 // **************************************************************************
 
 Taf _$TafFromJson(Map<String, dynamic> json) => Taf(
-      ot: json['OT'] as int?,
+      ot: (json['OT'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$TafToJson(Taf instance) => <String, dynamic>{

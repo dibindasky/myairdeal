@@ -13,11 +13,11 @@ PayType _$PayTypeFromJson(Map<String, dynamic> json) => PayType(
       afC: json['afC'] == null
           ? null
           : AfC.fromJson(json['afC'] as Map<String, dynamic>),
-      sR: (json['sR'] as num?)?.toInt(),
+      sR: json['sR'] as num?,
       bI: json['bI'] == null
           ? null
           : Bi.fromJson(json['bI'] as Map<String, dynamic>),
-      rT: (json['rT'] as num?)?.toInt(),
+      rT: json['rT'] as num?,
       cc: json['cc'] as String?,
       cB: json['cB'] as String?,
       fB: json['fB'] as String?,

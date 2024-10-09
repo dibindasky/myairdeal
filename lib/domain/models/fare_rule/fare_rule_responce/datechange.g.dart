@@ -7,7 +7,7 @@ part of 'datechange.dart';
 // **************************************************************************
 
 Datechange _$DatechangeFromJson(Map<String, dynamic> json) => Datechange(
-      amount: json['amount'] as int?,
+      amount: (json['amount'] as num?)?.toInt(),
       policyInfo: json['policyInfo'] as String?,
       fcs: json['fcs'] == null
           ? null

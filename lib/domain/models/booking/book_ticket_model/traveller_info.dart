@@ -15,6 +15,7 @@ class TravellerInfo {
   String? pid;
   @JsonKey(name: '_id')
   String? id;
+  @JsonKey(name: 'pNat')
   String? pN;
   @JsonKey(name: 'ssrMealInfos')
   List<SsrInfo>? ssrMealInfos;

@@ -8,8 +8,8 @@ part of 'order.dart';
 
 Order _$OrderFromJson(Map<String, dynamic> json) => Order(
       bookingId: json['bookingId'] as String?,
-      amount: json['amount'] as int?,
-      markup: json['markup'] as int?,
+      amount: (json['amount'] as num?)?.toInt(),
+      markup: (json['markup'] as num?)?.toInt(),
       deliveryInfo: json['deliveryInfo'] == null
           ? null
           : DeliveryInfo.fromJson(json['deliveryInfo'] as Map<String, dynamic>),

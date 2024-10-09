@@ -417,9 +417,9 @@ class FlightSortController extends GetxController {
       cabinClass: classType.value,
       // pax info count
       paxInfo: PaxInfo(
-        adult: adultCount.value.toString(),
-        child: childrenCount.value.toString(),
-        infant: infantCount.value.toString(),
+        adult: adultCount.value,
+        child: childrenCount.value,
+        infant: infantCount.value,
       ),
       // search modifiers route and types
       searchModifiers: SearchModifiers(

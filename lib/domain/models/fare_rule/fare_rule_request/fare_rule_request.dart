@@ -4,6 +4,7 @@ part 'fare_rule_request.g.dart';
 
 @JsonSerializable()
 class FareRuleRequest {
+  @JsonKey(name: 'id')
   String? bookingId;
   String? flowType;
 

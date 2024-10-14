@@ -58,4 +58,16 @@ class PayType {
       mI: mI ?? this.mI,
     );
   }
+
+  static const colLocalId = 'local_id';
+  static const colFdPriceId = 'fd_price_id';
+  static const colFc = 'fC';
+  static const colAfC = 'afC';
+  static const colSR = 'sR';
+  static const colBi = 'bI';
+  static const colRT = 'rT';
+  static const colCC = 'cc';
+  static const colCB = 'cB';
+  static const colFB = 'fB';
+  static const colMI = 'mI';
 }

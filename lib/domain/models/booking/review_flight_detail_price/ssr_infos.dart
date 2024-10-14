@@ -1,22 +1,28 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:myairdeal/domain/models/booking/book_ticket_model/ssr_info.dart';
 
-part 'ssr_infos.g.dart';
-
-@JsonSerializable()
 class SsrInfos {
-  @JsonKey(name: 'MEAL')
   List<SsrInfo>? meal;
-  @JsonKey(name: 'BAGGAGE')
   List<SsrInfo>? baggage;
 
-  SsrInfos({this.meal,this.baggage});
+  SsrInfos({this.meal, this.baggage});
 
   factory SsrInfos.fromJson(Map<String, dynamic> json) {
-    return _$SsrInfoFromJson(json);
+    return SsrInfos(
+      meal: (json['MEAL'] as List<dynamic>?)
+          ?.map((item) => SsrInfo.fromJson(item as Map<String, dynamic>))
+          .toList(),
+      baggage: (json['BAGGAGE'] as List<dynamic>?)
+          ?.map((item) => SsrInfo.fromJson(item as Map<String, dynamic>))
+          .toList(),
+    );
   }
 
-  Map<String, dynamic> toJson() => _$SsrInfoToJson(this);
+  Map<String, dynamic> toJson() {
+    return {
+      'MEAL': meal?.map((item) => item.toJson()).toList(),
+      'BAGGAGE': baggage?.map((item) => item.toJson()).toList(),
+    };
+  }
 
   SsrInfos copyWith({
     List<SsrInfo>? meal,

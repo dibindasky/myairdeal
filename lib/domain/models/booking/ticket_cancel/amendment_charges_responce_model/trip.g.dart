@@ -28,5 +28,5 @@ Map<String, dynamic> _$TripToJson(Trip instance) => <String, dynamic>{
       'departureDate': instance.departureDate,
       'flightNumbers': instance.flightNumbers,
       'airlines': instance.airlines,
-      'amendmentInfo': instance.amendmentInfo?.toJson(),
+      'amendmentInfo': instance.amendmentInfo,
     };

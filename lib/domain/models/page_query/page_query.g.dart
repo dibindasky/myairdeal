@@ -7,7 +7,7 @@ part of 'page_query.dart';
 // **************************************************************************
 
 PageQuery _$PageQueryFromJson(Map<String, dynamic> json) => PageQuery(
-      pageSize: json['pageSize'] as int?,
+      pageSize: (json['pageSize'] as num?)?.toInt(),
       search: json['search'] as String?,
     );
 

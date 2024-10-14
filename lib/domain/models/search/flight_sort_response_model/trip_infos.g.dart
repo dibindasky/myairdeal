@@ -11,39 +11,39 @@ TripInfos _$TripInfosFromJson(Map<String, dynamic> json) => TripInfos(
           ?.map((e) =>
               SearchAirlineInformation.fromJson(e as Map<String, dynamic>))
           .toList(),
-    )
-      ..returns = (json['RETURN'] as List<dynamic>?)
+      returns: (json['RETURN'] as List<dynamic>?)
           ?.map((e) =>
               SearchAirlineInformation.fromJson(e as Map<String, dynamic>))
-          .toList()
-      ..combo = (json['COMBO'] as List<dynamic>?)
+          .toList(),
+      combo: (json['COMBO'] as List<dynamic>?)
           ?.map((e) =>
               SearchAirlineInformation.fromJson(e as Map<String, dynamic>))
-          .toList()
-      ..multicity1 = (json['0'] as List<dynamic>?)
+          .toList(),
+      multicity1: (json['0'] as List<dynamic>?)
           ?.map((e) =>
               SearchAirlineInformation.fromJson(e as Map<String, dynamic>))
-          .toList()
-      ..multicity2 = (json['1'] as List<dynamic>?)
+          .toList(),
+      multicity2: (json['1'] as List<dynamic>?)
           ?.map((e) =>
               SearchAirlineInformation.fromJson(e as Map<String, dynamic>))
-          .toList()
-      ..multicity3 = (json['2'] as List<dynamic>?)
+          .toList(),
+      multicity3: (json['2'] as List<dynamic>?)
           ?.map((e) =>
               SearchAirlineInformation.fromJson(e as Map<String, dynamic>))
-          .toList()
-      ..multicity4 = (json['3'] as List<dynamic>?)
+          .toList(),
+      multicity4: (json['3'] as List<dynamic>?)
           ?.map((e) =>
               SearchAirlineInformation.fromJson(e as Map<String, dynamic>))
-          .toList()
-      ..multicity5 = (json['4'] as List<dynamic>?)
+          .toList(),
+      multicity5: (json['4'] as List<dynamic>?)
           ?.map((e) =>
               SearchAirlineInformation.fromJson(e as Map<String, dynamic>))
-          .toList()
-      ..multicity6 = (json['5'] as List<dynamic>?)
+          .toList(),
+      multicity6: (json['5'] as List<dynamic>?)
           ?.map((e) =>
               SearchAirlineInformation.fromJson(e as Map<String, dynamic>))
-          .toList();
+          .toList(),
+    );
 
 Map<String, dynamic> _$TripInfosToJson(TripInfos instance) => <String, dynamic>{
       'ONWARD': instance.onward,

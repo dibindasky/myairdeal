@@ -22,4 +22,6 @@ class AfC {
       taf: taf ?? this.taf,
     );
   }
+
+  static const colTAF = 'taf';
 }

@@ -21,7 +21,7 @@ AmendmentInfo _$AmendmentInfoFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$AmendmentInfoToJson(AmendmentInfo instance) =>
     <String, dynamic>{
-      'ADULT': instance.adult?.toJson(),
-      'CHILD': instance.child?.toJson(),
-      'INFANT': instance.infant?.toJson(),
+      'ADULT': instance.adult,
+      'CHILD': instance.child,
+      'INFANT': instance.infant,
     };

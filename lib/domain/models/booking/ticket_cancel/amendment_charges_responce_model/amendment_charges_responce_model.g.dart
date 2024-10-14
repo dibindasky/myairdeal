@@ -25,7 +25,7 @@ Map<String, dynamic> _$AmendmentChargesResponceModelToJson(
         AmendmentChargesResponceModel instance) =>
     <String, dynamic>{
       'bookingId': instance.bookingId,
-      'trips': instance.trips?.map((e) => e.toJson()).toList(),
-      'status': instance.status?.toJson(),
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+      'trips': instance.trips,
+      'status': instance.status,
+      'errors': instance.errors,
     };

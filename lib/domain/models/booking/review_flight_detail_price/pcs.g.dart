@@ -13,8 +13,7 @@ Pcs _$PcsFromJson(Map<String, dynamic> json) => Pcs(
       dobe: json['dobe'] as bool?,
     );
 
-Map<String, dynamic> _$PcsToJson(Pcs instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PcsToJson(Pcs instance) => <String, dynamic>{
       'pped': instance.pped,
       'pid': instance.pid,
       'pm': instance.pm,

@@ -9,10 +9,6 @@ part of 'retrieve_single_bookingresponce_model.dart';
 RetrieveSingleBookingresponceModel _$RetrieveSingleBookingresponceModelFromJson(
         Map<String, dynamic> json) =>
     RetrieveSingleBookingresponceModel(
-      allBookingSearchquery: json['searchQuery'] == null
-          ? null
-          : FlightSearchQuery.fromJson(
-              json['searchQuery'] as Map<String, dynamic>),
       order: json['order'] == null
           ? null
           : Order.fromJson(json['order'] as Map<String, dynamic>),
@@ -28,6 +24,10 @@ RetrieveSingleBookingresponceModel _$RetrieveSingleBookingresponceModelFromJson(
       errors: (json['errors'] as List<dynamic>?)
           ?.map((e) => Error.fromJson(e as Map<String, dynamic>))
           .toList(),
+      allBookingSearchquery: json['searchQuery'] == null
+          ? null
+          : FlightSearchQuery.fromJson(
+              json['searchQuery'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$RetrieveSingleBookingresponceModelToJson(

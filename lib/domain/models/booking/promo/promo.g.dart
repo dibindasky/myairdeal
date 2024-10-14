@@ -9,18 +9,17 @@ part of 'promo.dart';
 Promo _$PromoFromJson(Map<String, dynamic> json) => Promo(
       id: json['_id'] as String?,
       code: json['code'] as String?,
-      value: json['value'] as int?,
+      value: (json['value'] as num?)?.toInt(),
       advertise: json['advertise'] as bool?,
-      userIds: (json['userIds'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      userIds:
+          (json['userIds'] as List<dynamic>?)?.map((e) => e as String).toList(),
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-      v: json['__v'] as int?,
+      v: (json['__v'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$PromoToJson(Promo instance) => <String, dynamic>{

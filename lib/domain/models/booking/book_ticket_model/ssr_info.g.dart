@@ -10,7 +10,7 @@ SsrInfo _$SsrInfoFromJson(Map<String, dynamic> json) => SsrInfo(
       key: json['key'] as String?,
       code: json['code'] as String?,
       desc: json['desc'] as String?,
-      amount: json['amount'] as int?,
+      amount: (json['amount'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$SsrInfoToJson(SsrInfo instance) => <String, dynamic>{

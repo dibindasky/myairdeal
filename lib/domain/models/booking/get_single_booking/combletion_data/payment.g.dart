@@ -7,7 +7,7 @@ part of 'payment.dart';
 // **************************************************************************
 
 Payment _$PaymentFromJson(Map<String, dynamic> json) => Payment(
-      amount: json['amount'] as int?,
+      amount: (json['amount'] as num?)?.toInt(),
       razorPayId: json['razorPayId'] as String?,
     );
 

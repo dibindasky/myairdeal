@@ -8,7 +8,7 @@ part of 'bom_del.dart';
 
 BomDel _$BomDelFromJson(Map<String, dynamic> json) => BomDel(
       code: json['code'] as String?,
-      amount: json['amount'] as int?,
+      amount: (json['amount'] as num?)?.toInt(),
       desc: json['desc'] as String?,
     );
 

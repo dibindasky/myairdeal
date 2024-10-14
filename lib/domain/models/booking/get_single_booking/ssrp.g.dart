@@ -7,7 +7,7 @@ part of 'ssrp.dart';
 // **************************************************************************
 
 Ssrp _$SsrpFromJson(Map<String, dynamic> json) => Ssrp(
-      ot: json['OT'] as int?,
+      ot: (json['OT'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$SsrpToJson(Ssrp instance) => <String, dynamic>{

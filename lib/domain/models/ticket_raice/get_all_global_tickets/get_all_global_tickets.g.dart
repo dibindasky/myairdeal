@@ -36,5 +36,5 @@ Map<String, dynamic> _$GetAllGlobalTicketsToJson(
       'product': instance.product,
       'status': instance.status,
       'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String()
+      'updatedAt': instance.updatedAt?.toIso8601String(),
     };

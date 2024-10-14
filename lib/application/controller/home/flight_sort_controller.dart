@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:myairdeal/application/presentation/routes/routes.dart';
 import 'package:myairdeal/application/presentation/utils/colors.dart';
 import 'package:myairdeal/application/presentation/utils/constants.dart';
 import 'package:myairdeal/application/presentation/utils/formating/date_formating.dart';
+import 'package:myairdeal/data/local_db/search/search_local_service.dart';
 import 'package:myairdeal/data/service/flight_sort/flight_service.dart';
 import 'package:myairdeal/data/service/home/home_service.dart';
 import 'package:myairdeal/domain/models/search/city_search_model/city_search_model.dart';
@@ -18,6 +20,7 @@ import 'package:myairdeal/domain/models/search/flight_search_sort_model/flight_s
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/pax_info.dart';
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/route_info.dart';
 import 'package:myairdeal/domain/models/search/flight_search_sort_model/search_modifiers.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/flight_sort_response_model.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/total_price_list.dart';
 import 'package:myairdeal/domain/models/search/recent_detail_search/search_query.dart';
@@ -30,7 +33,14 @@ class FlightSortController extends GetxController {
 
   /// flight service class responsible for api calls
   final FlightRepo flightService = FlightService();
+
+  /// home service class
   final HomeRepo homeService = HomeService();
+
+  /// local service responsible for local db operations
+
+  /// local service responsible for local db operations
+  final SearchLocalService searchLocalService = SearchLocalService();
 
   /// list responsible for international(combo) multicity and round trips airline storing,
   /// [comboList] data provider
@@ -417,9 +427,9 @@ class FlightSortController extends GetxController {
       cabinClass: classType.value,
       // pax info count
       paxInfo: PaxInfo(
-        adult: adultCount.value.toString(),
-        child: childrenCount.value.toString(),
-        infant: infantCount.value.toString(),
+        adult: adultCount.value,
+        child: childrenCount.value,
+        infant: infantCount.value,
       ),
       // search modifiers route and types
       searchModifiers: SearchModifiers(
@@ -457,6 +467,7 @@ class FlightSortController extends GetxController {
     // api call for get all flights
     final result = await flightService.getAllFlight(
         flightSearchSortModel: FlightSearchSortModel(searchQuery: searchModel));
+    FlightSortResponseModel? flightSortResponseModel;
     result.fold((l) {
       searchListLoading.value = false;
       Get.back(id: 1);
@@ -471,144 +482,162 @@ class FlightSortController extends GetxController {
             <Map<String, List<SearchAirlineInformation>>>[].obs;
         specialRetrunAirlines = <String, String>{}.obs;
         searchListforSpecialReturn = <List<SearchAirlineInformation>>[].obs;
+
+        // if (r.searchResult?.tripInfos != null) {
+        //   hiveService.addSearchResponse(r.searchResult!.tripInfos!);
+        // }
+        flightSortResponseModel = r;
+
+        // return;
         // if we got a combo flight then sort it seperatly
-        if (r.searchResult?.tripInfos?.combo != null) {
-          searchListMain.add(RxList.from(r.searchResult?.tripInfos?.combo ??
-              <SearchAirlineInformation>[]));
-          getComboList();
-          comboTrip.value = true;
-        } else {
-          // find the key onward to get all the onward flights and add to 0 th index
-          if (r.searchResult?.tripInfos?.onward != null) {
-            searchListMain.add(RxList.from(r.searchResult?.tripInfos?.onward ??
-                <SearchAirlineInformation>[]));
-          }
-          // find the retrun key and add to list and add to 1st index
-          if (r.searchResult?.tripInfos?.returns != null) {
-            roundTrip.value = true;
-            searchListMain.add(RxList.from(r.searchResult?.tripInfos?.returns ??
-                <SearchAirlineInformation>[]));
-          }
-          // add multicity trip 0th index
-          if ((tripType.value == 2 && multiCityCount.value >= 1) ||
-              r.searchResult?.tripInfos?.multicity1 != null) {
-            searchListMain.add(RxList.from(
-                r.searchResult?.tripInfos?.multicity1 ??
-                    <SearchAirlineInformation>[]));
-          }
-          // add multicity trip 1st index
-          if ((tripType.value == 2 && multiCityCount.value >= 2) ||
-              r.searchResult?.tripInfos?.multicity2 != null) {
-            searchListMain.add(RxList.from(
-                r.searchResult?.tripInfos?.multicity2 ??
-                    <SearchAirlineInformation>[]));
-          }
-          // add multicity trip 2nd index
-          if ((tripType.value == 2 && multiCityCount.value >= 3) ||
-              r.searchResult?.tripInfos?.multicity3 != null) {
-            searchListMain.add(RxList.from(
-                r.searchResult?.tripInfos?.multicity3 ??
-                    <SearchAirlineInformation>[]));
-          }
-          // add multicity trip 3rd index
-          if ((tripType.value == 2 && multiCityCount.value >= 4) ||
-              r.searchResult?.tripInfos?.multicity4 != null) {
-            searchListMain.add(RxList.from(
-                r.searchResult?.tripInfos?.multicity4 ??
-                    <SearchAirlineInformation>[]));
-          }
-          // add multicity trip 4th index
-          if ((tripType.value == 2 && multiCityCount.value >= 5) ||
-              r.searchResult?.tripInfos?.multicity5 != null) {
-            searchListMain.add(RxList.from(
-                r.searchResult?.tripInfos?.multicity5 ??
-                    <SearchAirlineInformation>[]));
-          }
-          // add multicity trip 5th index
-          if ((tripType.value == 2 && multiCityCount.value >= 6) ||
-              r.searchResult?.tripInfos?.multicity6 != null) {
-            searchListMain.add(RxList.from(
-                r.searchResult?.tripInfos?.multicity6 ??
-                    <SearchAirlineInformation>[]));
-          }
-          // set the selected flights list to 0 for every list
-          selectedFlights.value =
-              List.generate(searchListMain.length, (x) => 0);
-          // set the selected flights selected pice index as 0
-          selectedTicketPrices.value =
-              List.generate(searchListMain.length, (x) => 0);
-          // set list for special return in cadse of any special returns available
-          searchListforSpecialReturn = List.generate(
-              searchListMain.length, (x) => <SearchAirlineInformation>[]);
-          specialReturnFlights = List.generate(searchListMain.length,
-              (x) => <String, List<SearchAirlineInformation>>{});
-
-          /// add all items to the [searchList] to show in ui
-          for (int i = 0; i < searchListMain.length; i++) {
-            // if round trip need to find out the special return and need to seperate it to show seperatly
-            if (roundTrip.value) {
-              // list of search items e
-              for (var e in searchListMain[i]) {
-                (e.totalPriceList ?? <TotalPriceList>[]).sort((a, b) =>
-                    (a.fd?.adult?.fC?.tf ?? 0)
-                        .compareTo(b.fd?.adult?.fC?.tf ?? 0));
-
-                /// add special return fares to the [specialReturnFlights]
-                if ((e.totalPriceList ?? <TotalPriceList>[])
-                    .any((price) => price.fareIdentifier == 'SPECIAL_RETURN')) {
-                  SearchAirlineInformation temp = e.copyWith(
-                      totalPriceList: (e.totalPriceList ?? <TotalPriceList>[])
-                          .where((price) =>
-                              price.fareIdentifier == 'SPECIAL_RETURN')
-                          .toList());
-                  if (!(specialReturnFlights[i]
-                      .containsKey(temp.sI?[0].fD?.aI?.code ?? ''))) {
-                    specialReturnFlights[i][temp.sI?[0].fD?.aI?.code ?? ''] =
-                        <SearchAirlineInformation>[];
-                  }
-                  specialReturnFlights[i][temp.sI?[0].fD?.aI?.code ?? ''] = [
-                    ...specialReturnFlights[i][temp.sI?[0].fD?.aI?.code ?? '']!,
-                    temp
-                  ];
-                }
-                // find the airline offers dosent have special return offer
-                SearchAirlineInformation temp = e.copyWith(
-                    totalPriceList: (e.totalPriceList ?? <TotalPriceList>[])
-                        .where(
-                            (price) => price.fareIdentifier != 'SPECIAL_RETURN')
-                        .toList());
-
-                if (temp.totalPriceList != null &&
-                    temp.totalPriceList!.isNotEmpty) {
-                  searchListforSpecialReturn[i].add(temp);
-                }
-              }
-              searchList.add(RxList.from(searchListforSpecialReturn[i]));
-              searchListMain[i] = searchListforSpecialReturn[i];
-            } else {
-              for (var e in searchListMain[i]) {
-                (e.totalPriceList ?? <TotalPriceList>[]).sort((a, b) =>
-                    (a.fd?.adult?.fC?.tf ?? 0)
-                        .compareTo(b.fd?.adult?.fC?.tf ?? 0));
-              }
-              searchList.add(RxList.from(searchListMain[i]));
-            }
-          }
-        }
-        startSearchTimer();
       } else if (r.errors != null) {
         Get.back(id: 1);
         Get.snackbar(
             'Failed to load data', r.errors?[0].message ?? errorMessage,
             backgroundColor: kRed, colorText: kWhite);
       }
-      searchListLoading.value = false;
+
       if (searchListMain.isEmpty) {
         return;
       }
       // if (!comboTrip.value)
-      getSortingVariables();
+      // getSortingVariables();
     });
+    if (flightSortResponseModel?.searchResult?.tripInfos != null) {
+      print('insert data to local db');
+      // await searchLocalService.debugSegmentInfo();
+      await searchLocalService.insertSearchDataToDb(
+          tripInfos: flightSortResponseModel!.searchResult!.tripInfos!);
+      // await searchLocalService.debugSegmentInfo();
+      print('callling for saved data');
+      await Future.delayed(Duration(seconds: 2));
+      final data = await searchLocalService.retrieveTripInfos();
+      // await searchLocalService.debugSegmentInfo();
+      print('saved data length -> ${data?.onward?.length}');
+      print('saved data at -> ${data?.onward?.first.sI?.first.at}');
+      print('saved data dt -> ${data?.onward?.first.sI?.first.dt}');
+      print('saved data duration -> ${data?.onward?.first.sI?.first.duration}');
+      if (data?.combo != null) {
+        searchListMain
+            .add(RxList.from(data?.combo ?? <SearchAirlineInformation>[]));
+        // TODO: do combo
+        getComboList();
+        comboTrip.value = true;
+      } else {
+        // find the key onward to get all the onward flights and add to 0 th index
+        if (data?.onward != null) {
+          searchListMain
+              .add(RxList.from(data?.onward ?? <SearchAirlineInformation>[]));
+        }
+        // find the retrun key and add to list and add to 1st index
+        if (data?.returns != null) {
+          roundTrip.value = true;
+          searchListMain
+              .add(RxList.from(data?.returns ?? <SearchAirlineInformation>[]));
+        }
+        // add multicity trip 0th index
+        if ((tripType.value == 2 && multiCityCount.value >= 1) ||
+            data?.multicity1 != null) {
+          searchListMain.add(
+              RxList.from(data?.multicity1 ?? <SearchAirlineInformation>[]));
+        }
+        // add multicity trip 1st index
+        if ((tripType.value == 2 && multiCityCount.value >= 2) ||
+            data?.multicity2 != null) {
+          searchListMain.add(
+              RxList.from(data?.multicity2 ?? <SearchAirlineInformation>[]));
+        }
+        // add multicity trip 2nd index
+        if ((tripType.value == 2 && multiCityCount.value >= 3) ||
+            data?.multicity3 != null) {
+          searchListMain.add(
+              RxList.from(data?.multicity3 ?? <SearchAirlineInformation>[]));
+        }
+        // add multicity trip 3rd index
+        if ((tripType.value == 2 && multiCityCount.value >= 4) ||
+            data?.multicity4 != null) {
+          searchListMain.add(
+              RxList.from(data?.multicity4 ?? <SearchAirlineInformation>[]));
+        }
+        // add multicity trip 4th index
+        if ((tripType.value == 2 && multiCityCount.value >= 5) ||
+            data?.multicity5 != null) {
+          searchListMain.add(
+              RxList.from(data?.multicity5 ?? <SearchAirlineInformation>[]));
+        }
+        // add multicity trip 5th index
+        if ((tripType.value == 2 && multiCityCount.value >= 6) ||
+            data?.multicity6 != null) {
+          searchListMain.add(
+              RxList.from(data?.multicity6 ?? <SearchAirlineInformation>[]));
+        }
+        // set the selected flights list to 0 for every list
+        selectedFlights.value = List.generate(searchListMain.length, (x) => 0);
+        // set the selected flights selected pice index as 0
+        selectedTicketPrices.value =
+            List.generate(searchListMain.length, (x) => 0);
+        // set list for special return in cadse of any special returns available
+        searchListforSpecialReturn = List.generate(
+            searchListMain.length, (x) => <SearchAirlineInformation>[]);
+        specialReturnFlights = List.generate(searchListMain.length,
+            (x) => <String, List<SearchAirlineInformation>>{});
+
+        /// add all items to the [searchList] to show in ui
+        for (int i = 0; i < searchListMain.length; i++) {
+          // if round trip need to find out the special return and need to seperate it to show seperatly
+          if (roundTrip.value) {
+            // list of search items e
+            for (var e in searchListMain[i]) {
+              (e.totalPriceList ?? <TotalPriceList>[]).sort((a, b) =>
+                  (a.fd?.adult?.fC?.tf ?? 0)
+                      .compareTo(b.fd?.adult?.fC?.tf ?? 0));
+
+              /// add special return fares to the [specialReturnFlights]
+              if ((e.totalPriceList ?? <TotalPriceList>[])
+                  .any((price) => price.fareIdentifier == 'SPECIAL_RETURN')) {
+                SearchAirlineInformation temp = e.copyWith(
+                    totalPriceList: (e.totalPriceList ?? <TotalPriceList>[])
+                        .where(
+                            (price) => price.fareIdentifier == 'SPECIAL_RETURN')
+                        .toList());
+                if (!(specialReturnFlights[i]
+                    .containsKey(temp.sI?[0].fD?.aI?.code ?? ''))) {
+                  specialReturnFlights[i][temp.sI?[0].fD?.aI?.code ?? ''] =
+                      <SearchAirlineInformation>[];
+                }
+                specialReturnFlights[i][temp.sI?[0].fD?.aI?.code ?? ''] = [
+                  ...specialReturnFlights[i][temp.sI?[0].fD?.aI?.code ?? '']!,
+                  temp
+                ];
+              }
+              // find the airline offers dosent have special return offer
+              SearchAirlineInformation temp = e.copyWith(
+                  totalPriceList: (e.totalPriceList ?? <TotalPriceList>[])
+                      .where(
+                          (price) => price.fareIdentifier != 'SPECIAL_RETURN')
+                      .toList());
+
+              if (temp.totalPriceList != null &&
+                  temp.totalPriceList!.isNotEmpty) {
+                searchListforSpecialReturn[i].add(temp);
+              }
+            }
+            searchList.add(RxList.from(searchListforSpecialReturn[i]));
+            searchListMain[i] = searchListforSpecialReturn[i];
+          } else {
+            for (var e in searchListMain[i]) {
+              (e.totalPriceList ?? <TotalPriceList>[]).sort((a, b) =>
+                  (a.fd?.adult?.fC?.tf ?? 0)
+                      .compareTo(b.fd?.adult?.fC?.tf ?? 0));
+            }
+            searchList.add(RxList.from(searchListMain[i]));
+          }
+        }
+      }
+      searchListLoading.value = false;
+      startSearchTimer();
+    }
+
     updateSearchToRecent(FlightSearchSortModel(searchQuery: searchModel));
   }
 

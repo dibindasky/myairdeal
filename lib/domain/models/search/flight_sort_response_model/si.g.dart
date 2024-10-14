@@ -30,6 +30,8 @@ SI _$SIFromJson(Map<String, dynamic> json) => SI(
       ssrInfo: json['ssrInfo'] == null
           ? null
           : SsrInfos.fromJson(json['ssrInfo'] as Map<String, dynamic>),
+      searchAirlineId: (json['searchAirlineId'] as num?)?.toInt(),
+      siLocalID: (json['local_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$SIToJson(SI instance) => <String, dynamic>{
@@ -47,5 +49,7 @@ Map<String, dynamic> _$SIToJson(SI instance) => <String, dynamic>{
       'iand': instance.iand,
       'isRs': instance.isRs,
       'sN': instance.sN,
-      'ssrInfo':instance.ssrInfo,
+      'ssrInfo': instance.ssrInfo,
+      'searchAirlineId': instance.searchAirlineId,
+      'local_id': instance.siLocalID,
     };

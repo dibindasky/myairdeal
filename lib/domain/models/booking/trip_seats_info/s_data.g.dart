@@ -7,8 +7,8 @@ part of 's_data.dart';
 // **************************************************************************
 
 SData _$SDataFromJson(Map<String, dynamic> json) => SData(
-      row: json['row'] as int?,
-      column: json['column'] as int?,
+      row: (json['row'] as num?)?.toInt(),
+      column: (json['column'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$SDataToJson(SData instance) => <String, dynamic>{

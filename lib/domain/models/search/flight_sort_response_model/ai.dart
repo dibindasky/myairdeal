@@ -25,4 +25,8 @@ class AI {
       isLcc: isLcc ?? this.isLcc,
     );
   }
+
+  static const colCode = 'code';
+  static const colName = 'name';
+  static const colisLcc = 'isLcc';
 }

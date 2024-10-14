@@ -7,21 +7,21 @@ part of 'fc.dart';
 // **************************************************************************
 
 Fc _$FcFromJson(Map<String, dynamic> json) => Fc(
-      taf: json['TAF'] as int?,
-      ssrp: json['SSRP'] as int?,
-      bf: json['BF'] as int?,
-      tf: json['TF'] as int?,
-      aar: json['AAR'] as int?,
-      afs: json['AFS'] as int?,
-      nf: json['NF'] as int?,
+      taf: (json['TAF'] as num?)?.toInt(),
+      ssrp: (json['SSRP'] as num?)?.toInt(),
+      bf: (json['BF'] as num?)?.toInt(),
+      tf: (json['TF'] as num?)?.toInt(),
+      nf: (json['NF'] as num?)?.toInt(),
+      aar: (json['AAR'] as num?)?.toInt(),
+      afs: (json['AFS'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$FcToJson(Fc instance) => <String, dynamic>{
       'TAF': instance.taf,
+      'AFS': instance.afs,
+      'AAR': instance.aar,
       'SSRP': instance.ssrp,
       'BF': instance.bf,
       'TF': instance.tf,
       'NF': instance.nf,
-      'AAR': instance.aar,
-      'AFS': instance.afs,
     };

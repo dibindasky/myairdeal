@@ -18,9 +18,9 @@ CodeAirport _$CodeAirportFromJson(Map<String, dynamic> json) => CodeAirport(
 Map<String, dynamic> _$CodeAirportToJson(CodeAirport instance) =>
     <String, dynamic>{
       'code': instance.code,
-      'city': instance.city,
+      'name': instance.name,
       'cityCode': instance.cityCode,
+      'city': instance.city,
       'country': instance.country,
       'countryCode': instance.countryCode,
-      'name': instance.name,
     };

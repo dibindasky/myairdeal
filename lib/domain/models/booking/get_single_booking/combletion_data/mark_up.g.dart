@@ -7,7 +7,7 @@ part of 'mark_up.dart';
 // **************************************************************************
 
 MarkUp _$MarkUpFromJson(Map<String, dynamic> json) => MarkUp(
-      value: json['value'] as int?,
+      value: (json['value'] as num?)?.toInt(),
       flatPrice: json['flatPrice'] as bool?,
       percentage: json['percentage'] as bool?,
       baseFare: json['baseFare'] as bool?,

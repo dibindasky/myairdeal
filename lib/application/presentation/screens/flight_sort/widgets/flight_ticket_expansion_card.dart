@@ -51,7 +51,7 @@ class TicketDetailExpansionChild extends StatelessWidget {
               ),
               kWidth5,
               Text(
-                '₹ ${totalPriceList.fd!.adult!.fC!.tf}',
+                '₹ ${totalPriceList.fd?.adult?.fC?.tf ?? ''}',
                 style: textThinStyle1.copyWith(fontWeight: FontWeight.w900),
               ),
               kWidth10,

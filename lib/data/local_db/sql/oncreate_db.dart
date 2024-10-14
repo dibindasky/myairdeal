@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:myairdeal/data/local_db/sqflite_local_service.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/aa.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/da.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/fd_price.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/pay_type.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/total_price_list.dart';
@@ -85,7 +87,7 @@ class Sql {
         ${TotalPriceList.colIcca} TEXT ,
         ${TotalPriceList.colMsri} TEXT ,
         ${TotalPriceList.colSearchAirlineId} INTEGER ,
-        FOREIGN KEY (${TotalPriceList.colSearchAirlineId}) REFERENCES $tripInfoTable(${SearchAirlineInformation.colLocalId})
+        FOREIGN KEY (${TotalPriceList.colSearchAirlineId}) REFERENCES $segmentInformationTable(${SearchAirlineInformation.colLocalId})
       )
     ''';
 
@@ -95,17 +97,21 @@ class Sql {
         ${FdPrice.colLocalId} INTEGER PRIMARY KEY AUTOINCREMENT ,
         ${FdPrice.colPassengerType} TEXT ,
         ${FdPrice.colTotalPriceListId} TEXT ,
-        FOREIGN KEY (${FdPrice.colTotalPriceListId}) REFERENCES $tripInfoTable(${TotalPriceList.colLocalId})
+        FOREIGN KEY (${FdPrice.colTotalPriceListId}) REFERENCES $totalPriceListTable(${TotalPriceList.colLocalId})
       )
     ''';
 
   /// table for [PayType] relation with [FdPrice]
   static const String _payTypeTableCreation = '''
       CREATE TABLE IF NOT EXISTS $payTypeTable (
-        ${FdPrice.colLocalId} INTEGER PRIMARY KEY AUTOINCREMENT ,
-        ${FdPrice.colPassengerType} TEXT ,
-        ${FdPrice.colTotalPriceListId} TEXT ,
-        FOREIGN KEY (${FdPrice.colTotalPriceListId}) REFERENCES $tripInfoTable(${TotalPriceList.colLocalId})
+        ${PayType.colLocalId} INTEGER PRIMARY KEY AUTOINCREMENT ,
+        ${PayType.colRT} TEXT ,
+        ${PayType.colSR} TEXT ,
+        ${PayType.colCC} TEXT ,
+        ${PayType.colCB} TEXT ,
+        ${PayType.colFB} TEXT ,
+        ${PayType.colMI} INTEGER ,
+        FOREIGN KEY (${PayType.colFdPriceId}) REFERENCES $fdPriceTable(${FdPrice.colLocalId})
       )
     ''';
 
@@ -121,7 +127,7 @@ class Sql {
         ${Aa.colCity} TEXT ,
         ${Aa.colCountryCode} TEXT ,
         ${Aa.colSiId} INTEGER ,
-        FOREIGN KEY (${Aa.colSiId}) REFERENCES $tripInfoTable(${SI.colLocalId})
+        FOREIGN KEY (${Aa.colSiId}) REFERENCES $segmentInformationTable(${SI.colLocalId})
       )
     ''';
 
@@ -137,7 +143,7 @@ class Sql {
         ${Da.colCity} TEXT ,
         ${Da.colCountryCode} TEXT ,
         ${Da.colSiId} INTEGER ,
-        FOREIGN KEY (${Da.colSiId}) REFERENCES $tripInfoTable(${SI.colLocalId})
+        FOREIGN KEY (${Da.colSiId}) REFERENCES $segmentInformationTable(${SI.colLocalId})
       )
     ''';
 }

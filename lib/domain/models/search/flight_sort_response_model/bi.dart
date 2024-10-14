@@ -22,4 +22,7 @@ class Bi {
       cB: cB ?? this.cB,
     );
   }
+
+  static const colIB = 'iB';
+  static const colCB = 'cB';
 }

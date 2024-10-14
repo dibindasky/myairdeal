@@ -43,4 +43,14 @@ class Aa {
       countryCode: countryCode ?? this.countryCode,
     );
   }
+
+  static const colLocalId = 'local_id';
+  static const colSiId = 'si_id';
+  static const colCode = 'code';
+  static const colName = 'name';
+  static const colCityCode = 'cityCode';
+  static const colCity = 'city';
+  static const colCountry = 'country';
+  static const colCountryCode = 'countryCode';
+  static const colTerminal = 'terminal';
 }

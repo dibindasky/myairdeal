@@ -32,4 +32,9 @@ class Fc {
       taf: taf ?? this.taf,
     );
   }
+
+  static const colBF = 'bf';
+  static const colTF = 'tf';
+  static const colNF = 'nf';
+  static const colTAF = 'taf';
 }

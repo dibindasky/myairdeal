@@ -9,8 +9,9 @@ part 'search_airline_information.g.dart';
 class SearchAirlineInformation {
   List<SI>? sI;
   List<TotalPriceList>? totalPriceList;
+  String? tripType;
 
-  SearchAirlineInformation({this.sI, this.totalPriceList});
+  SearchAirlineInformation({this.sI, this.totalPriceList,this.tripType});
 
   factory SearchAirlineInformation.fromJson(Map<String, dynamic> json) {
     return _$SearchAirlineInformationFromJson(json);
@@ -27,4 +28,10 @@ class SearchAirlineInformation {
       totalPriceList: totalPriceList ?? this.totalPriceList,
     );
   }
+
+  static const colLocalId = 'local_id';
+  static const coltripInfoId = 'trip_info_id';
+  static const coltripInfoType = 'trip_info_type';
+  static const colSI = 'sI';
+  static const colTotalPriceList = 'totalPriceList';
 }

@@ -32,4 +32,11 @@ class FdPrice {
       child: child ?? this.child,
     );
   }
+
+  static const colAdult = 'ADULT';
+  static const colInfant = 'INFANT';
+  static const colChild = 'CHILD';
+  static const colLocalId = 'local_id';
+  static const colPassengerType = 'passenger_type';
+  static const colTotalPriceListId = 'total_price_list_id';
 }

@@ -15,6 +15,7 @@ SearchAirlineInformation _$SearchAirlineInformationFromJson(
       totalPriceList: (json['totalPriceList'] as List<dynamic>?)
           ?.map((e) => TotalPriceList.fromJson(e as Map<String, dynamic>))
           .toList(),
+      tripType: json['tripType'] as String?,
     );
 
 Map<String, dynamic> _$SearchAirlineInformationToJson(
@@ -22,4 +23,5 @@ Map<String, dynamic> _$SearchAirlineInformationToJson(
     <String, dynamic>{
       'sI': instance.sI,
       'totalPriceList': instance.totalPriceList,
+      'tripType': instance.tripType,
     };

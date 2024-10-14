@@ -40,4 +40,11 @@ class Taf {
       agst: agst ?? this.agst,
     );
   }
+
+  static const colYQ = 'yq';
+  static const colYR = 'yr';
+  static const colMFT = 'mft';
+  static const colOT = 'ot';
+  static const colMF = 'mf';
+  static const colAGST = 'agst';
 }

@@ -25,23 +25,29 @@ class SI {
   int? sN;
   @JsonKey(name: 'ssrInfo')
   SsrInfos? ssrInfo;
+  int? searchAirlineId;
+  @JsonKey(name: 'local_id')
+  int? siLocalID;
 
-  SI(
-      {this.id,
-      this.fD,
-      this.stops,
-      this.so,
-      this.duration,
-      this.cT,
-      this.da,
-      this.aa,
-      this.oaa,
-      this.dt,
-      this.at,
-      this.iand,
-      this.isRs,
-      this.sN,
-      this.ssrInfo});
+  SI({
+    this.id,
+    this.fD,
+    this.stops,
+    this.so,
+    this.duration,
+    this.cT,
+    this.da,
+    this.aa,
+    this.oaa,
+    this.dt,
+    this.at,
+    this.iand,
+    this.isRs,
+    this.sN,
+    this.ssrInfo,
+    this.searchAirlineId,
+    this.siLocalID,
+  });
 
   factory SI.fromJson(Map<String, dynamic> json) => _$SIFromJson(json);
 
@@ -63,6 +69,8 @@ class SI {
     bool? isRs,
     int? sN,
     SsrInfos? ssrInfo,
+    int? searchAirlineId,
+    int? siLocalID,
   }) {
     return SI(
       id: id ?? this.id,
@@ -80,6 +88,26 @@ class SI {
       isRs: isRs ?? this.isRs,
       sN: sN ?? this.sN,
       ssrInfo: ssrInfo ?? this.ssrInfo,
+      siLocalID: siLocalID ?? this.siLocalID,
+      searchAirlineId: searchAirlineId ?? this.searchAirlineId,
     );
   }
+
+  static const colLocalId = 'local_id';
+  static const colSearchAirlineId = 'search_airline_id';
+  static const colId = 'id';
+  static const colFD = 'fD';
+  static const colStops = 'stops';
+  static const colSo = 'so';
+  static const colDuration = 'duration';
+  static const colCT = 'cT';
+  static const colDa = 'da';
+  static const colAa = 'aa';
+  static const colOaa = 'oaa';
+  static const colDt = 'dt';
+  static const colAt = 'at';
+  static const colIand = 'iand';
+  static const colIsRs = 'isRs';
+  static const colSN = 'sN';
+  static const colSsrInfo = 'ssrInfo';
 }

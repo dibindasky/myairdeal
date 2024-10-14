@@ -13,6 +13,7 @@ class TotalPriceList {
   List<dynamic>? msri;
   List<dynamic>? messages;
   bool? icca;
+  String? searchAirlineId;
 
   TotalPriceList({
     this.fd,
@@ -22,6 +23,7 @@ class TotalPriceList {
     this.sri,
     this.messages,
     this.icca,
+    this.searchAirlineId,
   });
 
   factory TotalPriceList.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class TotalPriceList {
     List<dynamic>? msri,
     List<dynamic>? messages,
     bool? icca,
+    String? searchAirlineId,
   }) {
     return TotalPriceList(
       fd: fd ?? this.fd,
@@ -47,6 +50,17 @@ class TotalPriceList {
       sri: sri ?? this.sri,
       messages: messages ?? this.messages,
       icca: icca ?? this.icca,
+      searchAirlineId: searchAirlineId ?? this.searchAirlineId,
     );
   }
+
+  static const colSearchAirlineId = 'search_airline_id';
+  static const colLocalId = 'local_id';
+  static const colFD = 'fd';
+  static const colFareIdentifier = 'fareIdentifier';
+  static const colId = 'id';
+  static const colSri = 'sri';
+  static const colMsri = 'msri';
+  static const colMessages = 'messages';
+  static const colIcca = 'icca';
 }

@@ -654,8 +654,6 @@ class TravellerController extends GetxController {
       if (s.seatPosition?.row == null || s.seatPosition?.column == null) {
         continue;
       }
-      print('seat info ------------------------------------');
-      print(s.toJson());
       seatList[s.seatPosition!.row! - 1][s.seatPosition!.column! - 1] = s;
     }
     if (selectedSeats[selectedSeatFlightKey.value] == null) {

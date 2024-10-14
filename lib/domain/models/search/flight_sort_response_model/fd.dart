@@ -27,4 +27,8 @@ class FD {
       eT: eT ?? this.eT,
     );
   }
+
+  static const colAI = 'aI';
+  static const colfN = 'fN';
+  static const coleT = 'eT';
 }

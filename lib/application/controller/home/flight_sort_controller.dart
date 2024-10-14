@@ -497,26 +497,30 @@ class FlightSortController extends GetxController {
             backgroundColor: kRed, colorText: kWhite);
       }
 
-      if (searchListMain.isEmpty) {
-        return;
-      }
+      // if (searchListMain.isEmpty) {
+      //   return;
+      // }
       // if (!comboTrip.value)
       // getSortingVariables();
     });
-    if (flightSortResponseModel?.searchResult?.tripInfos != null) {
+    if (flightSortResponseModel?.searchResult?.tripInfos != null &&
+        flightSortResponseModel?.errors == null) {
       print('insert data to local db');
       // await searchLocalService.debugSegmentInfo();
       await searchLocalService.insertSearchDataToDb(
           tripInfos: flightSortResponseModel!.searchResult!.tripInfos!);
       // await searchLocalService.debugSegmentInfo();
-      print('callling for saved data');
+      print('calling for saved data');
       await Future.delayed(Duration(seconds: 2));
+      // final data = flightSortResponseModel?.searchResult?.tripInfos;
       final data = await searchLocalService.retrieveTripInfos();
       // await searchLocalService.debugSegmentInfo();
       print('saved data length -> ${data?.onward?.length}');
       print('saved data at -> ${data?.onward?.first.sI?.first.at}');
       print('saved data dt -> ${data?.onward?.first.sI?.first.dt}');
       print('saved data duration -> ${data?.onward?.first.sI?.first.duration}');
+      print(
+          'saved data duration -> ${data?.onward?.first.totalPriceList?.first.fareIdentifier}');
       if (data?.combo != null) {
         searchListMain
             .add(RxList.from(data?.combo ?? <SearchAirlineInformation>[]));
@@ -634,10 +638,17 @@ class FlightSortController extends GetxController {
           }
         }
       }
+      if (searchList.isNotEmpty) {
+        getSortingVariables();
+      }
       searchListLoading.value = false;
+      if (searchListMain.isEmpty) {
+        return;
+      }
+
       startSearchTimer();
     }
-
+    searchListLoading.value = false;
     updateSearchToRecent(FlightSearchSortModel(searchQuery: searchModel));
   }
 

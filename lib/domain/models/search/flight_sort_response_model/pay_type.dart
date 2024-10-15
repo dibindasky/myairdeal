@@ -61,6 +61,7 @@ class PayType {
 
   static const colLocalId = 'local_id';
   static const colFdPriceId = 'fd_price_id';
+  static const colPassengerType= 'passenger_type';
   static const colFc = 'fC';
   static const colAfC = 'afC';
   static const colSR = 'sR';

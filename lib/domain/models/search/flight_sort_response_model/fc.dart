@@ -33,6 +33,8 @@ class Fc {
     );
   }
 
+  static const colLocalId = 'local_id';
+  static const colPayTypeId = 'paytype_id';
   static const colBF = 'bf';
   static const colTF = 'tf';
   static const colNF = 'nf';

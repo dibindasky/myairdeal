@@ -41,6 +41,8 @@ class Taf {
     );
   }
 
+  static const colLocalId = 'local_id';
+  static const colPayTypeId = 'paytype_id';
   static const colYQ = 'yq';
   static const colYR = 'yr';
   static const colMFT = 'mft';

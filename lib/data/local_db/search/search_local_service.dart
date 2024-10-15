@@ -2,6 +2,12 @@ import 'dart:developer';
 
 import 'package:myairdeal/data/local_db/sqflite_local_service.dart';
 import 'package:myairdeal/data/local_db/sql/oncreate_db.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/aa.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/da.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/fc.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/fd.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/fd_price.dart';
+import 'package:myairdeal/domain/models/search/flight_sort_response_model/pay_type.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/search_airline_information.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/si.dart';
 import 'package:myairdeal/domain/models/search/flight_sort_response_model/total_price_list.dart';
@@ -112,20 +118,18 @@ class SearchLocalService {
     final data = searchAirlineInfos
         .where((info) => info['trip_type'] == tripType)
         .map((info) {
-          print('total price list data ==> ${totalPriceLists
-                  .where((tpl) => tpl.searchAirlineId == info['id'])
-                  .toList()}');
-          return SearchAirlineInformation(
-              tripType: info['trip_type'],
-              sI: segmentInfos
-                  .where((si) => si.searchAirlineId == info['id'])
-                  .toList(),
-              totalPriceList: totalPriceLists
-                  .where((tpl) => tpl.searchAirlineId == info['id'])
-                  .toList(),
-            );
-        })
-        .toList();
+      print(
+          'total price list data ==> ${totalPriceLists.where((tpl) => tpl.searchAirlineId == info['id']).toList()}');
+      return SearchAirlineInformation(
+        tripType: info['trip_type'],
+        sI: segmentInfos
+            .where((si) => si.searchAirlineId == info['id'])
+            .toList(),
+        totalPriceList: totalPriceLists
+            .where((tpl) => tpl.searchAirlineId == info['id'])
+            .toList(),
+      );
+    }).toList();
     print('_filterByTripType => ${data.length}');
     return data;
   }
@@ -143,7 +147,7 @@ class SearchLocalService {
             : parts[4] == 'false'
                 ? false
                 : null,
-        msri: parts[5] as List<String>?,
+        msri: parts[5].split(','),
         searchAirlineId: parts[6] as String?,
       );
     }).toList();
@@ -300,7 +304,6 @@ class SearchLocalService {
   Future<int?> _insertSegmentInfo(
       {required int searchInfoId, required SI si}) async {
     try {
-      // TODO: add [da],[aa] and [fD]
       const searchAirlineQuery = '''INSERT INTO ${Sql.segmentInformationTable} (
                   ${SI.colId},
                   ${SI.colStops},
@@ -311,7 +314,7 @@ class SearchLocalService {
                   ${SI.colSearchAirlineId})
           VALUES (?,?,?,?,?,?,?) 
         ''';
-      return await localService.rawInsert(
+      int siId = await localService.rawInsert(
           searchAirlineQuery,
           [
             si.id ?? '0',
@@ -323,8 +326,110 @@ class SearchLocalService {
             searchInfoId,
           ],
           'retrieveTripInfos SI');
+      await _insertArrivalAirport(siId: siId, aa: si.aa);
+      await _insertDepartureAirport(siId: siId, da: si.da);
+      await _insertFdSegmentInfo(siId: siId, fd: si.fD);
+      return siId;
     } catch (e) {
       log('error _insertSearchAirlineInfo -> $e');
+      return null;
+    }
+  }
+
+  /// insert [Da] and retrn id
+  Future<int?> _insertDepartureAirport(
+      {required int siId, required Da? da}) async {
+    if (da == null) return null;
+    try {
+      const departureInfoQuery = '''INSERT INTO ${Sql.departureAirportTable} (
+                  ${Da.colSiId},
+                  ${Da.colCity},
+                  ${Da.colCityCode},
+                  ${Da.colCode},
+                  ${Da.colCountry},
+                  ${Da.colCountryCode},
+                  ${Da.colName},
+                  ${Da.colTerminal})
+          VALUES (?,?,?,?,?,?,?,?) 
+        ''';
+      await localService.rawInsert(departureInfoQuery, [
+        siId,
+        da.city ?? '',
+        da.cityCode ?? '',
+        da.code ?? '',
+        da.country ?? '',
+        da.countryCode ?? '',
+        da.name ?? '',
+        da.terminal ?? ''
+      ]);
+
+      return siId;
+    } catch (e) {
+      log('error _insertDepartureAirport -> $e');
+      return null;
+    }
+  }
+
+  /// insert [Aa] and retrn id
+  Future<int?> _insertArrivalAirport(
+      {required int siId, required Aa? aa}) async {
+    if (aa == null) return null;
+    try {
+      const arrivalInfoQuery = '''INSERT INTO ${Sql.arrivalAirportTable} (
+                  ${Aa.colSiId},
+                  ${Aa.colCity},
+                  ${Aa.colCityCode},
+                  ${Aa.colCode},
+                  ${Aa.colCountry},
+                  ${Aa.colCountryCode},
+                  ${Aa.colName},
+                  ${Aa.colTerminal})
+          VALUES (?,?,?,?,?,?,?,?) 
+        ''';
+      await localService.rawInsert(arrivalInfoQuery, [
+        siId,
+        aa.city ?? '',
+        aa.cityCode ?? '',
+        aa.code ?? '',
+        aa.country ?? '',
+        aa.countryCode ?? '',
+        aa.name ?? '',
+        aa.terminal ?? ''
+      ]);
+
+      return siId;
+    } catch (e) {
+      log('error _insertDepartureAirport -> $e');
+      return null;
+    }
+  }
+
+  /// insert [FD] and retrn id
+  Future<int?> _insertFdSegmentInfo(
+      {required int siId, required FD? fd}) async {
+    if (fd == null) return null;
+    try {
+      const arrivalInfoQuery = '''INSERT INTO ${Sql.fdSegmentInfoTable} (
+                  ${FD.colSiId},
+                  ${FD.colAICode},
+                  ${FD.colAIName},
+                  ${FD.colAIIsLcc},
+                  ${FD.colfN},
+                  ${FD.coleT})
+          VALUES (?,?,?,?,?,?) 
+        ''';
+      await localService.rawInsert(arrivalInfoQuery, [
+        siId,
+        fd.aI?.code ?? '',
+        fd.aI?.name ?? '',
+        (fd.aI?.isLcc ?? false) ? 1 : 0,
+        fd.fN ?? '',
+        fd.eT ?? '',
+      ]);
+
+      return siId;
+    } catch (e) {
+      log('error _insertFdSegmentInfo -> $e');
       return null;
     }
   }
@@ -343,22 +448,93 @@ class SearchLocalService {
               ${TotalPriceList.colSearchAirlineId})
           VALUES (?,?,?,?,?,?) 
         ''';
-      return await localService.rawInsert(
-          totalPriceListQuery,
-          [
-            totalPriceList.id ?? '0',
-            totalPriceList.fareIdentifier ?? '',
-            totalPriceList.sri ?? '',
-            totalPriceList.icca?.toString() ?? '',
-            totalPriceList.msri ?? '',
-            searchInfoId,
-          ],
-          'retrieveTripInfos SI');
+      final totalPriceId = await localService.rawInsert(totalPriceListQuery, [
+        totalPriceList.id ?? '0',
+        totalPriceList.fareIdentifier ?? '',
+        totalPriceList.sri ?? '',
+        totalPriceList.icca?.toString() ?? '',
+        totalPriceList.msri ?? '',
+        searchInfoId,
+      ]);
+      await _insertFdPriceItem(
+          totalPriceListId: totalPriceId, fdPrice: totalPriceList.fd);
+      return totalPriceId;
     } catch (e) {
       log('error _insertSearchAirlineInfo -> $e');
       return null;
     }
   }
+
+  /// insert [FdPrice] and retrn id
+  Future<void> _insertFdPriceItem(
+      {required int totalPriceListId, required FdPrice? fdPrice}) async {
+    if (fdPrice == null) return;
+    try {
+      const totalPriceListQuery = '''INSERT INTO ${Sql.totalPriceListTable} (
+              ${PayType.colFdPriceId} ,
+              ${PayType.colPassengerType} ,
+              ${PayType.colSR} ,
+              ${PayType.colCC} ,
+              ${PayType.colCB} ,
+              ${PayType.colFB} ,
+              ${PayType.colMI} ,
+              ${PayType.colRT})
+          VALUES (?,?,?,?,?,?,?,?) 
+        ''';
+      final data = {
+        FdPrice.colAdult: fdPrice.adult,
+        FdPrice.colChild: fdPrice.child,
+        FdPrice.colInfant: fdPrice.infant
+      };
+      for (var e in data.entries) {
+        final payTypeId = await localService.rawInsert(totalPriceListQuery, [
+          totalPriceListId,
+          e.key,
+          e.value?.sR ?? 0,
+          e.value?.cc ?? '',
+          e.value?.cB ?? '',
+          e.value?.fB ?? '',
+          (e.value?.mI ?? false) ? 1 : 0,
+          e.value?.rT ?? 0,
+        ]);
+        // await _insertFcPayTypeItem(payTypeId: payTypeId, fc: e.value?.fC);
+      }
+      return;
+    } catch (e) {
+      log('error _insertSearchAirlineInfo -> $e');
+      return;
+    }
+  }
+
+  // /// insert [Fc] and retrn id
+  // Future<void> _insertFcPayTypeItem(
+  //     {required int payTypeId, required Fc? fc}) async {
+  //   if (fc == null) return;
+  //   try {
+  //     const totalPriceListQuery = '''INSERT INTO ${Sql.fCPaytypeTable} (
+  //             ${Fc.colPayTypeId} ,
+  //             ${Fc.colBF} ,
+  //             ${Fc.colTF} ,
+  //             ${Fc.colTAF} ,
+  //             ${Fc.colNF} )
+  //         VALUES (?,?,?,?,?) 
+  //       ''';
+  //     final payTypeId = await localService.rawInsert(totalPriceListQuery, [
+  //       totalPriceListId,
+  //       e.key,
+  //       e.value?.sR ?? 0,
+  //       e.value?.cc ?? '',
+  //       e.value?.cB ?? '',
+  //       e.value?.fB ?? '',
+  //       (e.value?.mI ?? false) ? 1 : 0,
+  //       e.value?.rT ?? 0,
+  //     ]);
+  //     return;
+  //   } catch (e) {
+  //     log('error _insertSearchAirlineInfo -> $e');
+  //     return;
+  //   }
+  // }
 
   Future<void> deleteAllData() async {
     try {

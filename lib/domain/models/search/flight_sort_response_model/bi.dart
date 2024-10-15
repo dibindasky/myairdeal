@@ -23,6 +23,8 @@ class Bi {
     );
   }
 
+  static const colLocalId = 'local_id';
+  static const colPayTypeId = 'paytype_id';
   static const colIB = 'iB';
   static const colCB = 'cB';
 }

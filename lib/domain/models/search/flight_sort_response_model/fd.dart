@@ -28,7 +28,11 @@ class FD {
     );
   }
 
-  static const colAI = 'aI';
+  static const colLocalId = 'local_id';
+  static const colSiId = 'segment_info_id';
+  static const colAIName = 'aI_name';
+  static const colAICode = 'aI_code';
+  static const colAIIsLcc = 'aI_islcc';
   static const colfN = 'fN';
   static const coleT = 'eT';
 }

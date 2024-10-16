@@ -515,7 +515,7 @@ class FlightSortController extends GetxController {
       // final data = flightSortResponseModel?.searchResult?.tripInfos;
       final data = await searchLocalService.retrieveTripInfos();
       // await searchLocalService.debugSegmentInfo();
-      print('saved data length -> ${data?.onward?.length??'empty'}');
+      print('saved data length -> ${data?.onward?.length ?? 'empty'}');
       // print('saved data at -> ${data?.onward?.first.sI?.first.at}');
       // print('saved data dt -> ${data?.onward?.first.sI?.first.dt}');
       // print('saved data duration -> ${data?.onward?.first.sI?.first.duration}');
@@ -532,6 +532,7 @@ class FlightSortController extends GetxController {
         if (data?.onward != null) {
           searchListMain
               .add(RxList.from(data?.onward ?? <SearchAirlineInformation>[]));
+          print('saved data onward length 1=> ${searchListMain.first.length}');
         }
         // find the retrun key and add to list and add to 1st index
         if (data?.returns != null) {
@@ -637,9 +638,11 @@ class FlightSortController extends GetxController {
             searchList.add(RxList.from(searchListMain[i]));
           }
         }
+        print('saved data onward length 2 => ${searchListMain.first.length}');
       }
       if (searchList.isNotEmpty) {
         getSortingVariables();
+        print('saved data onward length 3=> ${searchListMain.first.length}');
       }
       searchListLoading.value = false;
       if (searchListMain.isEmpty) {
@@ -737,6 +740,7 @@ class FlightSortController extends GetxController {
     else {
       print('search list main length [0] - ${searchListMain[0].length}');
       // loop for all trips
+      print('saved data onward length sort variable 1=> ${searchListMain.first.length}');
       for (int i = 0; i < searchListMain.length; i++) {
         sortingVariables[i] = List.generate(6, (index) => [].obs);
         sortingVariablesSelected[i] = List.generate(6, (index) => [].obs);
@@ -1015,6 +1019,7 @@ class FlightSortController extends GetxController {
     }
     // sorting for domestic and one way international trip
     else {
+            print('saved data onward length sort airline 1=> ${searchListMain.first.length}');
       List<SearchAirlineInformation> sort = [];
       // sort for airline, dont sort if it is a special retun
       if (selectedSpecialReturnAirline.value == '') {
@@ -1137,6 +1142,7 @@ class FlightSortController extends GetxController {
       }
       searchList[index].value = sort.obs;
     }
+    print('saved data onward length sort airline 2=> ${searchListMain.first.length}');
     update();
     getTotalFare();
     Timer(const Duration(milliseconds: 1), () {

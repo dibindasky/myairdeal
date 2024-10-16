@@ -511,16 +511,16 @@ class FlightSortController extends GetxController {
           tripInfos: flightSortResponseModel!.searchResult!.tripInfos!);
       // await searchLocalService.debugSegmentInfo();
       print('calling for saved data');
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 5));
       // final data = flightSortResponseModel?.searchResult?.tripInfos;
       final data = await searchLocalService.retrieveTripInfos();
       // await searchLocalService.debugSegmentInfo();
-      print('saved data length -> ${data?.onward?.length}');
-      print('saved data at -> ${data?.onward?.first.sI?.first.at}');
-      print('saved data dt -> ${data?.onward?.first.sI?.first.dt}');
-      print('saved data duration -> ${data?.onward?.first.sI?.first.duration}');
-      print(
-          'saved data duration -> ${data?.onward?.first.totalPriceList?.first.fareIdentifier}');
+      print('saved data length -> ${data?.onward?.length??'empty'}');
+      // print('saved data at -> ${data?.onward?.first.sI?.first.at}');
+      // print('saved data dt -> ${data?.onward?.first.sI?.first.dt}');
+      // print('saved data duration -> ${data?.onward?.first.sI?.first.duration}');
+      // print(
+      //     'saved data duration -> ${data?.onward?.first.totalPriceList?.first.fareIdentifier}');
       if (data?.combo != null) {
         searchListMain
             .add(RxList.from(data?.combo ?? <SearchAirlineInformation>[]));
@@ -735,6 +735,7 @@ class FlightSortController extends GetxController {
       sortingVariables[0]![3].sort();
     } // for domestic trips and international one way
     else {
+      print('search list main length [0] - ${searchListMain[0].length}');
       // loop for all trips
       for (int i = 0; i < searchListMain.length; i++) {
         sortingVariables[i] = List.generate(6, (index) => [].obs);

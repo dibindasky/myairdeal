@@ -32,9 +32,9 @@ class SearchLocalService {
     log('get flight data -- Segment Info Debug: $results');
   }
 
-Future<TripInfos?> retrieveTripInfos() async {
-  try {
-    const query = '''
+  Future<TripInfos?> retrieveTripInfos() async {
+    try {
+      const query = '''
     SELECT 
       ti.*,
       GROUP_CONCAT(DISTINCT sai.${SearchAirlineInformation.colLocalId} 
@@ -84,7 +84,38 @@ Future<TripInfos?> retrieveTripInfos() async {
                    || '::' || fd.${FD.colfN}
                    || '::' || fd.${FD.coleT}
                    || '::' || fd.${FD.colSiId})
-          AS fd_segment_info
+          AS fd_segment_info,
+      GROUP_CONCAT(DISTINCT pt.${PayType.colLocalId}
+                   || '::' || pt.${PayType.colPassengerType}
+                   || '::' || pt.${PayType.colSR}
+                   || '::' || pt.${PayType.colCC}
+                   || '::' || pt.${PayType.colCB}
+                   || '::' || pt.${PayType.colFB}
+                   || '::' || pt.${PayType.colMI}
+                   || '::' || pt.${PayType.colRT}
+                   || '::' || pt.${PayType.colFdPriceId})
+          AS pay_type_info,
+      GROUP_CONCAT(DISTINCT fc.${Fc.colLocalId}
+                   || '::' || fc.${Fc.colBF}
+                   || '::' || fc.${Fc.colTF}
+                   || '::' || fc.${Fc.colTAF}
+                   || '::' || fc.${Fc.colNF}
+                   || '::' || fc.${Fc.colPayTypeId})
+          AS fc_info,
+      GROUP_CONCAT(DISTINCT bi.${Bi.colLocalId}
+                   || '::' || bi.${Bi.colIB}
+                   || '::' || bi.${Bi.colCB}
+                   || '::' || bi.${Bi.colPayTypeId})
+          AS bi_info,
+      GROUP_CONCAT(DISTINCT taf.${Taf.colLocalId}
+                   || '::' || taf.${Taf.colYQ}
+                   || '::' || taf.${Taf.colMFT}
+                   || '::' || taf.${Taf.colOT}
+                   || '::' || taf.${Taf.colMF}
+                   || '::' || taf.${Taf.colAGST}
+                   || '::' || taf.${Taf.colYR}
+                   || '::' || taf.${Taf.colPayTypeId})
+          AS taf_info
     FROM ${Sql.tripInfoTable} ti
     LEFT JOIN ${Sql.searchAirlineResultTable} sai 
         ON ti.${TripInfos.colLocalId} = sai.${SearchAirlineInformation.coltripInfoId}
@@ -98,181 +129,338 @@ Future<TripInfos?> retrieveTripInfos() async {
         ON si.${SI.colLocalId} = da.${Da.colSiId}
     LEFT JOIN ${Sql.fdSegmentInfoTable} fd
         ON si.${SI.colLocalId} = fd.${FD.colSiId}
+    LEFT JOIN ${Sql.payTypeTable} pt
+        ON tpl.${TotalPriceList.colLocalId} = pt.${PayType.colFdPriceId}
+    LEFT JOIN ${Sql.fCPaytypeTable} fc
+        ON pt.${PayType.colLocalId} = fc.${Fc.colPayTypeId}
+    LEFT JOIN ${Sql.biPayTypeTable} bi
+        ON pt.${PayType.colLocalId} = bi.${Bi.colPayTypeId}
+    LEFT JOIN ${Sql.tafPayTypeTable} taf
+        ON pt.${PayType.colLocalId} = taf.${Taf.colPayTypeId}
     GROUP BY ti.${TripInfos.colLocalId}
   ''';
 
-    log('retrieveTripInfos -> start execute query');
-    final results = await localService.rawQuery(query);
-    log('retrieveTripInfos -> done execute query - ${results.length}');
+      log('retrieveTripInfos -> start execute query');
+      final results = await localService.rawQuery(query);
+      log('retrieveTripInfos -> done execute query - ${results.length}');
 
-    if (results.isEmpty) return null;
+      if (results.isEmpty) return null;
 
-    final tripData = results.last;
-    log('retrieveTripInfos -> tripData --> $tripData');
+      final tripData = results.last;
+      log('retrieveTripInfos -> tripData --> $tripData');
 
-    final searchAirlineInfos = _parseSearchAirlineInfo(tripData['search_airline_info'] as String?);
-    final segmentInfos = _parseSegmentInfo(
-      tripData['segment_info'] as String?,
-      tripData['arrival_airport'] as String?,
-      tripData['departure_airport'] as String?,
-      tripData['fd_segment_info'] as String?,
-    );
-    final totalPriceLists = _parseTotalPriceList(tripData['total_price_list'] as String?);
+      final searchAirlineInfos =
+          _parseSearchAirlineInfo(tripData['search_airline_info'] as String?);
+      final segmentInfos = _parseSegmentInfo(
+        tripData['segment_info'] as String?,
+        tripData['arrival_airport'] as String?,
+        tripData['departure_airport'] as String?,
+        tripData['fd_segment_info'] as String?,
+      );
+      final totalPriceLists = _parseTotalPriceList(
+        tripData['total_price_list'] as String?,
+        tripData['pay_type_info'] as String?,
+        tripData['fc_info'] as String?,
+        tripData['bi_info'] as String?,
+        tripData['taf_info'] as String?,
+      );
 
-    return TripInfos(
-      combo: _filterByTripType(searchAirlineInfos, segmentInfos, totalPriceLists, TripInfos.colCombo),
-      onward: _filterByTripType(searchAirlineInfos, segmentInfos, totalPriceLists, TripInfos.colOnward),
-      returns: _filterByTripType(searchAirlineInfos, segmentInfos, totalPriceLists, TripInfos.colReturns),
-      multicity1: _filterByTripType(searchAirlineInfos, segmentInfos, totalPriceLists, TripInfos.colMulticity1),
-      multicity2: _filterByTripType(searchAirlineInfos, segmentInfos, totalPriceLists, TripInfos.colMulticity2),
-      multicity3: _filterByTripType(searchAirlineInfos, segmentInfos, totalPriceLists, TripInfos.colMulticity3),
-      multicity4: _filterByTripType(searchAirlineInfos, segmentInfos, totalPriceLists, TripInfos.colMulticity4),
-      multicity5: _filterByTripType(searchAirlineInfos, segmentInfos, totalPriceLists, TripInfos.colMulticity5),
-      multicity6: _filterByTripType(searchAirlineInfos, segmentInfos, totalPriceLists, TripInfos.colMulticity6),
-    );
-  } catch (e, stackTrace) {
-    log('error retrieveTripInfos -> $e');
-    log('stackTrace retrieveTripInfos-> $stackTrace');
-    return null;
+      return TripInfos(
+        combo: _filterByTripType(searchAirlineInfos, segmentInfos,
+            totalPriceLists, TripInfos.colCombo),
+        onward: _filterByTripType(searchAirlineInfos, segmentInfos,
+            totalPriceLists, TripInfos.colOnward),
+        returns: _filterByTripType(searchAirlineInfos, segmentInfos,
+            totalPriceLists, TripInfos.colReturns),
+        multicity1: _filterByTripType(searchAirlineInfos, segmentInfos,
+            totalPriceLists, TripInfos.colMulticity1),
+        multicity2: _filterByTripType(searchAirlineInfos, segmentInfos,
+            totalPriceLists, TripInfos.colMulticity2),
+        multicity3: _filterByTripType(searchAirlineInfos, segmentInfos,
+            totalPriceLists, TripInfos.colMulticity3),
+        multicity4: _filterByTripType(searchAirlineInfos, segmentInfos,
+            totalPriceLists, TripInfos.colMulticity4),
+        multicity5: _filterByTripType(searchAirlineInfos, segmentInfos,
+            totalPriceLists, TripInfos.colMulticity5),
+        multicity6: _filterByTripType(searchAirlineInfos, segmentInfos,
+            totalPriceLists, TripInfos.colMulticity6),
+      );
+    } catch (e, stackTrace) {
+      log('error retrieveTripInfos -> $e');
+      log('stackTrace retrieveTripInfos-> $stackTrace');
+      return null;
+    }
   }
-}
 
-List<SI> _parseSegmentInfo(String? info, String? arrivalInfo, String? departureInfo, String? fdInfo) {
-  if (info == null || info.isEmpty) return [];
-  
-  final arrivalMap = _parseArrivalAirportInfo(arrivalInfo);
-  final departureMap = _parseDepartureAirportInfo(departureInfo);
-  final fdMap = _parseFdInfo(fdInfo);
-
-  return info.split(',').map((item) {
-    final parts = item.split('::');
-    final siId = parts[0];
-    return SI(
-      id: parts[1],
-      stops: int.tryParse(parts[2]) ?? 0,
-      duration: int.tryParse(parts[3]) ?? 0,
-      dt: parts[4],
-      at: parts[5],
-      sN: int.tryParse(parts[6]) ?? 0,
-      searchAirlineId: int.tryParse(parts[7]) ?? 0,
-      aa: arrivalMap[siId],
-      da: departureMap[siId],
-      fD: fdMap[siId],
-    );
-  }).toList();
-}
-
-Map<String, Aa> _parseArrivalAirportInfo(String? info) {
-  if (info == null || info.isEmpty) return {};
-  return Map.fromEntries(
-    info.split(',').map((item) {
-      final parts = item.split('::');
-      return MapEntry(
-        parts[8], // siId
-        Aa(
-          code: parts[1],
-          name: parts[2],
-          cityCode: parts[3],
-          country: parts[4],
-          terminal: parts[5],
-          city: parts[6],
-          countryCode: parts[7],
-        ),
-      );
-    }),
-  );
-}
-Map<String, Da> _parseDepartureAirportInfo(String? info) {
-  if (info == null || info.isEmpty) return {};
-  return Map.fromEntries(
-    info.split(',').map((item) {
-      final parts = item.split('::');
-      return MapEntry(
-        parts[8], // siId
-        Da(
-          code: parts[1],
-          name: parts[2],
-          cityCode: parts[3],
-          country: parts[4],
-          terminal: parts[5],
-          city: parts[6],
-          countryCode: parts[7],
-        ),
-      );
-    }),
-  );
-}
-
-Map<String, FD> _parseFdInfo(String? info) {
-  if (info == null || info.isEmpty) return {};
-  return Map.fromEntries(
-    info.split(',').map((item) {
-      final parts = item.split('::');
-      return MapEntry(
-        parts[6], // siId
-        FD(
-          aI: AI(
-            code: parts[1],
-            name: parts[2],
-            isLcc: parts[3] == '1',
-          ),
-          fN: parts[4],
-          eT: parts[5],
-        ),
-      );
-    }),
-  );
-}
-
-// ... (rest of the helper methods remain the same)
   List<SearchAirlineInformation> _filterByTripType(
       List<Map<String, dynamic>> searchAirlineInfos,
       List<SI> segmentInfos,
       List<TotalPriceList> totalPriceLists,
       String tripType) {
     final data = searchAirlineInfos
-        .where((info) => info['trip_type'] == tripType)
+        .where((info) =>
+            info[SearchAirlineInformation.coltripInfoType] == tripType)
         .map((info) {
-      print(
-          'total price list data ==> ${totalPriceLists.where((tpl) => tpl.searchAirlineId == info['id']).toList()}');
       return SearchAirlineInformation(
-        tripType: info['trip_type'],
+        tripType: info[SearchAirlineInformation.coltripInfoType],
         sI: segmentInfos
-            .where((si) => si.searchAirlineId == info['id'])
+            .where((si) =>
+                si.searchAirlineId == info[SearchAirlineInformation.colLocalId])
             .toList(),
         totalPriceList: totalPriceLists
-            .where((tpl) => tpl.searchAirlineId == info['id'])
+            .where((tpl) =>
+                tpl.searchAirlineId ==
+                info[SearchAirlineInformation.colLocalId])
             .toList(),
       );
     }).toList();
-    print('_filterByTripType => ${data.length}');
+    print('_filterByTripType => $tripType ${data.length}');
     return data;
   }
 
-  List<TotalPriceList> _parseTotalPriceList(String? info) {
+  List<TotalPriceList> _parseTotalPriceList(String? info, String? payTypeInfo,
+      String? fcInfo, String? biInfo, String? tafInfo) {
     if (info == null || info.isEmpty) return [];
+
+    final payTypeMap = _parsePayTypeInfo(payTypeInfo);
+    final fcMap = _parseFcInfo(fcInfo);
+    final biMap = _parseBiInfo(biInfo);
+    final tafMap = _parseTafInfo(tafInfo);
+
     return info.split(',').map((item) {
       final parts = item.split('::');
+      final tplId = parts[0];
+      final payTypes = payTypeMap[tplId] ?? [];
+
       return TotalPriceList(
-        id: parts[1] as String?,
-        fareIdentifier: parts[2] as String?,
-        sri: parts[3] as String?,
-        icca: parts[4] == 'true'
-            ? true
-            : parts[4] == 'false'
-                ? false
-                : null,
+        id: parts[1],
+        fareIdentifier: parts[2],
+        sri: parts[3],
+        icca: parts[4] == 'true',
         msri: parts[5].split(','),
-        searchAirlineId: parts[6] as String?,
+        searchAirlineId: parts[6],
+        fd: FdPrice(
+          adult:
+              _createPayType(payTypes, FdPrice.colAdult, fcMap, biMap, tafMap),
+          child:
+              _createPayType(payTypes, FdPrice.colChild, fcMap, biMap, tafMap),
+          infant:
+              _createPayType(payTypes, FdPrice.colInfant, fcMap, biMap, tafMap),
+        ),
       );
     }).toList();
+  }
+
+  Map<String, List<Map<String, dynamic>>> _parsePayTypeInfo(String? info) {
+    if (info == null || info.isEmpty) return {};
+    final payTypeMap = <String, List<Map<String, dynamic>>>{};
+    info.split(',').forEach((item) {
+      final parts = item.split('::');
+      final fdPriceId = parts[8];
+      payTypeMap.putIfAbsent(fdPriceId, () => []).add({
+        PayType.colLocalId: parts[0],
+        PayType.colPassengerType: parts[1],
+        PayType.colSR: double.parse(parts[2]),
+        PayType.colCC: parts[3],
+        PayType.colCB: parts[4],
+        PayType.colFB: parts[5],
+        PayType.colMI: parts[6] == '1',
+        PayType.colRT: double.parse(parts[7]),
+      });
+    });
+    return payTypeMap;
+  }
+
+  Map<String, Map<String, dynamic>> _parseFcInfo(String? info) {
+    if (info == null || info.isEmpty) return {};
+    return Map.fromEntries(
+      info.split(',').map((item) {
+        final parts = item.split('::');
+        return MapEntry(parts[5], {
+          Fc.colBF: int.parse(parts[1]),
+          Fc.colTF: double.parse(parts[2]),
+          Fc.colTAF: double.parse(parts[3]),
+          Fc.colNF: double.parse(parts[4]),
+        });
+      }),
+    );
+  }
+
+  Map<String, Map<String, dynamic>> _parseBiInfo(String? info) {
+    if (info == null || info.isEmpty) return {};
+    return Map.fromEntries(
+      info.split(',').map((item) {
+        final parts = item.split('::');
+        return MapEntry(parts[3], {
+          Bi.colCB: parts[1],
+          Bi.colIB: parts[2],
+        });
+      }),
+    );
+  }
+
+  Map<String, Map<String, dynamic>> _parseTafInfo(String? info) {
+    if (info == null || info.isEmpty) return {};
+    return Map.fromEntries(
+      info.split(',').map((item) {
+        final parts = item.split('::');
+        return MapEntry(parts[7], {
+          Taf.colYQ: int.parse(parts[1]),
+          Taf.colMFT: double.parse(parts[2]),
+          Taf.colOT: int.parse(parts[3]),
+          Taf.colMF: int.parse(parts[4]),
+          Taf.colAGST: int.parse(parts[5]),
+          Taf.colYR: int.parse(parts[6]),
+        });
+      }),
+    );
+  }
+
+  PayType? _createPayType(
+      List<Map<String, dynamic>> payTypes,
+      String passengerType,
+      Map<String, Map<String, dynamic>> fcMap,
+      Map<String, Map<String, dynamic>> biMap,
+      Map<String, Map<String, dynamic>> tafMap) {
+    final payType = payTypes.firstWhere(
+        (pt) => pt[PayType.colPassengerType] == passengerType,
+        orElse: () => {});
+    if (payType.isEmpty) return null;
+
+    final fcData = fcMap[payType[PayType.colLocalId]];
+    final biData = biMap[payType[PayType.colLocalId]];
+    final tafData = tafMap[payType[PayType.colLocalId]];
+
+    return PayType(
+        sR: payType[PayType.colSR],
+        cc: payType[PayType.colCC],
+        cB: payType[PayType.colCB],
+        fB: payType[PayType.colFB],
+        mI: payType[PayType.colMI],
+        rT: payType[PayType.colRT],
+        fC: fcData != null
+            ? Fc(
+                bf: fcData[Fc.colBF],
+                tf: fcData[Fc.colTF],
+                taf: fcData[Fc.colTAF],
+                nf: fcData[Fc.colNF],
+              )
+            : null,
+        bI: biData != null
+            ? Bi(
+                iB: biData[Bi.colIB],
+                cB: biData[Bi.colCB],
+              )
+            : null,
+        afC: AfC(
+            taf: tafData != null
+                ? Taf(
+                    agst: tafData[Taf.colAGST],
+                    mf: tafData[Taf.colMF],
+                    mft: tafData[Taf.colMFT],
+                    ot: tafData[Taf.colOT],
+                    yq: tafData[Taf.colYQ],
+                    yr: tafData[Taf.colYR])
+                : null));
+  }
+
+  List<SI> _parseSegmentInfo(String? info, String? arrivalInfo,
+      String? departureInfo, String? fdInfo) {
+    if (info == null || info.isEmpty) return [];
+
+    final arrivalMap = _parseArrivalAirportInfo(arrivalInfo);
+    final departureMap = _parseDepartureAirportInfo(departureInfo);
+    final fdMap = _parseFdInfo(fdInfo);
+
+    return info.split(',').map((item) {
+      final parts = item.split('::');
+      final siId = parts[0];
+      return SI(
+        id: parts[1],
+        stops: int.tryParse(parts[2]) ?? 0,
+        duration: int.tryParse(parts[3]) ?? 0,
+        dt: parts[4],
+        at: parts[5],
+        sN: int.tryParse(parts[6]) ?? 0,
+        searchAirlineId: int.tryParse(parts[7]) ?? 0,
+        aa: arrivalMap[siId],
+        da: departureMap[siId],
+        fD: fdMap[siId],
+      );
+    }).toList();
+  }
+
+  Map<String, Aa> _parseArrivalAirportInfo(String? info) {
+    if (info == null || info.isEmpty) return {};
+    return Map.fromEntries(
+      info.split(',').map((item) {
+        final parts = item.split('::');
+        return MapEntry(
+          parts[8], // siId
+          Aa(
+            code: parts[1],
+            name: parts[2],
+            cityCode: parts[3],
+            country: parts[4],
+            terminal: parts[5],
+            city: parts[6],
+            countryCode: parts[7],
+          ),
+        );
+      }),
+    );
+  }
+
+  Map<String, Da> _parseDepartureAirportInfo(String? info) {
+    if (info == null || info.isEmpty) return {};
+    return Map.fromEntries(
+      info.split(',').map((item) {
+        final parts = item.split('::');
+        return MapEntry(
+          parts[8], // siId
+          Da(
+            code: parts[1],
+            name: parts[2],
+            cityCode: parts[3],
+            country: parts[4],
+            terminal: parts[5],
+            city: parts[6],
+            countryCode: parts[7],
+          ),
+        );
+      }),
+    );
+  }
+
+  Map<String, FD> _parseFdInfo(String? info) {
+    if (info == null || info.isEmpty) return {};
+    return Map.fromEntries(
+      info.split(',').map((item) {
+        final parts = item.split('::');
+        return MapEntry(
+          parts[6], // siId
+          FD(
+            aI: AI(
+              code: parts[1],
+              name: parts[2],
+              isLcc: parts[3] == '1',
+            ),
+            fN: parts[4],
+            eT: parts[5],
+          ),
+        );
+      }),
+    );
   }
 
   List<Map<String, dynamic>> _parseSearchAirlineInfo(String? info) {
     if (info == null || info.isEmpty) return [];
     return info.split(',').map((item) {
       final parts = item.split('::');
-      return {'id': int.parse(parts[0]), 'trip_type': parts[1]};
+      return {
+        SearchAirlineInformation.colLocalId: int.parse(parts[0]),
+        SearchAirlineInformation.coltripInfoType: parts[1]
+      };
     }).toList();
   }
 
@@ -569,7 +757,7 @@ Map<String, FD> _parseFdInfo(String? info) {
       {required int totalPriceListId, required FdPrice? fdPrice}) async {
     if (fdPrice == null) return;
     try {
-      const totalPriceListQuery = '''INSERT INTO ${Sql.totalPriceListTable} (
+      const totalPriceListQuery = '''INSERT INTO ${Sql.payTypeTable} (
               ${PayType.colFdPriceId} ,
               ${PayType.colPassengerType} ,
               ${PayType.colSR} ,

@@ -14,18 +14,18 @@ import 'package:myairdeal/domain/models/search/flight_sort_response_model/trip_i
 import 'package:sqflite/sqflite.dart' as sql;
 
 class Sql {
-  static const tripInfoTable = 'trip_infos';
-  static const searchAirlineResultTable = 'search_result';
-  static const segmentInformationTable = 'segment_infos';
-  static const totalPriceListTable = 'total_price_list';
-  static const fdPriceTable = 'fd_price';
-  static const payTypeTable = 'pay_type';
-  static const fCPaytypeTable = 'fc_paytype';
-  static const biPayTypeTable = 'bi_paytype';
-  static const tafPayTypeTable = 'taf_afc_paytype';
-  static const fdSegmentInfoTable = 'fd_segment_info';
-  static const arrivalAirportTable = 'arrival_airport';
-  static const departureAirportTable = 'departure_airport';
+  static const String tripInfoTable = 'trip_infos';
+  static const String searchAirlineResultTable = 'search_result';
+  static const String segmentInformationTable = 'segment_infos';
+  static const String totalPriceListTable = 'total_price_list';
+  static const String fdPriceTable = 'fd_price';
+  static const String payTypeTable = 'pay_type';
+  static const String fCPaytypeTable = 'fc_paytype';
+  static const String biPayTypeTable = 'bi_paytype';
+  static const String tafPayTypeTable = 'taf_afc_paytype';
+  static const String fdSegmentInfoTable = 'fd_segment_info';
+  static const String arrivalAirportTable = 'arrival_airport';
+  static const String departureAirportTable = 'departure_airport';
 
   /// create the tables for the first time when user come to the application
   static Future onCreate(sql.Database db) async {
@@ -208,7 +208,7 @@ class Sql {
         ${FD.colAIIsLcc} INTEGER ,
         ${FD.colfN} TEXT ,
         ${FD.coleT} TEXT ,
-        ${Da.colSiId} INTEGER ,
+        ${FD.colSiId} INTEGER ,
         FOREIGN KEY (${FD.colSiId}) REFERENCES $segmentInformationTable(${SI.colLocalId})
       )
     ''';
